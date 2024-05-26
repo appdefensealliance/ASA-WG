@@ -14,33 +14,58 @@ Version 0.7 - May 25, 2024
 
 1.1 [Implement strong password security measures](#11-implement-strong-password-security-measures)
 
-1.2 Disable any default accounts for public application access interfaces
-1.3 Lookup secrets shall be random and not reused
-1.4 Out of band verifiers shall be random and not reused
-2 Session Management
-2.1 URLs shall not expose sensitive information
-2.2 Implement Session Invalidation on Logout, User Request, and Password Change
-2.3 Implement and Secure Application Session Tokens
-2.4 Protect Sensitive Account Modifications 
-3 Access Control
-3.1 Implement access control mechanisms to protect sensitive data and APIs
-3.2 Implement secure OAuth integrations to protect user data and prevent unauthorized access
-3.3 Application exposed administrative interfaces shall use appropriate multi-factor authentication.
-4 Communications
-4.1 Protect Sensitive Data Through Strong Cryptography 
-5 Data Validation and Sanitization
-5.1 Implement Validation & Input Sanitation
-5.2 Securely Handle Untrusted Files 
-6 Configuration
-6.1 Keep all components up to date
-6.2 Disable debug modes in production environments
-6.3 The origin header shall not be used for authentication of access control decisions
-6.4 Protect Application from Subdomain Takeover
-6.5 Do not log credentials or payment details
-6.6 Sensitive user data is either not stored in browser storage or is deleted when the user logs out
-6.7 Securely store server-side secrets
+1.2 [Disable any default accounts for public application access interfaces](#12-disable-any-default-accounts-for-public-application-access-interfaces)
+
+1.3 [Lookup secrets shall be random and not reused](#13-lookup-secrets-shall-be-random-and-not-reused)
+
+1.4 [Out of band verifiers shall be random and not reused](#14-out-of-band-verifiers-shall-be-random-and-not-reused)
+
+2 [Session Management](#2-session-management)
+
+2.1 [URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
+
+2.2 [Implement Session Invalidation on Logout, User Request, and Password Change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
+
+2.3 [Implement and Secure Application Session Tokens](#23-implement-and-secure-application-session-tokens)
+
+2.4 [Protect Sensitive Account Modifications](#24-protect-sensitive-account-modifications)
+
+3 [Access Control](#3-access-control)
+
+3.1 [Implement access control mechanisms to protect sensitive data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
+
+3.2 [Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
+
+3.3 [Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
+
+4 [Communications](#4-communications)
+
+4.1 [Protect Sensitive Data Through Strong Cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+
+5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
+
+5.1 [Implement Validation & Input Sanitation](#51-implement-validation--input-sanitation)
+
+5.2 [Securely Handle Untrusted Files](#52-securely-handle-untrusted-files)
+
+6 [Configuration](#6-configuration)
+
+6.1 [Keep all components up to date](#61-keep-all-components-up-to-date)
+
+6.2 [Disable debug modes in production environments](#62-disable-debug-modes-in-production-environments)
+
+6.3 [The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
+
+6.4 [Protect Application from Subdomain Takeover](#64-protect-application-from-subdomain-takeover)
+
+6.5 [Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
+
+6.6 [Sensitive user data is either not stored in browser storage or is deleted when the user logs out](#66-sensitive-user-data-is-either-not-stored-in-browser-storage-or-is-deleted-when-the-user-logs-out)
+
+6.7 [Securely store server-side secrets](#67-securely-store-server-side-secrets)
 
 
+# Introduction
 In today's digitally-driven world, web applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure web environment, a robust web application security standard and certification program is essential.
 
 **Our Approach: OWASP ASVS as the Foundation**
