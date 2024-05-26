@@ -11,7 +11,9 @@ Version 0.7 - May 25, 2024
 
 # Table of Contents
 1 [Authentication](#1-authentication)
-1.1 [Implement strong password security measures](#1.1-Implement strong password security measures)
+
+1.1 [Implement strong password security measures](#11-implement-strong-password-security-measures)
+
 1.2 Disable any default accounts for public application access interfaces
 1.3 Lookup secrets shall be random and not reused
 1.4 Out of band verifiers shall be random and not reused
