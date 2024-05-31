@@ -194,7 +194,65 @@ Version 0.5 - April 8, 2024
 
 [2.18.1 Ensure IAM Users Receive Permissions Only Through Groups](#2181-ensure-iam-users-receive-permissions-only-through-groups)
 
+[3.1 Establish and Maintain Detailed Enterprise Asset Inventory](#31-establish-and-maintain-detailed-enterprise-asset-inventory)
 
+[3.1.1 Ensure Cloud Asset Inventory Is Enabled](#311-ensure-cloud-asset-inventory-is-enabled)
+
+[3.2 Tune Security Event Alerting Thresholds](#32-tune-security-event-alerting-thresholds)
+
+[3.2.1 Ensure That 'Notify about alerts with the following severity' is Set to 'High'](#321-ensure-that-notify-about-alerts-with-the-following-severity-is-set-to-high)
+
+[3.3 Establish and Maintain Contact Information for Reporting Security Incidents](#33-establish-and-maintain-contact-information-for-reporting-security-incidents)
+
+[3.3.1 Ensure That 'All users with the following roles' is set to 'Owner'](#331-ensure-that-all-users-with-the-following-roles-is-set-to-owner)
+
+[3.3.2 Ensure 'Additional email addresses' is Configured with a Security Contact Email](#332-ensure-additional-email-addresses-is-configured-with-a-security-contact-email)
+
+[3.4 Log Sensitive Data Access](#34-log-sensitive-data-access)
+
+[3.4.1 Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket](#341-ensure-s3-bucket-access-logging-is-enabled-on-the-cloudtrail-s3-bucket)
+
+[3.5 Configure Data Access Control Lists](#35-configure-data-access-control-lists)
+
+[3.5.1 Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible](#351-ensure-the-s3-bucket-used-to-store-cloudtrail-logs-is-not-publicly-accessible)
+
+[3.5.2 Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible](#352-ensure-the-storage-container-storing-the-activity-logs-is-not-publicly-accessible)
+
+[3.6 Establish and Maintain a Secure Configuration Process](#36-establish-and-maintain-a-secure-configuration-process)
+
+[3.6.1 Ensure Any of the ASC Default Policy Settings are Not Set to 'Disabled'](#361-ensure-any-of-the-asc-default-policy-settings-are-not-set-to-disabled)
+
+[3.7 Perform Automated Operating System Patch Management](#37-perform-automated-operating-system-patch-management)
+
+[3.7.1 Ensure that Microsoft Defender Recommendation for 'Apply system updates' status is 'Completed'](#371-ensure-that-microsoft-defender-recommendation-for-apply-system-updates-status-is-completed)
+
+[3.8 Perform Automated Vulnerability Scans of Internal Enterprise Assets](#38-perform-automated-vulnerability-scans-of-internal-enterprise-assets)
+
+[3.8.1 Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On'](#381-ensure-that-auto-provisioning-of-log-analytics-agent-for-azure-vms-is-set-to-on)
+
+[3.9 Conduct Audit Log Reviews](#39-conduct-audit-log-reviews)
+
+[3.9.1 Ensure management console sign-in without MFA is monitored](#391-ensure-management-console-sign-in-without-mfa-is-monitored)
+
+[3.9.2 Ensure usage of 'root' account is monitored](#392-ensure-usage-of-root-account-is-monitored)
+
+[3.9.3 Ensure IAM policy changes are monitored](#393-ensure-iam-policy-changes-are-monitored)
+
+[3.9.4 Ensure CloudTrail configuration changes are monitored](#394-ensure-cloudtrail-configuration-changes-are-monitored)
+
+[3.9.5 Ensure S3 bucket policy changes are monitored](#395-ensure-s3-bucket-policy-changes-are-monitored)
+
+[3.9.6 Ensure changes to network gateways are monitored](#396-ensure-changes-to-network-gateways-are-monitored)
+
+[3.9.7 Ensure route table changes are monitored](#397-ensure-route-table-changes-are-monitored)
+
+[3.9.8 Ensure VPC changes are monitored](#398-ensure-vpc-changes-are-monitored)
+
+[3.9.9 Ensure AWS Organizations changes are monitored](#399-ensure-aws-organizations-changes-are-monitored)
+
+[3.9.10 Ensure That Cloud Audit Logging Is Configured Properly](#3910-ensure-that-cloud-audit-logging-is-configured-properly)
+
+[3.9.11 Ensure That Cloud DNS Logging Is Enabled for All VPC Networks](#3911-ensure-that-cloud-dns-logging-is-enabled-for-all-vpc-networks)
 
 
 
