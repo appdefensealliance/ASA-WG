@@ -6,9 +6,196 @@ Version 0.5 - April 8, 2024
 
 
 # Table of Contents
+[1 Compute](#1-compute)
+
+[1.1 Establish and Maintain a Software Inventory](#11-establish-and-maintain-a-software-inventory)
+
+[1.1.1 Ensure that Only Approved Extensions Are Installed](#111-ensure-that-only-approved-extensions-are-installed)
+
+[1.2 Ensure Authorized Software is Currently Supported](#12-ensure-authorized-software-is-currently-supported)
+
+[1.2.1 Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime](#121-ensure-that-all-aws-lambda-functions-are-configured-to-use-a-current-not-deprecated-runtime)
+
+[1.2.2 Ensure that all Azure Functions are configured to use a current (not deprecated) runtime](#122-ensure-that-all-azure-functions-are-configured-to-use-a-current-not-deprecated-runtime)
+
+[1.2.3 Ensure That 'PHP version' is the Latest, If Used to Run the Web App](#123-ensure-that-php-version-is-the-latest-if-used-to-run-the-web-app)
+
+[1.2.4 Ensure that 'Python version' is the Latest Stable Version, if Used to Run the Web App](#124-ensure-that-python-version-is-the-latest-stable-version-if-used-to-run-the-web-app)
+
+[1.2.5 Ensure that 'Java version' is the latest, if used to run the Web App ](#125-ensure-that-java-version-is-the-latest-if-used-to-run-the-web-app)
+
+[1.2.6 Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App ](#126-ensure-that-http-version-is-the-latest-if-used-to-run-the-web-app)
+
+[1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime ](#126-ensure-that-all-gcp-cloud-functions-are-configured-to-use-a-current-not-deprecated-runtime)
+
+[1.3 Encrypt Sensitive Data in Transit](#13-encrypt-sensitive-data-in-transit)
+
+[1.3.1 Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service ](#131-ensure-web-app-redirects-all-http-traffic-to-https-in-azure-app-service)
+
+[1.3.2 Ensure Web App is using the latest version of TLS encryption](#132-ensure-web-app-is-using-the-latest-version-of-tls-encryption)
+
+[1.3.3 Ensure FTP deployments are Disabled ](#133-ensure-ftp-deployments-are-disabled)
+
+[1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances ](#134-ensure-block-project-wide-ssh-keys-is-enabled-for-vm-instances)
+
+[1.4 Encrypt Sensitive Data at Rest](#14-encrypt-sensitive-data-at-rest)
+
+[1.4.1 Ensure Virtual Machines are utilizing Managed Disks](#141-ensure-virtual-machines-are-utilizing-managed-disks)
+
+[1.5 Implement and Manage a Firewall on Servers](#15-implement-and-manage-a-firewall-on-servers)
+
+[1.5.1 Ensure That IP Forwarding Is Not Enabled on Instances](#151-ensure-that-ip-forwarding-is-not-enabled-on-instances)
+
+[1.6 Manage Default Accounts on Enterprise Assets and Software ](#16-manage-default-accounts-on-enterprise-assets-and-software)
+
+[1.6.1 Ensure That Instances Are Not Configured To Use the Default Service Account](#161-ensure-that-instances-are-not-configured-to-use-the-default-service-account)
+
+[1.6.2 Ensure That Instances Are Not Configured To Use the Default Service Account With Full Access to All Cloud APIs](#162-ensure-that-instances-are-not-configured-to-use-the-default-service-account-with-full-access-to-all-cloud-apis)
+
+[1.7 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software](#17-uninstall-or-disable-unnecessary-services-on-enterprise-assets-and-software)
+
+[1.7.1 Ensure ‘Enable Connecting to Serial Ports’ Is Not Enabled for VM Instance](#171-ensure-enable-connecting-to-serial-ports-is-not-enabled-for-vm-instance)
+
+[1.8 Centralize Account Management](#18-centralize-account-management)
+
+[1.8.1 Ensure that Register with Azure Active Directory is enabled on App Service](#181-ensure-that-register-with-azure-active-directory-is-enabled-on-app-service)
+
+[1.8.2 Ensure Oslogin Is Enabled for a Project](#182-ensure-oslogin-is-enabled-for-a-project)
+
+[2 Identity and Access Management](#2-identity-and-access-management)
+
+[2.1 Establish and Maintain a Data Recovery Process](#21-establish-and-maintain-a-data-recovery-process)
+
+[2.1.1 Ensure the Key Vault is Recoverable](#211-ensure-the-key-vault-is-recoverable)
+
+[2.2 Designate Personnel to Manage Incident Handling](#22-designate-personnel-to-manage-incident-handling)
+
+[2.2.1 Ensure a support role has been created to manage incidents with AWS Support](#221-ensure-a-support-role-has-been-created-to-manage-incidents-with-aws-support)
+
+[2.3 Establish and Maintain Contact Information for Reporting Security Incidents](#23-establish-and-maintain-contact-information-for-reporting-security-incidents)
+
+[2.3.1 Maintain current contact details](#231-maintain-current-contact-details)
+
+[2.3.2 Ensure security contact information is registered](#232-ensure-security-contact-information-is-registered)
+
+[2.3.5 Ensure Essential Contacts is Configured for Organization](#235-ensure-essential-contacts-is-configured-for-organization)
+
+[2.4 Address Unauthorized Software](#24-address-unauthorized-software)
+
+[2.4.1 Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent](#241-ensure-user-consent-for-applications-is-set-to-do-not-allow-user-consent)
+
+[2.4.2 Ensure that 'Users can add gallery apps to My Apps' is set to 'No'](#242-ensure-that-users-can-add-gallery-apps-to-my-apps-is-set-to-no)
+
+[2.4.3 Ensure That ‘Users Can Register Applications’ Is Set to ‘No’](#243-ensure-that-users-can-register-applications-is-set-to-no)
+
+[2.5 Establish and Maintain a Data Management Process](#25-establish-and-maintain-a-data-management-process)
+
+[2.5.1 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in RBAC Key Vaults](#251-ensure-that-the-expiration-date-that-is)
+
+[2.5.2 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in Non-RBAC Key Vaults.](#252-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-keys-in-non-rbac-key-vaults)
+
+[2.5.3 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults](#253-ensure-that-the-expiration-date-that-is-no-more than-90-days-in-the-future-is-set-for-all-secrets-in-rbac-key-vaults)
+
+[2.5.4 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults](#254-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-secrets-in-non-rbac-key-vaults)
+
+[2.6 Encrypt Sensitive Data at Rest](#26-encrypt-sensitive-data-at-rest)
+
+[2.6.1 Ensure Secrets are Not Stored in Cloud Functions Environment Variables by Using Secret Manager](#261-ensure-secrets-are-not-stored-in-cloud-functions-environment-variables-by-using-secret-manager)
+
+[2.7 Configure Data Access Control Lists](#27-configure-data-access-control-lists)
+
+[2.7.1 Ensure no 'root' user account access key exists](#271-ensure-no-root-user-account-access-key-exists)
+
+[2.7.2 Do not setup access keys during initial user setup for all IAM users that have a console password](#272-do-not-setup-access-keys-during-initial-user-setup-for-all-iam-users-that-have-a-console-password)
+
+[2.7.3 Ensure IAM policies that allow full "_:_" administrative privileges are not attached ](#273-ensure-iam-policies-that-allow-full-_-administrative-privileges-are-not-attached)
+
+[2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'](#274-expand_moreensure-that-guest-users-access-restrictions-is-set-to-guest-user-access-is-restricted-to-properties-and-memberships-of-their-own-directory-objects)expand_more
+
+[2.7.5 Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level](#275-expand_moreensure-that-iam-users-are-not-assigned-the-service-account-user-or-service-account-token-creator-roles-at-project-level)expand_more
+
+[2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible](#276-ensure-that-cloud-kms-cryptokeys-are-not-anonymously-or-publicly-accessible)
+
+[2.8 Establish and Maintain a Secure Configuration Process](#28-establish-and-maintain-a-secure-configuration-process)
+
+[2.8.1 Ensure Security Defaults is enabled on Azure Active Directory](#281-ensure-security-defaults-is-enabled-on-azure-active-directory)
+
+[2.8.2 Ensure IAM password policy requires minimum length of 14 or greater](#282-ensure-iam-password-policy-requires-minimum-length-of-14-or-greater)
+
+[2.8.3 Ensure there is only one active access key available for any single IAM user](#283-ensure-there-is-only-one-active-access-key-available-for-any-single-iam-user)
+
+[2.8.4 Ensure access keys are rotated every 90 days or less](#284-ensure-access-keys-are-rotated-every-90-days-or-less)
+
+[2.9 Use Unique Passwords](#29-use-unique-passwords)
+
+[2.9.1 Ensure IAM password policy prevents password reuse](#291-ensure-iam-password-policy-prevents-password-reuse)
+
+[2.9.2 Ensure that a Custom Bad Password List is set to 'Enforce' for your Organization](#292-ensure-that-a-custom-bad-password-list-is-set-to-enforce-for-your-organization)
+
+[2.10 Disable Dormant Accounts](#210-disable-dormant-accounts)
+
+[2.10.1 Ensure credentials unused for 45 days or greater are disabled ](#2101-ensure-credentials-unused-for-45-days-or-greater-are-disabled)
+
+[2.10.2 Ensure Guest Users Are Reviewed on a Regular Basis ](#2102-ensure-guest-users-are-reviewed-on-a-regular-basis)
+
+[2.11 Restrict Administrator Privileges to Dedicated Administrator Accounts](#211-restrict-administrator-privileges-to-dedicated-administrator-accounts)
+
+[2.11.1 Eliminate use of the 'root' user for administrative and daily tasks](#2111-eliminate-use-of-the-root-user-for-administrative-and-daily-tasks)
+
+[2.11.2 Ensure That 'Notify all admins when other admins reset their password?' is set to 'Yes'](#2112-ensure-that-notify-all-admins-when-other-admins-reset-their-password-is-set-to-yes)
+
+[2.11.3 Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes'](#2113-ensure-that-restrict-access-to-azure-ad-administration-portal-is-set-to-yes)
+
+[2.11.4 Ensure That No Custom Subscription Administrator Roles Exist](#2114-ensure-that-no-custom-subscription-administrator-roles-exist)
+
+[2.11.5 Ensure That Service Account Has No Admin Privileges](#2115-ensure-that-service-account-has-no-admin-privileges)
+
+[2.12 Centralize Account Management](#212-centralize-account-management)
+
+[2.12.1 Ensure that Corporate Login Credentials are Used ](#2121-ensure-that-corporate-login-credentials-are-used)
+
+[2.13 Establish an Access Revoking Process](#213-establish-an-access-revoking-process)
+
+[2.13.1 Ensure that 'Number of days before users are asked to re-confirm their authentication information' is set to '90'](#2131-ensure-that-number-of-days-before-users-are-asked-to-re-confirm-their-authentication-information-is-set-to-90)
+
+[2.14 Require MFA for Externally-Exposed Applications](#214-require-mfa-for-externally-exposed-applications)
+
+[2.14.1 Ensure That 'Number of methods required to reset' is set to '2'](#2141-ensure-that-number-of-methods-required-to-reset-is-set-to-2)
+
+[2.14.2 Ensure that 'Require Multi-Factor Authentication to register or join devices with Azure AD' is set to 'Yes' ](#2142-ensure-that-require-multi-factor-authentication-to-register-or-join-devices-with-azure-ad-is-set-to-yes)
+
+[2.14.3 Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Privileged Users](#2143-ensure-that-multi-factor-auth-status-is-enabled-for-all-privileged-users)
+
+[2.14.4 Ensure that 'Allow users to remember multi-factor authentication on devices they trust' is Disabled ](#2144-ensure-that-allow-users-to-remember-multi-factor-authentication-on-devices-they-trust-is-disabled)
+
+[2.14.5 Ensure that A Multi-factor Authentication Policy Exists for All Users ](#2145-ensure-that-a-multi-factor-authentication-policy-exists-for-all-users)
+
+[2.14.6 Ensure Multi-factor Authentication is Required for Risky Sign-ins ](#2146-ensure-multi-factor-authentication-is-required-for-risky-sign-ins)
+
+[2.14.7 Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts ](#2147-ensure-that-multi-factor-authentication-is-enabled-for-all-non-service-accounts)
+
+[2.14.8 Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users ](#2148-ensure-that-multi-factor-auth-status-is-enabled-for-all-non-privileged-users)
+
+[2.15 Require MFA for Remote Network Access](#215-require-mfa-for-remote-network-access)
+
+[2.15.1 Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups ](#2151-ensure-that-a-multi-factor-authentication-policy-exists-for-administrative-groups)
+
+[2.15.2 Ensure Multi-factor Authentication is Required for Azure Management](#2152-ensure-multi-factor-authentication-is-required-for-azure-management)
+
+[2.16 Require MFA for Administrative Access](#216-require-mfa-for-administrative-access)
+
+[2.16.1 Ensure MFA is enabled for the 'root' user account ](#2161-ensure-mfa-is-enabled-for-the-root-user-account)
+
+[2.17 Centralize Access Control](#217-centralize-access-control)
+
+[2.17.1 Ensure that 'Notify users on password resets?' is set to 'Yes'](#2171-ensure-that-notify-users-on-password-resets-is-set-to-yes)
+
+[2.18 Define and Maintain Role-Based Access Control](#218-define-and-maintain-role-based-access-control)
+
+[2.18.1 Ensure IAM Users Receive Permissions Only Through Groups](#2181-ensure-iam-users-receive-permissions-only-through-groups)
 
 
-[TOC]
+
 
 
 
@@ -160,7 +347,7 @@ Evidence or test output indicates that no Lambda function is configured to use a
 
 ---
 
-###1.2.2 Ensure that all Azure Functions are configured to use a current (not deprecated) runtime
+### 1.2.2 Ensure that all Azure Functions are configured to use a current (not deprecated) runtime
 **Platform:** Azure 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. 
 
