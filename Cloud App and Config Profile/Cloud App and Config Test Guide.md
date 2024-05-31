@@ -110,9 +110,9 @@ Version 0.5 - April 8, 2024
 
 [2.7.3 Ensure IAM policies that allow full "_:_" administrative privileges are not attached ](#273-ensure-iam-policies-that-allow-full-_-administrative-privileges-are-not-attached)
 
-[2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'](#274-expand_moreensure-that-guest-users-access-restrictions-is-set-to-guest-user-access-is-restricted-to-properties-and-memberships-of-their-own-directory-objects)expand_more
+[2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'](#274-expand_moreensure-that-guest-users-access-restrictions-is-set-to-guest-user-access-is-restricted-to-properties-and-memberships-of-their-own-directory-objects)
 
-[2.7.5 Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level](#275-expand_moreensure-that-iam-users-are-not-assigned-the-service-account-user-or-service-account-token-creator-roles-at-project-level)expand_more
+[2.7.5 Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level](#275-expand_moreensure-that-iam-users-are-not-assigned-the-service-account-user-or-service-account-token-creator-roles-at-project-level)
 
 [2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible](#276-ensure-that-cloud-kms-cryptokeys-are-not-anonymously-or-publicly-accessible)
 
