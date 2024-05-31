@@ -254,6 +254,220 @@ Version 0.5 - April 8, 2024
 
 [3.9.11 Ensure That Cloud DNS Logging Is Enabled for All VPC Networks](#3911-ensure-that-cloud-dns-logging-is-enabled-for-all-vpc-networks)
 
+[3.10 Collect Audit Logs](#310-collect-audit-logs)
+
+[3.10.1 Ensure That Sinks Are Configured for All Log Entries](#3101-ensure-that-sinks-are-configured-for-all-log-entries)
+
+[3.10.2 Ensure Log Metric Filter and Alerts Exist for Project Ownership Assignments/Changes](#3102-ensure-log-metric-filter-and-alerts-exist-for-project-ownership-assignmentschanges)
+
+[3.10.3 Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes](#3103-ensure-that-the-log-metric-filter-and-alerts-exist-for-audit-configuration-changes)
+
+[3.10.4 Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes](#3104-ensure-that-the-log-metric-filter-and-alerts-exist-for-custom-role-changes)
+
+[3.11 Collect Detailed Audit Logs](#311-collect-detailed-audit-logs)
+
+[3.11.1 Ensure CloudTrail is enabled in all regions](#3111-ensure-cloudtrail-is-enabled-in-all-regions)
+
+[3.11.2 Ensure CloudTrail trails are integrated with CloudWatch Logs](#3112-ensure-cloudtrail-trails-are-integrated-with-cloudwatch-logs)
+
+[3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data](#3113-ensure-that-azure-monitor-resource-logging-is-enabled-for-all-services-that-manage-store-or-secure-sensitive-data)
+
+[3.11.4 Ensure that logging for Azure Key Vault is 'Enabled'](#3114-ensure-that-logging-for-azure-key-vault-is-enabled)
+
+[3.11.5 Ensure that Activity Log Alert exists for Create Policy Assignment](#3115-ensure-that-activity-log-alert-exists-for-create-policy-assignment)
+
+[3.11.6 Ensure that Activity Log Alert exists for Delete Policy Assignment](#3116-ensure-that-activity-log-alert-exists-for-delete-policy-assignment)
+
+[3.11.7 Ensure that Activity Log Alert exists for Create or Update Network Security Group ](#3117-ensure-that-activity-log-alert-exists-for-create-or-update-network-security-group)
+
+[3.11.8 Ensure that Activity Log Alert exists for Delete Network Security Group](#3118-ensure-that-activity-log-alert-exists-for-delete-network-security-group)
+
+[3.11.9 Ensure that Activity Log Alert exists for Create or Update Security Solution](#3119-ensure-that-activity-log-alert-exists-for-create-or-update-security-solution)
+
+[3.11.10 Ensure that Activity Log Alert exists for Delete Security Solution](#31110-ensure-that-activity-log-alert-exists-for-delete-security-solution)
+
+[3.11.11 Ensure that Activity Log Alert exists for Create or Update SQL Server Firewall Rule ](#31111-ensure-that-activity-log-alert-exists-for-create-or-update-sql-server-firewall-rule)
+
+[3.11.12 Ensure that Activity Log Alert exists for Delete SQL Server Firewall Rule](#31112-ensure-that-activity-log-alert-exists-for-delete-sql-server-firewall-rule)
+
+[3.11.13 Ensure that Activity Log Alert exists for Create or Update Public IP Address rule](#31113-ensure-that-activity-log-alert-exists-for-create-or-update-public-ip-address-rule)
+
+[3.11.14 Ensure that Activity Log Alert exists for Delete Public IP Address rule](#31114-ensure-that-activity-log-alert-exists-for-delete-public-ip-address-rule)
+
+[4 Networking](#4-networking)
+
+[4.1 Encrypt Sensitive Data in Transit](#41-encrypt-sensitive-data-in-transit)
+
+[4.1.1 Ensure No HTTPS or SSL Proxy Load Balancers Permit SSL Policies With Weak Cipher Suites](#411-ensure-no-https-or-ssl-proxy-load-balancers-permit-ssl-policies-with-weak-cipher-suites)
+
+[4.2 Establish and Maintain a Secure Configuration Process for Network Infrastructure](#42-establish-and-maintain-a-secure-configuration-process-for-network-infrastructure)
+
+[4.2.1 Ensure Legacy Networks Do Not Exist for Older Projects](#421-ensure-legacy-networks-do-not-exist-for-older-projects)
+
+[4.2.2 Ensure That DNSSEC Is Enabled for Cloud DNS](#422-ensure-that-dnssec-is-enabled-for-cloud-dns)
+
+[4.2.3 Ensure That RSASHA1 Is Not Used for the Key-Signing Key in Cloud DNS DNSSEC](#423-ensure-that-rsasha1-is-not-used-for-the-key-signing-key-in-cloud-dns-dnssec)
+
+[4.2.4 Ensure That RSASHA1 Is Not Used for the Zone-Signing Key in Cloud DNS DNSSEC](#424-ensure-that-rsasha1-is-not-used-for-the-zone-signing-key-in-cloud-dns-dnssec)
+
+[4.2.5 Ensure that EC2 Metadata Service only allows IMDSv2](#425-ensure-that-ec2-metadata-service-only-allows-imdsv2)
+
+[4.3 Implement and Manage a Firewall on Servers](#43-implement-and-manage-a-firewall-on-servers)
+
+[4.3.1 Ensure that RDP access from the Internet is evaluated and restricted](#431-ensure-that-rdp-access-from-the-internet-is-evaluated-and-restricted)
+
+[4.3.2 Ensure that SSH access from the Internet is evaluated and restricted](#432-ensure-that-ssh-access-from-the-internet-is-evaluated-and-restricted)
+
+[4.3.3 Ensure That SSH Access Is Restricted From the Internet](#433-ensure-that-ssh-access-is-restricted-from-the-internet)
+
+[4.3.4 Ensure That RDP Access Is Restricted From the Internet](#434-ensure-that-rdp-access-is-restricted-from-the-internet)
+
+[4.3.5 Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports](#435-ensure-no-network-acls-allow-ingress-from-00000-to-remote-server-administration-ports)
+
+[4.3.6 Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports](#436-ensure-no-security-groups-allow-ingress-from-00000-to-remote-server-administration-ports)
+
+[4.3.7 Ensure no security groups allow ingress from ::/0 to remote server administration ports](#437-ensure-no-security-groups-allow-ingress-from-0-to-remote-server-administration-ports)
+
+
+[5 Storage](#5-storage)
+
+[5.1 Establish and Maintain a Data Recovery Process](#51-establish-and-maintain-a-data-recovery-process)
+
+[5.1.1 Ensure Soft Delete is Enabled for Azure Containers and Blob Storage](#511-ensure-soft-delete-is-enabled-for-azure-containers-and-blob-storage)
+
+[5.2 Establish and Maintain a Secure Network Architecture](#52-establish-and-maintain-a-secure-network-architecture)
+
+[5.2.1 Ensure Default Network Access Rule for Storage Accounts is Set to Deny](#521-ensure-default-network-access-rule-for-storage-accounts-is-set-to-deny)
+
+[5.3 Encrypt Sensitive Data in Transit](#53-encrypt-sensitive-data-in-transit)
+
+[5.3.1 Ensure that 'Secure transfer required' is set to 'Enabled'](#531-ensure-that-secure-transfer-required-is-set-to-enabled)
+
+[5.3.2 Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2"](#532-ensure-the-minimum-tls-version-for-storage-accounts-is-set-to-version-12)
+
+[5.4 Encrypt Sensitive Data at Rest](#54-encrypt-sensitive-data-at-rest)
+
+[5.4.1 Ensure EBS Volume Encryption is Enabled in all Regions](#541-ensure-ebs-volume-encryption-is-enabled-in-all-regions)
+
+[5.4.2 Ensure that encryption is enabled for EFS file systems](#542-ensure-that-encryption-is-enabled-for-efs-file-systems)
+
+[5.5 Configure Data Access Control Lists](#55-configure-data-access-control-lists)
+
+[5.5.1 Ensure that S3 Buckets are configured with 'Block public access (bucket settings)'](#551-ensure-that-s3-buckets-are-configured-with-block-public-access-bucket-settings)
+
+[5.5.2 Ensure that 'Public access level' is disabled for storage accounts with blob containers](#552-ensure-that-public-access-level-is-disabled-for-storage-accounts-with-blob-containers)
+
+[5.5.3 Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible](#553-ensure-that-cloud-storage-bucket-is-not-anonymously-or-publicly-accessible)
+
+[5.6 Establish and Maintain a Secure Configuration Process](#56-establish-and-maintain-a-secure-configuration-process)
+
+[5.6.1 Ensure that 'Enable key rotation reminders' is enabled for each Storage Account](#561-ensure-that-enable-key-rotation-reminders-is-enabled-for-each-storage-account)
+
+[5.7 Securely Manage Enterprise Assets and Software](#57-securely-manage-enterprise-assets-and-software)
+
+[5.7.1 Ensure that Storage Account Access Keys are Periodically Regenerated](#571-ensure-that-storage-account-access-keys-are-periodically-regenerated)
+
+[5.8 Establish an Access Revoking Process](#58-establish-an-access-revoking-process)
+
+[5.8.1 Ensure that Shared Access Signature Tokens Expire Within an Hour](#581-ensure-that-shared-access-signature-tokens-expire-within-an-hour)
+
+[6 Database Services](#6-database-services)
+
+[6.1 Use Standard Hardening Configuration Templates for Application Infrastructure](#61-use-standard-hardening-configuration-templates-for-application-infrastructure)
+
+[6.1.1 Ensure That the ‘Local_infile’ Database Flag for a Cloud SQL MySQL Instance Is Set to ‘Off’](#611-ensure-that-the-local_infile-database-flag-for-a-cloud-sql-mysql-instance-is-set-to-off)
+
+[6.2 Allowlist Authorized Scripts](#62-allowlist-authorized-scripts)
+
+[6.2.1 Ensure 'external scripts enabled' database flag for Cloud SQL SQL Server instance is set to 'off'](#621-ensure-external-scripts-enabled-database-flag-for-cloud-sql-sql-server-instance-is-set-to-off)
+
+[6.3 Encrypt Sensitive Data in Transit](#63-encrypt-sensitive-data-in-transit)
+
+[6.3.1 Ensure 'Enforce SSL connection' is set to 'ENABLED' for PostgreSQL Database Server](#631-ensure-enforce-ssl-connection-is-set-to-enabled-for-postgresql-database-server)
+
+[6.3.2 Ensure 'Enforce SSL connection' is set to 'Enabled' for Standard MySQL Database Server](#632-ensure-enforce-ssl-connection-is-set-to-enabled-for-standard-mysql-database-server)
+
+[6.3.3 Ensure 'TLS Version' is set to 'TLSV1.2' for MySQL flexible Database Server](#633-ensure-tls-version-is-set-to-tlsv12-for-mysql-flexible-database-server)
+
+[6.3.4 Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL](#634-ensure-that-the-cloud-sql-database-instance-requires-all-incoming-connections-to-use-ssl)
+
+[6.4 Encrypt Sensitive Data at Rest](#64-encrypt-sensitive-data-at-rest)
+
+[6.4.1 Ensure that encryption-at-rest is enabled for RDS Instances](#641-ensure-that-encryption-at-rest-is-enabled-for-rds-instances)
+
+[6.4.2 Ensure that 'Data encryption' is set to 'On' on a SQL Database](#642-ensure-that-data-encryption-is-set-to-on-on-a-sql-database)
+
+[6.5 Configure Data Access Control Lists](#65-configure-data-access-control-lists)
+
+[6.5.1 Ensure that public access is not given to RDS Instance](#651-ensure-that-public-access-is-not-given-to-rds-instance)
+
+[6.5.2 Ensure no Azure SQL Databases allow ingress from 0.0.0.0/0 (ANY IP)](#652-ensure-no-azure-sql-databases-allow-ingress-from-00000-any-ip)
+
+[6.5.3 Ensure That Cloud SQL Database Instances Do Not Implicitly Whitelist All Public IP Addresses](#653-ensure-that-cloud-sql-database-instances-do-not-implicitly-whitelist-all-public-ip-addresses)
+
+[6.5.4 Ensure ‘Skip_show_database’ Database Flag for Cloud SQL MySQL Instance Is Set to ‘On’](#654-ensure-skip_show_database-database-flag-for-cloud-sql-mysql-instance-is-set-to-on)
+
+[6.5.5 Ensure that the 'cross db ownership chaining' database flag for Cloud SQL SQL Server instance is set to 'off'](#655-ensure-that-the-cross-db-ownership-chaining-database-flag-for-cloud-sql-sql-server-instance-is-set-to-off)
+
+[6.5.6 Ensure that the 'contained database authentication' database flag for Cloud SQL on the SQL Server instance is set to 'off'](#656-ensure-that-the-contained-database-authentication-database-flag-for-cloud-sql-on-the-sql-server-instance-is-set-to-off)
+
+[6.6 Establish and Maintain a Secure Configuration Process](#66-establish-and-maintain-a-secure-configuration-process)
+
+[6.6.1 Ensure 'user options' database flag for Cloud SQL SQL Server instance is not configured](#661-ensure-user-options-database-flag-for-cloud-sql-sql-server-instance-is-not-configured)
+
+[6.6.2 Ensure '3625 (trace flag)' database flag for all Cloud SQL Server instances is set to 'on'](#662-ensure-3625-trace-flag-database-flag-for-all-cloud-sql-server-instances-is-set-to-on)
+
+[6.7 Implement and Manage a Firewall on Servers](#67-implement-and-manage-a-firewall-on-servers)
+
+[6.7.1 Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled](#671-ensure-allow-access-to-azure-services-for-postgresql-database-server-is-disabled)
+
+[6.8 Securely Manage Enterprise Assets and Software](#68-securely-manage-enterprise-assets-and-software)
+
+[6.8.1 Ensure Instance IP assignment is set to private](#681-ensure-instance-ip-assignment-is-set-to-private)
+
+[6.9 Manage Default Accounts on Enterprise Assets and Softwar](#69-manage-default-accounts-on-enterprise-assets-and-softwar)
+
+[6.9.1 Ensure That a MySQL Database Instance Does Not Allow Anyone To Connect With Administrative Privileges](#691-ensure-that-a-mysql-database-instance-does-not-allow-anyone-to-connect-with-administrative-privileges)
+
+[6.10 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software](#610-uninstall-or-disable-unnecessary-services-on-enterprise-assets-and-software)
+
+[6.10.1 Ensure 'remote access' database flag for Cloud SQL SQL Server instance is set to 'off'](#6101-ensure-remote-access-database-flag-for-cloud-sql-sql-server-instance-is-set-to-off)
+
+[6.11 Centralize Account Management](#611-centralize-account-management)
+
+[6.11.1 Ensure that Azure Active Directory Admin is Configured for SQL Servers](#6111-ensure-that-azure-active-directory-admin-is-configured-for-sql-servers)
+
+[6.12 Perform Automated Application Patch Management](#612-perform-automated-application-patch-management)
+
+[6.12.1 Ensure Auto Minor Version Upgrade feature is Enabled for RDS Instances](#6121-ensure-auto-minor-version-upgrade-feature-is-enabled-for-rds-instances)
+
+[6.13 Collect Audit Logs](#613-collect-audit-logs)
+
+[6.13.1 Ensure Server Parameter 'log_checkpoints' is set to 'ON' for PostgreSQL Database Server](#6131-ensure-server-parameter-log_checkpoints-is-set-to-on-for-postgresql-database-server)
+
+[6.13.2 Ensure server parameter 'log_connections' is set to 'ON' for PostgreSQL Database Server](#6132-ensure-server-parameter-log_connections-is-set-to-on-for-postgresql-database-server)
+
+[6.13.3 Ensure server parameter 'log_disconnections' is set to 'ON' for PostgreSQL Database Server](#6133-ensure-server-parameter-log_disconnections-is-set-to-on-for-postgresql-database-server)
+
+[6.14 Ensure Adequate Audit Log Storage](#614-ensure-adequate-audit-log-storage)
+
+[6.14.1 Ensure Server Parameter 'log_retention_days' is greater than 3 days for PostgreSQL Database Server](#6141-ensure-server-parameter-log_retention_days-is-greater-than-3-days-for-postgresql-database-server)
+
+[6.15 Collect Detailed Audit Logs](#615-collect-detailed-audit-logs)
+
+[6.15.1 Ensure that 'Auditing' is set to 'On'](#6151-ensure-that-auditing-is-set-to-on)
+
+[6.15.2 Ensure That the ‘Log_connections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’](#6152-ensure-that-the-log_connections-database-flag-for-cloud-sql-postgresql-instance-is-set-to-on)
+
+[6.15.3 Ensure That the ‘Log_disconnections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’](#6153-ensure-that-the-log_disconnections-database-flag-for-cloud-sql-postgresql-instance-is-set-to-on)
+
+[6.15.4 Ensure that the ‘Log_min_messages’ Flag for a Cloud SQL PostgreSQL Instance is set at minimum to 'Warning'](#6154-ensure-that-the-log_min_messages-flag-for-a-cloud-sql-postgresql-instance-is-set-at-minimum-to-warning)
+
+[6.15.5 Ensure ‘Log_min_error_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘Error’ or Stricter](#6155-ensure-log_min_error_statement-database-flag-for-cloud-sql-postgresql-instance-is-set-to-error-or-stricter)
+
+[6.15.6 Ensure That the ‘Log_min_duration_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘-1′ (Disabled)](#6156-ensure-that-the-log_min_duration_statement-database-flag-for-cloud-sql-postgresql-instance-is-set-to-1-disabled)
+
+[6.15.7 Ensure That 'cloudsql.enable_pgaudit' Database Flag for each Cloud Sql Postgresql Instance Is Set to 'on' For Centralized Logging](#6157-ensure-that-cloudsqlenable_pgaudit-database-flag-for-each-cloud-sql-postgresql-instance-is-set-to-on-for-centralized-logging)
 
 
 
