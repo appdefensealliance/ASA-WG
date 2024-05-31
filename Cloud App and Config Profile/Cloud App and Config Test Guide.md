@@ -82,7 +82,7 @@ Version 0.5 - April 8, 2024
 
 [2.4 Address Unauthorized Software](#24-address-unauthorized-software)
 
-[2.4.1 Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent](#241-ensure-user-consent-for-applications-is-set-to-do-not-allow-user-consent)
+[2.4.1 Ensure User consent for applications is set to Do not allow user consent](#241-ensure-user-consent-for-applications-is-set-to-do-not-allow-user-consent)
 
 [2.4.2 Ensure that 'Users can add gallery apps to My Apps' is set to 'No'](#242-ensure-that-users-can-add-gallery-apps-to-my-apps-is-set-to-no)
 
@@ -94,7 +94,7 @@ Version 0.5 - April 8, 2024
 
 [2.5.2 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in Non-RBAC Key Vaults.](#252-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-keys-in-non-rbac-key-vaults)
 
-[2.5.3 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults](#253-ensure-that-the-expiration-date-that-is-no-more than-90-days-in-the-future-is-set-for-all-secrets-in-rbac-key-vaults)
+[2.5.3 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults](#253-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-secrets-in-rbac-key-vaults)
 
 [2.5.4 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults](#254-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-secrets-in-non-rbac-key-vaults)
 
