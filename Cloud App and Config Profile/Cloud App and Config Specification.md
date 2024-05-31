@@ -9,7 +9,144 @@ Version 0.5 - April 8, 2024
 # Table of Contents
 
 
-[TOC]
+1 [Compute](#1-compute)
+
+1.1 [Establish and Maintain a Software Inventory](#11-establish-and-maintain-a-software-inventory)
+
+1.2 [Ensure Authorized Software is Currently Supported](#12-ensure-authorized-software-is-currently-supported)
+
+1.3 [Encrypt Sensitive Data in Transit](#13-encrypt-sensitive-data-in-transit)
+
+1.4 [Encrypt Sensitive Data at Rest](#14-encrypt-sensitive-data-at-rest)
+
+1.5 [Implement and Manage a Firewall on Servers](#15-implement-and-manage-a-firewall-on-servers)
+
+1.6 [Manage Default Accounts on Enterprise Assets and Software](#16-manage-default-accounts-on-enterprise-assets-and-software)
+
+1.7 [Uninstall or Disable Unnecessary Services on Enterprise Assets and Software](#17-uninstall-or-disable-unnecessary-services-on-enterprise-assets-and-software)
+
+1.8 [Centralize Account Management](#18-centralize-account-management)
+
+2 [Identity and Access Management](#2-identity-and-access-management)
+
+2.1 [Establish and Maintain a Data Recovery Process](#21-establish-and-maintain-a-data-recovery-process)
+
+2.2 [Designate Personnel to Manage Incident Handling](#22-designate-personnel-to-manage-incident-handling)
+
+2.3 [Establish and Maintain Contact Information for Reporting Security Incidents](#23-establish-and-maintain-contact-information-for-reporting-security-incidents)
+
+2.4 [Address Unauthorized Software](#24-address-unauthorized-software)
+
+2.5 [Establish and Maintain a Data Management Process](#25-establish-and-maintain-a-data-management-process)
+
+2.6 [Encrypt Sensitive Data at Rest](#26-encrypt-sensitive-data-at-rest)
+
+2.7 [Configure Data Access Control Lists](#27-configure-data-access-control-lists)
+
+2.8 [Establish and Maintain a Secure Configuration Process](#28-establish-and-maintain-a-secure-configuration-process)
+
+2.9 [Use Unique Passwords](#29-use-unique-passwords)
+
+2.10 [Disable Dormant Accounts](#210-disable-dormant-accounts)
+
+2.11 [Restrict Administrator Privileges to Dedicated Administrator Accounts](#211-restrict-administrator-privileges-to-dedicated-administrator-accounts)
+
+2.12 [Centralize Account Management](#212-centralize-account-management)
+
+2.13 [Establish an Access Revoking Process](#213-establish-an-access-revoking-process)
+
+2.14 [Require MFA for Externally-Exposed Applications](#214-require-mfa-for-externally-exposed-applications)
+
+2.15 [Require MFA for Remote Network Access](#215-require-mfa-for-remote-network-access)
+
+2.16 [Require MFA for Administrative Access](#216-require-mfa-for-administrative-access)
+
+2.17 [Centralize Access Control](#217-centralize-access-control)
+
+2.18 [Define and Maintain Role-Based Access Control](#218-define-and-maintain-role-based-access-control)
+
+3 [Logging and Monitoring](#3-logging-and-monitoring)
+
+3.1 [Establish and Maintain Detailed Enterprise Asset Inventory](#31-establish-and-maintain-detailed-enterprise-asset-inventory)
+
+3.2 [Tune Security Event Alerting Thresholds](#32-tune-security-event-alerting-thresholds)
+
+3.3 [Establish and Maintain Contact Information for Reporting Security Incidents](#33-establish-and-maintain-contact-information-for-reporting-security-incidents)
+
+3.4 [Log Sensitive Data Access](#34-log-sensitive-data-access)
+
+3.5 [Configure Data Access Control Lists](#35-configure-data-access-control-lists)
+
+3.6 [Establish and Maintain a Secure Configuration Process](#36-establish-and-maintain-a-secure-configuration-process)
+
+3.7 [Perform Automated Operating System Patch Management](#37-perform-automated-operating-system-patch-management)
+
+3.8 [Perform Automated Vulnerability Scans of Internal Enterprise Assets](#38-perform-automated-vulnerability-scans-of-internal-enterprise-assets)
+
+3.9 [Conduct Audit Log Reviews](#39-conduct-audit-log-reviews)
+
+3.10 [Collect Audit Logs](#310-collect-audit-logs)
+
+3.11 [Collect Detailed Audit Logs](#311-collect-detailed-audit-logs)
+
+4 [Networking](#4-networking)
+
+4.1 [Encrypt Sensitive Data in Transit](#41-encrypt-sensitive-data-in-transit)
+
+4.2 [Establish and Maintain a Secure Configuration Process for Network Infrastructure](#42-establish-and-maintain-a-secure-configuration-process-for-network-infrastructure)
+
+4.3 [Implement and Manage a Firewall on Servers](#43-implement-and-manage-a-firewall-on-servers)
+
+5 [Storage](#5-storage)
+
+5.1 [Establish and Maintain a Data Recovery Process](#51-establish-and-maintain-a-data-recovery-process)
+
+5.2 [Establish and Maintain a Secure Network Architecture](#52-establish-and-maintain-a-secure-network-architecture)
+
+5.3 [Encrypt Sensitive Data in Transit](#53-encrypt-sensitive-data-in-transit)
+
+5.4 [Encrypt Sensitive Data at Rest](#54-encrypt-sensitive-data-at-rest)
+
+5.5 [Configure Data Access Control Lists](#55-configure-data-access-control-lists)
+
+5.6 [Establish and Maintain a Secure Configuration Process](#56-establish-and-maintain-a-secure-configuration-process)
+
+5.7 [Securely Manage Enterprise Assets and Software](#57-securely-manage-enterprise-assets-and-software)
+
+5.8 [Establish an Access Revoking Process](#58-establish-an-access-revoking-process)
+
+6 [Database Services](#6-database-services)
+
+6.1 [Use Standard Hardening Configuration Templates for Application Infrastructure](#61-use-standard-hardening-configuration-templates-for-application-infrastructure)
+
+6.2 [Allowlist Authorized Scripts](#62-allowlist-authorized-scripts)
+
+6.3 [Encrypt Sensitive Data in Transit](#63-encrypt-sensitive-data-in-transit)
+
+6.4 [Encrypt Sensitive Data at Rest](#64-encrypt-sensitive-data-at-rest)
+
+6.5 [Configure Data Access Control Lists](#65-configure-data-access-control-lists)
+
+6.6 [Establish and Maintain a Secure Configuration Process](#66-establish-and-maintain-a-secure-configuration-process)
+
+6.7 [Implement and Manage a Firewall on Servers](#67-implement-and-manage-a-firewall-on-servers)
+
+6.8 [Securely Manage Enterprise Assets and Software](#68-securely-manage-enterprise-assets-and-software)
+
+6.9 [Manage Default Accounts on Enterprise Assets and Software](#69-manage-default-accounts-on-enterprise-assets-and-software)
+
+6.10 [Uninstall or Disable Unnecessary Services on Enterprise Assets and Software](#610-uninstall-or-disable-unnecessary-services-on-enterprise-assets-and-software)
+
+6.11 [Centralize Account Management](#611-centralize-account-management)
+
+6.12 [Perform Automated Application Patch Management](#612-perform-automated-application-patch-management)
+
+6.13 [Collect Audit Logs](#613-collect-audit-logs)
+
+6.14 [Ensure Adequate Audit Log Storage](#614-ensure-adequate-audit-log-storage)
+
+6.15 [Collect Detailed Audit Logs](#615-collect-detailed-audit-logs)
+
 
 
 
@@ -1264,7 +1401,7 @@ Secure management of assets and software guards against malicious users from bei
 ---
 
 
-## 6.9 Manage Default Accounts on Enterprise Assets and Softwar
+## 6.9 Manage Default Accounts on Enterprise Assets and Software
 ### Description
 
 Manage default accounts on enterprise assets and software, such as root, administrator, and other pre-configured vendor accounts. Example implementations can include: disabling default accounts or making them unusable.
