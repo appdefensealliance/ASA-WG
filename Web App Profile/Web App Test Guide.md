@@ -138,18 +138,18 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.2.1
 *L1*
 1. External user authentication service shall be an ADA approved service; and
 2. Non-ADA approved service anti-automation documentation shall include brute force protections and account lockouts. The controls shall include at least one of the following:
-2.1 Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
-2.2 CAPTCHA or other anti-automation controls on failed login attempts to limit the effectiveness of automated credential testing.
-2.3 Multi-factor authentication is enforced by default for all users.
-3. App enforces strong password length and complexity requirements and disallows weak or common breached passwords (need to define length/complexity or other specifics).
+   * 2.1. Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
+   * 2.2. CAPTCHA or other anti-automation controls on failed login attempts to limit the effectiveness of automated credential testing.
+   * 2.3. Multi-factor authentication is enforced by default for all users.
+3. App shall enforce strong password length and complexity requirements and shall disallow weak or common breached passwords (need to define length/complexity or other specifics).
 
 *L2*
 1. External user authentication service shall be an ADA approved service; and
 2. Non-ADA approved service anti-automation documentation shall include brute force protections and account lockouts. The controls shall include at least one of the following:
-2.1 Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
-2.2 CAPTCHA or other anti-automation controls on failed login attempts to limit the effectiveness of automated credential testing.
-2.3 Multi-factor authentication is enforced by default for all users.
-3. App enforces strong password length and complexity requirements and disallows weak or common breached passwords (need to define length/complexity or other specifics).
+   * 2.1. Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
+   * 2.2. CAPTCHA or other anti-automation controls on failed login attempts shall be enforced to limit the effectiveness of automated credential testing.
+   * 2.3. Multi-factor authentication shall be enforced by default for all users.
+3. App shall enforce strong password length and complexity requirements and shall disallow weak or common breached passwords (need to define length/complexity or other specifics).
 
 
 
@@ -188,19 +188,19 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 *L1*
 1. External user authentication service shall be an ADA approved service; and
 2. Non-ADA approved service initial password or activation codes documentation shall include the following controls:
-2.1. The codes shall be at least 6 characters long.
-2.2 The codes shall contain letters and numbers.
-2.3 The codes shall expire after a short period of time. (24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
-2.4 The codes shall not be permitted to become long term passwords.
-3. Password length and complexity is sufficient that other controls provided above will mitigate a brute force attack.
+   * 2.1. The initial password or codes shall be at least 6 characters long.
+   * 2.2. The initial password or codes shall contain letters and numbers.
+   * 2.3. The initial password or codes shall expire after a short period of time. (24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
+   * 2.4. The initial password or codes shall not be permitted to become long term passwords.
+3. Password length and complexity shall be sufficient that other controls provided above will mitigate a brute force attack.
 
 *L2*
 1. External user authentication service shall be an ADA approved service; and
 2. Non-ADA approved service initial password or activation codes shall be validated to include the following controls:
-2.1. The codes shall be at least 6 characters long.
-2.2 The codes shall contain letters and numbers.
-2.3 The codes shall expire after a short period of time.(24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
-2.4 The codes shall not be permitted to become long term passwords.
+   * 2.1. The initial password or codes shall be at least 6 characters long.
+   * 2.2. The initial password or codes shall contain letters and numbers.
+   * 2.3. The initial password or codes shall expire after a short period of time.(24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
+   * 2.4. The initial password or codes shall not be permitted to become long term passwords.
 
 
 
@@ -233,7 +233,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 
 *L1 and L2*
 1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service salt and hash methods shall follow industry best practices. The list of approved one-way key derivation functions is detailed in NIST 800-63 B section 5.1.1.2
+2. Non-ADA approved service salt and hash methods shall follow industry best practices. The list of approved one-way key derivation functions is detailed in NIST 800-63 B section 5.1.1.2.
 
 
 
@@ -247,7 +247,7 @@ Default accounts can be easily discovered through publicly available documentati
 
 
 ---
-**1.2.1 Shared or default accounts shall not present on publicly exposed interfaces.**\
+**1.2.1 Shared or default accounts shall not be present on publicly exposed interfaces.**\
 External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 
 
@@ -262,10 +262,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 
 
 *L1*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 2. Perform the testing guidance provided by WSTG-ATHN-02 to validate default accounts are not present on publicly exposed interfaces.
 
 
@@ -273,10 +273,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 
 
 *L1*
-1. Supplied evidence shall not contain the use of default accounts on publicly exposed interfaces.
+1. Supplied evidence shall demonstrate that no default accounts are used on publicly exposed interfaces.
 
 *L2*
-1. Supplied evidence shall not contain the use of default accounts on publicly exposed interfaces; and
+1. Supplied evidence shall demonstrate that no default accounts are used on publicly exposed interfaces.
 2. Test results from WSTG-ATHN-02 shall not detect the use of default accounts on publicly exposed interfaces.
 
 
@@ -412,7 +412,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 *L2 and l2*
 1. External user authentication service shall be an ADA approved service; and
-2. Provided evidence describes how the out of band verifier expires after 7 days.
+2. Provided evidence shall demonstrate that the out-of-band verifier expires after 7 days.
 
 
 ---
@@ -452,7 +452,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.3
 
 *L2*
 1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service verify the application does not allow the out of band verifier to be used more than once.
+2. Non-ADA approved service shall verify the application does not allow the out of band verifier to be used more than once.
 
 
 
@@ -489,7 +489,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 *L1*
 1. External user authentication services shall be an ADA approved service; and
-2. Provided evidence describes how initial authentication code generation is securely random.
+2. Provided evidence shall describe how initial authentication code generation is securely random.
 
 *L2*
 1. External user authentication services shall be an ADA approved service; and
@@ -541,19 +541,16 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 
 *L1*
 
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 4195072 Password submitted using GET method
+   - 4195328 Password returned in URL query string
+   - 5244672 Session token in URL
 
-- 4195072 Password submitted using GET method
-- 4195328 Password returned in URL query string
-- 5244672 Session token in URL
-
-and 
-
-confirm that provided evidence shows either sensitive information is not being sent via the URL or that an option exists to send sensitive data within the HTTP body or via Header values
+2. Provided evidence shall show either sensitive information is not being sent via the URL or an option exists to send sensitive data within the HTTP body or via Header values.
 
 *L2*
 
-1. Verify that application requests do not send passwords or session tokens as a URL parameter and that the application API does not require sensitive data to be sent via the URL
+1. Application requests shall not send passwords or session tokens as a URL parameter and the application API shall not require sensitive data to be sent via the URL.
 
 
 ---
@@ -603,11 +600,11 @@ or;
 
 *L1*
 
-1. Confirm that provided evidence shows server-side session invalidation on user logout and session expiration
+1. Provided evidence shall show server-side session invalidation on user logout and session expiration.
 
 *L2*
 
-1. Verify that the application performs server-side session invalidation on user logout and session expiration
+1. Provided evidence shall show that application performs server-side session invalidation on user logout and session expiration.
 
 
 ---
@@ -643,10 +640,10 @@ N/A (to be collected by labs)
 
 
 *L1*
-1. Confirm that provided evidence shows user active sessions are terminated or an option is given to inactive active sessions on user password change
+1. Provided evidence shall show user active sessions are terminated or an option is given to inactive active sessions on user password change.
 
 *L2*
-1. Verify that the application performs server-side session invalidation of user active sessions or option is given to inactive active sessions on user password change
+1. Verification shall confirm that application performs server-side session invalidation of user active sessions or option shall be given to inactive active sessions on user password change.
 
 
 ---
@@ -678,10 +675,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 
 
 *L1*
-1. Confirm that provided evidence shows stateless authentication tokens have an expiration time within 24 hours of being issued
+1. Provided evidence shall show stateless authentication tokens have an expiration time within 24 hours of being issued.
 
 *L2*
-1. Verify that stateless authentication tokens have an expiration time within 24 hours of being issued
+1. Verification shall confirm that stateless authentication tokens have an expiration time within 24 hours of being issued.
 
 
 ---
@@ -720,12 +717,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.1
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-- 5243392 TLS cookie without secure flag set
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 5243392 TLS cookie without secure flag set
 
 *L2*
-1. Verify that application session cookies utilize the "Secure" attribute
+1. Verification shall confirm that application session cookies shall utilize the "Secure" attribute.
 
 
 ---
@@ -755,12 +751,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.2
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-- 500600 Cookie without HttpOnly flag set
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 500600 Cookie without HttpOnly flag set
 
 *L2*
-1. Verify that application session cookies utilize the "HttpOnly" attribute
+1. Verification shall confirm that application session cookies utilize the "HttpOnly" attribute
 
 
 ---
@@ -796,10 +791,10 @@ or;
 
 
 *L1*
-1. Confirm that provided evidence shows session tokens are dynamically generated after user authentication
+1. Provided evidence shall show session tokens are dynamically generated after user authentication
 
 *L2*
-1. Verify that application session tokens are dynamically generated and change after user authentication
+1. Verification shall confirm that application session tokens are dynamically generated and change after user authentication
 
 
 ---
@@ -829,13 +824,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-- 2099456 JWT signature not verified
-- 2099457 JWT none algorithm supported
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 2099456 JWT signature not verified
+   - 2099457 JWT none algorithm supported
 
 *L2*
-1. Verify that application stateless session token digital signatures are validated using server-side private key
+1. Verification shall confirm that application stateless session token digital signatures are validated using server-side private key
 
 
 ---
@@ -880,10 +874,10 @@ or;
 
 
 *L1*
-1. Confirm that provided evidence shows either the user has a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data
+1. Provided evidence shall show either the user has a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data
 
 *L2*
-1. Verify that a user is required to have a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data
+1. Verification shall confirm that a user is required to have a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data
 
 
 ---
@@ -1080,14 +1074,14 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.2
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-- 2098452 GraphQL content type not validated
-- 2098944 Cross-site request forgery
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 2098452 GraphQL content type not validated
+   - 2098944 Cross-site request forgery
 
 *L2*
-1. Verify application or framework enforces a strong anti-CSRF mechanism to protect authenticate functionality.
+1. Verification shall confirm that application or framework enforces a strong anti-CSRF mechanism to protect authenticate functionality.
 and
-2. Verify application or framework enforces an effective anti-automation or anti-CSRF which protects unauthenticated functionality.
+2. Verification shall confirm that application or framework enforces an effective anti-automation or anti-CSRF which protects unauthenticated functionality.
 
 
 ---
@@ -1113,8 +1107,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.2
 
 
 *L1 and L2*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-- 6291712 Directory Listing
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 6291712 Directory Listing
 
 
 ---
@@ -1161,7 +1155,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 1. Verify evidence to confirm application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
 
 *L2*
-1. Verify that the application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
+1. Verification shall confirm that the application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
 
 
 
@@ -1198,7 +1192,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 1. Verify evidence to confirm application is securely utilizing state and redirect_uri validation to prevent against open redirect and CSRF vulnerabilities. 
 
 *L2*
-1. Verify that the application is not vulnerable to open redirects or CSRF vulnerabilities in the OAuth authorization process.
+1. Verification shall confirm that the application is not vulnerable to open redirects or CSRF vulnerabilities in the OAuth authorization process.
 
 
 
@@ -1338,17 +1332,15 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 *L1 and L2*
 1. Describe any situations in which your application uses the following cryptographic operations: 
+   * Encryption or decryption
+   * Hashing
+   * MAC or HMAC
 
-* Encryption or decryption
-* Hashing
-* MAC or HMAC
-
-For each of these operations, briefly describe how your application performs the cryptographic operation including:
-
-* Chosen cryptographic algorithms
-* Key size and mechanism of generation
-* IV size and mechanism of generation (if applicable)
-* Key management (storage, rotation, and expiration)
+2. For each of these operations, briefly describe how your application performs the cryptographic operation including:
+   * Chosen cryptographic algorithms
+   * Key size and mechanism of generation
+   * IV size and mechanism of generation (if applicable)
+   * Key management (storage, rotation, and expiration)
 
 
 
@@ -1452,13 +1444,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.1
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-- 5248000: Client-side HTTP parameter pollution (reflected)
-- 5248001: Client-side HTTP parameter pollution (stored)
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 5248000: Client-side HTTP parameter pollution (reflected)
+   - 5248001: Client-side HTTP parameter pollution (stored)
 
 *L2*
-1. Verify application is not vulnerable to HTTP parameter pollution as defined in WSTG-INPV-04.
+1. Verification shall confirm that application is not vulnerable to HTTP parameter pollution as defined in WSTG-INPV-04.
 
 
 ---
@@ -1488,16 +1479,15 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.5
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-- 5243136: Open redirection (reflected)
-- 5243137: Open redirection (stored)
-- 5243152: Open redirection (DOM-based)
-- 5243153: Open redirection (reflected DOM-based)
-- 5243154: Open redirection (stored DOM-based)
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 5243136: Open redirection (reflected)
+   - 5243137: Open redirection (stored)
+   - 5243152: Open redirection (DOM-based)
+   - 5243153: Open redirection (reflected DOM-based)
+   - 5243154: Open redirection (stored DOM-based)
 
 *L2*
-1. Verify application restricts redirects to allowlisted URLs or displays a warning when redirecting to untrusted content.
+1. Verification shall confirm that application restricts redirects to allowlisted URLs or displays a warning when redirecting to untrusted content.
 
 
 ---
@@ -1527,18 +1517,17 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.4
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-- 1051904: Server-side JavaScript code injection
-- 1052160: Perl code injection
-- 1052416: Ruby code injection
-- 1052432: Python code injection
-- 1051648: PHP Code Injection
-- 1052672: Unidentified code injection
-- 1052448: Expression Language Injection
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 1051904: Server-side JavaScript code injection
+   - 1052160: Perl code injection
+   - 1052416: Ruby code injection
+   - 1052432: Python code injection
+   - 1051648: PHP Code Injection
+   - 1052672: Unidentified code injection
+   - 1052448: Expression Language Injection
 
 *L2*
-1. Verify application does not allow arbitrary code execution from user input. In scenarios where user-supplied code execution is expected, ensure all user input is sanitized and sandboxed prior to execution. 
+1. Verification shall confirm that application does not allow arbitrary code execution from user input. In scenarios where user-supplied code execution is expected, ensure all user input is sanitized and sandboxed prior to execution. 
 
 
 ---
@@ -1570,12 +1559,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.5
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-- 1052800: Server-side template injection
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 1052800: Server-side template injection
 
 *L2*
-1. Verify application is not susceptible to template injection from untrusted input. 
+1. Verification shall confirm that application is not susceptible to template injection from untrusted input. 
 
 
 ---
@@ -1607,14 +1595,13 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.6
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-1051136: Out-of-band resource load (HTTP)
-3146240: External service interaction (DNS)
-3146256: External service interaction (HTTP)
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 1051136: Out-of-band resource load (HTTP)
+   - 3146240: External service interaction (DNS)
+   - 3146256: External service interaction (HTTP)
 
 *L2*
-1. Ensure that the application does not initiate arbitrary HTTP or DNS requests to either internal or external resources based on user-supplied input, unless it is a necessary part of the application functionality. In such cases, ensure application implements robust input validation and uses allowlists to restrict requests to trusted and necessary domains or IP addresses.
+1. Verification shall confirm that the application does not initiate arbitrary HTTP or DNS requests to either internal or external resources based on user-supplied input, unless it is a necessary part of the application functionality. In such cases, ensure application implements robust input validation and uses allowlists to restrict requests to trusted and necessary domains or IP addresses.
 
 
 ---
@@ -1653,7 +1640,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.7
 
 
 *L2*
-1. Verify that the application does not allow malicious SVG file uploads containing inline scripts, resulting in Cross-Site Scripting (XSS) within the application.
+1. Verification shall confirm that the application does not allow malicious SVG file uploads containing inline scripts, resulting in Cross-Site Scripting (XSS) within the application.
 
 
 ---
@@ -1685,19 +1672,18 @@ Perform the XML injection testing procedure defined in WSTG-INPV-07 and the XPat
 
 
 *L1*
-Verify that Burp Suite scan does not identify the following vulnerabilities:
-
-1050368: XML injection
-1050112: XPath injection
-1049600: XML external entity injection
-2098016 Client-side XPath injection (DOM-based)
-2098017 Client-side XPath injection (reflected DOM-based)
-2098018 Client-side XPath injection (stored DOM-based)
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 1050368: XML injection
+   - 1050112: XPath injection
+   - 1049600: XML external entity injection
+   - 2098016 Client-side XPath injection (DOM-based)
+   - 2098017 Client-side XPath injection (reflected DOM-based)
+   - 2098018 Client-side XPath injection (stored DOM-based)
 
 
 
 *L2*
-Ensure that the application safely parses XML input and is not susceptible to common XML parsing vulnerabilities including XML injection, XML external entities (XXE), or XPath injection. 
+1. Verification shall confirm that the application safely parses XML input and is not susceptible to common XML parsing vulnerabilities including XML injection, XML external entities (XXE), or XPath injection. 
 
 
 ---
@@ -1729,15 +1715,15 @@ Perform the reflected Cross-Site Scripting (XSS) testing procedure defined in WS
 
 
 *L1*
-Verify that Burp Suite scan does not identify any of the following vulnerabilities:
-- 2097408: Cross-site scripting (stored)
-- 2097920: Cross-site scripting (reflected)
-- 2097936: Cross-site scripting (DOM-based)
-- 2097937: Cross-site scripting (reflected DOM-based)
-- 2097938: Cross-site scripting (stored DOM-based)
+1. Burp Suite scan shall not identify any of the following vulnerabilities:
+   - 2097408: Cross-site scripting (stored)
+   - 2097920: Cross-site scripting (reflected)
+   - 2097936: Cross-site scripting (DOM-based)
+   - 2097937: Cross-site scripting (reflected DOM-based)
+   - 2097938: Cross-site scripting (stored DOM-based)
 
 *L2*
-Verify testing evidence does not indicate application is susceptible to stored, reflected, or DOM-based Cross-site Scripting (XSS) vulnerabilities.
+1. Verification shall confirm that testing evidence does not indicate application is susceptible to stored, reflected, or DOM-based Cross-site Scripting (XSS) vulnerabilities.
 
 
 ---
@@ -1770,14 +1756,13 @@ Perform the database injection testing procedure defined in WSTG-INPV-05
 
 
 *L1*
-Verify that Burp Suite scan does not identify any of the following vulnerabilities:
-
-- 1049088: SQL Injection
-- 1049104: SQL Injection (Second Order)
+1. Burp Suite scan shall not identify any of the following vulnerabilities:
+   - 1049088: SQL Injection
+   - 1049104: SQL Injection (Second Order)
 
 
 *L2*
-Verify testing evidence does not indicate application is vulnerable to SQL injection, including in-band, blind (inferential), and out-of-band attacks.
+1. Verification shall confirm that application is not vulnerable to SQL injection, including in-band, blind (inferential), and out-of-band attacks.
 
 
 ---
@@ -1806,12 +1791,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.8
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify any of the following vulnerabilities:
-
-- 1048832: OS Command Injection
+1. Burp Suite scan shall not identify any of the following vulnerabilities:
+   - 1048832: OS Command Injection
 
 *L2*
-1. Verify testing evidence does not indicate the application is vulnerable to OS command injection vulnerabilities from parsing untrusted user input.
+1. Verification shall confirm that testing evidence does not indicate the application is vulnerable to OS command injection vulnerabilities from parsing untrusted user input.
 
 
 ---
@@ -1841,13 +1825,13 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.9
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify any of the following vulnerabilities:
-- 1049344: File path traversal
-- 1051392: File path manipulation
+1. Burp Suite scan shall not identify any of the following vulnerabilities:
+   - 1049344: File path traversal
+   - 1051392: File path manipulation
 
 
 *L2*
-1. Verify testing evidence does not indicate application is vulnerable to Local File Inclusion (LFI), Remote File Inclusion (RFI), or related directory traversal attacks. 
+1. Verification shall confirm that testing evidence does not indicate application is vulnerable to Local File Inclusion (LFI), Remote File Inclusion (RFI), or related directory traversal attacks. 
 
 
 ---
@@ -1894,7 +1878,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 12.2.1
 
 
 *L2*
-1. Verify that the application restricts file uploads to expected file types and that application prevents direct execution of any uploaded content including HTML, JavaScript, and server-side code. In cases where the application intends for the user to upload executable file types, ensure the application appropriately sanitizes or sandboxes executable files. 
+1. Verification shall confirm that the application restricts file uploads to expected file types and that application prevents direct execution of any uploaded content including HTML, JavaScript, and server-side code. In cases where the application intends for the user to upload executable file types, ensure the application appropriately sanitizes or sandboxes executable files. 
 
 
 ---
@@ -1936,14 +1920,14 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Verify that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
+1. Verification shall confirm that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
 
 An app that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
 The app does not invoke the vulnerable 3P library code or 
 The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
 
 *L2*
-1. Verify that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
+1. Verification shall confirm that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
 
 An app that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
 The app does not invoke the vulnerable 3P library code or 
@@ -1987,11 +1971,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.3.2
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-1050624: ASP.NET debugging enabled
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 1050624: ASP.NET debugging enabled
 
 *L2*
-1. No observed debug modes are enabled in production environments.
+1. Verification shall confirm that no debug modes are enabled in production environments.
 
 
 ---
@@ -2029,11 +2013,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.5.2
 
 
 *L1*
-1. Verify that Burp Suite scan does not identify the following vulnerabilities:
-2098689: Cross-origin resource sharing: arbitrary origin trusted
+1. Burp Suite scan shall not identify the following vulnerabilities:
+   - 2098689: Cross-origin resource sharing: arbitrary origin trusted
 
 *L2*
-1. Origin header is not used for authentication of access control decisions.
+1. Verification shall confirm that origin header is not used for authentication of access control decisions.
 
 
 ---
@@ -2134,7 +2118,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 2. Samples from log files do not contain credentials or payment details.
 
 *L2*
-1. Application does not log credentials or payment details.
+1. Verification shall confirm that application does not log credentials or payment details.
 
 
 ---
@@ -2180,9 +2164,9 @@ and;
 2. The written description describes how sensitive data stored in browser storage is deleted when the user logs out.
 
 *L2*
-1. Application does not store sensitive data in browser storage.
+1. Verification shall confirm that application does not store sensitive data in browser storage.
 and;
-2. Application deletes sensitive data stored in browser storage when the user logs out.
+2. Verification shall confirm that application deletes sensitive data stored in browser storage when the user logs out.
 
 
 ---
@@ -2217,9 +2201,9 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.4.1
 
 
 *L1 and L2*
-1. The submitted documentation describes an appropriate access control policy for server-side secrets
-2. The submitted documentation describes a cryptographically secure approach for secrets storage
-3. The submitted documentation describes how access to secrets is logged or monitored
+1. The submitted documentation shall describe an appropriate access control policy for server-side secrets
+2. The submitted documentation shall describe a cryptographically secure approach for secrets storage
+3. The submitted documentation shall describe how access to secrets is logged or monitored
 
 
 ---
