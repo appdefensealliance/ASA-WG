@@ -135,22 +135,13 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.2.1
 **Verification**
 
 
-*L1*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service anti-automation documentation shall include brute force protections and account lockouts. The controls shall include at least one of the following:
+*L1 and L2*
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, the anti-automation documentation shall include brute force protections and account lockouts. The controls shall include at least one of the following:
    * 2.1. Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
    * 2.2. CAPTCHA or other anti-automation controls on failed login attempts to limit the effectiveness of automated credential testing.
    * 2.3. Multi-factor authentication is enforced by default for all users.
-3. App shall enforce strong password length and complexity requirements and shall disallow weak or common breached passwords (need to define length/complexity or other specifics).
-
-*L2*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service anti-automation documentation shall include brute force protections and account lockouts. The controls shall include at least one of the following:
-   * 2.1. Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
-   * 2.2. CAPTCHA or other anti-automation controls on failed login attempts shall be enforced to limit the effectiveness of automated credential testing.
-   * 2.3. Multi-factor authentication shall be enforced by default for all users.
-3. App shall enforce strong password length and complexity requirements and shall disallow weak or common breached passwords (need to define length/complexity or other specifics).
-
+   * 2.4. Application shall enforce strong password length and complexity requirements and shall disallow weak or common breached passwords (need to define length/complexity or other specifics).
 
 
 ---
@@ -186,8 +177,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 
 
 *L1*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service initial password or activation codes documentation shall include the following controls:
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, initial password or activation codes documentation shall include the following controls:
    * 2.1. The initial password or codes shall be at least 6 characters long.
    * 2.2. The initial password or codes shall contain letters and numbers.
    * 2.3. The initial password or codes shall expire after a short period of time. (24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
@@ -195,8 +186,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 3. Password length and complexity shall be sufficient that other controls provided above will mitigate a brute force attack.
 
 *L2*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service initial password or activation codes shall be validated to include the following controls:
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, initial password or activation codes shall be validated to include the following controls:
    * 2.1. The initial password or codes shall be at least 6 characters long.
    * 2.2. The initial password or codes shall contain letters and numbers.
    * 2.3. The initial password or codes shall expire after a short period of time.(24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
@@ -232,8 +223,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 
 
 *L1 and L2*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service salt and hash methods shall follow industry best practices. The list of approved one-way key derivation functions is detailed in NIST 800-63 B section 5.1.1.2.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, salt and hash methods shall follow industry best practices. The list of approved one-way key derivation functions is detailed in NIST 800-63 B section 5.1.1.2.
 
 
 
@@ -255,7 +246,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 
 
 *L1 and L2*
-1. Provide a written description of any default accounts which may be present on publicly exposed interfaces.
+1. If any default accounts are present on publicly exposed interfaces, a written description of these accounts must be provided.
 
 
 **Test Procedure**
@@ -273,10 +264,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 
 
 *L1*
-1. Supplied evidence shall demonstrate that no default accounts are used on publicly exposed interfaces.
+1. No default accounts shall be used on publicly exposed interfaces.
 
 *L2*
-1. Supplied evidence shall demonstrate that no default accounts are used on publicly exposed interfaces.
+1. No default accounts shall be used on publicly exposed interfaces.
 2. Test results from WSTG-ATHN-02 shall not detect the use of default accounts on publicly exposed interfaces.
 
 
@@ -325,12 +316,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.6.1
 
 
 *L1*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service lookup secrets description shall describe how the secrets are used only once.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, service lookup secrets description shall describe how the secrets are used only once.
 
 *L2*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service shall be validated that the lookup secrets are used only once.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, it shall be validated that the lookup secrets are used only once.
 
 
 ---
@@ -366,12 +357,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.6.2
 
 
 *L1*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service lookup secrets description shall describe how the secrets are sufficiently random such that they would expire or be rejected with the brute force protections prior before it is statistically possible for an attacker to guess the secret.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, lookup secrets description shall describe how the secrets are sufficiently random such that they would expire or be rejected with the brute force protections prior before it is statistically possible for an attacker to guess the secret.
 
 *L2*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service lookup secrets shall be verified that the secrets are sufficiently random such that they would expire or be rejected with the brute force protections prior before it is statistically possible for an attacker to guess the secret. Randomness shall be based on observation.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, lookup secrets shall be verified that the secrets are sufficiently random such that they would expire or be rejected with the brute force protections prior before it is statistically possible for an attacker to guess the secret. Randomness shall be based on observation.
 
 
 
@@ -411,8 +402,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 
 *L2 and l2*
-1. External user authentication service shall be an ADA approved service; and
-2. Provided evidence shall demonstrate that the out-of-band verifier expires after 7 days.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, the out-of-band verifier shall expire after 7 days.
 
 
 ---
@@ -447,12 +438,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.3
 
 
 *L1*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service lookup secrets description shall describe how the out of band verifier is only used once.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, out of band verifier shall only be used once.
 
 *L2*
-1. External user authentication service shall be an ADA approved service; and
-2. Non-ADA approved service shall verify the application does not allow the out of band verifier to be used more than once.
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, evaluation shall verify that the application does not allow the out of band verifier to be used more than once.
 
 
 
@@ -488,11 +479,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 
 *L1*
-1. External user authentication services shall be an ADA approved service; and
-2. Provided evidence shall describe how initial authentication code generation is securely random.
+1. An ADA-approved external user authentication service may be used.
+2. Initial authentication code generation shall be securely random.
 
 *L2*
-1. External user authentication services shall be an ADA approved service; and
+1. An ADA-approved external user authentication service may be used.
 2. Initial authentication code shall be observed to be random.
 
 
@@ -546,7 +537,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
    - 4195328 Password returned in URL query string
    - 5244672 Session token in URL
 
-2. Provided evidence shall show either sensitive information is not being sent via the URL or an option exists to send sensitive data within the HTTP body or via Header values.
+2. Either sensitive information shall not be sent via the URL or an option shall exist to send sensitive data within the HTTP body or via Header values.
 
 *L2*
 
@@ -600,11 +591,11 @@ or;
 
 *L1*
 
-1. Provided evidence shall show server-side session invalidation on user logout and session expiration.
+1. Server-side session invalidation shall occur upon user logout and session expiration.
 
 *L2*
 
-1. Provided evidence shall show that application performs server-side session invalidation on user logout and session expiration.
+1. Test shall confirm that the application performs server-side session invalidation on user logout and session expiration.
 
 
 ---
@@ -640,10 +631,10 @@ N/A (to be collected by labs)
 
 
 *L1*
-1. Provided evidence shall show user active sessions are terminated or an option is given to inactive active sessions on user password change.
+1. User active sessions shall be terminated or an option is given to inactive active sessions on user password change.
 
 *L2*
-1. Verification shall confirm that application performs server-side session invalidation of user active sessions or option shall be given to inactive active sessions on user password change.
+1. Test shall confirm that application performs server-side session invalidation of user active sessions or option shall be given to inactive active sessions on user password change.
 
 
 ---
@@ -675,10 +666,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 
 
 *L1*
-1. Provided evidence shall show stateless authentication tokens have an expiration time within 24 hours of being issued.
+1. Stateless authentication tokens shall have an expiration time within 24 hours of being issued.
 
 *L2*
-1. Verification shall confirm that stateless authentication tokens have an expiration time within 24 hours of being issued.
+1. Stateless authentication tokens shall have an expiration time within 24 hours of being issued.
 
 
 ---
@@ -717,11 +708,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.1
 
 
 *L1*
-1. Burp Suite scan shall not identify the following vulnerabilities:
+1. Burp Suite scan shall not identify the following vulnerability:
    - 5243392 TLS cookie without secure flag set
 
 *L2*
-1. Verification shall confirm that application session cookies shall utilize the "Secure" attribute.
+1. Test shall confirm that application session cookies shall utilize the "Secure" attribute.
 
 
 ---
@@ -751,11 +742,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.2
 
 
 *L1*
-1. Burp Suite scan shall not identify the following vulnerabilities:
+1. Burp Suite scan shall not identify the following vulnerability:
    - 500600 Cookie without HttpOnly flag set
 
 *L2*
-1. Verification shall confirm that application session cookies utilize the "HttpOnly" attribute
+1. Test shall confirm that application session cookies utilize the "HttpOnly" attribute.
 
 
 ---
@@ -791,10 +782,10 @@ or;
 
 
 *L1*
-1. Provided evidence shall show session tokens are dynamically generated after user authentication
+1. Session tokens shall be dynamically generated after user authentication.
 
 *L2*
-1. Verification shall confirm that application session tokens are dynamically generated and change after user authentication
+1. Test shall confirm that application session tokens are dynamically generated and change after user authentication.
 
 
 ---
@@ -829,7 +820,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
    - 2099457 JWT none algorithm supported
 
 *L2*
-1. Verification shall confirm that application stateless session token digital signatures are validated using server-side private key
+1. Test shall confirm that application stateless session token digital signatures are validated using server-side private key.
 
 
 ---
@@ -874,10 +865,10 @@ or;
 
 
 *L1*
-1. Provided evidence shall show either the user has a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data
+1. Either the user shall have a full login session or an account verification process shall be conducted before allowing user account modifications or transaction against sensitive data.
 
 *L2*
-1. Verification shall confirm that a user is required to have a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data
+1. Test shall confirm that a user is required to have a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data.
 
 
 ---
@@ -929,10 +920,10 @@ Note: A single written description shall be used for access control test cases 3
 
 
 *L1*
-1. Written description shall describe how the application enforces access control rules on a trusted service layer.
+1. Application shall enforce access control rules on a trusted service layer.
 
 *L2*
-1. Validate that access control decisions are uniformly enforced on a trusted service layer.
+1. Access control decisions shall be uniformly enforced on a trusted service layer.
 
 
 ---
@@ -967,10 +958,10 @@ Note: A single written description shall be used for access control test cases 3
 
 
 *L1*
-1. Written description shall describe how user and data attributes and policy information used by access controls cannot be manipulated by the end user.
+1. User and data attributes and policy information used by access controls shall not be manipulated by the end user.
 
 *L2*
-1. Validate that access controls shall not be able to be manipulated by the end user unless specifically authorized.
+1. Test shall confirm that access controls are not be able to be manipulated by the end user unless specifically authorized.
 
 
 ---
@@ -1005,10 +996,10 @@ Note: A single written description shall be used for access control test cases 3
 
 
 *L1*
-1. Written description shall describe how access controls fail securely.
+1. Access controls shall fail securely.
 
 *L2*
-1. Validate the application's access controls securely failed closed including when an exception occurs.
+1. Test shall confirm that the application's access controls securely failed closed including when an exception occurs.
 
 
 ---
@@ -1041,10 +1032,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.1
 
 
 *L1*
-1. Written description shall describe how IDOR attacks are mitigated.
+1. A process shall be in place to mitigate IDOR attacks.
 
 *L2*
-1. Any APIs which accept user facing parameters (or URIs) do not exhibit signs of IDOR weaknesses.
+1. Any APIs that accept user facing parameters (or URIs) shall not exhibit signs of IDOR weaknesses.
 
 
 ---
@@ -1079,9 +1070,9 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.2
    - 2098944 Cross-site request forgery
 
 *L2*
-1. Verification shall confirm that application or framework enforces a strong anti-CSRF mechanism to protect authenticate functionality.
+1. Application or framework shall enforce a strong anti-CSRF mechanism to protect authenticate functionality.
 and
-2. Verification shall confirm that application or framework enforces an effective anti-automation or anti-CSRF which protects unauthenticated functionality.
+2. Test shall confirm that application or framework enforces an effective anti-automation or anti-CSRF which protects unauthenticated functionality.
 
 
 ---
@@ -1107,7 +1098,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.2
 
 
 *L1 and L2*
-1. Burp Suite scan shall not identify the following vulnerabilities:
+1. Burp Suite scan shall not identify the following vulnerability:
    - 6291712 Directory Listing
 
 
@@ -1152,10 +1143,10 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Verify evidence to confirm application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
+1. Application shall not use a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
 
 *L2*
-1. Verification shall confirm that the application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
+1. Test shall confirm that the application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
 
 
 
@@ -1189,10 +1180,10 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Verify evidence to confirm application is securely utilizing state and redirect_uri validation to prevent against open redirect and CSRF vulnerabilities. 
+1. Application shall securely utilize state and redirect_uri validation to prevent against open redirect and CSRF vulnerabilities. 
 
 *L2*
-1. Verification shall confirm that the application is not vulnerable to open redirects or CSRF vulnerabilities in the OAuth authorization process.
+1. Test shall confirm that the application is not vulnerable to open redirects or CSRF vulnerabilities in the OAuth authorization process.
 
 
 
@@ -1229,8 +1220,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.1
 
 
 *L1 and L2*
-1. Written description of the multi-factor authentication methods that shall follow industry best practices.
-2. Screenshot evidence  demonstrating  multi-factor authentication  is enforced for administrative accounts
+1. Multi-factor authentication methods shall follow industry best practices.
+2. Multi-factor authentication shall be enforced for administrative accounts.
 
 
 
@@ -1275,11 +1266,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.1.2
 
 *L1*
 
-1. Review PDF export from Qualys SSL Labs scan to confirm that application meets the TLS configuration defined in NIST SP.800-52r2.
+1. Application shall meet the TLS configuration defined in NIST SP.800-52r2.
 
 *L2*
 
-1. Review test results to confirm that the application meets the TLS configuration defined in NIST SP.800-52r2.
+1. Test shall confirm that the application meets the TLS configuration defined in NIST SP.800-52r2.
 
 
 
@@ -1314,12 +1305,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.2.1
 
 *L1*
 
-1. Review PDF export from Qualys SSL Labs scan to confirm that application meets the TLS certification requirements defined in NIST SP.800-52r2.
+1. Application shall meet the TLS certification requirements defined in NIST SP.800-52r2.
 
 
 *L2*
 
-1. Review test results to confirm that the application meets the TLS certificate requirements defined in NIST SP.800-52r2.
+1. Test shall confirm that the application meets the TLS certificate requirements defined in NIST SP.800-52r2.
 
 
 ---
@@ -1360,11 +1351,11 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Validate that evidence does not indicate use of disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2. 
+1. Disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2 shall not be present. 
 
 
 *L2*
-1. Validate that testing evidence does not indicate use of disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2. Cryptographic observations from manual validation will be made based on observed entropy.
+1. Disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2 shall not be present. Cryptographic observations from manual validation will be made based on observed entropy.
 
 
 
@@ -1400,10 +1391,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.2.1
 
 *L1*
 
-1. Verify developer-supplied evidence to ensure errors or other output resulting from cryptographic failures do not disclose sensitive information about the operation’s state or reveal any details that could be exploited as a side channel. User-facing error messages should be vague and consistent regardless of the failure type.
+1. Errors or other output resulting from cryptographic failures shall not disclose sensitive information about the operation’s state or reveal any details that could be exploited as a side channel. User-facing error messages shall be vague and consistent regardless of the failure type.
 
 *L2*
-1. Verify testing results to ensure errors or other output resulting from cryptographic failures do not disclose sensitive information about the operation's state or reveal any details that could be exploited as a side channel. User-facing error messages should be vague and consistent regardless of the failure type.
+1. Test shall confirm that errors or other output resulting from cryptographic failures do not disclose sensitive information about the operation's state or reveal any details that could be exploited as a side channel. User-facing error messages shall be vague and consistent regardless of the failure type.
 
 
 
@@ -1449,7 +1440,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.1
    - 5248001: Client-side HTTP parameter pollution (stored)
 
 *L2*
-1. Verification shall confirm that application is not vulnerable to HTTP parameter pollution as defined in WSTG-INPV-04.
+1. Test shall confirm that application is not vulnerable to HTTP parameter pollution as defined in WSTG-INPV-04.
 
 
 ---
@@ -1487,7 +1478,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.5
    - 5243154: Open redirection (stored DOM-based)
 
 *L2*
-1. Verification shall confirm that application restricts redirects to allowlisted URLs or displays a warning when redirecting to untrusted content.
+1. Test shall confirm that application restricts redirects to allowlisted URLs or displays a warning when redirecting to untrusted content.
 
 
 ---
@@ -1527,7 +1518,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.4
    - 1052448: Expression Language Injection
 
 *L2*
-1. Verification shall confirm that application does not allow arbitrary code execution from user input. In scenarios where user-supplied code execution is expected, ensure all user input is sanitized and sandboxed prior to execution. 
+1. Test shall confirm that application does not allow arbitrary code execution from user input. In scenarios where user-supplied code execution is expected, ensure all user input is sanitized and sandboxed prior to execution. 
 
 
 ---
@@ -1563,7 +1554,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.5
    - 1052800: Server-side template injection
 
 *L2*
-1. Verification shall confirm that application is not susceptible to template injection from untrusted input. 
+1. Test shall confirm that application is not susceptible to template injection from untrusted input. 
 
 
 ---
@@ -1601,7 +1592,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.6
    - 3146256: External service interaction (HTTP)
 
 *L2*
-1. Verification shall confirm that the application does not initiate arbitrary HTTP or DNS requests to either internal or external resources based on user-supplied input, unless it is a necessary part of the application functionality. In such cases, ensure application implements robust input validation and uses allowlists to restrict requests to trusted and necessary domains or IP addresses.
+1. Test shall confirm that the application does not initiate arbitrary HTTP or DNS requests to either internal or external resources based on user-supplied input, unless it is a necessary part of the application functionality. In such cases, ensure application implements robust input validation and uses allowlists to restrict requests to trusted and necessary domains or IP addresses.
 
 
 ---
@@ -1636,11 +1627,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.7
 
 
 *L1*
-1. Validate the evidence does not indicate unrestricted upload or unsafe handling of SVG files 
+1. Unrestricted upload or unsafe handling of SVG files shall not be present.
 
 
 *L2*
-1. Verification shall confirm that the application does not allow malicious SVG file uploads containing inline scripts, resulting in Cross-Site Scripting (XSS) within the application.
+1. Test shall confirm that the application does not allow malicious SVG file uploads containing inline scripts, resulting in Cross-Site Scripting (XSS) within the application.
 
 
 ---
@@ -1683,7 +1674,7 @@ Perform the XML injection testing procedure defined in WSTG-INPV-07 and the XPat
 
 
 *L2*
-1. Verification shall confirm that the application safely parses XML input and is not susceptible to common XML parsing vulnerabilities including XML injection, XML external entities (XXE), or XPath injection. 
+1. Test shall confirm that the application safely parses XML input and is not susceptible to common XML parsing vulnerabilities including XML injection, XML external entities (XXE), or XPath injection. 
 
 
 ---
@@ -1723,7 +1714,7 @@ Perform the reflected Cross-Site Scripting (XSS) testing procedure defined in WS
    - 2097938: Cross-site scripting (stored DOM-based)
 
 *L2*
-1. Verification shall confirm that testing evidence does not indicate application is susceptible to stored, reflected, or DOM-based Cross-site Scripting (XSS) vulnerabilities.
+1. Test shall confirm that application shall is not susceptible to stored, reflected, or DOM-based Cross-site Scripting (XSS) vulnerabilities.
 
 
 ---
@@ -1748,8 +1739,7 @@ Execute authenticated Burp Suite scan on the target application using the ADA sc
 
 
 *L2*
-Perform the database injection testing procedure defined in WSTG-INPV-05
-.
+Perform the database injection testing procedure defined in WSTG-INPV-05.
 
 
 **Verification**
@@ -1874,11 +1864,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 12.2.1
 
 
 *L1*
-1. Validate the evidence indicates application enforces appropriate file type restrictions on file uploads.
+1. Application shall enforce appropriate file type restrictions on file uploads.
 
 
 *L2*
-1. Verification shall confirm that the application restricts file uploads to expected file types and that application prevents direct execution of any uploaded content including HTML, JavaScript, and server-side code. In cases where the application intends for the user to upload executable file types, ensure the application appropriately sanitizes or sandboxes executable files. 
+1. Testing shall confirm that the application restricts file uploads to expected file types and that application prevents direct execution of any uploaded content including HTML, JavaScript, and server-side code. In cases where the application intends for the user to upload executable file types, the application shall appropriately sanitize or sandbox executable files. 
 
 
 ---
@@ -1892,7 +1882,7 @@ Attackers can perform automated scans to identify vulnerable applications based 
 
 
 ---
-**6.1.1 The app only uses software components without known exploitable vulnerabilities.**\
+**6.1.1 The application only uses software components without known exploitable vulnerabilities.**\
 External Reference: ASVS Version 4.0.3 Requirement: 
 
 
@@ -1920,18 +1910,18 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Verification shall confirm that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
+1. The application shall not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
 
-An app that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
-The app does not invoke the vulnerable 3P library code or 
-The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
+An application that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
+* The application does not invoke the vulnerable 3P library code, or 
+* The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
 
 *L2*
-1. Verification shall confirm that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
+1. Scan shall confirm that the application does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
 
-An app that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
-The app does not invoke the vulnerable 3P library code or 
-The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
+An application that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
+* The application does not invoke the vulnerable 3P library code or 
+* The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
 
 
 
@@ -2049,7 +2039,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 10.3.3
 
 
 *L1*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
 1. Verify application for adherence with the requirements as defined in WSTG-CONF-10.
@@ -2060,11 +2050,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 10.3.3
 
 
 *L1*
-1. Written description shall contain appropriate controls to limit subdomain takeovers.
+1. Appropriate controls to limit subdomain takeovers shall be implemented.
 
 *L2*
-1. Written description shall contain appropriate controls to limit subdomain takeovers.
-2. Screenshots support the controls described in the written description.
+1. Appropriate controls to limit subdomain takeovers shall be implemented.
+2. Screenshots shall support the controls described in the written description.
 
 
 ---
@@ -2114,8 +2104,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 
 
 *L1*
-1. Written description shall describe how the application does not log credentials or payment details.
-2. Samples from log files do not contain credentials or payment details.
+1. Application shall not not log credentials or payment details.
+2. Samples from log files shall not not contain credentials or payment details.
 
 *L2*
 1. Verification shall confirm that application does not log credentials or payment details.
@@ -2159,12 +2149,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 8.2.2
 
 
 *L1*
-1. The written description describes a lack of sensitive data being stored in browser storage.
+1. Application shall not store sensitive data in browser storage.
 and;
-2. The written description describes how sensitive data stored in browser storage is deleted when the user logs out.
+2. Sensitive data stored in browser storage shall be deleted when the user logs out.
 
 *L2*
-1. Verification shall confirm that application does not store sensitive data in browser storage.
+1. Application does not store sensitive data in browser storage.
 and;
 2. Verification shall confirm that application deletes sensitive data stored in browser storage when the user logs out.
 
@@ -2194,16 +2184,16 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.4.1
 
 
 *L1 and L2*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 
 **Verification**
 
 
 *L1 and L2*
-1. The submitted documentation shall describe an appropriate access control policy for server-side secrets
-2. The submitted documentation shall describe a cryptographically secure approach for secrets storage
-3. The submitted documentation shall describe how access to secrets is logged or monitored
+1. An appropriate access control policy for server-side secrets shall be documented.
+2. Secrets shall be stored using a cryptographically secure approach. 
+3. Access to secrets shall be logged or monitored.
 
 
 ---
