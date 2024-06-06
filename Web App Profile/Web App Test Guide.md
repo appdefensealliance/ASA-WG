@@ -137,11 +137,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.2.1
 
 *L1 and L2*
 1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, the anti-automation documentation shall include brute force protections and account lockouts. The controls shall include at least one of the following:
+2. If a non-ADA approved service is used, the application shall enforce at least one of the following controls:
    * 2.1. Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
    * 2.2. CAPTCHA or other anti-automation controls on failed login attempts to limit the effectiveness of automated credential testing.
    * 2.3. Multi-factor authentication is enforced by default for all users.
-   * 2.4. Application shall enforce strong password length and complexity requirements and shall disallow weak or common breached passwords (need to define length/complexity or other specifics).
+   * 2.4. Minimum password length of 8 characters with the prohibition of weak or commonly breached passwords.
 
 
 ---
@@ -154,8 +154,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 
 *L1*
 1. Provide a list of any external user authentication services.
-2. If a proprietary user authentication service is used by the application, provide a written description of the initial password or activation code process (if used). 
-3. If a proprietary user authentication service is used by the application, provide screenshots of the initial password or activation code process in action. (if used)
+2. If a proprietary user authentication service is used by the application, provide a written description of the initial password or activation code process. 
+3. If a proprietary user authentication service is used by the application, provide screenshots of the initial password or activation code process in action.
 
 *L2*
 1. N/A (to be collected by labs)
@@ -166,11 +166,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 
 *L1*
 1. Review list of external authentication services against ADA approved services.
-2. Review provided evidence for adherence with the requirements
+2. Review provided evidence for adherence with the requirements.
 
 *L2*
 1. Review list of external authentication services against ADA approved services.
-2. For proprietary authentication services, evaluate the application's initial password or activation code generation
+2. For proprietary authentication services, evaluate the application's initial password or activation code generation.
 
 
 **Verification**
@@ -183,7 +183,6 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
    * 2.2. The initial password or codes shall contain letters and numbers.
    * 2.3. The initial password or codes shall expire after a short period of time. (24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
    * 2.4. The initial password or codes shall not be permitted to become long term passwords.
-3. Password length and complexity shall be sufficient that other controls provided above will mitigate a brute force attack.
 
 *L2*
 1. An ADA-approved external user authentication service may be used.
@@ -205,7 +204,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 
 *L1 and L2*
 1. Provide a list of any external user authentication services.
-2. If a proprietary user authentication service is used by the application, provide a written description of the password salt and hash methods used in the application.
+2. If a proprietary user authentication service is used by the application, provide a written description of the password storage methods including any cryptographic protections such as salts or hashing.
 
 
 
@@ -213,9 +212,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 
 
 *L1 and L2*
-
 1. Review list of external authentication services against ADA approved services.
-2. Review provided evidence for adherence with the requirements
+2. Review provided evidence for adherence with the requirements.
 
 
 
@@ -224,7 +222,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 
 *L1 and L2*
 1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, salt and hash methods shall follow industry best practices. The list of approved one-way key derivation functions is detailed in NIST 800-63 B section 5.1.1.2.
+2. If a non-ADA approved service is used, cryptographic hashing methods shall follow industry best practices. The list of approved one-way key derivation functions is detailed in NIST 800-63 B section 5.1.1.2.
 
 
 
@@ -385,7 +383,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 *L1 and L2*
 1. Provide a list of any external user authentication services.
-2. If a proprietary user authentication service is used by the application, provide a written description of the out of band verifier expiration process. (if used)
+2. If a proprietary user authentication service is used by the application, provide a written description of the out of band verifier expiration process.
 
 
 
@@ -457,7 +455,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 *L1*
 1. Provide a list of any external user authentication services.
-2. If a proprietary user authentication service is used by the application, provide a written description of the algorithm used to generate initial authentication codes. (if used)
+2. If a proprietary user authentication service is used by the application, provide a written description of the algorithm used to generate initial authentication codes.
 
 *L2*
 1. N/A (to be collected by labs)
@@ -493,12 +491,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 ### Description
 Web applications must never expose sensitive data within URL parameters. Sensitive data should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
 ### Rationale
-Exposing sensitive data such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links.  This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access
+Exposing sensitive data such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links.  This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access.
 ### Audit
 
 
 ---
-**2.1.1 The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option) to prevent exposing sensitive information like API keys or session tokens within the URL query strings**\
+**2.1.1 The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option to prevent) exposing sensitive information like API keys or session tokens within the URL query strings**\
 External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 
 
@@ -521,10 +519,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 
 
 *L1*
-1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration and review evidence to validate API operations meet the specified requirements
+1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration and review evidence to validate API operations meet the specified requirements.
 
 *L2*
-1. Perform exposed variable testing procedure defined in WSTG-SESS-04
+1. Perform exposed variable testing procedure defined in WSTG-SESS-04.
 
 
 **Verification**
@@ -563,11 +561,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.1
 
 *L1*
 
-1. Provide code snippets that show how the logout and expiration functionality is implemented and that demonstrate user session tokens are invalidated when a user logs out or the session is expired
+1. Provide code snippets that show how the logout and expiration functionality is implemented and that demonstrate user session tokens are invalidated when a user logs out or the session is expired.
 
 or;
 
-2. Provide documentation that describes how session tokens are handled on user logout and expiration
+2. Provide documentation that describes how session tokens are handled on user logout and expiration.
 
 *L2*
 
@@ -579,11 +577,11 @@ or;
 
 *L1*
 
-1. Review evidence to validate logout and session expiration functions meet the specified requirements
+1. Review evidence to validate logout and session expiration functions meet the specified requirements.
 
 *L2* 
 
-1. Perform session testing procedures defined in WSTG-SESS-06 and WSTG-SESS-07
+1. Perform session testing procedures defined in WSTG-SESS-06 and WSTG-SESS-07.
 
 
 **Verification**
@@ -607,11 +605,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.3
 
 
 *L1*
-1. Provide code snippets that show how session invalidation is handled for a user after a successful password change
+1. Provide code snippets that show how session invalidation is handled for a user after a successful password change.
 
 or;
 
-2. Provide documentation that describes how session invalidation is handled for a user after a successful password change
+2. Provide documentation that describes how session invalidation is handled for a user after a successful password change.
 
 *L2*
 N/A (to be collected by labs)
@@ -621,10 +619,10 @@ N/A (to be collected by labs)
 
 
 *L1*
-1. Review evidence to validate session termination on password change meets the specified requirements
+1. Review evidence to validate session termination on password change meets the specified requirements.
 
 *L2*
-1. Perform session invalidation testing procedures defined in WSTG-SESS-07
+1. Perform session invalidation testing procedures defined in WSTG-SESS-07.
 
 
 **Verification**
@@ -646,7 +644,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 
 
 *L1*
-1. Provide code snippets, screenshot, or documentation that shows the time period for which stateless tokens are valid (if utilized)
+1. Provide code snippets, screenshot, or documentation that shows the time period for which stateless tokens are valid (if utilized).
 
 *L2*
 1. N/A (to be collected by labs)
@@ -656,10 +654,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 
 
 *L1*
-1. Review evidence to validate session expiration meets the specified requirements
+1. Review evidence to validate session expiration meets the specified requirements.
 
 *L2* 
-1. Obtain stateless authentication token from target application
+1. Obtain stateless authentication token from target application.
 
 
 **Verification**
@@ -701,7 +699,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.1
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 *L2*
-1. Perform cookie attribute testing procedure defined in WSTG-SESS-02
+1. Perform cookie attribute testing procedure defined in WSTG-SESS-02.
 
 
 **Verification**
@@ -735,7 +733,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.2
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 *L2*
-1. Perform cookie attribute testing procedure defined in WSTG-SESS-02
+1. Perform cookie attribute testing procedure defined in WSTG-SESS-02.
 
 
 **Verification**
@@ -808,7 +806,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 *L2*
-1. Perform testing procedures to validate stateless session tokens are securely generated and validated.  Where stateless tokens utilize JSON Web Tokens (JWT), perform testing procedures defined in WSTG-SESS-10 
+1. Perform testing procedures to validate stateless session tokens are securely generated and validated.  Where stateless tokens utilize JSON Web Tokens (JWT), perform testing procedures defined in WSTG-SESS-10.
 
 
 **Verification**
@@ -828,7 +826,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
 ### Description
 Applications must enforce a complete, valid login session or require re-authentication/secondary verification prior to any sensitive actions, such as sensitive data transactions or changes to account settings.
 ### Rationale
-This requirement prevents unauthorized access to sensitive parts of an application.  Even if an attacker partially compromises a session, re-authentication or secondary checks create an extra barrier. It helps mitigate session hijacking attempts and safeguards user data,  promoting overall account security.
+This requirement prevents unauthorized access to sensitive parts of an application.  Even if an attacker partially compromises a session, re-authentication or secondary checks create an extra barrier. It helps mitigate session hijacking attempts and safeguards user data, promoting overall account security.
 ### Audit
 
 
@@ -877,14 +875,7 @@ or;
 ### Description
 Applications shall enforce robust access controls at a trusted service layer, ensuring data integrity and applying the principle of least privilege. This includes protecting user/data attributes, limiting user manipulation, failing securely during exceptions, defending against Insecure Direct Object References (IDOR), and using strong anti-CSRF and multi-factor authentication (MFA) for administrative functions.
 ### Rationale
-*Layered Defense* 
-Combining URI and resource-level checks provides multiple layers of protection, enhancing security against unauthorized access.
-
-*Fine-grained Control*
-Resource-level permissions allow for precise control over individual objects or data, while URI-level controls offer broader protection of web resources.
-
-*Flexibility*
-This approach supports varying access control needs, ensuring security in diverse application architectures.
+Resource-level permissions allow for precise control over individual objects or data, while URI-level controls offer broader protection of web resources. Combining URI and resource-level checks provides multiple layers of protection, enhancing security against unauthorized access.
 ### Audit
 
 
@@ -902,7 +893,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.1
 Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.5.
 
 *L2*
-1. Testing Based on WSTG-ATHZ-02 (Testing for Bypassing Authorization / Vertical & Horizontal Bypasses)
+1. N/A (to be collected by labs)
 
 
 
@@ -913,7 +904,7 @@ Note: A single written description shall be used for access control test cases 3
 1. Review provided evidence for adherence with the requirements
 
 *L2*
-1. Verify application for adherence with the requirements as defined in WSTG-ATHZ-02
+1. Perform authorization bypass testing as defined in WSTG-ATHZ-02.
 
 
 **Verification**
@@ -940,18 +931,16 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.2
 Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.5.
 
 *L2*
-1. Testing Based on WSTG-ATHZ-02 (Testing for Bypassing Authorization / Vertical & Horizontal Bypasses)
-
-
+1. N/A (to be collected by labs)
 
 **Test Procedure**
 
 
 *L1*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
-1. Verify application for adherence with the requirements
+1. Perform authorization bypass testing as defined in WSTG-ATHZ-02.
 
 
 **Verification**
@@ -978,7 +967,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.5
 Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.5.
 
 *L2*
-1. Testing Based on WSTG-ATHZ-02 (Testing for Bypassing Authorization / Vertical & Horizontal Bypasses)
+1. N/A (to be collected by labs)
 
 
 
@@ -986,10 +975,10 @@ Note: A single written description shall be used for access control test cases 3
 
 
 *L1*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
-1. Verify application for adherence with the requirements as defined in WSTG-ERRH-01
+1. Perform testing for improper access control error handling as defined in WSTG-ERRH-01.
 
 
 **Verification**
@@ -1022,20 +1011,20 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.1
 
 
 *L1*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
-1. Verify application for adherence with the requirements as defined in WSTG-ATHZ-04
+1. Perform testing for Insecure Direction Object References as defined in WSTG-ATHZ-04.
 
 
 **Verification**
 
 
 *L1*
-1. A process shall be in place to mitigate IDOR attacks.
+1. A process shall be in place to mitigate Insecure Direct Object Reference attacks.
 
 *L2*
-1. Any APIs that accept user facing parameters (or URIs) shall not exhibit signs of IDOR weaknesses.
+1. Any APIs that accept user facing parameters (or URIs) shall not exhibit signs of Insecure Direct Object References.
 
 
 ---
@@ -1066,13 +1055,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.2
 
 *L1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
-   - 2098452 GraphQL content type not validated
    - 2098944 Cross-site request forgery
 
 *L2*
-1. Application or framework shall enforce a strong anti-CSRF mechanism to protect authenticate functionality.
-and
-2. Test shall confirm that application or framework enforces an effective anti-automation or anti-CSRF which protects unauthenticated functionality.
+1. Application or framework shall enforce effective controls to mitigate Cross Site Request Forgery (CSRF).
 
 
 ---
@@ -1135,7 +1121,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 1. Review evidence to verify which OAuth 2.0 flows are used by the application. 
 
 *L2*
-1. Perform the Testing for Deprecated Grant Types testing steps defined in WSTG-ATHZ-05 (Testing for OAuth Weaknesses)
+1. Perform the Testing for Deprecated Grant Types steps defined in WSTG-ATHZ-05 (Testing for OAuth Weaknesses).
 
 
 
@@ -1143,7 +1129,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Application shall not use a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
+1. Documentation shall not indicate the use of a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
 
 *L2*
 1. Test shall confirm that the application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
@@ -1172,7 +1158,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 1. Review provided evidence to verify the application's usage of the redirect_uri and state parameters.
 
 *L2*
-1. Perform the Testing for OAuth Client Weaknesses testing steps defined in WSTG-ATHZ-05 (Testing for OAuth Weaknesses)
+1. Perform the Testing for OAuth Client Weaknesses steps defined in WSTG-ATHZ-05 (Testing for OAuth Weaknesses).
 
 
 
@@ -1245,7 +1231,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.1.2
 
 
 *L1*
-1. Execute a Qualys SSL Labs scan for your application and provide a PDF export of the test results demonstrating that application meets the aforementioned TLS requirements. In most cases, this should result in a B or higher score.
+1. Execute a Qualys SSL Labs scan for the application and provide a PDF export of the test results demonstrating that application meets the aforementioned TLS requirements. In most cases, this should result in a B or higher score.
 
 *L2*
 1. N/A (to be collected by lab)
@@ -1284,7 +1270,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.2.1
 
 
 *L1*
-1. Execute a Qualys SSL Labs scan for your application and provide a PDF export of the test results demonstrating that application meets the aforementioned TLS requirements. In most cases, this should result in a B or higher score.
+1. Execute a Qualys SSL Labs scan for the application and provide a PDF export of the test results demonstrating that application meets the aforementioned TLS requirements. In most cases, this should result in a B or higher score.
 
 *L2*
 1. N/A (to be collected by lab)
@@ -1842,7 +1828,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 12.2.1
 
 
 *L1*
-1. Identify any situations in which your application accepts user file uploads.escribe how the application securely validates file type and prevents file execution. Provide detailed evidence such as source code, screenshots, or other relevant sources.
+1. Identify any situations in which the application accepts user file uploads. Describe how the application securely validates file type and prevents file execution. Provide detailed evidence such as source code, screenshots, or other relevant sources.
 
 
 *L2*
@@ -1890,7 +1876,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Provide output of a depency scan of application and 3P libraries using OWASP dependency check or other ADA approved scanning tools.
+1. Provide output of a dependency scan of application and 3P libraries using OWASP dependency check or other ADA approved scanning tools.
 
 *L2*
 1. Developer to provide lab access to source code repository or application software manifest.
@@ -1900,10 +1886,10 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1 *
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
-1. Perform depency scan of source code repository or scan of developer provided manifest.
+1. Perform dependency scan of source code repository or scan of developer provided manifest.
 
 
 **Verification**
@@ -2062,14 +2048,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 10.3.3
 ### Description
 Applications must never log sensitive user data, specifically credentials (e.g., passwords, API keys) and payment details (e.g., credit card numbers, CVVs).
 ### Rationale
-*Data Compromise Prevention*
-Logging such sensitive data creates unnecessary copies that are themselves targets for attackers. If logs are compromised, critical user information is exposed, significantly increasing the impact of a breach.
-
-*Regulatory Compliance*
-Many data privacy regulations (PCI-DSS, GDPR, etc.) explicitly prohibit the storage of sensitive authentication and financial data, especially in plain text.
-
-*Security Best Practice*
-Avoiding logging sensitive information minimizes the overall attack surface and demonstrates a commitment to responsible data handling.
+Many data privacy regulations (PCI-DSS, GDPR, etc.) explicitly prohibit the storage of sensitive authentication and financial data, especially in plaintext. In addition, avoiding logging sensitive information minimizes the overall attack surface and demonstrates a commitment to responsible data handling.
 ### Audit
 
 
@@ -2116,7 +2095,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 ### Description
 Web applications should never store sensitive user data (e.g., passwords, credit card numbers, session tokens) in browser storage mechanisms like local storage or session storage. However, if data is stored in browser storage it must be deleted when the user logs out.
 ### Rationale
-Browser storage is inherently accessible to client-side JavaScript, making it vulnerable to attacks like Cross-Site Scripting (XSS). Storing sensitive data here exposes it to potential theft or misuse by an attacker if they manage to inject malicious code. Sensitive data must be stored securely on the server-side.
+Browser storage is inherently accessible to client-side JavaScript, making it vulnerable to attacks like Cross-Site Scripting (XSS). Storing sensitive data here exposes it to potential theft or misuse by an attacker if they manage to inject malicious code.
 ### Audit
 
 
