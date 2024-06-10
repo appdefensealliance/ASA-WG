@@ -496,22 +496,14 @@ Exposing sensitive data such as session tokens in URLs significantly increases t
 
 
 ---
-**2.1.1 The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option to prevent) exposing sensitive information like API keys or session tokens within the URL query strings**\
+**2.1.1 The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option to prevent) exposing sensitive information like API keys or session tokens within the URL query strings.**\
 External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 
 
 **Evidence**
 
 
-*L1*
-1. Provide API documentation that identifies how web clients interact with the application's API, this documentation should include details related to: 
-
-* URLs of API Resources
-* Expected URL & POST Parameters
-* How Clients are Expected to Authenticate to the API 
-
-
-*L2*
+*L1 and L2*
 1. N/A (to be collected by labs)
 
 
@@ -519,7 +511,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 
 
 *L1*
-1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration and review evidence to validate API operations meet the specified requirements.
+1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 *L2*
 1. Perform exposed variable testing procedure defined in WSTG-SESS-04.
