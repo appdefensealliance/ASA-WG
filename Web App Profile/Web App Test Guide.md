@@ -236,17 +236,19 @@ Default accounts can be easily discovered through publicly available documentati
 
 
 ---
-**1.2.1 Shared or default accounts shall not be present on publicly exposed interfaces.**\
+**1.2.1 Default credentials shall not be present on publicly exposed interfaces.**\
 External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 
 
 **Evidence**
 
 
-*L1 and L2*
-1. If any default accounts are present on publicly exposed interfaces, a written description of these accounts must be provided.
+*L1*
+1. If any default accounts are present on publicly exposed interfaces, a confirmation that default credentials are not used shall be provided.
 
-
+*L2*
+1. N/A (to be collected by labs)
+   
 **Test Procedure**
 
 
@@ -254,19 +256,17 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 1. Review provided evidence for adherence with the requirements.
 
 *L2*
-1. Review provided evidence for adherence with the requirements.
-2. Perform the testing guidance provided by WSTG-ATHN-02 to validate default accounts are not present on publicly exposed interfaces.
+1. Perform the testing guidance provided by WSTG-ATHN-02 to validate default credentials are not present on publicly exposed interfaces.
 
 
 **Verification**
 
 
 *L1*
-1. No default accounts shall be used on publicly exposed interfaces.
+1. Default credentials shall not be present on publicly exposed interfaces.
 
 *L2*
-1. No default accounts shall be used on publicly exposed interfaces.
-2. Test results from WSTG-ATHN-02 shall not detect the use of default accounts on publicly exposed interfaces.
+1. Test results from WSTG-ATHN-02 shall not detect the use of default credentials on publicly exposed interfaces.
 
 
 
