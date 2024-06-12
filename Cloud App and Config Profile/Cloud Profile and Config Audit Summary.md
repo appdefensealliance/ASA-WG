@@ -153,53 +153,53 @@ This document provides  summary of the audit requirements sorted by platforms an
 
 
 # 3 Google
-| Spec | Description |
-|---|----------|
-| 1.2.6 | Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime |
-| 1.3.4 | Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances |
-| 1.5.1 | Ensure That IP Forwarding Is Not Enabled on Instances |
-| 1.6.1 | Ensure That Instances Are Not Configured To Use the Default Service Account |
-| 1.6.2 | Ensure That Instances Are Not Configured To Use the Default Service Account With Full Access to All Cloud APIs |
-| 1.7.1 | Ensure ‘Enable Connecting to Serial Ports’ Is Not Enabled for VM Instance |
-| 1.8.2 | Ensure Oslogin Is Enabled for a Project |
-| 2.3.5 | Ensure Essential Contacts is Configured for Organization |
-| 2.6.1 | Ensure Secrets are Not Stored in Cloud Functions Environment Variables by Using Secret Manager |
-| 2.7.5 | Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level |
-| 2.7.6 | Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible |
-| 2.11.5 | Ensure That Service Account Has No Admin Privileges |
-| 2.12.1 | Ensure that Corporate Login Credentials are Used |
-| 2.14.7 | Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts |
-| 3.1.1 | Ensure Cloud Asset Inventory Is Enabled |
-| 3.9.10 | Ensure That Cloud Audit Logging Is Configured Properly |
-| 3.9.11 | Googel | Ensure That Cloud DNS Logging Is Enabled for All VPC Networks |
-| 3.10.1 | Ensure That Sinks Are Configured for All Log Entries |
-| 3.10.2 | Ensure Log Metric Filter and Alerts Exist for Project Ownership Assignments/Changes |
-| 3.10.3 | Googel | Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes |
-| 3.10.4 | Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes |
-| 4.1.1 | Ensure No HTTPS or SSL Proxy Load Balancers Permit SSL Policies With Weak Cipher Suites |
-| 4.2.1 | Ensure Legacy Networks Do Not Exist for Older Projects |
-| 4.2.2 | Ensure That DNSSEC Is Enabled for Cloud DNS |
-| 4.2.3 | Ensure That RSASHA1 Is Not Used for the Key-Signing Key in Cloud DNS DNSSEC |
-| 4.2.4 | Ensure That RSASHA1 Is Not Used for the Zone-Signing Key in Cloud DNS DNSSEC |
-| 4.3.3 | Ensure That SSH Access Is Restricted From the Internet |
-| 4.3.4 | Ensure That RDP Access Is Restricted From the Internet |
-| 5.5.3 | Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible |
-| 6.1.1 | Ensure That the ‘Local_infile’ Database Flag for a Cloud SQL MySQL Instance Is Set to ‘Off’ |
-| 6.2.1 | Ensure 'external scripts enabled' database flag for Cloud SQL SQL Server instance is set to 'off' |
-| 6.3.4 | Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL |
-| 6.5.3 | Ensure That Cloud SQL Database Instances Do Not Implicitly Whitelist All Public IP Addresses |
-| 6.5.4 | Ensure ‘Skip_show_database’ Database Flag for Cloud SQL MySQL Instance Is Set to ‘On’ |
-| 6.5.5 | Ensure that the 'cross db ownership chaining' database flag for Cloud SQL SQL Server instance is set to 'off' |
-| 6.5.6 | Ensure that the 'contained database authentication' database flag for Cloud SQL on the SQL Server instance is set to 'off' |
-| 6.6.1 | Ensure 'user options' database flag for Cloud SQL SQL Server instance is not configured |
-| 6.6.2 | Ensure '3625 (trace flag)' database flag for all Cloud SQL Server instances is set to 'on' |
-| 6.8.1 | Ensure Instance IP assignment is set to private |
-| 6.9.1 | Ensure That a MySQL Database Instance Does Not Allow Anyone To Connect With Administrative Privileges |
-| 6.10.1 | Ensure 'remote access' database flag for Cloud SQL SQL Server instance is set to 'off' |
-| 6.15.2 | Ensure That the ‘Log_connections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’ |
-| 6.15.3 | Ensure That the ‘Log_disconnections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’ |
-| 6.15.4 | Ensure that the ‘Log_min_messages’ Flag for a Cloud SQL PostgreSQL Instance is set at minimum to 'Warning' |
-| 6.15.5 | Ensure ‘Log_min_error_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘Error’ or Stricter |
-| 6.15.6 | Ensure That the ‘Log_min_duration_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘-1′ (Disabled) |
-| 6.15.7 | Ensure That 'cloudsql.enable_pgaudit' Database Flag for each Cloud Sql Postgresql Instance Is Set to 'on' For Centralized Logging |
+| Spec | CIS 2.0 | Description |
+|---|---|----------|
+| 1.2.6 | TBD | Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime |
+| 1.3.4 | 4.3 | Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances |
+| 1.5.1 | 4.6 | Ensure That IP Forwarding Is Not Enabled on Instances |
+| 1.6.1 | 4.1 | Ensure That Instances Are Not Configured To Use the Default Service Account |
+| 1.6.2 | 4.2 | Ensure That Instances Are Not Configured To Use the Default Service Account With Full Access to All Cloud APIs |
+| 1.7.1 | 4.5 | Ensure ‘Enable Connecting to Serial Ports’ Is Not Enabled for VM Instance |
+| 1.8.2 | 4.4 | Ensure Oslogin Is Enabled for a Project |
+| 2.3.5 | 1.16 | Ensure Essential Contacts is Configured for Organization |
+| 2.6.1 | 1.18 | Ensure Secrets are Not Stored in Cloud Functions Environment Variables by Using Secret Manager |
+| 2.7.5 | 1.6 | Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level |
+| 2.7.6 | 1.9 | Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible |
+| 2.11.5 | 1.5 | Ensure That Service Account Has No Admin Privileges |
+| 2.12.1 | 1.1 | Ensure that Corporate Login Credentials are Used |
+| 2.14.7 | 1.2 | Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts |
+| 3.1.1 | 2.13 | Ensure Cloud Asset Inventory Is Enabled |
+| 3.9.10 | 2.1 | Ensure That Cloud Audit Logging Is Configured Properly |
+| 3.9.11 | 2.12 | Ensure That Cloud DNS Logging Is Enabled for All VPC Networks |
+| 3.10.1 | 2.2 | Ensure That Sinks Are Configured for All Log Entries |
+| 3.10.2 | 2.4 | Ensure Log Metric Filter and Alerts Exist for Project Ownership Assignments/Changes |
+| 3.10.3 | 2.5 | Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes |
+| 3.10.4 | 2.6 | Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes |
+| 4.1.1 | 3.9 | Ensure No HTTPS or SSL Proxy Load Balancers Permit SSL Policies With Weak Cipher Suites |
+| 4.2.1 | 3.2 | Ensure Legacy Networks Do Not Exist for Older Projects |
+| 4.2.2 | 3.3 | Ensure That DNSSEC Is Enabled for Cloud DNS |
+| 4.2.3 | 3.4 | Ensure That RSASHA1 Is Not Used for the Key-Signing Key in Cloud DNS DNSSEC |
+| 4.2.4 | 3.5 | Ensure That RSASHA1 Is Not Used for the Zone-Signing Key in Cloud DNS DNSSEC |
+| 4.3.3 | 3.6 | Ensure That SSH Access Is Restricted From the Internet |
+| 4.3.4 | 3.7 | Ensure That RDP Access Is Restricted From the Internet |
+| 5.5.3 | 5.1 | Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible |
+| 6.1.1 | 6.1.3 | Ensure That the ‘Local_infile’ Database Flag for a Cloud SQL MySQL Instance Is Set to ‘Off’ |
+| 6.2.1 | 6.3.1 | Ensure 'external scripts enabled' database flag for Cloud SQL SQL Server instance is set to 'off' |
+| 6.3.4 | 6.4 | Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL |
+| 6.5.3 | 6.5 | Ensure That Cloud SQL Database Instances Do Not Implicitly Whitelist All Public IP Addresses |
+| 6.5.4 | 6.1.2 | Ensure ‘Skip_show_database’ Database Flag for Cloud SQL MySQL Instance Is Set to ‘On’ |
+| 6.5.5 | 6.3.2 | Ensure that the 'cross db ownership chaining' database flag for Cloud SQL SQL Server instance is set to 'off' |
+| 6.5.6 | 6.3.7 | Ensure that the 'contained database authentication' database flag for Cloud SQL on the SQL Server instance is set to 'off' |
+| 6.6.1 | 6.3.4 | Ensure 'user options' database flag for Cloud SQL SQL Server instance is not configured |
+| 6.6.2 | 6.3.6 | Ensure '3625 (trace flag)' database flag for all Cloud SQL Server instances is set to 'on' |
+| 6.8.1 | 6.2.9 | Ensure Instance IP assignment is set to private |
+| 6.9.1 | 6.1.1 | Ensure That a MySQL Database Instance Does Not Allow Anyone To Connect With Administrative Privileges |
+| 6.10.1 | 6.3.5 | Ensure 'remote access' database flag for Cloud SQL SQL Server instance is set to 'off' |
+| 6.15.2 | 6.2.2 | Ensure That the ‘Log_connections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’ |
+| 6.15.3 | 6.2.3 | Ensure That the ‘Log_disconnections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’ |
+| 6.15.4 | 6.2.5 | Ensure that the ‘Log_min_messages’ Flag for a Cloud SQL PostgreSQL Instance is set at minimum to 'Warning' |
+| 6.15.5 | 6.2.6 | Ensure ‘Log_min_error_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘Error’ or Stricter |
+| 6.15.6 | 6.2.7 | Ensure That the ‘Log_min_duration_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘-1′ (Disabled) |
+| 6.15.7 | 6.2.8 | Ensure That 'cloudsql.enable_pgaudit' Database Flag for each Cloud Sql Postgresql Instance Is Set to 'on' For Centralized Logging |
 
