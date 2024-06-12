@@ -510,7 +510,9 @@ It is necessary to first identify the software that needs to be secured before t
 
 ### 1.1.1 Ensure that Only Approved Extensions Are Installed
 **Platform:** Azure
+
 **Rationale:** Azure virtual machine extensions are small applications that provide post-deployment configuration and automation tasks on Azure virtual machines. These extensions run with administrative privileges and could potentially access anything on a virtual machine. The Azure Portal and community provide several such extensions. Each organization should carefully evaluate these extensions and ensure that only those that are approved for use are actually implemented.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 7.5
 
 **Evidence**
@@ -580,6 +582,7 @@ When software ceases to be supported, the maintainer of that software will no lo
 
 ### 1.2.1 Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime
 **Platform:** AWS 
+
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. 
 
 **External Reference:** [AWS Security Hub Lambda.2](https://docs.aws.amazon.com/securityhub/latest/userguide/lambda-controls.html#lambda-2)
@@ -621,6 +624,7 @@ Evidence or test output indicates that no Lambda function is configured to use a
 
 ### 1.2.2 Ensure that all Azure Functions are configured to use a current (not deprecated) runtime
 **Platform:** Azure 
+
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. 
 
 **External Reference:** Todo
@@ -645,7 +649,9 @@ Microsoft documentation contains the specific dates and version for supported la
 
 ### 1.2.3 Ensure That 'PHP version' is the Latest, If Used to Run the Web App
 **Platform:** Azure
+
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.6
 
 **Evidence**
@@ -695,8 +701,10 @@ Evidence or test output indicates that the developer has configured App Service 
 ---
 
 ### 1.2.4 Ensure that 'Python version' is the Latest Stable Version, if Used to Run the Web App
-**Platform:** Azure \
-**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. Using the latest full version will keep your stack secure to vulnerabilities and exploits. \
+**Platform:** Azure
+
+**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. Using the latest full version will keep your stack secure to vulnerabilities and exploits.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.7
 
 **Evidence**
@@ -748,8 +756,10 @@ Evidence or test output indicates that -- if used to run the web app -- the deve
 ---
 
 ### 1.2.5 Ensure that 'Java version' is the latest, if used to run the Web App 
-**Platform:** Azure \
-**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. \
+**Platform:** Azure
+
+**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.8
 
 **Evidence**
@@ -800,7 +810,8 @@ Evidence or test output indicates that -- if used to run the web app -- the deve
 ---
 
 ### 1.2.6 Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App 
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
 HTTP 2.0 has additional performance improvements on the head-of-line blocking problem of old HTTP version, header compression, and prioritization of requests. HTTP 2.0 no longer supports HTTP 1.1's chunked transfer encoding mechanism, as it provides its own, more efficient, mechanisms for data streaming. \
@@ -852,7 +863,8 @@ Evidence or test output indicates that HTTP 2.0 is enabled for each webapp.
 ---
 
 ### 1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime 
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. 
 
 **External Reference:** Todo
@@ -882,8 +894,10 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 ---
 
 ### 1.3.1 Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service 
-**Platform:** Azure \
-**Rationale:** Enabling HTTPS-only traffic will redirect all non-secure HTTP requests to HTTPS ports. HTTPS uses the TLS/SSL protocol to provide a secure connection which is both encrypted and authenticated. It is therefore important to support HTTPS for the security benefits. \
+**Platform:** Azure
+
+**Rationale:** Enabling HTTPS-only traffic will redirect all non-secure HTTP requests to HTTPS ports. HTTPS uses the TLS/SSL protocol to provide a secure connection which is both encrypted and authenticated. It is therefore important to support HTTPS for the security benefits.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.2
 
 **Evidence**
@@ -930,8 +944,10 @@ Evidence or test output indicates that each Azure App Service webapp is configur
 ---
 
 ### 1.3.2 Ensure Web App is using the latest version of TLS encryption
-**Platform:** Azure \
-**Rationale:** App service currently allows the web app to set TLS versions 1.0, 1.1 and 1.2. It is highly recommended to use the latest TLS 1.2 version for web app secure connections. \
+**Platform:** Azure
+
+**Rationale:** App service currently allows the web app to set TLS versions 1.0, 1.1 and 1.2. It is highly recommended to use the latest TLS 1.2 version for web app secure connections.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.3
 
 **Evidence**
@@ -983,8 +999,10 @@ Evidence or test output indicates that each webapp is configured to require TLS 
 
 ---
 ### 1.3.3 Ensure FTP deployments are Disabled 
-**Platform:** Azure \
-**Rationale:** Azure FTP deployment endpoints are public. An attacker listening to traffic on a wifi network used by a remote employee or a corporate network could see login traffic in clear-text which would then grant them full control of the code base of the app or service. This finding is more severe if User Credentials for deployment are set at the subscription level rather than using the default Application Credentials which are unique per App. \
+**Platform:** Azure
+
+**Rationale:** Azure FTP deployment endpoints are public. An attacker listening to traffic on a wifi network used by a remote employee or a corporate network could see login traffic in clear-text which would then grant them full control of the code base of the app or service. This finding is more severe if User Credentials for deployment are set at the subscription level rather than using the default Application Credentials which are unique per App.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.10
 
 **Evidence**
@@ -1049,8 +1067,10 @@ Evidence or test output indicates that no webapp is deployed with FtpsState of A
 ---
 
 ### 1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances 
-**Platform:** Google \
-**Rationale:** Project-wide SSH keys are stored in Compute/Project-meta-data. Project wide SSH keys can be used to login into all the instances within the project. Using project-wide SSH keys eases the SSH key management but if compromised, poses the security risk which can impact all the instances within the project. It is recommended to use Instance specific SSH keys which can limit the attack surface if the SSH keys are compromised. \
+**Platform:** Google
+
+**Rationale:** Project-wide SSH keys are stored in Compute/Project-meta-data. Project wide SSH keys can be used to login into all the instances within the project. Using project-wide SSH keys eases the SSH key management but if compromised, poses the security risk which can impact all the instances within the project. It is recommended to use Instance specific SSH keys which can limit the attack surface if the SSH keys are compromised.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.3
 
 **Evidence**
@@ -1105,10 +1125,12 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 ---
 
 ### 1.4.1 Ensure Virtual Machines are utilizing Managed Disks
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Managed disks are by default encrypted on the underlying hardware, so no additional encryption is required for basic protection. It is available if additional encryption is required. Managed disks are by design more resilient than storage accounts.
 
-For ARM-deployed Virtual Machines, Azure Adviser will at some point recommend moving VHDs to managed disks both from a security and cost management perspective. \
+For ARM-deployed Virtual Machines, Azure Adviser will at some point recommend moving VHDs to managed disks both from a security and cost management perspective.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 7.2
 
 **Evidence**
@@ -1172,8 +1194,10 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 ---
 
 ### 1.5.1 Ensure That IP Forwarding Is Not Enabled on Instances
-**Platform:** Google \
-**Rationale:** Compute Engine instance cannot forward a packet unless the source IP address of the packet matches the IP address of the instance. Similarly, GCP won't deliver a packet whose destination IP address is different than the IP address of the instance receiving the packet. However, both capabilities are required if you want to use instances to help route packets. To enable this source and destination IP check, disable the `canIpForward` field, which allows an instance to send and receive packets with non-matching destination or source IPs. \
+**Platform:** Google
+
+**Rationale:** Compute Engine instance cannot forward a packet unless the source IP address of the packet matches the IP address of the instance. Similarly, GCP won't deliver a packet whose destination IP address is different than the IP address of the instance receiving the packet. However, both capabilities are required if you want to use instances to help route packets. To enable this source and destination IP check, disable the `canIpForward` field, which allows an instance to send and receive packets with non-matching destination or source IPs.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.6
 
 **Evidence**
@@ -1229,10 +1253,12 @@ Products typically ship with insecure defaults that, if not configured securely,
 ---
 
 ### 1.6.1 Ensure That Instances Are Not Configured To Use the Default Service Account
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** The default Compute Engine service account has the Editor role on the project, which allows read and write access to most Google Cloud Services. To defend against privilege escalations if your VM is compromised and prevent an attacker from gaining access to all of your project, it is recommended to not use the default Compute Engine service account. Instead, you should create a new service account and assign only the permissions needed by your instance.
 
-The default Compute Engine service account is named `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`. \
+The default Compute Engine service account is named `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.1
 
 **Evidence**
@@ -1271,7 +1297,8 @@ Evidence or test output indicates that no VM instance is configured to use the d
 ---
 
 ### 1.6.2 Ensure That Instances Are Not Configured To Use the Default Service Account With Full Access to All Cloud APIs
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Along with the ability to optionally create, manage and use user managed custom service accounts, Google Compute Engine provides default service account `Compute Engine default service account` for an instance to access necessary cloud services. `Project Editor` role is assigned to `Compute Engine default service account` hence, this service account has almost all capabilities over all cloud services except billing. However, when `Compute Engine default service account` is assigned to an instance it can operate in 3 scopes.
 
 
@@ -1284,7 +1311,8 @@ Evidence or test output indicates that no VM instance is configured to use the d
 ```
 
 
-When an instance is configured with `Compute Engine default service account` with Scope `Allow full access to all Cloud APIs`, based on IAM roles assigned to the user(s) accessing Instance, it may allow user to perform cloud operations/API calls that user is not supposed to perform leading to successful privilege escalation. \
+When an instance is configured with `Compute Engine default service account` with Scope `Allow full access to all Cloud APIs`, based on IAM roles assigned to the user(s) accessing Instance, it may allow user to perform cloud operations/API calls that user is not supposed to perform leading to successful privilege escalation.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.2
 
 **Evidence**
@@ -1341,13 +1369,15 @@ Uninstalling and disabling unnecessary services reduces the target area of your 
 ---
 
 ### 1.7.1 Ensure ‘Enable Connecting to Serial Ports’ Is Not Enabled for VM Instance
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** A virtual machine instance has four virtual serial ports. Interacting with a serial port is similar to using a terminal window, in that input and output is entirely in text mode and there is no graphical interface or mouse support. The instance's operating system, BIOS, and other system-level entities often write output to the serial ports, and can accept input such as commands or answers to prompts. Typically, these system-level entities use the first serial port (port 1) and serial port 1 is often referred to as the serial console.
 
 The interactive serial console does not support IP-based access restrictions such as IP whitelists. If you enable the interactive serial console on an instance, clients can attempt to connect to that instance from any IP address. This allows anybody to connect to that instance if they know the correct SSH key, username, project ID, zone, and instance name.
 
-Therefore interactive serial console support should be disabled. \
-External Reference: CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.5
+Therefore interactive serial console support should be disabled.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.5
 
 **Evidence**
 
@@ -1415,8 +1445,10 @@ Centralizing makes administration simpler and therefore reduces risks related to
 ---
 
 ### 1.8.1 Ensure that Register with Azure Active Directory is enabled on App Service
-**Platform:** Azure \
-**Rationale:** App Service provides a highly scalable, self-patching web hosting service in Azure. It also provides a managed identity for apps, which is a turn-key solution for securing access to Azure SQL Database and other Azure services. \
+**Platform:** Azure
+
+**Rationale:** App Service provides a highly scalable, self-patching web hosting service in Azure. It also provides a managed identity for apps, which is a turn-key solution for securing access to Azure SQL Database and other Azure services.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.5
 
 **Evidence**
@@ -1471,8 +1503,10 @@ Evidence or test output indicates that every web app is assigned a unique princi
 ---
 
 ### 1.8.2 Ensure Oslogin Is Enabled for a Project
-**Platform:** Google \
-**Rationale:** Enabling osLogin ensures that SSH keys used to connect to instances are mapped with IAM users. Revoking access to an IAM user will revoke all the SSH keys associated with that particular user. It facilitates centralized and automated SSH key pair management which is useful in handling cases like response to compromised SSH key pairs and/or revocation of external/third-party/Vendor users. \
+**Platform:** Google
+
+**Rationale:** Enabling osLogin ensures that SSH keys used to connect to instances are mapped with IAM users. Revoking access to an IAM user will revoke all the SSH keys associated with that particular user. It facilitates centralized and automated SSH key pair management which is useful in handling cases like response to compromised SSH key pairs and/or revocation of external/third-party/Vendor users.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.4
 
 **Evidence**
@@ -1530,7 +1564,8 @@ Establish and maintain a data recovery process. In the process, address the scop
 ---
 
 ### 2.1.1 Ensure the Key Vault is Recoverable
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** There could be scenarios where users accidentally run delete/purge commands on Key Vault or an attacker/malicious user deliberately does so in order to cause disruption. Deleting or purging a Key Vault leads to immediate data loss, as keys encrypting data and secrets/certificates allowing access/services will become non-accessible. There are 2 Key Vault properties that play a role in permanent unavailability of a Key Vault:
 
 
@@ -1545,7 +1580,8 @@ Setting this parameter to "true" for a Key Vault ensures that even if Key Vault 
 
 enableSoftDelete only ensures that Key Vault is not deleted permanently and will be recoverable for 90 days from date of deletion. However, there are scenarios in which the Key Vault and/or its objects are accidentally purged and hence will not be recoverable. Setting enablePurgeProtection to "true" ensures that the Key Vault and its objects cannot be purged.
 
-Enabling both the parameters on Key Vaults ensures that Key Vaults and their objects cannot be deleted/purged permanently. \
+Enabling both the parameters on Key Vaults ensures that Key Vaults and their objects cannot be deleted/purged permanently.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.5
 
 **Evidence**
@@ -1628,8 +1664,10 @@ Without an incident response plan, an enterprise may not discover an attack in t
 ---
 
 ### 2.2.1 Ensure a support role has been created to manage incidents with AWS Support
-**Platform:** AWS \
-**Rationale:** By implementing least privilege for access control, an IAM Role will require an appropriate IAM Policy to allow Support Center Access in order to manage Incidents with AWS Support. \
+**Platform:** AWS
+
+**Rationale:** By implementing least privilege for access control, an IAM Role will require an appropriate IAM Policy to allow Support Center Access in order to manage Incidents with AWS Support.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.17
 
 **Evidence**
@@ -1688,8 +1726,10 @@ As time goes by -- and processes and people change within an organization -- it'
 ---
 
 ### 2.3.1 Maintain current contact details
-**Platform:** AWS \
-**Rationale:** If an AWS account is observed to be behaving in a prohibited or suspicious manner, AWS will attempt to contact the account owner by email and phone using the contact details listed. If this is unsuccessful and the account behavior needs urgent mitigation, proactive measures may be taken, including throttling of traffic between the account exhibiting suspicious behavior and the AWS API endpoints and the Internet. This will result in impaired service to and from the account in question, so it is in both the customers' and AWS' best interests that prompt contact can be established. This is best achieved by setting AWS account contact details to point to resources which have multiple individuals as recipients, such as email aliases and PABX hunt groups. \
+**Platform:** AWS
+
+**Rationale:** If an AWS account is observed to be behaving in a prohibited or suspicious manner, AWS will attempt to contact the account owner by email and phone using the contact details listed. If this is unsuccessful and the account behavior needs urgent mitigation, proactive measures may be taken, including throttling of traffic between the account exhibiting suspicious behavior and the AWS API endpoints and the Internet. This will result in impaired service to and from the account in question, so it is in both the customers' and AWS' best interests that prompt contact can be established. This is best achieved by setting AWS account contact details to point to resources which have multiple individuals as recipients, such as email aliases and PABX hunt groups.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.1
 
 **Evidence**
@@ -1711,8 +1751,10 @@ Evidence or test output indicates that the tenant is configured with contact inf
 ---
 
 ### 2.3.2 Ensure security contact information is registered
-**Platform:** AWS \
-**Rationale:** Specifying security-specific contact information will help ensure that security advisories sent by AWS reach the team in your organization that is best equipped to respond to them. \
+**Platform:** AWS
+
+**Rationale:** Specifying security-specific contact information will help ensure that security advisories sent by AWS reach the team in your organization that is best equipped to respond to them.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.2
 
 **Evidence**
@@ -1752,8 +1794,10 @@ Evidence or test output indicates that the tenant is configured with security co
 ---
 
 ### 2.3.5 Ensure Essential Contacts is Configured for Organization
-**Platform:** Google \
-**Rationale:** Many Google Cloud services, such as Cloud Billing, send out notifications to share important information with Google Cloud users. By default, these notifications are sent to members with certain Identity and Access Management (IAM) roles. With Essential Contacts, you can customize who receives notifications by providing your own list of contacts. \
+**Platform:** Google
+
+**Rationale:** Many Google Cloud services, such as Cloud Billing, send out notifications to share important information with Google Cloud users. By default, these notifications are sent to members with certain Identity and Access Management (IAM) roles. With Essential Contacts, you can customize who receives notifications by providing your own list of contacts.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.16
 
 **Evidence**
@@ -1823,8 +1867,10 @@ Actively manage (inventory, track, and correct) all software (operating systems 
 ---
 
 ### 2.4.1 Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent
-**Platform:** Azure \
-**Rationale:** If Azure Active Directory is running as an identity provider for third-party applications, permissions and consent should be limited to administrators or pre-approved. Malicious applications may attempt to exfiltrate data or abuse privileged user accounts. \
+**Platform:** Azure
+
+**Rationale:** If Azure Active Directory is running as an identity provider for third-party applications, permissions and consent should be limited to administrators or pre-approved. Malicious applications may attempt to exfiltrate data or abuse privileged user accounts.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.11
 
 **Evidence**
@@ -1859,8 +1905,10 @@ Evidence or test output indicates that `User consent for applications` is set to
 ---
 
 ### 2.4.2 Ensure that 'Users can add gallery apps to My Apps' is set to 'No'
-**Platform:** Azure \
-**Rationale:** Unless Azure Active Directory is running as an identity provider for third-party applications, do not allow users to use their identity outside of your cloud environment. User profiles contain private information such as phone numbers and email addresses which could then be sold off to other third parties without requiring any further consent from the user. \
+**Platform:** Azure
+
+**Rationale:** Unless Azure Active Directory is running as an identity provider for third-party applications, do not allow users to use their identity outside of your cloud environment. User profiles contain private information such as phone numbers and email addresses which could then be sold off to other third parties without requiring any further consent from the user.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.13
 
 **Evidence**
@@ -1883,8 +1931,10 @@ Evidence or test output indicates that `Users can add gallery apps to My Apps` i
 ---
 
 ### 2.4.3 Ensure That ‘Users Can Register Applications’ Is Set to ‘No’
-**Platform:** Azure \
-**Rationale:** It is recommended to only allow an administrator to register custom-developed applications. This ensures that the application undergoes a formal security review and approval process prior to exposing Azure Active Directory data. Certain users like developers or other high-request users may also be delegated permissions to prevent them from waiting on an administrative user. Your organization should review your policies and decide your needs. \
+**Platform:** Azure
+
+**Rationale:** It is recommended to only allow an administrator to register custom-developed applications. This ensures that the application undergoes a formal security review and approval process prior to exposing Azure Active Directory data. Certain users like developers or other high-request users may also be delegated permissions to prevent them from waiting on an administrative user. Your organization should review your policies and decide your needs.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.14
 
 **Evidence**
@@ -1936,8 +1986,10 @@ Develop processes and technical controls to identify, classify, securely handle,
 ---
 
 ### 2.5.1 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in RBAC Key Vaults
-**Platform:** Azure \
-**Rationale:** Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. The `exp` (expiration date) attribute identifies the expiration date on or after which the key MUST NOT be used for encryption of new data, wrapping of new keys, and signing. By default, keys never expire. It is thus recommended that keys be rotated in the key vault and set an explicit expiration date for all keys to help enforce the key rotation. This ensures that the keys cannot be used beyond their assigned lifetimes. \
+**Platform:** Azure
+
+**Rationale:** Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. The `exp` (expiration date) attribute identifies the expiration date on or after which the key MUST NOT be used for encryption of new data, wrapping of new keys, and signing. By default, keys never expire. It is thus recommended that keys be rotated in the key vault and set an explicit expiration date for all keys to help enforce the key rotation. This ensures that the keys cannot be used beyond their assigned lifetimes.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.1
 
 **Evidence**
@@ -2004,8 +2056,10 @@ Evidence or test output indicates that an expiration date is set for all keys in
 ---
 
 ### 2.5.2 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in Non-RBAC Key Vaults.
-**Platform:** Azure \
-**Rationale:** Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. The `exp` (expiration date) attribute identifies the expiration date on or after which the key MUST NOT be used for a cryptographic operation. By default, keys never expire. It is thus recommended that keys be rotated in the key vault and set an explicit expiration date for all keys. This ensures that the keys cannot be used beyond their assigned lifetimes. \
+**Platform:** Azure
+
+**Rationale:** Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. The `exp` (expiration date) attribute identifies the expiration date on or after which the key MUST NOT be used for a cryptographic operation. By default, keys never expire. It is thus recommended that keys be rotated in the key vault and set an explicit expiration date for all keys. This ensures that the keys cannot be used beyond their assigned lifetimes.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.2
 
 **Evidence**
@@ -2071,8 +2125,10 @@ Evidence or test output indicates that an expiration date is set for all keys in
 ---
 
 ### 2.5.3 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults
-**Platform:** Azure \
-**Rationale:** The Azure Key Vault enables users to store and keep secrets within the Microsoft Azure environment. Secrets in the Azure Key Vault are octet sequences with a maximum size of 25k bytes each. The `exp` (expiration date) attribute identifies the expiration date on or after which the secret MUST NOT be used. By default, secrets never expire. It is thus recommended to rotate secrets in the key vault and set an explicit expiration date for all secrets. This ensures that the secrets cannot be used beyond their assigned lifetimes. \
+**Platform:** Azure
+
+**Rationale:** The Azure Key Vault enables users to store and keep secrets within the Microsoft Azure environment. Secrets in the Azure Key Vault are octet sequences with a maximum size of 25k bytes each. The `exp` (expiration date) attribute identifies the expiration date on or after which the secret MUST NOT be used. By default, secrets never expire. It is thus recommended to rotate secrets in the key vault and set an explicit expiration date for all secrets. This ensures that the secrets cannot be used beyond their assigned lifetimes.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.3
 
 **Evidence**
@@ -2130,8 +2186,10 @@ Evidence or test output indicates that an expiration date is set for all secrets
 ---
 
 ### 2.5.4 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults
-**Platform:** Azure \
-**Rationale:** The Azure Key Vault enables users to store and keep secrets within the Microsoft Azure environment. Secrets in the Azure Key Vault are octet sequences with a maximum size of 25k bytes each. The `exp` (expiration date) attribute identifies the expiration date on or after which the secret MUST NOT be used. By default, secrets never expire. It is thus recommended to rotate secrets in the key vault and set an explicit expiration date for all secrets. This ensures that the secrets cannot be used beyond their assigned lifetimes. \
+**Platform:** Azure
+
+**Rationale:** The Azure Key Vault enables users to store and keep secrets within the Microsoft Azure environment. Secrets in the Azure Key Vault are octet sequences with a maximum size of 25k bytes each. The `exp` (expiration date) attribute identifies the expiration date on or after which the secret MUST NOT be used. By default, secrets never expire. It is thus recommended to rotate secrets in the key vault and set an explicit expiration date for all secrets. This ensures that the secrets cannot be used beyond their assigned lifetimes.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.4
 
 **Evidence**
@@ -2218,8 +2276,10 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 ---
 
 ### 2.6.1 Ensure Secrets are Not Stored in Cloud Functions Environment Variables by Using Secret Manager
-**Platform:** Google \
-**Rationale:** It is recommended to use the Secret Manager, because environment variables are stored unencrypted, and accessible for all users who have access to the code. \
+**Platform:** Google
+
+**Rationale:** It is recommended to use the Secret Manager, because environment variables are stored unencrypted, and accessible for all users who have access to the code.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.18
 
 **Evidence**
@@ -2316,8 +2376,10 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 ---
 
 ### 2.7.1 Ensure no 'root' user account access key exists
-**Platform:** AWS \
-**Rationale:** Deleting access keys associated with the 'root' user account limits vectors by which the account can be compromised. Additionally, deleting the 'root' access keys encourages the creation and use of role based accounts that are least privileged. \
+**Platform:** AWS
+
+**Rationale:** Deleting access keys associated with the 'root' user account limits vectors by which the account can be compromised. Additionally, deleting the 'root' access keys encourages the creation and use of role based accounts that are least privileged.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.4
 
 **Evidence**
@@ -2355,11 +2417,13 @@ Evidence or test output indicates that no root user account access key exists.
 ---
 
 ### 2.7.2 Do not setup access keys during initial user setup for all IAM users that have a console password
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** Requiring the additional steps be taken by the user for programmatic access after their profile has been created will give a stronger indication of intent that access keys are [a] necessary for their work and [b] once the access key is established on an account that the keys may be in use somewhere in the organization.
 
-**Note**: Even if it is known the user will need access keys, require them to create the keys themselves or put in a support ticket to have them created as a separate step from user creation. \
-External Reference: CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.11
+Note: Even if it is known the user will need access keys, require them to create the keys themselves or put in a support ticket to have them created as a separate step from user creation.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.11
 
 **Evidence**
 
@@ -2420,12 +2484,14 @@ Evidence or test output indicates that no user exists for which: (1) password en
 ---
 
 ### 2.7.3 Ensure IAM policies that allow full "_:_" administrative privileges are not attached 
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** It's more secure to start with a minimum set of permissions and grant additional permissions as necessary, rather than starting with permissions that are too lenient and then trying to tighten them later.
 
 Providing full administrative privileges instead of restricting to the minimum set of permissions that the user is required to do exposes the resources to potentially unwanted actions.
 
-IAM policies that have a statement with "Effect": "Allow" with "Action": "*" over "Resource": "*" should be removed. \
+IAM policies that have a statement with "Effect": "Allow" with "Action": "*" over "Resource": "*" should be removed.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.16, [AWS Security Hub IAM.1](https://docs.aws.amazon.com/securityhub/latest/userguide/iam-controls.html#iam-1)
 
 **Evidence**
@@ -2466,7 +2532,8 @@ Evidence or test output indicates that no customer-managed IAM policy allows ful
 ---
 
 ### 2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Limiting guest access ensures that guest accounts do not have permission for certain directory tasks, such as enumerating users, groups or other directory resources, and cannot be assigned to administrative roles in your directory. Guest access has three levels of restriction.
 
 
@@ -2475,7 +2542,8 @@ Evidence or test output indicates that no customer-managed IAM policy allows ful
 2. Guest users have limited access to properties and memberships of directory objects (default value),
 3. Guest user access is restricted to properties and memberships of their own directory objects (most restrictive).
 
-The recommended option is the 3rd, most restrictive: "Guest user access is restricted to their own directory object". \
+The recommended option is the 3rd, most restrictive: "Guest user access is restricted to their own directory object".
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.15
 
 **Evidence**
@@ -2518,14 +2586,16 @@ Evidence that `Guest users access restrictions` is set to `Guest user access is 
 ---
 
 ### 2.7.5 Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** A service account is a special Google account that belongs to an application or a virtual machine (VM), instead of to an individual end-user. Application/VM-Instance uses the service account to call the service's Google API so that users aren't directly involved. In addition to being an identity, a service account is a resource that has IAM policies attached to it. These policies determine who can use the service account.
 
 Users with IAM roles to update the App Engine and Compute Engine instances (such as App Engine Deployer or Compute Instance Admin) can effectively run code as the service accounts used to run these instances, and indirectly gain access to all the resources for which the service accounts have access. Similarly, SSH access to a Compute Engine instance may also provide the ability to execute code as that instance/Service account.
 
 Based on business needs, there could be multiple user-managed service accounts configured for a project. Granting the `iam.serviceAccountUser` or `iam.serviceAccountTokenCreator` roles to a user for a project gives the user access to all service accounts in the project, including service accounts that may be created in the future. This can result in elevation of privileges by using service accounts and corresponding `Compute Engine instances`.
 
-In order to implement `least privileges` best practices, IAM users should not be assigned the `Service Account User` or `Service Account Token Creator` roles at the project level. Instead, these roles should be assigned to a user for a specific service account, giving that user access to the service account. The `Service Account User` allows a user to bind a service account to a long-running job service, whereas the `Service Account Token Creator` role allows a user to directly impersonate (or assert) the identity of a service account. \
+In order to implement `least privileges` best practices, IAM users should not be assigned the `Service Account User` or `Service Account Token Creator` roles at the project level. Instead, these roles should be assigned to a user for a specific service account, giving that user access to the service account. The `Service Account User` allows a user to bind a service account to a long-running job service, whereas the `Service Account Token Creator` role allows a user to directly impersonate (or assert) the identity of a service account.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.6
 
 **Evidence**
@@ -2560,9 +2630,11 @@ Evidence or test output indicates that IAM users are not assigned the service ac
 
 
 ---
-###2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible
-**Platform:** Google \
-**Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if sensitive data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed. \
+### 2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible
+**Platform:** Google
+
+**Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if sensitive data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.9
 
 **Evidence**
@@ -2614,7 +2686,8 @@ Establish and maintain a secure configuration process for enterprise assets (end
 ---
 
 ### 2.8.1 Ensure Security Defaults is enabled on Azure Active Directory
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Security defaults provide secure default settings that we manage on behalf of organizations to keep customers safe until they are ready to manage their own identity security settings.
 
 For example, doing the following:
@@ -2623,7 +2696,7 @@ For example, doing the following:
 
 * Requiring all users and admins to register for MFA.
 * Challenging users with MFA - when necessary, based on factors such as location, device, role, and task.
-* Disabling authentication from legacy authentication clients, which can’t do MFA. \
+* Disabling authentication from legacy authentication clients, which can’t do MFA.
 
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.1
 
@@ -2647,8 +2720,10 @@ Evidence or test output indicates that security defaults is enabled on Azure Act
 
 ---
 ### 2.8.2 Ensure IAM password policy requires minimum length of 14 or greater
-**Platform:** AWS \
-**Rationale:** Setting a password complexity policy increases account resiliency against brute force login attempts. \
+**Platform:** AWS
+
+**Rationale:** Setting a password complexity policy increases account resiliency against brute force login attempts.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.8
 
 **Evidence**
@@ -2682,8 +2757,10 @@ Evidence or test output indicates that the IAM password policy requires a minimu
 ---
 
 ### 2.8.3 Ensure there is only one active access key available for any single IAM user
-**Platform:** AWS \
-**Rationale:** Access keys are long-term credentials for an IAM user or the AWS account 'root' user. You can use access keys to sign programmatic requests to the AWS CLI or AWS API. One of the best ways to protect your account is to not allow users to have multiple access keys. \
+**Platform:** AWS
+
+**Rationale:** Access keys are long-term credentials for an IAM user or the AWS account 'root' user. You can use access keys to sign programmatic requests to the AWS CLI or AWS API. One of the best ways to protect your account is to not allow users to have multiple access keys.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.13
 
 **Evidence**
@@ -2735,10 +2812,12 @@ Evidence or test output indicates that no user has more than one active access k
 ---
 
 ### 2.8.4 Ensure access keys are rotated every 90 days or less
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** Rotating access keys will reduce the window of opportunity for an access key that is associated with a compromised or terminated account to be used.
 
-Access keys should be rotated to ensure that data cannot be accessed with an old key which might have been lost, cracked, or stolen. \
+Access keys should be rotated to ensure that data cannot be accessed with an old key which might have been lost, cracked, or stolen.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.14
 
 **Evidence**
@@ -2790,8 +2869,10 @@ Malicious users automate login attempts using username and password databases fr
 ---
 
 ### 2.9.1 Ensure IAM password policy prevents password reuse
-**Platform:** AWS \
-**Rationale:** Preventing password reuse increases account resiliency against brute force login attempts. \
+**Platform:** AWS
+
+**Rationale:** Preventing password reuse increases account resiliency against brute force login attempts.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.9
 
 **Evidence**
@@ -2824,8 +2905,10 @@ Evidence or test output indicates that the IAM password policy prevents password
 ---
 
 ### 2.9.2 Ensure that a Custom Bad Password List is set to 'Enforce' for your Organization
-**Platform:** Azure \
-**Rationale:** Enabling this gives your organization further customization on what secure passwords are allowed. Setting a bad password list enables your organization to fine-tune its password policy further, depending on your needs. Removing easy-to-guess passwords increases the security of access to your Azure resources. \
+**Platform:** Azure
+
+**Rationale:** Enabling this gives your organization further customization on what secure passwords are allowed. Setting a bad password list enables your organization to fine-tune its password policy further, depending on your needs. Removing easy-to-guess passwords increases the security of access to your Azure resources.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.7
 
 **Evidence**
@@ -2867,8 +2950,10 @@ Ensuring that dormant accounts are disabled when they're no longer needed reduce
 ---
 
 ### 2.10.1 Ensure credentials unused for 45 days or greater are disabled 
-**Platform:** AWS \
-**Rationale:** Disabling or removing unnecessary credentials will reduce the window of opportunity for credentials associated with a compromised or abandoned account to be used. \
+**Platform:** AWS
+
+**Rationale:** Disabling or removing unnecessary credentials will reduce the window of opportunity for credentials associated with a compromised or abandoned account to be used.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.12
 
 **Evidence**
@@ -2927,8 +3012,10 @@ Evidence or test output indicates that no dormant credentials exist as defined b
 
 ---
 ### 2.10.2 Ensure Guest Users Are Reviewed on a Regular Basis 
-**Platform:** Azure \
-**Rationale:** Guest users in the Azure AD are generally required for collaboration purposes in Office 365, and may also be required for Azure functions in enterprises with multiple Azure tenants. Guest users are typically added outside your employee on-boarding/off-boarding process and could potentially be overlooked indefinitely, leading to a potential vulnerability. To prevent this, guest users should be reviewed on a regular basis. During this audit, guest users should also be determined to not have administrative privileges. \
+**Platform:** Azure
+
+**Rationale:** Guest users in the Azure AD are generally required for collaboration purposes in Office 365, and may also be required for Azure functions in enterprises with multiple Azure tenants. Guest users are typically added outside your employee on-boarding/off-boarding process and could potentially be overlooked indefinitely, leading to a potential vulnerability. To prevent this, guest users should be reviewed on a regular basis. During this audit, guest users should also be determined to not have administrative privileges.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.5
 
 **Evidence**
@@ -2991,8 +3078,10 @@ As a matter of good practice, users who can take administrative actions should u
 ---
 
 ### 2.11.1 Eliminate use of the 'root' user for administrative and daily tasks
-**Platform:** AWS \
-**Rationale:** The 'root user' has unrestricted access to and control over all account resources. Use of it is inconsistent with the principles of least privilege and separation of duties, and can lead to unnecessary harm due to error or account compromise. \
+**Platform:** AWS
+
+**Rationale:** The 'root user' has unrestricted access to and control over all account resources. Use of it is inconsistent with the principles of least privilege and separation of duties, and can lead to unnecessary harm due to error or account compromise.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.7
 
 **Evidence**
@@ -3032,8 +3121,10 @@ Evidence or test output indicates the root account is not being used for any pur
 ---
 
 ### 2.11.2 Ensure That 'Notify all admins when other admins reset their password?' is set to 'Yes'
-**Platform:** Azure \
-**Rationale:** Global Administrator accounts are sensitive. Any password reset activity notification, when sent to all Global Administrators, ensures that all Global administrators can passively confirm if such a reset is a common pattern within their group. For example, if all Global Administrators change their password every 30 days, any password reset activity before that may require administrator(s) to evaluate any unusual activity and confirm its origin. \
+**Platform:** Azure
+
+**Rationale:** Global Administrator accounts are sensitive. Any password reset activity notification, when sent to all Global Administrators, ensures that all Global administrators can passively confirm if such a reset is a common pattern within their group. For example, if all Global Administrators change their password every 30 days, any password reset activity before that may require administrator(s) to evaluate any unusual activity and confirm its origin.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.10
 
 **Evidence**
@@ -3057,8 +3148,10 @@ Evidence or test output indicates that `Notify all admins when other admins rese
 ---
 
 ### 2.11.3 Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes'
-**Platform:** Azure \
-**Rationale:** The Azure AD administrative portal has sensitive data and permission settings. All non-administrators should be prohibited from accessing any Azure AD data in the administration portal to avoid exposure. \
+**Platform:** Azure
+
+**Rationale:** The Azure AD administrative portal has sensitive data and permission settings. All non-administrators should be prohibited from accessing any Azure AD data in the administration portal to avoid exposure.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.17
 
 **Evidence**
@@ -3081,8 +3174,10 @@ Evidence or test output indicates that `Restrict access to Azure AD administrati
 ---
 
 ### 2.11.4 Ensure That No Custom Subscription Administrator Roles Exist
-**Platform:** Azure \
-**Rationale:** Classic subscription admin roles offer basic access management and include Account Administrator, Service Administrator, and Co-Administrators. It is recommended the least necessary permissions be given initially. Permissions can be added as needed by the account holder. This ensures the account holder cannot perform actions which were not intended. \
+**Platform:** Azure
+
+**Rationale:** Classic subscription admin roles offer basic access management and include Account Administrator, Service Administrator, and Co-Administrators. It is recommended the least necessary permissions be given initially. Permissions can be added as needed by the account holder. This ensures the account holder cannot perform actions which were not intended.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.23
 
 **Evidence**
@@ -3132,8 +3227,10 @@ Evidence or test output indicates that no custom subscription administrator role
 ---
 
 ### 2.11.5 Ensure That Service Account Has No Admin Privileges
-**Platform:** Google \
-**Rationale:** Service accounts represent service-level security of the Resources (application or a VM) which can be determined by the roles assigned to it. Enrolling ServiceAccount with Admin rights gives full access to an assigned application or a VM. A ServiceAccount Access holder can perform critical actions like delete, update change settings, etc. without user intervention. For this reason, it's recommended that service accounts not have Admin rights. \
+**Platform:** Google
+
+**Rationale:** Service accounts represent service-level security of the Resources (application or a VM) which can be determined by the roles assigned to it. Enrolling ServiceAccount with Admin rights gives full access to an assigned application or a VM. A ServiceAccount Access holder can perform critical actions like delete, update change settings, etc. without user intervention. For this reason, it's recommended that service accounts not have Admin rights.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.5
 
 **Evidence**
@@ -3194,8 +3291,10 @@ Centralizing makes administration simpler and therefore reduces risks related to
 ---
 
 ### 2.12.1 Ensure that Corporate Login Credentials are Used 
-**Platform:** Google \
-**Rationale:** It is recommended fully-managed corporate Google accounts be used for increased visibility, auditing, and controlling access to Cloud Platform resources. Email accounts based outside of the user's organization, such as personal accounts, should not be used for business purposes. \
+**Platform:** Google
+
+**Rationale:** It is recommended fully-managed corporate Google accounts be used for increased visibility, auditing, and controlling access to Cloud Platform resources. Email accounts based outside of the user's organization, such as personal accounts, should not be used for business purposes.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.1
 
 **Evidence**
@@ -3252,8 +3351,10 @@ Ensuring that access grants are revoked when they're no longer needed reduces th
 
 ---
 ### 2.13.1 Ensure that 'Number of days before users are asked to re-confirm their authentication information' is set to '90'
-**Platform:** Azure \
-**Rationale:** This setting is necessary if you have set up 'Require users to register when signing in option'. If authentication re-confirmation is disabled, registered users will never be prompted to re-confirm their existing authentication information. If the authentication information for a user changes, such as a phone number or email, then the password reset information for that user reverts to the previously registered authentication information. \
+**Platform:** Azure
+
+**Rationale:** This setting is necessary if you have set up 'Require users to register when signing in option'. If authentication re-confirmation is disabled, registered users will never be prompted to re-confirm their existing authentication information. If the authentication information for a user changes, such as a phone number or email, then the password reset information for that user reverts to the previously registered authentication information.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.8
 
 **Evidence**
@@ -3294,8 +3395,10 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 ---
 
 ### 2.14.1 Ensure That 'Number of methods required to reset' is set to '2'
-**Platform:** Azure \
-**Rationale:** A Self-service Password Reset (SSPR) through Azure Multi-factor Authentication (MFA) ensures the user's identity is confirmed using two separate methods of identification. With multiple methods set, an attacker would have to compromise both methods before they could maliciously reset a user's password. \
+**Platform:** Azure
+
+**Rationale:** A Self-service Password Reset (SSPR) through Azure Multi-factor Authentication (MFA) ensures the user's identity is confirmed using two separate methods of identification. With multiple methods set, an attacker would have to compromise both methods before they could maliciously reset a user's password.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.6
 
 **Evidence**
@@ -3319,8 +3422,10 @@ Evidence or test output indicates that the `Number of methods required to reset 
 ---
 
 ### 2.14.2 Ensure that 'Require Multi-Factor Authentication to register or join devices with Azure AD' is set to 'Yes' 
-**Platform:** Azure \
-**Rationale:** Multi-factor authentication is recommended when adding devices to Azure AD. When set to `Yes`, users who are adding devices from the internet must first use the second method of authentication before their device is successfully added to the directory. This ensures that rogue devices are not added to the domain using a compromised user account. _Note:_ Some Microsoft documentation suggests using conditional access policies for joining a domain from certain whitelisted networks or devices. Even with these in place, using Multi-Factor Authentication is still recommended, as it creates a process for review before joining the domain. \
+**Platform:** Azure
+
+**Rationale:** Multi-factor authentication is recommended when adding devices to Azure AD. When set to `Yes`, users who are adding devices from the internet must first use the second method of authentication before their device is successfully added to the directory. This ensures that rogue devices are not added to the domain using a compromised user account. _Note:_ Some Microsoft documentation suggests using conditional access policies for joining a domain from certain whitelisted networks or devices. Even with these in place, using Multi-Factor Authentication is still recommended, as it creates a process for review before joining the domain.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.22
 
 **Evidence**
@@ -3343,8 +3448,10 @@ Evidence or test output indicates that `Require MFA to register or join devices 
 ---
 
 ### 2.14.3 Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Privileged Users
-**Platform:** Azure \
-**Rationale:** Multi-factor authentication requires an individual to present a minimum of two separate forms of authentication before access is granted. Multi-factor authentication provides additional assurance that the individual attempting to gain access is who they claim to be. With multi-factor authentication, an attacker would need to compromise at least two different authentication mechanisms, increasing the difficulty of compromise and thus reducing the risk. \
+**Platform:** Azure
+
+**Rationale:** Multi-factor authentication requires an individual to present a minimum of two separate forms of authentication before access is granted. Multi-factor authentication provides additional assurance that the individual attempting to gain access is who they claim to be. With multi-factor authentication, an attacker would need to compromise at least two different authentication mechanisms, increasing the difficulty of compromise and thus reducing the risk.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.2
 
 **Evidence**
@@ -3422,8 +3529,10 @@ Evidence or test output indicates that `MFA Status is `Enabled` for all privileg
 ---
 
 ### 2.14.4 Ensure that 'Allow users to remember multi-factor authentication on devices they trust' is Disabled 
-**Platform:** Azure \
-**Rationale:** Remembering Multi-Factor Authentication (MFA) for devices and browsers allows users to have the option to bypass MFA for a set number of days after performing a successful sign-in using MFA. This can enhance usability by minimizing the number of times a user may need to perform two-step verification on the same device. However, if an account or device is compromised, remembering MFA for trusted devices may affect security. Hence, it is recommended that users not be allowed to bypass MFA. \
+**Platform:** Azure
+
+**Rationale:** Remembering Multi-Factor Authentication (MFA) for devices and browsers allows users to have the option to bypass MFA for a set number of days after performing a successful sign-in using MFA. This can enhance usability by minimizing the number of times a user may need to perform two-step verification on the same device. However, if an account or device is compromised, remembering MFA for trusted devices may affect security. Hence, it is recommended that users not be allowed to bypass MFA.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.4
 
 **Evidence**
@@ -3447,8 +3556,10 @@ Evidence or test output indicates that `Allow users to remember MFA on devices t
 ---
 
 ### 2.14.5 Ensure that A Multi-factor Authentication Policy Exists for All Users 
-**Platform:** Azure \
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel. \
+**Platform:** Azure
+
+**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.4
 
 **Evidence**
@@ -3472,8 +3583,10 @@ Evidence or test output indicates that a MFA policy exists for all users.
 ---
 
 ### 2.14.6 Ensure Multi-factor Authentication is Required for Risky Sign-ins 
-**Platform:** Azure \
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel. \
+**Platform:** Azure
+
+**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.5
 
 **Evidence**
@@ -3496,8 +3609,10 @@ Evidence or test output indicates that MFA is required for risky sign ins.
 ---
 
 ### 2.14.7 Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts 
-**Platform:** Google \
-**Rationale:** Multi-factor authentication requires more than one mechanism to authenticate a user. This secures user logins from attackers exploiting stolen or weak credentials. \
+**Platform:** Google
+
+**Rationale:** Multi-factor authentication requires more than one mechanism to authenticate a user. This secures user logins from attackers exploiting stolen or weak credentials.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.2
 
 **Evidence**
@@ -3519,8 +3634,10 @@ Evidence or test output indicates that MFA is enabled for all non service accoun
 ---
 
 ### 2.14.8 Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users 
-**Platform:** Azure \
-**Rationale:** Multi-factor authentication requires an individual to present a minimum of two separate forms of authentication before access is granted. Multi-factor authentication provides additional assurance that the individual attempting to gain access is who they claim to be. With multi-factor authentication, an attacker would need to compromise at least two different authentication mechanisms, increasing the difficulty of compromise and thus reducing the risk.** \
+**Platform:** Azure
+
+**Rationale:** Multi-factor authentication requires an individual to present a minimum of two separate forms of authentication before access is granted. Multi-factor authentication provides additional assurance that the individual attempting to gain access is who they claim to be. With multi-factor authentication, an attacker would need to compromise at least two different authentication mechanisms, increasing the difficulty of compromise and thus reducing the risk.**
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.3
 
 **Evidence**
@@ -3591,8 +3708,10 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 ---
 
 ### 2.15.1 Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups 
-**Platform:** Azure \
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative accounts to authenticated personnel. \
+**Platform:** Azure
+
+**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative accounts to authenticated personnel.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.3
 
 **Evidence**
@@ -3616,8 +3735,10 @@ Evidence or test output indicates that a MFA policy exists for administrative gr
 ---
 
 ### 2.15.2 Ensure Multi-factor Authentication is Required for Azure Management
-**Platform:** Azure \
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative actions and to prevent intruders from changing settings. \
+**Platform:** Azure
+
+**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative actions and to prevent intruders from changing settings.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.6
 
 **Evidence**
@@ -3658,8 +3779,10 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 ---
 
 ### 2.16.1 Ensure MFA is enabled for the 'root' user account 
-**Platform:** AWS \
-**Rationale:** Enabling MFA provides increased security for console access as it requires the authenticating principal to possess a device that emits a time-sensitive key and have knowledge of a credential. \
+**Platform:** AWS
+
+**Rationale:** Enabling MFA provides increased security for console access as it requires the authenticating principal to possess a device that emits a time-sensitive key and have knowledge of a credential.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.5
 
 **Evidence**
@@ -3718,8 +3841,10 @@ Centralizing makes administration simpler and therefore reduces risks related to
 ---
 
 ### 2.17.1 Ensure that 'Notify users on password resets?' is set to 'Yes'
-**Platform:** Azure \
-**Rationale:** User notification on password reset is a proactive way of confirming password reset activity. It helps the user to recognize unauthorized password reset activities. \
+**Platform:** Azure
+
+**Rationale:** User notification on password reset is a proactive way of confirming password reset activity. It helps the user to recognize unauthorized password reset activities.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.9
 
 **Evidence**
@@ -3760,8 +3885,10 @@ Standardizing the mechanism for granting cloud permissions reduces the risk of a
 ---
 
 ### 2.18.1 Ensure IAM Users Receive Permissions Only Through Groups
-**Platform:** AWS \
-**Rationale:** Assigning IAM policy only through groups unifies permissions management to a single, flexible layer consistent with organizational functional roles. By unifying permissions management, the likelihood of excessive permissions is reduced. \
+**Platform:** AWS
+
+**Rationale:** Assigning IAM policy only through groups unifies permissions management to a single, flexible layer consistent with organizational functional roles. By unifying permissions management, the likelihood of excessive permissions is reduced.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.15
 
 **Evidence**
@@ -3819,10 +3946,12 @@ It is necessary to first identify the systems and devices that need to be secure
 ---
 
 ### 3.1.1 Ensure Cloud Asset Inventory Is Enabled
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** The GCP resources and IAM policies captured by GCP Cloud Asset Inventory enables security analysis, resource change tracking, and compliance auditing.
 
-It is recommended that GCP Cloud Asset Inventory be enabled for all GCP projects. \
+It is recommended that GCP Cloud Asset Inventory be enabled for all GCP projects.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.13
 
 **Evidence**
@@ -3878,8 +4007,10 @@ Tools must be tuned to reduce the prevalence of both false negatives and false p
 ---
 
 ### 3.2.1 Ensure That 'Notify about alerts with the following severity' is Set to 'High' 
-**Platform:** Azure \
-**Rationale:** Enabling security alert emails ensures that security alert emails are received from Microsoft. This ensures that the right people are aware of any potential security issues and are able to mitigate the risk. \
+**Platform:** Azure
+
+**Rationale:** Enabling security alert emails ensures that security alert emails are received from Microsoft. This ensures that the right people are aware of any potential security issues and are able to mitigate the risk.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.20
 
 **Evidence**
@@ -3930,8 +4061,10 @@ As time goes by -- and processes and people change within an organization -- it'
 ---
 
 ### 3.3.1 Ensure That 'All users with the following roles' is set to 'Owner'
-**Platform:** Azure \
-**Rationale:** Enabling security alert emails to subscription owners ensures that they receive security alert emails from Microsoft. This ensures that they are aware of any potential security issues and can mitigate the risk in a timely fashion. \
+**Platform:** Azure
+
+**Rationale:** Enabling security alert emails to subscription owners ensures that they receive security alert emails from Microsoft. This ensures that they are aware of any potential security issues and can mitigate the risk in a timely fashion.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.18
 
 **Evidence**
@@ -3965,8 +4098,10 @@ Evidence or test output indicates that people with the role "owner" are subscrib
 ---
 
 ### 3.3.2 Ensure 'Additional email addresses' is Configured with a Security Contact Email
-**Platform:** Azure \
-**Rationale:** Microsoft Defender for Cloud emails the Subscription Owner to notify them about security alerts. Adding your Security Contact's email address to the 'Additional email addresses' field ensures that your organization's Security Team is included in these alerts. This ensures that the proper people are aware of any potential compromise in order to mitigate the risk in a timely fashion. \
+**Platform:** Azure
+
+**Rationale:** Microsoft Defender for Cloud emails the Subscription Owner to notify them about security alerts. Adding your Security Contact's email address to the 'Additional email addresses' field ensures that your organization's Security Team is included in these alerts. This ensures that the proper people are aware of any potential compromise in order to mitigate the risk in a timely fashion.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.19
 
 **Evidence**
@@ -4019,8 +4154,10 @@ Organizations need reliable forensic information about access, modification, and
 ---
 
 ### 3.4.1 Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket
-**Platform:** AWS \
-**Rationale:** By enabling S3 bucket logging on target S3 buckets, it is possible to capture all events which may affect objects within any target buckets. Configuring logs to be placed in a separate bucket allows access to log information which can be useful in security and incident response workflows. \
+**Platform:** AWS
+
+**Rationale:** By enabling S3 bucket logging on target S3 buckets, it is possible to capture all events which may affect objects within any target buckets. Configuring logs to be placed in a separate bucket allows access to log information which can be useful in security and incident response workflows.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.6
 
 **Evidence**
@@ -4102,8 +4239,10 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 ---
 
 ### 3.5.1 Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible 
-**Platform:** AWS \
-**Rationale:** Allowing public access to CloudTrail log content may aid an adversary in identifying weaknesses in the affected account's use or configuration. \
+**Platform:** AWS
+
+**Rationale:** Allowing public access to CloudTrail log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.3
 
 **Evidence**
@@ -4181,8 +4320,10 @@ Evidence or test output indicates that the CloudTrail destination bucket(s) do n
 ---
 
 ### 3.5.2 Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible
-**Platform:** Azure \
-**Rationale:** Allowing public access to activity log content may aid an adversary in identifying weaknesses in the affected account's use or configuration. \
+**Platform:** Azure
+
+**Rationale:** Allowing public access to activity log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.1.3
 
 **Evidence**
@@ -4290,8 +4431,10 @@ This CIS Control provides guidance for securing hardware and software. As delive
 ---
 
 ### 3.6.1 Ensure Any of the ASC Default Policy Settings are Not Set to 'Disabled'
-**Platform:** Azure \
-**Rationale:** A security policy defines the desired configuration of your workloads and helps ensure compliance with company or regulatory security requirements. ASC Default policy is associated with every subscription by default. ASC default policy assignment is a set of security recommendations based on best practices. Enabling recommendations in ASC default policy ensures that Azure security center provides the ability to monitor all of the supported recommendations and optionally allow automated action for a few of the supported recommendations. \
+**Platform:** Azure
+
+**Rationale:** A security policy defines the desired configuration of your workloads and helps ensure compliance with company or regulatory security requirements. ASC Default policy is associated with every subscription by default. ASC default policy assignment is a set of security recommendations based on best practices. Enabling recommendations in ASC default policy ensures that Azure security center provides the ability to monitor all of the supported recommendations and optionally allow automated action for a few of the supported recommendations.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.14
 
 **Evidence**
@@ -4361,7 +4504,8 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 ---
 
 ### 3.7.1 Ensure that Microsoft Defender Recommendation for 'Apply system updates' status is 'Completed'
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Windows and Linux virtual machines should be kept updated to:
 
 
@@ -4370,7 +4514,8 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 * Improve an OS or application’s general stability
 * Fix a security vulnerability
 
-The Azure Security Center retrieves a list of available security and critical updates from Windows Update or Windows Server Update Services (WSUS), depending on which service is configured on a Windows VM. The security center also checks for the latest updates in Linux systems. If a VM is missing a system update, the security center will recommend system updates be applied. \
+The Azure Security Center retrieves a list of available security and critical updates from Windows Update or Windows Server Update Services (WSUS), depending on which service is configured on a Windows VM. The security center also checks for the latest updates in Linux systems. If a VM is missing a system update, the security center will recommend system updates be applied.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.13
 
 **Evidence**
@@ -4413,8 +4558,10 @@ Tools can help to identify vulnerabilities that require remediation.
 ---
 
 ### 3.8.1 Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On'
-**Platform:** Azure \
-**Rationale:** When `Log Analytics agent for Azure VMs` is turned on, Microsoft Defender for Cloud provisions the Microsoft Monitoring Agent on all existing supported Azure virtual machines and any new ones that are created. The Microsoft Monitoring Agent scans for various security-related configurations and events such as system updates, OS vulnerabilities, endpoint protection, and provides alerts. \
+**Platform:** Azure
+
+**Rationale:** When `Log Analytics agent for Azure VMs` is turned on, Microsoft Defender for Cloud provisions the Microsoft Monitoring Agent on all existing supported Azure virtual machines and any new ones that are created. The Microsoft Monitoring Agent scans for various security-related configurations and events such as system updates, OS vulnerabilities, endpoint protection, and provides alerts.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.15
 
 **Evidence**
@@ -4480,10 +4627,12 @@ Logs may contain indications of compromise, so it's important to review logs reg
 ---
 
 ### 3.9.1 Ensure management console sign-in without MFA is monitored
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-Monitoring for single-factor console logins will increase visibility into accounts that are not protected by MFA. These types of accounts are more susceptible to compromise and unauthorized access. \
+Monitoring for single-factor console logins will increase visibility into accounts that are not protected by MFA. These types of accounts are more susceptible to compromise and unauthorized access.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.2
 
 **Evidence**
@@ -4601,10 +4750,12 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.2 Ensure usage of 'root' account is monitored 
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** Monitoring for 'root' account logins will provide visibility into the use of a fully privileged account and an opportunity to reduce the use of it.
 
-Cloud Watch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting. \
+Cloud Watch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.3
 
 **Evidence**
@@ -4713,10 +4864,12 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.3 Ensure IAM policy changes are monitored
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-Monitoring changes to IAM policies will help ensure authentication and authorization controls remain intact. \
+Monitoring changes to IAM policies will help ensure authentication and authorization controls remain intact.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.4
 
 **Evidence**
@@ -4825,8 +4978,10 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.4 Ensure CloudTrail configuration changes are monitored
-**Platform:** AWS \
-**Rationale:** Monitoring changes to CloudTrail's configuration will help ensure sustained visibility to activities performed in the AWS account. \
+**Platform:** AWS
+
+**Rationale:** Monitoring changes to CloudTrail's configuration will help ensure sustained visibility to activities performed in the AWS account.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.5
 
 **Evidence**
@@ -4926,10 +5081,12 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.5 Ensure S3 bucket policy changes are monitored
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-Monitoring changes to S3 bucket policies may reduce time to detect and correct permissive policies on sensitive S3 buckets. \
+Monitoring changes to S3 bucket policies may reduce time to detect and correct permissive policies on sensitive S3 buckets.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.8
 
 **Evidence**
@@ -5029,10 +5186,12 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.6 Ensure changes to network gateways are monitored
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-Monitoring changes to network gateways will help ensure that all ingress/egress traffic traverses the VPC border via a controlled path. \
+Monitoring changes to network gateways will help ensure that all ingress/egress traffic traverses the VPC border via a controlled path.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.12
 
 **Evidence**
@@ -5132,10 +5291,12 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.7 Ensure route table changes are monitored 
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-Monitoring changes to route tables will help ensure that all VPC traffic flows through an expected path and prevent any accidental or intentional modifications that may lead to uncontrolled network traffic. An alarm should be triggered every time an AWS API call is performed to create, replace, delete, or disassociate a Route Table. \
+Monitoring changes to route tables will help ensure that all VPC traffic flows through an expected path and prevent any accidental or intentional modifications that may lead to uncontrolled network traffic. An alarm should be triggered every time an AWS API call is performed to create, replace, delete, or disassociate a Route Table.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.13
 
 **Evidence**
@@ -5235,10 +5396,12 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.8 Ensure VPC changes are monitored
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-VPCs in AWS are logically isolated virtual networks that can be used to launch AWS resources. Monitoring changes to VPC configuration will help ensure VPC traffic flow is not getting impacted. Changes to VPCs can impact network accessibility from the public internet and additionally impact VPC traffic flow to and from resources launched in the VPC. \
+VPCs in AWS are logically isolated virtual networks that can be used to launch AWS resources. Monitoring changes to VPC configuration will help ensure VPC traffic flow is not getting impacted. Changes to VPCs can impact network accessibility from the public internet and additionally impact VPC traffic flow to and from resources launched in the VPC.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.14
 
 **Evidence**
@@ -5338,10 +5501,12 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.9 Ensure AWS Organizations changes are monitored
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-Monitoring AWS Organizations changes can help you prevent any unwanted, accidental or intentional modifications that may lead to unauthorized access or other security breaches. This monitoring technique helps you to ensure that any unexpected changes performed within your AWS Organizations can be investigated and any unwanted changes can be rolled back. \
+Monitoring AWS Organizations changes can help you prevent any unwanted, accidental or intentional modifications that may lead to unauthorized access or other security breaches. This monitoring technique helps you to ensure that any unexpected changes performed within your AWS Organizations can be investigated and any unwanted changes can be rolled back.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.15
 
 **Evidence**
@@ -5446,7 +5611,8 @@ Evidence or test output indicates that there is at least one active multi-region
 ---
 
 ### 3.9.10 Ensure That Cloud Audit Logging Is Configured Properly
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Cloud Audit Logging maintains two audit logs for each project, folder, and organization: Admin Activity and Data Access.
 
 
@@ -5468,7 +5634,8 @@ It is recommended to have an effective default audit config configured in such a
 
 1. logtype is set to DATA_READ (to log user activity tracking) and DATA_WRITES (to log changes/tampering to user data).
 2. audit config is enabled for all the services supported by the Data Access audit logs feature.
-3. Logs should be captured for all users, i.e., there are no exempted users in any of the audit config sections. This will ensure overriding the audit config will not contradict the requirement. \
+3. Logs should be captured for all users, i.e., there are no exempted users in any of the audit config sections. This will ensure overriding the audit config will not contradict the requirement.
+
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.1
 
@@ -5524,10 +5691,12 @@ Evidence or test output indicates that cloud audit logging is enabled comprehens
 ---
 
 ### 3.9.11 Ensure That Cloud DNS Logging Is Enabled for All VPC Networks
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Security monitoring and forensics cannot depend solely on IP addresses from VPC flow logs, especially when considering the dynamic IP usage of cloud resources, HTTP virtual host routing, and other technology that can obscure the DNS name used by a client from the IP address. Monitoring of Cloud DNS logs provides visibility to DNS names requested by the clients within the VPC. These logs can be monitored for anomalous domain names, evaluated against threat intelligence, and
 
-Note: For full capture of DNS, firewall must block egress UDP/53 (DNS) and TCP/443 (DNS over HTTPS) to prevent client from using external DNS name server for resolution. \
+Note: For full capture of DNS, firewall must block egress UDP/53 (DNS) and TCP/443 (DNS over HTTPS) to prevent client from using external DNS name server for resolution.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.12
 
 **Evidence**
@@ -5581,8 +5750,10 @@ Having log files of what actions have taken place by users and also system event
 ---
 
 ### 3.10.1 Ensure That Sinks Are Configured for All Log Entries
-**Platform:** Google \
-**Rationale:** Log entries are held in Cloud Logging. To aggregate logs, export them to a SIEM. To keep them longer, it is recommended to set up a log sink. Exporting involves writing a filter that selects the log entries to export, and choosing a destination in Cloud Storage, BigQuery, or Cloud Pub/Sub. The filter and destination are held in an object called a sink. To ensure all log entries are exported to sinks, ensure that there is no filter configured for a sink. Sinks can be created in projects, organizations, folders, and billing accounts. \
+**Platform:** Google
+
+**Rationale:** Log entries are held in Cloud Logging. To aggregate logs, export them to a SIEM. To keep them longer, it is recommended to set up a log sink. Exporting involves writing a filter that selects the log entries to export, and choosing a destination in Cloud Storage, BigQuery, or Cloud Pub/Sub. The filter and destination are held in an object called a sink. To ensure all log entries are exported to sinks, ensure that there is no filter configured for a sink. Sinks can be created in projects, organizations, folders, and billing accounts.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.2
 
 **Evidence**
@@ -5624,7 +5795,8 @@ Evidence or test output indicates that log sinks are configured for all log entr
 ---
 
 ### 3.10.2 Ensure Log Metric Filter and Alerts Exist for Project Ownership Assignments/Changes
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Project ownership has the highest level of privileges on a project. To avoid misuse of project resources, the project ownership assignment/change actions mentioned above should be monitored and alerted to concerned recipients.
 
 
@@ -5725,7 +5897,8 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 ---
 
 ### 3.10.3 Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Admin activity and data access logs produced by cloud audit logging enable security analysis, resource change tracking, and compliance auditing.
 
 Configuring the metric filter and alerts for audit configuration changes ensures the recommended state of audit configuration is maintained so that all activities in the project are audit-able at any point in time.
@@ -5813,8 +5986,10 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 ---
 
 ### 3.10.4 Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes
-**Platform:** Google \
-**Rationale:** Google Cloud IAM provides predefined roles that give granular access to specific Google Cloud Platform resources and prevent unwanted access to other resources. However, to cater to organization-specific needs, Cloud IAM also provides the ability to create custom roles. Project owners and administrators with the Organization Role Administrator role or the IAM Role Administrator role can create custom roles. Monitoring role creation, deletion and updating activities will help in identifying any over-privileged role at early stages. \
+**Platform:** Google
+
+**Rationale:** Google Cloud IAM provides predefined roles that give granular access to specific Google Cloud Platform resources and prevent unwanted access to other resources. However, to cater to organization-specific needs, Cloud IAM also provides the ability to create custom roles. Project owners and administrators with the Organization Role Administrator role or the IAM Role Administrator role can create custom roles. Monitoring role creation, deletion and updating activities will help in identifying any over-privileged role at early stages.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.6
 
 **Evidence**
@@ -5919,7 +6094,8 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 ---
 
 ### 3.11.1 Ensure CloudTrail is enabled in all regions
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** The AWS API call history produced by CloudTrail enables security analysis, resource change tracking, and compliance auditing. Additionally,
 
 
@@ -5981,8 +6157,10 @@ Evidence or test output indicates that CloudTrail is enabled in all regions.
 ---
 
 ### 3.11.2 Ensure CloudTrail trails are integrated with CloudWatch Logs
-**Platform:** AWS \
-**Rationale:** Sending CloudTrail logs to CloudWatch Logs will facilitate real-time and historic activity logging based on user, API, resource, and IP address, and provides opportunity to establish alarms and notifications for anomalous or sensitive account activity. \
+**Platform:** AWS
+
+**Rationale:** Sending CloudTrail logs to CloudWatch Logs will facilitate real-time and historic activity logging based on user, API, resource, and IP address, and provides opportunity to establish alarms and notifications for anomalous or sensitive account activity.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.4
 
 **Evidence**
@@ -6036,8 +6214,10 @@ Evidence or test output indicates that CloudTrail trails are integrated with Clo
 ---
 
 ### 3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data
-**Platform:** Azure \
-**Rationale:** A lack of monitoring reduces the visibility into the data plane, and therefore an organization's ability to detect reconnaissance, authorization attempts or other malicious activity. Unlike Activity Logs, Resource Logs are not enabled by default. Specifically, without monitoring it would be impossible to tell which entities had accessed a data store that was breached. In addition, alerts for failed attempts to access APIs for Web Services or Databases are only possible when logging is enabled. \
+**Platform:** Azure
+
+**Rationale:** A lack of monitoring reduces the visibility into the data plane, and therefore an organization's ability to detect reconnaissance, authorization attempts or other malicious activity. Unlike Activity Logs, Resource Logs are not enabled by default. Specifically, without monitoring it would be impossible to tell which entities had accessed a data store that was breached. In addition, alerts for failed attempts to access APIs for Web Services or Databases are only possible when logging is enabled.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.4
 
 **Evidence**
@@ -6102,8 +6282,10 @@ Evidence or test output indicates that Azure Monitor Resource Logging is enabled
 ---
 
 ### 3.11.4 Ensure that logging for Azure Key Vault is 'Enabled'
-**Platform:** Azure \
-**Rationale:** Monitoring how and when key vaults are accessed, and by whom, enables an audit trail of interactions with confidential information, keys, and certificates managed by Azure Keyvault. Enabling logging for Key Vault saves information in an Azure storage account which the user provides. This creates a new container named insights-logs-auditevent automatically for the specified storage account. This same storage account can be used for collecting logs for multiple key vaults. \
+**Platform:** Azure
+
+**Rationale:** Monitoring how and when key vaults are accessed, and by whom, enables an audit trail of interactions with confidential information, keys, and certificates managed by Azure Keyvault. Enabling logging for Key Vault saves information in an Azure storage account which the user provides. This creates a new container named insights-logs-auditevent automatically for the specified storage account. This same storage account can be used for collecting logs for multiple key vaults.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.1.5
 
 **Evidence**
@@ -6182,8 +6364,10 @@ Evidence or test output indicates that logging for Azure Key Vault is enabled.
 ---
 
 ### 3.11.5 Ensure that Activity Log Alert exists for Create Policy Assignment
-**Platform:** Azure \
-**Rationale:** Monitoring for create policy assignment events gives insight into changes done in "Azure policy - assignments" and can reduce the time it takes to detect unsolicited changes. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for create policy assignment events gives insight into changes done in "Azure policy - assignments" and can reduce the time it takes to detect unsolicited changes.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.1
 
 **Evidence**
@@ -6233,8 +6417,10 @@ Evidence or test output indicates that an activity log alert exists for Create P
 ---
 
 ### 3.11.6 Ensure that Activity Log Alert exists for Delete Policy Assignment
-**Platform:** Azure \
-**Rationale:** Monitoring for delete policy assignment events gives insight into changes done in "azure policy - assignments" and can reduce the time it takes to detect unsolicited changes. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for delete policy assignment events gives insight into changes done in "azure policy - assignments" and can reduce the time it takes to detect unsolicited changes.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.2
 
 **Evidence**
@@ -6282,8 +6468,10 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 ---
 
 ### 3.11.7 Ensure that Activity Log Alert exists for Create or Update Network Security Group 
-**Platform:** Azure \
-**Rationale:** Monitoring for Create or Update Network Security Group events gives insight into network access changes and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for Create or Update Network Security Group events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.3
 
 **Evidence**
@@ -6331,8 +6519,10 @@ Evidence or test output indicates that an activity log alert exists for Create o
 ---
 
 ### 3.11.8 Ensure that Activity Log Alert exists for Delete Network Security Group
-**Platform:** Azure \
-**Rationale:** Monitoring for "Delete Network Security Group" events gives insight into network access changes and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for "Delete Network Security Group" events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.4
 
 **Evidence**
@@ -6380,8 +6570,10 @@ Evidence or test output indicates that an activity log alert exists for Delete N
 ---
 
 ### 3.11.9 Ensure that Activity Log Alert exists for Create or Update Security Solution
-**Platform:** Azure \
-**Rationale:** Monitoring for Create or Update Security Solution events gives insight into changes to the active security solutions and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for Create or Update Security Solution events gives insight into changes to the active security solutions and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.5
 
 **Evidence**
@@ -6429,8 +6621,10 @@ Evidence or test output indicates that an activity log alert exists for Create o
 ---
 
 ### 3.11.10 Ensure that Activity Log Alert exists for Delete Security Solution
-**Platform:** Azure \
-**Rationale:** Monitoring for Delete Security Solution events gives insight into changes to the active security solutions and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for Delete Security Solution events gives insight into changes to the active security solutions and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.6
 
 **Evidence**
@@ -6478,8 +6672,10 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 ---
 
 ### 3.11.11 Ensure that Activity Log Alert exists for Create or Update SQL Server Firewall Rule 
-**Platform:** Azure \
-**Rationale:** Monitoring for Create or Update SQL Server Firewall Rule events gives insight into network access changes and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for Create or Update SQL Server Firewall Rule events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.7
 
 **Evidence**
@@ -6527,8 +6723,10 @@ Evidence or test output indicates that an activity log alert exists for Create o
 ---
 
 ### 3.11.12 Ensure that Activity Log Alert exists for Delete SQL Server Firewall Rule
-**Platform:** Azure \
-**Rationale:** Monitoring for Delete SQL Server Firewall Rule events gives insight into SQL network access changes and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for Delete SQL Server Firewall Rule events gives insight into SQL network access changes and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.8
 
 **Evidence**
@@ -6576,8 +6774,10 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 ---
 
 ### 3.11.13 Ensure that Activity Log Alert exists for Create or Update Public IP Address rule
-**Platform:** Azure \
-**Rationale:** Monitoring for Create or Update Public IP Address events gives insight into network access changes and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for Create or Update Public IP Address events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.9
 
 **Evidence**
@@ -6625,8 +6825,10 @@ Evidence or test output indicates that an activity log alert exists for Create o
 ---
 
 ### 3.11.14 Ensure that Activity Log Alert exists for Delete Public IP Address rule
-**Platform:** Azure \
-**Rationale:** Monitoring for Delete Public IP Address events gives insight into network access changes and may reduce the time it takes to detect suspicious activity. \
+**Platform:** Azure
+
+**Rationale:** Monitoring for Delete Public IP Address events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.10
 
 **Evidence**
@@ -6696,8 +6898,10 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 ---
 
 ### 4.1.1 Ensure No HTTPS or SSL Proxy Load Balancers Permit SSL Policies With Weak Cipher Suites
-**Platform:** Google \
-**Rationale:** Load balancers are used to efficiently distribute traffic across multiple servers. Both SSL proxy and HTTPS load balancers are external load balancers, meaning they distribute traffic from the Internet to a GCP network. GCP customers can configure load balancer SSL policies with a minimum TLS version (1.0, 1.1, or 1.2) that clients can use to establish a connection, along with a profile (Compatible, Modern, Restricted, or Custom) that specifies permissible cipher suites. To comply with users using outdated protocols, GCP load balancers can be configured to permit insecure cipher suites. In fact, the GCP default SSL policy uses a minimum TLS version of 1.0 and a Compatible profile, which allows the widest range of insecure cipher suites. As a result, it is easy for customers to configure a load balancer without even knowing that they are permitting outdated cipher suites. \
+**Platform:** Google
+
+**Rationale:** Load balancers are used to efficiently distribute traffic across multiple servers. Both SSL proxy and HTTPS load balancers are external load balancers, meaning they distribute traffic from the Internet to a GCP network. GCP customers can configure load balancer SSL policies with a minimum TLS version (1.0, 1.1, or 1.2) that clients can use to establish a connection, along with a profile (Compatible, Modern, Restricted, or Custom) that specifies permissible cipher suites. To comply with users using outdated protocols, GCP load balancers can be configured to permit insecure cipher suites. In fact, the GCP default SSL policy uses a minimum TLS version of 1.0 and a Compatible profile, which allows the widest range of insecure cipher suites. As a result, it is easy for customers to configure a load balancer without even knowing that they are permitting outdated cipher suites.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.9
 
 **Evidence**
@@ -6823,8 +7027,10 @@ This CIS Control provides guidance for securing hardware and software. As delive
 ---
 
 ### 4.2.1 Ensure Legacy Networks Do Not Exist for Older Projects
-**Platform:** Google \
-**Rationale:** Legacy networks have a single network IPv4 prefix range and a single gateway IP address for the whole network. The network is global in scope and spans all cloud regions. Subnetworks cannot be created in a legacy network and are unable to switch from legacy to auto or custom subnet networks. Legacy networks can have an impact for high network traffic projects and are subject to a single point of contention or failure. \
+**Platform:** Google
+
+**Rationale:** Legacy networks have a single network IPv4 prefix range and a single gateway IP address for the whole network. The network is global in scope and spans all cloud regions. Subnetworks cannot be created in a legacy network and are unable to switch from legacy to auto or custom subnet networks. Legacy networks can have an impact for high network traffic projects and are subject to a single point of contention or failure.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.2
 
 **Evidence**
@@ -6863,8 +7069,9 @@ Evidence or test output indicates that no project contains a network having the 
 ---
 
 ### 4.2.2 Ensure That DNSSEC Is Enabled for Cloud DNS
-**Platform:** Google \
-**Rationale:** Domain Name System Security Extensions (DNSSEC) adds security to the DNS protocol by enabling DNS responses to be validated. Having a trustworthy DNS that translates a domain name like www.example.com into its associated IP address is an increasingly important building block of today’s web-based applications. Attackers can hijack this process of domain/IP lookup and redirect users to a malicious site through DNS hijacking and man-in-the-middle attacks. DNSSEC helps mitigate the risk of such attacks by cryptographically signing DNS records. As a result, it prevents attackers from issuing fake DNS responses that may misdirect browsers to nefarious websites. \
+**Platform:** Google
+**Rationale:** Domain Name System Security Extensions (DNSSEC) adds security to the DNS protocol by enabling DNS responses to be validated. Having a trustworthy DNS that translates a domain name like www.example.com into its associated IP address is an increasingly important building block of today’s web-based applications. Attackers can hijack this process of domain/IP lookup and redirect users to a malicious site through DNS hijacking and man-in-the-middle attacks. DNSSEC helps mitigate the risk of such attacks by cryptographically signing DNS records. As a result, it prevents attackers from issuing fake DNS responses that may misdirect browsers to nefarious websites.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.3
 
 **Evidence**
@@ -6910,10 +7117,12 @@ Evidence or test output indicates that DNSSEC is enabled for all managed zones h
 ---
 
 ### 4.2.3 Ensure That RSASHA1 Is Not Used for the Key-Signing Key in Cloud DNS DNSSEC
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Domain Name System Security Extensions (DNSSEC) algorithm numbers in this registry may be used in CERT RRs. Zonesigning (DNSSEC) and transaction security mechanisms (SIG(0) and TSIG) make use of particular subsets of these algorithms.
 
-The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the user can select the DNSSEC signing algorithms and the denial-of-existence type. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If there is a need to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings. \
+The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the user can select the DNSSEC signing algorithms and the denial-of-existence type. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If there is a need to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.4
 
 **Evidence**
@@ -6932,10 +7141,12 @@ Evidence or test output indicates that RSASHA1 is not used for the key-signing k
 ---
 
 ### 4.2.4 Ensure That RSASHA1 Is Not Used for the Zone-Signing Key in Cloud DNS DNSSEC
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** DNSSEC algorithm numbers in this registry may be used in CERT RRs. Zone signing (DNSSEC) and transaction security mechanisms (SIG(0) and TSIG) make use of particular subsets of these algorithms.
 
-The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the DNSSEC signing algorithms and the denial-of-existence type can be selected. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If the need exists to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings. \
+The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the DNSSEC signing algorithms and the denial-of-existence type can be selected. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If the need exists to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.5
 
 **Evidence**
@@ -6956,8 +7167,10 @@ Evidence or test output indicates that RSASHA1 is not used for the zone-signing 
 
 ---
 ### 4.2.5 Ensure that EC2 Metadata Service only allows IMDSv2
-**Platform:** AWS \
-**Rationale:** Allowing Version 1 of the service may open EC2 instances to Server-Side Request Forgery (SSRF) attacks, so Amazon recommends utilizing Version 2 for better instance security. \
+**Platform:** AWS
+
+**Rationale:** Allowing Version 1 of the service may open EC2 instances to Server-Side Request Forgery (SSRF) attacks, so Amazon recommends utilizing Version 2 for better instance security.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.6
 
 **Evidence**
@@ -7010,8 +7223,10 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 ---
 
 ### 4.3.1 Ensure that RDP access from the Internet is evaluated and restricted
-**Platform:** Azure \
-**Rationale:** The potential security problem with using RDP over the Internet is that attackers can use various brute force techniques to gain access to Azure Virtual Machines. Once the attackers gain access, they can use a virtual machine as a launch point for compromising other machines on an Azure Virtual Network or even attack networked devices outside of Azure. \
+**Platform:** Azure
+
+**Rationale:** The potential security problem with using RDP over the Internet is that attackers can use various brute force techniques to gain access to Azure Virtual Machines. Once the attackers gain access, they can use a virtual machine as a launch point for compromising other machines on an Azure Virtual Network or even attack networked devices outside of Azure.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 6.1
 
 **Evidence**
@@ -7056,8 +7271,10 @@ Evidence or test output indicates that no network security group is configured t
 ---
 
 ### 4.3.2 Ensure that SSH access from the Internet is evaluated and restricted
-**Platform:** Azure \
-**Rationale:** The potential security problem with using SSH over the Internet is that attackers can use various brute force techniques to gain access to Azure Virtual Machines. Once the attackers gain access, they can use a virtual machine as a launch point for compromising other machines on the Azure Virtual Network or even attack networked devices outside of Azure. \
+**Platform:** Azure
+
+**Rationale:** The potential security problem with using SSH over the Internet is that attackers can use various brute force techniques to gain access to Azure Virtual Machines. Once the attackers gain access, they can use a virtual machine as a launch point for compromising other machines on the Azure Virtual Network or even attack networked devices outside of Azure.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 6.2
 
 **Evidence**
@@ -7102,8 +7319,10 @@ Evidence or test output indicates that no network security group is configured t
 ---
 
 ### 4.3.3 Ensure That SSH Access Is Restricted From the Internet
-**Platform:** Google \
-**Rationale:** GCP `Firewall Rules` within a `VPC Network` apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `SSH` with the default `Port 22`. Generic access from the Internet to a specific IP Range needs to be restricted. \
+**Platform:** Google
+
+**Rationale:** GCP `Firewall Rules` within a `VPC Network` apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `SSH` with the default `Port 22`. Generic access from the Internet to a specific IP Range needs to be restricted.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.6
 
 **Evidence**
@@ -7145,8 +7364,10 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 ---
 
 ### 4.3.4 Ensure That RDP Access Is Restricted From the Internet
-**Platform:** Google \
-**Rationale:** GCP `Firewall Rules` within a `VPC Network`. These rules apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `RDP` with the default `Port 3389`. Generic access from the Internet to a specific IP Range should be restricted. \
+**Platform:** Google
+
+**Rationale:** GCP `Firewall Rules` within a `VPC Network`. These rules apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `RDP` with the default `Port 3389`. Generic access from the Internet to a specific IP Range should be restricted.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.7
 
 **Evidence**
@@ -7188,8 +7409,10 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 ---
 
 ### 4.3.5 Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports
-**Platform:** AWS \
-**Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise. \
+**Platform:** AWS
+
+**Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.1
 
 **Evidence**
@@ -7217,8 +7440,10 @@ Evidence or test output indicates that no Network ACL allows ingress to port 22 
 ---
 
 ### 4.3.6 Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports
-**Platform:** AWS \
-**Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise. \
+**Platform:** AWS
+
+**Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.2
 
 **Evidence**
@@ -7244,8 +7469,10 @@ Evidence or test output indicates that no security group allows ingress to port 
 ---
 
 ### 4.3.7 Ensure no security groups allow ingress from ::/0 to remote server administration ports
-**Platform:** AWS \
-**Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise. \
+**Platform:** AWS
+
+**Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.3
 
 **Evidence**
@@ -7293,8 +7520,10 @@ Organizations need to establish and maintain data recovery practices sufficient 
 ---
 
 ### 5.1.1 Ensure Soft Delete is Enabled for Azure Containers and Blob Storage
-**Platform:** Azure \
-**Rationale:** Containers and Blob Storage data can be incorrectly deleted. An attacker/malicious user may do this deliberately in order to cause disruption. Deleting an Azure Storage blob causes immediate data loss. Enabling this configuration for Azure storage ensures that even if blobs/data were deleted from the storage account, Blobs/data objects are recoverable for a particular time which is set in the "Retention policies," ranging from 7 days to 365 days. \
+**Platform:** Azure
+
+**Rationale:** Containers and Blob Storage data can be incorrectly deleted. An attacker/malicious user may do this deliberately in order to cause disruption. Deleting an Azure Storage blob causes immediate data loss. Enabling this configuration for Azure storage ensures that even if blobs/data were deleted from the storage account, Blobs/data objects are recoverable for a particular time which is set in the "Retention policies," ranging from 7 days to 365 days.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.11
 
 **Evidence**
@@ -7355,8 +7584,10 @@ Malicious actors can exploit insecure services, poor firewall and network config
 ---
 
 ### 5.2.1 Ensure Default Network Access Rule for Storage Accounts is Set to Deny
-**Platform:** Azure \
-**Rationale:** Storage accounts should be configured to deny access to traffic from all networks (including internet traffic). Access can be granted to traffic from specific Azure Virtual networks, allowing a secure network boundary for specific applications to be built. Access can also be granted to public internet IP address ranges to enable connections from specific internet or on-premises clients. When network rules are configured, only applications from allowed networks can access a storage account. When calling from an allowed network, applications continue to require proper authorization (a valid access key or SAS token) to access the storage account. \
+**Platform:** Azure
+
+**Rationale:** Storage accounts should be configured to deny access to traffic from all networks (including internet traffic). Access can be granted to traffic from specific Azure Virtual networks, allowing a secure network boundary for specific applications to be built. Access can also be granted to public internet IP address ranges to enable connections from specific internet or on-premises clients. When network rules are configured, only applications from allowed networks can access a storage account. When calling from an allowed network, applications continue to require proper authorization (a valid access key or SAS token) to access the storage account.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.8
 
 **Evidence**
@@ -7431,8 +7662,10 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 ---
 
 ### 5.3.1 Ensure that 'Secure transfer required' is set to 'Enabled'
-**Platform:** Azure \
-**Rationale:** The secure transfer option enhances the security of a storage account by only allowing requests to the storage account by a secure connection. For example, when calling REST APIs to access storage accounts, the connection must use HTTPS. Any requests using HTTP will be rejected when 'secure transfer required' is enabled. When using the Azure files service, connection without encryption will fail, including scenarios using SMB 2.1, SMB 3.0 without encryption, and some flavors of the Linux SMB client. Because Azure storage doesn’t support HTTPS for custom domain names, this option is not applied when using a custom domain name. \
+**Platform:** Azure
+
+**Rationale:** The secure transfer option enhances the security of a storage account by only allowing requests to the storage account by a secure connection. For example, when calling REST APIs to access storage accounts, the connection must use HTTPS. Any requests using HTTP will be rejected when 'secure transfer required' is enabled. When using the Azure files service, connection without encryption will fail, including scenarios using SMB 2.1, SMB 3.0 without encryption, and some flavors of the Linux SMB client. Because Azure storage doesn’t support HTTPS for custom domain names, this option is not applied when using a custom domain name.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.1
 
 **Evidence**
@@ -7463,8 +7696,10 @@ Evidence or test output indicates that all storage accounts are configured such 
 ---
 
 ### 5.3.2 Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2"
-**Platform:** Azure \
-**Rationale:** TLS 1.0 has known vulnerabilities and has been replaced by later versions of the TLS protocol. Continued use of this legacy protocol affects the security of data in transit. \
+**Platform:** Azure
+
+**Rationale:** TLS 1.0 has known vulnerabilities and has been replaced by later versions of the TLS protocol. Continued use of this legacy protocol affects the security of data in transit.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.15
 
 **Evidence**
@@ -7538,8 +7773,10 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 ---
 
 ### 5.4.1 Ensure EBS Volume Encryption is Enabled in all Regions
-**Platform:** AWS \
-**Rationale:** Encrypting data at rest reduces the likelihood that it is unintentionally exposed and can nullify the impact of disclosure if the encryption remains unbroken. \
+**Platform:** AWS
+
+**Rationale:** Encrypting data at rest reduces the likelihood that it is unintentionally exposed and can nullify the impact of disclosure if the encryption remains unbroken.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.2.1
 
 **Evidence**
@@ -7582,8 +7819,10 @@ Evidence or test output indicates that all regions are configured such that EBS 
 ---
 
 ### 5.4.2 Ensure that encryption is enabled for EFS file systems
-**Platform:** AWS \
-**Rationale:** Data should be encrypted at rest to reduce the risk of a data breach via direct access to the storage device. \
+**Platform:** AWS
+
+**Rationale:** Data should be encrypted at rest to reduce the risk of a data breach via direct access to the storage device.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.4.1
 
 **Evidence**
@@ -7649,12 +7888,14 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 ---
 
 ### 5.5.1 Ensure that S3 Buckets are configured with 'Block public access (bucket settings)'
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** Amazon S3 `Block public access (bucket settings)` prevents the accidental or malicious public exposure of data contained within the respective bucket(s).
 
 Amazon S3 `Block public access (account settings)` prevents the accidental or malicious public exposure of data contained within all buckets of the respective AWS account.
 
-Whether blocking public access to all or some buckets is an organizational decision that should be based on data sensitivity, least privilege, and use case. \
+Whether blocking public access to all or some buckets is an organizational decision that should be based on data sensitivity, least privilege, and use case.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.1.4
 
 **Evidence**
@@ -7749,8 +7990,10 @@ Evidence or test output indicates that all S3 buckets are configured such that t
 ---
 
 ### 5.5.2 Ensure that 'Public access level' is disabled for storage accounts with blob containers
-**Platform:** Azure \
-**Rationale:** The default configuration for a storage account permits a user with appropriate permissions to configure public (anonymous) access to containers and blobs in a storage account. Keep in mind that public access to a container is always turned off by default and must be explicitly configured to permit anonymous requests. It grants read-only access to these resources without sharing the account key, and without requiring a shared access signature. It is recommended not to provide anonymous access to blob containers until, and unless, it is strongly desired. A shared access signature token or Azure AD RBAC should be used for providing controlled and timed access to blob containers. If no anonymous access is needed on any container in the storage account, it’s recommended to set allowBlobPublicAccess false at the account level, which forbids any container to accept anonymous access in the future. \
+**Platform:** Azure
+
+**Rationale:** The default configuration for a storage account permits a user with appropriate permissions to configure public (anonymous) access to containers and blobs in a storage account. Keep in mind that public access to a container is always turned off by default and must be explicitly configured to permit anonymous requests. It grants read-only access to these resources without sharing the account key, and without requiring a shared access signature. It is recommended not to provide anonymous access to blob containers until, and unless, it is strongly desired. A shared access signature token or Azure AD RBAC should be used for providing controlled and timed access to blob containers. If no anonymous access is needed on any container in the storage account, it’s recommended to set allowBlobPublicAccess false at the account level, which forbids any container to accept anonymous access in the future.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.7
 
 **Evidence**
@@ -7791,8 +8034,10 @@ Evidence or test output indicates that `Public access level` is disabled for sto
 ---
 
 ### 5.5.3 Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible
-**Platform:** Google \
-**Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any sensitive data. Hence, ensure that anonymous or public access to a bucket is not allowed. \
+**Platform:** Google
+
+**Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any sensitive data. Hence, ensure that anonymous or public access to a bucket is not allowed.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 5.1
 
 **Evidence**
@@ -7880,12 +8125,14 @@ Establish and maintain a secure configuration process for enterprise assets (end
 ---
 
 ### 5.6.1 Ensure that 'Enable key rotation reminders' is enabled for each Storage Account
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Reminders such as those generated by this requirement will help maintain a regular and healthy cadence for activities which improve the overall efficacy of a security program.
 
 Cryptographic key rotation periods will vary depending on your organization's security requirements and the type of data which is being stored in the Storage Account. For example, PCI DSS mandates that cryptographic keys be replaced or rotated 'regularly,' and advises that keys for static data stores be rotated every 'few months.'
 
-For the purposes of this requirement, 90 days are prescribed as the reminder frequency. Review and adjustment of the 90 day period is recommended, and may even be necessary. Your organization's security requirements should dictate the appropriate setting. \
+For the purposes of this requirement, 90 days are prescribed as the reminder frequency. Review and adjustment of the 90 day period is recommended, and may even be necessary. Your organization's security requirements should dictate the appropriate setting.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.3
 
 **Evidence**
@@ -7925,12 +8172,14 @@ Secure management of assets and software guards against malicious users from bei
 ---
 
 ### 5.7.1 Ensure that Storage Account Access Keys are Periodically Regenerated
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** When a storage account is created, Azure generates two 512-bit storage access keys which are used for authentication when the storage account is accessed. Rotating these keys periodically ensures that any inadvertent access or exposure does not result from the compromise of these keys.
 
 Cryptographic key rotation periods will vary depending on your organization's security requirements and the type of data which is being stored in the Storage Account. For example, PCI DSS mandates that cryptographic keys be replaced or rotated 'regularly,' and advises that keys for static data stores be rotated every 'few months.'
 
-For the purposes of this requirement, 90 days are prescribed as the reminder frequency. Review and adjustment of the 90 day period is recommended, and may even be necessary. Your organization's security requirements should dictate the appropriate setting. \
+For the purposes of this requirement, 90 days are prescribed as the reminder frequency. Review and adjustment of the 90 day period is recommended, and may even be necessary. Your organization's security requirements should dictate the appropriate setting.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.4
 
 **Evidence**
@@ -8004,8 +8253,10 @@ Ensuring that access grants are revoked when they're no longer needed reduces th
 ---
 
 ### 5.8.1 Ensure that Shared Access Signature Tokens Expire Within an Hour
-**Platform:** Azure \
-**Rationale:** A shared access signature (SAS) is a URI that grants restricted access rights to Azure Storage resources. A shared access signature can be provided to clients who should not be trusted with the storage account key but for whom it may be necessary to delegate access to certain storage account resources. Providing a shared access signature URI to these clients allows them access to a resource for a specified period of time. This time should be set as low as possible and preferably no longer than an hour. \
+**Platform:** Azure
+
+**Rationale:** A shared access signature (SAS) is a URI that grants restricted access rights to Azure Storage resources. A shared access signature can be provided to clients who should not be trusted with the storage account key but for whom it may be necessary to delegate access to certain storage account resources. Providing a shared access signature URI to these clients allows them access to a resource for a specified period of time. This time should be set as low as possible and preferably no longer than an hour.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.6
 
 **Evidence**
@@ -8040,12 +8291,14 @@ Industry-recommended hardening configuration templates reduce the attack surface
 ---
 
 ### 6.1.1 Ensure That the ‘Local_infile’ Database Flag for a Cloud SQL MySQL Instance Is Set to ‘Off’
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** The `local_infile` flag controls the server-side LOCAL capability for LOAD DATA statements. Depending on the `local_infile` setting, the server refuses or permits local data loading by clients that have LOCAL enabled on the client side.
 
 To explicitly cause the server to refuse LOAD DATA LOCAL statements (regardless of how client programs and libraries are configured at build time or runtime), start mysqld with local_infile disabled. local_infile can also be set at runtime.
 
-Due to security issues associated with the `local_infile` flag, it is recommended to disable it. This requirement is applicable to MySQL database instances. \
+Due to security issues associated with the `local_infile` flag, it is recommended to disable it. This requirement is applicable to MySQL database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.3
 
 **Evidence**
@@ -8107,8 +8360,10 @@ Unauthorized scripts can be used by malicious users to take over a system or tak
 ---
 
 ### 6.2.1 Ensure 'external scripts enabled' database flag for Cloud SQL SQL Server instance is set to 'off'
-**Platform:** Google \
-**Rationale:** `external scripts enabled` allows the execution of scripts with certain remote language extensions. This property is OFF by default. When Advanced Analytics Services is installed, setup can optionally set this property to true. As the External Scripts Enabled feature allows scripts external to SQL such as files located in an R library to be executed, which could adversely affect the security of the system, hence this should be disabled. This requirement is applicable to SQL Server database instances. \
+**Platform:** Google
+
+**Rationale:** `external scripts enabled` allows the execution of scripts with certain remote language extensions. This property is OFF by default. When Advanced Analytics Services is installed, setup can optionally set this property to true. As the External Scripts Enabled feature allows scripts external to SQL such as files located in an R library to be executed, which could adversely affect the security of the system, hence this should be disabled. This requirement is applicable to SQL Server database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.1
 
 **Evidence**
@@ -8160,8 +8415,10 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 ---
 
 ### 6.3.1 Ensure 'Enforce SSL connection' is set to 'ENABLED' for PostgreSQL Database Server
-**Platform:** Azure \
-**Rationale:** `SSL connectivity` helps to provide a new layer of security by connecting database servers to client applications using Secure Sockets Layer (SSL). Enforcing SSL connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application. \
+**Platform:** Azure
+
+**Rationale:** `SSL connectivity` helps to provide a new layer of security by connecting database servers to client applications using Secure Sockets Layer (SSL). Enforcing SSL connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.1
 
 **Evidence**
@@ -8203,8 +8460,10 @@ Evidence or test output indicates that all PostgreSQL database servers are confi
 ---
 
 ### 6.3.2 Ensure 'Enforce SSL connection' is set to 'Enabled' for Standard MySQL Database Server
-**Platform:** Azure \
-**Rationale:** SSL connectivity helps to provide a new layer of security by connecting database servers to client applications using Secure Sockets Layer (SSL). Enforcing SSL connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application. \
+**Platform:** Azure
+
+**Rationale:** SSL connectivity helps to provide a new layer of security by connecting database servers to client applications using Secure Sockets Layer (SSL). Enforcing SSL connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.4.1
 
 **Evidence**
@@ -8236,8 +8495,10 @@ Evidence or test output indicates that all Standard MySQL database servers are c
 ---
 
 ### 6.3.3 Ensure 'TLS Version' is set to 'TLSV1.2' for MySQL flexible Database Server
-**Platform:** Azure \
-**Rationale:** TLS connectivity helps to provide a new layer of security by connecting database servers to client applications using Transport Layer Security (TLS). Enforcing TLS connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application. \
+**Platform:** Azure
+
+**Rationale:** TLS connectivity helps to provide a new layer of security by connecting database servers to client applications using Transport Layer Security (TLS). Enforcing TLS connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.4.2
 
 **Evidence**
@@ -8293,8 +8554,10 @@ Evidence or test output indicates that all MySQL flexible database servers are c
 ---
 
 ### 6.3.4 Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL
-**Platform:** Google \
-**Rationale:** SQL database connections if successfully trapped (MITM); can reveal sensitive data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances. \
+**Platform:** Google
+
+**Rationale:** SQL database connections if successfully trapped (MITM); can reveal sensitive data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.4
 
 **Evidence**
@@ -8349,8 +8612,10 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 ---
 
 ### 6.4.1 Ensure that encryption-at-rest is enabled for RDS Instances
-**Platform:** AWS \
-**Rationale:** Databases are likely to hold sensitive and critical data, it is highly recommended to implement encryption in order to protect your data from unauthorized access or disclosure. With RDS encryption enabled, the data stored on the instance's underlying storage, the automated backups, read replicas, and snapshots, are all encrypted. \
+**Platform:** AWS
+
+**Rationale:** Databases are likely to hold sensitive and critical data, it is highly recommended to implement encryption in order to protect your data from unauthorized access or disclosure. With RDS encryption enabled, the data stored on the instance's underlying storage, the automated backups, read replicas, and snapshots, are all encrypted.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.3.1; [Amazon Relational Database Service controls - AWS Security Hub](https://docs.aws.amazon.com/securityhub/latest/userguide/rds-controls.html#rds-3)
 
 **Evidence**
@@ -8403,8 +8668,10 @@ Evidence or test output indicates that all RDS instances are configured with enc
 ---
 
 ### 6.4.2 Ensure that 'Data encryption' is set to 'On' on a SQL Database
-**Platform:** Azure \
-**Rationale:** Azure SQL Database transparent data encryption helps protect against the threat of malicious activity by performing real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application. \
+**Platform:** Azure
+
+**Rationale:** Azure SQL Database transparent data encryption helps protect against the threat of malicious activity by performing real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.5
 
 **Evidence**
@@ -8483,8 +8750,10 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 ---
 
 ### 6.5.1 Ensure that public access is not given to RDS Instance
-**Platform:** AWS \
-**Rationale:** Ensure that no public-facing RDS database instances are provisioned in your AWS account and restrict unauthorized access in order to minimize security risks. When the RDS instance allows unrestricted access (0.0.0.0/0), everyone and everything on the Internet can establish a connection to your database and this can increase the opportunity for malicious activities such as brute force attacks, PostgreSQL injections, or DoS/DDoS attacks. \
+**Platform:** AWS
+
+**Rationale:** Ensure that no public-facing RDS database instances are provisioned in your AWS account and restrict unauthorized access in order to minimize security risks. When the RDS instance allows unrestricted access (0.0.0.0/0), everyone and everything on the Internet can establish a connection to your database and this can increase the opportunity for malicious activities such as brute force attacks, PostgreSQL injections, or DoS/DDoS attacks.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.3.3
 
 **Evidence**
@@ -8586,14 +8855,16 @@ Evidence or test output indicates that no RDS instance allows Public Accessibili
 ---
 
 ### 6.5.2 Ensure no Azure SQL Databases allow ingress from 0.0.0.0/0 (ANY IP) 
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Azure SQL Server includes a firewall to block access to unauthorized connections. More granular IP addresses can be defined by referencing the range of addresses available from specific data centers.
 
 By default, for a SQL server, a Firewall exists with StartIp of 0.0.0.0 and EndIP of 0.0.0.0 allowing access to all the Azure services.
 
 Additionally, a custom rule can be set up with StartIp of 0.0.0.0 and EndIP of 255.255.255.255 allowing access from ANY IP over the Internet.
 
-In order to reduce the potential attack surface for a SQL server, firewall rules should be defined with more granular IP addresses by referencing the range of addresses available from specific data centers. \
+In order to reduce the potential attack surface for a SQL server, firewall rules should be defined with more granular IP addresses by referencing the range of addresses available from specific data centers.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.2
 
 **Evidence**
@@ -8658,10 +8929,12 @@ Evidence or test output indicates that no Azure SQL Database instance allows ing
 ---
 
 ### 6.5.3 Ensure That Cloud SQL Database Instances Do Not Implicitly Whitelist All Public IP Addresses
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** To minimize attack surface on a Database server instance, only trusted/known and required IP(s) should be white-listed to connect to it.
 
-An authorized network should not have IPs/networks configured to `0.0.0.0/0` which will allow access to the instance from anywhere in the world. Note that authorized networks apply only to instances with public IPs. \
+An authorized network should not have IPs/networks configured to `0.0.0.0/0` which will allow access to the instance from anywhere in the world. Note that authorized networks apply only to instances with public IPs.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.5
 
 **Evidence**
@@ -8698,8 +8971,10 @@ Evidence or test output indicates that no Cloud SQL Database instances allow ing
 ---
 
 ### 6.5.4 Ensure ‘Skip_show_database’ Database Flag for Cloud SQL MySQL Instance Is Set to ‘On’
-**Platform:** Google \
-**Rationale:** 'skip_show_database' database flag prevents people from using the SHOW DATABASES statement if they do not have the SHOW DATABASES privilege. This can improve security if you have concerns about users being able to see databases belonging to other users. Its effect depends on the SHOW DATABASES privilege: If the variable value is ON, the SHOW DATABASES statement is permitted only to users who have the SHOW DATABASES privilege, and the statement displays all database names. If the value is OFF, SHOW DATABASES is permitted to all users, but displays the names of only those databases for which the user has the SHOW DATABASES or other privilege. This requirement is applicable to Mysql database instances. \
+**Platform:** Google
+
+**Rationale:** 'skip_show_database' database flag prevents people from using the SHOW DATABASES statement if they do not have the SHOW DATABASES privilege. This can improve security if you have concerns about users being able to see databases belonging to other users. Its effect depends on the SHOW DATABASES privilege: If the variable value is ON, the SHOW DATABASES statement is permitted only to users who have the SHOW DATABASES privilege, and the statement displays all database names. If the value is OFF, SHOW DATABASES is permitted to all users, but displays the names of only those databases for which the user has the SHOW DATABASES or other privilege. This requirement is applicable to Mysql database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.2
 
 **Evidence**
@@ -8742,8 +9017,10 @@ Evidence or test output indicates that all Cloud SQL MySQL instance(s) have the 
 ---
 
 ### 6.5.5 Ensure that the 'cross db ownership chaining' database flag for Cloud SQL SQL Server instance is set to 'off'
-**Platform:** Google \
-**Rationale:** Use the `cross db ownership` for chaining option to configure cross-database ownership chaining for an instance of Microsoft SQL Server. This server option allows you to control cross-database ownership chaining at the database level or to allow cross-database ownership chaining for all databases. Enabling `cross db ownership` is not recommended unless all of the databases hosted by the instance of SQL Server must participate in cross-database ownership chaining and you are aware of the security implications of this setting. This requirement is applicable to SQL Server database instances. \
+**Platform:** Google
+
+**Rationale:** Use the `cross db ownership` for chaining option to configure cross-database ownership chaining for an instance of Microsoft SQL Server. This server option allows you to control cross-database ownership chaining at the database level or to allow cross-database ownership chaining for all databases. Enabling `cross db ownership` is not recommended unless all of the databases hosted by the instance of SQL Server must participate in cross-database ownership chaining and you are aware of the security implications of this setting. This requirement is applicable to SQL Server database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.2
 
 **Evidence**
@@ -8776,8 +9053,10 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) have
 ---
 
 ### 6.5.6 Ensure that the 'contained database authentication' database flag for Cloud SQL on the SQL Server instance is set to 'off'
-**Platform:** Google \
-**Rationale:** A contained database includes all database settings and metadata required to define the database and has no configuration dependencies on the instance of the Database Engine where the database is installed. Users can connect to the database without authenticating a login at the Database Engine level. Isolating the database from the Database Engine makes it possible to easily move the database to another instance of SQL Server. Contained databases have some unique threats that should be understood and mitigated by SQL Server Database Engine administrators. Most of the threats are related to the USER WITH PASSWORD authentication process, which moves the authentication boundary from the Database Engine level to the database level, hence this is recommended to disable this flag. This requirement is applicable to SQL Server database instances. \
+**Platform:** Google
+
+**Rationale:** A contained database includes all database settings and metadata required to define the database and has no configuration dependencies on the instance of the Database Engine where the database is installed. Users can connect to the database without authenticating a login at the Database Engine level. Isolating the database from the Database Engine makes it possible to easily move the database to another instance of SQL Server. Contained databases have some unique threats that should be understood and mitigated by SQL Server Database Engine administrators. Most of the threats are related to the USER WITH PASSWORD authentication process, which moves the authentication boundary from the Database Engine level to the database level, hence this is recommended to disable this flag. This requirement is applicable to SQL Server database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.7
 
 **Evidence**
@@ -8829,10 +9108,12 @@ This CIS Control provides guidance for securing hardware and software. As delive
 ---
 
 ### 6.6.1 Ensure 'user options' database flag for Cloud SQL SQL Server instance is not configured
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** The `user options` option specifies global defaults for all users. A list of default query processing options is established for the duration of a user's work session. The user options option allows you to change the default values of the SET options (if the server's default settings are not appropriate).
 
-A user can override these defaults by using the SET statement. You can configure user options dynamically for new logins. After you change the setting of user options, new login sessions use the new setting; current login sessions are not affected. This requirement is applicable to SQL Server database instances. \
+A user can override these defaults by using the SET statement. You can configure user options dynamically for new logins. After you change the setting of user options, new login sessions use the new setting; current login sessions are not affected. This requirement is applicable to SQL Server database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.4
 
 **Evidence**
@@ -8865,8 +9146,10 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) do n
 ---
 
 ### 6.6.2 Ensure '3625 (trace flag)' database flag for all Cloud SQL Server instances is set to 'on'
-**Platform:** Google \
-**Rationale:** Microsoft SQL Trace Flags are frequently used to diagnose performance issues or to debug stored procedures or complex computer systems, but they may also be recommended by Microsoft Support to address behavior that is negatively impacting a specific workload. All documented trace flags and those recommended by Microsoft Support are fully supported in a production environment when used as directed. `3625(trace log)` Limits the amount of information returned to users who are not members of the sysadmin fixed server role, by masking the parameters of some error messages using '******'. Setting this in a Google Cloud flag for the instance allows for security through obscurity and prevents the disclosure of sensitive information, hence it is recommended to set this flag globally to on to prevent the flag having been left off, or changed by bad actors. This requirement is applicable to SQL Server database instances. \
+**Platform:** Google
+
+**Rationale:** Microsoft SQL Trace Flags are frequently used to diagnose performance issues or to debug stored procedures or complex computer systems, but they may also be recommended by Microsoft Support to address behavior that is negatively impacting a specific workload. All documented trace flags and those recommended by Microsoft Support are fully supported in a production environment when used as directed. `3625(trace log)` Limits the amount of information returned to users who are not members of the sysadmin fixed server role, by masking the parameters of some error messages using '******'. Setting this in a Google Cloud flag for the instance allows for security through obscurity and prevents the disclosure of sensitive information, hence it is recommended to set this flag globally to on to prevent the flag having been left off, or changed by bad actors. This requirement is applicable to SQL Server database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.6
 
 **Evidence**
@@ -8918,8 +9201,10 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 ---
 
 ### 6.7.1 Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled
-**Platform:** Azure \
-**Rationale:** If access from Azure services is enabled, the server's firewall will accept connections from all Azure resources, including resources not in your subscription. This is usually not a desired configuration. Instead, set up firewall rules to allow access from specific network ranges or VNET rules to allow access from specific virtual networks. \
+**Platform:** Azure
+
+**Rationale:** If access from Azure services is enabled, the server's firewall will accept connections from all Azure resources, including resources not in your subscription. This is usually not a desired configuration. Instead, set up firewall rules to allow access from specific network ranges or VNET rules to allow access from specific virtual networks.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.7
 
 **Evidence**
@@ -8970,8 +9255,10 @@ Secure management of assets and software guards against malicious users from bei
 ---
 
 ### 6.8.1 Ensure Instance IP assignment is set to private
-**Platform:** Google \
-**Rationale:** Setting database access only to private will reduce attack surface. \
+**Platform:** Google
+
+**Rationale:** Setting database access only to private will reduce attack surface.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.9
 
 **Evidence**
@@ -9038,8 +9325,10 @@ Products typically ship with insecure defaults that, if not configured securely,
 ---
 
 ### 6.9.1 Ensure That a MySQL Database Instance Does Not Allow Anyone To Connect With Administrative Privileges
-**Platform:** Google \
-**Rationale:** At the time of MySQL Instance creation, not providing an administrative password allows anyone to connect to the SQL database instance with administrative privileges. The root password should be set to ensure only authorized users have these privileges. \
+**Platform:** Google
+
+**Rationale:** At the time of MySQL Instance creation, not providing an administrative password allows anyone to connect to the SQL database instance with administrative privileges. The root password should be set to ensure only authorized users have these privileges.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.1
 
 **Evidence**
@@ -9105,8 +9394,10 @@ Uninstalling and disabling unnecessary services reduces the target area of your 
 ---
 
 ### 6.10.1 Ensure 'remote access' database flag for Cloud SQL SQL Server instance is set to 'off'
-**Platform:** Google \
-**Rationale:** The `remote access` option controls the execution of stored procedures from local or remote servers on which instances of SQL Server are running. The default value for this option is 1. This grants permission to run local stored procedures from remote servers or remote stored procedures from the local server. To prevent local stored procedures from being run from a remote server or remote stored procedures from being run on the local server, this must be disabled. The Remote Access option controls the execution of local stored procedures on remote servers or remote stored procedures on local servers. 'Remote access' functionality can be abused to launch a Denial-of-Service (DoS) attack on remote servers by off-loading query processing to a target, hence this should be disabled. This requirement is applicable to SQL Server database instances. \
+**Platform:** Google
+
+**Rationale:** The `remote access` option controls the execution of stored procedures from local or remote servers on which instances of SQL Server are running. The default value for this option is 1. This grants permission to run local stored procedures from remote servers or remote stored procedures from the local server. To prevent local stored procedures from being run from a remote server or remote stored procedures from being run on the local server, this must be disabled. The Remote Access option controls the execution of local stored procedures on remote servers or remote stored procedures on local servers. 'Remote access' functionality can be abused to launch a Denial-of-Service (DoS) attack on remote servers by off-loading query processing to a target, hence this should be disabled. This requirement is applicable to SQL Server database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.5
 
 **Evidence**
@@ -9158,7 +9449,8 @@ Centralizing makes administration simpler and therefore reduces risks related to
 ---
 
 ### 6.11.1 Ensure that Azure Active Directory Admin is Configured for SQL Servers
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** Azure Active Directory authentication is a mechanism to connect to Microsoft Azure SQL Database and SQL Data Warehouse by using identities in Azure Active Directory (Azure AD). With Azure AD authentication, identities of database users and other Microsoft services can be managed in one central location. Central ID management provides a single place to manage database users and simplifies permission management.
 
 
@@ -9171,7 +9463,8 @@ Centralizing makes administration simpler and therefore reduces risks related to
 * Azure AD authentication uses contained database users to authenticate identities at the database level.
 * Azure AD supports token-based authentication for applications connecting to SQL Database.
 * Azure AD authentication supports ADFS (domain federation) or native user/password authentication for a local Azure Active Directory without domain synchronization.
-* Azure AD supports connections from SQL Server Management Studio that use Active Directory Universal Authentication, which includes Multi-Factor Authentication (MFA). MFA includes strong authentication with a range of easy verification options — phone call, text message, smart cards with pin, or mobile app notification. \
+* Azure AD supports connections from SQL Server Management Studio that use Active Directory Universal Authentication, which includes Multi-Factor Authentication (MFA). MFA includes strong authentication with a range of easy verification options — phone call, text message, smart cards with pin, or mobile app notification.
+
 
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.4
 
@@ -9240,8 +9533,10 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 ---
 
 ### 6.12.1 Ensure Auto Minor Version Upgrade feature is Enabled for RDS Instances
-**Platform:** AWS \
-**Rationale:** AWS RDS will occasionally deprecate minor engine versions and provide new ones for an upgrade. When the last version number within the release is replaced, the version changed is considered minor. With Auto Minor Version Upgrade feature enabled, the version upgrades will occur automatically during the specified maintenance window so your RDS instances can get the new features, bug fixes, and security patches for their database engines. \
+**Platform:** AWS
+
+**Rationale:** AWS RDS will occasionally deprecate minor engine versions and provide new ones for an upgrade. When the last version number within the release is replaced, the version changed is considered minor. With Auto Minor Version Upgrade feature enabled, the version upgrades will occur automatically during the specified maintenance window so your RDS instances can get the new features, bug fixes, and security patches for their database engines.
+
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.3.2
 
 **Evidence**
@@ -9309,8 +9604,10 @@ Having log files of what actions have taken place by users and also system event
 ---
 
 ### 6.13.1 Ensure Server Parameter 'log_checkpoints' is set to 'ON' for PostgreSQL Database Server
-**Platform:** Azure \
-**Rationale:** Enabling `log_checkpoints` helps the PostgreSQL Database to `Log each checkpoint` in turn generates query and error logs. However, access to transaction logs is not supported. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance. \
+**Platform:** Azure
+
+**Rationale:** Enabling `log_checkpoints` helps the PostgreSQL Database to `Log each checkpoint` in turn generates query and error logs. However, access to transaction logs is not supported. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.2
 
 **Evidence**
@@ -9353,8 +9650,10 @@ Evidence or test output indicates that all PostgreSQL instances are configured w
 ---
 
 ### 6.13.2 Ensure server parameter 'log_connections' is set to 'ON' for PostgreSQL Database Server
-**Platform:** Azure \
-**Rationale:** Enabling `log_connections` helps PostgreSQL Database to log attempted connection to the server, as well as successful completion of client authentication. Log data can be used to identify, troubleshoot, and repair configuration errors and suboptimal performance. \
+**Platform:** Azure
+
+**Rationale:** Enabling `log_connections` helps PostgreSQL Database to log attempted connection to the server, as well as successful completion of client authentication. Log data can be used to identify, troubleshoot, and repair configuration errors and suboptimal performance.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.3
 
 **Evidence**
@@ -9397,8 +9696,10 @@ Evidence or test output indicates that all PostgreSQL instances are configured w
 ---
 
 ### 6.13.3 Ensure server parameter 'log_disconnections' is set to 'ON' for PostgreSQL Database Server
-**Platform:** Azure \
-**Rationale:** Enabling `log_disconnections` helps PostgreSQL Database to `Logs end of a session`, including duration, which in turn generates query and error logs. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance. \
+**Platform:** Azure
+
+**Rationale:** Enabling `log_disconnections` helps PostgreSQL Database to `Logs end of a session`, including duration, which in turn generates query and error logs. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.4
 
 **Evidence**
@@ -9458,8 +9759,10 @@ Once configured, logs may generate large volumes of data. Organizations must ens
 ---
 
 ### 6.14.1 Ensure Server Parameter 'log_retention_days' is greater than 3 days for PostgreSQL Database Server 
-**Platform:** Azure \
-**Rationale:** Configuring `log_retention_days` determines the duration in days that `Azure Database for PostgreSQL` retains log files. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance. \
+**Platform:** Azure
+
+**Rationale:** Configuring `log_retention_days` determines the duration in days that `Azure Database for PostgreSQL` retains log files. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.6
 
 **Evidence**
@@ -9521,10 +9824,12 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 ---
 
 ### 6.15.1 Ensure that 'Auditing' is set to 'On'
-**Platform:** Azure \
+**Platform:** Azure
+
 **Rationale:** The Azure platform allows a SQL server to be created as a service. Enabling auditing at the server level ensures that all existing and newly created databases on the SQL server instance are audited. Auditing policy applied on the SQL database does not override auditing policy and settings applied on the particular SQL server where the database is hosted.
 
-Auditing tracks database events and writes them to an audit log in the Azure storage account. It also helps to maintain regulatory compliance, understand database activity, and gain insight into discrepancies and anomalies that could indicate business concerns or suspected security violations. \
+Auditing tracks database events and writes them to an audit log in the Azure storage account. It also helps to maintain regulatory compliance, understand database activity, and gain insight into discrepancies and anomalies that could indicate business concerns or suspected security violations.
+
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.1
 
 **Evidence**
@@ -9566,8 +9871,10 @@ Evidence or test output indicates that all SQL Server instances are configured w
 ---
 
 ### 6.15.2 Ensure That the ‘Log_connections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’
-**Platform:** Google \
-**Rationale:** PostgreSQL does not log attempted connections by default. Enabling the `log_connections` setting will create log entries for each attempted connection as well as successful completion of client authentication which can be useful in troubleshooting issues and to determine any unusual connection attempts to the server. This requirement is applicable to PostgreSQL database instances. \
+**Platform:** Google
+
+**Rationale:** PostgreSQL does not log attempted connections by default. Enabling the `log_connections` setting will create log entries for each attempted connection as well as successful completion of client authentication which can be useful in troubleshooting issues and to determine any unusual connection attempts to the server. This requirement is applicable to PostgreSQL database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.2
 
 **Evidence**
@@ -9601,8 +9908,10 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 ---
 
 ### 6.15.3 Ensure That the ‘Log_disconnections’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘On’
-**Platform:** Google \
-**Rationale:** PostgreSQL does not log session details such as duration and session end by default. Enabling the `log_disconnections` setting will create log entries at the end of each session which can be useful in troubleshooting issues and determine any unusual activity across a time period. The `log_disconnections` and `log_connections` work hand in hand and generally, the pair would be enabled/disabled together. This requirement is applicable to PostgreSQL database instances. \
+**Platform:** Google
+
+**Rationale:** PostgreSQL does not log session details such as duration and session end by default. Enabling the `log_disconnections` setting will create log entries at the end of each session which can be useful in troubleshooting issues and determine any unusual activity across a time period. The `log_disconnections` and `log_connections` work hand in hand and generally, the pair would be enabled/disabled together. This requirement is applicable to PostgreSQL database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.3
 
 **Evidence**
@@ -9636,10 +9945,12 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 ---
 
 ### 6.15.4 Ensure that the ‘Log_min_messages’ Flag for a Cloud SQL PostgreSQL Instance is set at minimum to 'Warning'
-**Platform:** Google \
+**Platform:** Google
+
 **Rationale:** Auditing helps in troubleshooting operational problems and also permits forensic analysis. If `log_min_messages` is not set to the correct value, messages may not be classified as error messages appropriately. An organization will need to decide their own threshold for logging `log_min_messages` flag.
 
-This requirement is applicable to PostgreSQL database instances. \
+This requirement is applicable to PostgreSQL database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.5
 
 **Evidence**
@@ -9673,8 +9984,10 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 ---
 
 ### 6.15.5 Ensure ‘Log_min_error_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘Error’ or Stricter
-**Platform:** Google \
-**Rationale:** Auditing helps in troubleshooting operational problems and also permits forensic analysis. If `log_min_error_statement` is not set to the correct value, messages may not be classified as error messages appropriately. Considering general log messages as error messages would make it difficult to find actual errors and considering only stricter severity levels as error messages may skip actual errors to log their SQL statements. The `log_min_error_statement` flag should be set to `ERROR` or stricter. This requirement is applicable to PostgreSQL database instances. \
+**Platform:** Google
+
+**Rationale:** Auditing helps in troubleshooting operational problems and also permits forensic analysis. If `log_min_error_statement` is not set to the correct value, messages may not be classified as error messages appropriately. Considering general log messages as error messages would make it difficult to find actual errors and considering only stricter severity levels as error messages may skip actual errors to log their SQL statements. The `log_min_error_statement` flag should be set to `ERROR` or stricter. This requirement is applicable to PostgreSQL database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.6
 
 **Evidence**
@@ -9708,8 +10021,10 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 ---
 
 ### 6.15.6 Ensure That the ‘Log_min_duration_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘-1′ (Disabled)
-**Platform:** Google \
-**Rationale:** Logging SQL statements may include sensitive information that should not be recorded in logs. This requirement is applicable to PostgreSQL database instances. \
+**Platform:** Google
+
+**Rationale:** Logging SQL statements may include sensitive information that should not be recorded in logs. This requirement is applicable to PostgreSQL database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.7
 
 **Evidence**
@@ -9743,8 +10058,10 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 ---
 
 ### 6.15.7 Ensure That 'cloudsql.enable_pgaudit' Database Flag for each Cloud Sql Postgresql Instance Is Set to 'on' For Centralized Logging
-**Platform:** Google \
-**Rationale:** As numerous other requirements in this section consist of turning on flags for logging purposes, your organization will need a way to manage these logs. You may have a solution already in place. If you do not, consider installing and enabling the open source pgaudit extension within PostgreSQL and enabling its corresponding flag of `cloudsql.enable_pgaudit`. This flag and installing the extension enables database auditing in PostgreSQL through the open-source pgAudit extension. This extension provides detailed session and object logging to comply with government, financial, & ISO standards and provides auditing capabilities to mitigate threats by monitoring security events on the instance. Enabling the flag and settings later in this requirement will send these logs to Google Logs Explorer so that you can access them in a central location. This requirement is applicable only to PostgreSQL database instances. \
+**Platform:** Google
+
+**Rationale:** As numerous other requirements in this section consist of turning on flags for logging purposes, your organization will need a way to manage these logs. You may have a solution already in place. If you do not, consider installing and enabling the open source pgaudit extension within PostgreSQL and enabling its corresponding flag of `cloudsql.enable_pgaudit`. This flag and installing the extension enables database auditing in PostgreSQL through the open-source pgAudit extension. This extension provides detailed session and object logging to comply with government, financial, & ISO standards and provides auditing capabilities to mitigate threats by monitoring security events on the instance. Enabling the flag and settings later in this requirement will send these logs to Google Logs Explorer so that you can access them in a central location. This requirement is applicable only to PostgreSQL database instances.
+
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.8
 
 **Evidence**
@@ -9828,7 +10145,8 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 ---
 
 ### 6.15.8 Database logging should be enabled
-**Platform:** AWS \
+**Platform:** AWS
+
 **Rationale:** RDS databases should have relevant logs enabled. Database logging provides detailed records of requests made to RDS. Database logs can assist with security and access audits and can help to diagnose availability issues. 
 
 **External Reference:** [AWS Security Hub - RDS.9](https://docs.aws.amazon.com/securityhub/latest/userguide/rds-controls.html#rds-9)
