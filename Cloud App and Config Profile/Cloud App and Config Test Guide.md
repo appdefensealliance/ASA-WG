@@ -1866,7 +1866,7 @@ Actively manage (inventory, track, and correct) all software (operating systems 
 
 ---
 
-### 2.4.1 Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent
+### 2.4.1 Ensure User consent for applications is set to Do not allow user consent
 **Platform:** Azure
 
 **Rationale:** If Azure Active Directory is running as an identity provider for third-party applications, permissions and consent should be limited to administrators or pre-approved. Malicious applications may attempt to exfiltrate data or abuse privileged user accounts.
