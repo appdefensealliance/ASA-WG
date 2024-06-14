@@ -919,7 +919,7 @@ Logs may contain indications of compromise, so it's important to review logs reg
 | 3.9.8 | AWS | Ensure VPC changes are monitored |
 | 3.9.9 | AWS | Ensure AWS Organizations changes are monitored |
 | 3.9.10 | Google | Ensure That Cloud Audit Logging Is Configured Properly |
-| 3.9.11 | Googel | Ensure That Cloud DNS Logging Is Enabled for All VPC Networks |
+| 3.9.11 | Google | Ensure That Cloud DNS Logging Is Enabled for All VPC Networks |
 
 
 ---
@@ -941,7 +941,7 @@ Having log files of what actions have taken place by users and also system event
 |---|-----|----------|
 | 3.10.1 | Google | Ensure That Sinks Are Configured for All Log Entries |
 | 3.10.2 | Google | Ensure Log Metric Filter and Alerts Exist for Project Ownership Assignments/Changes |
-| 3.10.3 | Googel | Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes |
+| 3.10.3 | Google | Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes |
 | 3.10.4 | Google | Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes |
 
 ---
