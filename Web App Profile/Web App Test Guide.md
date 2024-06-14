@@ -58,7 +58,7 @@ Version 0.7 - May 25, 2024
 
 2.3.2 [Cookie-based session tokens shall have the 'HttpOnly' attribute set.](#232-cookie-based-session-tokens-shall-have-the-httponly-attribute-set)
 
-2.3.3 The application shall use session tokens rather than static API secrets and keys, except with legacy implementations.
+2.3.3 [The application shall use session tokens rather than static API secrets and keys, except with legacy implementations.](#233-the-application-shall-use-session-tokens-rather-than-static-api-secrets-and-keys-except-with-legacy-implementations)
 
 2.3.4 [Stateless session tokens shall use digital signatures, encryption, and other countermeasures to protect against tampering, enveloping, replay, null cipher, and key substitution attacks.](#234-stateless-session-tokens-shall-use-digital-signatures-encryption-and-other-countermeasures-to-protect-against-tampering-enveloping-replay-null-cipher-and-key-substitution-attacks)
 
@@ -112,7 +112,7 @@ Version 0.7 - May 25, 2024
 
 5.1.2 [URL redirects and forwards are limited to allowlisted URLs or a warning is displayed when redirecting to untrusted content.](#512-url-redirects-and-forwards-are-limited-to-allowlisted-urls-or-a-warning-is-displayed-when-redirecting-to-untrusted-content)
 
-5.1.3 Avoid the use of eval() or other dynamic code execution features. When there is no alternative, any user input is sanitized and sandboxed before being executed.
+5.1.3 [Avoid the use of eval() or other dynamic code execution features. When there is no alternative, any user input is sanitized and sandboxed before being executed.](#513-avoid-the-use-of-eval-or-other-dynamic-code-execution-features-when-there-is-no-alternative-any-user-input-is-sanitized-and-sandboxed-before-being-executed)
 
 5.1.4 [Protect against template injection attacks by ensuring that any user input being included is sanitized or sandboxed.](#514-protect-against-template-injection-attacks-by-ensuring-that-any-user-input-being-included-is-sanitized-or-sandboxed)
 
@@ -136,7 +136,7 @@ Version 0.7 - May 25, 2024
 
 6 [Configuration](#6-configuration)
 
-6.1 [Keep all components up to date](#61-keep-all-components-up-to-date
+6.1 [Keep all components up to date](#61-keep-all-components-up-to-date)
 
 6.1.1 [The application only uses software components without known exploitable vulnerabilities.](#611-the-application-only-uses-software-components-without-known-exploitable-vulnerabilities)
 
