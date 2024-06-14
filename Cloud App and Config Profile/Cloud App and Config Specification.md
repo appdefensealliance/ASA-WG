@@ -3,8 +3,20 @@
 
 Version 0.5 - April 8, 2024
 
+# Contributors
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
 
-
+* Alex Duff (ASA WG Chair)
+* Brooke Davis (ASA WG Vice Chair)
+* Brad Ree
+* Cody Martin
+* Juan Manuel Martinez Hernandez
+* Julia McLaughlin
+* Rennie deGraaf
+* Rupesh Nair
+* Soledad Antelada Toledano
+* Tony Balkan
+* Viktor Sytnik
 
 # Table of Contents
 

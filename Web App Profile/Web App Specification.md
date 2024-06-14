@@ -8,6 +8,22 @@ Version 0.7 - May 25, 2024
 | 0.5 | 5/25/24 | Initial draft based on Web App Tiger Team review of ASVS specification |
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
 
+# Contributors
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
+
+* Alex Duff (ASA WG Chair)
+* Brooke Davis (ASA WG Vice Chair)
+* Brad Ree
+* Chilik Tamir
+* Christopher Estrada
+* Cody Martin
+* Gianluca Braga
+* John Tidwell
+* Juan Manuel Martinez Hernandez
+* Jullian Gerhart
+* Michael Whiteman
+* Viktor Sytnik
+* Zach Moreno
 
 # Table of Contents
 1 [Authentication](#1-authentication)
