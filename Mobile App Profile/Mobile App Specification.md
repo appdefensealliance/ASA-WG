@@ -1,27 +1,3 @@
-<!-----
-NEW: Check the "Suppress top comment" to remove this info from the output.
-
-Conversion time: 8.182 seconds.
-
-
-Using this Markdown file:
-
-1. Cut and paste this output into your source file.
-2. See the notes and action items below regarding this conversion run.
-3. Check the rendered output (headings, lists, code blocks, tables) for proper
-   formatting and use a linkchecker before you publish this page.
-
-Conversion notes:
-
-* GDC version 1.1.19 r30
-* Fri Jun 07 2024 13:23:04 GMT-0700 (Pacific Daylight Time)
-* Source doc: https://docs.google.com/open?id=1bnRuun2D7sWgm7TZIWnB6qf9t1qzF-mqE2J45_ki-4Y&resourcekey=0-Ppoqt2-ADuD7gkref1VOng
------>
-
-
-
-
-
 
 # **App Defense Alliance Mobile Application Specification**
 
@@ -64,27 +40,27 @@ Version 0.7 - June 14, 2024
 
 **Android**
 
-1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
+1.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
 
 1.1.1 [The app security stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
 
 1.1.2 [The app prevents leakage of sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-2/)
 
-2 [Crypto](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
+1.2 [Crypto](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
 
 1.2.1 [The app employs strong cryptography and uses it according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-1/)
 
 1.2.2 [The app performs key management according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-2/)
 
-3 [Auth](https://mas.owasp.org/MASVS/07-MASVS-AUTH/)
+1.3 [Auth](https://mas.owasp.org/MASVS/07-MASVS-AUTH/)
 
 1.3.1 [The app uses secure authentication and authorization protocols and follows the relevant best practices](https://mas.owasp.org/MASVS/controls/MASVS-AUTH-1/)
 
-4 [Network](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
+1.4 [Network](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
 
 1.4.1 [The app secures all network traffic according to the current best practices](https://mas.owasp.org/MASVS/controls/MASVS-NETWORK-1/)
 
-5 [Platform](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
+1.5 [Platform](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
 
 1.5.1 [The app uses IPC mechanisms securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-1/)
 
@@ -92,7 +68,7 @@ Version 0.7 - June 14, 2024
 
 1.5.3 [The app uses the user interface securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-3/)
 
-6 [Code](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
+1.6 [Code](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
 
 1.6.1 [The app requires an up-to-date platform version](https://mas.owasp.org/MASVS/controls/MASVS-CODE-1/)
 
@@ -100,7 +76,7 @@ Version 0.7 - June 14, 2024
 
 1.6.3 [The app validates and sanitizes all untrusted inputs](https://mas.owasp.org/MASVS/controls/MASVS-CODE-4/)
 
-7 [Resilience](https://mas.owasp.org/MASVS/11-MASVS-RESILIENCE/)
+1.7 [Resilience](https://mas.owasp.org/MASVS/11-MASVS-RESILIENCE/)
 
 1.7.1 [The app implements anti-tampering mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-2/)
 
@@ -108,7 +84,7 @@ Version 0.7 - June 14, 2024
 
 1.7.3 [The app implements anti-dynamic analysis techniques](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-4/)
 
-8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
+1.8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
 
 1.8.1 [The app minimizes access to sensitive data and resources](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-1/)
 
@@ -118,7 +94,57 @@ Version 0.7 - June 14, 2024
 
 **iOS**
 
-iOS follows the same structure as the above with 2 as the numbering convention (ie. 2.1.1 - The app securely stores sensitive data) 
+2.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
+
+2.1.1 [The app security stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
+
+2.1.2 [The app prevents leakage of sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-2/)
+
+2.2 [Crypto](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
+
+2.2.1 [The app employs strong cryptography and uses it according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-1/)
+
+2.2.2 [The app performs key management according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-2/)
+
+2.3 [Auth](https://mas.owasp.org/MASVS/07-MASVS-AUTH/)
+
+2.3.1 [The app uses secure authentication and authorization protocols and follows the relevant best practices](https://mas.owasp.org/MASVS/controls/MASVS-AUTH-1/)
+
+2.4 [Network](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
+
+2.4.1 [The app secures all network traffic according to the current best practices](https://mas.owasp.org/MASVS/controls/MASVS-NETWORK-1/)
+
+2.5 [Platform](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
+
+2.5.1 [The app uses IPC mechanisms securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-1/)
+
+2.5.2 [The app uses WebViews securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-2/)
+
+2.5.3 [The app uses the user interface securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-3/)
+
+2.6 [Code](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
+
+2.6.1 [The app requires an up-to-date platform version](https://mas.owasp.org/MASVS/controls/MASVS-CODE-1/)
+
+2.6.2 [The app only uses software components without known vulnerabilities](https://mas.owasp.org/MASVS/controls/MASVS-CODE-3/)
+
+2.6.3 [The app validates and sanitizes all untrusted inputs](https://mas.owasp.org/MASVS/controls/MASVS-CODE-4/)
+
+2.7 [Resilience](https://mas.owasp.org/MASVS/11-MASVS-RESILIENCE/)
+
+2.7.1 [The app implements anti-tampering mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-2/)
+
+2.7.2 [The app implements anti-static analysis mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-3/)
+
+2.7.3 [The app implements anti-dynamic analysis techniques](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-4/)
+
+2.8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
+
+2.8.1 [The app minimizes access to sensitive data and resources](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-1/)
+
+2.8.2 [The app is transparent about data collection and usage](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-3/)
+
+2.8.3 [The app offers user control over their data](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-4/)
 
 **Introduction**
 
@@ -154,11 +180,11 @@ The following assumptions are intended to aid the Authorized Labs for baseline s
 
 The mobile application relies upon a trustworthy computing platform that runs a recent version of a mobile operating system (i.e. N-2) from the date of evaluation.   For the purposes of this document, N refers to a major operation system release.
 
-**PROPER\_USER**
+**PROPER_USER**
 
 The user of the application software is not willfully negligent or hostile, and sets a device PIN/Passcode.
 
-**SENSITIVE\_DATA**
+**SENSITIVE_DATA**
 
 Data that is of particular concern from a security perspective, including personal identifiable information, credentials, and keys. This is not taking into account regulatory requirements for privacy or compliance for various verticals such as healthcare or finance.
 
@@ -171,9 +197,8 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
 
 # 1 ANDROID
 
-
 ## 
-    **1.1 Storage**
+    1.1 Storage
 
 
 ### **1.1.1 The app shall securely store sensitive data**
@@ -231,13 +256,13 @@ There are cases when sensitive data is unintentionally stored or exposed to publ
   <tr>
    <td>1.1.2.1
    </td>
-   <td>The Keyboard Cache Is Disabled for sensitive data inputs.
+   <td>The Keyboard Cache shall be disabled for sensitive data inputs.
    </td>
   </tr>
   <tr>
    <td>1.1.2.2
    </td>
-   <td>No sensitive data is stored in system logs
+   <td>No sensitive data shall be stored in system logs
    </td>
   </tr>
 </table>
@@ -245,7 +270,7 @@ There are cases when sensitive data is unintentionally stored or exposed to publ
 
 
 ## 
-    **1.2 Crypto**
+    1.2 Crypto
 
 
 ### **1.2.1 The app employs current strong cryptography and uses it according to industry best practices.**
@@ -327,7 +352,7 @@ Even the strongest cryptography would be compromised by poor key management.
 
 
 ## 
-    **1.3 Auth**
+    1.3 Auth
 
 
 ### **1.3.1 The app uses secure authentication and authorization protocols and follows the relevant best practices.**
@@ -361,7 +386,7 @@ Authentication and authorization provide an added layer of security and help pre
 
 
 ## 
-    **1.4 Network**
+    1.4 Network
 
 
 ### **1.4.1 The app secures all network traffic according to the current best practices.**
@@ -370,7 +395,7 @@ Authentication and authorization provide an added layer of security and help pre
 
 This control ensures that the app is in fact setting up secure connections in any situation. This is typically done by encrypting data and authenticating the remote endpoint, as TLS does. However, there are many ways for a developer to disable the platform secure defaults, or bypass them completely by using low-level APIs or third-party libraries.
 
-**Rationale **
+**Rationale**
 
 Ensuring data privacy and integrity of any data in transit is critical for any app that communicates over the network. 
 
@@ -407,7 +432,7 @@ Ensuring data privacy and integrity of any data in transit is critical for any a
 
 
 ## 
-    **1.5 Platform**
+    1.5 Platform
 
 
 ### **1.5.1 The app uses IPC mechanisms securely.**
@@ -525,7 +550,7 @@ Sensitive data has to be displayed in the UI in many situations (e.g. passwords,
 
 
 ## 
-    **1.6 Code**
+    1.6 Code
 
 
 ### **[1.6.1 The app requires an up-to-date platform version.](https://mas.owasp.org/MASVS/controls/MASVS-CODE-1/)**
@@ -637,7 +662,7 @@ This incoming data might have been inadvertently modified by untrusted actors an
 
 
 ## 
-    **1.7 Resilience**
+    1.7 Resilience
 
 
 ### **1.7.1 The app implements anti-tampering mechanisms.**
@@ -646,7 +671,7 @@ This incoming data might have been inadvertently modified by untrusted actors an
 
 This control tries to ensure the integrity of the app's intended functionality by preventing modifications to the original code and resources.
 
-**Rationale **
+**Rationale**
 
 Apps run on a user-controlled device, and without proper protections it's relatively easy to run a modified version locally (e.g. to cheat in a game, or enable premium features without paying), or upload a backdoored version of it to third-party app stores.
 
@@ -731,7 +756,7 @@ Observing and manipulating an app during runtime makes it much easier to deciphe
 
 
 ## 
-    **1.8 Privacy**
+    1.8 Privacy
 
 
 ### **1.8.1 The app minimizes access to sensitive data and resources.**
@@ -822,3 +847,501 @@ Users should have control over their data.
   </tr>
 </table>
 
+
+
+# 2 iOS
+
+
+## 
+    2.1 Storage
+
+
+### **2.1.1 The app shall securely store sensitive data**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.1.1.1
+   </td>
+   <td>The app shall securely store sensitive data
+   </td>
+  </tr>
+</table>
+
+
+
+
+
+### **2.1.2 The app prevents leakage of sensitive data**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.1.2.1
+   </td>
+   <td>The Keyboard Cache shall be Disabled for sensitive data inputs.
+   </td>
+  </tr>
+  <tr>
+   <td>2.1.2.2
+   </td>
+   <td>No sensitive data shall be stored in system logs
+   </td>
+  </tr>
+</table>
+
+
+
+## 
+    2.2 Crypto
+
+
+### **2.2.1 The app employs current strong cryptography and uses it according to industry best practices.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.2.1.1
+   </td>
+   <td>No insecure random number generators shall be utilized for any security sensitive context.
+   </td>
+  </tr>
+  <tr>
+   <td>2.2.1.2
+   </td>
+   <td>Strong cryptography shall be implemented according to industry best practices.
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.2.2 The app performs key management according to industry best practices.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.2.2.1
+   </td>
+   <td>Cryptographic keys shall only be used for their defined purpose.
+   </td>
+  </tr>
+  <tr>
+   <td>2.2.2.2
+   </td>
+   <td>Cryptographic key management shall be implemented properly.
+   </td>
+  </tr>
+</table>
+
+
+
+## 
+    2.3 Auth
+
+
+### **2.3.1 The app uses secure authentication and authorization protocols and follows the relevant best practices.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.3.1.1
+   </td>
+   <td>If using OAuth 2.0 to authenticate, Proof Key for Code Exchange (PKCE) shall be implemented to protect the code grant
+   </td>
+  </tr>
+</table>
+
+
+
+## 
+    2.4 Network
+
+
+### **2.4.1 The app secures all network traffic according to the current best practices.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.4.1.1
+   </td>
+   <td>Network connections shall be encrypted
+   </td>
+  </tr>
+  <tr>
+   <td>2.4.1.2
+   </td>
+   <td>TLS configuration of network connections shall adhere to industry best practices
+   </td>
+  </tr>
+  <tr>
+   <td>2.4.1.3
+   </td>
+   <td>Endpoint identity shall be verified on network connections
+   </td>
+  </tr>
+</table>
+
+
+
+## 
+    2.5 Platform
+
+
+### **2.5.1 The app uses IPC mechanisms securely.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.1.1
+   </td>
+   <td>The app shall not expose sensitive data via IPC mechanisms
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.1.2
+   </td>
+   <td>The app shall not expose sensitive data via App Extensions
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.1.3
+   </td>
+   <td>The app shall not expose sensitive functionality via Custom URL Schemes
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.1.4
+   </td>
+   <td>The app shall not expose sensitive data via UIActivity Sharing
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.1.5
+   </td>
+   <td>The app shall not use the general pasteboard for sharing sensitive information
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.1.6
+   </td>
+   <td>The app shall not expose sensitive functionality via Universal Links
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.5.2 The app uses WebViews securely.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.2.1
+   </td>
+   <td>WebViews shall securely execute JavaScript
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.2.2
+   </td>
+   <td>WebView shall be configured securely
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.5.3 The app uses the user interface securely.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.5.3.1
+   </td>
+   <td>The app shall by default mask data in the User Interface when it is known to be sensitive
+   </td>
+  </tr>
+</table>
+
+
+
+## 
+    2.6 Code
+
+
+### **2.6.1 The app requires an up-to-date platform version.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.6.1.1
+   </td>
+   <td>The app shall set the targetSdkVersion to an up-to-date platform version
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.6.2 The app only uses software components without known vulnerabilities.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.6.2.1
+   </td>
+   <td>The app only uses software components without known vulnerabilities
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.6.3 The app validates and sanitizes all untrusted inputs.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.6.3.1
+   </td>
+   <td>Compiler security features shall be enabled
+   </td>
+  </tr>
+</table>
+
+
+
+## 
+    2.7 Resilience
+
+
+### **2.7.1 The app implements anti-tampering mechanisms.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.7.1.1
+   </td>
+   <td>The app shall be properly signed.
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.7.2 The app implements anti-static analysis mechanisms**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.7.2.1
+   </td>
+   <td>The app shall disable all debugging symbols in the production version.
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.7.3 The app implements anti-dynamic analysis mechanisms**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.7.3.1
+   </td>
+   <td>The app shall not be debuggable if installed from outside of commercial app stores.
+   </td>
+  </tr>
+</table>
+
+
+
+## 
+    2.8 Privacy
+
+
+### **2.8.1 The app minimizes access to sensitive data and resources.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.8.1.1
+   </td>
+   <td>The app shall minimize access to sensitive data and resources provided by the platform.
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.8.2 The app is transparent about data collection and usage.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.8.2.1
+   </td>
+   <td>The app shall be transparent about data collection and usage.
+   </td>
+  </tr>
+</table>
+
+
+
+### **2.8.3 The app offers user control over their data.**
+
+**Audit**
+
+
+<table>
+  <tr>
+   <td style="background-color: null"><strong>Spec</strong>
+   </td>
+   <td style="background-color: null"><strong>Description</strong>
+   </td>
+  </tr>
+  <tr>
+   <td>2.8.3.1
+   </td>
+   <td>Users shall have the ability to request their data to be deleted via an in-app mechanism.
+   </td>
+  </tr>
+</table>
