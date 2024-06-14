@@ -5726,8 +5726,7 @@ gcloud dns policies list --flatten="networks[]" --format="table[box,title='All D
 Each VPC Network should be associated with a DNS policy with logging enabled.
 
 **Verification**
-
-Evidence or test output indicates that cloud DNS logging is enabled for all VPC networks.
+ Evidence or test output indicates that cloud DNS logging is enabled for all critical VPC networks, meaning any VPC network that is used to process confidential data.
 
 
 ---
