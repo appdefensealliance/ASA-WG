@@ -425,7 +425,7 @@ Version 0.5 - April 8, 2024
 
 [6.8.1 Ensure Instance IP assignment is set to private](#681-ensure-instance-ip-assignment-is-set-to-private)
 
-[6.9 Manage Default Accounts on Enterprise Assets and Softwar](#69-manage-default-accounts-on-enterprise-assets-and-softwar)
+[6.9 Manage Default Accounts on Enterprise Assets and Software](#69-manage-default-accounts-on-enterprise-assets-and-softwar)
 
 [6.9.1 Ensure That a MySQL Database Instance Does Not Allow Anyone To Connect With Administrative Privileges](#691-ensure-that-a-mysql-database-instance-does-not-allow-anyone-to-connect-with-administrative-privileges)
 
@@ -814,7 +814,7 @@ Evidence or test output indicates that -- if used to run the web app -- the deve
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-HTTP 2.0 has additional performance improvements on the head-of-line blocking problem of old HTTP version, header compression, and prioritization of requests. HTTP 2.0 no longer supports HTTP 1.1's chunked transfer encoding mechanism, as it provides its own, more efficient, mechanisms for data streaming. \
+HTTP 2.0 has additional performance improvements on the head-of-line blocking problem present in HTTP 1.1, along with improved header compression and prioritization of requests. HTTP 2.0 no longer supports HTTP 1.1's chunked transfer encoding mechanism, as it provides its own, more efficient, mechanisms for data streaming.\
 External Reference: CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.9
 
 **Evidence**
@@ -2526,7 +2526,7 @@ Perform the following to determine what policies are created:
 
 **Verification**
 
-Evidence or test output indicates that no customer-managed IAM policy allows full administrative privileges are attached. Note that inline and AWS-manged policies are exempt from this requirement.
+Evidence or test output indicates that no customer-managed IAM policy that allows full administrative privileges are attached (i.e., in effect within the AWS account). Note that inline and AWS-manged policies are exempt from this requirement.
 
 
 ---
@@ -2772,7 +2772,7 @@ Evidence or test output indicates that the IAM password policy requires a minimu
 2. In the left navigation panel, choose `Users`.
 3. Click on the IAM user name that you want to examine.
 4. On the IAM user configuration page, select `Security Credentials` tab.
-5. Under the `Access Keys` section, in the Status column, check the current status for each access key associated with the IAM user. If the selected IAM user has more than one access key activated then the users access configuration does not adhere to security best practices and the risk of accidental exposures increases.
+5. Under the `Access Keys` section, in the Status column, check the current status for each access key associated with the IAM user. If the selected IAM user has more than one access key activated then the user's access configuration does not adhere to security best practices and the risk of accidental exposures increases.
 * Repeat steps no. 3 – 5 for each IAM user in your AWS account.
 
 **From Command Line:**
@@ -3142,7 +3142,7 @@ Evidence or test output indicates the root account is not being used for any pur
 
 **Verification**
 
-Evidence or test output indicates that `Notify all admins when other admins reset their password?` is set to `yes`.
+Evidence or test output indicates that the `Notify all admins when other admins reset their password?` configuration is set to `yes`.
 
 
 ---
@@ -4038,7 +4038,7 @@ az account get-access-token --query "{subscription:subscription,accessToken:acce
 
 **Verification**
 
-Evidence or test output indicates that notifications for high severity events is enabled.
+Evidence or test output indicates that email notifications for high-severity (or higher) events are enabled.
 
 
 ---
@@ -4260,7 +4260,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 5. For each bucket noted in step 3, right-click on the bucket and click `Properties`.
 6. In the `Properties` pane, click the `Permissions` tab.
 7. The tab shows a list of grants, one row per grant, in the bucket ACL. Each row identifies the grantee and the permissions granted.
-8. Ensure no rows exists that has the `Grantee` set to `Everyone` or the `Grantee` set to `Any Authenticated User.`
+8. Ensure no rows exist where the `Grantee` is set to `Everyone` or the `Grantee` set to `Any Authenticated User.`
 9. If the `Edit bucket policy` button is present, click it to review the bucket policy.
 10. Ensure the policy does not contain a `Statement` having an `Effect` set to `Allow` and a `Principal` set to "*" or {"AWS": "*"}, or if it does, ensure that it has a condition in place to restrict access, such as `aws:PrincipalOrgID`.
 
@@ -5605,7 +5605,7 @@ at least one subscription should have "SubscriptionArn" with valid aws ARN. Exam
 
 **Verification**
 
-Evidence or test output indicates that there is at least one active multi-region CloudTrail with prescribed metric filters and alarms configured related to AWS organizations changes.
+Evidence or test output indicates that there is at least one active multi-region CloudTrail with prescribed metric filters and alarms configured related to changes to AWS organizations.
 
 
 ---
@@ -6252,7 +6252,7 @@ az monitor diagnostic-settings list --resource <resource ID>
 ```
 
 
-An empty result means a `diagnostic settings` is not configured for that resource. An error message means a `diagnostic settings` is not supported for that resource.
+An empty result means that no `diagnostic settings` are configured for that resource. An error message means that the configured `diagnostic settings` are not supported for that resource.
 
 **From PowerShell**
 
@@ -6272,7 +6272,7 @@ foreach ($resource in $resources) {$diagnosticSetting = Get-AzDiagnosticSetting 
 ```
 
 
-A result of `Diagnostic Settings not configured for resource: &lt;resource name>` means a `diagnostic settings` is not configured for that resource. Otherwise, the output of the above command will show configured `Diagnostic Settings` for a resource.
+A result of `Diagnostic Settings not configured for resource: &lt;resource name>` means  that no `diagnostic settings` are configured for that resource. Otherwise, the output of the above command will show configured `Diagnostic Settings` for a resource.
 
 **Verification**
 
@@ -9067,13 +9067,13 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) have
 
 1. Go to the Cloud SQL Instances page in the Google Cloud Console by visiting [https://console.cloud.google.com/sql/instances](https://console.cloud.google.com/sql/instances).
 2. Select the instance to open its `Instance Overview` page
-3. Ensure the database flag `contained database authentication` that has been set is listed under the `Database flags` section.
+3. Under the `Database flags` section, if the database flag `contained database authentication` is present, then ensure that it is not set to `on`.
 
 **From Google Cloud CLI**
 
 
 
-1. Ensure the below command returns `off` for every Cloud SQL SQL Server database instance.
+1. Ensure the below command doesn't return `on` for any Cloud SQL SQL Server database instance.
 
 
 ```
@@ -9308,7 +9308,7 @@ Evidence or test output indicates that all Cloud SQL instances have an IP Addres
 ---
 
 
-## 6.9 Manage Default Accounts on Enterprise Assets and Softwar
+## 6.9 Manage Default Accounts on Enterprise Assets and Software
 ### Description
 
 Manage default accounts on enterprise assets and software, such as root, administrator, and other pre-configured vendor accounts. Example implementations can include: disabling default accounts or making them unusable.
@@ -9978,8 +9978,7 @@ gcloud sql instances list --format=json | jq '.settings.databaseFlags[] | select
 
 **Verification**
 
-Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `log_min_messages` database flag is set to Warning or more verbose.
-
+Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `log_min_messages` database flag set at the level of Warning (or more verbose).
 
 ---
 
@@ -10015,7 +10014,7 @@ gcloud sql instances list --format=json | jq '.[].settings.databaseFlags[] | sel
 
 **Verification**
 
-Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `log_min_error_statement` database flag is set to Error or stricter.
+Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `log_min_error_statement` database flag set to Error or stricter.
 
 
 ---
@@ -10052,7 +10051,7 @@ gcloud sql instances list --format=json| jq '.settings.databaseFlags[] | select(
 
 **Verification**
 
-Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `log_min_duration_statement` database flag is set to -1 (Disabled).
+Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `log_min_duration_statement` database flag set to -1 (Disabled).
 
 
 ---
@@ -10139,7 +10138,7 @@ protoPayload.request.@type="type.googleapis.com/google.cloud.sql.audit.v1.PgAudi
 
 **Verification**
 
-Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `cloudsql.enable_pgaudit` database flag is set to `on` for centralized logging.
+Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have the `cloudsql.enable_pgaudit` database flag set to `on` for centralized logging.
 
 
 ---

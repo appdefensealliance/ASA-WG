@@ -17,7 +17,7 @@ Version 0.7 - June 10, 2024
 
 
 # Overview
-This document provides  summary of the audit requirements sorted by platforms and is meant to be used as a supliment to the Cloud App and Config Specification and Cloud App and Config Test Guide.
+This document provides a summary of the audit requirements sorted by platforms and is meant to be used as a supplement to the Cloud App and Config Specification and Cloud App and Config Test Guide.
 
 
 # 1 AWS
