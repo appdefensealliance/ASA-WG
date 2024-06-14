@@ -840,7 +840,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.2
 
 
 ---
-**2.3.3 The application shall use session tokens rather than static API secrets and keys, except with legacy implementations.**\
+### 2.3.3 The application shall use session tokens rather than static API secrets and keys, except with legacy implementations.
 External Reference: ASVS Version 4.0.3 Requirement: 3.5.2
 
 
@@ -1560,7 +1560,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.5
 
 
 ---
-**5.1.3 Avoid the use of eval() or other dynamic code execution features. When there is no alternative, any user input is sanitized and sandboxed before being executed.**\
+### 5.1.3 Avoid the use of eval() or other dynamic code execution features. When there is no alternative, any user input is sanitized and sandboxed before being executed.
 External Reference: ASVS Version 4.0.3 Requirement: 5.2.4
 
 
