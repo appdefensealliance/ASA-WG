@@ -52,6 +52,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Jullian Gerhart
 * Olivier Tuchon
 * Peter Mueller
+* Riccardo Poffo
 * Rupesh Nair
 * Syrone Hanks II
 * Thomas Cannon
