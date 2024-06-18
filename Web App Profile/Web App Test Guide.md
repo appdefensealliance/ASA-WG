@@ -2070,7 +2070,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.5.2
 **Test Procedure**
 
 
-*L1 *
+*L1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 *L2*
