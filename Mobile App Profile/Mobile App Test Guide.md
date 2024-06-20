@@ -2226,7 +2226,7 @@ _L2_
 
 **Verification**
 
-L1 & L2: Review the provided information to verify that the app is 
+L1 & L2: Review the provided information to verify:
 
 
 
