@@ -544,7 +544,6 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.3
 2. If a non-ADA approved service is used, evaluation shall verify that the application does not allow the out of band verifier to be used more than once.
 
 
-
 ---
 ### 1.4.3 Out of band verifier shall be securely random
 External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
@@ -578,11 +577,53 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 *L1*
 1. An ADA-approved external user authentication service may be used.
-2. Initial authentication code generation shall be securely random.
+2. Initial authentication code generation shall be securely random (generation of random numbers shall be in a way that is impossible for an attacker to predict or manipulate).
 
 *L2*
 1. An ADA-approved external user authentication service may be used.
 2. Initial authentication code shall be observed to be random.
+
+
+---
+### 1.4.4 Out of band verifier shall be resistant to brute force attacks
+External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
+
+
+**Evidence**
+
+
+*L1*
+1. Provide a list of any external user authentication services.
+2. If a proprietary user authentication service is used by the application, provide a written description of the algorithm used to generate initial authentication codes and also of any rate-limiting applied during the application’s initial authentication code validation process.
+
+*L2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*L1*
+1. Review list of external authentication services against ADA approved services.
+2. Review provided evidence for adherence with the requirements.
+
+*L2*
+1. Review list of external authentication services against ADA approved services.
+2. Validate application’s adherence with the requirements.
+
+
+**Verification**
+
+
+*L1*
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, authentication codes shall contain at least 20 bits of entropy (typically a six digital random number is sufficient).
+3. If a non-ADA approved service is used and the authentication secret has less than 64 bits of entropy, the application shall implement a rate-limiting mechanism.
+
+*L2*
+1. An ADA-approved external user authentication service may be used.
+2. If a non-ADA approved service is used, evaluation shall verify authentication codes contain at least 20 bits of entropy (typically a six digital random number is sufficient).
+3. If a non-ADA approved service is used and the authentication secret has less than 64 bits of entropy, evaluation shall verify the application implements a rate-limiting mechanism.
 
 
 ---
