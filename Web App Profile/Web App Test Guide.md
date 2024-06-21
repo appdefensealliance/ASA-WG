@@ -40,7 +40,7 @@ Version 0.7 - May 25, 2024
 
 2.1.1 [The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option to prevent) exposing sensitive information like API keys or session tokens within the URL query strings.](#211-the-application-shall-not-reveal-passwords-or-session-tokens-in-url-parameters-in-cases-where-the-application-provides-an-api-the-application-shall-prevent-or-give-developers-an-option-to-prevent-exposing-sensitive-information-like-api-keys-or-session-tokens-within-the-url-query-strings)
 
-2.2 [Implement Session Invalidation on Logout, User Request, and Password Change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
+2.2 [Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
 
 2.2.1 [Users shall have the ability to logout of the application. Logout or session expiration shall invalidate all stateful session tokens, including refresh tokens.](#221-users-shall-have-the-ability-to-logout-of-the-application-logout-or-session-expiration-shall-invalidate-all-stateful-session-tokens-including-refresh-tokens)
 
@@ -48,7 +48,7 @@ Version 0.7 - May 25, 2024
 
 2.2.3 [Stateless authentication tokens must expire within 24 hours of being issued](#223-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued)
 
-2.3 [Implement and Secure Application Session Tokens](#23-implement-and-secure-application-session-tokens)
+2.3 [Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
 
 2.3.1 [Cookie-based session tokens shall have the 'Secure' attribute set.](#231-cookie-based-session-tokens-shall-have-the-secure-attribute-set)
 
@@ -58,7 +58,7 @@ Version 0.7 - May 25, 2024
 
 2.3.4 [Stateless session tokens shall use digital signatures, encryption, and other countermeasures to protect against tampering, enveloping, replay, null cipher, and key substitution attacks.](#234-stateless-session-tokens-shall-use-digital-signatures-encryption-and-other-countermeasures-to-protect-against-tampering-enveloping-replay-null-cipher-and-key-substitution-attacks)
 
-2.4 [Protect Sensitive Account Modifications](#24-protect-sensitive-account-modifications)
+2.4 [Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
 
 2.4.1 [Verify the application ensures a full, valid login session or requires re-authentication or secondary verification before allowing any sensitive transactions or account modifications.](#241-verify-the-application-ensures-a-full-valid-login-session-or-requires-re-authentication-or-secondary-verification-before-allowing-any-sensitive-transactions-or-account-modifications)
 
@@ -82,7 +82,7 @@ Version 0.7 - May 25, 2024
 
 3.2.1 [Application shall implement only secure and recommended OAuth 2.0 flows, such as the Authorization Code Flow or the Authorization Code Flow with PKCE, while avoiding the use of deprecated flows like the Implicit Flow or the Resource Owner Password Credentials Flow.](#321-application-shall-implement-only-secure-and-recommended-oauth-20-flows-such-as-the-authorization-code-flow-or-the-authorization-code-flow-with-pkce-while-avoiding-the-use-of-deprecated-flows-like-the-implicit-flow-or-the-resource-owner-password-credentials-flow)
 
-3.2.2 [Ensure that the application securely validates the redirect_uri and state parameters during the OAuth 2.0 authorization process to prevent open redirect and CSRF vulnerabilities.](#322-ensure-that-the-application-securely-validates-the-redirect_uri-and-state-parameters-during-the-oauth-20-authorization-process-to-prevent-open-redirect-and-csrf-vulnerabilities)
+3.2.2 [Application shall securely validates the redirect_uri and state parameters during the OAuth 2.0 authorization process to prevent open redirect and CSRF vulnerabilities.](#322-application-shall-securely-validate-the-redirect_uri-and-state-parameters-during-the-oauth-20-authorization-process-to-prevent-open-redirect-and-csrf-vulnerabilities)
 
 3.3 [Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
 
@@ -90,7 +90,7 @@ Version 0.7 - May 25, 2024
 
 4 [Communications](#4-communications)
 
-4.1 [Protect Sensitive Data Through Strong Cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+4.1 [Protect sensitive data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
 
 4.1.1 [Application shall enforce the use of TLS for all connections and default to TLS 1.2+.](#411-application-shall-enforce-the-use-of-tls-for-all-connections-and-default-to-tls-12-in-cases-where-support-for-legacy-clients-is-necessary-tls-10-and-11-may-be-supported-if-mitigations-are-implemented-to-minimize-the-risk-of-downgrade-attacks-and-known-tls-exploits-regardless-of-the-tls-version-in-use-the-application-shall-default-to-secure-cipher-suites-and-reject-those-with-known-vulnerabilities)
 
@@ -704,7 +704,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 
 
 ---
-## 2.3 Implement and Secure Application Session Tokens
+## 2.3 Implement and secure application session tokens
 ### Description
 When using cookie-based session tokens, the application must enforce the 'Secure' attribute (ensuring transmission only over HTTPS) and the 'HttpOnly' attribute (preventing access by client-side JavaScript).  The application prioritizes session tokens over static API keys, except where legacy systems necessitate static secrets.
 ### Rationale
@@ -855,7 +855,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
 
 
 ---
-## 2.4 Protect Sensitive Account Modifications 
+## 2.4 Protect sensitive account modifications 
 ### Description
 Applications must enforce a complete, valid login session or require re-authentication/secondary verification prior to any sensitive actions, such as sensitive data transactions or changes to account settings.
 ### Rationale
@@ -1170,7 +1170,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 ---
-### 3.2.2 Ensure that the application securely validates the redirect_uri and state parameters during the OAuth 2.0 authorization process to prevent open redirect and CSRF vulnerabilities.
+### 3.2.2 Application shall securely validate the redirect_uri and state parameters during the OAuth 2.0 authorization process to prevent open redirect and CSRF vulnerabilities.
 External Reference: ASVS Version 4.0.3 Requirement: 
 
 
@@ -1245,7 +1245,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.1
 
 ---
 # 4 Communications
-## 4.1 Protect Sensitive Data Through Strong Cryptography 
+## 4.1 Protect sensitive data through strong cryptography 
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -1418,7 +1418,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.2.1
 
 ---
 # 5 Data Validation and Sanitization
-## 5.1 Implement Validation & Input Sanitation
+## 5.1 Implement validation & input sanitation
 ### Description
 Web applications must implement robust input validation and output encoding to defend against a wide range of injection attacks. This includes protecting against HTTP Parameter Pollution, XSS (reflected, stored, and DOM-based), SQL injection, OS command injection, file inclusion vulnerabilities, template injection, SSRF, XPath/XML injection, and unsafe use of dynamic code execution features (like eval()).
 ### Rationale
@@ -1843,7 +1843,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.9
 
 
 ---
-## 5.2 Securely Handle Untrusted Files 
+## 5.2 Securely handle untrusted files 
 ### Description
 Web applications must safely process and manage files that originate from untrusted or unknown sources. This includes restricting uploads to expected file types and preventing direct execution of uploaded content containing HTML, JavaScript, or dynamic server-side code.
 ### Rationale
@@ -2029,7 +2029,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.5.2
 
 
 ---
-## 6.4 Protect Application from Subdomain Takeover
+## 6.4 Protect application from subdomain takeover
 ### Description
 The application must implement safeguards to prevent subdomain takeover vulnerabilities. This includes proactive identification and removal of dangling DNS records (e.g., CNAME records pointing to decommissioned services) and regular monitoring of third-party services integrated with the application's domains.
 ### Rationale

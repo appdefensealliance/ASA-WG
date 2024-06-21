@@ -38,11 +38,11 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 2.1 [URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
 
-2.2 [Implement Session Invalidation on Logout, User Request, and Password Change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
+2.2 [Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
 
-2.3 [Implement and Secure Application Session Tokens](#23-implement-and-secure-application-session-tokens)
+2.3 [Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
 
-2.4 [Protect Sensitive Account Modifications](#24-protect-sensitive-account-modifications)
+2.4 [Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
 
 3 [Access Control](#3-access-control)
 
@@ -54,13 +54,13 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 4 [Communications](#4-communications)
 
-4.1 [Protect Sensitive Data Through Strong Cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+4.1 [Protect sensitive data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
 
 5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
 
-5.1 [Implement Validation & Input Sanitation](#51-implement-validation--input-sanitation)
+5.1 [Implement validation & input sanitation](#51-implement-validation--input-sanitation)
 
-5.2 [Securely Handle Untrusted Files](#52-securely-handle-untrusted-files)
+5.2 [Securely handle untrusted files](#52-securely-handle-untrusted-files)
 
 6 [Configuration](#6-configuration)
 
@@ -70,7 +70,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 6.3 [The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
 
-6.4 [Protect Application from Subdomain Takeover](#64-protect-application-from-subdomain-takeover)
+6.4 [Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
 
 6.5 [Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
 
@@ -145,7 +145,7 @@ Default accounts can be easily discovered through publicly available documentati
 ### Audit
 | Spec | Description |
 | --- | ------|
-| [1.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#121-default-credentials-shall-not-be-present-on-publicly-exposed-interfaces) | Shared or default accounts shall not present on publicly exposed interfaces.|
+| [1.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#121-default-credentials-shall-not-be-present-on-publicly-exposed-interfaces) | Default credentials shall not present on publicly exposed interfaces.|
 
 ---
 ## 1.3 Out of band verifiers shall be random and not reused
@@ -174,7 +174,7 @@ Exposing sensitive data such as session tokens in URLs significantly increases t
 | [2.1.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#211-the-application-shall-not-reveal-passwords-or-session-tokens-in-url-parameters-in-cases-where-the-application-provides-an-api-the-application-shall-prevent-or-give-developers-an-option-to-prevent-exposing-sensitive-information-like-api-keys-or-session-tokens-within-the-url-query-strings) | The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option) to prevent exposing sensitive information like API keys or session tokens within the URL query strings|
 
 ---
-## 2.2 Implement Session Invalidation on Logout, User Request, and Password Change
+## 2.2 Implement session invalidation on logout, user request, and password change
 ### Description
 The application must invalidate session tokens upon logout, expiration, and shall provide the option (or acts by default) to terminate other active sessions after a successful password change (including reset).
 ### Rationale
@@ -187,7 +187,7 @@ These features protect against unauthorized access.  Logouts and expirations pre
 | [2.2.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#223-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued) | Stateless authentication tokens must expire within 24 hours of being issued|
 
 ---
-## 2.3 Implement and Secure Application Session Tokens
+## 2.3 Implement and secure application session tokens
 ### Description
 When using cookie-based session tokens, the application must enforce the 'Secure' attribute (ensuring transmission only over HTTPS) and the 'HttpOnly' attribute (preventing access by client-side JavaScript).  The application prioritizes session tokens over static API keys, except where legacy systems necessitate static secrets.
 ### Rationale
@@ -201,7 +201,7 @@ Secure' and 'HttpOnly' mitigate risks of token interception and Cross-Site Scrip
 | [2.3.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#234-stateless-session-tokens-shall-use-digital-signatures-encryption-and-other-countermeasures-to-protect-against-tampering-enveloping-replay-null-cipher-and-key-substitution-attacks) | Stateless session tokens shall use digital signatures, encryption, and other countermeasures to protect against tampering, enveloping, replay, null cipher, and key substitution attacks.|
 
 ---
-## 2.4 Protect Sensitive Account Modifications 
+## 2.4 Protect sensitive account modifications 
 ### Description
 Applications must enforce a complete, valid login session or require re-authentication/secondary verification prior to any sensitive actions, such as sensitive data transactions or changes to account settings.
 ### Rationale
@@ -263,7 +263,7 @@ Infrastructure administrative interfaces shall never be exposed through an inter
 
 ---
 # 4 Communications
-## 4.1 Protect Sensitive Data Through Strong Cryptography 
+## 4.1 Protect sensitive data through strong cryptography 
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -279,7 +279,7 @@ Strong TLS and cipher suites ensure confidentiality and integrity of data in tra
 
 ---
 # 5 Data Validation and Sanitization
-## 5.1 Implement Validation & Input Sanitation
+## 5.1 Implement validation & input sanitation
 ### Description
 Web applications must implement robust input validation and output encoding to defend against a wide range of injection attacks. This includes protecting against HTTP Parameter Pollution, XSS (reflected, stored, and DOM-based), SQL injection, OS command injection, file inclusion vulnerabilities, template injection, SSRF, XPath/XML injection, and unsafe use of dynamic code execution features (like eval()).
 ### Rationale
