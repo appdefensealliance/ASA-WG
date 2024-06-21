@@ -102,7 +102,7 @@ Version 0.7 - May 25, 2024
 
 5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
 
-5.1 [Implement Validation & Input Sanitation](#51-implement-validation--input-sanitation)
+5.1 [Implement validation & input sanitation](#51-implement-validation--input-sanitation)
 
 5.1.1 [Protect against HTTP parameter pollution.](#511-protect-against-http-parameter-pollution)
 
@@ -126,7 +126,7 @@ Version 0.7 - May 25, 2024
 
 5.1.11 [Protect against local file inclusion or remote file inclusion attacks](#5111-protect-against-local-file-inclusion-or-remote-file-inclusion-attacks)
 
-5.2 [Securely Handle Untrusted Files](#52-securely-handle-untrusted-files)
+5.2 [Securely handle untrusted files](#52-securely-handle-untrusted-files)
 
 5.2.1 [Protect against malicious file uploads by limiting uploads to expected file types and preventing direct execution of uploaded content.](#521-protect-against-malicious-file-uploads-by-limiting-uploads-to-expected-file-types-and-preventing-direct-execution-of-uploaded-content)
 
