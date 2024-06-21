@@ -1209,9 +1209,9 @@ External Reference: ASVS Version 4.0.3 Requirement:
 ---
 ## 3.3 Application exposed administrative interfaces shall use appropriate multi-factor authentication.
 ### Description
-Application exposed administrative interfaces shall implement multi-factor authentication. These interfaces shall be limited to application layer functionality and must not expose the cloud infrastructure.
+Multi-factor authentication shall be implemented for all application exposed administrative interfaces. These interfaces must be limited to application layer functionality and shall not expose the underlying cloud infrastructure. This requirement applies to both custom admin interfaces and open source admin portals, such as the WordPress Admin dashboard.
 ### Rationale
-Infrastructure administrative interfaces shall never be exposed through an internet facing interface. However, there are many cases where application layer administrative tasks may need to be exposed to the internet. It is critical that these interfaces be limited in functionality and always implement multi-factor authentication to prevent attackers from compromising administrative accounts.
+Infrastructure administrative interfaces shall not be exposed through an internet facing interface. However, there are many cases where application layer administrative tasks may need to be exposed to the internet. It is critical that these interfaces be limited in functionality and always implement multi-factor authentication to prevent attackers from compromising administrative accounts.
 
 ### Audit
 
@@ -1225,22 +1225,21 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.1
 
 
 *L1 and L2*
-1. N/A (to be collected by labs)
+1. Provide evidence demonstrating that any application exposed administrative interfaces enforce multi-factor authentication for all accounts. 
 
 
 **Test Procedure**
 
 
 *L1 and L2*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 
 **Verification**
 
 
 *L1 and L2*
-1. Multi-factor authentication methods shall follow industry best practices.
-2. Multi-factor authentication shall be enforced for administrative accounts.
+1. Multi-factor authentication shall be enforced for all administrative accounts.
 
 
 
