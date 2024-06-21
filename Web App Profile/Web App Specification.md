@@ -134,21 +134,7 @@ Default accounts can be easily discovered through publicly available documentati
 | [1.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#121-default-credentials-shall-not-be-present-on-publicly-exposed-interfaces) | Shared or default accounts shall not present on publicly exposed interfaces.|
 
 ---
-## 1.3 Lookup secrets shall be random and not reused
-### Description
-Lookup secrets are pre-generated lists of single-use codes that are often used as a substitute for a user's password when they forget their password or need access to their account. Given the sensitive nature of these codes, it is important that they are resistant to replay, spoofing, and brute force attacks. 
-
-### Rationale
-Since lookup secrets often act as a substitute for a user password, it's important that they are securely randomly generated and resistant to replay attacks.
-### Audit
-| Spec | Description |
-| --- | ------|
-| [1.3.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#131-lookup-secrets-shall-be-used-only-once) | Lookup secrets shall be used only once.|
-| [1.3.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#132-lookup-secrets-shall-have-sufficient-randomness) | Lookup secrets shall have sufficient randomness.|
-
-
----
-## 1.4 Out of band verifiers shall be random and not reused
+## 1.3 Out of band verifiers shall be random and not reused
 ### Description
 Any verification codes or tokens sent through out-of-band methods (such as SMS or email) should have sufficient entropy along with a suitable expiration duration. Once a verifier has been used or has expired, it should be invalidated and a new one should be generated for each subsequent verification attempt.
 ### Rationale
