@@ -24,19 +24,13 @@ Version 0.7 - May 25, 2024
 
 1.2.1 [Default credentials shall not be present on publicly exposed interfaces.](#121-default-credentials-shall-not-be-present-on-publicly-exposed-interfaces)
 
-1.3 [Lookup secrets shall be random and not reused](#13-lookup-secrets-shall-be-random-and-not-reused)
+1.3 [Out of band verifiers shall be random and not reused](#14-out-of-band-verifiers-shall-be-random-and-not-reused)
 
-1.3.1 [Lookup secrets shall be used only once.](#131-lookup-secrets-shall-be-used-only-once)
+1.3.1 [Out of band verifier shall expire after 7 days.](#141-out-of-band-verifier-shall-expire-after-7-days)
 
-1.3.2 [Lookup secrets shall have sufficient randomness.](#132-lookup-secrets-shall-have-sufficient-randomness)
+1.3.2 [Out of band verifier shall only be used once.](#142-out-of-band-verifier-shall-only-be-used-once)
 
-1.4 [Out of band verifiers shall be random and not reused](#14-out-of-band-verifiers-shall-be-random-and-not-reused)
-
-1.4.1 [Out of band verifier shall expire after 7 days.](#141-out-of-band-verifier-shall-expire-after-7-days)
-
-1.4.2 [Out of band verifier shall only be used once.](#142-out-of-band-verifier-shall-only-be-used-once)
-
-1.4.3 [Out of band verifier shall be securely random](#143-out-of-band-verifier-shall-be-securely-random)
+1.3.3 [Out of band verifier shall be securely random](#143-out-of-band-verifier-shall-be-securely-random)
 
 2 [Session Management](#2-session-management)
 
@@ -368,104 +362,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 *L2*
 1. Test results from WSTG-ATHN-02 shall not detect the use of default credentials on publicly exposed interfaces.
 
-
-
-
 ---
-## 1.3 Lookup secrets shall be random and not reused
-### Description
-Lookup secrets are pre-generated lists of single-use codes that are often used as a substitute for a user's password when they forget their password or need access to their account. Given the sensitive nature of these codes, it is important that they are resistant to replay, spoofing, and brute force attacks. 
-
-### Rationale
-Since lookup secrets often act as a substitute for a user password, it's important that they are securely randomly generated and resistant to replay attacks.
-### Audit
-
-
----
-### 1.3.1 Lookup secrets shall be used only once.
-External Reference: ASVS Version 4.0.3 Requirement: 2.6.1
-
-
-**Evidence**
-
-
-*L1*
-1. Provide a list of any external user authentication services.
-2. If a proprietary user authentication service is used by the application, provide a written description of the lookup secrets controls. (If used)
-3. If a proprietary user authentication service is used by the application, provide screenshots of the lookup secrets being rejected after a single use. (If used)
-
-*L2*
-1. N/A (to be collected by labs)
-
-
-**Test Procedure**
-
-
-*L1*
-1. Review list of external authentication services against ADA approved services.
-2. Review provided evidence for adherence with the requirements
-
-*L2*
-1. Review list of external authentication services against ADA approved services.
-2. For proprietary authentication services, evaluate the application lookup secrets process.
-
-
-**Verification**
-
-
-*L1*
-1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, service lookup secrets description shall describe how the secrets are used only once.
-
-*L2*
-1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, it shall be validated that the lookup secrets are used only once.
-
-
----
-### 1.3.2 Lookup secrets shall have sufficient randomness.
-External Reference: ASVS Version 4.0.3 Requirement: 2.6.2
-
-
-**Evidence**
-
-
-*L1*
-1. Provide a list of any external user authentication services.
-2. If a proprietary user authentication service is used by the application, provide a written description of the algorithm used to generate random lookup secrets. (If used)
-3. If a proprietary user authentication service is used by the application, provide screenshots of three example lookup secrets. (if used)
-
-*L2*
-1. N/A (to be collected by labs)
-
-
-**Test Procedure**
-
-
-*L1*
-1. Review list of external authentication services against ADA approved services.
-2. Review provided evidence for adherence with the requirements
-
-*L2*
-1. Review list of external authentication services against ADA approved services.
-2. For proprietary authentication services, evaluate the application lookup secrets process.
-
-
-**Verification**
-
-
-*L1*
-1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, lookup secrets description shall describe how the secrets are sufficiently random such that they would expire or be rejected with the brute force protections prior before it is statistically possible for an attacker to guess the secret.
-
-*L2*
-1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, lookup secrets shall be verified that the secrets are sufficiently random such that they would expire or be rejected with the brute force protections prior before it is statistically possible for an attacker to guess the secret. Randomness shall be based on observation.
-
-
-
----
-## 1.4 Out of band verifiers shall be random and not reused
+## 1.3 Out of band verifiers shall be random and not reused
 ### Description
 Any verification codes or tokens sent through out-of-band methods (such as SMS or email) should have sufficient entropy along with a suitable expiration duration. Once a verifier has been used or has expired, it should be invalidated and a new one should be generated for each subsequent verification attempt.
 ### Rationale
@@ -474,7 +372,7 @@ By ensuring that out of band verifiers are securely generated and managed, the r
 
 
 ---
-### 1.4.1 Out of band verifier shall expire after 7 days.
+### 1.3.1 Out of band verifier shall expire after 7 days.
 External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 
@@ -505,7 +403,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 
 ---
-### 1.4.2 Out of band verifier shall only be used once.
+### 1.3.2 Out of band verifier shall only be used once.
 External Reference: ASVS Version 4.0.3 Requirement: 2.7.3
 
 
@@ -546,7 +444,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.3
 
 
 ---
-### 1.4.3 Out of band verifier shall be securely random
+### 1.3.3 Out of band verifier shall be securely random
 External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 
