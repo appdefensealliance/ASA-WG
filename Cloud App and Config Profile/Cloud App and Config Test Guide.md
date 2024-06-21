@@ -4254,15 +4254,13 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 1. Go to the Amazon CloudTrail console at [https://console.aws.amazon.com/cloudtrail/home](https://console.aws.amazon.com/cloudtrail/home).
-2. In the `API activity history` pane on the left, click `Trails`.
+2. In the navigation pane on the left, click `Trails`.
 3. In the `Trails` pane, note the bucket names in the `S3 bucket` column
 4. Go to Amazon S3 console at [https://console.aws.amazon.com/s3/home](https://console.aws.amazon.com/s3/home).
-5. For each bucket noted in step 3, right-click on the bucket and click `Properties`.
-6. In the `Properties` pane, click the `Permissions` tab.
-7. The tab shows a list of grants, one row per grant, in the bucket ACL. Each row identifies the grantee and the permissions granted.
-8. Ensure no rows exist where the `Grantee` is set to `Everyone` or the `Grantee` set to `Any Authenticated User.`
-9. If the `Edit bucket policy` button is present, click it to review the bucket policy.
-10. Ensure the policy does not contain a `Statement` having an `Effect` set to `Allow` and a `Principal` set to "*" or {"AWS": "*"}, or if it does, ensure that it has a condition in place to restrict access, such as `aws:PrincipalOrgID`.
+5. For each bucket noted in step 3, click on the bucket name.
+6. Click on the `Permissions` tab.
+7. In the `Bucket policy` section, ensure that there is no statement with the `Effect` of `Allow` with a `Principal` of either `"\*"` or `{"AWS": "\*"}` unless it also has a suitable condition in place to restrict access, such as `aws:PrincipalOrgID`.
+8. In the `Access control list (ACL)` section, that no permissions for either `Objects` or `Bucket ACL` are granted to either `Everyone` or `Authenticated users group`.
 
 **From Command Line:**
 
