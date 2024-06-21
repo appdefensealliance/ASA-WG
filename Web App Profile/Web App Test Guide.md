@@ -144,7 +144,7 @@ Version 0.7 - May 25, 2024
 
 6.3.1 [The origin header shall not be used for authentication of access control decisions](#631-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
 
-6.4 [Protect Application from Subdomain Takeover](#64-protect-application-from-subdomain-takeover)
+6.4 [Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
 
 6.4.1 [The application shall not be susceptible to subdomain takeovers.](#641-the-application-shall-not-be-susceptible-to-subdomain-takeovers)
 
