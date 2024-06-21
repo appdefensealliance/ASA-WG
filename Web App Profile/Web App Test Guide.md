@@ -24,13 +24,15 @@ Version 0.7 - May 25, 2024
 
 1.2.1 [Default credentials shall not be present on publicly exposed interfaces.](#121-default-credentials-shall-not-be-present-on-publicly-exposed-interfaces)
 
-1.3 [Out of band verifiers shall be random and not reused](#14-out-of-band-verifiers-shall-be-random-and-not-reused)
+1.3 [Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
 
-1.3.1 [Out of band verifier shall expire after 7 days.](#141-out-of-band-verifier-shall-expire-after-7-days)
+1.3.1 [Out of band verifier shall expire after 7 days.](#131-out-of-band-verifier-shall-expire-after-7-days)
 
-1.3.2 [Out of band verifier shall only be used once.](#142-out-of-band-verifier-shall-only-be-used-once)
+1.3.2 [Out of band verifier shall only be used once.](#132-out-of-band-verifier-shall-only-be-used-once)
 
-1.3.3 [Out of band verifier shall be securely random](#143-out-of-band-verifier-shall-be-securely-random)
+1.3.3 [Out of band verifier shall be securely random](#133-out-of-band-verifier-shall-be-securely-random)
+
+1.3.4 [Out of band verifier shall be resistant to brute force attacks](#134-out-of-band-verifier-shall-be-resistant-to-brute-force-attacks)
 
 2 [Session Management](#2-session-management)
 
@@ -483,7 +485,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 
 ---
-### 1.4.4 Out of band verifier shall be resistant to brute force attacks
+### 1.3.4 Out of band verifier shall be resistant to brute force attacks
 External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 
