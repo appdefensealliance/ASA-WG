@@ -1209,7 +1209,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 ### Description
 Multi-factor authentication shall be implemented for all application exposed administrative interfaces. These interfaces must be limited to application layer functionality and shall not expose the underlying cloud infrastructure. This requirement applies to both custom admin interfaces and open source admin portals, such as the WordPress Admin dashboard.
 ### Rationale
-Infrastructure administrative interfaces shall never be exposed through an internet facing interface. However, there are many cases where application layer administrative tasks may need to be exposed to the internet. It is critical that these interfaces be limited in functionality and always implement multi-factor authentication to prevent attackers from compromising administrative accounts.
+Infrastructure administrative interfaces shall not be exposed through an internet facing interface. However, there are many cases where application layer administrative tasks may need to be exposed to the internet. It is critical that these interfaces be limited in functionality and always implement multi-factor authentication to prevent attackers from compromising administrative accounts.
 
 ### Audit
 
