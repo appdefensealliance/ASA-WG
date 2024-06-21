@@ -97,14 +97,30 @@ This document is intended for system and application administrators, security sp
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
 
 # Definitions
-*ASVS*
-Application Security Verification Standard
+| Term | Definition |
+| --- | ----- |
+| ADA-approved external user authentication service | User authentication / Identity provider which has been reviewed against the ADA authentication requirements. The review may have been done directly against the service or part of an application review. See ADA Approved User Authentication Service. |
+| ASVS | Application Security Verification Standard |
+| Code snippets | Portion of code (either screenshot or text file), which demonstrates the implementation of the security control defined in the audit test case. The full text file, calling functions or underlying libraries do not need to be included. |
+| CVE | Common Vulnerabilities and Exposures. [https://www.cve.org/](https://www.cve.org/)|
+| CVSS | Common Vulnerability Scoring System. [https://www.cve.org/](https://www.cve.org/)|
+| Default credentials | Default credentials are any predefined user names and passwords combinations. For example, Admin/Admin. However, Admin with a user defined password would not be a default credential. |
+| HTTP parameter pollution | HTTP Parameter Pollution (HPP) is a web application vulnerability exploited by injecting encoded query string delimiters in already existing parameters. [https://en.wikipedia.org/wiki/HTTP_parameter_pollution](https://en.wikipedia.org/wiki/HTTP_parameter_pollution)|
+| IV (Initialization Vector) | A binary vector used as the input to initialize the algorithm for the encryption of a plaintext block sequence to increase security by introducing additional cryptographic variance and to synchronize cryptographic equipment. The initialization vector need not be secret. [https://csrc.nist.gov/glossary/term/initialization_vector](https://csrc.nist.gov/glossary/term/initialization_vector) |
+| Local File Inclusion | The File Inclusion vulnerability allows an attacker to include a file, usually exploiting a “dynamic file inclusion” mechanism implemented in the target application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion) |
+| (L1) ADA Assurance Level 1 (Verified Self Assessment) | The developer provides evidence and statements of compliance to each audit test case. The ADA approved lab reviews the evidence against the requirements. The ADA approved lab does not directly assess the application. |
+| (L2) ADA Assurance Level 2 (Lab Assessment) |  The ADA approved lab evaluates each audit test case directly against the application. In some cases, the developer may need to provide limited information or code snippets. |
+| non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
+| Padding Oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
+| Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
+| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, are out of scope. | 
+| Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
+| Sensitive Data | Data that is of particular concern from a security perspective, including personal identifiable information, credentials, and keys. This is not taking into account regulatory requirements for privacy or compliance for various verticals such as healthcare or finance. PII is any information that can be used to directly or indirectly identify a specific individual. This data, if mishandled, can lead to harm, discrimination, or privacy violations. |
+| Remote File Inclusion | Remote File Inclusion (also known as RFI) is the process of including remote files through the exploitation of vulnerable inclusion procedures implemented in the application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion) |
+| WSTG | OWASP Web Security Testing Guide |
+| 3P library | Any library which was not developed by the developer. These libraries may be open source or commercial libraries or SDKs.|
 
-*Sensitive Data*
-TBD
 
-*Software Bill Of Material (SBOM)*
-A “software bill of materials” (SBOM) has emerged as a key building block in software security and software supply chain risk management. A SBOM is a nested inventory, a list of ingredients that make up software components. 
 
 # 1 Authentication
 ## 1.1 Implement strong password security measures
