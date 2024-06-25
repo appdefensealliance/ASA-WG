@@ -108,7 +108,7 @@ Version 0.5 - April 8, 2024
 
 [2.7.2 Do not setup access keys during initial user setup for all IAM users that have a console password](#272-do-not-setup-access-keys-during-initial-user-setup-for-all-iam-users-that-have-a-console-password)
 
-[2.7.3 Ensure IAM policies that allow full "_:_" administrative privileges are not attached ](#273-ensure-iam-policies-that-allow-full-_-administrative-privileges-are-not-attached)
+[2.7.3 Ensure IAM policies that allow full  "\*:\*"  administrative privileges are not attached](#273-ensure-iam-policies-that-allow-full--administrative-privileges-are-not-attached#273-ensure-iam-policies-that-allow-full-_-administrative-privileges-are-not-attached)
 
 [2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'](#274-expand_moreensure-that-guest-users-access-restrictions-is-set-to-guest-user-access-is-restricted-to-properties-and-memberships-of-their-own-directory-objects)
 
@@ -2483,7 +2483,7 @@ Evidence or test output indicates that no user exists for which: (1) password en
 
 ---
 
-### 2.7.3 Ensure IAM policies that allow full "_:_" administrative privileges are not attached 
+### 2.7.3 Ensure IAM policies that allow full "\*:\*" administrative privileges are not attached 
 **Platform:** AWS
 
 **Rationale:** It's more secure to start with a minimum set of permissions and grant additional permissions as necessary, rather than starting with permissions that are too lenient and then trying to tighten them later.
