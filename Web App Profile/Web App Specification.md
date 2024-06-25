@@ -115,6 +115,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
 | Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, are out of scope. | 
 | Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
+| Scope | Identifies whether a requirement is applicable to web applications, web APIs, or both. Mobile applications that utilize web APIs must comply with both the mobile application and web API specifications. |
 | Sensitive Data | Data that is of particular concern from a security perspective, including personal identifiable information, credentials, and keys. This is not taking into account regulatory requirements for privacy or compliance for various verticals such as healthcare or finance. PII is any information that can be used to directly or indirectly identify a specific individual. This data, if mishandled, can lead to harm, discrimination, or privacy violations. |
 | Remote File Inclusion | Remote File Inclusion (also known as RFI) is the process of including remote files through the exploitation of vulnerable inclusion procedures implemented in the application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion) |
 | WSTG | OWASP Web Security Testing Guide |
@@ -128,6 +129,9 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 Applications need to have robust mechanisms in place to ensure the security of user passwords. This includes, but is not limited to, enforcing password length requirements, implementing mitigations to prevent automated attacks against authentication systems, and securely storing passwords using strong cryptographic methods.
 ### Rationale
 Weak or compromised passwords are a common attack vector used by adversaries to gain unauthorized access to user accounts. By implementing strong password security measures, organizations can significantly reduce the likelihood of successful password-based attacks.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -142,6 +146,8 @@ Weak or compromised passwords are a common attack vector used by adversaries to 
 Applications should not have any pre-configured or default user accounts that can be used to access its public-facing interfaces. This includes both user and administrative accounts that come with default credentials.
 ### Rationale
 Default accounts can be easily discovered through publicly available documentation, online forums, or other sources, making them an attractive target for attackers. If an attacker is able to gain access to a default account, they may be able to escalate their privileges and move laterally within the application or underlying infrastructure.
+### Scope
+- Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -153,6 +159,9 @@ Default accounts can be easily discovered through publicly available documentati
 Any verification codes or tokens sent through out-of-band methods (such as SMS or email) should have sufficient entropy along with a suitable expiration duration. Once a verifier has been used or has expired, it should be invalidated and a new one should be generated for each subsequent verification attempt.
 ### Rationale
 By ensuring that out of band verifiers are securely generated and managed, the risk of an adversary intercepting and using these verifiers is significantly reduced.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -168,6 +177,8 @@ By ensuring that out of band verifiers are securely generated and managed, the r
 Web applications must never expose sensitive data within URL parameters. Sensitive data should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
 ### Rationale
 Exposing sensitive data such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links.  This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access
+### Scope
+- Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -179,6 +190,9 @@ Exposing sensitive data such as session tokens in URLs significantly increases t
 The application must invalidate session tokens upon logout, expiration, and shall provide the option (or acts by default) to terminate other active sessions after a successful password change (including reset).
 ### Rationale
 These features protect against unauthorized access.  Logouts and expirations prevent lingering sessions, while password-change termination deters attackers who might know an old password.  Session visibility and control let users proactively manage their account, ensuring that only authorized devices are actively associated with their profile.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -192,6 +206,8 @@ These features protect against unauthorized access.  Logouts and expirations pre
 When using cookie-based session tokens, the application must enforce the 'Secure' attribute (ensuring transmission only over HTTPS) and the 'HttpOnly' attribute (preventing access by client-side JavaScript).  The application prioritizes session tokens over static API keys, except where legacy systems necessitate static secrets.
 ### Rationale
 Secure' and 'HttpOnly' mitigate risks of token interception and Cross-Site Scripting (XSS) attacks, enhancing session security. Session tokens, being temporary and user-specific, offer better control and auditing compared to long-lived API secrets, making them the preferred approach for modern applications.
+### Scope
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -206,6 +222,8 @@ Secure' and 'HttpOnly' mitigate risks of token interception and Cross-Site Scrip
 Applications must enforce a complete, valid login session or require re-authentication/secondary verification prior to any sensitive actions, such as sensitive data transactions or changes to account settings.
 ### Rationale
 This requirement prevents unauthorized access to sensitive parts of an application.  Even if an attacker partially compromises a session, re-authentication or secondary checks create an extra barrier. It helps mitigate session hijacking attempts and safeguards user data,  promoting overall account security.
+### Scope
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -225,6 +243,9 @@ Resource-level permissions allow for precise control over individual objects or 
 
 *Flexibility*
 This approach supports varying access control needs, ensuring security in diverse application architectures.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -242,7 +263,9 @@ Applications which support OAuth integrations shall follow established security 
 
 ### Rationale
 OAuth is a widely adopted authorization framework that allows users to grant third-party applications limited access to their resources on another service without sharing their login credentials. However, if not implemented securely, OAuth can expose users to various attacks, including account compromises and information disclosure. By securely implementing OAuth integrations, the application minimizes these risks and provides users with a more secure experience.
-
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -255,7 +278,8 @@ OAuth is a widely adopted authorization framework that allows users to grant thi
 Application exposed administrative interfaces shall implement multi-factor authentication. These interfaces shall be limited to application layer functionality and must not expose the cloud infrastructure.
 ### Rationale
 Infrastructure administrative interfaces shall never be exposed through an internet facing interface. However, there are many cases where application layer administrative tasks may need to be exposed to the internet. It is critical that these interfaces be limited in functionality and always implement multi-factor authentication to prevent attackers from compromising administrative accounts.
-
+### Scope
+- Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -268,7 +292,9 @@ Infrastructure administrative interfaces shall never be exposed through an inter
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
 Strong TLS and cipher suites ensure confidentiality and integrity of data in transit by protecting against eavesdropping and modification. Trusted TLS certificates verify authenticity and prevent adversary-in-the-middle attacks, while secure failure modes and robust cryptography deter advanced attacks exploiting weaknesses in cryptographic implementations.
-
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -284,6 +310,9 @@ Strong TLS and cipher suites ensure confidentiality and integrity of data in tra
 Web applications must implement robust input validation and output encoding to defend against a wide range of injection attacks. This includes protecting against HTTP Parameter Pollution, XSS (reflected, stored, and DOM-based), SQL injection, OS command injection, file inclusion vulnerabilities, template injection, SSRF, XPath/XML injection, and unsafe use of dynamic code execution features (like eval()).
 ### Rationale
 Robust input validation and output encoding is essential for web applications to effectively defend against multiple injection attack types. Injection attacks pose a significant risk for web applications due to their simplicity and ease of automation, enabling potential attackers to readily target vulnerable sites. By implementing secure input validation, web applications can significantly reduce the risk of attackers exploiting injection vulnerabilities to gain unauthorized access, manipulate data, or compromise systems.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -305,6 +334,9 @@ Robust input validation and output encoding is essential for web applications to
 Web applications must safely process and manage files that originate from untrusted or unknown sources. This includes restricting uploads to expected file types and preventing direct execution of uploaded content containing HTML, JavaScript, or dynamic server-side code.
 ### Rationale
 Files from untrusted sources may contain malicious code which could allow compromise of the application. If these files are executed directly, they can compromise the security of the web application, leading to unauthorized access, data breaches, or other harmful actions.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -317,6 +349,8 @@ Files from untrusted sources may contain malicious code which could allow compro
 Developers must verify that the libraries included in their application do not have any known exploitable vulnerabilities.
 ### Rationale
 Attackers can perform automated scans to identify vulnerable applications based on published vulnerabilities. 
+### Scope
+- Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -328,6 +362,8 @@ Attackers can perform automated scans to identify vulnerable applications based 
 Applications must strictly disable all debug modes before deployment into production environments.
 ### Rationale
 Debug modes often expose sensitive information like stack traces, code internals, and environment variables. This information can aid attackers in understanding the application's structure and identifying vulnerabilities, significantly increasing the risk of targeted attacks and exploitation. Disabling debug modes removes this unnecessary risk in production.
+### Scope
+- Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -339,6 +375,9 @@ Debug modes often expose sensitive information like stack traces, code internals
 The application must never rely solely on the Origin HTTP header for authentication or access control decisions.
 ### Rationale
 The Origin header can be easily manipulated by attackers, making it an unreliable indicator of a request's true source. This could lead to unauthorized access if an application mistakenly trusts requests based on a forged  Origin header. Security mechanisms must use more robust and tamper-proof methods for authentication and authorization.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -350,6 +389,8 @@ The Origin header can be easily manipulated by attackers, making it an unreliabl
 The application must implement safeguards to prevent subdomain takeover vulnerabilities. This includes proactive identification and removal of dangling DNS records (e.g., CNAME records pointing to decommissioned services) and regular monitoring of third-party services integrated with the application's domains.
 ### Rationale
 Dangling DNS records and vulnerable third-party services can allow attackers to take control of subdomains. This could enable them to host malicious content on the application's domain, harming reputation and potentially leading to phishing attacks or the compromise of user data.
+### Scope
+- Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -368,6 +409,9 @@ Many data privacy regulations (PCI-DSS, GDPR, etc.) explicitly prohibit the stor
 
 *Security Best Practice*
 Avoiding logging sensitive information minimizes the overall attack surface and demonstrates a commitment to responsible data handling.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -379,6 +423,8 @@ Avoiding logging sensitive information minimizes the overall attack surface and 
 Web applications should never store sensitive user data (e.g., passwords, credit card numbers, session tokens) in browser storage mechanisms like local storage or session storage. However, if data is stored in browser storage it must be deleted when the user logs out.
 ### Rationale
 Browser storage is inherently accessible to client-side JavaScript, making it vulnerable to attacks like Cross-Site Scripting (XSS). Storing sensitive data here exposes it to potential theft or misuse by an attacker if they manage to inject malicious code. Sensitive data must be stored securely on the server-side.
+### Scope
+- Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
@@ -390,6 +436,9 @@ Browser storage is inherently accessible to client-side JavaScript, making it vu
 Ensure server-side secrets are stored securely using an appropriate secrets management approach which provides encryption, access controls, and monitoring to prevent unauthorized access and maintain data confidentiality.
 ### Rationale
 Secrets management helps protect API keys, access tokens, and other server-side secrets used by the application from being accessed or stolen by unauthorized parties.
+### Scope
+- Web application
+- Web and mobile APIs
 ### Audit
 | Spec | Description |
 | --- | ------|
