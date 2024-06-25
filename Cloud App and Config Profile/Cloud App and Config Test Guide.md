@@ -2490,7 +2490,7 @@ Evidence or test output indicates that no user exists for which: (1) password en
 
 Providing full administrative privileges instead of restricting to the minimum set of permissions that the user is required to do exposes the resources to potentially unwanted actions.
 
-IAM policies that have a statement with "Effect": "Allow" with "Action": "*" over "Resource": "*" should be removed.
+IAM policies that have a statement with "Effect": "Allow" with "Action": "\*" over "Resource": "\*" should be removed.
 
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.16, [AWS Security Hub IAM.1](https://docs.aws.amazon.com/securityhub/latest/userguide/iam-controls.html#iam-1)
 
