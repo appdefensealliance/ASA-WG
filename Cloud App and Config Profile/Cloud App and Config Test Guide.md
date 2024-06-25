@@ -2393,7 +2393,7 @@ Perform the following to determine if the 'root' user account has access keys:
 3. Click `IAM`.
 4. Click on `Credential Report`.
 5. This will download a `.csv` file which contains credential usage for all IAM users within an AWS Account - open this file.
-6. For the `&lt;root_account>` user, ensure the `access_key_1_active` and `access_key_2_active` fields are set to `FALSE`.
+6. For the `<root_account>` user, ensure the `access_key_1_active` and `access_key_2_active` fields are set to `FALSE`.
 
 **From Command Line:**
 
@@ -3094,7 +3094,7 @@ As a matter of good practice, users who can take administrative actions should u
 2. In the left pane, click `Credential Report`
 3. Click on `Download Report`
 4. Open of Save the file locally
-5. Locate the `&lt;root account>` under the user column
+5. Locate the `<root account>` under the user column
 6. Review `password_last_used, access_key_1_last_used_date, access_key_2_last_used_date` to determine when the 'root user' was last used.
 
 **From Command Line:**
@@ -3798,7 +3798,7 @@ Perform the following to determine if the 'root' user account has MFA setup:
 3. Click `IAM`
 4. Click on `Credential Report`
 5. This will download a `.csv` file which contains credential usage for all IAM users within an AWS Account - open this file
-6. For the `&lt;root_account>` user, ensure the `mfa_active` field is set to `TRUE` .
+6. For the `<root_account>` user, ensure the `mfa_active` field is set to `TRUE` .
 
 **From Command Line:**
 
@@ -4028,7 +4028,7 @@ Tools must be tuned to reduce the prevalence of both false negatives and false p
 
 **From Azure CLI**
 
-Ensure the output of below command is set to `true`, enter your Subscription ID at the $0 between /subscriptions/&lt;$0>/providers.
+Ensure the output of below command is set to `true`, enter your Subscription ID at the $0 between /subscriptions/<$0>/providers.
 
 
 ```
@@ -4174,7 +4174,7 @@ Perform the following ensure the CloudTrail S3 bucket has access logging is enab
 4. Sign in to the AWS Management Console and open the S3 console at [https://console.aws.amazon.com/s3](https://console.aws.amazon.com/s3).
 5. Under `All Buckets` click on a target S3 bucket
 6. Click on `Properties` in the top right of the console
-7. Under `Bucket:` _ `&lt;bucket_name>` _ click on `Logging`
+7. Under `Bucket:` _ `<bucket_name>` _ click on `Logging`
 8. Ensure `Enabled` is checked.
 
 **From Command Line:**
@@ -4276,7 +4276,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 
-1. Ensure the `AllUsers` principal is not granted privileges to that `&lt;bucket>` :
+1. Ensure the `AllUsers` principal is not granted privileges to that `<bucket>` :
 
 
 ```
@@ -4286,7 +4286,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 
-1. Ensure the `AuthenticatedUsers` principal is not granted privileges to that `&lt;bucket>`:
+1. Ensure the `AuthenticatedUsers` principal is not granted privileges to that `<bucket>`:
 
 
 ```
@@ -4652,9 +4652,9 @@ aws cloudtrail describe-trails
 
 * ` \
 `Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -4682,7 +4682,7 @@ Ensure in the output there is at least one Event Selector for a Trail with `Incl
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -4711,8 +4711,8 @@ Or (To reduce false positives incase Single Sign-On (SSO) is used in organizatio
 
 
 1. ` \
-`Note the `&lt;no_mfa_console_signin_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;no_mfa_console_signin_metric>` captured in step 4.
+`Note the `<no_mfa_console_signin_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<no_mfa_console_signin_metric>` captured in step 4.
 
 
 ```
@@ -4774,9 +4774,9 @@ aws cloudtrail describe-trails
 
 
 * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -4804,7 +4804,7 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -4825,8 +4825,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;root_usage_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;root_usage_metric>` captured in step 4.
+`Note the `<root_usage_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<root_usage_metric>` captured in step 4.
 
 
 ```
@@ -4888,9 +4888,9 @@ aws cloudtrail describe-trails
 
 
 * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -4918,7 +4918,7 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -4939,8 +4939,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;iam_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;iam_changes_metric>` captured in step 4.
+`Note the `<iam_changes_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<iam_changes_metric>` captured in step 4.
 
 
 ```
@@ -4991,9 +4991,9 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 1. Identify the log group name configured for use with active multi-region CloudTrail:
 * List all CloudTrails: `aws cloudtrail describe-trails`
 * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -5021,7 +5021,7 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -5042,8 +5042,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;cloudtrail_cfg_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;cloudtrail_cfg_changes_metric>` captured in step 4.
+`Note the `<cloudtrail_cfg_changes_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<cloudtrail_cfg_changes_metric>` captured in step 4.
 
 
 ```
@@ -5096,9 +5096,9 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 1. Identify the log group name configured for use with active multi-region CloudTrail:
 * List all CloudTrails: `aws cloudtrail describe-trails`
 * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -5126,7 +5126,7 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -5147,8 +5147,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;s3_bucket_policy_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;s3_bucket_policy_changes_metric>` captured in step 4.
+`Note the `<s3_bucket_policy_changes_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<s3_bucket_policy_changes_metric>` captured in step 4.
 
 
 ```
@@ -5201,9 +5201,9 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 1. Identify the log group name configured for use with active multi-region CloudTrail:
 * List all CloudTrails: `aws cloudtrail describe-trails`
 * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -5231,7 +5231,7 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -5252,8 +5252,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;network_gw_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;network_gw_changes_metric>` captured in step 4.
+`Note the `<network_gw_changes_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<network_gw_changes_metric>` captured in step 4.
 
 
 ```
@@ -5306,9 +5306,9 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 1. Identify the log group name configured for use with active multi-region CloudTrail:
 * List all CloudTrails: `aws cloudtrail describe-trails`
 * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -5336,7 +5336,7 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -5357,8 +5357,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;route_table_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;route_table_changes_metric>` captured in step 4.
+`Note the `<route_table_changes_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<route_table_changes_metric>` captured in step 4.
 
 
 ```
@@ -5411,9 +5411,9 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 1. Identify the log group name configured for use with active multi-region CloudTrail:
 * List all CloudTrails: `aws cloudtrail describe-trails`
 * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `&lt;cloudtrail_log_group_name>`
+* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:&lt;region>:&lt;aws_account_number>:log-group:NewGroup:*`, `&lt;cloudtrail_log_group_name>` would be `NewGroup`
+Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
@@ -5441,7 +5441,7 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 
 
-1. Get a list of all associated metric filters for this `&lt;cloudtrail_log_group_name>`:
+1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
 
 
 ```
@@ -5462,8 +5462,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;vpc_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;vpc_changes_metric>` captured in step 4.
+`Note the `<vpc_changes_metric>` value associated with the `filterPattern` found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<vpc_changes_metric>` captured in step 4.
 
 
 ```
@@ -5527,7 +5527,7 @@ aws cloudtrail describe-trails
 
 * ` \
 `Identify Multi region Cloudtrails, Trails with `"IsMultiRegionTrail"` set to true
-* From value associated with CloudWatchLogsLogGroupArn note &lt;cloudtrail_log_group_name> **Example:** for CloudWatchLogsLogGroupArn that looks like arn:aws:logs::&lt;aws_account_number>:log-group:NewGroup:*, &lt;cloudtrail_log_group_name> would be NewGroup
+* From value associated with CloudWatchLogsLogGroupArn note <cloudtrail_log_group_name> **Example:** for CloudWatchLogsLogGroupArn that looks like arn:aws:logs::<aws_account_number>:log-group:NewGroup:*, <cloudtrail_log_group_name> would be NewGroup
 * Ensure Identified Multi region CloudTrail is active:
 
 
@@ -5551,7 +5551,7 @@ aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-tra
 
 
 * Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to true and `ReadWriteType` set to `All`.
-1. Get a list of all associated metric filters for this &lt;cloudtrail_log_group_name>:
+1. Get a list of all associated metric filters for this <cloudtrail_log_group_name>:
 
 
 ```
@@ -5572,8 +5572,8 @@ aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
 
 
 1. ` \
-`Note the `&lt;organizations_changes>` value associated with the filterPattern found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `&lt;organizations_changes>` captured in step 4:
+`Note the `<organizations_changes>` value associated with the filterPattern found in step 3.
+2. Get a list of CloudWatch alarms and filter on the `<organizations_changes>` captured in step 4:
 
 
 ```
@@ -5814,7 +5814,7 @@ Evidence or test output indicates that log sinks are configured for all log entr
 
 
 1. Go to `Logging/Log-based Metrics` by visiting [https://console.cloud.google.com/logs/metrics](https://console.cloud.google.com/logs/metrics).
-2. In the `User-defined Metrics` section, ensure that at least one metric `&lt;Log_Metric_Name>` is present with filter text:
+2. In the `User-defined Metrics` section, ensure that at least one metric `<Log_Metric_Name>` is present with filter text:
 
 
 ```
@@ -5832,7 +5832,7 @@ AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner")
 
 
 1. Go to `Alerting` by visiting [https://console.cloud.google.com/monitoring/alerting](https://console.cloud.google.com/monitoring/alerting).
-2. Under the `Policies` section, ensure that at least one alert policy exists for the log metric above. Clicking on the policy should show that it is configured with a condition. For example, `Violates when: Any logging.googleapis.com/user/&lt;Log Metric Name> stream` `is above a threshold of zero(0) for greater than zero(0) seconds` means that the alert will trigger for any new owner change. Verify that the chosen alerting thresholds make sense for your organization.
+2. Under the `Policies` section, ensure that at least one alert policy exists for the log metric above. Clicking on the policy should show that it is configured with a condition. For example, `Violates when: Any logging.googleapis.com/user/<Log Metric Name> stream` `is above a threshold of zero(0) for greater than zero(0) seconds` means that the alert will trigger for any new owner change. Verify that the chosen alerting thresholds make sense for your organization.
 3. Ensure that the appropriate notifications channels have been set up.
 
 **From Google Cloud CLI**
@@ -5866,7 +5866,7 @@ AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner")
 
 
 
-1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/&lt;Log Metric Name>`.
+1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/<Log Metric Name>`.
 
 **Ensure that the prescribed alerting policy is present:**
 
@@ -5883,7 +5883,7 @@ gcloud alpha monitoring policies list --format json
 
 
 1. Ensure that the output contains an least one alert policy where:
-* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/&lt;Log Metric Name>\"`
+* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
 * AND `enabled` is set to `true`
 
 **Verification**
@@ -5911,7 +5911,7 @@ Configuring the metric filter and alerts for audit configuration changes ensures
 
 
 1. Go to `Logging/Logs-based Metrics` by visiting [https://console.cloud.google.com/logs/metrics](https://console.cloud.google.com/logs/metrics).
-2. In the `User-defined Metrics` section, ensure that at least one metric `&lt;Log_Metric_Name>` is present with the filter text:
+2. In the `User-defined Metrics` section, ensure that at least one metric `<Log_Metric_Name>` is present with the filter text:
 
 
 ```
@@ -5925,7 +5925,7 @@ protoPayload.serviceData.policyDelta.auditConfigDeltas:*
 
 
 1. Go to `Alerting` by visiting [https://console.cloud.google.com/monitoring/alerting](https://console.cloud.google.com/monitoring/alerting).
-2. Under the `Policies` section, ensure that at least one alert policy exists for the log metric above. Clicking on the policy should show that it is configured with a condition. For example, `Violates when: Any logging.googleapis.com/user/&lt;Log Metric Name> stream` `is above a threshold of 0 for greater than zero(0) seconds`, means that the alert will trigger for any new owner change. Verify that the chosen alerting thresholds make sense for the user's organization.
+2. Under the `Policies` section, ensure that at least one alert policy exists for the log metric above. Clicking on the policy should show that it is configured with a condition. For example, `Violates when: Any logging.googleapis.com/user/<Log Metric Name> stream` `is above a threshold of 0 for greater than zero(0) seconds`, means that the alert will trigger for any new owner change. Verify that the chosen alerting thresholds make sense for the user's organization.
 3. Ensure that appropriate notification channels have been set up.
 
 **From Google Cloud CLI**
@@ -5955,7 +5955,7 @@ protoPayload.serviceData.policyDelta.auditConfigDeltas:*
 
 
 
-1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/&lt;Log Metric Name>`.
+1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/<Log Metric Name>`.
 
 **Ensure that the prescribed alerting policy is present:**
 
@@ -5972,7 +5972,7 @@ gcloud alpha monitoring policies list --format json
 
 
 1. Ensure that the output contains at least one alert policy where:
-* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/&lt;Log Metric Name>\"`
+* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
 * AND `enabled` is set to `true`
 
 **Verification**
@@ -5998,7 +5998,7 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 
 1. Go to `Logging/Logs-based Metrics` by visiting [https://console.cloud.google.com/logs/metrics](https://console.cloud.google.com/logs/metrics).
-2. In the `User-defined Metrics` section, ensure that at least one metric `&lt;Log_Metric_Name>` is present with filter text:
+2. In the `User-defined Metrics` section, ensure that at least one metric `<Log_Metric_Name>` is present with filter text:
 
 
 ```
@@ -6014,7 +6014,7 @@ OR protoPayload.methodName="google.iam.admin.v1.UpdateRole")
 
 
 1. Go to `Alerting` by visiting [https://console.cloud.google.com/monitoring/alerting](https://console.cloud.google.com/monitoring/alerting).
-2. Under the `Policies` section, ensure that at least one alert policy exists for the log metric above. Clicking on the policy should show that it is configured with a condition. For example, `Violates when: Any logging.googleapis.com/user/&lt;Log Metric Name> stream` `is above a threshold of zero(0) for greater than zero(0) seconds` means that the alert will trigger for any new owner change. Verify that the chosen alerting thresholds make sense for the user's organization.
+2. Under the `Policies` section, ensure that at least one alert policy exists for the log metric above. Clicking on the policy should show that it is configured with a condition. For example, `Violates when: Any logging.googleapis.com/user/<Log Metric Name> stream` `is above a threshold of zero(0) for greater than zero(0) seconds` means that the alert will trigger for any new owner change. Verify that the chosen alerting thresholds make sense for the user's organization.
 3. Ensure that the appropriate notifications channels have been set up.
 
 **From Google Cloud CLI**
@@ -6046,7 +6046,7 @@ protoPayload.methodName="google.iam.admin.v1.UpdateRole")
 
 
 
-1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/&lt;Log Metric Name>`.
+1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/<Log Metric Name>`.
 
 **Ensure that the prescribed alerting policy is present:**
 
@@ -6063,7 +6063,7 @@ gcloud alpha monitoring policies list --format json
 
 
 1. Ensure that the output contains an least one alert policy where:
-* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/&lt;Log Metric Name>\"`
+* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
 * AND `enabled` is set to `true`.
 
 **Verification**
@@ -6269,7 +6269,7 @@ foreach ($resource in $resources) {$diagnosticSetting = Get-AzDiagnosticSetting 
 ```
 
 
-A result of `Diagnostic Settings not configured for resource: &lt;resource name>` means  that no `diagnostic settings` are configured for that resource. Otherwise, the output of the above command will show configured `Diagnostic Settings` for a resource.
+A result of `Diagnostic Settings not configured for resource: <resource name>` means  that no `diagnostic settings` are configured for that resource. Otherwise, the output of the above command will show configured `Diagnostic Settings` for a resource.
 
 **Verification**
 
@@ -6384,7 +6384,7 @@ Evidence or test output indicates that logging for Azure Key Vault is enabled.
 * Status: <code>All selected</code>
 * Event initiated by: <code>* (All services and users)</code>
 1. Click <code>Done</code>
-2. Back in the &lt; Alert Name > window, review <code>Actions</code> to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review <code>Actions</code> to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 <strong>From Azure CLI</strong>
 
@@ -6437,7 +6437,7 @@ Evidence or test output indicates that an activity log alert exists for Create P
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6488,7 +6488,7 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 * Status: `All selected<`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6539,7 +6539,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6590,7 +6590,7 @@ Evidence or test output indicates that an activity log alert exists for Delete N
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6641,7 +6641,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6692,7 +6692,7 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6743,7 +6743,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review <code>Actions</code> to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review <code>Actions</code> to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6794,7 +6794,7 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6845,7 +6845,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 * Status: `All selected`
 * Event initiated by: `* (All services and users)`
 1. Click `Done`
-2. Back in the &lt; Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -7960,7 +7960,7 @@ If the output reads `false` for the separate configuration settings then refer t
 
 **From Command Line:**
 
-To check Public access settings for this account status, run the following command, `aws s3control get-public-access-block --account-id &lt;ACCT_ID> --region &lt;REGION_NAME>`
+To check Public access settings for this account status, run the following command, `aws s3control get-public-access-block --account-id <ACCT_ID> --region <REGION_NAME>`
 
 Output if Block Public access is enabled:
 
@@ -9284,7 +9284,7 @@ Each instance listed should have a `type` of `PRIVATE`.
 
 
 
-1. If you want to view a specific instance, note the &lt;INSTANCE_NAME>(s) listed and run the following.
+1. If you want to view a specific instance, note the <INSTANCE_NAME>(s) listed and run the following.
 
 
 ```
@@ -10076,7 +10076,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **From Google Cloud CLI**
 
-Run the command by providing `&lt;INSTANCE_NAME>`. Ensure the value of the flag is `on`.
+Run the command by providing `<INSTANCE_NAME>`. Ensure the value of the flag is `on`.
 
 
 ```
