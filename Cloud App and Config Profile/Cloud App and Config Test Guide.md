@@ -4169,13 +4169,12 @@ Perform the following ensure the CloudTrail S3 bucket has access logging is enab
 
 
 1. Go to the Amazon CloudTrail console at [https://console.aws.amazon.com/cloudtrail/home](https://console.aws.amazon.com/cloudtrail/home)
-2. In the API activity history pane on the left, click Trails
-3. In the Trails pane, note the bucket names in the S3 bucket column
-4. Sign in to the AWS Management Console and open the S3 console at [https://console.aws.amazon.com/s3](https://console.aws.amazon.com/s3).
-5. Under `All Buckets` click on a target S3 bucket
-6. Click on `Properties` in the top right of the console
-7. Under `Bucket:` _ `<bucket_name>` _ click on `Logging`
-8. Ensure `Enabled` is checked.
+2. In the navigation pane on the left, click Trails.
+3. In the Trails pane, note the bucket names in the S3 bucket column.
+4. Go to the Amazon S3 console at [https://console.aws.amazon.com/s3](https://console.aws.amazon.com/s3).
+5. For each bucket noted in step 3, click on a target S3 Bucket.
+6. Click on `Properties`
+7. In the `Server access logging` section, verify that server access logging is `Enabled`
 
 **From Command Line:**
 
