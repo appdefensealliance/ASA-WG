@@ -154,7 +154,7 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
 
 ## 1.1 Storage
 
-### 1.1.1 [The app shall securely store sensitive data] (https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
+### 1.1.1 The app shall securely store sensitive data
 
 #### Description
 This control ensures that any sensitive data that is intentionally stored by the app is properly protected independently of the target location.
