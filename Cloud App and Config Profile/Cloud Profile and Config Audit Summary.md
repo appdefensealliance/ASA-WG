@@ -70,85 +70,85 @@ This document provides a summary of the audit requirements sorted by platforms a
 
 
 # 2 Azure
-| Spec | Description |
-|---|----------|
-| 1.1.1 | Ensure that Only Approved Extensions Are Installed |
-| 1.2.3 | Ensure That 'PHP version' is the Latest, If Used to Run the Web App |
-| 1.2.4 | Ensure that 'Python version' is the Latest Stable Version, if Used to Run the Web App |
-| 1.2.5 | Ensure that 'Java version' is the latest, if used to run the Web App |
-| 1.2.6 | Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App |
-| 1.3.1 | Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service |
-| 1.3.2 | Ensure Web App is using the latest version of TLS encryption |
-| 1.3.3 | Ensure FTP deployments are Disabled |
-| 1.4.1 | Ensure Virtual Machines are utilizing Managed Disks |
-| 1.8.1 | Ensure that Register with Azure Active Directory is enabled on App Service |
-| 2.1.1 | Ensure the Key Vault is Recoverable |
-| 2.4.1 | Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent</code> |
-| 2.4.2 | Ensure that 'Users can add gallery apps to My Apps' is set to 'No' |
-| 2.4.3 | Ensure That ‘Users Can Register Applications’ Is Set to ‘No’ |
-| 2.5.1 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in RBAC Key Vaults |
-| 2.5.2 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in Non-RBAC Key Vaults. |
-| 2.5.3 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults |
-| 2.5.4 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults |
-| 2.7.4 | Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects' |
-| 2.8.1 | Ensure Security Defaults is enabled on Azure Active Directory |
-| 2.9.2 | Ensure that a Custom Bad Password List is set to 'Enforce' for your Organization |
-| 2.10.2 | Ensure Guest Users Are Reviewed on a Regular Basis |
-| 2.11.2 | Ensure That 'Notify all admins when other admins reset their password?' is set to 'Yes' |
-| 2.11.3 | Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes' |
-| 2.11.4 | Ensure That No Custom Subscription Administrator Roles Exist |
-| 2.13.1 | Ensure that 'Number of days before users are asked to re-confirm their authentication information' is set to '90' |
-| 2.14.1 | Ensure That 'Number of methods required to reset' is set to '2' |
-| 2.14.2 | Ensure that 'Require Multi-Factor Authentication to register or join devices with Azure AD' is set to 'Yes' |
-| 2.14.3 | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Privileged Users |
-| 2.14.4 | Ensure that 'Allow users to remember multi-factor authentication on devices they trust' is Disabled |
-| 2.14.5 | Ensure that A Multi-factor Authentication Policy Exists for All Users |
-| 2.14.6 | Ensure Multi-factor Authentication is Required for Risky Sign-ins |
-| 2.14.8 | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users |
-| 2.15.1 | Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups |
-| 2.15.2 | Ensure Multi-factor Authentication is Required for Azure Management |
-| 2.17.1 | Ensure that 'Notify users on password resets?' is set to 'Yes' |
-| 3.2.1 | Ensure That 'Notify about alerts with the following severity' is Set to 'High' |
-| 3.3.1 | Ensure That 'All users with the following roles' is set to 'Owner' |
-| 3.3.2 | Ensure 'Additional email addresses' is Configured with a Security Contact Email |
-| 3.5.2 | Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible |
-| 3.6.1 | Ensure Any of the ASC Default Policy Settings are Not Set to 'Disabled' |
-| 3.7.1 | Ensure that Microsoft Defender Recommendation for 'Apply system updates' status is 'Completed' |
-| 3.8.1 | Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On' |
-| 3.11.3 | Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data |
-| 3.11.4 | Ensure that logging for Azure Key Vault is 'Enabled' |
-| 3.11.5 | Ensure that Activity Log Alert exists for Create Policy Assignment |
-| 3.11.6 | Ensure that Activity Log Alert exists for Delete Policy Assignment |
-| 3.11.7 | Ensure that Activity Log Alert exists for Create or Update Network Security Group |
-| 3.11.8 | Ensure that Activity Log Alert exists for Delete Network Security Group |
-| 3.11.9 | Ensure that Activity Log Alert exists for Create or Update Security Solution |
-| 3.11.10 | Ensure that Activity Log Alert exists for Delete Security Solution |
-| 3.11.11 | Ensure that Activity Log Alert exists for Create or Update SQL Server Firewall Rule |
-| 3.11.12 | Ensure that Activity Log Alert exists for Delete SQL Server Firewall Rule |
-| 3.11.13 | Ensure that Activity Log Alert exists for Create or Update Public IP Address rule |
-| 3.11.14 | Ensure that Activity Log Alert exists for Delete Public IP Address rule |
-| 4.3.1 | Ensure that RDP access from the Internet is evaluated and restricted |
-| 4.3.2 | Ensure that SSH access from the Internet is evaluated and restricted |
-| 5.1.1 | Ensure Soft Delete is Enabled for Azure Containers and Blob Storage |
-| 5.2.1 | Ensure Default Network Access Rule for Storage Accounts is Set to Deny |
-| 5.3.1 | Ensure that 'Secure transfer required' is set to 'Enabled' |
-| 5.3.2 | Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2" |
-| 5.5.2 | Ensure that 'Public access level' is disabled for storage accounts with blob containers |
-| 5.6.1 | Ensure that 'Enable key rotation reminders' is enabled for each Storage Account |
-| 5.7.1 | Ensure that Storage Account Access Keys are Periodically Regenerated |
-| 5.8.1 | Ensure that Shared Access Signature Tokens Expire Within an Hour |
-| 6.3.1 | Ensure 'Enforce SSL connection' is set to 'ENABLED' for PostgreSQL Database Server |
-| 6.3.2 | Ensure 'Enforce SSL connection' is set to 'Enabled' for Standard MySQL Database Server |
-| 6.3.3 | Ensure 'TLS Version' is set to 'TLSV1.2' for MySQL flexible Database Server |
-| 6.4.2 | Ensure that 'Data encryption' is set to 'On' on a SQL Database |
-| 6.5.2 | Ensure no Azure SQL Databases allow ingress from 0.0.0.0/0 (ANY IP) |
-| 6.7.1 | Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled |
-| 6.11.1 | Ensure that Azure Active Directory Admin is Configured for SQL Servers |
-| 6.13.1 | Ensure Server Parameter 'log_checkpoints' is set to 'ON' for PostgreSQL Database Server |
-| 6.13.2 | Ensure server parameter 'log_connections' is set to 'ON' for PostgreSQL Database Server |
-| 6.13.3 | Ensure server parameter 'log_disconnections' is set to 'ON' for PostgreSQL Database Server |
-| 6.14.1 | Ensure Server Parameter 'log_retention_days' is greater than 3 days for PostgreSQL Database Server |
-| 6.15.1 | Ensure that 'Auditing' is set to 'On' |
+| Spec | CIS 2.0 | Description |
+|---|---|----------|
+| 1.1.1 | 7.5 | Ensure that Only Approved Extensions Are Installed |
+| 1.2.3 | 9.6 | Ensure That 'PHP version' is the Latest, If Used to Run the Web App |
+| 1.2.4 | 9.7 | Ensure that 'Python version' is the Latest Stable Version, if Used to Run the Web App |
+| 1.2.5 | 9.8 | Ensure that 'Java version' is the latest, if used to run the Web App |
+| 1.2.6 | 9.9 | Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App |
+| 1.3.1 | 9.2 | Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service |
+| 1.3.2 | 9.3 | Ensure Web App is using the latest version of TLS encryption |
+| 1.3.3 | 9.10 | Ensure FTP deployments are Disabled |
+| 1.4.1 | 7.2 | Ensure Virtual Machines are utilizing Managed Disks |
+| 1.8.1 | 9.5 | Ensure that Register with Azure Active Directory is enabled on App Service |
+| 2.1.1 | 8.5 | Ensure the Key Vault is Recoverable |
+| 2.4.1 | 1.11 | Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent</code> |
+| 2.4.2 | 1.13 | Ensure that 'Users can add gallery apps to My Apps' is set to 'No' |
+| 2.4.3 | 1.14 | Ensure That ‘Users Can Register Applications’ Is Set to ‘No’ |
+| 2.5.1 | 8.1 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in RBAC Key Vaults |
+| 2.5.2 | 8.2 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in Non-RBAC Key Vaults. |
+| 2.5.3 | 8.3 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults |
+| 2.5.4 | 8.4 | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults |
+| 2.7.4 | 1.15 | Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects' |
+| 2.8.1 | 1.1.1 | Ensure Security Defaults is enabled on Azure Active Directory |
+| 2.9.2 | 1.7 | Ensure that a Custom Bad Password List is set to 'Enforce' for your Organization |
+| 2.10.2 | 1.5 | Ensure Guest Users Are Reviewed on a Regular Basis |
+| 2.11.2 | 1.10 | Ensure That 'Notify all admins when other admins reset their password?' is set to 'Yes' |
+| 2.11.3 | 1.17 | Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes' |
+| 2.11.4 | 1.23 | Ensure That No Custom Subscription Administrator Roles Exist |
+| 2.13.1 | 1.8 | Ensure that 'Number of days before users are asked to re-confirm their authentication information' is set to '90' |
+| 2.14.1 | 1.6 | Ensure That 'Number of methods required to reset' is set to '2' |
+| 2.14.2 | 1.22 | Ensure that 'Require Multi-Factor Authentication to register or join devices with Azure AD' is set to 'Yes' |
+| 2.14.3 | 1.1.2 | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Privileged Users |
+| 2.14.4 | 1.1.4 | Ensure that 'Allow users to remember multi-factor authentication on devices they trust' is Disabled |
+| 2.14.5 | 1.2.4 | Ensure that A Multi-factor Authentication Policy Exists for All Users |
+| 2.14.6 | 1.2.5 | Ensure Multi-factor Authentication is Required for Risky Sign-ins |
+| 2.14.8 | 1.1.3 | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users |
+| 2.15.1 | 1.2.3 | Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups |
+| 2.15.2 | 1.2.6 | Ensure Multi-factor Authentication is Required for Azure Management |
+| 2.17.1 | 1.9 | Ensure that 'Notify users on password resets?' is set to 'Yes' |
+| 3.2.1 | 2.1.20 | Ensure That 'Notify about alerts with the following severity' is Set to 'High' |
+| 3.3.1 | 2.1.18 | Ensure That 'All users with the following roles' is set to 'Owner' |
+| 3.3.2 | 2.1.19 | Ensure 'Additional email addresses' is Configured with a Security Contact Email |
+| 3.5.2 | 5.1.3 | Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible |
+| 3.6.1 | 2.1.14 | Ensure Any of the ASC Default Policy Settings are Not Set to 'Disabled' |
+| 3.7.1 | 2.1.13 | Ensure that Microsoft Defender Recommendation for 'Apply system updates' status is 'Completed' |
+| 3.8.1 | 2.1.15 | Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On' |
+| 3.11.3 | 5.4 | Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data |
+| 3.11.4 | 5.1.5 | Ensure that logging for Azure Key Vault is 'Enabled' |
+| 3.11.5 | 5.2.1 | Ensure that Activity Log Alert exists for Create Policy Assignment |
+| 3.11.6 | 5.2.2 | Ensure that Activity Log Alert exists for Delete Policy Assignment |
+| 3.11.7 | 5.2.3 | Ensure that Activity Log Alert exists for Create or Update Network Security Group |
+| 3.11.8 | 5.2.4 | Ensure that Activity Log Alert exists for Delete Network Security Group |
+| 3.11.9 | 5.2.5 | Ensure that Activity Log Alert exists for Create or Update Security Solution |
+| 3.11.10 | 5.2.6 | Ensure that Activity Log Alert exists for Delete Security Solution |
+| 3.11.11 | 5.2.7 | Ensure that Activity Log Alert exists for Create or Update SQL Server Firewall Rule |
+| 3.11.12 | 5.2.8 | Ensure that Activity Log Alert exists for Delete SQL Server Firewall Rule |
+| 3.11.13 | 5.2.9 | Ensure that Activity Log Alert exists for Create or Update Public IP Address rule |
+| 3.11.14 | 5.2.10 | Ensure that Activity Log Alert exists for Delete Public IP Address rule |
+| 4.3.1 | 6.1 | Ensure that RDP access from the Internet is evaluated and restricted |
+| 4.3.2 | 6.2 | Ensure that SSH access from the Internet is evaluated and restricted |
+| 5.1.1 | 3.11 | Ensure Soft Delete is Enabled for Azure Containers and Blob Storage |
+| 5.2.1 | 3.8 | Ensure Default Network Access Rule for Storage Accounts is Set to Deny |
+| 5.3.1 | 3.1 | Ensure that 'Secure transfer required' is set to 'Enabled' |
+| 5.3.2 | 3.15 | Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2" |
+| 5.5.2 | 3.7 | Ensure that 'Public access level' is disabled for storage accounts with blob containers |
+| 5.6.1 | 3.3 | Ensure that 'Enable key rotation reminders' is enabled for each Storage Account |
+| 5.7.1 | 3.4 | Ensure that Storage Account Access Keys are Periodically Regenerated |
+| 5.8.1 | 3.6 | Ensure that Shared Access Signature Tokens Expire Within an Hour |
+| 6.3.1 | 4.3.1 | Ensure 'Enforce SSL connection' is set to 'ENABLED' for PostgreSQL Database Server |
+| 6.3.2 | 4.4.1 | Ensure 'Enforce SSL connection' is set to 'Enabled' for Standard MySQL Database Server |
+| 6.3.3 | 4.4.2 | Ensure 'TLS Version' is set to 'TLSV1.2' for MySQL flexible Database Server |
+| 6.4.2 | 4.1.5 | Ensure that 'Data encryption' is set to 'On' on a SQL Database |
+| 6.5.2 | 4.1.2 | Ensure no Azure SQL Databases allow ingress from 0.0.0.0/0 (ANY IP) |
+| 6.7.1 | 4.3.7 | Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled |
+| 6.11.1 | 4.1.4 | Ensure that Azure Active Directory Admin is Configured for SQL Servers |
+| 6.13.1 | 4.3.2 | Ensure Server Parameter 'log_checkpoints' is set to 'ON' for PostgreSQL Database Server |
+| 6.13.2 | 4.3.3 | Ensure server parameter 'log_connections' is set to 'ON' for PostgreSQL Database Server |
+| 6.13.3 | 4.3.4 | Ensure server parameter 'log_disconnections' is set to 'ON' for PostgreSQL Database Server |
+| 6.14.1 | 4.3.6 | Ensure Server Parameter 'log_retention_days' is greater than 3 days for PostgreSQL Database Server |
+| 6.15.1 | 4.1.1 | Ensure that 'Auditing' is set to 'On' |
 
 
 
