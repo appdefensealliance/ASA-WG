@@ -10,155 +10,155 @@ Version 0.7 - May 25, 2024
 
 
 # Table of Contents
-1 [Authentication](#1-authentication)
+1. [Authentication](#1-authentication)
 
-1.1 [Implement strong password security measures](#11-implement-strong-password-security-measures)
+   * 1.1 [Implement strong password security measures](#11-implement-strong-password-security-measures)
+   
+       * 1.1.1 [Authentication is resistant to brute force attacks](#111-authentication-is-resistant-to-brute-force-attacks)
 
-1.1.1 [Authentication is resistant to brute force attacks](#111-authentication-is-resistant-to-brute-force-attacks)
+       * 1.1.2 [System generated initial passwords or activation codes shall be securely randomly generated and expire after a short period.](#112-system-generated-initial-passwords-or-activation-codes-shall-be-securely-randomly-generated-and-expire-after-a-short-period)
 
-1.1.2 [System generated initial passwords or activation codes shall be securely randomly generated and expire after a short period.](#112-system-generated-initial-passwords-or-activation-codes-shall-be-securely-randomly-generated-and-expire-after-a-short-period)
+       * 1.1.3 [Passwords shall be stored in a form that is resistant to offline attacks.](#113-passwords-shall-be-stored-in-a-form-that-is-resistant-to-offline-attacks)
 
-1.1.3 [Passwords shall be stored in a form that is resistant to offline attacks.](#113-passwords-shall-be-stored-in-a-form-that-is-resistant-to-offline-attacks)
+   * 1.2 [Disable any default accounts for public application access interfaces](#12-disable-any-default-accounts-for-public-application-access-interfaces)
 
-1.2 [Disable any default accounts for public application access interfaces](#12-disable-any-default-accounts-for-public-application-access-interfaces)
+       * 1.2.1 [Default credentials shall not be present on publicly exposed interfaces.](#121-default-credentials-shall-not-be-present-on-publicly-exposed-interfaces)
 
-1.2.1 [Default credentials shall not be present on publicly exposed interfaces.](#121-default-credentials-shall-not-be-present-on-publicly-exposed-interfaces)
+   * 1.3 [Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
 
-1.3 [Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
+       * 1.3.1 [Out of band verifier shall expire after 7 days.](#131-out-of-band-verifier-shall-expire-after-7-days)
 
-1.3.1 [Out of band verifier shall expire after 7 days.](#131-out-of-band-verifier-shall-expire-after-7-days)
+       * 1.3.2 [Out of band verifier shall only be used once.](#132-out-of-band-verifier-shall-only-be-used-once)
 
-1.3.2 [Out of band verifier shall only be used once.](#132-out-of-band-verifier-shall-only-be-used-once)
+       * 1.3.3 [Out of band verifier shall be securely random](#133-out-of-band-verifier-shall-be-securely-random)
 
-1.3.3 [Out of band verifier shall be securely random](#133-out-of-band-verifier-shall-be-securely-random)
+       * 1.3.4 [Out of band verifier shall be resistant to brute force attacks](#134-out-of-band-verifier-shall-be-resistant-to-brute-force-attacks)
 
-1.3.4 [Out of band verifier shall be resistant to brute force attacks](#134-out-of-band-verifier-shall-be-resistant-to-brute-force-attacks)
+2. [Session Management](#2-session-management)
 
-2 [Session Management](#2-session-management)
+   * 2.1 [URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
 
-2.1 [URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
+       * 2.1.1 [The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option to prevent) exposing sensitive information like API keys or session tokens within the URL query strings.](#211-the-application-shall-not-reveal-passwords-or-session-tokens-in-url-parameters-in-cases-where-the-application-provides-an-api-the-application-shall-prevent-or-give-developers-an-option-to-prevent-exposing-sensitive-information-like-api-keys-or-session-tokens-within-the-url-query-strings)
 
-2.1.1 [The application shall not reveal passwords or session tokens in URL parameters. In cases where the application provides an API, the application shall prevent (or give developers an option to prevent) exposing sensitive information like API keys or session tokens within the URL query strings.](#211-the-application-shall-not-reveal-passwords-or-session-tokens-in-url-parameters-in-cases-where-the-application-provides-an-api-the-application-shall-prevent-or-give-developers-an-option-to-prevent-exposing-sensitive-information-like-api-keys-or-session-tokens-within-the-url-query-strings)
+   * 2.2 [Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
 
-2.2 [Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
+       * 2.2.1 [Users shall have the ability to logout of the application. Logout or session expiration shall invalidate all stateful session tokens, including refresh tokens.](#221-users-shall-have-the-ability-to-logout-of-the-application-logout-or-session-expiration-shall-invalidate-all-stateful-session-tokens-including-refresh-tokens)
 
-2.2.1 [Users shall have the ability to logout of the application. Logout or session expiration shall invalidate all stateful session tokens, including refresh tokens.](#221-users-shall-have-the-ability-to-logout-of-the-application-logout-or-session-expiration-shall-invalidate-all-stateful-session-tokens-including-refresh-tokens)
+       * 2.2.2 [The application shall provide the option (or acts by default) to terminate all other active sessions, including stateful refresh tokens, after a successful password change (including change via password reset/recovery), and that this is effective across the application, federated login (if present), and any relying parties.](#222-the-application-shall-provide-the-option-or-acts-by-default-to-terminate-all-other-active-sessions-including-stateful-refresh-tokens-after-a-successful-password-change-including-change-via-password-resetrecovery-and-that-this-is-effective-across-the-application-federated-login-if-present-and-any-relying-parties)
 
-2.2.2 [The application shall provide the option (or acts by default) to terminate all other active sessions, including stateful refresh tokens, after a successful password change (including change via password reset/recovery), and that this is effective across the application, federated login (if present), and any relying parties.](#222-the-application-shall-provide-the-option-or-acts-by-default-to-terminate-all-other-active-sessions-including-stateful-refresh-tokens-after-a-successful-password-change-including-change-via-password-resetrecovery-and-that-this-is-effective-across-the-application-federated-login-if-present-and-any-relying-parties)
+       * 2.2.3 [Stateless authentication tokens must expire within 24 hours of being issued](#223-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued)
 
-2.2.3 [Stateless authentication tokens must expire within 24 hours of being issued](#223-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued)
+   * 2.3 [Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
 
-2.3 [Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
+       * 2.3.1 [Cookie-based session tokens shall have the 'Secure' attribute set.](#231-cookie-based-session-tokens-shall-have-the-secure-attribute-set)
 
-2.3.1 [Cookie-based session tokens shall have the 'Secure' attribute set.](#231-cookie-based-session-tokens-shall-have-the-secure-attribute-set)
+       * 2.3.2 [Cookie-based session tokens shall have the 'HttpOnly' attribute set.](#232-cookie-based-session-tokens-shall-have-the-httponly-attribute-set)
 
-2.3.2 [Cookie-based session tokens shall have the 'HttpOnly' attribute set.](#232-cookie-based-session-tokens-shall-have-the-httponly-attribute-set)
+       * 2.3.3 [The application shall use session tokens rather than static API secrets and keys, except with legacy implementations.](#233-the-application-shall-use-session-tokens-rather-than-static-api-secrets-and-keys-except-with-legacy-implementations)
 
-2.3.3 [The application shall use session tokens rather than static API secrets and keys, except with legacy implementations.](#233-the-application-shall-use-session-tokens-rather-than-static-api-secrets-and-keys-except-with-legacy-implementations)
+       * 2.3.4 [Stateless session tokens shall use digital signatures, encryption, and other countermeasures to protect against tampering, enveloping, replay, null cipher, and key substitution attacks.](#234-stateless-session-tokens-shall-use-digital-signatures-encryption-and-other-countermeasures-to-protect-against-tampering-enveloping-replay-null-cipher-and-key-substitution-attacks)
 
-2.3.4 [Stateless session tokens shall use digital signatures, encryption, and other countermeasures to protect against tampering, enveloping, replay, null cipher, and key substitution attacks.](#234-stateless-session-tokens-shall-use-digital-signatures-encryption-and-other-countermeasures-to-protect-against-tampering-enveloping-replay-null-cipher-and-key-substitution-attacks)
+   * 2.4 [Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
 
-2.4 [Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
+       * 2.4.1 [Verify the application ensures a full, valid login session or requires re-authentication or secondary verification before allowing any sensitive transactions or account modifications.](#241-verify-the-application-ensures-a-full-valid-login-session-or-requires-re-authentication-or-secondary-verification-before-allowing-any-sensitive-transactions-or-account-modifications)
 
-2.4.1 [Verify the application ensures a full, valid login session or requires re-authentication or secondary verification before allowing any sensitive transactions or account modifications.](#241-verify-the-application-ensures-a-full-valid-login-session-or-requires-re-authentication-or-secondary-verification-before-allowing-any-sensitive-transactions-or-account-modifications)
+3. [Access Control](#3-access-control)
 
-3 [Access Control](#3-access-control)
+   * 3.1 [Implement access control mechanisms to protect sensitive data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
 
-3.1 [Implement access control mechanisms to protect sensitive data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
+       * 3.1.1 [The application shall enforce least privilege access control rules on a trusted service layer.](#311-the-application-shall-enforce-least-privilege-access-control-rules-on-a-trusted-service-layer)
 
-3.1.1 [The application shall enforce least privilege access control rules on a trusted service layer.](#311-the-application-shall-enforce-least-privilege-access-control-rules-on-a-trusted-service-layer)
+       * 3.1.2 [All user and data attributes and policy information used by access controls shall not be able to be manipulated by end users unless specifically authorized.](#312-all-user-and-data-attributes-and-policy-information-used-by-access-controls-shall-not-be-able-to-be-manipulated-by-end-users-unless-specifically-authorized)
 
-3.1.2 [All user and data attributes and policy information used by access controls shall not be able to be manipulated by end users unless specifically authorized.](#312-all-user-and-data-attributes-and-policy-information-used-by-access-controls-shall-not-be-able-to-be-manipulated-by-end-users-unless-specifically-authorized)
+       * 3.1.3 [Access controls shall fail securely including when an exception occurs.](#313-access-controls-shall-fail-securely-including-when-an-exception-occurs)
 
-3.1.3 [Access controls shall fail securely including when an exception occurs.](#313-access-controls-shall-fail-securely-including-when-an-exception-occurs)
+       * 3.1.4 [Sensitive resources shall be protected against Insecure Direct Object Reference (IDOR) attacks targeting creation, reading, updating and deletion of records, such as creating or updating someone else's record, viewing everyone's records, or deleting all records.](#314-sensitive-resources-shall-be-protected-against-insecure-direct-object-reference-idor-attacks-targeting-creation-reading-updating-and-deletion-of-records-such-as-creating-or-updating-someone-elses-record-viewing-everyones-records-or-deleting-all-records)
 
-3.1.4 [Sensitive resources shall be protected against Insecure Direct Object Reference (IDOR) attacks targeting creation, reading, updating and deletion of records, such as creating or updating someone else's record, viewing everyone's records, or deleting all records.](#314-sensitive-resources-shall-be-protected-against-insecure-direct-object-reference-idor-attacks-targeting-creation-reading-updating-and-deletion-of-records-such-as-creating-or-updating-someone-elses-record-viewing-everyones-records-or-deleting-all-records)
+       * 3.1.5 [The application or framework shall enforce a strong anti-CSRF mechanism to protect authenticated functionality, and effective anti-automation or anti-CSRF protects unauthenticated functionality.](#315-the-application-or-framework-shall-enforce-a-strong-anti-csrf-mechanism-to-protect-authenticated-functionality-and-effective-anti-automation-or-anti-csrf-protects-unauthenticated-functionality)
 
-3.1.5 [The application or framework shall enforce a strong anti-CSRF mechanism to protect authenticated functionality, and effective anti-automation or anti-CSRF protects unauthenticated functionality.](#315-the-application-or-framework-shall-enforce-a-strong-anti-csrf-mechanism-to-protect-authenticated-functionality-and-effective-anti-automation-or-anti-csrf-protects-unauthenticated-functionality)
+       * 3.1.6 [Directory browsing shall be disabled unless deliberately desired.](#316-directory-browsing-shall-be-disabled-unless-deliberately-desired)
 
-3.1.6 [Directory browsing shall be disabled unless deliberately desired.](#316-directory-browsing-shall-be-disabled-unless-deliberately-desired)
+   * 3.2 [Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
 
-3.2 [Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
+       * 3.2.1 [Application shall implement only secure and recommended OAuth 2.0 flows, such as the Authorization Code Flow or the Authorization Code Flow with PKCE, while avoiding the use of deprecated flows like the Implicit Flow or the Resource Owner Password Credentials Flow.](#321-application-shall-implement-only-secure-and-recommended-oauth-20-flows-such-as-the-authorization-code-flow-or-the-authorization-code-flow-with-pkce-while-avoiding-the-use-of-deprecated-flows-like-the-implicit-flow-or-the-resource-owner-password-credentials-flow)
 
-3.2.1 [Application shall implement only secure and recommended OAuth 2.0 flows, such as the Authorization Code Flow or the Authorization Code Flow with PKCE, while avoiding the use of deprecated flows like the Implicit Flow or the Resource Owner Password Credentials Flow.](#321-application-shall-implement-only-secure-and-recommended-oauth-20-flows-such-as-the-authorization-code-flow-or-the-authorization-code-flow-with-pkce-while-avoiding-the-use-of-deprecated-flows-like-the-implicit-flow-or-the-resource-owner-password-credentials-flow)
+       * 3.2.2 [Application shall securely validates the redirect_uri and state parameters during the OAuth 2.0 authorization process to prevent open redirect and CSRF vulnerabilities.](#322-application-shall-securely-validate-the-redirect_uri-and-state-parameters-during-the-oauth-20-authorization-process-to-prevent-open-redirect-and-csrf-vulnerabilities)
 
-3.2.2 [Application shall securely validates the redirect_uri and state parameters during the OAuth 2.0 authorization process to prevent open redirect and CSRF vulnerabilities.](#322-application-shall-securely-validate-the-redirect_uri-and-state-parameters-during-the-oauth-20-authorization-process-to-prevent-open-redirect-and-csrf-vulnerabilities)
+   * 3.3 [Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
 
-3.3 [Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
+       * 3.3.1 [Application administrative interfaces shall use appropriate multi-factor authentication to prevent unauthorized use.](#331-application-administrative-interfaces-shall-use-appropriate-multi-factor-authentication-to-prevent-unauthorized-use)
 
-3.3.1 [Application administrative interfaces shall use appropriate multi-factor authentication to prevent unauthorized use.](#331-application-administrative-interfaces-shall-use-appropriate-multi-factor-authentication-to-prevent-unauthorized-use)
+4. [Communications](#4-communications)
 
-4 [Communications](#4-communications)
+   * 4.1 [Protect sensitive data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
 
-4.1 [Protect sensitive data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+       * 4.1.1 [Application shall enforce the use of TLS for all connections and default to TLS 1.2+.](#411-application-shall-enforce-the-use-of-tls-for-all-connections-and-default-to-tls-12-in-cases-where-support-for-legacy-clients-is-necessary-tls-10-and-11-may-be-supported-if-mitigations-are-implemented-to-minimize-the-risk-of-downgrade-attacks-and-known-tls-exploits-regardless-of-the-tls-version-in-use-the-application-shall-default-to-secure-cipher-suites-and-reject-those-with-known-vulnerabilities)
 
-4.1.1 [Application shall enforce the use of TLS for all connections and default to TLS 1.2+.](#411-application-shall-enforce-the-use-of-tls-for-all-connections-and-default-to-tls-12-in-cases-where-support-for-legacy-clients-is-necessary-tls-10-and-11-may-be-supported-if-mitigations-are-implemented-to-minimize-the-risk-of-downgrade-attacks-and-known-tls-exploits-regardless-of-the-tls-version-in-use-the-application-shall-default-to-secure-cipher-suites-and-reject-those-with-known-vulnerabilities)
+       * 4.1.2 [Connections to and from the server shall use trusted TLS certificates.](#412-connections-to-and-from-the-server-shall-use-trusted-tls-certificates-where-internally-generated-or-self-signed-certificates-are-used-the-server-must-be-configured-to-only-trust-specific-internal-cas-and-specific-self-signed-certificates-all-others-should-be-rejected)
 
-4.1.2 [Connections to and from the server shall use trusted TLS certificates.](#412-connections-to-and-from-the-server-shall-use-trusted-tls-certificates-where-internally-generated-or-self-signed-certificates-are-used-the-server-must-be-configured-to-only-trust-specific-internal-cas-and-specific-self-signed-certificates-all-others-should-be-rejected)
+       * 4.1.3 [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data)
 
-4.1.3 [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data)
+       * 4.1.4 [All cryptographic modules shall fail securely, and errors are handled in a way that does not enable Padding Oracle attacks.](#414-all-cryptographic-modules-shall-fail-securely-and-errors-are-handled-in-a-way-that-does-not-enable-padding-oracle-attacks)
 
-4.1.4 [All cryptographic modules shall fail securely, and errors are handled in a way that does not enable Padding Oracle attacks.](#414-all-cryptographic-modules-shall-fail-securely-and-errors-are-handled-in-a-way-that-does-not-enable-padding-oracle-attacks)
+5. [Data Validation and Sanitization](#5-data-validation-and-sanitization)
 
-5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
+   * 5.1 [Implement validation & input sanitation](#51-implement-validation--input-sanitation)
 
-5.1 [Implement validation & input sanitation](#51-implement-validation--input-sanitation)
+       * 5.1.1 [Protect against HTTP parameter pollution.](#511-protect-against-http-parameter-pollution)
 
-5.1.1 [Protect against HTTP parameter pollution.](#511-protect-against-http-parameter-pollution)
+       * 5.1.2 [URL redirects and forwards are limited to allowlisted URLs or a warning is displayed when redirecting to untrusted content.](#512-url-redirects-and-forwards-are-limited-to-allowlisted-urls-or-a-warning-is-displayed-when-redirecting-to-untrusted-content)
 
-5.1.2 [URL redirects and forwards are limited to allowlisted URLs or a warning is displayed when redirecting to untrusted content.](#512-url-redirects-and-forwards-are-limited-to-allowlisted-urls-or-a-warning-is-displayed-when-redirecting-to-untrusted-content)
+       * 5.1.3 [Avoid the use of eval() or other dynamic code execution features. When there is no alternative, any user input is sanitized and sandboxed before being executed.](#513-avoid-the-use-of-eval-or-other-dynamic-code-execution-features-when-there-is-no-alternative-any-user-input-is-sanitized-and-sandboxed-before-being-executed)
 
-5.1.3 [Avoid the use of eval() or other dynamic code execution features. When there is no alternative, any user input is sanitized and sandboxed before being executed.](#513-avoid-the-use-of-eval-or-other-dynamic-code-execution-features-when-there-is-no-alternative-any-user-input-is-sanitized-and-sandboxed-before-being-executed)
+       * 5.1.4 [Protect against template injection attacks by ensuring that any user input being included is sanitized or sandboxed.](#514-protect-against-template-injection-attacks-by-ensuring-that-any-user-input-being-included-is-sanitized-or-sandboxed)
 
-5.1.4 [Protect against template injection attacks by ensuring that any user input being included is sanitized or sandboxed.](#514-protect-against-template-injection-attacks-by-ensuring-that-any-user-input-being-included-is-sanitized-or-sandboxed)
+       * 5.1.5 [Prevent Server-Side Request Forgery SSRF](#515-prevent-server-side-request-forgery-ssrf)
 
-5.1.5 [Prevent Server-Side Request Forgery SSRF](#515-prevent-server-side-request-forgery-ssrf)
+       * 5.1.6 [Sanitize, disable, or sandbox user supplied SVG files](#516-sanitize-disable-or-sandbox-user-supplied-svg-files)
 
-5.1.6 [Sanitize, disable, or sandbox user supplied SVG files](#516-sanitize-disable-or-sandbox-user-supplied-svg-files)
+       * 5.1.7 [Protect against XPath or XML injection attacks](#517-protect-against-xpath-or-xml-injection-attacks)
 
-5.1.7 [Protect against XPath or XML injection attacks](#517-protect-against-xpath-or-xml-injection-attacks)
+       * 5.1.8 [Context-aware output escaping or sanitization protects against reflected, stored, and DOM based XSS.](#518-context-aware-output-escaping-or-sanitization-protects-against-reflected-stored-and-dom-based-xss)
 
-5.1.8 [Context-aware output escaping or sanitization protects against reflected, stored, and DOM based XSS.](#518-context-aware-output-escaping-or-sanitization-protects-against-reflected-stored-and-dom-based-xss)
+       * 5.1.9 [Protect against database injection attacks](#519-protect-against-database-injection-attacks)
 
-5.1.9 [Protect against database injection attacks](#519-protect-against-database-injection-attacks)
+       * 5.1.10 [Protect against OS command injections](#5110-protect-against-os-command-injections)
 
-5.1.10 [Protect against OS command injections](#5110-protect-against-os-command-injections)
+       * 5.1.11 [Protect against local file inclusion or remote file inclusion attacks](#5111-protect-against-local-file-inclusion-or-remote-file-inclusion-attacks)
 
-5.1.11 [Protect against local file inclusion or remote file inclusion attacks](#5111-protect-against-local-file-inclusion-or-remote-file-inclusion-attacks)
+   * 5.2 [Securely handle untrusted files](#52-securely-handle-untrusted-files)
 
-5.2 [Securely handle untrusted files](#52-securely-handle-untrusted-files)
+       * 5.2.1 [Protect against malicious file uploads by limiting uploads to expected file types and preventing direct execution of uploaded content.](#521-protect-against-malicious-file-uploads-by-limiting-uploads-to-expected-file-types-and-preventing-direct-execution-of-uploaded-content)
 
-5.2.1 [Protect against malicious file uploads by limiting uploads to expected file types and preventing direct execution of uploaded content.](#521-protect-against-malicious-file-uploads-by-limiting-uploads-to-expected-file-types-and-preventing-direct-execution-of-uploaded-content)
+6. [Configuration](#6-configuration)
 
-6 [Configuration](#6-configuration)
+   * 6.1 [Keep all components up to date](#61-keep-all-components-up-to-date)
 
-6.1 [Keep all components up to date](#61-keep-all-components-up-to-date)
+       * 6.1.1 [The application only uses software components without known exploitable vulnerabilities.](#611-the-application-only-uses-software-components-without-known-exploitable-vulnerabilities)
 
-6.1.1 [The application only uses software components without known exploitable vulnerabilities.](#611-the-application-only-uses-software-components-without-known-exploitable-vulnerabilities)
+   * 6.2 [Disable debug modes in production environments](#62-disable-debug-modes-in-production-environments)
 
-6.2 [Disable debug modes in production environments](#62-disable-debug-modes-in-production-environments)
+       * 6.2.1 [Disable debug modes in production environments](#621-disable-debug-modes-in-production-environments)
 
-6.2.1 [Disable debug modes in production environments](#621-disable-debug-modes-in-production-environments)
+   * 6.3 [The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
 
-6.3 [The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
+       * 6.3.1 [The origin header shall not be used for authentication of access control decisions](#631-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
 
-6.3.1 [The origin header shall not be used for authentication of access control decisions](#631-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
+   * 6.4 [Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
 
-6.4 [Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
+       * 6.4.1 [The application shall not be susceptible to subdomain takeovers.](#641-the-application-shall-not-be-susceptible-to-subdomain-takeovers)
 
-6.4.1 [The application shall not be susceptible to subdomain takeovers.](#641-the-application-shall-not-be-susceptible-to-subdomain-takeovers)
+   * 6.5 [Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
 
-6.5 [Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
+       * 6.5.1 [The application shall not log credentials or payment details. Session tokens shall only be stored in logs in an irreversible, hashed form.](#651-the-application-shall-not-log-credentials-or-payment-details-session-tokens-shall-only-be-stored-in-logs-in-an-irreversible-hashed-form)
 
-6.5.1 [The application shall not log credentials or payment details. Session tokens shall only be stored in logs in an irreversible, hashed form.](#651-the-application-shall-not-log-credentials-or-payment-details-session-tokens-shall-only-be-stored-in-logs-in-an-irreversible-hashed-form)
+   * 6.6 [Sensitive user data is either not stored in browser storage or is deleted when the user logs out](#66-sensitive-user-data-is-either-not-stored-in-browser-storage-or-is-deleted-when-the-user-logs-out)
 
-6.6 [Sensitive user data is either not stored in browser storage or is deleted when the user logs out](#66-sensitive-user-data-is-either-not-stored-in-browser-storage-or-is-deleted-when-the-user-logs-out)
+       * 6.6.1 [If data is stored in browser storage it shall not contain sensitive data.](#661-if-data-is-stored-in-browser-storage-it-shall-not-contain-sensitive-data)
 
-6.6.1 [If data is stored in browser storage it shall not contain sensitive data.](#661-if-data-is-stored-in-browser-storage-it-shall-not-contain-sensitive-data)
+   * 6.7 [Securely store server-side secrets](#67-securely-store-server-side-secrets)
 
-6.7 [Securely store server-side secrets](#67-securely-store-server-side-secrets)
-
-6.7.1 [The application shall securely store access tokens, API keys, and other server-side secrets.](#671-the-application-shall-securely-store-access-tokens-api-keys-and-other-server-side-secrets)
+       * 6.7.1 [The application shall securely store access tokens, API keys, and other server-side secrets.](#671-the-application-shall-securely-store-access-tokens-api-keys-and-other-server-side-secrets)
 
 
 # Introduction
