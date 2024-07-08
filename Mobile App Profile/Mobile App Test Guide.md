@@ -107,18 +107,18 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
     - [1.4.1 The app secures all network traffic according to the current best practices](#141-the-app-secures-all-network-traffic-according-to-the-current-best-practices)
   - [1.5 Platform](#15-platform)
     - [1.5.1 The app uses IPC mechanisms securely](#151-the-app-uses-ipc-mechanisms-securely)
-    - [1.5.2 The app uses WebViews securely.](#152-the-app-uses-webviews-securely)
-    - [1.5.3 The app uses the user interface securely.](#153-the-app-uses-the-user-interface-securely)
+    - [1.5.2 The app uses WebViews securely](#152-the-app-uses-webviews-securely)
+    - [1.5.3 The app uses the user interface securely](#153-the-app-uses-the-user-interface-securely)
   - [1.6 Code](#16-code)
     - [1.6.1 The app requires an up-to-date platform version](#161-the-app-requires-an-up-to-date-platform-version)
     - [1.6.2 The app only uses software components without known vulnerabilities](#162-the-app-only-uses-software-components-without-known-vulnerabilities)
-    - [1.6.3 The app validates and sanitizes all untrusted inputs.](#163-the-app-validates-and-sanitizes-all-untrusted-inputs)
+    - [1.6.3 The app validates and sanitizes all untrusted inputs](#163-the-app-validates-and-sanitizes-all-untrusted-inputs)
   - [1.7 Resilience](#17-resilience)
     - [1.7.1 The app implements anti-tampering mechanisms](#171-the-app-implements-anti-tampering-mechanisms)
     - [1.7.2 The app implements anti-static analysis mechanisms](#172-the-app-implements-anti-static-analysis-mechanisms)
     - [1.7.3 The app implements anti-dynamic analysis mechanisms](#173-the-app-implements-anti-dynamic-analysis-mechanisms)
   - [1.8 Privacy](#18-privacy)
-    - [1.8.1 The app minimizes access to sensitive data and resources.](#181-the-app-minimizes-access-to-sensitive-data-and-resources)
+    - [1.8.1 The app minimizes access to sensitive data and resources](#181-the-app-minimizes-access-to-sensitive-data-and-resources)
     - [1.8.2 The app is transparent about data collection and usage](#182-the-app-is-transparent-about-data-collection-and-usage)
     - [1.8.3 The app offers user control over their data](#183-the-app-offers-user-control-over-their-data)
 - [2 iOS](#2-ios)
@@ -126,37 +126,37 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
     - [2.1.1 The app securely stores sensitive data](#211-the-app-securely-stores-sensitive-data)
     - [2.1.2 The app prevents leakage of sensitive data](#212-the-app-prevents-leakage-of-sensitive-data)
   - [2.2 Crypto](#22-crypto)
-    - [2.2.1 The app employs current strong cryptography and uses it according to industry best practices.](#221-the-app-employs-current-strong-cryptography-and-uses-it-according-to-industry-best-practices)
-    - [2.2.2  The app performs key management according to industry best practices](#222--the-app-performs-key-management-according-to-industry-best-practices)
+    - [2.2.1 The app employs current strong cryptography and uses it according to industry best practices](#221-the-app-employs-current-strong-cryptography-and-uses-it-according-to-industry-best-practices)
+    - [2.2.2 The app performs key management according to industry best practices](#222-the-app-performs-key-management-according-to-industry-best-practices)
   - [2.3 Auth](#23-auth)
-    - [2.3.1 The app uses secure authentication and authorization protocols and follows the relevant best practices.](#231-the-app-uses-secure-authentication-and-authorization-protocols-and-follows-the-relevant-best-practices)
+    - [2.3.1 The app uses secure authentication and authorization protocols and follows the relevant best practices](#231-the-app-uses-secure-authentication-and-authorization-protocols-and-follows-the-relevant-best-practices)
   - [2.4 Network](#24-network)
-    - [2.4.1 The app secures all network traffic according to the current best practices.](#241-the-app-secures-all-network-traffic-according-to-the-current-best-practices)
+    - [2.4.1 The app secures all network traffic according to the current best practices](#241-the-app-secures-all-network-traffic-according-to-the-current-best-practices)
   - [2.5 Platform](#25-platform)
-    - [2.5.1 The app uses IPC mechanisms securely.](#251-the-app-uses-ipc-mechanisms-securely)
-    - [2.5.2 The app uses WebViews securely.](#252-the-app-uses-webviews-securely)
-    - [2.5.3 The app uses the user interface securely.](#253-the-app-uses-the-user-interface-securely)
+    - [2.5.1 The app uses IPC mechanisms securely](#251-the-app-uses-ipc-mechanisms-securely)
+    - [2.5.2 The app uses WebViews securely](#252-the-app-uses-webviews-securely)
+    - [2.5.3 The app uses the user interface securely](#253-the-app-uses-the-user-interface-securely)
   - [2.6 Code](#26-code)
-    - [2.6.1 The app requires an up-to-date platform version.](#261-the-app-requires-an-up-to-date-platform-version)
-    - [2.6.2 The app only uses software components without known vulnerabilities.](#262-the-app-only-uses-software-components-without-known-vulnerabilities)
-    - [2.6.3 The app validates and sanitizes all untrusted inputs.](#263-the-app-validates-and-sanitizes-all-untrusted-inputs)
+    - [2.6.1 The app requires an up-to-date platform version](#261-the-app-requires-an-up-to-date-platform-version)
+    - [2.6.2 The app only uses software components without known vulnerabilities](#262-the-app-only-uses-software-components-without-known-vulnerabilities)
+    - [2.6.3 The app validates and sanitizes all untrusted inputs](#263-the-app-validates-and-sanitizes-all-untrusted-inputs)
   - [2.7 Resilience](#27-resilience)
-    - [2.7.1 The app implements anti-tampering mechanisms.](#271-the-app-implements-anti-tampering-mechanisms)
-    - [2.7.2 The app implements anti-static analysis mechanisms.](#272-the-app-implements-anti-static-analysis-mechanisms)
-    - [2.7.3 The app implements anti-dynamic analysis techniques.](#273-the-app-implements-anti-dynamic-analysis-techniques)
+    - [2.7.1 The app implements anti-tampering mechanisms](#271-the-app-implements-anti-tampering-mechanisms)
+    - [2.7.2 The app implements anti-static analysis mechanisms](#272-the-app-implements-anti-static-analysis-mechanisms)
+    - [2.7.3 The app implements anti-dynamic analysis techniques](#273-the-app-implements-anti-dynamic-analysis-techniques)
   - [2.8 Privacy](#28-privacy)
-    - [2.8.1 The app minimizes access to sensitive data and resources.](#281-the-app-minimizes-access-to-sensitive-data-and-resources)
-    - [2.8.2 The app is transparent about data collection and usage.](#282-the-app-is-transparent-about-data-collection-and-usage)
-    - [2.8.3 The app offers user control over their data.](#283-the-app-offers-user-control-over-their-data)
+    - [2.8.1 The app minimizes access to sensitive data and resources](#281-the-app-minimizes-access-to-sensitive-data-and-resources)
+    - [2.8.2 The app is transparent about data collection and usage](#282-the-app-is-transparent-about-data-collection-and-usage)
+    - [2.8.3 The app offers user control over their data](#283-the-app-offers-user-control-over-their-data)
 
 
 # 1 ANDROID
 
 
-## 1.1 Storage
+## 1.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
 
 
-### 1.1.1 The app securely stores sensitive data
+### 1.1.1 [The app securely stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
 
 #### Description
 
@@ -199,7 +199,7 @@ _L2_
 
 
 
-### 1.1.2 The app prevents leakage of sensitive data
+### 1.1.2 [The app prevents leakage of sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-2/)
 
 #### Description
 
@@ -266,10 +266,10 @@ _L2_
 1. Output of the analysis shows that no sensitive data is stored in plaintext.  The scope of this test is limited to logcat and storing any logs in public locations in external storage.
 
 
-## 1.2 Crypto
+## 1.2 [Crypto](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
 
 
-### 1.2.1 The app employs current strong cryptography and uses it according to industry best practices
+### 1.2.1 [The app employs current strong cryptography and uses it according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-1/)
 
 #### Description
 
@@ -370,7 +370,7 @@ _L2_
    * Verify that contexts requiring both confidentiality and integrity protection use an approved AEAD cipher mode.
 
 
-### 1.2.2 The app performs key management according to industry best practices
+### 1.2.2 [The app performs key management according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-2/)
 
 #### Description
 
@@ -445,10 +445,10 @@ _L2_
 1. Output of the analysis shows that cryptographic key management shall be implemented properly.
 
 
-## 1.3 Auth
+## 1.3 [Auth](https://mas.owasp.org/MASVS/07-MASVS-AUTH/)
 
 
-### 1.3.1 The app uses secure authentication and authorization protocols and follows the relevant best practices
+### 1.3.1 [The app uses secure authentication and authorization protocols and follows the relevant best practices](https://mas.owasp.org/MASVS/controls/MASVS-AUTH-1/)
 
 #### Description
 
@@ -487,10 +487,10 @@ _L2_
 1. Output of the analysis shows that if the developer is using OAuth 2.0, PKCE is implemented to protect the code grant.
 
 
-## 1.4 Network
+## 1.4 [Network](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
 
 
-### 1.4.1 The app secures all network traffic according to the current best practices
+### 1.4.1 [The app secures all network traffic according to the current best practices](https://mas.owasp.org/MASVS/controls/MASVS-NETWORK-1/)
 
 #### Description
 
@@ -610,10 +610,10 @@ _L2_
 
 
 
-## 1.5 Platform
+## 1.5 [Platform](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
 
 
-### 1.5.1 The app uses IPC mechanisms securely
+### 1.5.1 [The app uses IPC mechanisms securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-1/)
 
 #### Description
 
@@ -737,7 +737,7 @@ _L2_
 2. [Reference DAC documentation: https://developer.android.com/privacy-and-security/risks/pending-intent](https://developer.android.com/privacy-and-security/risks/pending-intent)
 
 
-### 1.5.2 The app uses WebViews securely.
+### 1.5.2 [The app uses WebViews securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-2/)
 
 #### Description
 
@@ -820,7 +820,7 @@ _L2_
 3. App shall not expose unnecessary, and unexpected, protocol handlers through dynamic analysis.
 
 
-### 1.5.3 The app uses the user interface securely.
+### 1.5.3 [The app uses the user interface securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-3/)
 
 #### Description
 
@@ -863,10 +863,10 @@ _L2_
 2. Passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) shall only be displayed to the user in clear text through an explicit action, such as clicking a show password button.
 
 
-## 1.6 Code
+## 1.6 [Code](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
 
 
-### 1.6.1 The app requires an up-to-date platform version
+### 1.6.1 [The app requires an up-to-date platform version](https://mas.owasp.org/MASVS/controls/MASVS-CODE-1/)
 
 #### Description
 
@@ -905,7 +905,7 @@ _L2_
 1. Verify that the targetSdkVersion is set to N-2 or above where N is the latest SDK at the time of test.
 
 
-### 1.6.2 The app only uses software components without known vulnerabilities
+### 1.6.2 [The app only uses software components without known vulnerabilities](https://mas.owasp.org/MASVS/controls/MASVS-CODE-3/)
 
 #### Description
 
@@ -950,7 +950,7 @@ An app that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 
    *   The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
 
 
-### 1.6.3 The app validates and sanitizes all untrusted inputs.
+### 1.6.3 [The app validates and sanitizes all untrusted inputs](https://mas.owasp.org/MASVS/controls/MASVS-CODE-4/)
 
 #### Description
 
@@ -1081,10 +1081,10 @@ _L2_
 2. Verify that after calling startActivityForResult() any data returned by other apps is handled securely within onActivityResult()
 
 
-## 1.7 Resilience
+## 1.7 [Resilience](https://mas.owasp.org/MASVS/11-MASVS-RESILIENCE/)
 
 
-### 1.7.1 The app implements anti-tampering mechanisms
+### 1.7.1 [The app implements anti-tampering mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-2/)
 
 #### Description
 
@@ -1123,7 +1123,7 @@ _L2_
 1. Output of the analysis shows that the app is signed using v2 or higher.
 
 
-### 1.7.2 The app implements anti-static analysis mechanisms
+### 1.7.2 [The app implements anti-static analysis mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-3/)
 
 #### Description
 
@@ -1162,7 +1162,7 @@ _L2_
 1. Output of the analysis shows that debugging symbols are disabled in their production version.
 
 
-### 1.7.3 The app implements anti-dynamic analysis mechanisms
+### 1.7.3 [The app implements anti-dynamic analysis mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-4/)
 
 #### Description
 
@@ -1201,10 +1201,10 @@ _L2_
 1. Output of the analysis shows that the application is not debuggable.
 
 
-## 1.8 Privacy
+## 1.8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
 
 
-### 1.8.1 The app minimizes access to sensitive data and resources.
+### 1.8.1 [The app minimizes access to sensitive data and resources](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-1/)
 
 #### Description
 
@@ -1243,7 +1243,7 @@ _L2_
 1. The app adheres to least privilege principle by only requesting permissions that are needed for its functionality.  Any flagged permissions requires the developer to provide justification for app functionality.
 
 
-### 1.8.2 The app is transparent about data collection and usage
+### 1.8.2 [The app is transparent about data collection and usage](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-3/)
 
 #### Description
 
@@ -1282,7 +1282,7 @@ _L2_
 1. All data collected should be included explicitly, either within the actual application or somewhere that can be accessed via the application.
 
 
-### 1.8.3 The app offers user control over their data
+### 1.8.3 [The app offers user control over their data](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-4/)
 
 #### Description
 
@@ -1322,10 +1322,10 @@ _L1 & L2 _
 # 2 iOS
 
 
-## 2.1 Storage
+## 2.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
 
 
-### 2.1.1 The app securely stores sensitive data
+### 2.1.1 [The app securely stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
 
 #### Audit
 
@@ -1358,7 +1358,7 @@ _L2_
 2. If sensitive data is being written to external storage, verify that the crypto implementation meets the [baseline crypto requirements](#heading=h.qck736ryyi5).
 
 
-### 2.1.2 The app prevents leakage of sensitive data
+### 2.1.2 [The app prevents leakage of sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-2/)
 
 #### Audit
 
@@ -1415,10 +1415,10 @@ _L2_
 1. Output of the analysis shows that no sensitive data is stored in plaintext in the application logs.
 
 
-## 2.2 Crypto
+## 2.2 [Crypto](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
 
 
-### 2.2.1 The app employs current strong cryptography and uses it according to industry best practices.
+### 2.2.1 [The app employs current strong cryptography and uses it according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-1/)
 
 #### Audit
 
@@ -1481,7 +1481,7 @@ _L2_
    *   Custom implementations: If the provider has a custom implementation of a library (open-source library) test is in scope, home-grown implementation requires further developer assurance.
 
 
-### 2.2.2  The app performs key management according to industry best practices
+### 2.2.2 [The app performs key management according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-2/)
 
 #### Audit
 
@@ -1553,10 +1553,10 @@ _L2_
 1. Output of the analysis shows that cryptographic key management shall be implemented properly.
 
 
-## 2.3 Auth
+## 2.3 [Auth](https://mas.owasp.org/MASVS/07-MASVS-AUTH/)
 
 
-### 2.3.1 The app uses secure authentication and authorization protocols and follows the relevant best practices.
+### 2.3.1 [The app uses secure authentication and authorization protocols and follows the relevant best practices](https://mas.owasp.org/MASVS/controls/MASVS-AUTH-1/)
 
 #### Audit
 
@@ -1587,10 +1587,10 @@ _L2_
 1. Output of the analysis shows that if the developer is using OAuth 2.0, PKCE is implemented to protect the code grant.
 
 
-## 2.4 Network
+## 2.4 [Network](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
 
 
-### 2.4.1 The app secures all network traffic according to the current best practices.
+### 2.4.1 [The app secures all network traffic according to the current best practices](https://mas.owasp.org/MASVS/controls/MASVS-NETWORK-1/)
 
 #### Audit
 
@@ -1701,10 +1701,10 @@ _L2_
 
 
 
-## 2.5 Platform
+## 2.5 [Platform](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
 
 
-### 2.5.1 The app uses IPC mechanisms securely.
+### 2.5.1 [The app uses IPC mechanisms securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-1/)
 
 #### Audit
 
@@ -1871,7 +1871,7 @@ _L2_
 1. Perform the dynamic analysis using Frida to understand functionality that is exposed via universal links and verify that the application is not performing actions on behalf of the user without user interaction
 
 
-### 2.5.2 The app uses WebViews securely.
+### 2.5.2 [The app uses WebViews securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-2/)
 
 #### Audit
 
@@ -1944,7 +1944,7 @@ _L2_
 2. Ensure that WebViews do not unnecessarily access or allow access to local files and content providers and the app implement best practices for loading WebView content and file access.
 
 
-### 2.5.3 The app uses the user interface securely.
+### 2.5.3 [The app uses the user interface securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-3/)
 
 #### Audit
 
@@ -1981,10 +1981,10 @@ _L2_
 2. Passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) shall only be displayed to the user in clear text through an explicit action, such as clicking a show password button.
 
 
-## 2.6 Code
+## 2.6 [Code](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
 
 
-### 2.6.1 The app requires an up-to-date platform version.
+### 2.6.1 [The app requires an up-to-date platform version](https://mas.owasp.org/MASVS/controls/MASVS-CODE-1/)
 
 #### Audit
 
@@ -2009,7 +2009,7 @@ _L2_
 _L1 & L2:_ Verify that the app was built with a version of Xcode (DTXcodeBuild) that is   N-2 or above where N is the latest version of Xcode at the time of test. The DTPlatformVersion should also be N-2 where N is the most recent version of iOS at the time of the test.
 
 
-### 2.6.2 The app only uses software components without known vulnerabilities.
+### 2.6.2 [The app only uses software components without known vulnerabilities](https://mas.owasp.org/MASVS/controls/MASVS-CODE-3/)
 
 #### Audit
 
@@ -2044,7 +2044,7 @@ An app that uses a vulnerable 3P library can still pass this test if the develop
 
 
 
-### 2.6.3 The app validates and sanitizes all untrusted inputs.
+### 2.6.3 [The app validates and sanitizes all untrusted inputs](https://mas.owasp.org/MASVS/controls/MASVS-CODE-4/)
 
 #### Audit
 
@@ -2075,10 +2075,10 @@ _L2_
 1. Verify the binary uses PIE ASLR and stack canaries by observing the output from objection
 
 
-## 2.7 Resilience
+## 2.7 [Resilience](https://mas.owasp.org/MASVS/11-MASVS-RESILIENCE/)
 
 
-### 2.7.1 The app implements anti-tampering mechanisms.
+### 2.7.1 [The app implements anti-tampering mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-2/)
 
 #### Audit
 
@@ -2103,7 +2103,7 @@ _L2_
 _L1 & L2:_ Verify that the app is signed using the [latest code signature format](https://developer.apple.com/documentation/xcode/using-the-latest-code-signature-format).
 
 
-### 2.7.2 The app implements anti-static analysis mechanisms.
+### 2.7.2 [The app implements anti-static analysis mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-3/)
 
 #### Audit
 
@@ -2136,7 +2136,7 @@ _L2_
 1. Output of the analysis shows that debugging symbols are disabled in their production version.
 
 
-### 2.7.3 The app implements anti-dynamic analysis techniques.
+### 2.7.3 [The app implements anti-dynamic analysis techniques](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-4/)
 
 #### Audit
 
@@ -2161,10 +2161,10 @@ _L2_
 _L1 & L2:_ Verify that the app does not allow debugging by ensuring the value for `get-task-allow` is `false`.
 
 
-## 2.8 Privacy
+## 2.8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
 
 
-### 2.8.1 The app minimizes access to sensitive data and resources.
+### 2.8.1 [The app minimizes access to sensitive data and resources](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-1/)
 
 #### Audit
 
@@ -2195,7 +2195,7 @@ _L2_
 1. The app adheres to least privilege principle by only requesting permissions that are needed for its functionality  with descriptive descriptions.
 
 
-### 2.8.2 The app is transparent about data collection and usage.
+### 2.8.2 [The app is transparent about data collection and usage](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-3/)
 
 #### Audit
 
@@ -2226,7 +2226,7 @@ _L2_
 1. All data collected should be included explicitly, either within the actual application or somewhere that can be accessed via the application.
 
 
-### 2.8.3 The app offers user control over their data.
+### 2.8.3 [The app offers user control over their data](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-4/)
 
 #### Audit
 
