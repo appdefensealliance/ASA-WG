@@ -2092,34 +2092,25 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 **Evidence**
 
 
-*L1*
+*L1 and L2*
 1. Provide a written description highlighting the protections to prevent logging of credentials or payment details.
 2. Provide a sample from a log captured during a login process.
 3. Provide a sample from a log captured during a payment process. (If applicable)
-
-*L2*
-1. Provide access to logs captured during the testing of the application
 
 
 **Test Procedure**
 
 
-*L1*
+*L1 and L2*
 1. Review provided evidence for adherence with the requirements
-
-*L2*
-1. Verify application for adherence with the requirements.
 
 
 **Verification**
 
 
-*L1*
+*L1 and L2*
 1. Application shall not not log credentials or payment details.
 2. Samples from log files shall not not contain credentials or payment details.
-
-*L2*
-1. Verification shall confirm that application does not log credentials or payment details.
 
 
 ---
