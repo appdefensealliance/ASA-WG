@@ -215,7 +215,7 @@ There are cases when sensitive data is unintentionally stored or exposed to publ
 
 **Evidence**
 
-L1: Provide a code snippet showing the use of InputMethodManager showSoftInput with the SHOW_IMPLICIT flag for sensitive data fields.
+L1: Provide an application resources file snippet showing that for every sensitive data field, the `android:inputType` property is set to one of the following values: `textNoSuggestions`, `textPassword`, `textVisiblePassword`, `numberPassword` or `textWebPassword`.
 
 **Test Procedure**
 
