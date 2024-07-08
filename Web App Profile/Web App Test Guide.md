@@ -208,7 +208,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.2.1
 *L1*
 1. Provide a list of any external user authentication services.
 2. If a proprietary user authentication service is used by the application, provide a written description of the password policy
-3. If a proprietary user authentication service is used by the application, provide a written description of any anti-automation controls in place including rate limiting, CAPTCHAs, or soft account lockouts.
+3. If a proprietary user authentication service is used by the application, provide a written description of any anti-automation controls in place including multi-factor controls, rate limiting, CAPTCHAs, or soft account lockouts.
 4. If a proprietary user authentication service is used by the application, provide screenshots of the anti-automation controls in action.
 
 
@@ -238,6 +238,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.2.1
    * 2.2. CAPTCHA or other anti-automation controls on failed login attempts to limit the effectiveness of automated credential testing.
    * 2.3. Multi-factor authentication is enforced by default for all users.
    * 2.4. Minimum password length of 8 characters with the prohibition of weak or commonly breached passwords.
+   * 2.5. Application enforces an additional authentication check (such as email or app-based OTP) for users who attempt to login from an unfamiliar device or location, as determined by IP address, device fingerprinting, or session history.
 
 
 ---
