@@ -114,17 +114,15 @@ Version 0.7 - May 25, 2024
 
        * 5.1.5 [Prevent Server-Side Request Forgery SSRF](#515-prevent-server-side-request-forgery-ssrf)
 
-       * 5.1.6 [Sanitize, disable, or sandbox user supplied SVG files](#516-sanitize-disable-or-sandbox-user-supplied-svg-files)
+       * 5.1.6 [Protect against XPath or XML injection attacks](#516-protect-against-xpath-or-xml-injection-attacks)
 
-       * 5.1.7 [Protect against XPath or XML injection attacks](#517-protect-against-xpath-or-xml-injection-attacks)
+       * 5.1.7 [Context-aware output escaping or sanitization protects against reflected, stored, and DOM based XSS.](#517-context-aware-output-escaping-or-sanitization-protects-against-reflected-stored-and-dom-based-xss)
 
-       * 5.1.8 [Context-aware output escaping or sanitization protects against reflected, stored, and DOM based XSS.](#518-context-aware-output-escaping-or-sanitization-protects-against-reflected-stored-and-dom-based-xss)
+       * 5.1.8 [Protect against database injection attacks](#518-protect-against-database-injection-attacks)
 
-       * 5.1.9 [Protect against database injection attacks](#519-protect-against-database-injection-attacks)
+       * 5.1.9 [Protect against OS command injections](#519-protect-against-os-command-injections)
 
-       * 5.1.10 [Protect against OS command injections](#5110-protect-against-os-command-injections)
-
-       * 5.1.11 [Protect against local file inclusion or remote file inclusion attacks](#5111-protect-against-local-file-inclusion-or-remote-file-inclusion-attacks)
+       * 5.1.10 [Protect against local file inclusion or remote file inclusion attacks](#5110-protect-against-local-file-inclusion-or-remote-file-inclusion-attacks)
 
    * 5.2 [Securely handle untrusted files](#52-securely-handle-untrusted-files)
 
@@ -1614,46 +1612,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.6
 
 
 ---
-### 5.1.6 Sanitize, disable, or sandbox user supplied SVG files
-External Reference: ASVS Version 4.0.3 Requirement: 5.2.7
-
-
-**Evidence**
-
-
-*L1*
-1. Identify any situations in which your application accepts user file uploads and describe how the application sanitizes, disables, or sandboxes SVG files. Provide detailed evidence such as source code, screenshots, or other relevant sources. 
-
-
-*L2*
-1. N/A (to be collected by labs)
-
-
-
-
-**Test Procedure**
-
-
-*L1*
-1. Review the provided evidence to validate SVG files are being handled securely.
-
-*L2*
-1. Perform malicious file upload testing procedure defined in WSTG-BUSL-09 focusing on Cross-Site Scripting (XSS) vulnerabilities resulting from SVG files containing inline scripts.
-
-
-**Verification**
-
-
-*L1*
-1. Unrestricted upload or unsafe handling of SVG files shall not be present.
-
-
-*L2*
-1. Test shall confirm that the application does not allow malicious SVG file uploads containing inline scripts, resulting in Cross-Site Scripting (XSS) within the application.
-
-
----
-### 5.1.7 Protect against XPath or XML injection attacks
+### 5.1.6 Protect against XPath or XML injection attacks
 External Reference: ASVS Version 4.0.3 Requirement: 5.3.10
 
 
@@ -1696,7 +1655,7 @@ Perform the XML injection testing procedure defined in WSTG-INPV-07 and the XPat
 
 
 ---
-### 5.1.8 Context-aware output escaping or sanitization protects against reflected, stored, and DOM based XSS.
+### 5.1.7 Context-aware output escaping or sanitization protects against reflected, stored, and DOM based XSS.
 External Reference: ASVS Version 4.0.3 Requirement: 5.3.3
 
 
@@ -1736,7 +1695,7 @@ Perform the reflected Cross-Site Scripting (XSS) testing procedure defined in WS
 
 
 ---
-### 5.1.9 Protect against database injection attacks
+### 5.1.8 Protect against database injection attacks
 External Reference: ASVS Version 4.0.3 Requirement: 5.3.4
 
 
@@ -1774,7 +1733,7 @@ Perform the database injection testing procedure defined in WSTG-INPV-05.
 
 
 ---
-### 5.1.10 Protect against OS command injections
+### 5.1.9 Protect against OS command injections
 External Reference: ASVS Version 4.0.3 Requirement: 5.3.8
 
 
@@ -1807,7 +1766,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.8
 
 
 ---
-### 5.1.11 Protect against local file inclusion or remote file inclusion attacks
+### 5.1.10 Protect against local file inclusion or remote file inclusion attacks
 External Reference: ASVS Version 4.0.3 Requirement: 5.3.9
 
 
