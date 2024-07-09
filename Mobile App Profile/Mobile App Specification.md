@@ -97,7 +97,7 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
 # Table of Contents
 - [1 ANDROID](#1-android)
   - [1.1 Storage](#11-storage)
-    - [1.1.1 The app securely stores sensitive data](#111-the-app-securely-stores-sensitive-data)
+    - [1.1.1 The app securely stores sensitive data in external storage](#111-the-app-securely-stores-sensitive-data-in-external-storage)
     - [1.1.2 The app prevents leakage of sensitive data](#112-the-app-prevents-leakage-of-sensitive-data)
   - [1.2 Crypto](#12-crypto)
     - [1.2.1 The app employs current strong cryptography and uses it according to industry best practices](#121-the-app-employs-current-strong-cryptography-and-uses-it-according-to-industry-best-practices)
@@ -124,7 +124,7 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
     - [1.8.3 The app offers user control over their data](#183-the-app-offers-user-control-over-their-data)
 - [2 iOS](#2-ios)
   - [2.1 Storage](#21-storage)
-    - [2.1.1 The app securely stores sensitive data](#211-the-app-securely-stores-sensitive-data)
+    - [2.1.1 The app securely stores sensitive data in external storage](#211-the-app-securely-stores-sensitive-data-in-external-storage)
     - [2.1.2 The app prevents leakage of sensitive data](#212-the-app-prevents-leakage-of-sensitive-data)
   - [2.2 Crypto](#22-crypto)
     - [2.2.1 The app employs current strong cryptography and uses it according to industry best practices](#221-the-app-employs-current-strong-cryptography-and-uses-it-according-to-industry-best-practices)
@@ -154,7 +154,7 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
 
 ## 1.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
 
-### 1.1.1 [The app securely stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
+### 1.1.1 [The app securely stores sensitive data in external storage](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
 
 #### Description
 This control ensures that any sensitive data that is intentionally stored by the app is properly protected independently of the target location.
@@ -170,7 +170,7 @@ Apps handle sensitive data coming from many sources such as the user, the backen
   </tr>
   <tr>
    <td>1.1.1.1</td>
-   <td>The app shall securely store sensitive data</td>
+   <td>The app shall securely store sensitive data in external storage</td>
   </tr>
 </table>
 
@@ -642,7 +642,7 @@ Users should have control over their data.
 ## 2.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
 
 
-### 2.1.1 [The app securely stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
+### 2.1.1 [The app securely stores sensitive data in external storage](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
 
 #### Audit
 
@@ -653,7 +653,7 @@ Users should have control over their data.
   </tr>
   <tr>
    <td>2.1.1.1</td>
-   <td>The app shall securely store sensitive data</td>
+   <td>The app shall securely store sensitive data in external storage</td>
   </tr>
 </table>
 
