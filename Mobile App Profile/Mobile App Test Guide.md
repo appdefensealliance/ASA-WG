@@ -311,7 +311,7 @@ _L2_
 
 **Evidence**
 
-_L1: _If your application leverages symmetric cryptography, provide an output from static analysis demonstrating that your application is only using known good symmetric algorithms with a bit length of a minimum of 128 and that no hardcoded symmetric keys are used for security sensitive contexts.
+L1: If your application leverages symmetric cryptography, provide an output from static analysis demonstrating that your application is only using known good symmetric algorithms with a bit length of a minimum of 128 and that no hardcoded symmetric keys are used for security sensitive contexts.
 
 **Test Procedure**
 
@@ -331,7 +331,11 @@ _L1_
 
 _L2_
 
-1. Output of the analysis shows that the app utilizes a minimum of AES-128 and that no insecure methods shall be used for symmetric cryptography as defined below unless specifically required for backwards compatibility with third party systems. Industry best practices are commonly defined as:
+1. Output of the analysis shows that the app utilizes a minimum of AES-128 and that no insecure methods shall be used for symmetric cryptography as defined below unless specifically required for backwards compatibility with third party systems.
+
+_Additional Context_
+
+Industry best practices are commonly defined as:
    * Verify that only cryptographic primitives approved by relevant industry or government standards are in use.
    * Verify that contexts requiring confidentiality use an approved block cipher or stream cipher.
    * Verify that contexts requiring integrity protection use an approved MAC or digital signature algorithm.
@@ -362,8 +366,11 @@ _L1_
 
 _L2_
 
-1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices. Industry best practices are commonly defined as:.
+1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices.
 
+_Additional Context_
+
+Industry best practices are commonly defined as:.
    * Verify that only cryptographic primitives approved by relevant industry or government standards are in use.
    * Verify that contexts requiring confidentiality use an approved block cipher or stream cipher.
    * Verify that contexts requiring integrity protection use an approved MAC or digital signature algorithm.
@@ -529,8 +536,9 @@ _L2_
 
 1. Verify that the application does not use plaintext network connections over the internet for security sensitive purposes.
 
-    The following are out of scope:
+_Additional Context_
 
+The following are out of scope:
    *   Connections that are not used for security sensitive purposes (e.g. anonymized analytics)
    *   Connections initiated in WebViews to navigate to arbitrary user-selected URLs, for apps that have browser capabilities.
    *   Connections to on-device web-server within the application
@@ -567,10 +575,11 @@ _L2_
 2. Verify that the app cannot negotiate to use known vulnerable ciphers
 3. Verify that the app uses industry best practices related to algorithms & ciphers
 
-    This test is limited in scope to the mobile app; not the backend.
+_Additional Context_
 
+This test is limited in scope to the mobile app; not the backend.
 
-    For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
+For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
 
    *   Clients must support TLS1.2 or higher
    *   Clients must not support SSL2.0 or SSL3.0.
@@ -606,7 +615,9 @@ _L2_
     *   Verify that the app does not trust user installed certificates.
     *   If the system trusted CA store is not used, alternative mechanisms to validate trust such as certificate pinning may be used.
 
-    This test is limited in scope to connections that contain sensitive data.
+_Additional Context_
+
+This test is limited in scope to connections that contain sensitive data.
 
 
 
@@ -943,7 +954,8 @@ _L2_
 
 1. Verify that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0.
 
-     \
+_Additional Context_
+
 An app that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that:
 
    *   The app does not invoke the vulnerable 3P library code or
@@ -988,7 +1000,8 @@ _L2_
 
 1. Output of the analysis shows that demonstrates that compiler security features (PIE/PIC and stack smashing protections) are enabled
 
-     \
+_Additional Context_
+
 If a native 3P library that is packaged in the application does not have these enabled, this test can still pass if the developer provides justification that the 3P library does not build or work as expected if these are enabled.
 
 
@@ -1050,7 +1063,9 @@ _L2_
    *   Verify that the app correctly validates the scheme and host parts of loaded URIs against an allowlist relevant to the app, as per [unsafe-uri-loading](https://developer.android.com/privacy-and-security/risks/unsafe-uri-loading).
    *   Verify SafeBrowsing is enabled
 
-    If the app has no webviews, this test should pass automatically.
+_Additional Context_
+
+If the app has no webviews, this test should pass automatically.
 
 
 ##### 1.6.3.4 Any use of implicit intents shall be appropriate for the app's functionality and any return data shall be handled securely.
@@ -1312,7 +1327,7 @@ _L2_
 
 **Verification**
 
-_L1 & L2 _
+_L1 & L2_
 
 
 
@@ -1448,7 +1463,7 @@ _L2_
 
 1. Output of the analysis shows that no insecure random number generators are utilized for any security sensitive context.
 
-##### 2.2.1.2 **Strong cryptography shall be implemented according to industry best practices.
+##### 2.2.1.2 Strong cryptography shall be implemented according to industry best practices.
 
 **Evidence**
 
@@ -1474,7 +1489,9 @@ _L2_
 
 1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices.
 
-    Refer to [SP.800-57p1r5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) and [SP.800-131Ar2](https://csrc.nist.gov/pubs/sp/800/131/a/r2/final) with 112 bit of security as baseline:
+_Additional Context_
+
+Refer to [SP.800-57p1r5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) and [SP.800-131Ar2](https://csrc.nist.gov/pubs/sp/800/131/a/r2/final) with 112 bit of security as baseline:
 
    *   Hashing: SHA-224 or better
    *   Digital signatures & public key encryption: (Key length no less than 2048 bits for factoring or 224 for ECC)
@@ -1621,8 +1638,9 @@ _L2_
 
 1. Verify that the application does not use plaintext network connections over the internet for security sensitive purposes.
 
-    Valid justification for plaintext connections:
+_Additional Context_
 
+Valid justification for plaintext connections:
    *   Connections that are not used for security sensitive purposes (e.g. transferring sensitive data)
    *   Connections initiated in webviews to navigate to arbitrary user-selected URLs, for apps that have browser capabilities.
    *   Connections to on-device web-server within the application
@@ -1659,11 +1677,11 @@ _L2_
 2. Verify that the app cannot negotiate to use known vulnerable ciphers
 3. Verify that the app uses industry best practices related to algorithms & ciphers
 
-    This test is limited in scope to the mobile app; not the backend.
+_Additional Context_
 
+This test is limited in scope to the mobile app; not the backend.
 
-    For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
-
+For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
    *   Clients must support TLS1.2 or higher
    *   Clients must not support SSL2.0 or SSL3.0.
    *   Clients must not default to TLS1.0 or TLS1.1
@@ -1697,7 +1715,9 @@ _L2_
     1. Verify that the app does not trust user installed certificates.
     2. If the system trusted CA store is not used, alternative mechanisms to validate trust such as certificate pinning may be used.
 
-    This test is limited in scope to connections that contain sensitive data.
+_Additional Context_
+
+This test is limited in scope to connections that contain sensitive data.
 
 
 
@@ -2039,7 +2059,8 @@ _L2_
 
 1. Review the output from objection to verify that the app does not use any 3P libraries that have a published vulnerability with a severity >= CVSS 7.0.
 
-     \
+_Additional Context_
+
 An app that uses a vulnerable 3P library can still pass this test if the developer provides justification that the app doesn't invoke the vulnerable 3P library code or the 3P library hasn't yet made an update available. If the 3P library provider doesn't have a patch process this will result in a failure.
 
 
