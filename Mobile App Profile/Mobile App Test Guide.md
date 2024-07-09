@@ -96,7 +96,7 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
 # Table of Contents
 - [1 ANDROID](#1-android)
   - [1.1 Storage](#11-storage)
-    - [1.1.1 The app securely stores sensitive data](#111-the-app-securely-stores-sensitive-data)
+    - [1.1.1 The app securely stores sensitive data in external storage](#111-the-app-securely-stores-sensitive-data-in-external-storage)
     - [1.1.2 The app prevents leakage of sensitive data](#112-the-app-prevents-leakage-of-sensitive-data)
   - [1.2 Crypto](#12-crypto)
     - [1.2.1 The app employs current strong cryptography and uses it according to industry best practices](#121-the-app-employs-current-strong-cryptography-and-uses-it-according-to-industry-best-practices)
@@ -123,7 +123,7 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
     - [1.8.3 The app offers user control over their data](#183-the-app-offers-user-control-over-their-data)
 - [2 iOS](#2-ios)
   - [2.1 Storage](#21-storage)
-    - [2.1.1 The app securely stores sensitive data](#211-the-app-securely-stores-sensitive-data)
+    - [2.1.1 The app securely stores sensitive data in external storage](#211-the-app-securely-stores-sensitive-data-in-external-storage)
     - [2.1.2 The app prevents leakage of sensitive data](#212-the-app-prevents-leakage-of-sensitive-data)
   - [2.2 Crypto](#22-crypto)
     - [2.2.1 The app employs current strong cryptography and uses it according to industry best practices](#221-the-app-employs-current-strong-cryptography-and-uses-it-according-to-industry-best-practices)
@@ -156,7 +156,7 @@ The ADA approach emphasizes the use of automation where possible. We expect futu
 ## 1.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
 
 
-### 1.1.1 [The app securely stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
+### 1.1.1 [The app securely stores sensitive data in external storage](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
 
 #### Description
 
@@ -168,7 +168,7 @@ Apps handle sensitive data coming from many sources such as the user, the backen
 
 #### Audit
 
-##### 1.1.1.1 The app shall securely store sensitive data.
+##### 1.1.1.1 The app shall securely store sensitive data in external storage.
 
 **Evidence**
 
@@ -768,8 +768,7 @@ L1
 
 
 
-1. Demonstrate by providing tooling output that JavaScript is disabled within WebView by running semgrep rules [MASTG-PLATFORM-5](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/rules/platform/mstg-platform-5.yaml).
-2. If JavaScript is enabled, provide a data flow diagram with trusted end-points, secure protocols, and trust boundaries demonstrating the app's control over resources being loaded.
+1. If JavaScript is enabled, provide a data flow diagram with trusted end-points, secure protocols, and trust boundaries demonstrating the app's control over resources being loaded.
 
 **Test Procedure**
 
@@ -794,6 +793,10 @@ _L2_
 2. Ensure that JS and HTML are loaded locally from within the app, or from trusted web servers only.
 3. Ensure that users cannot define which data-sources to load based on user input.
 4. [Refer to DAC guidance for scoping: https://developer.android.com/privacy-and-security/risks/unsafe-uri-loading](https://developer.android.com/privacy-and-security/risks/unsafe-uri-loading)
+
+_Additional Context_
+
+If the app has Javascript disabled, this shall pass automatically. This can be demonstrated by providing tooling output that JavaScript is disabled within WebView by running semgrep rules [MASTG-PLATFORM-5](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/rules/platform/mstg-platform-5.yaml).
 
 
 ##### 1.5.2.2 WebView shall be configured to allow the minimum set of protocol handlers required while disabling potentially dangerous handlers.
@@ -1340,11 +1343,11 @@ _L1 & L2_
 ## 2.1 [Storage](https://mas.owasp.org/MASVS/05-MASVS-STORAGE/)
 
 
-### 2.1.1 [The app securely stores sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
+### 2.1.1 [The app securely stores sensitive data in external storage](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-1/)
 
 #### Audit
 
-##### 2.1.1.1 The app shall securely store sensitive data.
+##### 2.1.1.1 The app shall securely store sensitive data in external storage.
 
 **Evidence**
 
@@ -1650,7 +1653,7 @@ Valid justification for plaintext connections:
 
 **Evidence**
 
-_L1: _Attach the Info.plist that shows the App Transport Security (ATS) policy, along with [justification](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding supported ciphersuites, minimum and maximum TLS version.
+L1:Attach the Info.plist that shows the App Transport Security (ATS) policy, along with [justification](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding supported ciphersuites, minimum and maximum TLS version.
 
 **Test Procedure**
 
@@ -1690,7 +1693,7 @@ For industry best practices, see section “Minimum Requirements for TLS Clients
 
 **Evidence**
 
-_L1: _Attachment of Info.plist file. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding trusted CA certificates and hostname verification.
+L1:Attachment of Info.plist file. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding trusted CA certificates and hostname verification.
 
 **Test Procedure**
 
@@ -1758,7 +1761,7 @@ _L2_
 
 **Evidence**
 
-_L1: _Attach the Info.plist file output from the following command along with an explanation of what the App Extension does.
+L1:Attach the Info.plist file output from the following command along with an explanation of what the App Extension does.
 
 
 ```
@@ -1840,7 +1843,7 @@ L1 & L2: Review the provided information to verify:
 
 **Evidence**
 
-_L1: _Attach the Info.plist file and output from the semgrep rule [ios_general_paste](https://github.com/MobSF/mobsfscan/blob/main/mobsfscan/rules/patterns/ios/swift/swift_rules.yaml).
+L1: Attach the Info.plist file and output from the semgrep rule [ios_general_paste](https://github.com/MobSF/mobsfscan/blob/main/mobsfscan/rules/patterns/ios/swift/swift_rules.yaml).
 
 **Test Procedure**
 
@@ -1868,7 +1871,7 @@ _L2_
 
 **Evidence**
 
-_L1: _Attach the values for the key `com.apple.developer.associated-domains` in the .entitlements file along with design documentation describing functionality exposed via universal links.
+L1: Attach the values for the key `com.apple.developer.associated-domains` in the .entitlements file along with design documentation describing functionality exposed via universal links.
 
 **Test Procedure**
 
@@ -1899,7 +1902,7 @@ _L2_
 
 **Evidence**
 
-_L1: _
+L1:
 
 
 
@@ -1920,8 +1923,7 @@ _L2_
 
 _L1_
 
-1. JavaScript is disabled.
-2. If JavaScript is required the corresponding data flow diagram shall demonstrate developer controlled resource usage.
+1. If JavaScript is required the corresponding data flow diagram shall demonstrate developer controlled resource usage.
 
 _L2_
 
@@ -1929,11 +1931,17 @@ _L2_
 2. Ensure that JS and HTML are loaded locally from within the app, or from trusted web servers only.
 3. Ensure that users cannot define which data-sources to load based on user input.
 
+_Additional Context_
+
+If the app has Javascript disabled, this shall pass automatically.
+
+
+
 ##### 2.5.2.2 WebView shall be configured securely.
 
 **Evidence**
 
-_L1:  _
+L1:
 
 
 
@@ -1972,7 +1980,7 @@ _L2_
 
 **Evidence**
 
-_L1: _
+L1:
 
 
 
