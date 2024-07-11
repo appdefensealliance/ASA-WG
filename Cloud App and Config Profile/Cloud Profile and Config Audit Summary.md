@@ -21,50 +21,47 @@ This document provides a summary of the audit requirements sorted by platforms a
 
 
 # 1 AWS
-| Spec | Description |
-|---|----------|
-| 1.2.1 | Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime | 1.2.2 | Azure | Ensure that all Azure Functions are configured to use a current (not deprecated) runtime |
-| 2.2.1 | Ensure a support role has been created to manage incidents with AWS Support |
-| 2.3.1 | Maintain current contact details |
-| 2.3.2 | Ensure security contact information is registered |
-| 2.7.1 | Ensure no 'root' user account access key exists |
-| 2.7.2 | Do not setup access keys during initial user setup for all IAM users that have a console password |
-| 2.7.3 | Ensure IAM policies that allow full "_:_" administrative privileges are not attached |
-| 2.8.2 | Ensure IAM password policy requires minimum length of 14 or greater |
-| 2.8.3 | Ensure there is only one active access key available for any single IAM user |
-| 2.8.4 | Ensure access keys are rotated every 90 days or less |
-| 2.9.1 | Ensure IAM password policy prevents password reuse |
-| 2.10.1 | Ensure credentials unused for 45 days or greater are disabled |
-| 2.11.1 | Eliminate use of the 'root' user for administrative and daily tasks |
-| 2.16.1 | Ensure MFA is enabled for the 'root' user account |
-| 2.18.1 | Ensure IAM Users Receive Permissions Only Through Groups |
-| 3.4.1 | Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket |
-| 3.5.1 | Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible  |
-| 3.9.1 | Ensure management console sign-in without MFA is monitored |
-| 3.9.2 | Ensure usage of 'root' account is monitored |
-| 3.9.3 | Ensure IAM policy changes are monitored |
-| 3.9.4 | Ensure CloudTrail configuration changes are monitored |
-| 3.9.5 | Ensure S3 bucket policy changes are monitored |
-| 3.9.6 | Ensure changes to network gateways are monitored |
-| 3.9.7 | Ensure route table changes are monitored |
-| 3.9.8 | Ensure VPC changes are monitored |
-| 3.9.9 | Ensure AWS Organizations changes are monitored |
-| 3.11.1 | Ensure CloudTrail is enabled in all regions |
-| 3.11.2 | Ensure CloudTrail trails are integrated with CloudWatch Logs |
-| 4.2.5 | Ensure that EC2 Metadata Service only allows IMDSv2 |
-| 4.3.5 | Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports |
-| 4.3.6 | Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports |
-| 4.3.7 | Ensure no security groups allow ingress from ::/0 to remote server administration ports |
-| 5.4.1 | Ensure EBS Volume Encryption is Enabled in all Regions |
-| 5.4.2 | Ensure that encryption is enabled for EFS file systems |
-| 5.5.1 | Ensure that S3 Buckets are configured with 'Block public access (bucket settings)' |
-| 6.4.1 | Ensure that encryption-at-rest is enabled for RDS Instances |
-| 6.5.1 | Ensure that public access is not given to RDS Instance |
-| 6.12.1 | Ensure Auto Minor Version Upgrade feature is Enabled for RDS Instances |
-| 6.15.8 | Database logging should be enabled |
-
-
-
+| Spec | CIS 2.0 | Description |
+|---|-------|----------|
+| [1.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#121-ensure-that-all-aws-lambda-functions-are-configured-to-use-a-current-not-deprecated-runtime) | None | Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime | 1.2.2 | Azure | Ensure that all Azure Functions are configured to use a current (not deprecated) runtime |
+| [2.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#221-ensure-a-support-role-has-been-created-to-manage-incidents-with-aws-support) | 1.17 | Ensure a support role has been created to manage incidents with AWS Support |
+| [2.3.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#231-maintain-current-contact-details) | 1.1 | Maintain current contact details |
+| [2.3.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#232-ensure-security-contact-information-is-registered) | 1.2 | Ensure security contact information is registered |
+| [2.7.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#271-ensure-no-root-user-account-access-key-exists) | 1.4 | Ensure no 'root' user account access key exists |
+| [2.7.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#272-do-not-setup-access-keys-during-initial-user-setup-for-all-iam-users-that-have-a-console-password) | 1.11 | Do not setup access keys during initial user setup for all IAM users that have a console password |
+| [2.7.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#273-ensure-iam-policies-that-allow-full--administrative-privileges-are-not-attached) | 1.16 | Ensure IAM policies that allow full "_:_" administrative privileges are not attached |
+| [2.8.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#282-ensure-iam-password-policy-requires-minimum-length-of-14-or-greater) | 1.8 | Ensure IAM password policy requires minimum length of 14 or greater |
+| [2.8.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#283-ensure-there-is-only-one-active-access-key-available-for-any-single-iam-user) | 1.13 | Ensure there is only one active access key available for any single IAM user |
+| [2.8.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#284-ensure-access-keys-are-rotated-every-90-days-or-less) | 1.14 | Ensure access keys are rotated every 90 days or less |
+| [2.9.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#291-ensure-iam-password-policy-prevents-password-reuse) | 1.9 | Ensure IAM password policy prevents password reuse |
+| [2.10.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#2101-ensure-credentials-unused-for-45-days-or-greater-are-disabled) | 1.12 | Ensure credentials unused for 45 days or greater are disabled |
+| [2.11.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#2111-eliminate-use-of-the-root-user-for-administrative-and-daily-tasks) | 1.7 | Eliminate use of the 'root' user for administrative and daily tasks |
+| [2.16.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#2161-ensure-mfa-is-enabled-for-the-root-user-account) | 1.5 | Ensure MFA is enabled for the 'root' user account |
+| [2.18.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#2181-ensure-iam-users-receive-permissions-only-through-groups) | 1.15 | Ensure IAM Users Receive Permissions Only Through Groups |
+| [3.4.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#341-ensure-s3-bucket-access-logging-is-enabled-on-the-cloudtrail-s3-bucket) | 3.6 | Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket |
+| [3.5.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#351-ensure-the-s3-bucket-used-to-store-cloudtrail-logs-is-not-publicly-accessible) | 3.3 | Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible  |
+| [3.9.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#391-ensure-management-console-sign-in-without-mfa-is-monitored) | 4.2 | Ensure management console sign-in without MFA is monitored |
+| [3.9.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#392-ensure-usage-of-root-account-is-monitored) | 4.3 | Ensure usage of 'root' account is monitored |
+| [3.9.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#393-ensure-iam-policy-changes-are-monitored) | 4.4 | Ensure IAM policy changes are monitored |
+| [3.9.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#394-ensure-cloudtrail-configuration-changes-are-monitored) | 4.5 | Ensure CloudTrail configuration changes are monitored |
+| [3.9.5](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#395-ensure-s3-bucket-policy-changes-are-monitored) | 4.8 | Ensure S3 bucket policy changes are monitored |
+| [3.9.6](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#396-ensure-changes-to-network-gateways-are-monitored) | 4.12 | Ensure changes to network gateways are monitored |
+| [3.9.7](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#397-ensure-route-table-changes-are-monitored) | 4.13 | Ensure route table changes are monitored |
+| [3.9.8](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#398-ensure-vpc-changes-are-monitored) | 4.14 | Ensure VPC changes are monitored |
+| [3.9.9](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#399-ensure-aws-organizations-changes-are-monitored) | 4.15 | Ensure AWS Organizations changes are monitored |
+| [3.11.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#3111-ensure-cloudtrail-is-enabled-in-all-regions) | 3.1 | Ensure CloudTrail is enabled in all regions |
+| [3.11.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#3112-ensure-cloudtrail-trails-are-integrated-with-cloudwatch-logs) | 3.4 | Ensure CloudTrail trails are integrated with CloudWatch Logs |
+| [4.2.5](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#425-ensure-that-ec2-metadata-service-only-allows-imdsv2) | 5.6 | Ensure that EC2 Metadata Service only allows IMDSv2 |
+| [4.3.5](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#435-ensure-no-network-acls-allow-ingress-from-00000-to-remote-server-administration-ports) | 5.1 | Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports |
+| [4.3.6](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#436-ensure-no-security-groups-allow-ingress-from-00000-to-remote-server-administration-ports) | 5.2 | Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports |
+| [4.3.7](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#437-ensure-no-security-groups-allow-ingress-from-0-to-remote-server-administration-ports) | 5.3 | Ensure no security groups allow ingress from ::/0 to remote server administration ports |
+| [5.4.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#541-ensure-ebs-volume-encryption-is-enabled-in-all-regions) | 2.2.1 | Ensure EBS Volume Encryption is Enabled in all Regions |
+| [5.4.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#542-ensure-that-encryption-is-enabled-for-efs-file-systems) | 2.4.1 | Ensure that encryption is enabled for EFS file systems |
+| [5.5.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#551-ensure-that-s3-buckets-are-configured-with-block-public-access-bucket-settings) | 2.1.4 | Ensure that S3 Buckets are configured with 'Block public access (bucket settings)' |
+| [6.4.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#641-ensure-that-encryption-at-rest-is-enabled-for-rds-instances) | 2.3.1 | Ensure that encryption-at-rest is enabled for RDS Instances |
+| [6.5.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#651-ensure-that-public-access-is-not-given-to-rds-instance) | 2.3.3 | Ensure that public access is not given to RDS Instance |
+| [6.12.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#6121-ensure-auto-minor-version-upgrade-feature-is-enabled-for-rds-instances) | 2.3.2 | Ensure Auto Minor Version Upgrade feature is Enabled for RDS Instances |
+| [6.15.8](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#6158-database-logging-should-be-enabled) | None | Database logging should be enabled |
 
 
 
