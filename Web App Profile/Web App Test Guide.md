@@ -922,7 +922,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.1
 *L1*
 1. Explain / Provide documentation how user authentication and authorization are implemented, what roles and permissions are defined, and how access control rules are enforced when users interact with the application.
 2. Explain / Provide documentation that the principle of least privilege exists - users should only be able to access functions, data files, URLs, controllers, services, and other resources, for which they possess specific authorization.
-Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.5.
+Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.3.
 
 *L2*
 1. N/A (to be collected by labs)
@@ -960,7 +960,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.2
 *L1*
 1. Explain / Provide documentation how user authentication and authorization are implemented, what roles and permissions are defined, and how access control rules are enforced when users interact with the application.
 2. Explain / Provide documentation that the principle of least privilege exists - users should only be able to access functions, data files, URLs, controllers, services, and other resources, for which they possess specific authorization.
-Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.5.
+Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.3.
 
 *L2*
 1. N/A (to be collected by labs)
@@ -996,7 +996,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.5
 *L1*
 1. Explain / Provide documentation how user authentication and authorization are implemented, what roles and permissions are defined, and how access control rules are enforced when users interact with the application.
 2. Explain / Provide documentation that the principle of least privilege exists - users should only be able to access functions, data files, URLs, controllers, services, and other resources, for which they possess specific authorization.
-Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.5.
+Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.3.
 
 *L2*
 1. N/A (to be collected by labs)
