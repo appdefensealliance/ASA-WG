@@ -90,7 +90,7 @@ Version 0.5 - April 8, 2024
 
 [2.5 Establish and Maintain a Data Management Process](#25-establish-and-maintain-a-data-management-process)
 
-[2.5.1 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in RBAC Key Vaults](#251-ensure-that-the-expiration-date-that-is)
+[2.5.1 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in RBAC Key Vaults](#251-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-keys-in-rbac-key-vaults)
 
 [2.5.2 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in Non-RBAC Key Vaults.](#252-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-keys-in-non-rbac-key-vaults)
 
@@ -108,11 +108,11 @@ Version 0.5 - April 8, 2024
 
 [2.7.2 Do not setup access keys during initial user setup for all IAM users that have a console password](#272-do-not-setup-access-keys-during-initial-user-setup-for-all-iam-users-that-have-a-console-password)
 
-[2.7.3 Ensure IAM policies that allow full  "\*:\*"  administrative privileges are not attached](#273-ensure-iam-policies-that-allow-full--administrative-privileges-are-not-attached#273-ensure-iam-policies-that-allow-full-_-administrative-privileges-are-not-attached)
+[2.7.3 Ensure IAM policies that allow full  "\*:\*"  administrative privileges are not attached](#273-ensure-iam-policies-that-allow-full--administrative-privileges-are-not-attached)
 
-[2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'](#274-expand_moreensure-that-guest-users-access-restrictions-is-set-to-guest-user-access-is-restricted-to-properties-and-memberships-of-their-own-directory-objects)
+[2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'](#274-ensure-that-guest-users-access-restrictions-is-set-to-guest-user-access-is-restricted-to-properties-and-memberships-of-their-own-directory-objects)
 
-[2.7.5 Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level](#275-expand_moreensure-that-iam-users-are-not-assigned-the-service-account-user-or-service-account-token-creator-roles-at-project-level)
+[2.7.5 Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level](#275-ensure-that-iam-users-are-not-assigned-the-service-account-user-or-service-account-token-creator-roles-at-project-level)
 
 [2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible](#276-ensure-that-cloud-kms-cryptokeys-are-not-anonymously-or-publicly-accessible)
 
@@ -1089,14 +1089,11 @@ Evidence or test output indicates that no webapp is deployed with FtpsState of A
 
 1. List the instances in your project and get details on each instance:
 
+  ```
+  gcloud compute instances list --format=json
+  ```
 
-```
-gcloud compute instances list --format=json
-```
-
-
-
-1. Ensure `key: block-project-ssh-keys` is set to `value: 'true'`.
+2. Ensure `key: block-project-ssh-keys` is set to `value: 'true'`.
 
 **Verification**
 
@@ -1216,15 +1213,12 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 
 1. List all instances:
 
+  ```
+  gcloud compute instances list --format='table(name,canIpForward)'
 
-```
-gcloud compute instances list --format='table(name,canIpForward)'
+  ```
 
-```
-
-
-
-1. Ensure that the CAN_IP_FORWARD column in the output of above command does not contain `True` for any VM instance.
+2. Ensure that the CAN_IP_FORWARD column in the output of above command does not contain `True` for any VM instance.
 
 **Exception:** Instances created by GKE should be excluded because they need to have IP forwarding enabled and cannot be changed. Instances created by GKE have names that start with "gke-".
 
@@ -1277,15 +1271,12 @@ The default Compute Engine service account is named `[PROJECT_NUMBER]-compute@de
 
 1. List the instances in your project and get details on each instance:
 
+  ```
+  gcloud compute instances list --format=json | jq -r '. | "SA: \(.[].serviceAccounts[].email) Name: \(.[].name)"'
 
-```
-gcloud compute instances list --format=json | jq -r '. | "SA: \(.[].serviceAccounts[].email) Name: \(.[].name)"'
+  ```
 
-```
-
-
-
-1. Ensure that the service account section has an email that does not match the pattern `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`.
+2. Ensure that the service account section has an email that does not match the pattern `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`.
 
 **Exception:** VMs created by GKE should be excluded. These VMs have names that start with `gke-` and are labeled `goog-gke-node`.
 
@@ -1331,15 +1322,12 @@ When an instance is configured with `Compute Engine default service account` wit
 
 1. List the instances in your project and get details on each instance:
 
+  ```
+  gcloud compute instances list --format=json | jq -r '. | "SA Scopes: \(.[].serviceAccounts[].scopes) Name: \(.[].name) Email: \(.[].serviceAccounts[].email)"'
 
-```
-gcloud compute instances list --format=json | jq -r '. | "SA Scopes: \(.[].serviceAccounts[].scopes) Name: \(.[].name) Email: \(.[].serviceAccounts[].email)"'
+  ```
 
-```
-
-
-
-1. Ensure that the service account section has an email that does not match the pattern `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`.
+2. Ensure that the service account section has an email that does not match the pattern `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`.
 
 **Exception:** VMs created by GKE should be excluded. These VMs have names that start with `gke-` and are labeled `goog-gke-node
 
@@ -1525,15 +1513,12 @@ Evidence or test output indicates that every web app is assigned a unique princi
 
 1. List the instances in your project and get details on each instance:
 
+  ```
+  gcloud compute instances list --format=json
 
-```
-gcloud compute instances list --format=json
+  ```
 
-```
-
-
-
-1. Verify that the section `commonInstanceMetadata` has a key `enable-oslogin` set to value `TRUE`. **Exception:** VMs created by GKE should be excluded. These VMs have names that start with `gke-` and are labeled `goog-gke-node`
+2. Verify that the section `commonInstanceMetadata` has a key `enable-oslogin` set to value `TRUE`. **Exception:** VMs created by GKE should be excluded. These VMs have names that start with `gke-` and are labeled `goog-gke-node`
 
 **Verification**
 
@@ -1576,7 +1561,7 @@ Setting this parameter to "true" for a Key Vault ensures that even if Key Vault 
 
 
 
-1. `enablePurgeProtection`:
+2. `enablePurgeProtection`:
 
 enableSoftDelete only ensures that Key Vault is not deleted permanently and will be recoverable for 90 days from date of deletion. However, there are scenarios in which the Key Vault and/or its objects are accidentally purged and hence will not be recoverable. Setting enablePurgeProtection to "true" ensures that the Key Vault and its objects cannot be purged.
 
@@ -1601,15 +1586,12 @@ Enabling both the parameters on Key Vaults ensures that Key Vaults and their obj
 
 1. List all Resources of type Key Vaults:
 
+  ```
+  az resource list --query "[?type=='Microsoft.KeyVault/vaults']"
 
-```
-az resource list --query "[?type=='Microsoft.KeyVault/vaults']"
+  ```
 
-```
-
-
-
-1. For Every Key Vault ID ensure check parameters `enableSoftDelete` and `enablePurgeProtection` are set to enabled.
+2. For Every Key Vault ID ensure check parameters `enableSoftDelete` and `enablePurgeProtection` are set to enabled.
 
 
 ```
@@ -1686,7 +1668,7 @@ aws iam list-policies --query "Policies[?PolicyName == 'AWSSupportAccess']"
 
 
 
-1. Check if the 'AWSSupportAccess' policy is attached to any role:
+2. Check if the 'AWSSupportAccess' policy is attached to any role:
 
 
 ```
@@ -1696,7 +1678,7 @@ aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSSupport
 
 
 
-1. In Output, Ensure `PolicyRoles` does not return empty. 'Example: Example: PolicyRoles: [ ]'
+3. In Output, Ensure `PolicyRoles` does not return empty. 'Example: Example: PolicyRoles: [ ]'
 
 If it returns empty then refer to the remediation in the CIS Benchmark.
 
@@ -1784,7 +1766,7 @@ aws account get-alternate-contact --alternate-contact-type SECURITY
 
 
 
-1. Ensure proper contact information is specified for the `Security` contact.
+2. Ensure proper contact information is specified for the `Security` contact.
 
 **Verification**
 
@@ -1809,11 +1791,11 @@ Evidence or test output indicates that the tenant is configured with security co
 1. Go to `Essential Contacts` by visiting [https://console.cloud.google.com/iam-admin/essential-contacts](https://console.cloud.google.com/iam-admin/essential-contacts)
 2. Make sure the organization appears in the resource selector at the top of the page. The resource selector tells you what project, folder, or organization you are currently managing contacts for.
 3. Ensure that appropriate email addresses are configured for each of the following notification categories:
-* `Legal`
-* `Security`
-* `Suspension`
-* `Technical`
-* `Technical Incidents`
+   * `Legal`
+   * `Security`
+   * `Suspension`
+   * `Technical`
+   * `Technical Incidents`
 
 Alternatively, appropriate email addresses can be configured for the `All` notification category to receive all possible important notifications.
 
@@ -1831,12 +1813,12 @@ gcloud essential-contacts list --organization=<ORGANIZATION_ID>
 
 
 
-1. Ensure at least one appropriate email address is configured for each of the following notification categories:
-* `LEGAL`
-* `SECURITY`
-* `SUSPENSION`
-* `TECHNICAL`
-* `TECHNICAL_INCIDENTS`
+2. Ensure at least one appropriate email address is configured for each of the following notification categories:
+   * `LEGAL`
+   * `SECURITY`
+   * `SUSPENSION`
+   * `TECHNICAL`
+   * `TECHNICAL_INCIDENTS`
 
 Alternatively, appropriate email addresses can be configured for the `ALL` notification category to receive all possible important notifications.
 
@@ -2310,7 +2292,7 @@ gcloud functions list
 
 
 
-1. For each cloud function in the list run the following command.
+2. For each cloud function in the list run the following command.
 
 
 ```
@@ -2320,7 +2302,7 @@ gcloud functions describe <function_name>
 
 
 
-1. Review the settings of the buildEnvironmentVariables and environmentVariables. Determine if this is data that should not be publicly accessible.
+3. Review the settings of the buildEnvironmentVariables and environmentVariables. Determine if this is data that should not be publicly accessible.
 
 Determine if Secret Manager API is 'Enabled' for your Project
 
@@ -2347,7 +2329,7 @@ gcloud services list
 
 
 
-1. If 'Secret Manager API' is in the list, it is enabled.
+2. If 'Secret Manager API' is in the list, it is enabled.
 
 **Verification**
 
@@ -2458,7 +2440,7 @@ Perform the following to determine if access keys were created upon user creatio
 
 
 
-1. The output of this command will produce a table similar to the following:
+2. The output of this command will produce a table similar to the following:
 
 
 ```
@@ -2474,7 +2456,7 @@ user,password_enabled,access_key_1_active,access_key_1_last_used_date,access_key
 
 
 
-1. For any user having `password_enabled` set to `true` AND `access_key_last_used_date` set to `N/A` then refer to the remediation in the CIS Benchmark.
+3. For any user having `password_enabled` set to `true` AND `access_key_last_used_date` set to `N/A` then refer to the remediation in the CIS Benchmark.
 
 **Verification**
 
@@ -2512,7 +2494,7 @@ Perform the following to determine what policies are created:
 
 
 
-1. For each policy returned, run the following command to determine if any policies is allowing full administrative privileges on the account:
+2. For each policy returned, run the following command to determine if any policies is allowing full administrative privileges on the account:
 
 
 ```
@@ -2522,7 +2504,7 @@ Perform the following to determine what policies are created:
 
 
 
-1. In output ensure policy should not have any Statement block with `"Effect": "Allow"` and `Action` set to `"*"` and `Resource` set to `"*"`
+3. In output ensure policy should not have any Statement block with `"Effect": "Allow"` and `Action` set to `"*"` and `Resource` set to `"*"`
 
 **Verification**
 
@@ -2653,7 +2635,7 @@ gcloud kms keys list --keyring=[key_ring_name] --location=global --format=json |
 
 
 
-1. Ensure the below command's output does not contain `allUsers` or `allAuthenticatedUsers`.
+2. Ensure the below command's output does not contain `allUsers` or `allAuthenticatedUsers`.
 
 
 ```
@@ -2789,7 +2771,7 @@ The command output should return an array that contains all your IAM user names.
 
 
 
-1. Run `list-access-keys` command using the IAM user name list to return the current status of each access key associated with the selected IAM user:
+2. Run `list-access-keys` command using the IAM user name list to return the current status of each access key associated with the selected IAM user:
 
 
 ```
@@ -2801,7 +2783,7 @@ The command output should expose the metadata `("Username", "AccessKeyId", "Stat
 
 
 
-1. Check the `Status` property value for each key returned to determine each key's current state. If the `Status` property value for more than one IAM access key is set to `Active`, the user access configuration does not adhere to this requirement, refer to the remediation in the CIS Benchmark.
+3. Check the `Status` property value for each key returned to determine each key's current state. If the `Status` property value for more than one IAM access key is set to `Active`, the user access configuration does not adhere to this requirement, refer to the remediation in the CIS Benchmark.
 * Repeat steps no. 2 and 3 for each IAM user in your AWS account.
 
 **Verification**
@@ -3257,7 +3239,7 @@ gcloud projects get-iam-policy PROJECT_ID --format json > iam.json
 
 
 
-1. The contents of the JSON file will look similar to the following. Note that `role` of members group associated with each `serviceaccount` does not contain `*Admin` or `*admin` or does not match `roles/editor` or does not match `roles/owner`.
+2. The contents of the JSON file will look similar to the following. Note that `role` of members group associated with each `serviceaccount` does not contain `*Admin` or `*admin` or does not match `roles/editor` or does not match `roles/owner`.
 
 This requirement is only applicable to `User-Managed user-created` service accounts. These accounts have the nomenclature: `SERVICE_ACCOUNT_NAME@PROJECT_ID.iam.gserviceaccount.com`. Note that some Google-managed, Google-created service accounts have the same naming format, and should be excluded (e.g., `appsdev-apps-dev-script-auth@system.gserviceaccount.com` which needs the Owner role).
 
@@ -3485,7 +3467,7 @@ Capture `id` and corresponding `userPrincipalName` ('$uid', '$userPrincipalName'
 
 
 
-1. List all Role Definitions Using Azure management API:
+2. List all Role Definitions Using Azure management API:
 
 
 ```
@@ -3497,7 +3479,7 @@ Capture Role Definition IDs/Name ('$name') and role names ('$properties/roleName
 
 
 
-1. List All Role Assignments (Mappings `$A.uid` to `$B.name`) Using Azure Management API:
+3. List All Role Assignments (Mappings `$A.uid` to `$B.name`) Using Azure Management API:
 
 
 ```
@@ -3509,7 +3491,7 @@ Find all administrative roles (`$B.name`) in `"Properties/roleDefinitionId"` map
 
 
 
-1. Now Match (`$CProperties/principalId`) with `$A.uid` and get `$A.userPrincipalName` save this as `D.userPrincipalName`
+4. Now Match (`$CProperties/principalId`) with `$A.uid` and get `$A.userPrincipalName` save this as `D.userPrincipalName`
 
 **Step 2:** Run MSOL PowerShell command:
 
@@ -3667,13 +3649,13 @@ Capture `id` and corresponding `userPrincipalName` (`$uid`, `$userPrincipalName`
 
 
 
-1. List all Role Definitions Using Azure management API:
+2. List all Role Definitions Using Azure management API:
 
 Capture Role Definition IDs/Name (`$name`) and role names (`$properties/roleName`) where `"properties/roleName"` does NOT contain (`Owner` or `*contributor` or `admin` )
 
 
 
-1. List All Role Assignments (Mappings `$A.uid` to `$B.name`) Using Azure Management API:
+3. List All Role Assignments (Mappings `$A.uid` to `$B.name`) Using Azure Management API:
 
 Find all non-administrative roles (`$B.name`) in `"Properties/roleDefinationId"` mapped with user ids (`$A.id`) in `"Properties/principalId"` where `"Properties/principalType" == "User"`
 
@@ -3814,7 +3796,7 @@ Perform the following to determine if the 'root' user account has MFA setup:
 
 
 
-1. Ensure the AccountMFAEnabled property is set to 1
+2. Ensure the AccountMFAEnabled property is set to 1
 
 **Verification**
 
@@ -3907,7 +3889,7 @@ Perform the following to determine if an inline policy is set or a policy is dir
 
 
 
-1. For each user returned, run the following command to determine if any policies are attached to them:
+2. For each user returned, run the following command to determine if any policies are attached to them:
 
 
 ```
@@ -3918,7 +3900,7 @@ Perform the following to determine if an inline policy is set or a policy is dir
 
 
 
-1. If any policies are returned, the user has an inline policy or direct policy attachment.
+3. If any policies are returned, the user has an inline policy or direct policy attachment.
 
 **Verification**
 
@@ -4190,7 +4172,7 @@ aws cloudtrail describe-trails --query 'trailList[*].S3BucketName'
 
 
 
-1. Ensure Bucket Logging is enabled:
+2. Ensure Bucket Logging is enabled:
 
 
 ```
@@ -4275,7 +4257,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 
-1. Ensure the `AllUsers` principal is not granted privileges to that `<bucket>` :
+2. Ensure the `AllUsers` principal is not granted privileges to that `<bucket>` :
 
 
 ```
@@ -4285,7 +4267,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 
-1. Ensure the `AuthenticatedUsers` principal is not granted privileges to that `<bucket>`:
+3. Ensure the `AuthenticatedUsers` principal is not granted privileges to that `<bucket>`:
 
 
 ```
@@ -4295,7 +4277,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 
-1. Get the S3 Bucket Policy
+4. Get the S3 Bucket Policy
 
 
 ```
@@ -4305,7 +4287,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 
-1. Ensure the policy does not contain a `Statement` having an `Effect` set to `Allow` and a `Principal` set to "*" or {"AWS": "*"}. Additionally, check to see whether a condition has been added to the bucket policy covering `aws:PrincipalOrgID`, as having this (in the StringEquals or StringEqualsIgnoreCase) would restrict access to only the named Org ID.
+5. Ensure the policy does not contain a `Statement` having an `Effect` set to `Allow` and a `Principal` set to "*" or {"AWS": "*"}. Additionally, check to see whether a condition has been added to the bucket policy covering `aws:PrincipalOrgID`, as having this (in the StringEquals or StringEqualsIgnoreCase) would restrict access to only the named Org ID.
 
 **Note:** Principal set to "*" or {"AWS": "*"}, without any conditions, allows anonymous access.
 
@@ -4351,7 +4333,7 @@ az monitor diagnostic-settings subscription list --subscription $subscription.Id
 
 
 
-1. Ensure the container storing activity logs (insights-activity-logs) is not publicly accessible:
+2. Ensure the container storing activity logs (insights-activity-logs) is not publicly accessible:
 
 
 ```
@@ -4363,7 +4345,7 @@ If this command returns output and no errors, the storage account is publicly ac
 
 
 
-1. Otherwise, list `Storage Account Keys` for the storage account.
+3. Otherwise, list `Storage Account Keys` for the storage account.
 
 
 ```
@@ -4373,7 +4355,7 @@ az storage account keys list --resource-group <storage account resource group> -
 
 
 
-1. Use a key to determine if the `Container` is also publicly accessible (in the event the storage account is)
+4. Use a key to determine if the `Container` is also publicly accessible (in the event the storage account is)
 
 
 ```
@@ -4639,91 +4621,91 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all `CloudTrails`:
+   * List all `CloudTrails`:
 
 
-```
-aws cloudtrail describe-trails
+   ```
+   aws cloudtrail describe-trails
 
-```
-
-
-
-* ` \
-`Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
-
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
+   ```
 
 
 
-* Ensure Identified Multi region `CloudTrail` is active
+   * ` \
+   `Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-Ensure in the output that `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region 'Cloudtrail' captures all Management Events
+   * Ensure Identified Multi region `CloudTrail` is active
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-Ensure in the output there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   Ensure in the output that `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region 'Cloudtrail' captures all Management Events
 
 
-```
-"filterPattern": "{ ($.eventName = "ConsoleLogin") && ($.additionalEventData.MFAUsed != "Yes") }"
-```
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-Or (To reduce false positives incase Single Sign-On (SSO) is used in organization):
-
-
-```
-"filterPattern": "{ ($.eventName = "ConsoleLogin") && ($.additionalEventData.MFAUsed != "Yes") && ($.userIdentity.type = "IAMUser") && ($.responseElements.ConsoleLogin = "Success") }"
-
-```
+   Ensure in the output there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
 
 
 
-1. ` \
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ ($.eventName = "ConsoleLogin") && ($.additionalEventData.MFAUsed != "Yes") }"
+   ```
+
+
+   Or (To reduce false positives incase Single Sign-On (SSO) is used in organization):
+
+
+   ```
+   "filterPattern": "{ ($.eventName = "ConsoleLogin") && ($.additionalEventData.MFAUsed != "Yes") && ($.userIdentity.type = "IAMUser") && ($.responseElements.ConsoleLogin = "Success") }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<no_mfa_console_signin_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<no_mfa_console_signin_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<no_mfa_console_signin_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<no_mfa_console_signin_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<no_mfa_console_signin_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
 
 
 ```
@@ -4762,95 +4744,95 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails:
+   * List all CloudTrails:
 
 
-```
-aws cloudtrail describe-trails
+   ```
+   aws cloudtrail describe-trails
 
-```
-
-
-
-* Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
-
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
+   ```
 
 
 
-* Ensure Identified Multi region CloudTrail is active
+   * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-ensure `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events
+   * Ensure Identified Multi region CloudTrail is active
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events
 
 
-```
-"filterPattern": "{ $.userIdentity.type = "Root" && $.userIdentity.invokedBy NOT EXISTS && $.eventType != "AwsServiceEvent" }"
-
-```
-
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-1. ` \
+   Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
+
+
+
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ $.userIdentity.type = "Root" && $.userIdentity.invokedBy NOT EXISTS && $.eventType != "AwsServiceEvent" }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<root_usage_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<root_usage_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<root_usage_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<root_usage_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<root_usage_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN.
+   at least one subscription should have "SubscriptionArn" with valid aws ARN.
 
 
-```
-Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -4876,95 +4858,95 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails:
+   * List all CloudTrails:
 
 
-```
-aws cloudtrail describe-trails
+   ```
+   aws cloudtrail describe-trails
 
-```
-
-
-
-* Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
-
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
+   ```
 
 
 
-* Ensure Identified Multi region CloudTrail is active
+   * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-ensure `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events
+   * Ensure Identified Multi region CloudTrail is active
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events
 
 
-```
-"filterPattern": "{($.eventName=DeleteGroupPolicy)||($.eventName=DeleteRolePolicy)||($.eventName=DeleteUserPolicy)||($.eventName=PutGroupPolicy)||($.eventName=PutRolePolicy)||($.eventName=PutUserPolicy)||($.eventName=CreatePolicy)||($.eventName=DeletePolicy)||($.eventName=CreatePolicyVersion)||($.eventName=DeletePolicyVersion)||($.eventName=AttachRolePolicy)||($.eventName=DetachRolePolicy)||($.eventName=AttachUserPolicy)||($.eventName=DetachUserPolicy)||($.eventName=AttachGroupPolicy)||($.eventName=DetachGroupPolicy)}"
-
-```
-
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-1. ` \
+   Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
+
+
+
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{($.eventName=DeleteGroupPolicy)||($.eventName=DeleteRolePolicy)||($.eventName=DeleteUserPolicy)||($.eventName=PutGroupPolicy)||($.eventName=PutRolePolicy)||($.eventName=PutUserPolicy)||($.eventName=CreatePolicy)||($.eventName=DeletePolicy)||($.eventName=CreatePolicyVersion)||($.eventName=DeletePolicyVersion)||($.eventName=AttachRolePolicy)||($.eventName=DetachRolePolicy)||($.eventName=AttachUserPolicy)||($.eventName=DetachUserPolicy)||($.eventName=AttachGroupPolicy)||($.eventName=DetachGroupPolicy)}"
+
+   ```
+
+
+
+4. ` \
 `Note the `<iam_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<iam_changes_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<iam_changes_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<iam_changes_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<iam_changes_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN.
+   at least one subscription should have "SubscriptionArn" with valid aws ARN.
 
 
-```
-Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -4988,86 +4970,86 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails: `aws cloudtrail describe-trails`
-* Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
+   * List all CloudTrails: `aws cloudtrail describe-trails`
+   * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
-
-
-
-* Ensure Identified Multi region CloudTrail is active
-
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-ensure `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events
+   * Ensure Identified Multi region CloudTrail is active
+
+   
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
-
-
-Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the filterPattern output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events
 
 
-```
-"filterPattern": "{ ($.eventName = CreateTrail) || ($.eventName = UpdateTrail) || ($.eventName = DeleteTrail) || ($.eventName = StartLogging) || ($.eventName = StopLogging) }"
-
-```
-
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-1. ` \
+   Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
+
+
+
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the filterPattern output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ ($.eventName = CreateTrail) || ($.eventName = UpdateTrail) || ($.eventName = DeleteTrail) || ($.eventName = StartLogging) || ($.eventName = StopLogging) }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<cloudtrail_cfg_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<cloudtrail_cfg_changes_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<cloudtrail_cfg_changes_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<cloudtrail_cfg_changes_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<cloudtrail_cfg_changes_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN.
+   at least one subscription should have "SubscriptionArn" with valid aws ARN.
 
 
-```
-Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -5093,86 +5075,86 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails: `aws cloudtrail describe-trails`
-* Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
+   * List all CloudTrails: `aws cloudtrail describe-trails`
+   * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
-
-
-
-* Ensure Identified Multi region CloudTrail is active
-
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-ensure `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events
+   * Ensure Identified Multi region CloudTrail is active
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events
 
 
-```
-"filterPattern": "{ ($.eventSource = s3.amazonaws.com) && (($.eventName = PutBucketAcl) || ($.eventName = PutBucketPolicy) || ($.eventName = PutBucketCors) || ($.eventName = PutBucketLifecycle) || ($.eventName = PutBucketReplication) || ($.eventName = DeleteBucketPolicy) || ($.eventName = DeleteBucketCors) || ($.eventName = DeleteBucketLifecycle) || ($.eventName = DeleteBucketReplication)) }"
-
-```
-
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-1. ` \
+   Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
+
+
+
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ ($.eventSource = s3.amazonaws.com) && (($.eventName = PutBucketAcl) || ($.eventName = PutBucketPolicy) || ($.eventName = PutBucketCors) || ($.eventName = PutBucketLifecycle) || ($.eventName = PutBucketReplication) || ($.eventName = DeleteBucketPolicy) || ($.eventName = DeleteBucketCors) || ($.eventName = DeleteBucketLifecycle) || ($.eventName = DeleteBucketReplication)) }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<s3_bucket_policy_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<s3_bucket_policy_changes_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<s3_bucket_policy_changes_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<s3_bucket_policy_changes_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<s3_bucket_policy_changes_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN.
+   at least one subscription should have "SubscriptionArn" with valid aws ARN.
 
 
-```
-Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -5198,86 +5180,86 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails: `aws cloudtrail describe-trails`
-* Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
+   * List all CloudTrails: `aws cloudtrail describe-trails`
+   * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
-
-
-
-* Ensure Identified Multi region CloudTrail is active
-
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-ensure `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events
+   * Ensure Identified Multi region CloudTrail is active
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events
 
 
-```
-"filterPattern": "{ ($.eventName = CreateCustomerGateway) || ($.eventName = DeleteCustomerGateway) || ($.eventName = AttachInternetGateway) || ($.eventName = CreateInternetGateway) || ($.eventName = DeleteInternetGateway) || ($.eventName = DetachInternetGateway) }"
-
-```
-
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-1. ` \
+   Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
+
+
+
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ ($.eventName = CreateCustomerGateway) || ($.eventName = DeleteCustomerGateway) || ($.eventName = AttachInternetGateway) || ($.eventName = CreateInternetGateway) || ($.eventName = DeleteInternetGateway) || ($.eventName = DetachInternetGateway) }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<network_gw_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<network_gw_changes_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<network_gw_changes_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<network_gw_changes_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<network_gw_changes_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN.
+   at least one subscription should have "SubscriptionArn" with valid aws ARN.
 
 
-```
-Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -5303,86 +5285,85 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails: `aws cloudtrail describe-trails`
-* Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
+   * List all CloudTrails: `aws cloudtrail describe-trails`
+   * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
-
-
-
-* Ensure Identified Multi region CloudTrail is active
-
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-ensure `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events
+   * Ensure Identified Multi region CloudTrail is active
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events
 
 
-```
-"filterPattern": "{ ($.eventName = CreateRoute) || ($.eventName = CreateRouteTable) || ($.eventName = ReplaceRoute) || ($.eventName = ReplaceRouteTableAssociation) || ($.eventName = DeleteRouteTable) || ($.eventName = DeleteRoute) || ($.eventName = DisassociateRouteTable) }"
-
-```
-
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-1. ` \
+   Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
+
+
+
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ ($.eventName = CreateRoute) || ($.eventName = CreateRouteTable) || ($.eventName = ReplaceRoute) || ($.eventName = ReplaceRouteTableAssociation) || ($.eventName = DeleteRouteTable) || ($.eventName = DeleteRoute) || ($.eventName = DisassociateRouteTable) }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<route_table_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<route_table_changes_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<route_table_changes_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<route_table_changes_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<route_table_changes_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
+
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   at least one subscription should have "SubscriptionArn" with valid aws ARN.
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN.
-
-
-```
-Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -5408,86 +5389,86 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 1. Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails: `aws cloudtrail describe-trails`
-* Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
-* From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
+   * List all CloudTrails: `aws cloudtrail describe-trails`
+   * Identify Multi region Cloudtrails: `Trails with "IsMultiRegionTrail" set to true`
+   * From value associated with CloudWatchLogsLogGroupArn note `<cloudtrail_log_group_name>`
 
-Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
-
-
-
-* Ensure Identified Multi region CloudTrail is active
-
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-ensure `IsLogging` is set to `TRUE`
+   Example: for CloudWatchLogsLogGroupArn that looks like `arn:aws:logs:<region>:<aws_account_number>:log-group:NewGroup:*`, `<cloudtrail_log_group_name>` would be `NewGroup`
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events
+   * Ensure Identified Multi region CloudTrail is active
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-```
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
-
-
-
-1. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events
 
 
-```
-"filterPattern": "{ ($.eventName = CreateVpc) || ($.eventName = DeleteVpc) || ($.eventName = ModifyVpcAttribute) || ($.eventName = AcceptVpcPeeringConnection) || ($.eventName = CreateVpcPeeringConnection) || ($.eventName = DeleteVpcPeeringConnection) || ($.eventName = RejectVpcPeeringConnection) || ($.eventName = AttachClassicLinkVpc) || ($.eventName = DetachClassicLinkVpc) || ($.eventName = DisableVpcClassicLink) || ($.eventName = EnableVpcClassicLink) }"
-
-```
-
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
+   ```
 
 
-1. ` \
+   Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to `true` and `ReadWriteType` set to `All`
+
+
+
+2. Get a list of all associated metric filters for this `<cloudtrail_log_group_name>`:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ ($.eventName = CreateVpc) || ($.eventName = DeleteVpc) || ($.eventName = ModifyVpcAttribute) || ($.eventName = AcceptVpcPeeringConnection) || ($.eventName = CreateVpcPeeringConnection) || ($.eventName = DeleteVpcPeeringConnection) || ($.eventName = RejectVpcPeeringConnection) || ($.eventName = AttachClassicLinkVpc) || ($.eventName = DetachClassicLinkVpc) || ($.eventName = DisableVpcClassicLink) || ($.eventName = EnableVpcClassicLink) }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<vpc_changes_metric>` value associated with the `filterPattern` found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<vpc_changes_metric>` captured in step 4.
+5. Get a list of CloudWatch alarms and filter on the `<vpc_changes_metric>` captured in step 4.
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<vpc_changes_metric>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<vpc_changes_metric>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the `AlarmActions` value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic
+7. Ensure there is at least one active subscriber to the SNS topic
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN.
+   at least one subscription should have "SubscriptionArn" with valid aws ARN.
 
 
-```
-Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   Example of valid "SubscriptionArn": "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -5513,91 +5494,91 @@ If you are using CloudTrails and CloudWatch, perform the following:
 
 
 1. Ensure that there is at least one active multi-region CloudTrail with prescribed metric filters and alarms configured:
-* Identify the log group name configured for use with active multi-region CloudTrail:
-* List all CloudTrails:
+   * Identify the log group name configured for use with active multi-region CloudTrail:
+   * List all CloudTrails:
 
 
-```
-aws cloudtrail describe-trails
+   ```
+   aws cloudtrail describe-trails
 
-```
-
-
-
-* ` \
-`Identify Multi region Cloudtrails, Trails with `"IsMultiRegionTrail"` set to true
-* From value associated with CloudWatchLogsLogGroupArn note <cloudtrail_log_group_name> **Example:** for CloudWatchLogsLogGroupArn that looks like arn:aws:logs::<aws_account_number>:log-group:NewGroup:*, <cloudtrail_log_group_name> would be NewGroup
-* Ensure Identified Multi region CloudTrail is active:
-
-
-```
-aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
-```
-
-
-Ensure `IsLogging` is set to `TRUE`
+   ```
 
 
 
-* Ensure identified Multi-region Cloudtrail captures all Management Events:
+   * ` \
+   `Identify Multi region Cloudtrails, Trails with `"IsMultiRegionTrail"` set to true
+   * From value associated with CloudWatchLogsLogGroupArn note <cloudtrail_log_group_name> **Example:** for CloudWatchLogsLogGroupArn that looks like arn:aws:logs::<aws_account_number>:log-group:NewGroup:*, <cloudtrail_log_group_name> would be NewGroup
+   * Ensure Identified Multi region CloudTrail is active:
 
 
-```
-aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
-
-```
-
+   ```
+   aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
+   ```
 
 
-* Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to true and `ReadWriteType` set to `All`.
-1. Get a list of all associated metric filters for this <cloudtrail_log_group_name>:
-
-
-```
-aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
-
-```
+   Ensure `IsLogging` is set to `TRUE`
 
 
 
-1. Ensure the output from the above command contains the following:
+   * Ensure identified Multi-region Cloudtrail captures all Management Events:
 
 
-```
-"filterPattern": "{ ($.eventSource = organizations.amazonaws.com) && (($.eventName = "AcceptHandshake") || ($.eventName = "AttachPolicy") || ($.eventName = "CreateAccount") || ($.eventName = "CreateOrganizationalUnit") || ($.eventName = "CreatePolicy") || ($.eventName = "DeclineHandshake") || ($.eventName = "DeleteOrganization") || ($.eventName = "DeleteOrganizationalUnit") || ($.eventName = "DeletePolicy") || ($.eventName = "DetachPolicy") || ($.eventName = "DisablePolicyType") || ($.eventName = "EnablePolicyType") || ($.eventName = "InviteAccountToOrganization") || ($.eventName = "LeaveOrganization") || ($.eventName = "MoveAccount") || ($.eventName = "RemoveAccountFromOrganization") || ($.eventName = "UpdatePolicy") || ($.eventName = "UpdateOrganizationalUnit")) }"
+   ```
+   aws cloudtrail get-event-selectors --trail-name <trailname shown in describe-trails>
 
-```
+   ```
 
 
 
-1. ` \
+   * Ensure there is at least one Event Selector for a Trail with `IncludeManagementEvents` set to true and `ReadWriteType` set to `All`.
+2. Get a list of all associated metric filters for this <cloudtrail_log_group_name>:
+
+
+   ```
+   aws logs describe-metric-filters --log-group-name "<cloudtrail_log_group_name>"
+
+   ```
+
+
+
+3. Ensure the output from the above command contains the following:
+
+
+   ```
+   "filterPattern": "{ ($.eventSource = organizations.amazonaws.com) && (($.eventName = "AcceptHandshake") || ($.eventName = "AttachPolicy") || ($.eventName = "CreateAccount") || ($.eventName = "CreateOrganizationalUnit") || ($.eventName = "CreatePolicy") || ($.eventName = "DeclineHandshake") || ($.eventName = "DeleteOrganization") || ($.eventName = "DeleteOrganizationalUnit") || ($.eventName = "DeletePolicy") || ($.eventName = "DetachPolicy") || ($.eventName = "DisablePolicyType") || ($.eventName = "EnablePolicyType") || ($.eventName = "InviteAccountToOrganization") || ($.eventName = "LeaveOrganization") || ($.eventName = "MoveAccount") || ($.eventName = "RemoveAccountFromOrganization") || ($.eventName = "UpdatePolicy") || ($.eventName = "UpdateOrganizationalUnit")) }"
+
+   ```
+
+
+
+4. ` \
 `Note the `<organizations_changes>` value associated with the filterPattern found in step 3.
-2. Get a list of CloudWatch alarms and filter on the `<organizations_changes>` captured in step 4:
+5. Get a list of CloudWatch alarms and filter on the `<organizations_changes>` captured in step 4:
 
 
-```
-aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<organizations_changes>`]'
+   ```
+   aws cloudwatch describe-alarms --query 'MetricAlarms[?MetricName== `<organizations_changes>`]'
 
-```
+   ```
 
 
 
-1. ` \
+6. ` \
 `Note the AlarmActions value - this will provide the SNS topic ARN value.
-2. Ensure there is at least one active subscriber to the SNS topic:
+7. Ensure there is at least one active subscriber to the SNS topic:
+
+   
+   ```
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   ```
 
 
-```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
-```
+   at least one subscription should have "SubscriptionArn" with valid aws ARN. Example of valid "SubscriptionArn":
 
 
-at least one subscription should have "SubscriptionArn" with valid aws ARN. Example of valid "SubscriptionArn":
-
-
-```
-"arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
-```
+   ```
+   "arn:aws:sns:<region>:<aws_account_number>:<SnsTopicName>:<SubscriptionID>"
+   ```
 
 
 **Verification**
@@ -5661,7 +5642,7 @@ gcloud projects get-iam-policy PROJECT_ID
 
 
 
-1. Policy should have a default auditConfigs section which has the logtype set to DATA_WRITES and DATA_READ for all services. Note that projects inherit settings from folders, which in turn inherit settings from the organization. When called, projects get-iam-policy, the result shows only the policies set in the project, not the policies inherited from the parent folder or organization. Nevertheless, if the parent folder has Cloud Audit Logging enabled, the project does as well.
+2. Policy should have a default auditConfigs section which has the logtype set to DATA_WRITES and DATA_READ for all services. Note that projects inherit settings from folders, which in turn inherit settings from the organization. When called, projects get-iam-policy, the result shows only the policies set in the project, not the policies inherited from the parent folder or organization. Nevertheless, if the parent folder has Cloud Audit Logging enabled, the project does as well.
 
 Sample output for default audit configs may look like this:
 
@@ -5678,7 +5659,7 @@ Sample output for default audit configs may look like this:
 
 
 
-1. Any of the auditConfigs sections should not have parameter "exemptedMembers:" set, which will ensure that Logging is enabled for all users and no user is exempted.
+3. Any of the auditConfigs sections should not have parameter "exemptedMembers:" set, which will ensure that Logging is enabled for all users and no user is exempted.
 
 **Verification**
 
@@ -5712,7 +5693,7 @@ gcloud compute networks list --format="table[box,title='All VPC Networks'](name:
 
 
 
-1. List all DNS policies, logging enablement, and associated VPC networks:
+2. List all DNS policies, logging enablement, and associated VPC networks:
 
 
 ```
@@ -5779,7 +5760,7 @@ The output should list at least one sink with an `empty filter`.
 
 
 
-1. Additionally, ensure that the resource configured as `Destination` exists.
+2. Additionally, ensure that the resource configured as `Destination` exists.
 
 See [https://cloud.google.com/sdk/gcloud/reference/beta/logging/sinks/list](https://cloud.google.com/sdk/gcloud/reference/beta/logging/sinks/list) for more information.
 
@@ -5850,7 +5831,7 @@ gcloud logging metrics list --format json
 
 
 
-1. Ensure that the output contains at least one metric with filter set to:
+2. Ensure that the output contains at least one metric with filter set to:
 
 
 ```
@@ -5865,7 +5846,7 @@ AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner")
 
 
 
-1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/<Log Metric Name>`.
+3. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/<Log Metric Name>`.
 
 **Ensure that the prescribed alerting policy is present:**
 
@@ -5881,9 +5862,9 @@ gcloud alpha monitoring policies list --format json
 
 
 
-1. Ensure that the output contains an least one alert policy where:
-* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
-* AND `enabled` is set to `true`
+2. Ensure that the output contains an least one alert policy where:
+   * `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
+   * AND `enabled` is set to `true`
 
 **Verification**
 
@@ -5943,7 +5924,7 @@ gcloud beta logging metrics list --format json
 
 
 
-1. Ensure that the output contains at least one metric with the filter set to:
+2. Ensure that the output contains at least one metric with the filter set to:
 
 
 ```
@@ -5970,9 +5951,9 @@ gcloud alpha monitoring policies list --format json
 
 
 
-1. Ensure that the output contains at least one alert policy where:
-* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
-* AND `enabled` is set to `true`
+2. Ensure that the output contains at least one alert policy where:
+   * `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
+   * AND `enabled` is set to `true`
 
 **Verification**
 
@@ -6032,7 +6013,7 @@ gcloud logging metrics list --format json
 
 
 
-1. Ensure that the output contains at least one metric with the filter set to:
+2. Ensure that the output contains at least one metric with the filter set to:
 
 
 ```
@@ -6045,7 +6026,7 @@ protoPayload.methodName="google.iam.admin.v1.UpdateRole")
 
 
 
-1. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/<Log Metric Name>`.
+3. Note the value of the property `metricDescriptor.type` for the identified metric, in the format `logging.googleapis.com/user/<Log Metric Name>`.
 
 **Ensure that the prescribed alerting policy is present:**
 
@@ -6061,9 +6042,9 @@ gcloud alpha monitoring policies list --format json
 
 
 
-1. Ensure that the output contains an least one alert policy where:
-* `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
-* AND `enabled` is set to `true`.
+2. Ensure that the output contains an least one alert policy where:
+   * `conditions.conditionThreshold.filter` is set to `metric.type=\"logging.googleapis.com/user/<Log Metric Name>\"`
+   * AND `enabled` is set to `true`.
 
 **Verification**
 
@@ -6187,8 +6168,8 @@ Perform the following to ensure CloudTrail is configured as prescribed:
 
 
 
-1. Ensure `CloudWatchLogsLogGroupArn` is not empty and note the value of the `Name` property.
-2. Using the noted value of the `Name` property, run the following command:
+2. Ensure `CloudWatchLogsLogGroupArn` is not empty and note the value of the `Name` property.
+3. Using the noted value of the `Name` property, run the following command:
 
 
 ```
@@ -6198,7 +6179,7 @@ Perform the following to ensure CloudTrail is configured as prescribed:
 
 
 
-1. Ensure the `LatestcloudwatchLogdDeliveryTime` property is set to a recent (~one day old) timestamp.
+4. Ensure the `LatestcloudwatchLogdDeliveryTime` property is set to a recent (~one day old) timestamp.
 
 If the `CloudWatch Logs` log group is not set up and the delivery time is not recent refer to the remediation in the CIS Benchmark.
 
@@ -6432,11 +6413,11 @@ Evidence or test output indicates that an activity log alert exists for Create P
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Administrative', Signal name='Delete policy assignment (policyAssignments)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6483,11 +6464,11 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Administrative', Signal name='Create or Update Network Security Group (networkSecurityGroups)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected<`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected<`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6534,11 +6515,11 @@ Evidence or test output indicates that an activity log alert exists for Create o
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Administrative', Signal name='Delete Network Security Group (networkSecurityGroups)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6585,11 +6566,11 @@ Evidence or test output indicates that an activity log alert exists for Delete N
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Security', Signal name='Create or Update Security Solutions (securitySolutions)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6636,11 +6617,11 @@ Evidence or test output indicates that an activity log alert exists for Create o
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Security', Signal name='Delete Security Solutions (securitySolutions)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6687,11 +6668,11 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Administrative', Signal name='Create/Update server firewall rule (servers/firewallRules)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6738,11 +6719,11 @@ Evidence or test output indicates that an activity log alert exists for Create o
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Administrative', Signal name='Delete server firewall rule (servers/firewallRules)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review <code>Actions</code> to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review <code>Actions</code> to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6789,11 +6770,11 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Administrative', Signal name='Create or Update Public Ip Address (publicIPAddresses)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6840,11 +6821,11 @@ Evidence or test output indicates that an activity log alert exists for Create o
 5. Click on the Alert `Name` associated with the previous step
 6. Click on the Condition name of **`Whenever the Activity Log has an event with Category='Administrative', Signal name='Delete Public Ip Address (Microsoft.Network/publicIPAddresses)'`**
 7. In the Configure signal logic window, ensure the following is configured:
-* Event level: `All selected`
-* Status: `All selected`
-* Event initiated by: `* (All services and users)`
-1. Click `Done`
-2. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
+   * Event level: `All selected`
+   * Status: `All selected`
+   * Event initiated by: `* (All services and users)`
+8. Click `Done`
+9. Back in the < Alert Name > window, review `Actions` to ensure that an Action group is assigned to notify the appropriate personnel in your organization.
 
 **From Azure CLI**
 
@@ -6911,9 +6892,9 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 3. Ensure that each target proxy entry in the `Frontend` table has an `SSL Policy` configured.
 4. Click on each SSL policy to go to its `SSL policy details` page.
 5. Ensure that the SSL policy satisfies one of the following conditions:
-* has a `Min TLS` set to `TLS 1.2` and `Profile` set to `Modern` profile, or
-* has `Profile` set to `Restricted`. Note that a Restricted profile effectively requires clients to use TLS 1.2 regardless of the chosen minimum TLS version, or
-* has `Profile` set to `Custom` and the following features are all disabled:
+   * has a `Min TLS` set to `TLS 1.2` and `Profile` set to `Modern` profile, or
+   * has `Profile` set to `Restricted`. Note that a Restricted profile effectively requires clients to use TLS 1.2 regardless of the chosen minimum TLS version, or
+   * has `Profile` set to `Custom` and the following features are all disabled:
 
 
 ```
@@ -6940,7 +6921,7 @@ gcloud compute target-ssl-proxies list
 
 
 
-1. For each target proxy, list its properties:
+2. For each target proxy, list its properties:
 
 
 ```
@@ -6951,7 +6932,7 @@ gcloud compute target-ssl-proxies describe TARGET_SSL_PROXY_NAME
 
 
 
-1. Ensure that the `sslPolicy` field is present and identifies the name of the SSL policy:
+3. Ensure that the `sslPolicy` field is present and identifies the name of the SSL policy:
 
 
 ```
@@ -6963,7 +6944,7 @@ If the `sslPolicy` field is missing from the configuration, it means that the GC
 
 
 
-1. Describe the SSL policy:
+4. Describe the SSL policy:
 
 
 ```
@@ -6973,10 +6954,10 @@ gcloud compute ssl-policies describe SSL_POLICY_NAME
 
 
 
-1. Ensure that the policy satisfies one of the following conditions:
-* has `Profile` set to `Modern` and `minTlsVersion` set to `TLS_1_2`, or
-* has `Profile` set to `Restricted`, or
-* has `Profile` set to `Custom` and  `enabledFeatures` does not contain any of the following values:
+5. Ensure that the policy satisfies one of the following conditions:
+   * has `Profile` set to `Modern` and `minTlsVersion` set to `TLS_1_2`, or
+   * has `Profile` set to `Restricted`, or
+   * has `Profile` set to `Custom` and  `enabledFeatures` does not contain any of the following values:
 
 
 ```
@@ -7047,7 +7028,7 @@ gcloud config set project <Project-ID>
 
 
 
-1. List the networks configured in that project:
+2. List the networks configured in that project:
 
 
 ```
@@ -7093,7 +7074,7 @@ gcloud dns managed-zones list
 
 
 
-1. For each zone of `VISIBILITY` `public`, get its metadata:
+2. For each zone of `VISIBILITY` `public`, get its metadata:
 
 
 ```
@@ -7103,7 +7084,7 @@ gcloud dns managed-zones describe ZONE_NAME
 
 
 
-1. Ensure that `dnssecConfig.state` property is `on`.
+3. Ensure that `dnssecConfig.state` property is `on`.
 
 **Verification**
 
@@ -7233,9 +7214,9 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 
 1. For each VM, open the `Networking` blade
 2. Verify that the `INBOUND PORT RULES` **does not** have a rule for RDP such as
-* port = `3389`,
-* protocol = `TCP`,
-* Source = `Any` OR `Internet`
+   * port = `3389`,
+   * protocol = `TCP`,
+   * Source = `Any` OR `Internet`
 
 **From Azure CLI**
 
@@ -7281,9 +7262,9 @@ Evidence or test output indicates that no network security group is configured t
 
 1. Open the `Networking` blade for the specific Virtual machine in Azure portal
 2. Verify that the `INBOUND PORT RULES` **does not** have a rule for SSH such as
-* port = `22`,
-* protocol = `TCP`,
-* Source = `Any` OR `Internet`
+   * port = `22`,
+   * protocol = `TCP`,
+   * Source = `Any` OR `Internet`
 
 **From Azure CLI**
 
@@ -7337,20 +7318,17 @@ Evidence or test output indicates that no network security group is configured t
 gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed)'
 
 Ensure that there is no rule matching the below criteria:
-
-
-
-* `SOURCE_RANGES` is `0.0.0.0/0`
-* AND `DIRECTION` is `INGRESS`
-* AND IPProtocol is `tcp` or `ALL`
-* AND `PORTS` is set to `22` or `range containing 22` or `Null (not set)`
+   * `SOURCE_RANGES` is `0.0.0.0/0`
+   * AND `DIRECTION` is `INGRESS`
+   * AND IPProtocol is `tcp` or `ALL`
+   * AND `PORTS` is set to `22` or `range containing 22` or `Null (not set)`
 
 Note:
 
 
 
-* When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
-* When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
+   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
+   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
 
 **Verification**
 
@@ -7382,20 +7360,17 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed.ports)'
 
 Ensure that there is no rule matching the below criteria:
-
-
-
-* `SOURCE_RANGES` is `0.0.0.0/0`
-* AND `DIRECTION` is `INGRESS`
-* AND IPProtocol is `TCP` or `ALL`
-* AND `PORTS` is set to `3389` or `range containing 3389` or `Null (not set)`
+   * `SOURCE_RANGES` is `0.0.0.0/0`
+   * AND `DIRECTION` is `INGRESS`
+   * AND IPProtocol is `TCP` or `ALL`
+   * AND `PORTS` is set to `3389` or `range containing 3389` or `Null (not set)`
 
 Note:
 
 
 
-* When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
-* When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
+   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
+   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
 
 **Verification**
 
@@ -7422,9 +7397,9 @@ Perform the following to determine if the account is configured as prescribed:
 1. Login to the AWS Management Console at [https://console.aws.amazon.com/vpc/home](https://console.aws.amazon.com/vpc/home)
 2. In the left pane, click `Network ACLs`
 3. For each network ACL, perform the following:
-* Select the network ACL
-* Click the `Inbound Rules` tab
-* Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0` and shows `ALLOW`
+   * Select the network ACL
+   * Click the `Inbound Rules` tab
+   * Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0` and shows `ALLOW`
 
 **Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports
 
@@ -7802,8 +7777,8 @@ aws --region <region> ec2 get-ebs-encryption-by-default
 
 
 
-1. Verify that `"EbsEncryptionByDefault": true` is displayed.
-2. Review every region in-use.
+2. Verify that `"EbsEncryptionByDefault": true` is displayed.
+3. Review every region in-use.
 
 **Note:** EBS volume encryption is configured per region.
 
@@ -7846,8 +7821,8 @@ aws efs describe-file-systems --region <region> --output table --query 'FileSyst
 
 
 
-1. The command output should return a table with the requested file system IDs.
-2. Run describe-file-systems command using the ID of the file system that you want to examine as identifier and the necessary query filters:
+2. The command output should return a table with the requested file system IDs.
+3. Run describe-file-systems command using the ID of the file system that you want to examine as identifier and the necessary query filters:
 
 
 ```
@@ -7857,7 +7832,7 @@ aws efs describe-file-systems --region <region> --file-system-id <file-system-id
 
 
 
-1. The command output should return the file system encryption status true or false. If the returned value is `false`, the selected AWS EFS file system is not encrypted and if the returned value is `true`, the selected AWS EFS file system is encrypted.
+4. The command output should return the file system encryption status true or false. If the returned value is `false`, the selected AWS EFS file system is not encrypted and if the returned value is `true`, the selected AWS EFS file system is encrypted.
 
 **Verification**
 
@@ -7922,7 +7897,7 @@ aws s3 ls
 
 
 
-1. Find the public access setting on that bucket
+2. Find the public access setting on that bucket
 
 
 ```
@@ -8061,7 +8036,7 @@ gsutil ls
 
 
 
-1. Check the IAM Policy for each bucket:
+2. Check the IAM Policy for each bucket:
 
 
 ```
@@ -8075,7 +8050,7 @@ No role should contain `allUsers` and/or `allAuthenticatedUsers` as a member.
 
 
 
-1. List all buckets in a project
+3. List all buckets in a project
 
 
 ```
@@ -8085,7 +8060,7 @@ Get https://www.googleapis.com/storage/v1/b?project=<ProjectName>
 
 
 
-1. Check the IAM Policy for each bucket
+4. Check the IAM Policy for each bucket
 
 
 ```
@@ -8206,7 +8181,7 @@ Make a note of `id`, `name` and `resourceGroup`.
 
 
 
-1. For every storage account make sure that key is regenerated in the past 90 days.
+2. For every storage account make sure that key is regenerated in the past 90 days.
 
 
 ```
@@ -8321,7 +8296,7 @@ gcloud sql instances list
 
 
 
-1. Ensure the below command returns `off` for every Cloud SQL MySQL database instance.
+2. Ensure the below command returns `off` for every Cloud SQL MySQL database instance.
 
 
 ```
@@ -8643,7 +8618,7 @@ aws rds describe-db-instances --region <region-name> --query 'DBInstances[*].DBI
 
 
 
-1. Run again `describe-db-instances` command using the RDS Instance identifier returned earlier, to determine if the selected database instance is encrypted, The command output should return the encryption status `True` Or `False`.
+2. Run again `describe-db-instances` command using the RDS Instance identifier returned earlier, to determine if the selected database instance is encrypted, The command output should return the encryption status `True` Or `False`.
 
 
 ```
@@ -8653,8 +8628,8 @@ aws rds describe-db-instances --region <region-name> --db-instance-identifier <D
 
 
 
-1. If the StorageEncrypted parameter value is `False`, Encryption is not enabled for the selected RDS database instance.
-2. Repeat steps 1 to 3 for auditing each RDS Instance and change Region to verify for other regions
+3. If the StorageEncrypted parameter value is `False`, Encryption is not enabled for the selected RDS database instance.
+4. Repeat steps 1 to 3 for auditing each RDS Instance and change Region to verify for other regions
 
 **Verification**
 
@@ -8763,12 +8738,12 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 3. Select the RDS instance that you want to examine.
 4. Click `Instance Name` from the dashboard, Under `Connectivity and Security.
 5. On the `Security`, check if the Publicly Accessible flag status is set to `Yes`, follow the below-mentioned steps to check database subnet access.
-* In the `networking` section, click the subnet link available under `Subnets`
-* The link will redirect you to the VPC Subnets page.
-* Select the subnet listed on the page and click the `Route Table` tab from the dashboard bottom panel. If the route table contains any entries with the destination `CIDR block set to 0.0.0.0/0` and with an `Internet Gateway` attached.
-* The selected RDS database instance was provisioned inside a public subnet, therefore is not running within a logically isolated environment and can be accessible from the Internet.
-1. Repeat steps no. 4 and 5 to determine the type (public or private) and subnet for other RDS database instances provisioned in the current region.
-2. Change the AWS region from the navigation bar and repeat the audit process for other regions.
+   * In the `networking` section, click the subnet link available under `Subnets`
+   * The link will redirect you to the VPC Subnets page.
+   * Select the subnet listed on the page and click the `Route Table` tab from the dashboard bottom panel. If the route table contains any entries with the destination `CIDR block set to 0.0.0.0/0` and with an `Internet Gateway` attached.
+   * The selected RDS database instance was provisioned inside a public subnet, therefore is not running within a logically isolated environment and can be accessible from the Internet.
+6. Repeat steps no. 4 and 5 to determine the type (public or private) and subnet for other RDS database instances provisioned in the current region.
+7. Change the AWS region from the navigation bar and repeat the audit process for other regions.
 
 **From Command Line:**
 
@@ -8784,8 +8759,8 @@ aws rds describe-db-instances --region <region-name> --query 'DBInstances[*].DBI
 
 
 
-1. The command output should return each database instance `identifier`.
-2. Run again `describe-db-instances` command using the `PubliclyAccessible` parameter as query filter to reveal the database instance Publicly Accessible flag status:
+2. The command output should return each database instance `identifier`.
+3. Run again `describe-db-instances` command using the `PubliclyAccessible` parameter as query filter to reveal the database instance Publicly Accessible flag status:
 
 
 ```
@@ -8795,8 +8770,8 @@ aws rds describe-db-instances --region <region-name> --db-instance-identifier <d
 
 
 
-1. Check for the Publicly Accessible parameter status, If the Publicly Accessible flag is set to `Yes`. Then selected RDS database instance is publicly accessible and insecure, follow the below-mentioned steps to check database subnet access
-2. Run again `describe-db-instances` command using the RDS database instance identifier that you want to check and appropriate filtering to describe the VPC subnet(s) associated with the selected instance:
+4. Check for the Publicly Accessible parameter status, If the Publicly Accessible flag is set to `Yes`. Then selected RDS database instance is publicly accessible and insecure, follow the below-mentioned steps to check database subnet access
+5. Run again `describe-db-instances` command using the RDS database instance identifier that you want to check and appropriate filtering to describe the VPC subnet(s) associated with the selected instance:
 
 
 ```
@@ -8806,8 +8781,8 @@ aws rds describe-db-instances --region <region-name> --db-instance-identifier <d
 
 
 
-* The command output should list the subnets available in the selected database subnet group.
-1. Run `describe-route-tables` command using the ID of the subnet returned at the previous step to describe the routes of the VPC route table associated with the selected subnet:
+   * The command output should list the subnets available in the selected database subnet group.
+6. Run `describe-route-tables` command using the ID of the subnet returned at the previous step to describe the routes of the VPC route table associated with the selected subnet:
 
 
 ```
@@ -8817,10 +8792,10 @@ aws ec2 describe-route-tables --region <region-name> --filters "Name=association
 
 
 
-* If the command returns the route table associated with database instance subnet ID. Check the `GatewayId` and `DestinationCidrBlock` attributes values returned in the output. If the route table contains any entries with the `GatewayId` value set to `igw-xxxxxxxx` and the `DestinationCidrBlock` value set to `0.0.0.0/0`, the selected RDS database instance was provisioned inside a public subnet.
-* Or
-* If the command returns empty results, the route table is implicitly associated with subnet, therefore the audit process continues with the next step
-1. Run again `describe-db-instances` command using the RDS database instance identifier that you want to check and appropriate filtering to describe the VPC ID associated with the selected instance:
+   * If the command returns the route table associated with database instance subnet ID. Check the `GatewayId` and `DestinationCidrBlock` attributes values returned in the output. If the route table contains any entries with the `GatewayId` value set to `igw-xxxxxxxx` and the `DestinationCidrBlock` value set to `0.0.0.0/0`, the selected RDS database instance was provisioned inside a public subnet.
+   * Or
+   * If the command returns empty results, the route table is implicitly associated with subnet, therefore the audit process continues with the next step
+7. Run again `describe-db-instances` command using the RDS database instance identifier that you want to check and appropriate filtering to describe the VPC ID associated with the selected instance:
 
 
 ```
@@ -8830,8 +8805,8 @@ aws rds describe-db-instances --region <region-name> --db-instance-identifier <d
 
 
 
-* The command output should show the VPC ID in the selected database subnet group
-1. Now run `describe-route-tables` command using the ID of the VPC returned at the previous step to describe the routes of the VPC main route table implicitly associated with the selected subnet:
+   * The command output should show the VPC ID in the selected database subnet group
+8. Now run `describe-route-tables` command using the ID of the VPC returned at the previous step to describe the routes of the VPC main route table implicitly associated with the selected subnet:
 
 
 ```
@@ -8841,7 +8816,7 @@ aws ec2 describe-route-tables --region <region-name> --filters "Name=vpc-id,Valu
 
 
 
-* The command output returns the VPC main route table implicitly associated with database instance subnet ID. Check the `GatewayId` and `DestinationCidrBlock` attributes values returned in the output. If the route table contains any entries with the `GatewayId` value set to `igw-xxxxxxxx` and the `DestinationCidrBlock` value set to `0.0.0.0/0`, the selected RDS database instance was provisioned inside a public subnet, therefore is not running within a logically isolated environment and does not adhere to AWS security best practices.
+   * The command output returns the VPC main route table implicitly associated with database instance subnet ID. Check the `GatewayId` and `DestinationCidrBlock` attributes values returned in the output. If the route table contains any entries with the `GatewayId` value set to `igw-xxxxxxxx` and the `DestinationCidrBlock` value set to `0.0.0.0/0`, the selected RDS database instance was provisioned inside a public subnet, therefore is not running within a logically isolated environment and does not adhere to AWS security best practices.
 
 **Verification**
 
@@ -8874,8 +8849,8 @@ In order to reduce the potential attack surface for a SQL server, firewall rules
 3. Click on `Networking`
 4. Ensure that `Allow Azure services and resources to access this server` is `Unchecked`
 5. Ensure that no firewall rule exists with
-* Start IP of `0.0.0.0`
-* or other combinations which allows access to wider public IP ranges
+   * Start IP of `0.0.0.0`
+   * or other combinations which allows access to wider public IP ranges
 
 **From Azure CLI**
 
@@ -8997,7 +8972,7 @@ gcloud sql instances list
 
 
 
-1. Ensure the below command returns `on` for every Cloud SQL Mysql database instance
+2. Ensure the below command returns `on` for every Cloud SQL Mysql database instance
 
 
 ```
@@ -9283,7 +9258,7 @@ Each instance listed should have a `type` of `PRIVATE`.
 
 
 
-1. If you want to view a specific instance, note the <INSTANCE_NAME>(s) listed and run the following.
+2. If you want to view a specific instance, note the <INSTANCE_NAME>(s) listed and run the following.
 
 
 ```
@@ -9343,7 +9318,7 @@ gcloud sql instances list --filter='DATABASE_VERSION:MYSQL* --project <project_i
 
 
 
-1. For every MySQL instance try to connect using the `PRIMARY_ADDRESS`, if available:
+2. For every MySQL instance try to connect using the `PRIMARY_ADDRESS`, if available:
 
 
 ```
@@ -9546,13 +9521,13 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 3. Select the RDS instance
 4. Click on the `Maintenance and backups` panel.
 5. Under the `Maintenance` section, search for the Auto Minor Version Upgrade status.
-* If the current status is set to `Disabled`, means the feature is not set and the minor engine upgrades released will not be applied to the selected RDS instance
+   * If the current status is set to `Disabled`, means the feature is not set and the minor engine upgrades released will not be applied to the selected RDS instance
 
 **From Command Line:**
 
 
 
-3. Run `describe-db-instances` command to list all RDS database names, available in the selected AWS region:
+1. Run `describe-db-instances` command to list all RDS database names, available in the selected AWS region:
 
 
 ```
@@ -9562,8 +9537,8 @@ aws rds describe-db-instances --region <regionName> --query 'DBInstances[*].DBIn
 
 
 
-1. The command output should return each database instance identifier.
-2. Run again `describe-db-instances` command using the RDS instance identifier returned earlier to determine the Auto Minor Version Upgrade status for the selected instance:
+2. The command output should return each database instance identifier.
+3. Run again `describe-db-instances` command using the RDS instance identifier returned earlier to determine the Auto Minor Version Upgrade status for the selected instance:
 
 
 ```
@@ -9573,7 +9548,7 @@ aws rds describe-db-instances --region <regionName> --db-instance-identifier <db
 
 
 
-1. The command output should return the feature current status. If the current status is set to `true`, the feature is enabled and the minor engine upgrades will be applied to the selected RDS instance.
+4. The command output should return the feature current status. If the current status is set to `true`, the feature is enabled and the minor engine upgrades will be applied to the selected RDS instance.
 
 **Verification**
 
@@ -10130,7 +10105,7 @@ protoPayload.request.@type="type.googleapis.com/google.cloud.sql.audit.v1.PgAudi
 
 
 
-1. If it returns any log sources, they are correctly set up.
+4. If it returns any log sources, they are correctly set up.
 
 **Verification**
 
