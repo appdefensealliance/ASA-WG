@@ -38,31 +38,21 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 In today’s digitally-driven world, mobile applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure mobile environment, a robust mobile application security standard and certification program is essential.
 
----
-
 ### Our Approach: OWASP MASVS as the Foundation
 
 This program leverages the internationally recognized OWASP Mobile Application Security Verification Standard (MASVS) as its core. The OWASP MASVS offers a comprehensive set of security assessment requirements and guidelines covering the entire mobile application development lifecycle. Building upon this base, the App Defense Alliance (ADA) focused on testable requirements with clear acceptance criteria. Further, the ADA approach emphasizes the use of automation where possible.
-
----
 
 ### Applicability
 
 This document is intended for system and application administrators, security specialists, auditors, help desk, platform deployment, and/or DevOps personnel who plan to develop, deploy, assess, or secure mobile applications.
 
----
-
 ### References
 
 1. [OWASP Mobile Application Security Verification Standard](https://github.com/OWASP/owasp-masvs/)
 
----
-
 ### Licensing
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
-
----
 
 ### Assumptions
 

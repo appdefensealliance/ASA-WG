@@ -153,7 +153,7 @@ Apps handle sensitive data coming from many sources such as the user, the backen
 
 | Spec | Description |
 | :--- | :--- |
-| 1.1.1.1 | The app shall securely store sensitive data in external storage
+| 1.1.1.1 | The app shall securely store sensitive data in external storage |
 
 ### 1.1.2 [The app prevents leakage of sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-2/)
 
@@ -169,8 +169,8 @@ There are cases when sensitive data is unintentionally stored or exposed to publ
 
 | Spec | Description |
 | :--- | :--- |
-| 1.1.2.1 | The Keyboard Cache shall be disabled for sensitive data inputs.  |
-| 1.1.2.2 | No sensitive data shall be stored in system logs
+| 1.1.2.1 | The Keyboard Cache shall be disabled for sensitive data inputs |
+| 1.1.2.2 | No sensitive data shall be stored in system logs |
 
 ## 1.2 [Crypto](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
 
@@ -188,9 +188,9 @@ Cryptography plays an especially important role in securing the user's data - ev
 
 | Spec | Description |
 | :--- | :--- |
-| 1.2.1.1 | No insecure random number generators shall be utilized for any security sensitive context.  |
-| 1.2.1.2 | No insecure operations shall be used for symmetric cryptography.  |
-| 1.2.1.3 | Strong cryptography shall be implemented according to industry best practices.
+| 1.2.1.1 | No insecure random number generators shall be utilized for any security sensitive context |
+| 1.2.1.2 | No insecure operations shall be used for symmetric cryptography |
+| 1.2.1.3 | Strong cryptography shall be implemented according to industry best practices |
 
 ### 1.2.2 [The app performs key management according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-2/)
 
@@ -206,8 +206,8 @@ Even the strongest cryptography would be compromised by poor key management.
 
 | Spec | Description |
 | :--- | :--- |
-| 1.2.2.1 | Cryptographic keys shall only be used for their defined purpose.  |
-| 1.2.2.2 | Cryptographic key management shall be implemented properly.
+| 1.2.2.1 | Cryptographic keys shall only be used for their defined purpose |
+| 1.2.2.2 | Cryptographic key management shall be implemented properly |
 
 ## 1.3 [Auth](https://mas.owasp.org/MASVS/07-MASVS-AUTH/)
 
@@ -225,7 +225,7 @@ Authentication and authorization provide an added layer of security and help pre
 
 | Spec | Description |
 | :--- | :--- |
-| 1.3.1.1 | If using OAuth 2.0 to authenticate, Proof Key for Code Exchange (PKCE) shall be implemented to protect the code grant
+| 1.3.1.1 | If using OAuth 2.0 to authenticate, Proof Key for Code Exchange (PKCE) shall be implemented to protect the code grant |
 
 ## 1.4 [Network](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
 
@@ -243,9 +243,9 @@ Ensuring data privacy and integrity of any data in transit is critical for any a
 
 | Spec | Description |
 | :--- | :--- |
-| 1.4.1.1 | Network connections shall be encrypted  |
-| 1.4.1.2 | TLS configuration of network connections shall adhere to industry best practices  |
-| 1.4.1.3 | Endpoint identity shall be verified on network connections
+| 1.4.1.1 | Network connections shall be encrypted |
+| 1.4.1.2 | TLS configuration of network connections shall adhere to industry best practices |
+| 1.4.1.3 | Endpoint identity shall be verified on network connections |
 
 ## 1.5 [Platform](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
 
@@ -261,12 +261,12 @@ Apps typically use platform provided IPC mechanisms to intentionally expose data
 
 #### Audit
 
-| Spec | Description  |
+| Spec | Description |
 | :--- | :--- |
-| 1.5.1.1 | The app shall limit content provider exposure and harden queries against injection attacks  |
-| 1.5.1.2 | The app shall use verified links and sanitize all link input data  |
-| 1.5.1.3 | Any sensitive functionality exposed via IPC shall be intentional and at the minimum required level.  |
-| 1.5.1.4 | All Pending Intents shall be immutable or otherwise justified for mutability
+| 1.5.1.1 | The app shall limit content provider exposure and harden queries against injection attacks |
+| 1.5.1.2 | The app shall use verified links and sanitize all link input data |
+| 1.5.1.3 | Any sensitive functionality exposed via IPC shall be intentional and at the minimum required level |
+| 1.5.1.4 | All Pending Intents shall be immutable or otherwise justified for mutability |
 
 ### 1.5.2 [The app uses WebViews securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-2/)
 
@@ -282,8 +282,8 @@ WebViews are typically used by apps that have a need for increased control over 
 
 | Spec | Description |
 | :--- | :--- |
-| 1.5.2.1 | WebViews shall securely execute JavaScript  |
-| 1.5.2.2 | WebView shall be configured to allow the minimum set of protocol handlers required while disabling potentially dangerous handlers.
+| 1.5.2.1 | WebViews shall securely execute JavaScript |
+| 1.5.2.2 | WebView shall be configured to allow the minimum set of protocol handlers required while disabling potentially dangerous handlers |
 
 ### 1.5.3 [The app uses the user interface securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-3/)
 
@@ -299,7 +299,7 @@ Sensitive data has to be displayed in the UI in many situations (e.g. passwords,
 
 | Spec | Description |
 | :--- | :--- |
-| 1.5.3.1 | The app shall by default mask data in the User Interface when it is known to be sensitive
+| 1.5.3.1 | The app shall by default mask data in the User Interface when it is known to be sensitive |
 
 ## 1.6 [Code](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
 
@@ -317,7 +317,7 @@ Every release of the mobile OS includes security patches and new security featur
 
 | Spec | Description |
 | :--- | :--- |
-| 1.6.1.1 | The app shall set the targetSdkVersion to an up-to-date platform version
+| 1.6.1.1 | The app shall set the targetSdkVersion to an up-to-date platform version |
 
 ### 1.6.2 [The app only uses software components without known vulnerabilities](https://mas.owasp.org/MASVS/controls/MASVS-CODE-3/)
 
@@ -333,7 +333,7 @@ The developer should protect users from known vulnerabilities.
 
 | Spec | Description |
 | :--- | :--- |
-| 1.6.2.1 | The app only uses software components without known vulnerabilities
+| 1.6.2.1 | The app only uses software components without known vulnerabilities |
 
 ### 1.6.3 [The app validates and sanitizes all untrusted inputs](https://mas.owasp.org/MASVS/controls/MASVS-CODE-4/)
 
@@ -349,10 +349,10 @@ This incoming data might have been inadvertently modified by untrusted actors an
 
 | Spec | Description |
 | :--- | :--- |
-| 1.6.3.1 | Compiler security features shall be enabled  |
-| 1.6.3.2 | The App shall Mitigate Against Injection Flaws in Content Providers  |
-| 1.6.3.3 | Arbitrary URL redirects shall not be included in the app's webviews  |
-| 1.6.3.4 | Any use of implicit intents shall be appropriate for the app's functionality and any return data shall be handled securely
+| 1.6.3.1 | Compiler security features shall be enabled |
+| 1.6.3.2 | The App shall Mitigate Against Injection Flaws in Content Providers |
+| 1.6.3.3 | Arbitrary URL redirects shall not be included in the app's webviews |
+| 1.6.3.4 | Any use of implicit intents shall be appropriate for the app's functionality and any return data shall be handled securely |
 
 ## 1.7 [Resilience](https://mas.owasp.org/MASVS/11-MASVS-RESILIENCE/)
 
@@ -370,7 +370,7 @@ Apps run on a user-controlled device, and without proper protections it's relati
 
 | Spec | Description |
 | :--- | :--- |
-| 1.7.1.1 | The app shall be properly signed.
+| 1.7.1.1 | The app shall be properly signed |
 
 ### 1.7.2 [The app implements anti-static analysis mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-3/)
 
@@ -386,7 +386,7 @@ Understanding the internals of an app is typically the first step towards tamper
 
 | Spec | Description |
 | :--- | :--- |
-| 1.7.2.1 | The app shall disable all debugging symbols in the production version.
+| 1.7.2.1 | The app shall disable all debugging symbols in the production version |
 
 ### [1.7.3 The app implements anti-dynamic analysis mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-4/)
 
@@ -402,7 +402,7 @@ Observing and manipulating an app during runtime makes it much easier to deciphe
 
 | Spec | Description |
 | :--- | :--- |
-| 1.7.3.1 | The app shall not be debuggable if installed from outside of commercial app stores.
+| 1.7.3.1 | The app shall not be debuggable if installed from outside of commercial app stores |
 
 ## 1.8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
 
@@ -420,7 +420,7 @@ Data minimization reduces the potential impact of data breaches or leaks.  This 
 
 | Spec | Description |
 | :--- | :--- |
-| 1.8.1.1 | The app shall minimize access to sensitive data and resources provided by the platform.
+| 1.8.1.1 | The app shall minimize access to sensitive data and resources provided by the platform |
 
 ### 1.8.2 [The app is transparent about data collection and usage](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-3/)
 
@@ -436,7 +436,7 @@ Users have the right to know how their data is being used.
 
 | Spec | Description |
 | :--- | :--- |
-| 1.8.2.1 | The app shall be transparent about data collection and usage.
+| 1.8.2.1 | The app shall be transparent about data collection and usage |
 
 ### 1.8.3 [The app offers user control over their data](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-4/)
 
@@ -452,7 +452,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 1.8.3.1 | Users shall have the ability to request their data to be deleted via an in-app mechanism.
+| 1.8.3.1 | Users shall have the ability to request their data to be deleted via an in-app mechanism |
 
 # 2 iOS
 
@@ -464,7 +464,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.1.1.1 | The app shall securely store sensitive data in external storage
+| 2.1.1.1 | The app shall securely store sensitive data in external storage |
 
 ### 2.1.2 [The app prevents leakage of sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-2/)
 
@@ -472,8 +472,8 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.1.2.1 | The Keyboard Cache shall be Disabled for sensitive data inputs.  |
-| 2.1.2.2 | No sensitive data shall be stored in system logs
+| 2.1.2.1 | The Keyboard Cache shall be Disabled for sensitive data inputs |
+| 2.1.2.2 | No sensitive data shall be stored in system logs |
 
 ## 2.2 [Crypto](https://mas.owasp.org/MASVS/06-MASVS-CRYPTO/)
 
@@ -483,8 +483,8 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.2.1.1 | No insecure random number generators shall be utilized for any security sensitive context.  |
-| 2.2.1.2 | Strong cryptography shall be implemented according to industry best practices.
+| 2.2.1.1 | No insecure random number generators shall be utilized for any security sensitive context |
+| 2.2.1.2 | Strong cryptography shall be implemented according to industry best practices |
 
 ### 2.2.2 [The app performs key management according to industry best practices](https://mas.owasp.org/MASVS/controls/MASVS-CRYPTO-2/)
 
@@ -492,8 +492,8 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.2.2.1 | Cryptographic keys shall only be used for their defined purpose.  |
-| 2.2.2.2 | Cryptographic key management shall be implemented properly.
+| 2.2.2.1 | Cryptographic keys shall only be used for their defined purpose |
+| 2.2.2.2 | Cryptographic key management shall be implemented properly |
 
 ## 2.3 [Auth](https://mas.owasp.org/MASVS/07-MASVS-AUTH/)
 
@@ -503,7 +503,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.3.1.1 | If using OAuth 2.0 to authenticate, Proof Key for Code Exchange (PKCE) shall be implemented to protect the code grant
+| 2.3.1.1 | If using OAuth 2.0 to authenticate, Proof Key for Code Exchange (PKCE) shall be implemented to protect the code grant |
 
 ## 2.4 [Network](https://mas.owasp.org/MASVS/08-MASVS-NETWORK/)
 
@@ -513,9 +513,9 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.4.1.1 | Network connections shall be encrypted  |
-| 2.4.1.2 | TLS configuration of network connections shall adhere to industry best practices  |
-| 2.4.1.3 | Endpoint identity shall be verified on network connections
+| 2.4.1.1 | Network connections shall be encrypted |
+| 2.4.1.2 | TLS configuration of network connections shall adhere to industry best practices |
+| 2.4.1.3 | Endpoint identity shall be verified on network connections |
 
 ## 2.5 [Platform](https://mas.owasp.org/MASVS/09-MASVS-PLATFORM/)
 
@@ -525,12 +525,12 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.5.1.1 | The app shall not expose sensitive data via IPC mechanisms  |
-| 2.5.1.2 | The app shall not expose sensitive data via App Extensions  |
-| 2.5.1.3 | The app shall not expose sensitive functionality via Custom URL Schemes  |
-| 2.5.1.4 | The app shall not expose sensitive data via UIActivity Sharing  |
-| 2.5.1.5 | The app shall not use the general pasteboard for sharing sensitive information  |
-| 2.5.1.6 | The app shall not expose sensitive functionality via Universal Links
+| 2.5.1.1 | The app shall not expose sensitive data via IPC mechanisms |
+| 2.5.1.2 | The app shall not expose sensitive data via App Extensions |
+| 2.5.1.3 | The app shall not expose sensitive functionality via Custom URL Schemes |
+| 2.5.1.4 | The app shall not expose sensitive data via UIActivity Sharing |
+| 2.5.1.5 | The app shall not use the general pasteboard for sharing sensitive information |
+| 2.5.1.6 | The app shall not expose sensitive functionality via Universal Links |
 
 ### 2.5.2 [The app uses WebViews securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-2/)
 
@@ -538,8 +538,8 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.5.2.1 | WebViews shall securely execute JavaScript  |
-| 2.5.2.2 | WebView shall be configured securely
+| 2.5.2.1 | WebViews shall securely execute JavaScript |
+| 2.5.2.2 | WebView shall be configured securely |
 
 ### 2.5.3 [The app uses the user interface securely](https://mas.owasp.org/MASVS/controls/MASVS-PLATFORM-3/)
 
@@ -547,7 +547,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.5.3.1 | The app shall by default mask data in the User Interface when it is known to be sensitive
+| 2.5.3.1 | The app shall by default mask data in the User Interface when it is known to be sensitive |
 
 ## 2.6 [Code](https://mas.owasp.org/MASVS/10-MASVS-CODE/)
 
@@ -557,7 +557,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.6.1.1 | The app shall set the targetSdkVersion to an up-to-date platform version
+| 2.6.1.1 | The app shall set the targetSdkVersion to an up-to-date platform version |
 
 ### 2.6.2 [The app only uses software components without known vulnerabilities](https://mas.owasp.org/MASVS/controls/MASVS-CODE-3/)
 
@@ -565,7 +565,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.6.2.1 | The app only uses software components without known vulnerabilities
+| 2.6.2.1 | The app only uses software components without known vulnerabilities |
 
 ### 2.6.3 [The app validates and sanitizes all untrusted inputs](https://mas.owasp.org/MASVS/controls/MASVS-CODE-4/)
 
@@ -573,7 +573,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.6.3.1 | Compiler security features shall be enabled
+| 2.6.3.1 | Compiler security features shall be enabled |
 
 ## 2.7 [Resilience](https://mas.owasp.org/MASVS/11-MASVS-RESILIENCE/)
 
@@ -583,7 +583,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.7.1.1 | The app shall be properly signed.
+| 2.7.1.1 | The app shall be properly signed |
 
 ### 2.7.2 [The app implements anti-static analysis mechanisms](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-3/)
 
@@ -591,7 +591,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.7.2.1 | The app shall disable all debugging symbols in the production version.
+| 2.7.2.1 | The app shall disable all debugging symbols in the production version |
 
 ### 2.7.3 [The app implements anti-dynamic analysis techniques](https://mas.owasp.org/MASVS/controls/MASVS-RESILIENCE-4/)
 
@@ -599,7 +599,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.7.3.1 | The app shall not be debuggable if installed from outside of commercial app stores.
+| 2.7.3.1 | The app shall not be debuggable if installed from outside of commercial app stores |
 
 ## 2.8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
 
@@ -609,7 +609,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.8.1.1 | The app shall minimize access to sensitive data and resources provided by the platform.
+| 2.8.1.1 | The app shall minimize access to sensitive data and resources provided by the platform |
 
 ### 2.8.2 [The app is transparent about data collection and usage](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-3/)
 
@@ -617,7 +617,7 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.8.2.1 | The app shall be transparent about data collection and usage.
+| 2.8.2.1 | The app shall be transparent about data collection and usage |
 
 ### 2.8.3 [The app offers user control over their data](https://mas.owasp.org/MASVS/controls/MASVS-PRIVACY-4/)
 
@@ -625,4 +625,4 @@ Users should have control over their data.
 
 | Spec | Description |
 | :--- | :--- |
-| 2.8.3.1 | Users shall have the ability to request their data to be deleted via an in-app mechanism.
+| 2.8.3.1 | Users shall have the ability to request their data to be deleted via an in-app mechanism |
