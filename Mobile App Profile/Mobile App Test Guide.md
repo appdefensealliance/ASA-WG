@@ -547,6 +547,7 @@ The following are out of scope:
 * Connections initiated in WebViews to navigate to arbitrary user-selected URLs, for apps that have browser capabilities.
 * Connections to on-device web-server within the application
 * Connections to local network web server (e.g. IoT)
+* Unencrypted connections that have a valid justification provided.
 
 ---
 
@@ -1706,6 +1707,7 @@ Valid justification for plaintext connections:
 * Connections initiated in webviews to navigate to arbitrary user-selected URLs, for apps that have browser capabilities.
 * Connections to on-device web-server within the application
 * Connections to local network web server (e.g. IoT)
+* Unencrypted connections that have a valid justification provided.
 
 ---
 
