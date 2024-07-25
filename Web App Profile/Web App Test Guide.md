@@ -1289,8 +1289,14 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.1.2
 
 1. Test shall confirm that the application meets the TLS configuration defined in NIST SP.800-52r2.
 
+_Additional Context_
 
+The following are out of scope for TLS encryption:
 
+* Connections that are not used for security sensitive purposes (e.g. anonymized analytics)
+* Connections to local backend web servers
+* Unencrypted connections that have a valid justification provided
+  
 
 ---
 ### 4.1.2 Connections to and from the server shall use trusted TLS certificates. Where internally generated or self-signed certificates are used, the server must be configured to only trust specific internal CAs and specific self-signed certificates. All others should be rejected.
