@@ -1701,7 +1701,7 @@ _L2_
 
 _Additional Context_
 
-Valid justification for plaintext connections:
+The following are out of scope:
 
 * Connections that are not used for security sensitive purposes (e.g. transferring sensitive data)
 * Connections initiated in webviews to navigate to arbitrary user-selected URLs, for apps that have browser capabilities.
