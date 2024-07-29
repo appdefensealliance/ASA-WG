@@ -96,7 +96,7 @@ Version 0.7 - May 25, 2024
 
        * 4.1.2 [Connections to and from the server shall use trusted TLS certificates.](#412-connections-to-and-from-the-server-shall-use-trusted-tls-certificates-where-internally-generated-or-self-signed-certificates-are-used-the-server-must-be-configured-to-only-trust-specific-internal-cas-and-specific-self-signed-certificates-all-others-should-be-rejected)
 
-       * 4.1.3 [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data)
+       *  [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data)
 
        * 4.1.4 [All cryptographic modules shall fail securely, and errors are handled in a way that does not enable Padding Oracle attacks.](#414-all-cryptographic-modules-shall-fail-securely-and-errors-are-handled-in-a-way-that-does-not-enable-padding-oracle-attacks)
 
@@ -1374,12 +1374,21 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2 shall not be present. 
 
+1. Developer evidence demonstrates that strong cryptography shall be implemented according to industry best practices.
 
 *L2*
-1. Disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2 shall not be present. Cryptographic observations from manual validation will be made based on observed entropy.
 
+1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices.
+
+
+Additional Context
+
+Refer to SP.800-57p1r5 and SP.800-131Ar2 with 112 bit of security as baseline:
+
+Hashing: SHA-224 or better
+Digital signatures & public key encryption: (Key length no less than 2048 bits for factoring or 224 for ECC)
+Custom implementations: If the provider has a custom implementation of a library (open-source library) test is in scope, home-grown implementation requires further developer assurance.
 
 
 
