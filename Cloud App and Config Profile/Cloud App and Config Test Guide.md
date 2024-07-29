@@ -2425,53 +2425,19 @@ Perform the following to determine if access keys were created upon user creatio
 **From Console:**
 
 
-
 1. Login to the AWS Management Console
-2. Click `Services`
-3. Click `IAM`
-4. Click on a User where column `Password age` and `Access key age` is not set to `None`
-5. Click on `Security credentials` Tab
-6. Compare the user `Creation time` to the Access Key `Created` date.
-7. For any that match, the key was created during initial user setup.
-* Keys that were created at the same time as the user profile and do not have a last used date should be deleted. Refer to the remediation below.
+2. From the `Services` menu, click `Security, Identity, & Compliance` > `IAM`.
+3. In the navigation panel on the left, click `Access reports` > `Credential report`.
+4. Download a credential report
+5. Open the downloaded CSV report in spreadsheet software.
+6. Search for rows where the `password_enabled` column is `true` and either of the `access_key_1_last_rotated` or `access_key_2_last_rotated` columns are also not N/A.
+7. Compare the `user_creation_time` field of each such row to the `access_key_1_last_rotated` and `access_key_2_last_rotated` fields. If they match (within a few minutes), then the key was created during initial user setup.
 
-**From Command Line:**
-
-
-
-1. Run the following command (OSX/Linux/UNIX) to generate a list of all IAM users along with their access keys utilization:
-
-
-```
- aws iam generate-credential-report
-
- aws iam get-credential-report --query 'Content' --output text | base64 -d | cut -d, -f1,4,9,11,14,16
-
-```
-
-
-
-2. The output of this command will produce a table similar to the following:
-
-
-```
-user,password_enabled,access_key_1_active,access_key_1_last_used_date,access_key_2_active,access_key_2_last_used_date
- elise,false,true,2015-04-16T15:14:00+00:00,false,N/A
- brandon,true,true,N/A,false,N/A
- rakesh,false,false,N/A,false,N/A
- helene,false,true,2015-11-18T17:47:00+00:00,false,N/A
- paras,true,true,2016-08-28T12:04:00+00:00,true,2016-03-04T10:11:00+00:00
- anitha,true,true,2016-06-08T11:43:00+00:00,true,N/A
-
-```
-
-
-
-3. For any user having `password_enabled` set to `true` AND `access_key_last_used_date` set to `N/A` then refer to the remediation in the CIS Benchmark.
+* Any access keys that do not pass the audit should be deleted following the remediation procedure in the CIS Benchmark.
 
 **Verification**
 
-Evidence or test output indicates that no user exists for which: (1) password enabled is set to true, and (2) an access key that has never been used exists for that user.
+Evidence or test output indicates that no access keys exist that were created during initial user setup exist for any IAM user that has a console password
 
 
 ---
