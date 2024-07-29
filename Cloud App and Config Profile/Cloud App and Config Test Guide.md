@@ -2828,14 +2828,15 @@ Perform the following to determine if access keys are rotated as prescribed:
 
 **From Command Line:**
 
+1. Generate and retrieve an IAM credential report using the following commands:
 
 ```
 aws iam generate-credential-report
 aws iam get-credential-report --query 'Content' --output text | base64 -d
 ```
 
-
-The `access_key_1_last_rotated` and the `access_key_2_last_rotated` fields in this file note the date and time, in ISO 8601 date-time format, when the user's access key was created or last changed. If the user does not have an active access key, the value in this field is N/A (not applicable).
+2. For each row in the report, check if `access_key_1_active` is `true`. If so, verify that `access_key_1_last_rotated` (a date in ISO 8601 date-time format) lies within the last 90 days.
+3. For each row in the report, check if `access_key_2_active` is `true`. If so, verify that `access_key_2_last_rotated` lies within the last 90 days.
 
 **Verification**
 
