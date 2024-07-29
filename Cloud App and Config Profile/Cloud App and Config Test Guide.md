@@ -10134,7 +10134,32 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Evidence**
 
-Todo
+**From Command Line:**
+
+1. Run `describe-db-instances` command list the names of database instances available in the each in-use AWS region
+
+```
+aws rds describe-db-instances
+  --region us-east-1
+  --output table
+  --query 'DBInstances[?Engine==`mysql`].DBInstanceIdentifier | []'
+```
+
+Note: if other database engines are in use, e.g., PostgreSQL, adjust the command above to list all instances.
+
+
+2. Run describe-db-instances command using the name of the MySQL database and custom query filters to describe the log types that the selected database instance is configured to export to Amazon CloudWatch Logs:
+
+```
+aws rds describe-db-instances
+  --region us-east-1
+  --db-instance-identifier database-id
+  --query 'DBInstances[*].EnabledCloudwatchLogsExports'
+```
+
+If the describe-db-instances command output returns an empty array (i.e. []), the required logs are not published to Amazon CloudWatch Logs, therefore the Log Exports feature is not enabled for the selected Amazon RDS database instance.
+
+Repeat steps #1 and #2 for every region+database.
 
 **Verification**
 
