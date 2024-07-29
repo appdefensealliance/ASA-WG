@@ -1892,7 +1892,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Test Procedure**
 
 
-*L1 *
+*L1*
 1. Review provided evidence for adherence with the requirements.
 
 *L2*
