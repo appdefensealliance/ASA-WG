@@ -4168,6 +4168,7 @@ Perform the following ensure the CloudTrail S3 bucket has access logging is enab
 5. For each bucket noted in step 3, click on a target S3 Bucket.
 6. Click on `Properties`
 7. In the `Server access logging` section, verify that server access logging is `Enabled`
+8. Repeat the above steps for each in-use region
 
 **From Command Line:**
 
@@ -4204,6 +4205,8 @@ Sample Output for a bucket with logging enabled:
  }
 }
 ```
+
+3. Repeat the above steps for each in-use region.
 
 
 **Verification**
@@ -4253,6 +4256,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 6. Click on the `Permissions` tab.
 7. In the `Bucket policy` section, ensure that there is no statement with the `Effect` of `Allow` with a `Principal` of either `"\*"` or `{"AWS": "\*"}` unless it also has a suitable condition in place to restrict access, such as `aws:PrincipalOrgID`.
 8. In the `Access control list (ACL)` section, that no permissions for either `Objects` or `Bucket ACL` are granted to either `Everyone` or `Authenticated users group`.
+9. Repeat the above steps for each in-use region
 
 **From Command Line:**
 
@@ -4301,6 +4305,8 @@ Perform the following to determine if any public access is granted to an S3 buck
 5. Ensure the policy does not contain a `Statement` having an `Effect` set to `Allow` and a `Principal` set to "*" or {"AWS": "*"}. Additionally, check to see whether a condition has been added to the bucket policy covering `aws:PrincipalOrgID`, as having this (in the StringEquals or StringEqualsIgnoreCase) would restrict access to only the named Org ID.
 
 **Note:** Principal set to "*" or {"AWS": "*"}, without any conditions, allows anonymous access.
+
+6. Repeat the above steps for each in-use region
 
 **Verification**
 
@@ -7411,8 +7417,10 @@ Perform the following to determine if the account is configured as prescribed:
    * Select the network ACL
    * Click the `Inbound Rules` tab
    * Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0` and shows `ALLOW`
+4. Repeat the above steps for each in-use region
 
 **Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports
+
 
 **Verification**
 
@@ -7440,8 +7448,10 @@ Perform the following to determine if the account is configured as prescribed:
 4. Select the security group
 5. Click the `Inbound Rules` tab
 6. Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0`
+7. Repeat the above steps for each in-use region
 
 **Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports.
+
 
 **Verification**
 
@@ -7469,8 +7479,10 @@ Perform the following to determine if the account is configured as prescribed:
 4. Select the security group
 5. Click the `Inbound Rules` tab
 6. Ensure no rule exists that has a port range that includes port `22`, `3389`, or other remote server administration ports for your environment and has a `Source` of `::/0`
+7. Repeat the above steps for each in-use region
 
 **Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports.
+
 
 **Verification**
 
@@ -7817,6 +7829,7 @@ Evidence or test output indicates that all regions are configured such that EBS 
 2. Select `File Systems` from the left navigation panel.
 3. Each item on the list has a visible Encrypted field that displays data at rest encryption status.
 4. Validate that this field reads `Encrypted` for all EFS file systems in all AWS regions.
+5. Repeat the above steps for each in-use region
 
 **From CLI:**
 
@@ -7844,6 +7857,7 @@ aws efs describe-file-systems --region <region> --file-system-id <file-system-id
 
 
 4. The command output should return the file system encryption status true or false. If the returned value is `false`, the selected AWS EFS file system is not encrypted and if the returned value is `true`, the selected AWS EFS file system is encrypted.
+5. Repeat the above steps for each in-use region
 
 **Verification**
 
@@ -9534,6 +9548,8 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 5. Under the `Maintenance` section, search for the Auto Minor Version Upgrade status.
    * If the current status is set to `Disabled`, means the feature is not set and the minor engine upgrades released will not be applied to the selected RDS instance
 
+6. Repeat the above steps for each in-use region
+
 **From Command Line:**
 
 
@@ -9560,6 +9576,7 @@ aws rds describe-db-instances --region <regionName> --db-instance-identifier <db
 
 
 4. The command output should return the feature current status. If the current status is set to `true`, the feature is enabled and the minor engine upgrades will be applied to the selected RDS instance.
+5. Repeat the above steps for each in-use region
 
 **Verification**
 
