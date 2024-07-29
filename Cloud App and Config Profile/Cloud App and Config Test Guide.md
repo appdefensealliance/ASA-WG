@@ -1715,14 +1715,26 @@ As time goes by -- and processes and people change within an organization -- it'
 
 **Evidence**
 
-This activity can only be performed via the AWS Console, with a user who has permission to read and write Billing information (aws-portal:*Billing )
+Perform the following with a user who has permission to read and write Billing information (aws-portal:*Billing )
 
-
+**From Console:**
 
 1. Sign in to the AWS Management Console and open the `Billing and Cost Management` console at [https://console.aws.amazon.com/billing/home#/](https://console.aws.amazon.com/billing/home#/).
 2. On the navigation bar, choose your account name, and then choose `Account`.
 3. On the `Account Settings` page, review and verify the current details.
 4. Under `Contact Information`, review and verify the current details.
+
+**From Command Line:**
+
+
+
+1. Run the following command:
+
+
+```
+aws account get-contact-information
+
+```
 
 **Verification**
 
