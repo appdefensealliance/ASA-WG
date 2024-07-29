@@ -2519,7 +2519,7 @@ Perform the following to determine what policies are created:
 
 **Verification**
 
-Evidence or test output indicates that no customer-managed IAM policy that allows full administrative privileges are attached (i.e., in effect within the AWS account). Note that inline and AWS-manged policies are exempt from this requirement.
+Evidence or test output indicates that no customer-managed IAM policy that allows full administrative privileges are attached (i.e., in effect within the AWS account). Note that inline and AWS-managed policies are exempt from this requirement.
 
 
 ---
