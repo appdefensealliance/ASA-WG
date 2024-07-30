@@ -473,7 +473,7 @@ Version 0.5 - April 8, 2024
 
 # Overview
 
-This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-pubilc data such as user data, user device data, company data, or other types of confidential information (excluding highly sensitive financial or medical PII).
+This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-public data such as user data, user device data, company data, or other types of confidential information (excluding highly sensitive financial or medical PII).
 
 
 # Applicability
