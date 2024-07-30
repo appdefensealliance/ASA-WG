@@ -26,7 +26,7 @@ Version 0.7 - May 25, 2024
 
    * 1.3 [Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
 
-       * 1.3.1 [Out of band verifier shall expire after 7 days.](#131-out-of-band-verifier-shall-expire-after-7-days)
+       * 1.3.1 [Out of band verifier shall expire in a reasonable timeframe.](#131-out-of-band-verifier-shall-expire-in-a-reasonable-timeframe)
 
        * 1.3.2 [Out of band verifier shall only be used once.](#132-out-of-band-verifier-shall-only-be-used-once)
 
@@ -373,7 +373,7 @@ By ensuring that out of band verifiers are securely generated and managed, the r
 
 
 ---
-### 1.3.1 Out of band verifier shall expire after 7 days.
+### 1.3.1 Out of band verifier shall expire in a reasonable timeframe.
 External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 
@@ -400,7 +400,9 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 *L2 and l2*
 1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, the out-of-band verifier shall expire after 7 days.
+2. If a non-ADA approved service is used, associated out-of-band verifiers shall expire in accordance with the below timeframes:
+   - Password reset verifiers (e.g., one time use email links) will expire after 7 days.
+   - MFA-related verifiers (e.g., TOTP codes) will expire after 30 minutes.
 
 
 ---
