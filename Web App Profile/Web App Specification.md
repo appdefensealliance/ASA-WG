@@ -165,7 +165,7 @@ By ensuring that out of band verifiers are securely generated and managed, the r
 ### Audit
 | Spec | Description |
 | --- | ------|
-| [1.3.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#131-out-of-band-verifier-shall-expire-after-7-days) | Out of band verifier shall expire after 7 days.|
+| [1.3.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#131-out-of-band-verifier-shall-expire-in-a-reasonable-timeframe) | Out of band verifier shall expire in a reasonable timeframe.|
 | [1.3.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#132-out-of-band-verifier-shall-only-be-used-once) | Out of band verifier shall only be used once.|
 | [1.3.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#133-out-of-band-verifier-shall-be-securely-random) | Out of band verifier shall be securely random|
 | [1.3.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#134-out-of-band-verifier-shall-be-resistant-to-brute-force-attacks) | Out of band verifier shall be resistant to brute force attacks|
