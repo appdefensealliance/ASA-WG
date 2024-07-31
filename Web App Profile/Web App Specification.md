@@ -46,7 +46,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 3 [Access Control](#3-access-control)
 
-3.1 [Implement access control mechanisms to protect confidential data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
+3.1 [Implement access control mechanisms to protect data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
 
 3.2 [Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
 
@@ -54,7 +54,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 4 [Communications](#4-communications)
 
-4.1 [Protect confidential data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+4.1 [Protect data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
 
 5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
 
@@ -232,7 +232,7 @@ This requirement prevents unauthorized access to sensitive parts of an applicati
 
 ---
 # 3 Access Control
-## 3.1 Implement access control mechanisms to protect confidential data and APIs
+## 3.1 Implement access control mechanisms to protect data and APIs
 ### Description
 Applications shall enforce robust access controls at a trusted service layer, ensuring data integrity and applying the principle of least privilege. This includes protecting user/data attributes, limiting user manipulation, failing securely during exceptions, defending against Insecure Direct Object References (IDOR), and using strong anti-CSRF and multi-factor authentication (MFA) for administrative functions.
 ### Rationale
@@ -288,7 +288,7 @@ Infrastructure administrative interfaces shall never be exposed through an inter
 
 ---
 # 4 Communications
-## 4.1 Protect confidential data through strong cryptography 
+## 4.1 Protect data through strong cryptography 
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
