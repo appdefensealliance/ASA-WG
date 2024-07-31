@@ -1663,18 +1663,7 @@ Without an incident response plan, an enterprise may not discover an attack in t
 **From Command Line:**
 
 
-
-1. List IAM policies, filter for the 'AWSSupportAccess' managed policy, and note the "Arn" element value:
-
-
-```
-aws iam list-policies --query "Policies[?PolicyName == 'AWSSupportAccess']"
-
-```
-
-
-
-2. Check if the 'AWSSupportAccess' policy is attached to any role:
+1. Check if the 'AWSSupportAccess' policy is attached to any role:
 
 
 ```
@@ -1683,7 +1672,7 @@ aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSSupport
 ```
 
 
-3. In the output, ensure that `PolicyRoles` is not empty (example: \"PolicyRoles\": []).
+2. In the output, ensure that `PolicyRoles` is not empty (example: \"PolicyRoles\": []).
 
 If it returns empty then refer to the remediation in the CIS Benchmark.
 
