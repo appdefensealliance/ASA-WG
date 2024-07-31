@@ -27,9 +27,9 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 1.2 [Ensure Authorized Software is Currently Supported](#12-ensure-authorized-software-is-currently-supported)
 
-1.3 [Encrypt Sensitive Data in Transit](#13-encrypt-sensitive-data-in-transit)
+1.3 [Encrypt Confidential Data in Transit](#13-encrypt-confidential-data-in-transit)
 
-1.4 [Encrypt Sensitive Data at Rest](#14-encrypt-sensitive-data-at-rest)
+1.4 [Encrypt Confidential Data at Rest](#14-encrypt-confidential-data-at-rest)
 
 1.5 [Implement and Manage a Firewall on Servers](#15-implement-and-manage-a-firewall-on-servers)
 
@@ -51,7 +51,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 2.5 [Establish and Maintain a Data Management Process](#25-establish-and-maintain-a-data-management-process)
 
-2.6 [Encrypt Sensitive Data at Rest](#26-encrypt-sensitive-data-at-rest)
+2.6 [Encrypt Confidential Data at Rest](#26-encrypt-confidential-data-at-rest)
 
 2.7 [Configure Data Access Control Lists](#27-configure-data-access-control-lists)
 
@@ -85,7 +85,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 3.3 [Establish and Maintain Contact Information for Reporting Security Incidents](#33-establish-and-maintain-contact-information-for-reporting-security-incidents)
 
-3.4 [Log Sensitive Data Access](#34-log-sensitive-data-access)
+3.4 [Log Confidential Data Access](#34-log-confidential-data-access)
 
 3.5 [Configure Data Access Control Lists](#35-configure-data-access-control-lists)
 
@@ -103,7 +103,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 4 [Networking](#4-networking)
 
-4.1 [Encrypt Sensitive Data in Transit](#41-encrypt-sensitive-data-in-transit)
+4.1 [Encrypt Confidential Data in Transit](#41-encrypt-confidential-data-in-transit)
 
 4.2 [Establish and Maintain a Secure Configuration Process for Network Infrastructure](#42-establish-and-maintain-a-secure-configuration-process-for-network-infrastructure)
 
@@ -115,9 +115,9 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 5.2 [Establish and Maintain a Secure Network Architecture](#52-establish-and-maintain-a-secure-network-architecture)
 
-5.3 [Encrypt Sensitive Data in Transit](#53-encrypt-sensitive-data-in-transit)
+5.3 [Encrypt Confidential Data in Transit](#53-encrypt-confidential-data-in-transit)
 
-5.4 [Encrypt Sensitive Data at Rest](#54-encrypt-sensitive-data-at-rest)
+5.4 [Encrypt Confidential Data at Rest](#54-encrypt-confidential-data-at-rest)
 
 5.5 [Configure Data Access Control Lists](#55-configure-data-access-control-lists)
 
@@ -133,9 +133,9 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 6.2 [Allowlist Authorized Scripts](#62-allowlist-authorized-scripts)
 
-6.3 [Encrypt Sensitive Data in Transit](#63-encrypt-sensitive-data-in-transit)
+6.3 [Encrypt Confidential Data in Transit](#63-encrypt-confidential-data-in-transit)
 
-6.4 [Encrypt Sensitive Data at Rest](#64-encrypt-sensitive-data-at-rest)
+6.4 [Encrypt Confidential Data at Rest](#64-encrypt-confidential-data-at-rest)
 
 6.5 [Configure Data Access Control Lists](#65-configure-data-access-control-lists)
 
@@ -164,7 +164,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 # Overview
 
-This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process sensitive data such as Personally Identifiable Information (PII) or other types of confidential information.
+This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-pubilc data such as user data, user device data, company data, or other types of confidential information (excluding highly sensitive financial or medical PII).
 
 
 # Applicability
@@ -223,13 +223,13 @@ When software ceases to be supported, the maintainer of that software will no lo
 | 1.2.6 | Azure | Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App |
 | 1.2.6 | Google | Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime |
 ---
-## 1.3 Encrypt Sensitive Data in Transit
+## 1.3 Encrypt Confidential Data in Transit
 ### Description
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -243,12 +243,12 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 ---
 
 
-## 1.4 Encrypt Sensitive Data at Rest
+## 1.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -463,12 +463,12 @@ Develop processes and technical controls to identify, classify, securely handle,
 ---
 
 
-## 2.6 Encrypt Sensitive Data at Rest
+## 2.6 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -802,17 +802,17 @@ As time goes by -- and processes and people change within an organization -- it'
 ---
 
 
-## 3.4 Log Sensitive Data Access
+## 3.4 Log Confidential Data Access
 
 
 ### Description
 
-Log sensitive data access, including modification and disposal.
+Log confidential data access, including modification and disposal.
 
 
 ### Rationale
 
-Organizations need reliable forensic information about access, modification, and deletion of sensitive data.
+Organizations need reliable forensic information about access, modification, and deletion of confidential data.
 
 
 ### Audit
@@ -965,7 +965,7 @@ Having log files of what actions have taken place by users and also system event
 ## 3.11 Collect Detailed Audit Logs
 ### Description
 
-Configure detailed audit logging for enterprise assets containing sensitive data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
+Configure detailed audit logging for enterprise assets containing confidential data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
 
 
 ### Rationale
@@ -978,7 +978,7 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 |---|-----|----------|
 | 3.11.1 | AWS | Ensure CloudTrail is enabled in all regions |
 | 3.11.2 | AWS | Ensure CloudTrail trails are integrated with CloudWatch Logs |
-| 3.11.3 | Azure | Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data |
+| 3.11.3 | Azure | Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data |
 | 3.11.4 | Azure | Ensure that logging for Azure Key Vault is 'Enabled' |
 | 3.11.5 | Azure | Ensure that Activity Log Alert exists for Create Policy Assignment |
 | 3.11.6 | Azure | Ensure that Activity Log Alert exists for Delete Policy Assignment |
@@ -998,17 +998,17 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 # 4 Networking
 
 
-## 4.1 Encrypt Sensitive Data in Transit
+## 4.1 Encrypt Confidential Data in Transit
 
 
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -1111,15 +1111,15 @@ Malicious actors can exploit insecure services, poor firewall and network config
 ---
 
 
-## 5.3 Encrypt Sensitive Data in Transit
+## 5.3 Encrypt Confidential Data in Transit
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -1131,12 +1131,12 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 ---
 
 
-## 5.4 Encrypt Sensitive Data at Rest
+## 5.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -1278,17 +1278,17 @@ Unauthorized scripts can be used by malicious users to take over a system or tak
 ---
 
 
-## 6.3 Encrypt Sensitive Data in Transit
+## 6.3 Encrypt Confidential Data in Transit
 
 
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -1303,12 +1303,12 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 ---
 
 
-## 6.4 Encrypt Sensitive Data at Rest
+## 6.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -1541,7 +1541,7 @@ Once configured, logs may generate large volumes of data. Organizations must ens
 
 ### Description
 
-Configure detailed audit logging for enterprise assets containing sensitive data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
+Configure detailed audit logging for enterprise assets containing confidential data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
 
 
 ### Rationale

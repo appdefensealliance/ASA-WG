@@ -28,7 +28,7 @@ Version 0.5 - April 8, 2024
 
 [1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime ](#126-ensure-that-all-gcp-cloud-functions-are-configured-to-use-a-current-not-deprecated-runtime)
 
-[1.3 Encrypt Sensitive Data in Transit](#13-encrypt-sensitive-data-in-transit)
+[1.3 Encrypt Confidential Data in Transit](#13-encrypt-confidential-data-in-transit)
 
 [1.3.1 Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service ](#131-ensure-web-app-redirects-all-http-traffic-to-https-in-azure-app-service)
 
@@ -38,7 +38,7 @@ Version 0.5 - April 8, 2024
 
 [1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances ](#134-ensure-block-project-wide-ssh-keys-is-enabled-for-vm-instances)
 
-[1.4 Encrypt Sensitive Data at Rest](#14-encrypt-sensitive-data-at-rest)
+[1.4 Encrypt Confidential Data at Rest](#14-encrypt-confidential-data-at-rest)
 
 [1.4.1 Ensure Virtual Machines are utilizing Managed Disks](#141-ensure-virtual-machines-are-utilizing-managed-disks)
 
@@ -98,7 +98,7 @@ Version 0.5 - April 8, 2024
 
 [2.5.4 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults](#254-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-secrets-in-non-rbac-key-vaults)
 
-[2.6 Encrypt Sensitive Data at Rest](#26-encrypt-sensitive-data-at-rest)
+[2.6 Encrypt Confidential Data at Rest](#26-encrypt-confidential-data-at-rest)
 
 [2.6.1 Ensure Secrets are Not Stored in Cloud Functions Environment Variables by Using Secret Manager](#261-ensure-secrets-are-not-stored-in-cloud-functions-environment-variables-by-using-secret-manager)
 
@@ -208,7 +208,7 @@ Version 0.5 - April 8, 2024
 
 [3.3.2 Ensure 'Additional email addresses' is Configured with a Security Contact Email](#332-ensure-additional-email-addresses-is-configured-with-a-security-contact-email)
 
-[3.4 Log Sensitive Data Access](#34-log-sensitive-data-access)
+[3.4 Log Confidential Data Access](#34-log-confidential-data-access)
 
 [3.4.1 Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket](#341-ensure-s3-bucket-access-logging-is-enabled-on-the-cloudtrail-s3-bucket)
 
@@ -276,7 +276,7 @@ Version 0.5 - April 8, 2024
 
 [3.11.2 Ensure CloudTrail trails are integrated with CloudWatch Logs](#3112-ensure-cloudtrail-trails-are-integrated-with-cloudwatch-logs)
 
-[3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data](#3113-ensure-that-azure-monitor-resource-logging-is-enabled-for-all-services-that-manage-store-or-secure-sensitive-data)
+[3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data](#3113-ensure-that-azure-monitor-resource-logging-is-enabled-for-all-services-that-manage-store-or-secure-confidential-data)
 
 [3.11.4 Ensure that logging for Azure Key Vault is 'Enabled'](#3114-ensure-that-logging-for-azure-key-vault-is-enabled)
 
@@ -302,7 +302,7 @@ Version 0.5 - April 8, 2024
 
 [4 Networking](#4-networking)
 
-[4.1 Encrypt Sensitive Data in Transit](#41-encrypt-sensitive-data-in-transit)
+[4.1 Encrypt Confidential Data in Transit](#41-encrypt-confidential-data-in-transit)
 
 [4.1.1 Ensure No HTTPS or SSL Proxy Load Balancers Permit SSL Policies With Weak Cipher Suites](#411-ensure-no-https-or-ssl-proxy-load-balancers-permit-ssl-policies-with-weak-cipher-suites)
 
@@ -345,13 +345,13 @@ Version 0.5 - April 8, 2024
 
 [5.2.1 Ensure Default Network Access Rule for Storage Accounts is Set to Deny](#521-ensure-default-network-access-rule-for-storage-accounts-is-set-to-deny)
 
-[5.3 Encrypt Sensitive Data in Transit](#53-encrypt-sensitive-data-in-transit)
+[5.3 Encrypt Confidential Data in Transit](#53-encrypt-confidential-data-in-transit)
 
 [5.3.1 Ensure that 'Secure transfer required' is set to 'Enabled'](#531-ensure-that-secure-transfer-required-is-set-to-enabled)
 
 [5.3.2 Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2"](#532-ensure-the-minimum-tls-version-for-storage-accounts-is-set-to-version-12)
 
-[5.4 Encrypt Sensitive Data at Rest](#54-encrypt-sensitive-data-at-rest)
+[5.4 Encrypt Confidential Data at Rest](#54-encrypt-confidential-data-at-rest)
 
 [5.4.1 Ensure EBS Volume Encryption is Enabled in all Regions](#541-ensure-ebs-volume-encryption-is-enabled-in-all-regions)
 
@@ -387,7 +387,7 @@ Version 0.5 - April 8, 2024
 
 [6.2.1 Ensure 'external scripts enabled' database flag for Cloud SQL SQL Server instance is set to 'off'](#621-ensure-external-scripts-enabled-database-flag-for-cloud-sql-sql-server-instance-is-set-to-off)
 
-[6.3 Encrypt Sensitive Data in Transit](#63-encrypt-sensitive-data-in-transit)
+[6.3 Encrypt Confidential Data in Transit](#63-encrypt-confidential-data-in-transit)
 
 [6.3.1 Ensure 'Enforce SSL connection' is set to 'ENABLED' for PostgreSQL Database Server](#631-ensure-enforce-ssl-connection-is-set-to-enabled-for-postgresql-database-server)
 
@@ -397,7 +397,7 @@ Version 0.5 - April 8, 2024
 
 [6.3.4 Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL](#634-ensure-that-the-cloud-sql-database-instance-requires-all-incoming-connections-to-use-ssl)
 
-[6.4 Encrypt Sensitive Data at Rest](#64-encrypt-sensitive-data-at-rest)
+[6.4 Encrypt Confidential Data at Rest](#64-encrypt-confidential-data-at-rest)
 
 [6.4.1 Ensure that encryption-at-rest is enabled for RDS Instances](#641-ensure-that-encryption-at-rest-is-enabled-for-rds-instances)
 
@@ -479,7 +479,7 @@ Version 0.5 - April 8, 2024
 
 # Overview
 
-This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process sensitive data such as Personally Identifiable Information (PII) or other types of confidential information.
+This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-public data such as user data, user device data, company data, or other types of confidential information (excluding highly sensitive financial or medical PII).
 
 
 # Applicability
@@ -885,13 +885,13 @@ Evidence or test output indicates that all Cloud Functions are configured to run
 
 
 ---
-## 1.3 Encrypt Sensitive Data in Transit
+## 1.3 Encrypt Confidential Data in Transit
 ### Description
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -1109,12 +1109,12 @@ Evidence or test output indicates that every compute instance is configured to b
 ---
 
 
-## 1.4 Encrypt Sensitive Data at Rest
+## 1.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases containing confidential data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -2245,12 +2245,12 @@ Evidence or test output indicates that an expiration date is set for all secrets
 ---
 
 
-## 2.6 Encrypt Sensitive Data at Rest
+## 2.6 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -2587,7 +2587,7 @@ Evidence or test output indicates that IAM users are not assigned the service ac
 ### 2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible
 **Platform:** Google
 
-**Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if sensitive data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed.
+**Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if confidential data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed.
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.9
 
@@ -3105,7 +3105,7 @@ Evidence or test output indicates that the `Notify all admins when other admins 
 ### 2.11.3 Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes'
 **Platform:** Azure
 
-**Rationale:** The Azure AD administrative portal has sensitive data and permission settings. All non-administrators should be prohibited from accessing any Azure AD data in the administration portal to avoid exposure.
+**Rationale:** The Azure AD administrative portal has accesss to confidential data and permission settings. All non-administrators should be prohibited from accessing any Azure AD data in the administration portal to avoid exposure.
 
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.17
 
@@ -4090,17 +4090,17 @@ Evidence or test output indicates that a security POC is subscribed to security 
 ---
 
 
-## 3.4 Log Sensitive Data Access
+## 3.4 Log Confidential Data Access
 
 
 ### Description
 
-Log sensitive data access, including modification and disposal.
+Log confidential data access, including modification and disposal.
 
 
 ### Rationale
 
-Organizations need reliable forensic information about access, modification, and deletion of sensitive data.
+Organizations need reliable forensic information about access, modification, and deletion of confidential data.
 
 
 ### Audit
@@ -4173,7 +4173,7 @@ Sample Output for a bucket with logging enabled:
 
 **Verification**
 
-Evidence or test output indicates that all S3 buckets containing sensitive data have access logging enabled with a CloudTrail destination.
+Evidence or test output indicates that all S3 buckets containing confidential data have access logging enabled with a CloudTrail destination.
 
 
 ---
@@ -6094,7 +6094,7 @@ No verification is required for this requirement, so long as Microsoft's default
 ## 3.11 Collect Detailed Audit Logs
 ### Description
 
-Configure detailed audit logging for enterprise assets containing sensitive data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
+Configure detailed audit logging for enterprise assets containing confidential data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
 
 
 ### Rationale
@@ -6227,7 +6227,7 @@ Evidence or test output indicates that CloudTrail trails are integrated with Clo
 
 ---
 
-### 3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data
+### 3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data
 **Platform:** Azure
 
 **Rationale:** A lack of monitoring reduces the visibility into the data plane, and therefore an organization's ability to detect reconnaissance, authorization attempts or other malicious activity. Unlike Activity Logs, Resource Logs are not enabled by default. Specifically, without monitoring it would be impossible to tell which entities had accessed a data store that was breached. In addition, alerts for failed attempts to access APIs for Web Services or Databases are only possible when logging is enabled.
@@ -6893,17 +6893,17 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 # 4 Networking
 
 
-## 4.1 Encrypt Sensitive Data in Transit
+## 4.1 Encrypt Confidential Data in Transit
 
 
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -7659,15 +7659,15 @@ Evidence or test output indicates that all storage accounts are configured such 
 ---
 
 
-## 5.3 Encrypt Sensitive Data in Transit
+## 5.3 Encrypt Confidential Data in Transit
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -7768,12 +7768,12 @@ Evidence or test output indicates that all storage accounts are configured such 
 ---
 
 
-## 5.4 Encrypt Sensitive Data at Rest
+## 5.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -8052,7 +8052,7 @@ Evidence or test output indicates that `Public access level` is disabled for sto
 ### 5.5.3 Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible
 **Platform:** Google
 
-**Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any sensitive data. Hence, ensure that anonymous or public access to a bucket is not allowed.
+**Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any confidential data. Hence, ensure that anonymous or public access to a bucket is not allowed.
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 5.1
 
@@ -8412,17 +8412,17 @@ Evidence or test output indicates that Cloud SQL MySQL instance(s) have the exte
 ---
 
 
-## 6.3 Encrypt Sensitive Data in Transit
+## 6.3 Encrypt Confidential Data in Transit
 
 
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -8572,7 +8572,7 @@ Evidence or test output indicates that all MySQL flexible database servers are c
 ### 6.3.4 Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL
 **Platform:** Google
 
-**Rationale:** SQL database connections if successfully trapped (MITM); can reveal sensitive data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances.
+**Rationale:** SQL database connections if successfully trapped (MITM); can reveal confidential data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances.
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.4
 
@@ -8609,12 +8609,12 @@ Evidence or test output indicates that Cloud SQL database instance(s) are config
 ---
 
 
-## 6.4 Encrypt Sensitive Data at Rest
+## 6.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -9829,7 +9829,7 @@ Evidence or test output indicates that all PostgreSQL instances are configured w
 
 ### Description
 
-Configure detailed audit logging for enterprise assets containing sensitive data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
+Configure detailed audit logging for enterprise assets containing confidential data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
 
 
 ### Rationale
