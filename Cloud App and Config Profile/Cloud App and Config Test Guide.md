@@ -7423,29 +7423,7 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.1
 
-**Evidence**
-
-**From Console:**
-
-Perform the following to determine if the account is configured as prescribed:
-
-
-
-1. Login to the AWS Management Console at [https://console.aws.amazon.com/vpc/home](https://console.aws.amazon.com/vpc/home)
-2. In the left pane, click `Network ACLs`
-3. For each network ACL, perform the following:
-   * Select the network ACL
-   * Click the `Inbound Rules` tab
-   * Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0` and shows `ALLOW`
-4. Repeat the above steps for each in-use region
-
-**Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports
-
-
-**Verification**
-
-Evidence or test output indicates that no Network ACL allows ingress to port 22 or port 3389 from the unrestricted public internet.
-
+**Status:** This requirement has been withdrawn in favor of 4.3.6 and 4.3.7
 
 ---
 
