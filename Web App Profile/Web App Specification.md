@@ -428,7 +428,7 @@ Properly deleting confidential data and authentication material after logout dec
 ### Audit
 | Spec | Description |
 | --- | ------|
-| [6.6.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#661-if-data-is-stored-in-browser-storage-it-shall-not-contain-sensitive-data) | If data is stored in browser storage it shall not contain sensitive data.|
+| [6.6.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#661-browser-storage-is-securely-cleared-during-logout) | Browser storage is securely cleared during logout.|
 
 ---
 ## 6.7 Securely store server-side secrets
