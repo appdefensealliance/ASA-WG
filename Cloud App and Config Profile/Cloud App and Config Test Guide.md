@@ -591,7 +591,7 @@ When software ceases to be supported, the maintainer of that software will no lo
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** [AWS Security Hub Lambda.2](https://docs.aws.amazon.com/securityhub/latest/userguide/lambda-controls.html#lambda-2)
+**External Reference:** CIS Controls v8, Section 2.1, [AWS Security Hub Lambda.2](https://docs.aws.amazon.com/securityhub/latest/userguide/lambda-controls.html#lambda-2)
 
 **Evidence**
 
@@ -633,11 +633,24 @@ Evidence or test output indicates that no Lambda function is configured to use a
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** Todo
+**External Reference:** CIS Controls v8, Section 2.1
 
 **Evidence**
 
-Todo
+**From Azure CLI**
+
+1. List Azure Function Apps
+
+```
+az functionapp list --output table --query '[*].{name:name, resourceGroup:resourceGroup}'
+```
+
+2. For each function and resource group, fetch the app settings configuration
+```
+az functionapp config appsettings list --name <app name> --resource-group <resource group> --query '[*].[name,value]'
+```
+
+3. For each runtime language used, confirm that the in-use runtime version has not passed Microsoft's community EOL date according to [https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions)
 
 **Verification**
 
@@ -647,8 +660,6 @@ Evidence or test output indicates that all Azure Functions are:
 
 1. Configured to use a supported (i.e., not unsupported) runtime host version
 2. Using a language version that is not past its EOL date
-
-Microsoft documentation contains the specific dates and version for supported languages and runtime modes: https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions
 
 
 ---
@@ -873,15 +884,32 @@ Evidence or test output indicates that HTTP 2.0 is enabled for each webapp.
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** Todo
+**External Reference:** CIS Controls v8, Section 2.1
 
 **Evidence**
 
-Todo
+**From Google Cloud CLI**
+
+
+
+1. List the functions in your project and get details on each:
+
+  ```
+  gcloud functions list --project <project name> --format="(NAME,REGION)"
+  ```
+
+2. For each function, use the `decribe` command to fetch information about its runtime:
+
+```
+gcloud functions describe <function name> --format="value(buildConfig.runtime)"
+```
+
+3. For each runtime language used, confirm that the in-use runtime version has not passed Google's deprecation date according to [https://cloud.google.com/functions/docs/runtime-support#support_schedule](https://cloud.google.com/functions/docs/runtime-support#support_schedule)
+
 
 **Verification**
 
-Evidence or test output indicates that all Cloud Functions are configured to run on a runtime that is not beyond its published deprecation date. See the [GCP documentation for specific runtime version deprecation dates](https://cloud.google.com/functions/docs/runtime-support).
+Evidence or test output indicates that all Cloud Functions are configured to run on a runtime that is not beyond its published deprecation date.
 
 
 ---
