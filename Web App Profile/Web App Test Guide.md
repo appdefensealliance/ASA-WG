@@ -529,11 +529,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 ---
 # 2 Session Management
-## 2.1 URLs shall not expose sensitive information
+## 2.1 URLs shall not expose authentication material
 ### Description
-Web applications must never expose sensitive data within URL parameters. Sensitive data should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
+Web applications must never expose authentication material, such as passwords or session cookies, within URL parameters. Authentication material should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
 ### Rationale
-Exposing sensitive data such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links.  This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access.
+Exposing authentication material such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links. This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access
 ### Audit
 
 
@@ -905,7 +905,7 @@ or;
 
 ---
 # 3 Access Control
-## 3.1 Implement access control mechanisms to protect sensitive data and APIs
+## 3.1 Implement access control mechanisms to protect confidential data and APIs
 ### Description
 Applications shall enforce robust access controls at a trusted service layer, ensuring data integrity and applying the principle of least privilege. This includes protecting user/data attributes, limiting user manipulation, failing securely during exceptions, defending against Insecure Direct Object References (IDOR), and using strong anti-CSRF and multi-factor authentication (MFA) for administrative functions.
 ### Rationale
@@ -1246,7 +1246,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.1
 
 ---
 # 4 Communications
-## 4.1 Protect sensitive data through strong cryptography 
+## 4.1 Protect confidential data through strong cryptography 
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -1339,7 +1339,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.2.1
 
 
 ---
-### 4.1.3 No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.
+### 4.1.3 No instances of weak cryptography which meaningfully impact the confidentiality or integrity of data.
 External Reference: ASVS Version 4.0.3 Requirement: 
 
 
@@ -2091,24 +2091,24 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 
 
 ---
-## 6.6 Sensitive user data is either not stored in browser storage or is deleted when the user logs out
+## 6.6 Securely clear client storage during logout
 ### Description
-Web applications should never store sensitive user data (e.g., passwords, credit card numbers, session tokens) in browser storage mechanisms like local storage or session storage. However, if data is stored in browser storage it must be deleted when the user logs out.
+Web applications should ensure that any confidential data or authentication material stored in the browser's local storage is deleted or otherwise rendered inaccessible when the user logs out.
 ### Rationale
-Browser storage is inherently accessible to client-side JavaScript, making it vulnerable to attacks like Cross-Site Scripting (XSS). Storing sensitive data here exposes it to potential theft or misuse by an attacker if they manage to inject malicious code.
+Properly deleting confidential data and authentication material after logout decreases the risk that an attacker with local access to the system will be able to compromise the data. This is particularly relevant in scenarios where users are logging in from shared systems or devices.
 ### Audit
 
 
 ---
-### 6.6.1 If data is stored in browser storage it shall not contain sensitive data.
-External Reference: ASVS Version 4.0.3 Requirement: 8.2.2
+### 6.6.1 Browser storage is securely cleared during logout
+External Reference: ASVS Version 4.0.3 Requirement: 8.2.3
 
 
 **Evidence**
 
 
 *L1*
-1. Provide a written description of what data (if any) is stored in browser storage.
+1. Provide a written description of what (if any) confidential data or authentication material is stored in the browser after user logout. 
 
 *L2*
 1. N/A (to be collected by labs)
@@ -2118,7 +2118,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 8.2.2
 
 
 *L1*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
 1. Verify application for adherence with the requirements as defined in WSTG-CLNT-12.
@@ -2127,15 +2127,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 8.2.2
 **Verification**
 
 
-*L1*
-1. Application shall not store sensitive data in browser storage.
-and;
-2. Sensitive data stored in browser storage shall be deleted when the user logs out.
-
-*L2*
-1. Application does not store sensitive data in browser storage.
-and;
-2. Verification shall confirm that application deletes sensitive data stored in browser storage when the user logs out.
+*L1 and L2*
+1. Confidential data and authentication material stored in browser storage shall be deleted when the user logs out.
 
 
 ---
