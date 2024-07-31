@@ -1,7 +1,13 @@
 # App Defense Alliance Cloud Profile
 ## Specification
+Version 0.7 - May 25, 2024
 
-Version 0.5 - April 8, 2024
+# Revision History
+| Version | Date  | Description|
+|----|----|-----------------|
+| 0.5 | 5/8/24 | Initial draft based on Web App Tiger Team review of CIS Cloud Foundations Benchmarks |
+| 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
+
 
 # Contributors
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
@@ -179,6 +185,10 @@ This profile builds upon the work of the Center for Internet Security (CIS), spe
 1. [CIS Amazon Web Services Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/14207)
 2. [CIS Google Cloud Platform Foundation Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/9562)
 3. [CIS Microsoft Azure Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/10624)
+
+# Licensing
+This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
 
 
 # 1 Compute
