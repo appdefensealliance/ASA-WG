@@ -287,7 +287,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 ---
 
 
-## 1.6 Manage Default Accounts on Enterprise Assets and Software 
+## 1.6 Manage Default Accounts on Enterprise Assets and Software
 ### Description
 
 Manage default accounts on enterprise assets and software, such as root, administrator, and other pre-configured vendor accounts. Example implementations can include: disabling default accounts or making them unusable.
@@ -940,7 +940,7 @@ Logs may contain indications of compromise, so it's important to review logs reg
 ## 3.10 Collect Audit Logs
 ### Description
 
-Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.
+Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets and that logs are retained for at least a minimum period of time.
 
 
 ### Rationale
@@ -955,6 +955,9 @@ Having log files of what actions have taken place by users and also system event
 | 3.10.2 | Google | Ensure Log Metric Filter and Alerts Exist for Project Ownership Assignments/Changes |
 | 3.10.3 | Google | Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes |
 | 3.10.4 | Google | Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes |
+| 3.10.5 | Google | Ensure That Audit Logs are retained for a Minimum of 90 Days |
+| 3.10.6 | AWS | Ensure That Audit Logs are retained for a Minimum of 90 Days |
+| 3.10.7 | Azure | Ensure That Audit Logs are retained for a Minimum of 90 Days |
 
 ---
 
@@ -1495,7 +1498,7 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 ## 6.13 Collect Audit Logs
 ### Description
 
-Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.
+Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets and that logs are retained for at least a minimum period of time.
 
 
 ### Rationale

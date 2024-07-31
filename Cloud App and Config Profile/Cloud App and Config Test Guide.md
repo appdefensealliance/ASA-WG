@@ -264,6 +264,12 @@ Version 0.5 - April 8, 2024
 
 [3.10.4 Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes](#3104-ensure-that-the-log-metric-filter-and-alerts-exist-for-custom-role-changes)
 
+[3.10.5 Ensure That Audit Logs are retained for a Minimum of 90 Days](#3105-ensure-that-audit-logs-are-retained-for-a-minimum-of-90-days)
+
+[3.10.6 Ensure That Audit Logs are retained for a Minimum of 90 Days](#3106-ensure-that-audit-logs-are-retained-for-a-minimum-of-90-days)
+
+[3.10.7 Ensure That Audit Logs are retained for a Minimum of 90 Days](#3107-ensure-that-audit-logs-are-retained-for-a-minimum-of-90-days)
+
 [3.11 Collect Detailed Audit Logs](#311-collect-detailed-audit-logs)
 
 [3.11.1 Ensure CloudTrail is enabled in all regions](#3111-ensure-cloudtrail-is-enabled-in-all-regions)
@@ -5697,7 +5703,7 @@ Each VPC Network should be associated with a DNS policy with logging enabled.
 ## 3.10 Collect Audit Logs
 ### Description
 
-Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.
+Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets and that logs are retained for at least a minimum period of time.
 
 
 ### Rationale
@@ -5717,40 +5723,7 @@ Having log files of what actions have taken place by users and also system event
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.2
 
-**Evidence**
-
-**From Google Cloud Console**
-
-
-
-1. Go to `Logs Router` by visiting [https://console.cloud.google.com/logs/router](https://console.cloud.google.com/logs/router).
-2. For every sink, click the 3-dot button for Menu options and select `View sink details`.
-3. Ensure there is at least one sink with an `empty` Inclusion filter.
-4. Additionally, ensure that the resource configured as `Destination` exists.
-
-**From Google Cloud CLI**
-
-
-
-1. Ensure that a sink with an `empty filter` exists. List the sinks for the project, folder or organization. If sinks are configured at a folder or organization level, they do not need to be configured for each project:
-
-
-```
-gcloud logging sinks list --folder=FOLDER_ID | --organization=ORGANIZATION_ID | --project=PROJECT_ID
-```
-
-
-The output should list at least one sink with an `empty filter`.
-
-
-
-2. Additionally, ensure that the resource configured as `Destination` exists.
-
-See [https://cloud.google.com/sdk/gcloud/reference/beta/logging/sinks/list](https://cloud.google.com/sdk/gcloud/reference/beta/logging/sinks/list) for more information.
-
-**Verification**
-
-Evidence or test output indicates that log sinks are configured for all log entries where required to satisfy the organization's log retention period.
+**Status:** This requirement has been withdrawn in favor of 3.10.5.
 
 
 ---
@@ -6037,6 +6010,97 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 ---
 
+### 3.10.5 Ensure That Audit Logs are retained for a Minimum of 90 Days
+**Platform:** Google
+
+**Rationale:** It is necesary to retain logs for a minimum time frame for security purposes (e.g., looking for evidence of exploitation given a potential vulnerability)
+
+**External Reference:** CIS Controls v8, Section 8.10
+
+**Evidence**
+
+**From Console:**
+
+1. Open the `Cloud Logging Console` at [https://console.cloud.google.com/logs](https://console.cloud.google.com/logs)
+2. Select `Configure` > `Logs Storage`
+3. For each log bucket that is used to store Audit Logs, open the bucket options menu and select `View bucket details`
+4. Check the `Retention period` value to ensure that it is set to a value >= 90 days
+
+**From Google Cloud CLI**
+
+1. List logging buckets
+```
+gcloud logging buckets list --project=<project-id> --format="json(name)"
+```
+2. For each bucket used for audit logs, call the `describe` command to fetch its retention period
+```
+gcloud logging buckets describe <bucket-id> --project=<project-id> --location=global --format=yaml(retentionDays)
+```
+3. Check the `Retention period` value to ensure that it is set to a value >= 90 days
+4. Repeat steps #1 and #2 for each GCP project
+
+**Verification**
+
+Evidence or test output indicates that buckets that store audit logs are configured with a retention period of 90 days or greater.
+
+
+---
+
+### 3.10.6 Ensure That Audit Logs are retained for a Minimum of 90 Days
+**Platform:** AWS
+
+**Rationale:** It is necesary to retain logs for a minimum time frame for security purposes (e.g., looking for evidence of exploitation given a potential vulnerability)
+
+**External Reference:** CIS Controls v8, Section 8.10
+
+**Evidence**
+
+**From Console:**
+1. Open the CloudWatch Console at [https://console.aws.amazon.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)
+2. Navigate to `Logs` > `Log groups`
+3. Click on the name of each log group used for audit logs
+4. Check the `Retention` attribute value in the `Log Group Details` section and ensure that it is set to a value >= 90 days. `Never expire` is also valid.
+
+**From Command Line:**
+
+1. List log groups
+```
+aws logs describe-log-groups --output table --query "logGroups[*].logGroupName"
+```
+2. For each bucket used for audit logs, query the retention period
+```
+aws logs describe-log-groups --log-group-name-prefix <log group name> --query "logGroups[*].retentionInDays"
+```
+3. Check the `Retention period` value to ensure that it is set to a value >= 90 days
+4. Repeat steps above for each in-use region
+
+
+
+**Verification**
+
+Evidence or test output indicates that CloudWatch log groups that store audit logs are configured with a retention period of 90 days or greater.
+
+
+---
+
+### 3.10.7 Ensure That Audit Logs are retained for a Minimum of 90 Days
+**Platform:** Azure
+
+**Rationale:** It is necesary to retain logs for a minimum time frame for security purposes (e.g., looking for evidence of exploitation given a potential vulnerability)
+
+**External Reference:** CIS Controls v8, Section 8.10
+
+**Evidence**
+
+[Activity logs are retained for 90 days by default within Azure](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log-insights#retention-period), therefore no evidence is required when running in Azure.
+
+
+**Verification**
+
+No verification is required for this requirement, so long as Microsoft's default log retention period remains greater than or equal to this requirement's specified retention period.
+
+
+---
 
 ## 3.11 Collect Detailed Audit Logs
 ### Description
@@ -9556,7 +9620,7 @@ Evidence or test output indicates that auto minor version update feature is enab
 ## 6.13 Collect Audit Logs
 ### Description
 
-Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.
+Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets and that logs are retained for at least a minimum period of time.
 
 
 ### Rationale
