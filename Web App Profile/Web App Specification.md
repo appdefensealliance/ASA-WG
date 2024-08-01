@@ -115,7 +115,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
 | Padding Oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
 | Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
-| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, are out of scope. |
+| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, are out of scope. | 
 | Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
 | Scope | Identifies whether a requirement is applicable to web applications, web APIs, or both. Mobile applications that utilize web APIs must comply with both the mobile application and web API specifications. |
 | Confidential data | Non-public information including user data and company confidential information which should only be accessible to authorized applications and systems. |
@@ -220,7 +220,7 @@ Secure' and 'HttpOnly' mitigate risks of token interception and Cross-Site Scrip
 | [2.3.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#234-stateless-session-tokens-shall-use-digital-signatures-encryption-and-other-countermeasures-to-protect-against-tampering-enveloping-replay-null-cipher-and-key-substitution-attacks) | Stateless session tokens shall use digital signatures, encryption, and other countermeasures to protect against tampering, enveloping, replay, null cipher, and key substitution attacks.|
 
 ---
-## 2.4 Protect sensitive account modifications
+## 2.4 Protect sensitive account modifications 
 ### Description
 Applications must enforce a complete, valid login session or require re-authentication/secondary verification prior to any sensitive actions, such as sensitive data transactions or changes to account settings.
 ### Rationale
@@ -238,7 +238,7 @@ This requirement prevents unauthorized access to sensitive parts of an applicati
 ### Description
 Applications shall enforce robust access controls at a trusted service layer, ensuring data integrity and applying the principle of least privilege. This includes protecting user/data attributes, limiting user manipulation, failing securely during exceptions, defending against Insecure Direct Object References (IDOR), and using strong anti-CSRF and multi-factor authentication (MFA) for administrative functions.
 ### Rationale
-*Layered Defense*
+*Layered Defense* 
 Combining URI and resource-level checks provides multiple layers of protection, enhancing security against unauthorized access.
 
 *Fine-grained Control*
@@ -290,7 +290,7 @@ Infrastructure administrative interfaces shall never be exposed through an inter
 
 ---
 # 4 Communications
-## 4.1 Protect data through strong cryptography
+## 4.1 Protect data through strong cryptography 
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -331,7 +331,7 @@ Robust input validation and output encoding is essential for web applications to
 | [5.1.10](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#5110-protect-against-local-file-inclusion-or-remote-file-inclusion-attacks) | Protect against local file inclusion or remote file inclusion attacks|
 
 ---
-## 5.2 Securely Handle Untrusted Files
+## 5.2 Securely Handle Untrusted Files 
 ### Description
 Web applications must safely process and manage files that originate from untrusted or unknown sources. This includes restricting uploads to expected file types and preventing direct execution of uploaded content containing HTML, JavaScript, or dynamic server-side code.
 ### Rationale
@@ -350,7 +350,7 @@ Files from untrusted sources may contain malicious code which could allow compro
 ### Description
 Developers must verify that the libraries included in their application do not have any known exploitable vulnerabilities.
 ### Rationale
-Attackers can perform automated scans to identify vulnerable applications based on published vulnerabilities.
+Attackers can perform automated scans to identify vulnerable applications based on published vulnerabilities. 
 ### Scope
 - Web application
 ### Audit
