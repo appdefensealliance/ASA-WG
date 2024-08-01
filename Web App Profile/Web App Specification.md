@@ -89,12 +89,32 @@ This program leverages the internationally recognized OWASP Application Security
 # Applicability
 This document is intended for system and application administrators, security specialists, auditors, help desk, platform deployment, and/or DevOps personnel who plan to develop, deploy, assess, or secure solutions in the cloud.
 
-
 # References
 1. [OWASP Application Security Verification Standard](https://github.com/OWASP/ASVS?tab=readme-ov-file)
 
 # Licensing
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
+
+# Specification Scoping Guidance
+Scoping a web application test can be a complex and challenging task, as it requires defining the boundaries of the application and determining what needs to be tested. Here is some guidance to help define a reasonable scope while evaluating a web application within the context of this specification.
+
+This specification is designed to be applied to one or more target web application(s) (first party components) and their integrated third-party components, subject to the following considerations:
+
+**First-Party Scoping Considerations**
+- Target Web Application(s): Before testing, define the target web application(s) as a group of components that operate together to provide a logical set of services. For example, if a large business platform offers multiple services such as online dating, instant messaging, and investment banking; each can be scoped and evaluated separately using this specification, with all grouped subcomponents considered in-scope for testing & evaluation.
+- Shared Backend Components: First party shared backend components or APIs are considered in the scope if they are utilized by the defined target application(s).
+
+**Third-Party API Scoping Considerations**
+- Sensitive Operations: Any third-party (3P) product API that supports sensitive operations, such as Authentication, accessing or mutating user data, & account recovery are within the scope of an ADA web assessment. These 3P APIs will only be subject to web assessment requirements defined within the Authentication, Session Management, & Access Control sections.
+- Limited Testing: Testing of these 3P APIs will be limited to components and configurations utilized by the tested application. Other 3P API components and ADA web requirements will be out of scope and will not be tested in relation to 3P Product APIs.
+
+**Additional Clarifications**
+- Out-of-Scope Components: The following components are explicitly out of scope for this testing:
+  - Third-party APIs not utilized by the target application
+  - Non-sensitive operations performed by third-party APIs
+- Examples and Scenarios: To illustrate the scoping decisions, consider the following examples:
+  - A web application uses a third-party authentication API to handle user login. In this case, the authentication API is within scope for testing.
+  - A web application uses a third-party analytics gateway to process application performance metrics. As the gateway does not handle sensitive user data, it is out of scope for testing.
 
 # Definitions
 | Term | Definition |
