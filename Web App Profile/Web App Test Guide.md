@@ -188,10 +188,14 @@ A “software bill of materials” (SBOM) has emerged as a key building block in
 
 # Dynamic Application Security Testing (DAST) Guidance
 Various App Defense Alliance (ADA) web profile requirements are designed to be tested and validated utilizing the [Burp Suite](https://portswigger.net/burp) DAST security tool (while employing the approved [ADA Burp Audit Scan Configuration](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/ADA%20Burp%20Audit%20Scan%20Configuration.json)).  These ADA DAST testing requirements must be confirmed within the context of an authenticated scan.   Testing labs will have the below options available to them to conduct a DAST scan from an authenticated state:
+
+Burp Suite (Primary Option):
    - Utilize [Burp Suite’s built in](https://portswigger.net/burp/documentation/scanner/authenticated-scanning) capabilities to authenticate with the target application.
    - Manually append a valid authentication state (headers / tokens / cookies) to scan requests.
    - Manually enumerate application functionality within Burp (while authenticated) to replicate spidering and then initiate scanning from those manually crawled pages & forms (including the previously utilized authenticated state).
-   - Utilize an alternative scanning tool (e.g., a different DAST product), so long as the lab can confirm that the tool covers the ADA's automated test cases from an authenticated state.
+
+Utilize Alternative Scanning Tool:
+   - In cases where a where a testing lab is unable to complete an assessment using Burp Suite due to technical limitations, the lab is permitted to use an alternative scanning tool (e.g., a different DAST product), so long as the testing lab can confirm that the tool covers the ADA's automated test cases from an authenticated state.
 
 # 1 Authentication
 ## 1.1 Implement strong password security measures
