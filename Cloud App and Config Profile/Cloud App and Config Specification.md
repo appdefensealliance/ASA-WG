@@ -171,6 +171,8 @@ This document provides prescriptive guidance for configuring security options fo
 
 This document is intended for system and application administrators, security specialists, auditors, help desk, platform deployment, and/or DevOps personnel who plan to develop, deploy, assess, or secure solutions in the cloud.
 
+Organizations that choose to adopt the requirements in this profile should consider their cloud architecture (i.e., set of root tenants/accounts) and the flows of non-public data (see prior section) to define the set of cloud resources that are in scope for assessment.
+
 
 # Acknowledgements
 

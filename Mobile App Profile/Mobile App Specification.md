@@ -38,7 +38,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 ## Introduction
 
-In today’s digitally-driven world, mobile applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure mobile environment, a robust mobile application security standard and certification program is essential.
+In today’s digitally-driven world, mobile applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure mobile environment, a robust mobile application security standard and certification program is essential. This profile is suitable for mobile applications that process non-pubilc data such as user data, user device data, company data, or other types of confidential information (excluding highly sensitive financial or medical PII).
 
 ### Our Approach: OWASP MASVS as the Foundation
 
@@ -47,6 +47,8 @@ This program leverages the internationally recognized OWASP Mobile Application S
 ### Applicability
 
 This document is intended for system and application administrators, security specialists, auditors, help desk, platform deployment, and/or DevOps personnel who plan to develop, deploy, assess, or secure mobile applications.
+
+Organizations that choose to adopt the requirements in this profile should consider their mobile architecture (i.e., the set of mobile apps) that process non-public data to define the set of mobile apps that are in scope for assessment.
 
 ### References
 
