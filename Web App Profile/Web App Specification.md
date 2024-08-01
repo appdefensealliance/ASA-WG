@@ -46,7 +46,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 3 [Access Control](#3-access-control)
 
-3.1 [Implement access control mechanisms to protect sensitive data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
+3.1 [Implement access control mechanisms to protect data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
 
 3.2 [Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
 
@@ -54,7 +54,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 4 [Communications](#4-communications)
 
-4.1 [Protect sensitive data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+4.1 [Protect data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
 
 5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
 
@@ -116,7 +116,8 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, are out of scope. | 
 | Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
 | Scope | Identifies whether a requirement is applicable to web applications, web APIs, or both. Mobile applications that utilize web APIs must comply with both the mobile application and web API specifications. |
-| Sensitive Data | Data that is of particular concern from a security perspective, including personal identifiable information, credentials, and keys. This is not taking into account regulatory requirements for privacy or compliance for various verticals such as healthcare or finance. PII is any information that can be used to directly or indirectly identify a specific individual. This data, if mishandled, can lead to harm, discrimination, or privacy violations. |
+| Confidential data | Non-public information including user data and company confidential information which should only be accessible to authorized applications and systems. |
+| Authentication material | Sensitive information used to verify the identity of a user or service. These materials can include passwords, API tokens, session cookies, and other types of credentials that are used to authenticate access to a system or application. |
 | Remote File Inclusion | Remote File Inclusion (also known as RFI) is the process of including remote files through the exploitation of vulnerable inclusion procedures implemented in the application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion) |
 | WSTG | OWASP Web Security Testing Guide |
 | 3P library | Any library which was not developed by the developer. These libraries may be open source or commercial libraries or SDKs.|
@@ -165,18 +166,18 @@ By ensuring that out of band verifiers are securely generated and managed, the r
 ### Audit
 | Spec | Description |
 | --- | ------|
-| [1.3.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#131-out-of-band-verifier-shall-expire-after-7-days) | Out of band verifier shall expire after 7 days.|
+| [1.3.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#131-out-of-band-verifier-shall-expire-in-a-reasonable-timeframe) | Out of band verifier shall expire in a reasonable timeframe.|
 | [1.3.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#132-out-of-band-verifier-shall-only-be-used-once) | Out of band verifier shall only be used once.|
 | [1.3.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#133-out-of-band-verifier-shall-be-securely-random) | Out of band verifier shall be securely random|
 | [1.3.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#134-out-of-band-verifier-shall-be-resistant-to-brute-force-attacks) | Out of band verifier shall be resistant to brute force attacks|
 
 ---
 # 2 Session Management
-## 2.1 URLs shall not expose sensitive information
+## 2.1 URLs shall not expose authentication material
 ### Description
-Web applications must never expose sensitive data within URL parameters. Sensitive data should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
+Web applications must never expose authentication material, such as passwords or session cookies, within URL parameters. Authentication material should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
 ### Rationale
-Exposing sensitive data such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links.  This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access
+Exposing authentication material such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links.  This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access
 ### Scope
 - Web application
 ### Audit
@@ -231,7 +232,7 @@ This requirement prevents unauthorized access to sensitive parts of an applicati
 
 ---
 # 3 Access Control
-## 3.1 Implement access control mechanisms to protect sensitive data and APIs
+## 3.1 Implement access control mechanisms to protect data and APIs
 ### Description
 Applications shall enforce robust access controls at a trusted service layer, ensuring data integrity and applying the principle of least privilege. This includes protecting user/data attributes, limiting user manipulation, failing securely during exceptions, defending against Insecure Direct Object References (IDOR), and using strong anti-CSRF and multi-factor authentication (MFA) for administrative functions.
 ### Rationale
@@ -287,7 +288,7 @@ Infrastructure administrative interfaces shall never be exposed through an inter
 
 ---
 # 4 Communications
-## 4.1 Protect sensitive data through strong cryptography 
+## 4.1 Protect data through strong cryptography 
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -300,7 +301,7 @@ Strong TLS and cipher suites ensure confidentiality and integrity of data in tra
 | --- | ------|
 | [4.1.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#411-application-shall-enforce-the-use-of-tls-for-all-connections-and-default-to-tls-12-in-cases-where-support-for-legacy-clients-is-necessary-tls-10-and-11-may-be-supported-if-mitigations-are-implemented-to-minimize-the-risk-of-downgrade-attacks-and-known-tls-exploits-regardless-of-the-tls-version-in-use-the-application-shall-default-to-secure-cipher-suites-and-reject-those-with-known-vulnerabilities) | Application shall enforce the use of TLS for all connections and default to TLS 1.2+. In cases where support for legacy clients is necessary, TLS 1.0 and 1.1 may be supported if mitigations are implemented to minimize the risk of downgrade attacks and known TLS exploits. Regardless of the TLS version in use, the application shall default to secure cipher suites and reject those with known vulnerabilities.|
 | [4.1.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#412-connections-to-and-from-the-server-shall-use-trusted-tls-certificates-where-internally-generated-or-self-signed-certificates-are-used-the-server-must-be-configured-to-only-trust-specific-internal-cas-and-specific-self-signed-certificates-all-others-should-be-rejected) | Connections to and from the server shall use trusted TLS certificates. Where internally generated or self-signed certificates are used, the server must be configured to only trust specific internal CAs and specific self-signed certificates. All others should be rejected.|
-| [4.1.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data) | No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.|
+| [4.1.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data) | No instances of weak cryptography which meaningfully impact the confidentiality or integrity of confidential data.|
 | [4.1.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#414-all-cryptographic-modules-shall-fail-securely-and-errors-are-handled-in-a-way-that-does-not-enable-padding-oracle-attacks) | All cryptographic modules shall fail securely, and errors are handled in a way that does not enable Padding Oracle attacks.|
 
 ---
@@ -417,17 +418,17 @@ Avoiding logging sensitive information minimizes the overall attack surface and 
 | [6.5.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#651-the-application-shall-not-log-credentials-or-payment-details-session-tokens-shall-only-be-stored-in-logs-in-an-irreversible-hashed-form) | The application shall not log credentials or payment details. Session tokens shall only be stored in logs in an irreversible, hashed form.|
 
 ---
-## 6.6 Sensitive user data is either not stored in browser storage or is deleted when the user logs out
+## 6.6 Securely clear client storage during logout
 ### Description
-Web applications should never store sensitive user data (e.g., passwords, credit card numbers, session tokens) in browser storage mechanisms like local storage or session storage. However, if data is stored in browser storage it must be deleted when the user logs out.
+Web applications should ensure that any confidential data or authentication material stored in the browser's local storage is deleted or otherwise rendered inaccessible when the user logs out.
 ### Rationale
-Browser storage is inherently accessible to client-side JavaScript, making it vulnerable to attacks like Cross-Site Scripting (XSS). Storing sensitive data here exposes it to potential theft or misuse by an attacker if they manage to inject malicious code. Sensitive data must be stored securely on the server-side.
+Properly deleting confidential data and authentication material after logout decreases the risk that an attacker with local access to the system will be able to compromise the data. This is particularly relevant in scenarios where users are logging in from shared systems or devices.
 ### Scope
 - Web application
 ### Audit
 | Spec | Description |
 | --- | ------|
-| [6.6.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#661-if-data-is-stored-in-browser-storage-it-shall-not-contain-sensitive-data) | If data is stored in browser storage it shall not contain sensitive data.|
+| [6.6.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#661-browser-storage-is-securely-cleared-during-logout) | Browser storage is securely cleared during logout.|
 
 ---
 ## 6.7 Securely store server-side secrets

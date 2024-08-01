@@ -28,7 +28,7 @@ Version 0.5 - April 8, 2024
 
 [1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime ](#126-ensure-that-all-gcp-cloud-functions-are-configured-to-use-a-current-not-deprecated-runtime)
 
-[1.3 Encrypt Sensitive Data in Transit](#13-encrypt-sensitive-data-in-transit)
+[1.3 Encrypt Confidential Data in Transit](#13-encrypt-confidential-data-in-transit)
 
 [1.3.1 Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service ](#131-ensure-web-app-redirects-all-http-traffic-to-https-in-azure-app-service)
 
@@ -38,7 +38,7 @@ Version 0.5 - April 8, 2024
 
 [1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances ](#134-ensure-block-project-wide-ssh-keys-is-enabled-for-vm-instances)
 
-[1.4 Encrypt Sensitive Data at Rest](#14-encrypt-sensitive-data-at-rest)
+[1.4 Encrypt Confidential Data at Rest](#14-encrypt-confidential-data-at-rest)
 
 [1.4.1 Ensure Virtual Machines are utilizing Managed Disks](#141-ensure-virtual-machines-are-utilizing-managed-disks)
 
@@ -98,7 +98,7 @@ Version 0.5 - April 8, 2024
 
 [2.5.4 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults](#254-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-secrets-in-non-rbac-key-vaults)
 
-[2.6 Encrypt Sensitive Data at Rest](#26-encrypt-sensitive-data-at-rest)
+[2.6 Encrypt Confidential Data at Rest](#26-encrypt-confidential-data-at-rest)
 
 [2.6.1 Ensure Secrets are Not Stored in Cloud Functions Environment Variables by Using Secret Manager](#261-ensure-secrets-are-not-stored-in-cloud-functions-environment-variables-by-using-secret-manager)
 
@@ -208,7 +208,7 @@ Version 0.5 - April 8, 2024
 
 [3.3.2 Ensure 'Additional email addresses' is Configured with a Security Contact Email](#332-ensure-additional-email-addresses-is-configured-with-a-security-contact-email)
 
-[3.4 Log Sensitive Data Access](#34-log-sensitive-data-access)
+[3.4 Log Confidential Data Access](#34-log-confidential-data-access)
 
 [3.4.1 Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket](#341-ensure-s3-bucket-access-logging-is-enabled-on-the-cloudtrail-s3-bucket)
 
@@ -264,13 +264,19 @@ Version 0.5 - April 8, 2024
 
 [3.10.4 Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes](#3104-ensure-that-the-log-metric-filter-and-alerts-exist-for-custom-role-changes)
 
+[3.10.5 Ensure That Audit Logs are retained for a Minimum of 90 Days](#3105-ensure-that-audit-logs-are-retained-for-a-minimum-of-90-days)
+
+[3.10.6 Ensure That Audit Logs are retained for a Minimum of 90 Days](#3106-ensure-that-audit-logs-are-retained-for-a-minimum-of-90-days)
+
+[3.10.7 Ensure That Audit Logs are retained for a Minimum of 90 Days](#3107-ensure-that-audit-logs-are-retained-for-a-minimum-of-90-days)
+
 [3.11 Collect Detailed Audit Logs](#311-collect-detailed-audit-logs)
 
 [3.11.1 Ensure CloudTrail is enabled in all regions](#3111-ensure-cloudtrail-is-enabled-in-all-regions)
 
 [3.11.2 Ensure CloudTrail trails are integrated with CloudWatch Logs](#3112-ensure-cloudtrail-trails-are-integrated-with-cloudwatch-logs)
 
-[3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data](#3113-ensure-that-azure-monitor-resource-logging-is-enabled-for-all-services-that-manage-store-or-secure-sensitive-data)
+[3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data](#3113-ensure-that-azure-monitor-resource-logging-is-enabled-for-all-services-that-manage-store-or-secure-confidential-data)
 
 [3.11.4 Ensure that logging for Azure Key Vault is 'Enabled'](#3114-ensure-that-logging-for-azure-key-vault-is-enabled)
 
@@ -296,7 +302,7 @@ Version 0.5 - April 8, 2024
 
 [4 Networking](#4-networking)
 
-[4.1 Encrypt Sensitive Data in Transit](#41-encrypt-sensitive-data-in-transit)
+[4.1 Encrypt Confidential Data in Transit](#41-encrypt-confidential-data-in-transit)
 
 [4.1.1 Ensure No HTTPS or SSL Proxy Load Balancers Permit SSL Policies With Weak Cipher Suites](#411-ensure-no-https-or-ssl-proxy-load-balancers-permit-ssl-policies-with-weak-cipher-suites)
 
@@ -339,13 +345,13 @@ Version 0.5 - April 8, 2024
 
 [5.2.1 Ensure Default Network Access Rule for Storage Accounts is Set to Deny](#521-ensure-default-network-access-rule-for-storage-accounts-is-set-to-deny)
 
-[5.3 Encrypt Sensitive Data in Transit](#53-encrypt-sensitive-data-in-transit)
+[5.3 Encrypt Confidential Data in Transit](#53-encrypt-confidential-data-in-transit)
 
 [5.3.1 Ensure that 'Secure transfer required' is set to 'Enabled'](#531-ensure-that-secure-transfer-required-is-set-to-enabled)
 
 [5.3.2 Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2"](#532-ensure-the-minimum-tls-version-for-storage-accounts-is-set-to-version-12)
 
-[5.4 Encrypt Sensitive Data at Rest](#54-encrypt-sensitive-data-at-rest)
+[5.4 Encrypt Confidential Data at Rest](#54-encrypt-confidential-data-at-rest)
 
 [5.4.1 Ensure EBS Volume Encryption is Enabled in all Regions](#541-ensure-ebs-volume-encryption-is-enabled-in-all-regions)
 
@@ -381,7 +387,7 @@ Version 0.5 - April 8, 2024
 
 [6.2.1 Ensure 'external scripts enabled' database flag for Cloud SQL SQL Server instance is set to 'off'](#621-ensure-external-scripts-enabled-database-flag-for-cloud-sql-sql-server-instance-is-set-to-off)
 
-[6.3 Encrypt Sensitive Data in Transit](#63-encrypt-sensitive-data-in-transit)
+[6.3 Encrypt Confidential Data in Transit](#63-encrypt-confidential-data-in-transit)
 
 [6.3.1 Ensure 'Enforce SSL connection' is set to 'ENABLED' for PostgreSQL Database Server](#631-ensure-enforce-ssl-connection-is-set-to-enabled-for-postgresql-database-server)
 
@@ -391,7 +397,7 @@ Version 0.5 - April 8, 2024
 
 [6.3.4 Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL](#634-ensure-that-the-cloud-sql-database-instance-requires-all-incoming-connections-to-use-ssl)
 
-[6.4 Encrypt Sensitive Data at Rest](#64-encrypt-sensitive-data-at-rest)
+[6.4 Encrypt Confidential Data at Rest](#64-encrypt-confidential-data-at-rest)
 
 [6.4.1 Ensure that encryption-at-rest is enabled for RDS Instances](#641-ensure-that-encryption-at-rest-is-enabled-for-rds-instances)
 
@@ -473,7 +479,7 @@ Version 0.5 - April 8, 2024
 
 # Overview
 
-This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process sensitive data such as Personally Identifiable Information (PII) or other types of confidential information.
+This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-public data such as user data, user device data, company data, or other types of confidential information (excluding highly sensitive financial or medical PII).
 
 
 # Applicability
@@ -581,9 +587,9 @@ When software ceases to be supported, the maintainer of that software will no lo
 ---
 
 ### 1.2.1 Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime
-**Platform:** AWS 
+**Platform:** AWS
 
-**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. 
+**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
 **External Reference:** [AWS Security Hub Lambda.2](https://docs.aws.amazon.com/securityhub/latest/userguide/lambda-controls.html#lambda-2)
 
@@ -598,7 +604,7 @@ When software ceases to be supported, the maintainer of that software will no lo
 
 
 ```
-aws lambda list-functions --function-version ALL --region <region> --output text --query "Functions[?Runtime=='<RUNTIME_IDENTIFIER>'].FunctionArn" 
+aws lambda list-functions --function-version ALL --region <region> --output text --query "Functions[?Runtime=='<RUNTIME_IDENTIFIER>'].FunctionArn"
 ```
 
 
@@ -623,9 +629,9 @@ Evidence or test output indicates that no Lambda function is configured to use a
 ---
 
 ### 1.2.2 Ensure that all Azure Functions are configured to use a current (not deprecated) runtime
-**Platform:** Azure 
+**Platform:** Azure
 
-**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. 
+**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
 **External Reference:** Todo
 
@@ -642,7 +648,7 @@ Evidence or test output indicates that all Azure Functions are:
 1. Configured to use a supported (i.e., not unsupported) runtime host version
 2. Using a language version that is not past its EOL date
 
-Microsoft documentation contains the specific dates and version for supported languages and runtime modes: https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions	 
+Microsoft documentation contains the specific dates and version for supported languages and runtime modes: https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions
 
 
 ---
@@ -755,7 +761,7 @@ Evidence or test output indicates that -- if used to run the web app -- the deve
 
 ---
 
-### 1.2.5 Ensure that 'Java version' is the latest, if used to run the Web App 
+### 1.2.5 Ensure that 'Java version' is the latest, if used to run the Web App
 **Platform:** Azure
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
@@ -809,7 +815,7 @@ Evidence or test output indicates that -- if used to run the web app -- the deve
 
 ---
 
-### 1.2.6 Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App 
+### 1.2.6 Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App
 **Platform:** Azure
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
@@ -862,10 +868,10 @@ Evidence or test output indicates that HTTP 2.0 is enabled for each webapp.
 
 ---
 
-### 1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime 
+### 1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime
 **Platform:** Google
 
-**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. 
+**Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
 **External Reference:** Todo
 
@@ -879,13 +885,13 @@ Evidence or test output indicates that all Cloud Functions are configured to run
 
 
 ---
-## 1.3 Encrypt Sensitive Data in Transit
+## 1.3 Encrypt Confidential Data in Transit
 ### Description
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -893,7 +899,7 @@ Encryption protects sensitive data when transmitted over untrusted network conne
 
 ---
 
-### 1.3.1 Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service 
+### 1.3.1 Ensure Web App Redirects All HTTP traffic to HTTPS in Azure App Service
 **Platform:** Azure
 
 **Rationale:** Enabling HTTPS-only traffic will redirect all non-secure HTTP requests to HTTPS ports. HTTPS uses the TLS/SSL protocol to provide a secure connection which is both encrypted and authenticated. It is therefore important to support HTTPS for the security benefits.
@@ -998,7 +1004,7 @@ Evidence or test output indicates that each webapp is configured to require TLS 
 
 
 ---
-### 1.3.3 Ensure FTP deployments are Disabled 
+### 1.3.3 Ensure FTP deployments are Disabled
 **Platform:** Azure
 
 **Rationale:** Azure FTP deployment endpoints are public. An attacker listening to traffic on a wifi network used by a remote employee or a corporate network could see login traffic in clear-text which would then grant them full control of the code base of the app or service. This finding is more severe if User Credentials for deployment are set at the subscription level rather than using the default Application Credentials which are unique per App.
@@ -1066,7 +1072,7 @@ Evidence or test output indicates that no webapp is deployed with FtpsState of A
 
 ---
 
-### 1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances 
+### 1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances
 **Platform:** Google
 
 **Rationale:** Project-wide SSH keys are stored in Compute/Project-meta-data. Project wide SSH keys can be used to login into all the instances within the project. Using project-wide SSH keys eases the SSH key management but if compromised, poses the security risk which can impact all the instances within the project. It is recommended to use Instance specific SSH keys which can limit the attack surface if the SSH keys are compromised.
@@ -1103,12 +1109,12 @@ Evidence or test output indicates that every compute instance is configured to b
 ---
 
 
-## 1.4 Encrypt Sensitive Data at Rest
+## 1.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases containing confidential data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -1230,7 +1236,7 @@ Evidence or test output indicates that no compute instance is configured with CA
 ---
 
 
-## 1.6 Manage Default Accounts on Enterprise Assets and Software 
+## 1.6 Manage Default Accounts on Enterprise Assets and Software
 ### Description
 
 Manage default accounts on enterprise assets and software, such as root, administrator, and other pre-configured vendor accounts. Example implementations can include: disabling default accounts or making them unusable.
@@ -1657,18 +1663,7 @@ Without an incident response plan, an enterprise may not discover an attack in t
 **From Command Line:**
 
 
-
-1. List IAM policies, filter for the 'AWSSupportAccess' managed policy, and note the "Arn" element value:
-
-
-```
-aws iam list-policies --query "Policies[?PolicyName == 'AWSSupportAccess']"
-
-```
-
-
-
-2. Check if the 'AWSSupportAccess' policy is attached to any role:
+1. Check if the 'AWSSupportAccess' policy is attached to any role:
 
 
 ```
@@ -1677,8 +1672,7 @@ aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSSupport
 ```
 
 
-
-3. In Output, Ensure `PolicyRoles` does not return empty. 'Example: Example: PolicyRoles: [ ]'
+2. In the output, ensure that `PolicyRoles` is not empty (example: \"PolicyRoles\": []).
 
 If it returns empty then refer to the remediation in the CIS Benchmark.
 
@@ -1716,14 +1710,26 @@ As time goes by -- and processes and people change within an organization -- it'
 
 **Evidence**
 
-This activity can only be performed via the AWS Console, with a user who has permission to read and write Billing information (aws-portal:*Billing )
+Perform the following with a user who has permission to read and write Billing information (aws-portal:*Billing )
 
-
+**From Console:**
 
 1. Sign in to the AWS Management Console and open the `Billing and Cost Management` console at [https://console.aws.amazon.com/billing/home#/](https://console.aws.amazon.com/billing/home#/).
 2. On the navigation bar, choose your account name, and then choose `Account`.
 3. On the `Account Settings` page, review and verify the current details.
 4. Under `Contact Information`, review and verify the current details.
+
+**From Command Line:**
+
+
+
+1. Run the following command:
+
+
+```
+aws account get-contact-information
+
+```
 
 **Verification**
 
@@ -2067,7 +2073,7 @@ For each key vault, ensure that the output of the below command contains Key ID 
 
 
 ```
-az keyvault key list --vault-name <KEYVAULTNAME> --query '[*].{"kid":kid,"enabled":attributes.enabled,"expires":attributes.expires}' 
+az keyvault key list --vault-name <KEYVAULTNAME> --query '[*].{"kid":kid,"enabled":attributes.enabled,"expires":attributes.expires}'
 ```
 
 
@@ -2239,12 +2245,12 @@ Evidence or test output indicates that an expiration date is set for all secrets
 ---
 
 
-## 2.6 Encrypt Sensitive Data at Rest
+## 2.6 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -2383,7 +2389,7 @@ Run the following command:
 
 
 ```
-aws iam get-account-summary | grep "AccountAccessKeysPresent" 
+aws iam get-account-summary | grep "AccountAccessKeysPresent"
 ```
 
 
@@ -2414,58 +2420,24 @@ Perform the following to determine if access keys were created upon user creatio
 **From Console:**
 
 
-
 1. Login to the AWS Management Console
-2. Click `Services`
-3. Click `IAM`
-4. Click on a User where column `Password age` and `Access key age` is not set to `None`
-5. Click on `Security credentials` Tab
-6. Compare the user `Creation time` to the Access Key `Created` date.
-7. For any that match, the key was created during initial user setup.
-* Keys that were created at the same time as the user profile and do not have a last used date should be deleted. Refer to the remediation below.
+2. From the `Services` menu, click `Security, Identity, & Compliance` > `IAM`.
+3. In the navigation panel on the left, click `Access reports` > `Credential report`.
+4. Download a credential report
+5. Open the downloaded CSV report in spreadsheet software.
+6. Search for rows where the `password_enabled` column is `true` and either of the `access_key_1_last_rotated` or `access_key_2_last_rotated` columns are also not N/A.
+7. Compare the `user_creation_time` field of each such row to the `access_key_1_last_rotated` and `access_key_2_last_rotated` fields. If they match (within a few minutes), then the key was created during initial user setup.
 
-**From Command Line:**
-
-
-
-1. Run the following command (OSX/Linux/UNIX) to generate a list of all IAM users along with their access keys utilization:
-
-
-```
- aws iam generate-credential-report
-
- aws iam get-credential-report --query 'Content' --output text | base64 -d | cut -d, -f1,4,9,11,14,16
-
-```
-
-
-
-2. The output of this command will produce a table similar to the following:
-
-
-```
-user,password_enabled,access_key_1_active,access_key_1_last_used_date,access_key_2_active,access_key_2_last_used_date
- elise,false,true,2015-04-16T15:14:00+00:00,false,N/A
- brandon,true,true,N/A,false,N/A
- rakesh,false,false,N/A,false,N/A
- helene,false,true,2015-11-18T17:47:00+00:00,false,N/A
- paras,true,true,2016-08-28T12:04:00+00:00,true,2016-03-04T10:11:00+00:00
- anitha,true,true,2016-06-08T11:43:00+00:00,true,N/A 
-
-```
-
-
-
-3. For any user having `password_enabled` set to `true` AND `access_key_last_used_date` set to `N/A` then refer to the remediation in the CIS Benchmark.
+* Any access keys that do not pass the audit should be deleted following the remediation procedure in the CIS Benchmark.
 
 **Verification**
 
-Evidence or test output indicates that no user exists for which: (1) password enabled is set to true, and (2) an access key that has never been used exists for that user.
+Evidence or test output indicates that no access keys exist that were created during initial user setup exist for any IAM user that has a console password
 
 
 ---
 
-### 2.7.3 Ensure IAM policies that allow full "\*:\*" administrative privileges are not attached 
+### 2.7.3 Ensure IAM policies that allow full "\*:\*" administrative privileges are not attached
 **Platform:** AWS
 
 **Rationale:** It's more secure to start with a minimum set of permissions and grant additional permissions as necessary, rather than starting with permissions that are too lenient and then trying to tighten them later.
@@ -2508,7 +2480,7 @@ Perform the following to determine what policies are created:
 
 **Verification**
 
-Evidence or test output indicates that no customer-managed IAM policy that allows full administrative privileges are attached (i.e., in effect within the AWS account). Note that inline and AWS-manged policies are exempt from this requirement.
+Evidence or test output indicates that no customer-managed IAM policy that allows full administrative privileges are attached (i.e., in effect within the AWS account). Note that inline and AWS-managed policies are exempt from this requirement.
 
 
 ---
@@ -2615,7 +2587,7 @@ Evidence or test output indicates that IAM users are not assigned the service ac
 ### 2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible
 **Platform:** Google
 
-**Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if sensitive data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed.
+**Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if confidential data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed.
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.9
 
@@ -2811,20 +2783,21 @@ Perform the following to determine if access keys are rotated as prescribed:
 1. Go to Management Console ([https://console.aws.amazon.com/iam](https://console.aws.amazon.com/iam))
 2. Click on `Users`
 3. Click `setting` icon
-4. Select `Console last sign-in`
-5. Click `Close`
-6. Ensure that the `Access key age` is less than 90 days ago. note) `None` in the `Access key age` means the user has not used the access key.
+4. Ensure \"Active key age\" is enabled within \"Visible Columns\"
+5. Close the preferences pane
+6. Ensure that the Active key age column for every user is either "-" (indicating that there is no active access key) or a value of 90 days or less.
 
 **From Command Line:**
 
+1. Generate and retrieve an IAM credential report using the following commands:
 
 ```
 aws iam generate-credential-report
 aws iam get-credential-report --query 'Content' --output text | base64 -d
 ```
 
-
-The `access_key_1_last_rotated` and the `access_key_2_last_rotated` fields in this file note the date and time, in ISO 8601 date-time format, when the user's access key was created or last changed. If the user does not have an active access key, the value in this field is N/A (not applicable).
+2. For each row in the report, check if `access_key_1_active` is `true`. If so, verify that `access_key_1_last_rotated` (a date in ISO 8601 date-time format) lies within the last 90 days.
+3. For each row in the report, check if `access_key_2_active` is `true`. If so, verify that `access_key_2_last_rotated` lies within the last 90 days.
 
 **Verification**
 
@@ -2873,7 +2846,7 @@ Perform the following to ensure the password policy is configured as prescribed:
 
 
 ```
-aws iam get-account-password-policy 
+aws iam get-account-password-policy
 ```
 
 
@@ -2931,7 +2904,7 @@ Ensuring that dormant accounts are disabled when they're no longer needed reduce
 
 ---
 
-### 2.10.1 Ensure credentials unused for 45 days or greater are disabled 
+### 2.10.1 Ensure credentials unused for 45 days or greater are disabled
 **Platform:** AWS
 
 **Rationale:** Disabling or removing unnecessary credentials will reduce the window of opportunity for credentials associated with a compromised or abandoned account to be used.
@@ -2993,7 +2966,7 @@ Evidence or test output indicates that no dormant credentials exist as defined b
 
 
 ---
-### 2.10.2 Ensure Guest Users Are Reviewed on a Regular Basis 
+### 2.10.2 Ensure Guest Users Are Reviewed on a Regular Basis
 **Platform:** Azure
 
 **Rationale:** Guest users in the Azure AD are generally required for collaboration purposes in Office 365, and may also be required for Azure functions in enterprises with multiple Azure tenants. Guest users are typically added outside your employee on-boarding/off-boarding process and could potentially be overlooked indefinitely, leading to a potential vulnerability. To prevent this, guest users should be reviewed on a regular basis. During this audit, guest users should also be determined to not have administrative privileges.
@@ -3132,7 +3105,7 @@ Evidence or test output indicates that the `Notify all admins when other admins 
 ### 2.11.3 Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes'
 **Platform:** Azure
 
-**Rationale:** The Azure AD administrative portal has sensitive data and permission settings. All non-administrators should be prohibited from accessing any Azure AD data in the administration portal to avoid exposure.
+**Rationale:** The Azure AD administrative portal has accesss to confidential data and permission settings. All non-administrators should be prohibited from accessing any Azure AD data in the administration portal to avoid exposure.
 
 **External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.17
 
@@ -3272,7 +3245,7 @@ Centralizing makes administration simpler and therefore reduces risks related to
 
 ---
 
-### 2.12.1 Ensure that Corporate Login Credentials are Used 
+### 2.12.1 Ensure that Corporate Login Credentials are Used
 **Platform:** Google
 
 **Rationale:** It is recommended fully-managed corporate Google accounts be used for increased visibility, auditing, and controlling access to Cloud Platform resources. Email accounts based outside of the user's organization, such as personal accounts, should not be used for business purposes.
@@ -3295,7 +3268,7 @@ Also list the accounts added on each folder:
 
 
 ```
-gcloud resource-manager folders get-iam-policy FOLDER_ID 
+gcloud resource-manager folders get-iam-policy FOLDER_ID
 ```
 
 
@@ -3403,7 +3376,7 @@ Evidence or test output indicates that the `Number of methods required to reset 
 
 ---
 
-### 2.14.2 Ensure that 'Require Multi-Factor Authentication to register or join devices with Azure AD' is set to 'Yes' 
+### 2.14.2 Ensure that 'Require Multi-Factor Authentication to register or join devices with Azure AD' is set to 'Yes'
 **Platform:** Azure
 
 **Rationale:** Multi-factor authentication is recommended when adding devices to Azure AD. When set to `Yes`, users who are adding devices from the internet must first use the second method of authentication before their device is successfully added to the directory. This ensures that rogue devices are not added to the domain using a compromised user account. _Note:_ Some Microsoft documentation suggests using conditional access policies for joining a domain from certain whitelisted networks or devices. Even with these in place, using Multi-Factor Authentication is still recommended, as it creates a process for review before joining the domain.
@@ -3510,7 +3483,7 @@ Evidence or test output indicates that `MFA Status is `Enabled` for all privileg
 
 ---
 
-### 2.14.4 Ensure that 'Allow users to remember multi-factor authentication on devices they trust' is Disabled 
+### 2.14.4 Ensure that 'Allow users to remember multi-factor authentication on devices they trust' is Disabled
 **Platform:** Azure
 
 **Rationale:** Remembering Multi-Factor Authentication (MFA) for devices and browsers allows users to have the option to bypass MFA for a set number of days after performing a successful sign-in using MFA. This can enhance usability by minimizing the number of times a user may need to perform two-step verification on the same device. However, if an account or device is compromised, remembering MFA for trusted devices may affect security. Hence, it is recommended that users not be allowed to bypass MFA.
@@ -3537,7 +3510,7 @@ Evidence or test output indicates that `Allow users to remember MFA on devices t
 
 ---
 
-### 2.14.5 Ensure that A Multi-factor Authentication Policy Exists for All Users 
+### 2.14.5 Ensure that A Multi-factor Authentication Policy Exists for All Users
 **Platform:** Azure
 
 **Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
@@ -3564,7 +3537,7 @@ Evidence or test output indicates that a MFA policy exists for all users.
 
 ---
 
-### 2.14.6 Ensure Multi-factor Authentication is Required for Risky Sign-ins 
+### 2.14.6 Ensure Multi-factor Authentication is Required for Risky Sign-ins
 **Platform:** Azure
 
 **Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
@@ -3590,7 +3563,7 @@ Evidence or test output indicates that MFA is required for risky sign ins.
 
 ---
 
-### 2.14.7 Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts 
+### 2.14.7 Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts
 **Platform:** Google
 
 **Rationale:** Multi-factor authentication requires more than one mechanism to authenticate a user. This secures user logins from attackers exploiting stolen or weak credentials.
@@ -3615,7 +3588,7 @@ Evidence or test output indicates that MFA is enabled for all non service accoun
 
 ---
 
-### 2.14.8 Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users 
+### 2.14.8 Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users
 **Platform:** Azure
 
 **Rationale:** Multi-factor authentication requires an individual to present a minimum of two separate forms of authentication before access is granted. Multi-factor authentication provides additional assurance that the individual attempting to gain access is who they claim to be. With multi-factor authentication, an attacker would need to compromise at least two different authentication mechanisms, increasing the difficulty of compromise and thus reducing the risk.**
@@ -3689,7 +3662,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 
 ---
 
-### 2.15.1 Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups 
+### 2.15.1 Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups
 **Platform:** Azure
 
 **Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative accounts to authenticated personnel.
@@ -3760,7 +3733,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 
 ---
 
-### 2.16.1 Ensure MFA is enabled for the 'root' user account 
+### 2.16.1 Ensure MFA is enabled for the 'root' user account
 **Platform:** AWS
 
 **Rationale:** Enabling MFA provides increased security for console access as it requires the authenticating principal to possess a device that emits a time-sensitive key and have knowledge of a credential.
@@ -3883,7 +3856,7 @@ Perform the following to determine if an inline policy is set or a policy is dir
 
 
 ```
- aws iam list-users --query 'Users[*].UserName' --output text 
+ aws iam list-users --query 'Users[*].UserName' --output text
 
 ```
 
@@ -3894,7 +3867,7 @@ Perform the following to determine if an inline policy is set or a policy is dir
 
 ```
  aws iam list-attached-user-policies --user-name <iam_user>
- aws iam list-user-policies --user-name <iam_user> 
+ aws iam list-user-policies --user-name <iam_user>
 
 ```
 
@@ -3988,7 +3961,7 @@ Tools must be tuned to reduce the prevalence of both false negatives and false p
 
 ---
 
-### 3.2.1 Ensure That 'Notify about alerts with the following severity' is Set to 'High' 
+### 3.2.1 Ensure That 'Notify about alerts with the following severity' is Set to 'High'
 **Platform:** Azure
 
 **Rationale:** Enabling security alert emails ensures that security alert emails are received from Microsoft. This ensures that the right people are aware of any potential security issues and are able to mitigate the risk.
@@ -4117,17 +4090,17 @@ Evidence or test output indicates that a security POC is subscribed to security 
 ---
 
 
-## 3.4 Log Sensitive Data Access
+## 3.4 Log Confidential Data Access
 
 
 ### Description
 
-Log sensitive data access, including modification and disposal.
+Log confidential data access, including modification and disposal.
 
 
 ### Rationale
 
-Organizations need reliable forensic information about access, modification, and deletion of sensitive data.
+Organizations need reliable forensic information about access, modification, and deletion of confidential data.
 
 
 ### Audit
@@ -4157,6 +4130,7 @@ Perform the following ensure the CloudTrail S3 bucket has access logging is enab
 5. For each bucket noted in step 3, click on a target S3 Bucket.
 6. Click on `Properties`
 7. In the `Server access logging` section, verify that server access logging is `Enabled`
+8. Repeat the above steps for each in-use region
 
 **From Command Line:**
 
@@ -4166,7 +4140,7 @@ Perform the following ensure the CloudTrail S3 bucket has access logging is enab
 
 
 ```
-aws cloudtrail describe-trails --query 'trailList[*].S3BucketName' 
+aws cloudtrail describe-trails --query 'trailList[*].S3BucketName'
 
 ```
 
@@ -4194,10 +4168,12 @@ Sample Output for a bucket with logging enabled:
 }
 ```
 
+3. Repeat the above steps for each in-use region.
+
 
 **Verification**
 
-Evidence or test output indicates that all S3 buckets containing sensitive data have access logging enabled with a CloudTrail destination.
+Evidence or test output indicates that all S3 buckets containing confidential data have access logging enabled with a CloudTrail destination.
 
 
 ---
@@ -4219,7 +4195,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 
 ---
 
-### 3.5.1 Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible 
+### 3.5.1 Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible
 **Platform:** AWS
 
 **Rationale:** Allowing public access to CloudTrail log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.
@@ -4242,6 +4218,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 6. Click on the `Permissions` tab.
 7. In the `Bucket policy` section, ensure that there is no statement with the `Effect` of `Allow` with a `Principal` of either `"\*"` or `{"AWS": "\*"}` unless it also has a suitable condition in place to restrict access, such as `aws:PrincipalOrgID`.
 8. In the `Access control list (ACL)` section, that no permissions for either `Objects` or `Bucket ACL` are granted to either `Everyone` or `Authenticated users group`.
+9. Repeat the above steps for each in-use region
 
 **From Command Line:**
 
@@ -4281,7 +4258,7 @@ Perform the following to determine if any public access is granted to an S3 buck
 
 
 ```
- aws s3api get-bucket-policy --bucket <s3_bucket_for_cloudtrail> 
+ aws s3api get-bucket-policy --bucket <s3_bucket_for_cloudtrail>
 
 ```
 
@@ -4290,6 +4267,8 @@ Perform the following to determine if any public access is granted to an S3 buck
 5. Ensure the policy does not contain a `Statement` having an `Effect` set to `Allow` and a `Principal` set to "*" or {"AWS": "*"}. Additionally, check to see whether a condition has been added to the bucket policy covering `aws:PrincipalOrgID`, as having this (in the StringEquals or StringEqualsIgnoreCase) would restrict access to only the named Org ID.
 
 **Note:** Principal set to "*" or {"AWS": "*"}, without any conditions, allows anonymous access.
+
+6. Repeat the above steps for each in-use region
 
 **Verification**
 
@@ -4709,7 +4688,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
 ```
-aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
 ```
 
 
@@ -4728,7 +4707,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 ---
 
-### 3.9.2 Ensure usage of 'root' account is monitored 
+### 3.9.2 Ensure usage of 'root' account is monitored
 **Platform:** AWS
 
 **Rationale:** Monitoring for 'root' account logins will provide visibility into the use of a fully privileged account and an opportunity to reduce the use of it.
@@ -4823,7 +4802,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -4937,7 +4916,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -4980,7 +4959,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
    * Ensure Identified Multi region CloudTrail is active
 
-   
+
    ```
    aws cloudtrail get-trail-status --name <Name of a Multi-region CloudTrail>
    ```
@@ -5040,7 +5019,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -5145,7 +5124,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -5250,7 +5229,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -5269,7 +5248,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 ---
 
-### 3.9.7 Ensure route table changes are monitored 
+### 3.9.7 Ensure route table changes are monitored
 **Platform:** AWS
 
 **Rationale:** CloudWatch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
@@ -5354,7 +5333,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 7. Ensure there is at least one active subscriber to the SNS topic
 
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -5459,7 +5438,7 @@ If you are using CloudTrails and CloudWatch, perform the following to ensure tha
 
 
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -5567,9 +5546,9 @@ If you are using CloudTrails and CloudWatch, perform the following:
 `Note the AlarmActions value - this will provide the SNS topic ARN value.
 7. Ensure there is at least one active subscriber to the SNS topic:
 
-   
+
    ```
-   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn> 
+   aws sns list-subscriptions-by-topic --topic-arn <sns_topic_arn>
    ```
 
 
@@ -5713,7 +5692,7 @@ Each VPC Network should be associated with a DNS policy with logging enabled.
 ## 3.10 Collect Audit Logs
 ### Description
 
-Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.
+Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets and that logs are retained for at least a minimum period of time.
 
 
 ### Rationale
@@ -5733,40 +5712,7 @@ Having log files of what actions have taken place by users and also system event
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.2
 
-**Evidence**
-
-**From Google Cloud Console**
-
-
-
-1. Go to `Logs Router` by visiting [https://console.cloud.google.com/logs/router](https://console.cloud.google.com/logs/router).
-2. For every sink, click the 3-dot button for Menu options and select `View sink details`.
-3. Ensure there is at least one sink with an `empty` Inclusion filter.
-4. Additionally, ensure that the resource configured as `Destination` exists.
-
-**From Google Cloud CLI**
-
-
-
-1. Ensure that a sink with an `empty filter` exists. List the sinks for the project, folder or organization. If sinks are configured at a folder or organization level, they do not need to be configured for each project:
-
-
-```
-gcloud logging sinks list --folder=FOLDER_ID | --organization=ORGANIZATION_ID | --project=PROJECT_ID
-```
-
-
-The output should list at least one sink with an `empty filter`.
-
-
-
-2. Additionally, ensure that the resource configured as `Destination` exists.
-
-See [https://cloud.google.com/sdk/gcloud/reference/beta/logging/sinks/list](https://cloud.google.com/sdk/gcloud/reference/beta/logging/sinks/list) for more information.
-
-**Verification**
-
-Evidence or test output indicates that log sinks are configured for all log entries where required to satisfy the organization's log retention period.
+**Status:** This requirement has been withdrawn in favor of 3.10.5.
 
 
 ---
@@ -5798,11 +5744,11 @@ Evidence or test output indicates that log sinks are configured for all log entr
 
 
 ```
-(protoPayload.serviceName="cloudresourcemanager.googleapis.com") 
-AND (ProjectOwnership OR projectOwnerInvitee) 
-OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="REMOVE" 
-AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner") 
-OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="ADD" 
+(protoPayload.serviceName="cloudresourcemanager.googleapis.com")
+AND (ProjectOwnership OR projectOwnerInvitee)
+OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="REMOVE"
+AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner")
+OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="ADD"
 AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner")
 ```
 
@@ -5835,11 +5781,11 @@ gcloud logging metrics list --format json
 
 
 ```
-(protoPayload.serviceName="cloudresourcemanager.googleapis.com") 
-AND (ProjectOwnership OR projectOwnerInvitee) 
-OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="REMOVE" 
-AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner") 
-OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="ADD" 
+(protoPayload.serviceName="cloudresourcemanager.googleapis.com")
+AND (ProjectOwnership OR projectOwnerInvitee)
+OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="REMOVE"
+AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner")
+OR (protoPayload.serviceData.policyDelta.bindingDeltas.action="ADD"
 AND protoPayload.serviceData.policyDelta.bindingDeltas.role="roles/owner")
 
 ```
@@ -5982,9 +5928,9 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 
 ```
-resource.type="iam_role" 
-AND (protoPayload.methodName="google.iam.admin.v1.CreateRole" 
-OR protoPayload.methodName="google.iam.admin.v1.DeleteRole" 
+resource.type="iam_role"
+AND (protoPayload.methodName="google.iam.admin.v1.CreateRole"
+OR protoPayload.methodName="google.iam.admin.v1.DeleteRole"
 OR protoPayload.methodName="google.iam.admin.v1.UpdateRole")
 ```
 
@@ -6053,11 +5999,102 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 ---
 
+### 3.10.5 Ensure That Audit Logs are retained for a Minimum of 90 Days
+**Platform:** Google
+
+**Rationale:** It is necesary to retain logs for a minimum time frame for security purposes (e.g., looking for evidence of exploitation given a potential vulnerability)
+
+**External Reference:** CIS Controls v8, Section 8.10
+
+**Evidence**
+
+**From Console:**
+
+1. Open the `Cloud Logging Console` at [https://console.cloud.google.com/logs](https://console.cloud.google.com/logs)
+2. Select `Configure` > `Logs Storage`
+3. For each log bucket that is used to store Audit Logs, open the bucket options menu and select `View bucket details`
+4. Check the `Retention period` value to ensure that it is set to a value >= 90 days
+
+**From Google Cloud CLI**
+
+1. List logging buckets
+```
+gcloud logging buckets list --project=<project-id> --format="json(name)"
+```
+2. For each bucket used for audit logs, call the `describe` command to fetch its retention period
+```
+gcloud logging buckets describe <bucket-id> --project=<project-id> --location=global --format=yaml(retentionDays)
+```
+3. Check the `Retention period` value to ensure that it is set to a value >= 90 days
+4. Repeat steps #1 and #2 for each GCP project
+
+**Verification**
+
+Evidence or test output indicates that buckets that store audit logs are configured with a retention period of 90 days or greater.
+
+
+---
+
+### 3.10.6 Ensure That Audit Logs are retained for a Minimum of 90 Days
+**Platform:** AWS
+
+**Rationale:** It is necesary to retain logs for a minimum time frame for security purposes (e.g., looking for evidence of exploitation given a potential vulnerability)
+
+**External Reference:** CIS Controls v8, Section 8.10
+
+**Evidence**
+
+**From Console:**
+1. Open the CloudWatch Console at [https://console.aws.amazon.com/cloudwatch/](https://console.aws.amazon.com/cloudwatch/)
+2. Navigate to `Logs` > `Log groups`
+3. Click on the name of each log group used for audit logs
+4. Check the `Retention` attribute value in the `Log Group Details` section and ensure that it is set to a value >= 90 days. `Never expire` is also valid.
+
+**From Command Line:**
+
+1. List log groups
+```
+aws logs describe-log-groups --output table --query "logGroups[*].logGroupName"
+```
+2. For each bucket used for audit logs, query the retention period
+```
+aws logs describe-log-groups --log-group-name-prefix <log group name> --query "logGroups[*].retentionInDays"
+```
+3. Check the `Retention period` value to ensure that it is set to a value >= 90 days
+4. Repeat steps above for each in-use region
+
+
+
+**Verification**
+
+Evidence or test output indicates that CloudWatch log groups that store audit logs are configured with a retention period of 90 days or greater.
+
+
+---
+
+### 3.10.7 Ensure That Audit Logs are retained for a Minimum of 90 Days
+**Platform:** Azure
+
+**Rationale:** It is necesary to retain logs for a minimum time frame for security purposes (e.g., looking for evidence of exploitation given a potential vulnerability)
+
+**External Reference:** CIS Controls v8, Section 8.10
+
+**Evidence**
+
+[Activity logs are retained for 90 days by default within Azure](https://learn.microsoft.com/en-us/azure/azure-monitor/essentials/activity-log-insights#retention-period), therefore no evidence is required when running in Azure.
+
+
+**Verification**
+
+No verification is required for this requirement, so long as Microsoft's default log retention period remains greater than or equal to this requirement's specified retention period.
+
+
+---
 
 ## 3.11 Collect Detailed Audit Logs
 ### Description
 
-Configure detailed audit logging for enterprise assets containing sensitive data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
+Configure detailed audit logging for enterprise assets containing confidential data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
 
 
 ### Rationale
@@ -6190,7 +6227,7 @@ Evidence or test output indicates that CloudTrail trails are integrated with Clo
 
 ---
 
-### 3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Sensitive Data
+### 3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data
 **Platform:** Azure
 
 **Rationale:** A lack of monitoring reduces the visibility into the data plane, and therefore an organization's ability to detect reconnaissance, authorization attempts or other malicious activity. Unlike Activity Logs, Resource Logs are not enabled by default. Specifically, without monitoring it would be impossible to tell which entities had accessed a data store that was breached. In addition, alerts for failed attempts to access APIs for Web Services or Databases are only possible when logging is enabled.
@@ -6444,7 +6481,7 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 
 ---
 
-### 3.11.7 Ensure that Activity Log Alert exists for Create or Update Network Security Group 
+### 3.11.7 Ensure that Activity Log Alert exists for Create or Update Network Security Group
 **Platform:** Azure
 
 **Rationale:** Monitoring for Create or Update Network Security Group events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
@@ -6648,7 +6685,7 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 
 ---
 
-### 3.11.11 Ensure that Activity Log Alert exists for Create or Update SQL Server Firewall Rule 
+### 3.11.11 Ensure that Activity Log Alert exists for Create or Update SQL Server Firewall Rule
 **Platform:** Azure
 
 **Rationale:** Monitoring for Create or Update SQL Server Firewall Rule events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
@@ -6856,17 +6893,17 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 # 4 Networking
 
 
-## 4.1 Encrypt Sensitive Data in Transit
+## 4.1 Encrypt Confidential Data in Transit
 
 
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -7022,7 +7059,7 @@ For each Google Cloud Platform project,
 
 
 ```
-gcloud config set project <Project-ID> 
+gcloud config set project <Project-ID>
 
 ```
 
@@ -7032,7 +7069,7 @@ gcloud config set project <Project-ID>
 
 
 ```
-gcloud compute networks list 
+gcloud compute networks list
 ```
 
 
@@ -7400,8 +7437,10 @@ Perform the following to determine if the account is configured as prescribed:
    * Select the network ACL
    * Click the `Inbound Rules` tab
    * Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0` and shows `ALLOW`
+4. Repeat the above steps for each in-use region
 
 **Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports
+
 
 **Verification**
 
@@ -7429,8 +7468,10 @@ Perform the following to determine if the account is configured as prescribed:
 4. Select the security group
 5. Click the `Inbound Rules` tab
 6. Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0`
+7. Repeat the above steps for each in-use region
 
 **Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports.
+
 
 **Verification**
 
@@ -7458,8 +7499,10 @@ Perform the following to determine if the account is configured as prescribed:
 4. Select the security group
 5. Click the `Inbound Rules` tab
 6. Ensure no rule exists that has a port range that includes port `22`, `3389`, or other remote server administration ports for your environment and has a `Source` of `::/0`
+7. Repeat the above steps for each in-use region
 
 **Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports.
+
 
 **Verification**
 
@@ -7616,15 +7659,15 @@ Evidence or test output indicates that all storage accounts are configured such 
 ---
 
 
-## 5.3 Encrypt Sensitive Data in Transit
+## 5.3 Encrypt Confidential Data in Transit
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -7725,12 +7768,12 @@ Evidence or test output indicates that all storage accounts are configured such 
 ---
 
 
-## 5.4 Encrypt Sensitive Data at Rest
+## 5.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -7806,6 +7849,7 @@ Evidence or test output indicates that all regions are configured such that EBS 
 2. Select `File Systems` from the left navigation panel.
 3. Each item on the list has a visible Encrypted field that displays data at rest encryption status.
 4. Validate that this field reads `Encrypted` for all EFS file systems in all AWS regions.
+5. Repeat the above steps for each in-use region
 
 **From CLI:**
 
@@ -7833,6 +7877,7 @@ aws efs describe-file-systems --region <region> --file-system-id <file-system-id
 
 
 4. The command output should return the file system encryption status true or false. If the returned value is `false`, the selected AWS EFS file system is not encrypted and if the returned value is `true`, the selected AWS EFS file system is encrypted.
+5. Repeat the above steps for each in-use region
 
 **Verification**
 
@@ -7942,9 +7987,9 @@ Output if Block Public access is enabled:
 ```
 {
  "PublicAccessBlockConfiguration": {
- "IgnorePublicAcls": true, 
- "BlockPublicPolicy": true, 
- "BlockPublicAcls": true, 
+ "IgnorePublicAcls": true,
+ "BlockPublicPolicy": true,
+ "BlockPublicAcls": true,
  "RestrictPublicBuckets": true
  }
 }
@@ -8007,7 +8052,7 @@ Evidence or test output indicates that `Public access level` is disabled for sto
 ### 5.5.3 Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible
 **Platform:** Google
 
-**Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any sensitive data. Hence, ensure that anonymous or public access to a bucket is not allowed.
+**Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any confidential data. Hence, ensure that anonymous or public access to a bucket is not allowed.
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 5.1
 
@@ -8367,17 +8412,17 @@ Evidence or test output indicates that Cloud SQL MySQL instance(s) have the exte
 ---
 
 
-## 6.3 Encrypt Sensitive Data in Transit
+## 6.3 Encrypt Confidential Data in Transit
 
 
 ### Description
 
-Encrypt sensitive data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
+Encrypt confidential data in transit. Example implementations can include: Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).
 
 
 ### Rationale
 
-Encryption protects sensitive data when transmitted over untrusted network connections.
+Encryption protects confidential data when transmitted over untrusted network connections.
 
 
 ### Audit
@@ -8527,7 +8572,7 @@ Evidence or test output indicates that all MySQL flexible database servers are c
 ### 6.3.4 Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL
 **Platform:** Google
 
-**Rationale:** SQL database connections if successfully trapped (MITM); can reveal sensitive data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances.
+**Rationale:** SQL database connections if successfully trapped (MITM); can reveal confidential data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances.
 
 **External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.4
 
@@ -8564,12 +8609,12 @@ Evidence or test output indicates that Cloud SQL database instance(s) are config
 ---
 
 
-## 6.4 Encrypt Sensitive Data at Rest
+## 6.4 Encrypt Confidential Data at Rest
 
 
 ### Description
 
-Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
+Encrypt confidential data at rest on servers, applications, and databases. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.
 
 
 ### Rationale
@@ -8825,7 +8870,7 @@ Evidence or test output indicates that no RDS instance allows Public Accessibili
 
 ---
 
-### 6.5.2 Ensure no Azure SQL Databases allow ingress from 0.0.0.0/0 (ANY IP) 
+### 6.5.2 Ensure no Azure SQL Databases allow ingress from 0.0.0.0/0 (ANY IP)
 **Platform:** Azure
 
 **Rationale:** Azure SQL Server includes a firewall to block access to unauthorized connections. More granular IP addresses can be defined by referencing the range of addresses available from specific data centers.
@@ -9523,6 +9568,8 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 5. Under the `Maintenance` section, search for the Auto Minor Version Upgrade status.
    * If the current status is set to `Disabled`, means the feature is not set and the minor engine upgrades released will not be applied to the selected RDS instance
 
+6. Repeat the above steps for each in-use region
+
 **From Command Line:**
 
 
@@ -9549,6 +9596,7 @@ aws rds describe-db-instances --region <regionName> --db-instance-identifier <db
 
 
 4. The command output should return the feature current status. If the current status is set to `true`, the feature is enabled and the minor engine upgrades will be applied to the selected RDS instance.
+5. Repeat the above steps for each in-use region
 
 **Verification**
 
@@ -9561,7 +9609,7 @@ Evidence or test output indicates that auto minor version update feature is enab
 ## 6.13 Collect Audit Logs
 ### Description
 
-Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.
+Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets and that logs are retained for at least a minimum period of time.
 
 
 ### Rationale
@@ -9729,7 +9777,7 @@ Once configured, logs may generate large volumes of data. Organizations must ens
 
 ---
 
-### 6.14.1 Ensure Server Parameter 'log_retention_days' is greater than 3 days for PostgreSQL Database Server 
+### 6.14.1 Ensure Server Parameter 'log_retention_days' is greater than 3 days for PostgreSQL Database Server
 **Platform:** Azure
 
 **Rationale:** Configuring `log_retention_days` determines the duration in days that `Azure Database for PostgreSQL` retains log files. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance.
@@ -9781,7 +9829,7 @@ Evidence or test output indicates that all PostgreSQL instances are configured w
 
 ### Description
 
-Configure detailed audit logging for enterprise assets containing sensitive data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
+Configure detailed audit logging for enterprise assets containing confidential data. Include event source, date, username, timestamp, source addresses, destination addresses, and other useful elements that could assist in a forensic investigation.
 
 
 ### Rationale
@@ -10054,7 +10102,7 @@ Run the command by providing `<INSTANCE_NAME>`. Ensure the value of the flag is 
 
 
 ```
-gcloud sql instances describe <INSTANCE_NAME> --format="json" | jq '.settings|.|.databaseFlags[]|select(.name=="cloudsql.enable_pgaudit")|.value' 
+gcloud sql instances describe <INSTANCE_NAME> --format="json" | jq '.settings|.|.databaseFlags[]|select(.name=="cloudsql.enable_pgaudit")|.value'
 ```
 
 
@@ -10068,7 +10116,7 @@ gcloud sql instances describe <INSTANCE_NAME> --format="json" | jq '.settings|.|
 
 
 ```
-SELECT * 
+SELECT *
 FROM pg_extension;
 
 ```
@@ -10117,7 +10165,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 ### 6.15.8 Database logging should be enabled
 **Platform:** AWS
 
-**Rationale:** RDS databases should have relevant logs enabled. Database logging provides detailed records of requests made to RDS. Database logs can assist with security and access audits and can help to diagnose availability issues. 
+**Rationale:** RDS databases should have relevant logs enabled. Database logging provides detailed records of requests made to RDS. Database logs can assist with security and access audits and can help to diagnose availability issues.
 
 **External Reference:** [AWS Security Hub - RDS.9](https://docs.aws.amazon.com/securityhub/latest/userguide/rds-controls.html#rds-9)
 

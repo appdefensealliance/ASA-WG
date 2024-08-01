@@ -26,7 +26,7 @@ Version 0.7 - May 25, 2024
 
    * 1.3 [Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
 
-       * 1.3.1 [Out of band verifier shall expire after 7 days.](#131-out-of-band-verifier-shall-expire-after-7-days)
+       * 1.3.1 [Out of band verifier shall expire in a reasonable timeframe.](#131-out-of-band-verifier-shall-expire-in-a-reasonable-timeframe)
 
        * 1.3.2 [Out of band verifier shall only be used once.](#132-out-of-band-verifier-shall-only-be-used-once)
 
@@ -96,7 +96,7 @@ Version 0.7 - May 25, 2024
 
        * 4.1.2 [Connections to and from the server shall use trusted TLS certificates.](#412-connections-to-and-from-the-server-shall-use-trusted-tls-certificates-where-internally-generated-or-self-signed-certificates-are-used-the-server-must-be-configured-to-only-trust-specific-internal-cas-and-specific-self-signed-certificates-all-others-should-be-rejected)
 
-       * 4.1.3 [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data)
+       *  [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data)
 
        * 4.1.4 [All cryptographic modules shall fail securely, and errors are handled in a way that does not enable Padding Oracle attacks.](#414-all-cryptographic-modules-shall-fail-securely-and-errors-are-handled-in-a-way-that-does-not-enable-padding-oracle-attacks)
 
@@ -185,6 +185,13 @@ TBD
 
 *Software Bill Of Material (SBOM)*
 A “software bill of materials” (SBOM) has emerged as a key building block in software security and software supply chain risk management. A SBOM is a nested inventory, a list of ingredients that make up software components. 
+
+# Dynamic Application Security Testing (DAST) Guidance
+Various App Defense Alliance (ADA) web profile requirements are designed to be tested and validated utilizing the [Burp Suite](https://portswigger.net/burp) DAST security tool (while employing the approved [ADA Burp Audit Scan Configuration](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/ADA%20Burp%20Audit%20Scan%20Configuration.json)).  These ADA DAST testing requirements must be confirmed within the context of an authenticated scan.   Testing labs will have the below options available to them to conduct a DAST scan from an authenticated state:
+   - Utilize [Burp Suite’s built in](https://portswigger.net/burp/documentation/scanner/authenticated-scanning) capabilities to authenticate with the target application.
+   - Manually append a valid authentication state (headers / tokens / cookies) to scan requests.
+   - Manually enumerate application functionality within Burp (while authenticated) to replicate spidering and then initiate scanning from those manually crawled pages & forms (including the previously utilized authenticated state).
+   - Utilize an alternative scanning tool (e.g., a different DAST product), so long as the lab can confirm that the tool covers the ADA's automated test cases from an authenticated state.
 
 # 1 Authentication
 ## 1.1 Implement strong password security measures
@@ -373,7 +380,7 @@ By ensuring that out of band verifiers are securely generated and managed, the r
 
 
 ---
-### 1.3.1 Out of band verifier shall expire after 7 days.
+### 1.3.1 Out of band verifier shall expire in a reasonable timeframe.
 External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 
@@ -400,7 +407,9 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 
 *L2 and l2*
 1. An ADA-approved external user authentication service may be used.
-2. If a non-ADA approved service is used, the out-of-band verifier shall expire after 7 days.
+2. If a non-ADA approved service is used, associated out-of-band verifiers shall expire in accordance with the below timeframes:
+   - Password reset verifiers (e.g., one time use email links) will expire after 7 days.
+   - MFA-related verifiers (e.g., TOTP codes) will expire after 30 minutes.
 
 
 ---
@@ -527,11 +536,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 
 ---
 # 2 Session Management
-## 2.1 URLs shall not expose sensitive information
+## 2.1 URLs shall not expose authentication material
 ### Description
-Web applications must never expose sensitive data within URL parameters. Sensitive data should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
+Web applications must never expose authentication material, such as passwords or session cookies, within URL parameters. Authentication material should be transmitted securely, such as within HTTP headers or cookies with appropriate security flags.
 ### Rationale
-Exposing sensitive data such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links.  This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access.
+Exposing authentication material such as session tokens in URLs significantly increases the risk of data loss and session hijacking. Attackers can easily intercept this data through browser history, network sniffing, or by tricking users into visiting malicious links. This vulnerability undermines data protection, the security of user sessions and makes the application susceptible to unauthorized access
 ### Audit
 
 
@@ -903,7 +912,7 @@ or;
 
 ---
 # 3 Access Control
-## 3.1 Implement access control mechanisms to protect sensitive data and APIs
+## 3.1 Implement access control mechanisms to protect confidential data and APIs
 ### Description
 Applications shall enforce robust access controls at a trusted service layer, ensuring data integrity and applying the principle of least privilege. This includes protecting user/data attributes, limiting user manipulation, failing securely during exceptions, defending against Insecure Direct Object References (IDOR), and using strong anti-CSRF and multi-factor authentication (MFA) for administrative functions.
 ### Rationale
@@ -1244,7 +1253,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.1
 
 ---
 # 4 Communications
-## 4.1 Protect sensitive data through strong cryptography 
+## 4.1 Protect confidential data through strong cryptography 
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -1289,8 +1298,14 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.1.2
 
 1. Test shall confirm that the application meets the TLS configuration defined in NIST SP.800-52r2.
 
+_Additional Context_
 
+The following are out of scope for TLS encryption:
 
+* Connections that are not used for security sensitive purposes (e.g. anonymized analytics)
+* Connections to local backend web servers
+* Unencrypted connections that have a valid justification provided
+  
 
 ---
 ### 4.1.2 Connections to and from the server shall use trusted TLS certificates. Where internally generated or self-signed certificates are used, the server must be configured to only trust specific internal CAs and specific self-signed certificates. All others should be rejected.
@@ -1331,7 +1346,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.2.1
 
 
 ---
-### 4.1.3 No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.
+### 4.1.3 No instances of weak cryptography which meaningfully impact the confidentiality or integrity of data.
 External Reference: ASVS Version 4.0.3 Requirement: 
 
 
@@ -1368,12 +1383,21 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 
 *L1*
-1. Disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2 shall not be present. 
 
+1. Developer evidence demonstrates that strong cryptography shall be implemented according to industry best practices.
 
 *L2*
-1. Disallowed encryption schemes or domain parameters as defined in NIST.SP.800-131Ar2 shall not be present. Cryptographic observations from manual validation will be made based on observed entropy.
 
+1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices.
+
+
+Additional Context
+
+Refer to SP.800-57p1r5 and SP.800-131Ar2 with 112 bit of security as baseline:
+
+Hashing: SHA-224 or better
+Digital signatures & public key encryption: (Key length no less than 2048 bits for factoring or 224 for ECC)
+Custom implementations: If the provider has a custom implementation of a library (open-source library) test is in scope, home-grown implementation requires further developer assurance.
 
 
 
@@ -1877,7 +1901,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Test Procedure**
 
 
-*L1 *
+*L1*
 1. Review provided evidence for adherence with the requirements.
 
 *L2*
@@ -2074,24 +2098,24 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 
 
 ---
-## 6.6 Sensitive user data is either not stored in browser storage or is deleted when the user logs out
+## 6.6 Securely clear client storage during logout
 ### Description
-Web applications should never store sensitive user data (e.g., passwords, credit card numbers, session tokens) in browser storage mechanisms like local storage or session storage. However, if data is stored in browser storage it must be deleted when the user logs out.
+Web applications should ensure that any confidential data or authentication material stored in the browser's local storage is deleted or otherwise rendered inaccessible when the user logs out.
 ### Rationale
-Browser storage is inherently accessible to client-side JavaScript, making it vulnerable to attacks like Cross-Site Scripting (XSS). Storing sensitive data here exposes it to potential theft or misuse by an attacker if they manage to inject malicious code.
+Properly deleting confidential data and authentication material after logout decreases the risk that an attacker with local access to the system will be able to compromise the data. This is particularly relevant in scenarios where users are logging in from shared systems or devices.
 ### Audit
 
 
 ---
-### 6.6.1 If data is stored in browser storage it shall not contain sensitive data.
-External Reference: ASVS Version 4.0.3 Requirement: 8.2.2
+### 6.6.1 Browser storage is securely cleared during logout
+External Reference: ASVS Version 4.0.3 Requirement: 8.2.3
 
 
 **Evidence**
 
 
 *L1*
-1. Provide a written description of what data (if any) is stored in browser storage.
+1. Provide a written description of what (if any) confidential data or authentication material is stored in the browser after user logout. 
 
 *L2*
 1. N/A (to be collected by labs)
@@ -2101,7 +2125,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 8.2.2
 
 
 *L1*
-1. Review provided evidence for adherence with the requirements
+1. Review provided evidence for adherence with the requirements.
 
 *L2*
 1. Verify application for adherence with the requirements as defined in WSTG-CLNT-12.
@@ -2110,15 +2134,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 8.2.2
 **Verification**
 
 
-*L1*
-1. Application shall not store sensitive data in browser storage.
-and;
-2. Sensitive data stored in browser storage shall be deleted when the user logs out.
-
-*L2*
-1. Application does not store sensitive data in browser storage.
-and;
-2. Verification shall confirm that application deletes sensitive data stored in browser storage when the user logs out.
+*L1 and L2*
+1. Confidential data and authentication material stored in browser storage shall be deleted when the user logs out.
 
 
 ---
