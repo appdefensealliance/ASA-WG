@@ -614,13 +614,13 @@ _L2_
 _L1_
 
 1. Verify that the application targets SDK > 24 or higher and user certificates are not trusted for connections that can carry sensitive data.
-2. If 3rd party networking libraries are used, verify via design documentation that user certificates are not trusted and hostname verification is enabled.
+2. If the system trusted CA store is not used, verify via design documentation that alternative mechanisms to validate trust such as certificate pinning are used.
 
 _L2_
 
 1. Verify that network connections carrying sensitive data are using trusted certificates and the connection is correctly validated as per  [MASTG-TEST-0021](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-NETWORK/MASTG-TEST-0021.md)
     * Verify that the app does not trust user installed certificates.
-    * If the system trusted CA store is not used, alternative mechanisms to validate trust such as certificate pinning may be used.
+    * If the system trusted CA store is not used, alternative mechanisms to validate trust such as certificate pinning shall be used.
 
 _Additional Context_
 
@@ -1775,13 +1775,13 @@ _L2_
 _L1_
 
 1. If the application targets iOS 9 or higher, verify that it does not trust user certificates for connections that can carry sensitive data.
-2. If 3rd party networking libraries are used, verify via design documentation that user certificates are not trusted and hostname verification is enabled.
+2. If the system trusted CA store is not used, verify via design documentation that alternative mechanisms to validate trust such as certificate pinning are used.
 
 _L2_
 
 1. Verify that network connections carrying sensitive data are using trusted certificates and the connection is correctly validated as per  [MASTG-TEST-0067](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-NETWORK/MASTG-TEST-0067.md)
     1. Verify that the app does not trust user installed certificates.
-    2. If the system trusted CA store is not used, alternative mechanisms to validate trust such as certificate pinning may be used.
+    2. If the system trusted CA store is not used, alternative mechanisms to validate trust such as certificate pinning shall be used.
 
 _Additional Context_
 
