@@ -46,7 +46,7 @@ Version 0.7 - May 25, 2024
 
        * 2.2.2 [The application shall provide the option (or acts by default) to terminate all other active sessions, including stateful refresh tokens, after a successful password change (including change via password reset/recovery), and that this is effective across the application, federated login (if present), and any relying parties.](#222-the-application-shall-provide-the-option-or-acts-by-default-to-terminate-all-other-active-sessions-including-stateful-refresh-tokens-after-a-successful-password-change-including-change-via-password-resetrecovery-and-that-this-is-effective-across-the-application-federated-login-if-present-and-any-relying-parties)
 
-       * 2.2.3 [Stateless authentication tokens must expire within 24 hours of being issued](#223-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued)
+       * 2.2.3 [Non-revocable stateless authentication tokens must expire within 24 hours of being issued](#223-non-revocable-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued)
 
    * 2.3 [Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
 
@@ -681,7 +681,7 @@ N/A (to be collected by labs)
 
 
 ---
-### 2.2.3 Stateless authentication tokens must expire within 24 hours of being issued
+### 2.2.3 Non-revocable stateless authentication tokens must expire within 24 hours of being issued
 External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 
 
@@ -709,10 +709,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 
 
 *L1*
-1. Stateless authentication tokens shall have an expiration time within 24 hours of being issued.
+1. Non-revocable stateless authentication tokens shall have an expiration time within 24 hours of being issued.
 
 *L2*
-1. Stateless authentication tokens shall have an expiration time within 24 hours of being issued.
+1. Non-revocable stateless authentication tokens shall have an expiration time within 24 hours of being issued.
 
 
 ---
