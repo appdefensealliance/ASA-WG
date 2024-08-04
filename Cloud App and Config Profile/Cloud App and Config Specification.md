@@ -4,19 +4,26 @@
 Version 0.5 - April 8, 2024
 
 # Contributors
-The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
-* Alex Duff (ASA WG Chair)
-* Brooke Davis (ASA WG Vice Chair)
-* Brad Ree
-* Cody Martin
-* Juan Manuel Martinez Hernandez
-* Julia McLaughlin
-* Rennie deGraaf
-* Rupesh Nair
-* Soledad Antelada Toledano
-* Tony Balkan
-* Viktor Sytnik
+### Application Security Assessment Working Group Leads
+* Alex Duff (Meta) - ASA WG Chair
+* Brooke Davis (Google) - ASA WG Vice Chair
+
+### Cloud Profile Leads
+* Alex Duff (Meta)
+* Brad Ree (Google)
+
+### Contributors
+* Cody Martin (Leviathan)
+* Juan Manuel Martinez Hernandez (Dekra)
+* Julia McLaughlin (Google)
+* Justin Gerace (Meta)
+* Rennie deGraaf (NCC Group)
+* Rupesh Nair (Netsentries )
+* Soledad Antelada Toledano (Google)
+* Tony Balkan (Microsoft)
+* Viktor Sytnik (Leviathan)
 
 # Table of Contents
 

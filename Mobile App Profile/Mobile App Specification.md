@@ -10,31 +10,39 @@ Version 0.7 - June 14, 2024
 | 0.5 | 5/10/24 | Initial draft based on Mobile App Tiger Team review of MASVS specification |
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
 
-## Contributors
+## Acknowledgements
 
-The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
-* Alex Duff (ASA WG Chair)
-* Brooke Davis (ASA WG Vice Chair)
-* Anna Bhirud
-* Antonio Nappa
-* Brad Ree
-* Cody Martin
-* Corey Gagnon
-* Eugene Liderman
-* Joel Scambray
-* Jorge Damian
-* José María Santos López
-* Juan Manuel Martinez Hernandez
-* Jullian Gerhart
-* Olivier Tuchon
-* Peter Mueller
-* Riccardo Poffo
-* Rupesh Nair
-* Syrone Hanks II
-* Thomas Cannon
-* Tim Bolton
-* Yiannis Kozyrakis
+### Application Security Assessment Working Group Leads
+* Alex Duff (Meta) - ASA WG Chair
+* Brooke Davis (Google) - ASA WG Vice Chair
+
+### Mobile Profile Leads
+* Brooke Davis (Google)
+* Tim Bolton (Meta)
+
+### Contributors
+
+* Anna Bhirud (Google)
+* Antonio Nappa (Zimperium)
+* Brad Ree (Google)
+* Christian Schnell (Zimperium)
+* Cody Martin (Leviathan)
+* Corey Gagnon (Meta)
+* Eugene Liderman (Google)
+* Joel Scambray (NCC Group)
+* Jorge Damian (NowSecure)
+* José María Santos López (Dekra)
+* Juan Manuel Martinez Hernandez (Dekra)
+* Jullian Gerhart (NCC Group)
+* Olivier Tuchon (Google)
+* Peter Mueller (Praetorian)
+* Riccardo Poffo (Mobisec)
+* Rupesh Nair (Netsentries)
+* Syrone Hanks II (Now Secure)
+* Thomas Cannon (NCC Group)
+* Yiannis Kozyrakis (Meta)
 
 ## Introduction
 
