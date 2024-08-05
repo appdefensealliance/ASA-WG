@@ -10,31 +10,67 @@ Version 0.7 - June 14, 2024
 | 0.5 | 5/10/24 | Initial draft based on Mobile App Tiger Team review of MASVS specification |
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
 
-## Contributors
+## Acknowledgements
 
-The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
-* Alex Duff (ASA WG Chair)
-* Brooke Davis (ASA WG Vice Chair)
-* Anna Bhirud
-* Antonio Nappa
-* Brad Ree
-* Cody Martin
+### Application Security Assessment Working Group Leads
+* Alex Duff (Meta) - ASA WG Chair
+* Brooke Davis (Google) - ASA WG Vice Chair
+
+### Mobile Profile Leads
+* Brooke Davis (Google)
+* Tim Bolton (Meta)
+
+### Contributors
+* Alex Duff (Meta)
+* Ana Vargas
+* Anna Bhirud (Google)
+* Antonio Nappa (Zimperium)
+* Anushree Shetty  (KPMG)
+* Artem Chornyi
+* Artur Gartvikh
+* Asaf Peleg (Zimperium)
+* Bhairavi Mehta (TAC Security)
+* Brad Ree (Google)
+* Brooke Davis (Google)
+* Carlos Holguera
+* Chris Cinnamo (Zimperium)
+* Christian Schnell (Zimperium)
+* Cody Martin (Leviathan Security)
 * Corey Gagnon
-* Eugene Liderman
-* Joel Scambray
+* Eugene Liderman (Google)
+* Gianluca Braga (Zimperium)
+* Joel Scambray (NCC Group)
+* Jon Paterson (Zimperium)
 * Jorge Damian
+* Jorge Wallace Ruiz (Dekra)
 * José María Santos López
 * Juan Manuel Martinez Hernandez
-* Jullian Gerhart
+* Julia McLaughlin (Google)
+* Jullian Gerhart (NCC Group)
+* Kelly Albrink (Bishop Fox)
+* Mamachan Anish (KPMG)
+* Mark Stribling (Leviathan Security)
+* Mateo Morales Amador
+* Michael Krueger
+* Michael Whiteman (Meta)
+* Nazariy Haliley (Bishop Fox)
+* Nicole Weisenbach (NCC Group)
+* Noelle Murata  (Leviathan Security)
 * Olivier Tuchon
-* Peter Mueller
-* Riccardo Poffo
-* Rupesh Nair
+* Pamela Dingle  (Microsoft)
+* Rubén Lirio (Dekra)
+* Rupesh Nair (Net Sentries)
+* Sebastian Porst
+* Shad Malloy
+* Soledad Antelada Toledano (Google)
 * Syrone Hanks II
-* Thomas Cannon
-* Tim Bolton
+* Thomas Cannon (NCC Group)
+* Tim Bolton (Meta)
+* Viktor Sytnik (Leviathan Security)
 * Yiannis Kozyrakis
+* Zach Moreno (Bishop Fox)
 
 ## Introduction
 

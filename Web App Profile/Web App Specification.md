@@ -9,22 +9,57 @@ Version 0.7 - May 25, 2024
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
 
 # Contributors
-The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
-* Alex Duff (ASA WG Chair)
-* Brooke Davis (ASA WG Vice Chair)
-* Brad Ree
+### Application Security Assessment Working Group Leads
+* Alex Duff (Meta) - ASA WG Chair
+* Brooke Davis (Google) - ASA WG Vice Chair
+
+### Mobile Profile Leads
+* Brad Ree (Google)
+* Michael Whiteman (Meta)
+
+### Contributors
+* Abdullah Albyati (Google)
+* Alex Duff (Meta)
+* Alexander Cobblah 
+* Anushree Shetty  (KPMG)
+* Artur Gartvikh
+* Bhairavi Mehta (TAC Security)
+* Brad Ree (Google)
+* Brooke Davis (Google)
 * Chilik Tamir
-* Christopher Estrada
-* Cody Martin
-* Gianluca Braga
-* John Tidwell
+* Chris Cinnamo (Zimperium)
+* Christopher Estrada (NCC Group)
+* Cody Martin (Leviathan Security)
+* Gianluca Braga (Zimperium)
+* Joel Scambray (NCC Group)
+* John Tidwell (Meta)
+* Jorge Wallace Ruiz (Dekra)
+* José María Santos López
 * Juan Manuel Martinez Hernandez
-* Jullian Gerhart
-* Michael Whiteman
-* Viktor Sytnik
-* Zach Moreno
-
+* Julia McLaughlin (Google)
+* Jullian Gerhart (NCC Group)
+* Kelly Albrink (Bishop Fox)
+* Mamachan Anish (KPMG)
+* Manuel Mancera (Dekra)
+* Mark Stribling (Leviathan Security)
+* Mateo Morales Amador
+* Michael Whiteman (Meta)
+* Nazariy Haliley (Bishop Fox)
+* Nico Chiaraviglio (Zimperium)
+* Nicole Weisenbach (NCC Group)
+* Noelle Murata (Leviathan Security)
+* Pamela Dingle  (Microsoft)
+* Rene Guerra (Schellman)
+* Richard Harris  (NCC Group)
+* Rupesh Nair (Net Sentries)
+* Shad Malloy
+* Soledad Antelada Toledano (Google)
+* Tim Bolton (Meta)
+* Viktor Sytnik (Leviathan)
+* Zach Moreno (Bishop Fox)
+  
 # Table of Contents
 1 [Authentication](#1-authentication)
 
@@ -89,12 +124,32 @@ This program leverages the internationally recognized OWASP Application Security
 # Applicability
 This document is intended for system and application administrators, security specialists, auditors, help desk, platform deployment, and/or DevOps personnel who plan to develop, deploy, assess, or secure solutions in the cloud.
 
-
 # References
 1. [OWASP Application Security Verification Standard](https://github.com/OWASP/ASVS?tab=readme-ov-file)
 
 # Licensing
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
+
+# Specification Scoping Guidance
+Scoping a web application test can be a complex and challenging task, as it requires defining the boundaries of the application and determining what needs to be tested. Here is some guidance to help define a reasonable scope while evaluating a web application within the context of this specification.
+
+This specification is designed to be applied to one or more target web application(s) (first party components) and their integrated third-party components, subject to the following considerations:
+
+**First-Party Scoping Considerations**
+- Target Web Application(s): Before testing, define the target web application(s) as a group of components that operate together to provide a logical set of services. For example, if a large business platform offers multiple services such as online dating, instant messaging, and investment banking; each can be scoped and evaluated separately using this specification, with all grouped subcomponents considered in-scope for testing & evaluation.
+- Shared Backend Components: First party shared backend components or APIs are considered in the scope if they are utilized by the defined target application(s).
+
+**Third-Party API Scoping Considerations**
+- Sensitive Operations: Any third-party (3P) product API that supports sensitive operations, such as Authentication, accessing or mutating user data, & account recovery are within the scope of an ADA web assessment. These 3P APIs will only be subject to web assessment requirements defined within the Authentication, Session Management, & Access Control sections.
+- Limited Testing: Testing of these 3P APIs will be limited to components and configurations utilized by the tested application. Other 3P API components and ADA web requirements will be out of scope and will not be tested in relation to 3P Product APIs.
+
+**Additional Clarifications**
+- Out-of-Scope Components: The following components are explicitly out of scope for this testing:
+  - Third-party APIs not utilized by the target application
+  - Non-sensitive operations performed by third-party APIs
+- Examples and Scenarios: To illustrate the scoping decisions, consider the following examples:
+  - A web application uses a third-party authentication API to handle user login. In this case, the authentication API is within scope for testing.
+  - A web application uses a third-party analytics gateway to process application performance metrics. As the gateway does not handle sensitive user data, it is out of scope for testing.
 
 # Definitions
 | Term | Definition |
@@ -199,7 +254,7 @@ These features protect against unauthorized access.  Logouts and expirations pre
 | --- | ------|
 | [2.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#221-users-shall-have-the-ability-to-logout-of-the-application-logout-or-session-expiration-shall-invalidate-all-stateful-session-tokens-including-refresh-tokens) | Users shall have the ability to logout of the application. Logout or session expiration shall invalidate all stateful session tokens, including refresh tokens.|
 | [2.2.2](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#222-the-application-shall-provide-the-option-or-acts-by-default-to-terminate-all-other-active-sessions-including-stateful-refresh-tokens-after-a-successful-password-change-including-change-via-password-resetrecovery-and-that-this-is-effective-across-the-application-federated-login-if-present-and-any-relying-parties) | The application shall provide the option (or acts by default) to terminate all other active sessions, including stateful refresh tokens, after a successful password change (including change via password reset/recovery), and that this is effective across the application, federated login (if present), and any relying parties.|
-| [2.2.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#223-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued) | Stateless authentication tokens must expire within 24 hours of being issued|
+| [2.2.3](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#223-non-revocable-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued) | Non-revocable sateless authentication tokens must expire within 24 hours of being issued|
 
 ---
 ## 2.3 Implement and secure application session tokens
@@ -218,7 +273,7 @@ Secure' and 'HttpOnly' mitigate risks of token interception and Cross-Site Scrip
 | [2.3.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#234-stateless-session-tokens-shall-use-digital-signatures-encryption-and-other-countermeasures-to-protect-against-tampering-enveloping-replay-null-cipher-and-key-substitution-attacks) | Stateless session tokens shall use digital signatures, encryption, and other countermeasures to protect against tampering, enveloping, replay, null cipher, and key substitution attacks.|
 
 ---
-## 2.4 Protect sensitive account modifications 
+## 2.4 Protect sensitive account modifications
 ### Description
 Applications must enforce a complete, valid login session or require re-authentication/secondary verification prior to any sensitive actions, such as sensitive data transactions or changes to account settings.
 ### Rationale
@@ -281,7 +336,7 @@ Infrastructure administrative interfaces shall never be exposed through an inter
 
 ---
 # 4 Communications
-## 4.1 Protect data through strong cryptography 
+## 4.1 Protect data through strong cryptography
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -322,7 +377,7 @@ Robust input validation and output encoding is essential for web applications to
 | [5.1.10](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/Web%20App%20Test%20Guide.md#5110-protect-against-local-file-inclusion-or-remote-file-inclusion-attacks) | Protect against local file inclusion or remote file inclusion attacks|
 
 ---
-## 5.2 Securely Handle Untrusted Files 
+## 5.2 Securely Handle Untrusted Files
 ### Description
 Web applications must safely process and manage files that originate from untrusted or unknown sources. This includes restricting uploads to expected file types and preventing direct execution of uploaded content containing HTML, JavaScript, or dynamic server-side code.
 ### Rationale
@@ -341,7 +396,7 @@ Files from untrusted sources may contain malicious code which could allow compro
 ### Description
 Developers must verify that the libraries included in their application do not have any known exploitable vulnerabilities.
 ### Rationale
-Attackers can perform automated scans to identify vulnerable applications based on published vulnerabilities. 
+Attackers can perform automated scans to identify vulnerable applications based on published vulnerabilities.
 ### Scope
 - Web application
 ### Audit

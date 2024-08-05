@@ -591,7 +591,7 @@ When software ceases to be supported, the maintainer of that software will no lo
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** [AWS Security Hub Lambda.2](https://docs.aws.amazon.com/securityhub/latest/userguide/lambda-controls.html#lambda-2)
+**External Reference:** CIS Controls v8, Section 2.1, [AWS Security Hub Lambda.2](https://docs.aws.amazon.com/securityhub/latest/userguide/lambda-controls.html#lambda-2)
 
 **Evidence**
 
@@ -633,11 +633,24 @@ Evidence or test output indicates that no Lambda function is configured to use a
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** Todo
+**External Reference:** CIS Controls v8, Section 2.1
 
 **Evidence**
 
-Todo
+**From Azure CLI**
+
+1. List Azure Function Apps
+
+```
+az functionapp list --output table --query '[*].{name:name, resourceGroup:resourceGroup}'
+```
+
+2. For each function and resource group, fetch the app settings configuration
+```
+az functionapp config appsettings list --name <app name> --resource-group <resource group> --query '[*].[name,value]'
+```
+
+3. For each runtime language used, confirm that the in-use runtime version has not passed Microsoft's community EOL date according to [https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions)
 
 **Verification**
 
@@ -647,8 +660,6 @@ Evidence or test output indicates that all Azure Functions are:
 
 1. Configured to use a supported (i.e., not unsupported) runtime host version
 2. Using a language version that is not past its EOL date
-
-Microsoft documentation contains the specific dates and version for supported languages and runtime modes: https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions
 
 
 ---
@@ -873,15 +884,32 @@ Evidence or test output indicates that HTTP 2.0 is enabled for each webapp.
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** Todo
+**External Reference:** CIS Controls v8, Section 2.1
 
 **Evidence**
 
-Todo
+**From Google Cloud CLI**
+
+
+
+1. List the functions in your project and get details on each:
+
+  ```
+  gcloud functions list --project <project name> --format="(NAME,REGION)"
+  ```
+
+2. For each function, use the `decribe` command to fetch information about its runtime:
+
+```
+gcloud functions describe <function name> --format="value(buildConfig.runtime)"
+```
+
+3. For each runtime language used, confirm that the in-use runtime version has not passed Google's deprecation date according to [https://cloud.google.com/functions/docs/runtime-support#support_schedule](https://cloud.google.com/functions/docs/runtime-support#support_schedule)
+
 
 **Verification**
 
-Evidence or test output indicates that all Cloud Functions are configured to run on a runtime that is not beyond its published deprecation date. See the [GCP documentation for specific runtime version deprecation dates](https://cloud.google.com/functions/docs/runtime-support).
+Evidence or test output indicates that all Cloud Functions are configured to run on a runtime that is not beyond its published deprecation date.
 
 
 ---
@@ -7423,29 +7451,7 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 
 **External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.1
 
-**Evidence**
-
-**From Console:**
-
-Perform the following to determine if the account is configured as prescribed:
-
-
-
-1. Login to the AWS Management Console at [https://console.aws.amazon.com/vpc/home](https://console.aws.amazon.com/vpc/home)
-2. In the left pane, click `Network ACLs`
-3. For each network ACL, perform the following:
-   * Select the network ACL
-   * Click the `Inbound Rules` tab
-   * Ensure no rule exists that has a port range that includes port `22`, `3389`, using the protocols TDP (6), UDP (17) or ALL (-1) or other remote server administration ports for your environment and has a `Source` of `0.0.0.0/0` and shows `ALLOW`
-4. Repeat the above steps for each in-use region
-
-**Note:** A Port value of `ALL` or a port range such as `0-1024` are inclusive of port `22`, `3389`, and other remote server administration ports
-
-
-**Verification**
-
-Evidence or test output indicates that no Network ACL allows ingress to port 22 or port 3389 from the unrestricted public internet.
-
+**Status:** This requirement has been withdrawn in favor of 4.3.6 and 4.3.7
 
 ---
 
@@ -10171,7 +10177,27 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Evidence**
 
-Todo
+**From Command Line:**
+
+1. Run `describe-db-instances` command list the names of database instances available in the each in-use AWS region
+```
+aws rds describe-db-instances
+  --region us-east-1
+  --output table
+  --query 'DBInstances[?Engine==`mysql`].DBInstanceIdentifier | []'
+```
+Note: if other database engines are in use, e.g., PostgreSQL, adjust the command above to list all instances.
+
+2. Run `describe-db-instances` command using the name of the MySQL database and custom query filters to describe the log types that the selected database instance is configured to export to Amazon CloudWatch Logs:
+```
+aws rds describe-db-instances
+  --region us-east-1
+  --db-instance-identifier database-id
+  --query 'DBInstances[*].EnabledCloudwatchLogsExports'
+```
+If the `describe-db-instances` command output returns an empty array (i.e. `[]`), the required logs are not published to Amazon CloudWatch Logs, therefore the Log Exports feature is not enabled for the selected Amazon RDS database instance.
+
+Repeat steps #1 and #2 for every region+database.
 
 **Verification**
 
