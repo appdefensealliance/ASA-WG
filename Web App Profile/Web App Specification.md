@@ -20,16 +20,46 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Michael Whiteman (Meta)
 
 ### Contributors
-* Chilik Tamir (Zimperium)
+* Abdullah Albyati (Google)
+* Alex Duff (Meta)
+* Alexander Cobblah 
+* Anushree Shetty  (KPMG)
+* Artur Gartvikh
+* Bhairavi Mehta (TAC Security)
+* Brad Ree (Google)
+* Brooke Davis (Google)
+* Chilik Tamir
+* Chris Cinnamo (Zimperium)
 * Christopher Estrada (NCC Group)
-* Cody Martin (Leviathan)
+* Cody Martin (Leviathan Security)
 * Gianluca Braga (Zimperium)
+* Joel Scambray (NCC Group)
 * John Tidwell (Meta)
-* Juan Manuel Martinez Hernandez (Dekra)
+* Jorge Wallace Ruiz (Dekra)
+* José María Santos López
+* Juan Manuel Martinez Hernandez
+* Julia McLaughlin (Google)
 * Jullian Gerhart (NCC Group)
+* Kelly Albrink (Bishop Fox)
+* Mamachan Anish (KPMG)
+* Manuel Mancera (Dekra)
+* Mark Stribling (Leviathan Security)
+* Mateo Morales Amador
+* Michael Whiteman (Meta)
+* Nazariy Haliley (Bishop Fox)
+* Nico Chiaraviglio (Zimperium)
+* Nicole Weisenbach (NCC Group)
+* Noelle Murata (Leviathan Security)
+* Pamela Dingle  (Microsoft)
+* Rene Guerra (Schellman)
+* Richard Harris  (NCC Group)
+* Rupesh Nair (Net Sentries)
+* Shad Malloy
+* Soledad Antelada Toledano (Google)
+* Tim Bolton (Meta)
 * Viktor Sytnik (Leviathan)
 * Zach Moreno (Bishop Fox)
-
+  
 # Table of Contents
 1 [Authentication](#1-authentication)
 
