@@ -157,26 +157,26 @@ Apps handle sensitive data coming from many sources such as the user, the backen
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest. If sensitive data is being written to external storage, provide the name and screenshot from a design document explaining how the data is encrypted.
+AL1: Attachment of the Android Manifest. If sensitive data is being written to external storage, provide the name and screenshot from a design document explaining how the data is encrypted.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0001](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-STORAGE/MASTG-TEST-0001.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. The Android Manifest does not declare the use of external storage.
 2. Or, if sensitive data is being written to external storage, confirm the crypto implementation meets the [baseline crypto requirements](#22-crypto) by reviewing the relevant screenshot from the design document.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that the app does not write and store unencrypted and sensitive data in external storage.
 2. Or, if sensitive data is being written to external storage, verify that the crypto implementation meets the [baseline crypto requirements](#22-crypto).
@@ -201,25 +201,25 @@ There are cases when sensitive data is unintentionally stored or exposed to publ
 
 ##### Evidence
 
-L1: Provide an application resources file snippet showing that for every sensitive data field, the `android:inputType` property is set to one of the following values: `textNoSuggestions`, `textPassword`, `textVisiblePassword`, `numberPassword` or `textWebPassword`.
+AL1: Provide an application resources file snippet showing that for every sensitive data field, the `android:inputType` property is set to one of the following values: `textNoSuggestions`, `textPassword`, `textVisiblePassword`, `numberPassword` or `textWebPassword`.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0006](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-STORAGE/MASTG-TEST-0006.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Documentation does not suggest data on text inputs that process sensitive data.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that the app disables the keyboard cache for any sensitive data inputs.
 
@@ -229,25 +229,25 @@ _L2_
 
 ##### Evidence
 
-L1: Provide a sample output of all the logs in your system logs that your app outputs though an average app session.
+AL1: Provide a sample output of all the logs in your system logs that your app outputs though an average app session.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0003](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-STORAGE/MASTG-TEST-0003.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Documentation review shows or states that no sensitive data is stored in plaintext in the system logs.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that no sensitive data is stored in plaintext.  The scope of this test is limited to logcat and storing any logs in public locations in external storage.
 
@@ -273,25 +273,25 @@ Cryptography plays an especially important role in securing the user's data - ev
 
 ##### Evidence
 
-L1: If your application leverages random number generators, provide an output demonstrating that it shall only use java.security.SecureRandom. If you are using java.util.Random or Math.random() it shall only be used for non-security purposes such as UI elements. For non-Java-based developer evidence demonstrates that for security-sensitive contexts, only kernel-based cryptographically-secure pseudorandom number generators are used.
+AL1: If your application leverages random number generators, provide an output demonstrating that it shall only use java.security.SecureRandom. If you are using java.util.Random or Math.random() it shall only be used for non-security purposes such as UI elements. For non-Java-based developer evidence demonstrates that for security-sensitive contexts, only kernel-based cryptographically-secure pseudorandom number generators are used.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0016](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CRYPTO/MASTG-TEST-0016.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that for security sensitive contexts only java.security.SecureRandom is used. For non-Java-based developer evidence demonstrates that for security-sensitive contexts, only kernel-based cryptographically-secure pseudorandom number generators are used.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that no insecure random number generators are utilized for any security sensitive context.
 
@@ -301,25 +301,25 @@ _L2_
 
 ##### Evidence
 
-L1: If your application leverages symmetric cryptography, provide an output from static analysis demonstrating that your application is only using known good symmetric algorithms with a bit length of a minimum of 128 and that no hardcoded symmetric keys are used for security sensitive contexts.
+AL1: If your application leverages symmetric cryptography, provide an output from static analysis demonstrating that your application is only using known good symmetric algorithms with a bit length of a minimum of 128 and that no hardcoded symmetric keys are used for security sensitive contexts.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0013](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CRYPTO/MASTG-TEST-0013.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that no insecure methods shall be used for symmetric cryptography as defined below.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that the app utilizes a minimum of AES-128 and that no insecure methods shall be used for symmetric cryptography as defined below unless specifically required for backwards compatibility with third party systems.
 
@@ -338,25 +338,25 @@ Industry best practices are commonly defined as:
 
 ##### Evidence
 
-L1: If your application implements cryptography, provide an output of all instances of cryptographic primitives in code either using a static analysis output, or source code snippets. If your application is relying on non-platform provided crypto you shall also provide evidence that the crypto has been independently reviewed for security.
+AL1: If your application implements cryptography, provide an output of all instances of cryptographic primitives in code either using a static analysis output, or source code snippets. If your application is relying on non-platform provided crypto you shall also provide evidence that the crypto has been independently reviewed for security.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0014](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CRYPTO/MASTG-TEST-0014.md). If the application is relying on non-platform provided crypto, the crypto shall be independently reviewed for security.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that strong cryptography shall be implemented according to industry best practices.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices.
 
@@ -389,7 +389,7 @@ Even the strongest cryptography would be compromised by poor key management.
 
 ##### Evidence
 
-L1:  Provide design documentation for how crypto keys are used. For each identified instance the documentation should address the following:
+AL1:  Provide design documentation for how crypto keys are used. For each identified instance the documentation should address the following:
 
 * For encryption/decryption - to ensure data confidentiality
 * For signing/verifying - to ensure integrity of data (as well as accountability in some cases)
@@ -397,21 +397,21 @@ L1:  Provide design documentation for how crypto keys are used. For each identif
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0015](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CRYPTO/MASTG-TEST-0015.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that cryptographic keys shall only be used for their defined purpose.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that cryptographic keys shall only be used for their defined purpose.
 
@@ -421,7 +421,7 @@ _L2_
 
 ##### Evidence
 
-L1: Provide design documentation that addresses the following criteria:
+AL1: Provide design documentation that addresses the following criteria:
 
 * keys are not synchronized over devices if it is used to protect high-risk data.
 * keys are not stored without additional protection.
@@ -432,21 +432,21 @@ L1: Provide design documentation that addresses the following criteria:
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0062](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CRYPTO/MASTG-TEST-0062.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that cryptographic key management shall be implemented properly.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that cryptographic key management shall be implemented properly.
 
@@ -472,25 +472,25 @@ Authentication and authorization provide an added layer of security and help pre
 
 ##### Evidence
 
-L1: If your application utilizes OAuth 2.0, demonstrate the use of PKCE by either providing a network capture of the authorization flow where there is presence of code_challenge and code_verifier parameters. Alternatively you can present a design document that explicitly references PKCE being enabled and used.
+AL1: If your application utilizes OAuth 2.0, demonstrate the use of PKCE by either providing a network capture of the authorization flow where there is presence of code_challenge and code_verifier parameters. Alternatively you can present a design document that explicitly references PKCE being enabled and used.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Run static and dynamic analysis to ensure that PKCE is being utilized.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that if the developer is using OAuth 2.0, PKCE is implemented to protect the code grant.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that if the developer is using OAuth 2.0, PKCE is implemented to protect the code grant.
 
@@ -516,26 +516,26 @@ Ensuring data privacy and integrity of any data in transit is critical for any a
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest and the network-security-config XML files, along with justification if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding plaintext connections.
+AL1: Attachment of the Android Manifest and the network-security-config XML files, along with justification if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding plaintext connections.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0019](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-NETWORK/MASTG-TEST-0019.md) that are applicable to Android manifest and network security config.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0019](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-NETWORK/MASTG-TEST-0019.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. The Android Manifest is not configured to allow plaintext connections. If it is, verify that valid justification has been provided.
 2. Using developer design documentation, verify that plaintext connections are not used over the internet for security sensitive purposes.
 
-_L2_
+_AL2_
 
 1. Verify that the application does not use plaintext network connections over the internet for security sensitive purposes.
 
@@ -555,27 +555,27 @@ The following are out of scope:
 
 ##### Evidence
 
-L1: If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding supported ciphersuites, minimum and maximum TLS version.
+AL1: If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding supported ciphersuites, minimum and maximum TLS version.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0020](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-NETWORK/MASTG-TEST-0020.md) to intercept network traffic.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Verify using design documentation that the app negotiates the best available ciphersuite that the backend offers
 2. Verify using design documentation  that the app cannot negotiate to use known vulnerable ciphers
 3. Verify using design documentation that the app uses industry best practices related to algorithms & ciphers
 
-_L2_
+_AL2_
 
 1. Verify that the app negotiates the best available ciphersuite that the backend offers
 2. Verify that the app cannot negotiate to use known vulnerable ciphers
@@ -588,7 +588,7 @@ This test is limited in scope to the mobile app; not the backend.
 For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
 
 * Clients must support TLS1.2 or higher
-* Clients must not support SSL2.0 or SSL3.0.
+* Clients must not support SSAL2.0 or SSL3.0.
 * Clients must not default to TLS1.0 or TLS1.1
 
 ---
@@ -597,26 +597,26 @@ For industry best practices, see section “Minimum Requirements for TLS Clients
 
 ##### Evidence
 
-L1: Attachment of Android Manifest and Network Security Config. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding trusted CA certificates and hostname verification.
+AL1: Attachment of Android Manifest and Network Security Config. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding trusted CA certificates and hostname verification.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0021](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-NETWORK/MASTG-TEST-0021.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Verify that the application targets SDK > 24 or higher and user certificates are not trusted for connections that can carry sensitive data.
 2. If the system trusted CA store is not used, verify via design documentation that alternative mechanisms to validate trust such as certificate pinning are used.
 
-_L2_
+_AL2_
 
 1. Verify that network connections carrying sensitive data are using trusted certificates and the connection is correctly validated as per  [MASTG-TEST-0021](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-NETWORK/MASTG-TEST-0021.md)
     * Verify that the app does not trust user installed certificates.
@@ -648,26 +648,26 @@ Apps typically use platform provided IPC mechanisms to intentionally expose data
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest. If a content provider is exposed, a screenshot from a design document explaining how SQLi hardening measures are used shall be provided.
+AL1: Attachment of the Android Manifest. If a content provider is exposed, a screenshot from a design document explaining how SQLi hardening measures are used shall be provided.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0007](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0007.md) and provide output
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Android Manifest shall demonstrate the limited necessary exposure of content providers.
 2. Design document shall demonstrate hardening measures against queries.
 
-_L2_
+_AL2_
 
 1. Testing output shall demonstrate limited content provider exposure, and hardening measures protecting against injection attacks.
 
@@ -677,26 +677,26 @@ _L2_
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest. If Android API 31 and below are used, a screenshot from a design doc demonstrates a validation and sanitization process for working with trusted inputs.
+AL1: Attachment of the Android Manifest. If Android API 31 and below are used, a screenshot from a design doc demonstrates a validation and sanitization process for working with trusted inputs.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0028](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0028.md), with the understanding that sampling must be used given scope of test.
 2. Run the Android "App Link Verification Tester" script.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Android Manifest demonstrates that the app target API level is above API 31, otherwise the design documentation screenshot demonstrates a sanitizing process for working with trusted inputs.
 
-_L2_
+_AL2_
 
 1. Output from Android "App Link Verification Tester" script shall verify that all links demonstrate input sanitization.
 
@@ -706,25 +706,25 @@ _L2_
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest with justifications for exposure and permission levels.
+AL1: Attachment of the Android Manifest with justifications for exposure and permission levels.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0029](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0029.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Enumerate IPC mechanisms via AndroidManifest.xml to evaluate the security policy of exposed surface area available to other apps.
 
-_L2_
+_AL2_
 
 1. There shall be no leaked sensitive information from exposed sensitive functionality.
 2. Sensitive functionality shall adhere to the principle of least privilege.
@@ -735,26 +735,26 @@ _L2_
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest. If API level is below 31, screenshot from a design doc detailing secure usage of PendingIntents. For all mutable Intents, the developer shall provide a clear justification.
+AL1: Attachment of the Android Manifest. If API level is below 31, screenshot from a design doc detailing secure usage of PendingIntents. For all mutable Intents, the developer shall provide a clear justification.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0030](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0030.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Android Manifest shall use API level 31 or greater to ensure immutable by default PendingIntents being in place.
 2. Or, verify the developer provided justification aligns with security tradeoffs required.
 
-_L2_
+_AL2_
 
 1. Ensure that Pending Intents are immutable, and the app explicitly specifies the exact package, action, and component that receives the base intent.
 2. [Reference DAC documentation: https://developer.android.com/privacy-and-security/risks/pending-intent](https://developer.android.com/privacy-and-security/risks/pending-intent)
@@ -779,28 +779,28 @@ WebViews are typically used by apps that have a need for increased control over 
 
 ##### Evidence
 
-L1
+AL1
 
 1. If JavaScript is enabled, provide a data flow diagram with trusted end-points, secure protocols, and trust boundaries demonstrating the app's control over resources being loaded.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0031](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0031.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Output from semgrep rules shall demonstrate JavaScript is disabled.
 2. If JavaScript is required the corresponding data flow diagram shall demonstrate developer controlled resource usage.
 
-_L2_
+_AL2_
 
 1. Ensure that all endpoints use HTTPS (or other encrypted protocols) for connections.
 2. Ensure that JS and HTML are loaded locally from within the app, or from trusted web servers only.
@@ -817,7 +817,7 @@ If the app has Javascript disabled, this shall pass automatically. This can be d
 
 ##### Evidence
 
-_L1_
+_AL1_
 
 1. Provide Android Manifest for API level verification for hardening WebView defaults. If API level has a default permissive posture for file access, or file access controls have been changed to be more open, the developer must provide justification.
 2. Run [MSTG-PLATFORM-6](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/status.md) and provide output to verify WebView usage is adhering to [MASTG-TEST-0032](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0032.md) Static Analysis testing is configured accordingly.
@@ -825,23 +825,23 @@ _L1_
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0032](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0032.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Android Manifest shall demonstrate API level 30 or above. If API level 29 or below is in use, `setAllowFileAccess` shall be set to `false`. If `setAllowFileAccess` is set to true, developer justification must demonstrate requirement for this configuration.
 2. Output from [MSTG-PLATFORM-6](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/status.md) shall demonstrate the usage of only necessary protocol handlers.
 3. Output from [MSTG-PLATFORM-6](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/status.md) shall demonstrate potentially dangerous handlers such as `file`, `tel`, and `app-id` are disabled. For any potentially dangerous handlers, the developer justification must demonstrate the need for implementation.
 
-_L2_
+_AL2_
 
 1. Output from [MSTG-PLATFORM-6](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/status.md) shall demonstrate the usage of only necessary protocol handlers.
 2. Output from [MSTG-PLATFORM-6](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/status.md) shall demonstrate that potentially dangerous handlers such as `file`, `tel`, and `app-id` are disabled. For any potentially dangerous handlers, the developer justification must demonstrate the need for implementation.
@@ -867,28 +867,28 @@ Sensitive data has to be displayed in the UI in many situations (e.g. passwords,
 
 ##### Evidence
 
-_L1_
+_AL1_
 
 1. Provide screenshots of proper input typing demonstrating that android`:inputType="textPassword"` is in use for passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) fields.
 2. Show screenshots of any UI elements where passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) are visible and demonstrate they are masked by default.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0008](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-PLATFORM/MASTG-TEST-0008.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Provided documentation shall demonstrate appropriate input type implementation for the intended use of the input field.
 
-_L2_
+_AL2_
 
 1. Passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) must be properly masked for input fields and suppressed in notifications where the app knows the type of data it is displaying.
 2. Passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) shall only be displayed to the user in clear text through an explicit action, such as clicking a show password button.
@@ -915,25 +915,25 @@ Every release of the mobile OS includes security patches and new security featur
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest
+AL1: Attachment of the Android Manifest
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Obtain the Android Manifest and review for adherence with requirements
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Verify that targetSDKVersion is set to N-2 or above where N is the latest SDK at the time of test.
 
-_L2_
+_AL2_
 
 1. Verify that the targetSdkVersion is set to N-2 or above where N is the latest SDK at the time of test.
 
@@ -957,25 +957,25 @@ The developer should protect users from known vulnerabilities.
 
 ##### Evidence
 
-L1: Follow the testing procedures outlined in [MASTG-TEST-0042](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0042.md) and provide the generated report.
+AL1: Follow the testing procedures outlined in [MASTG-TEST-0042](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0042.md) and provide the generated report.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0042](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0042.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Verify that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0.
 
-_L2_
+_AL2_
 
 1. Verify that the app does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0.
 
@@ -1006,25 +1006,25 @@ This incoming data might have been inadvertently modified by untrusted actors an
 
 ##### Evidence
 
-L1: Follow the instructions outlined in [MASTG-TEST-0044](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0044.md) and export the output.
+AL1: Follow the instructions outlined in [MASTG-TEST-0044](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0044.md) and export the output.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0044](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0044.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that compiler security features (PIE/PIC and stack smashing protections) are enabled.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that demonstrates that compiler security features (PIE/PIC and stack smashing protections) are enabled
 
@@ -1038,26 +1038,26 @@ If a native 3P library that is packaged in the application does not have these e
 
 ##### Evidence
 
-L1: Attachment of the Android Manifest. If a content provider is exposed, a screenshot from a design document explaining how injection hardening measures are used shall be provided.
+AL1: Attachment of the Android Manifest. If a content provider is exposed, a screenshot from a design document explaining how injection hardening measures are used shall be provided.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0025](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0025.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Android Manifest shall demonstrate the limited necessary exposure of content providers.
 2. Design document shall demonstrate hardening measures against queries.
 
-_L2_
+_AL2_
 
 1. Testing output shall demonstrate limited content provider exposure, and hardening measures protecting against injection attacks.
 
@@ -1067,28 +1067,28 @@ _L2_
 
 ##### Evidence
 
-_L1_
+_AL1_
 
 1. Grep output that WebView is never used as well as an attachment of the Android Manifest (or)
 2. Documentation demonstrating that only trusted content can be loaded in the apps webview
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0027](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0027.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Verify SafeBrowsing is enabled
 
-_L2_
+_AL2_
 
 1. Verify that only trusted content can be loaded in the app webview:
    * Verify that the app correctly validates the scheme and host parts of loaded URIs against an allowlist relevant to the app, as per [unsafe-uri-loading](https://developer.android.com/privacy-and-security/risks/unsafe-uri-loading).
@@ -1104,25 +1104,25 @@ If the app has no webviews, this test should pass automatically.
 
 ##### Evidence
 
-L1: Attach the Android Manifest and an explanation of the rationale for every implicit intent.
+AL1: Attach the Android Manifest and an explanation of the rationale for every implicit intent.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review all implicit intents and ensure rationale validates appropriateness for the apps functionality.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0026](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CODE/MASTG-TEST-0026.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that the app either has no implicit intents or that the implicit intents are appropriate for the apps functionality.
 
-_L2_
+_AL2_
 
 1. Verify that any use of implicit intents to send data to other apps is appropriate for the app’s functionality and does not leak sensitive data.
 2. Verify that after calling startActivityForResult() any data returned by other apps is handled securely within onActivityResult()
@@ -1149,25 +1149,25 @@ Apps run on a user-controlled device, and without proper protections it's relati
 
 ##### Evidence
 
-L1: Run the apksigner utility as documented in [MASTG-TEST-0038](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-RESILIENCE/MASTG-TEST-0038.md) and provide the output.
+AL1: Run the apksigner utility as documented in [MASTG-TEST-0038](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-RESILIENCE/MASTG-TEST-0038.md) and provide the output.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0038](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-RESILIENCE/MASTG-TEST-0038.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that the app is signed using v2 or higher.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that the app is signed using v2 or higher.
 
@@ -1191,25 +1191,25 @@ Understanding the internals of an app is typically the first step towards tamper
 
 ##### Evidence
 
-L1: Attach the results of semgrep rule [MSTG-CODE-3](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/status.md). If you have a third-party library that this cannot be enabled for, please document this.
+AL1: Attach the results of semgrep rule [MSTG-CODE-3](https://github.com/mindedsecurity/semgrep-rules-android-security/blob/main/status.md). If you have a third-party library that this cannot be enabled for, please document this.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0040](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-RESILIENCE/MASTG-TEST-0040.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that debugging symbols are disabled in their production version.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that debugging symbols are disabled in their production version.
 
@@ -1233,25 +1233,25 @@ Observing and manipulating an app during runtime makes it much easier to deciphe
 
 ##### Evidence
 
-L1: Attach the application Android Manifest or a screenshot showing that “android:debuggable” is not set to “true”
+AL1: Attach the application Android Manifest or a screenshot showing that “android:debuggable” is not set to “true”
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0039](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-RESILIENCE/MASTG-TEST-0039.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that the application is not debuggable.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that the application is not debuggable.
 
@@ -1277,25 +1277,25 @@ Data minimization reduces the potential impact of data breaches or leaks.  This 
 
 ##### Evidence
 
-L1: Attachment of the Android manifest showing permission requests.  Provide justification for any runtime or signature permissions
+AL1: Attachment of the Android manifest showing permission requests.  Provide justification for any runtime or signature permissions
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Using dynamic analysis, monitor runtime permission usage, data access patterns and third-party SDK behaviors.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. The Android Manifest adheres to least privilege principle by only requesting permissions that are needed for its functionality
 
-_L2_
+_AL2_
 
 1. The app adheres to least privilege principle by only requesting permissions that are needed for its functionality.  Any flagged permissions requires the developer to provide justification for app functionality.
 
@@ -1319,25 +1319,25 @@ Users have the right to know how their data is being used.
 
 ##### Evidence
 
-L1: Provide a URL to the app’s privacy policy.  Provide a screenshot of the App Store label with a mapping of declarations to the privacy policy.
+AL1: Provide a URL to the app’s privacy policy.  Provide a screenshot of the App Store label with a mapping of declarations to the privacy policy.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Perform a match against data practices displayed in the Data Safety Section  against data practices explicitly listed in the privacy policy.  Check for data types being transmitted over the network that aren’t declared to users.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Ensure the developer provides a valid privacy policy and the declarations match those in the App Store label
 
-_L2_
+_AL2_
 
 1. All data collected should be included explicitly, either within the actual application or somewhere that can be accessed via the application.
 
@@ -1361,21 +1361,21 @@ Users should have control over their data.
 
 ##### Evidence
 
-L1: Provide a screenshot that shows an in-app URL which allows users to initiate app account deletion
+AL1: Provide a screenshot that shows an in-app URL which allows users to initiate app account deletion
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Review App Store label to verify existence of data deletion request mechanism.  Lab confirms availability of URL in app.
 
 ##### Verification
 
-_L1 & L2_
+_AL1 & AL2_
 
 1. The app provides an in-app mechanism which allows users to modify and delete their personal data.
 
@@ -1395,26 +1395,26 @@ _L1 & L2_
 
 ##### Evidence
 
-L1: Attach screenshots of all instances of files being saved outside of the app sandbox via `UIDocumentPickerViewController`. If sensitive data is being written to external storage, provide the name and screenshot from a design document explaining how the data is encrypted.
+AL1: Attach screenshots of all instances of files being saved outside of the app sandbox via `UIDocumentPickerViewController`. If sensitive data is being written to external storage, provide the name and screenshot from a design document explaining how the data is encrypted.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-00052](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-STORAGE/MASTG-TEST-0052.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. The app does not use `UIDocumentPickerViewController`.
 2. If sensitive data is being written to external storage, confirm the crypto implementation meets the baseline [crypto requirements](#heading=h.qck736ryyi5) by reviewing the relevant screenshot from the design document.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that the app does not write and store unencrypted and sensitive data in external storage.
 2. If sensitive data is being written to external storage, verify that the crypto implementation meets the [baseline crypto requirements](#heading=h.qck736ryyi5).
@@ -1431,25 +1431,25 @@ _L2_
 
 ##### Evidence
 
-L1: Provide a code snippet showing that sensitive input fields are marked as `secureTextEntry` or that autocorrect is manually disabled with `autocorrectionType = UITextAutocorrectionTypeNo`.
+AL1: Provide a code snippet showing that sensitive input fields are marked as `secureTextEntry` or that autocorrect is manually disabled with `autocorrectionType = UITextAutocorrectionTypeNo`.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0055](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-STORAGE/MASTG-TEST-0055.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Review the provided evidence to verify that sensitive fields will not cache keyboard input.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows sensitive data is not present in the cache after typing into the respective text field.  Note: This only applies to input into text fields that are meant to be used for sensitive data.
 
@@ -1459,25 +1459,25 @@ _L2_
 
 ##### Evidence
 
-L1: Provide a sample output of all the logs in your system logs that your app outputs though an average app session.
+AL1: Provide a sample output of all the logs in your system logs that your app outputs though an average app session.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in[ MASTG-TEST-0053](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-STORAGE/MASTG-TEST-0053.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Documentation review shows or states that no sensitive data is stored in plaintext in the system logs.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that no sensitive data is stored in plaintext in the application logs.
 
@@ -1495,25 +1495,25 @@ _L2_
 
 ##### Evidence
 
-L1: If your application leverages random number generators for security purposes, provide output demonstrating that it shall only use cryptographically-secure pseudorandom number generators. For swift and objective-c code, provide output from the semgrep rule [ios_insecure_random_no_generator](https://github.com/MobSF/mobsfscan/blob/main/mobsfscan/rules/patterns/ios/swift/swift_rules.yaml).
+AL1: If your application leverages random number generators for security purposes, provide output demonstrating that it shall only use cryptographically-secure pseudorandom number generators. For swift and objective-c code, provide output from the semgrep rule [ios_insecure_random_no_generator](https://github.com/MobSF/mobsfscan/blob/main/mobsfscan/rules/patterns/ios/swift/swift_rules.yaml).
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0063](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CRYPTO/MASTG-TEST-0063.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that insecure random number generators are not used in a security sensitive context.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that no insecure random number generators are utilized for any security sensitive context.
 
@@ -1523,25 +1523,25 @@ _L2_
 
 ##### Evidence
 
-L1:  If your application implements cryptography, provide an output of all instances of cryptographic primitives in code either using a static analysis output, or source code snippets. If your application is relying on non-platform provided crypto you shall also provide evidence that the crypto has been independently reviewed for security.
+AL1:  If your application implements cryptography, provide an output of all instances of cryptographic primitives in code either using a static analysis output, or source code snippets. If your application is relying on non-platform provided crypto you shall also provide evidence that the crypto has been independently reviewed for security.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0061](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CRYPTO/MASTG-TEST-0061.md). If the application is relying on non-platform provided crypto, the crypto shall be independently reviewed for security.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that strong cryptography shall be implemented according to industry best practices.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices.
 
@@ -1565,7 +1565,7 @@ Refer to [SP.800-57p1r5](https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final) and 
 
 ##### Evidence
 
-L1: Provide design documentation for how crypto keys are used. For each identified instance the documentation should address the following:
+AL1: Provide design documentation for how crypto keys are used. For each identified instance the documentation should address the following:
 
 * For encryption/decryption - to ensure data confidentiality
 * For signing/verifying - to ensure integrity of data (as well as accountability in some cases)
@@ -1573,21 +1573,21 @@ L1: Provide design documentation for how crypto keys are used. For each identifi
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0062](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CRYPTO/MASTG-TEST-0062.md). Use objection `ios monitor crypto `command to monitor crypto operations.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that cryptographic keys are used for their defined purpose.
 
-_L2_
+_AL2_
 
 1. Dynamic analysis demonstrates that cryptographic keys are used for their defined purpose.
 
@@ -1597,7 +1597,7 @@ _L2_
 
 ##### Evidence
 
-L1: Provide design documentation that addresses the following criteria:
+AL1: Provide design documentation that addresses the following criteria:
 
 * keys are not synchronized over devices if it is used to protect high-risk data.
 * keys are not stored without additional protection.
@@ -1608,21 +1608,21 @@ L1: Provide design documentation that addresses the following criteria:
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0062](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CRYPTO/MASTG-TEST-0062.md). Use objection `ios monitor crypto `command to monitor crypto operations.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that cryptographic key management shall be implemented properly.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that cryptographic key management shall be implemented properly.
 
@@ -1640,25 +1640,25 @@ _L2_
 
 ##### Evidence
 
-L1: If your application utilizes OAuth 2.0, demonstrate the use of PKCE by either providing a network capture of the authorization flow where there is presence of code_challenge and code_verifier parameters. Alternatively you can present a design document that explicitly references PKCE being enabled and used.
+AL1: If your application utilizes OAuth 2.0, demonstrate the use of PKCE by either providing a network capture of the authorization flow where there is presence of code_challenge and code_verifier parameters. Alternatively you can present a design document that explicitly references PKCE being enabled and used.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Run static and dynamic analysis to ensure that PKCE is being utilized.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that if the developer is using OAuth 2.0, PKCE is implemented to protect the code grant.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that if the developer is using OAuth 2.0, PKCE is implemented to protect the code grant.
 
@@ -1676,26 +1676,26 @@ _L2_
 
 ##### Evidence
 
-L1: Attach the Info.plist that shows the App Transport Security (ATS) policy, along with [justification](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding plaintext connections.
+AL1: Attach the Info.plist that shows the App Transport Security (ATS) policy, along with [justification](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding plaintext connections.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0065](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-NETWORK/MASTG-TEST-0065.md) to intercept traffic.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. ATS is not configured to allow plaintext connections. If it is, verify that valid justification has been provided.
 2. Using developer design documentation, verify that plaintext connections are not used over the internet for security sensitive purposes.
 
-_L2_
+_AL2_
 
 1. Verify that the application does not use plaintext network connections over the internet for security sensitive purposes.
 
@@ -1715,28 +1715,28 @@ The following are out of scope:
 
 ##### Evidence
 
-L1:Attach the Info.plist that shows the App Transport Security (ATS) policy, along with [justification](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding supported ciphersuites, minimum and maximum TLS version.
+AL1:Attach the Info.plist that shows the App Transport Security (ATS) policy, along with [justification](https://developer.apple.com/documentation/security/preventing_insecure_network_connections#3138036) if plaintext connections are allowed. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding supported ciphersuites, minimum and maximum TLS version.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0066](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-NETWORK/MASTG-TEST-0066.md) to intercept network traffic.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Review the provided ATS policy to see if the app allows insecure connections.
 2. Verify using design documentation that the app negotiates the best available ciphersuite that the backend offers
 3. Verify using design documentation  that the app cannot negotiate to use known vulnerable ciphers
 4. Verify using design documentation that the app uses industry best practices related to algorithms & ciphers
 
-_L2_
+_AL2_
 
 1. Verify that the app negotiates the best available ciphersuite that the backend offers using the nscurl command:  `nscurl --ats-diagnostics --verbose`
 2. Verify that the app cannot negotiate to use known vulnerable ciphers
@@ -1749,7 +1749,7 @@ This test is limited in scope to the mobile app; not the backend.
 For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
 
 * Clients must support TLS1.2 or higher
-* Clients must not support SSL2.0 or SSL3.0.
+* Clients must not support SSAL2.0 or SSL3.0.
 * Clients must not default to TLS1.0 or TLS1.1
 
 ---
@@ -1758,26 +1758,26 @@ For industry best practices, see section “Minimum Requirements for TLS Clients
 
 ##### Evidence
 
-L1:Attachment of Info.plist file. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding trusted CA certificates and hostname verification.
+AL1:Attachment of Info.plist file. If 3rd party networking libraries are used, provide design documentation describing their security configuration regarding trusted CA certificates and hostname verification.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review the Info.plist file for the App Transport Security configuration for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0067](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-NETWORK/MASTG-TEST-0067.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. If the application targets iOS 9 or higher, verify that it does not trust user certificates for connections that can carry sensitive data.
 2. If the system trusted CA store is not used, verify via design documentation that alternative mechanisms to validate trust such as certificate pinning are used.
 
-_L2_
+_AL2_
 
 1. Verify that network connections carrying sensitive data are using trusted certificates and the connection is correctly validated as per  [MASTG-TEST-0067](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-NETWORK/MASTG-TEST-0067.md)
     1. Verify that the app does not trust user installed certificates.
@@ -1801,25 +1801,25 @@ This test is limited in scope to connections that contain sensitive data.
 
 ##### Evidence
 
-L1: Provide evidence of usage of IPC mechanisms listed in [MASTG-TEST-0056](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0056.md)
+AL1: Provide evidence of usage of IPC mechanisms listed in [MASTG-TEST-0056](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0056.md)
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0056](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0056.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Review the provided documentation to validate that the application is not performing actions on behalf of the user without user interaction.
 
-_L2_
+_AL2_
 
 1. Perform the dynamic analysis using Frida to understand functionality that is exposed via custom url schemes and verify that the application is not performing actions on behalf of the user without user interaction.
 
@@ -1829,7 +1829,7 @@ _L2_
 
 ##### Evidence
 
-L1:Attach the Info.plist file output from the following command along with an explanation of what the App Extension does.
+AL1:Attach the Info.plist file output from the following command along with an explanation of what the App Extension does.
 
 ```
 grep -nr NSExtensionPointIdentifier <Payload>.app
@@ -1837,17 +1837,17 @@ grep -nr NSExtensionPointIdentifier <Payload>.app
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 2. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 2. Follow the testing procedures outlined in [MASTG-TEST-0072](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0072.md) for identifying App Extensions.
 
 ##### Verification
 
-_L1 & L2:_ Review the provided information to verify:
+_AL1 & AL2:_ Review the provided information to verify:
 
 * Only data types required for App Extension functionality shall be supported.
 * The application may restrict extensions (custom keyboards)
@@ -1858,25 +1858,25 @@ _L1 & L2:_ Review the provided information to verify:
 
 ##### Evidence
 
-L1: Attach the Info.plist containing any values for CFBundleURLSchemes along with design documentation describing functionality exposed via custom URL schemes.
+AL1: Attach the Info.plist containing any values for CFBundleURLSchemes along with design documentation describing functionality exposed via custom URL schemes.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0075](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0075.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Review the provided documentation to validate that the application is not performing actions on behalf of the user without user interaction.
 
-_L2_
+_AL2_
 
 1. Perform the dynamic analysis using Frida to understand functionality that is exposed via custom url schemes and verify that the application is not performing actions on behalf of the user without user interaction.
 
@@ -1886,21 +1886,21 @@ _L2_
 
 ##### Evidence
 
-_L1 & L2:_ Provide documentation on UIActivity usage.
+_AL1 & AL2:_ Provide documentation on UIActivity usage.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0071](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0071.md)
 
 ##### Verification
 
-L1 & L2: Review the provided information to verify:
+AL1 & AL2: Review the provided information to verify:
 
 * The nature of the data being shared.
 * The inclusion of custom activities.
@@ -1912,26 +1912,26 @@ L1 & L2: Review the provided information to verify:
 
 ##### Evidence
 
-L1: Attach the Info.plist file and output from the semgrep rule [ios_general_paste](https://github.com/MobSF/mobsfscan/blob/main/mobsfscan/rules/patterns/ios/swift/swift_rules.yaml).
+AL1: Attach the Info.plist file and output from the semgrep rule [ios_general_paste](https://github.com/MobSF/mobsfscan/blob/main/mobsfscan/rules/patterns/ios/swift/swift_rules.yaml).
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0073](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0073.md) for dynamic analysis of pasteboard usage.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Verify in the Info.plist that the application supports a minimum version of iOS 14.0 or newer.
 2. Review the semgrep output to verify that the application is not using the general pasteboard to share sensitive information.
 
-_L2_
+_AL2_
 
 1. Verify in the Info.plist that the application supports a minimum version of iOS 14.0 or newer.
 2. Follow the steps in [MASTG-TEST-0073](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0073.md) to verify that the app is not automatically adding sensitive data to the general pasteboard.
@@ -1942,25 +1942,25 @@ _L2_
 
 ##### Evidence
 
-L1: Attach the values for the key `com.apple.developer.associated-domains` in the .entitlements file along with design documentation describing functionality exposed via universal links.
+AL1: Attach the values for the key `com.apple.developer.associated-domains` in the .entitlements file along with design documentation describing functionality exposed via universal links.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0070](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0070.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Review the provided documentation to verify that the application is not performing actions on behalf of the user without user interaction.
 
-_L2_
+_AL2_
 
 1. Perform the dynamic analysis using Frida to understand functionality that is exposed via universal links and verify that the application is not performing actions on behalf of the user without user interaction
 
@@ -1976,28 +1976,28 @@ _L2_
 
 ##### Evidence
 
-L1:
+AL1:
 
 1. Demonstrate that JavaScript is disabled within WebView.
 2. If JavaScript is enabled, provide a data flow diagram with trusted end-points, secure protocols, and trust boundaries demonstrating the app's control over resources being loaded.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0076](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0076.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. If JavaScript is required the corresponding data flow diagram shall demonstrate developer controlled resource usage.
 
-_L2_
+_AL2_
 
 1. Ensure that all endpoints use HTTPS (or other encrypted protocols) for connections.
 2. Ensure that JS and HTML are loaded locally from within the app, or from trusted web servers only.
@@ -2013,30 +2013,30 @@ If the app has Javascript disabled, this shall pass automatically.
 
 ##### Evidence
 
-L1:
+AL1:
 
 1. Provide output from [improper_wkwebview](https://github.com/akabe1/akabe1-semgrep-rules/blob/main/ios/swift/webview/improper_wkwebview.yaml) and [insecure_webview](https://github.com/akabe1/akabe1-semgrep-rules/blob/main/ios/swift/webview/insecure_webview.yaml) to demonstrate that WebView usage is adhering to [MASTG-TEST-0077](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0077.md)
 2. Provide a justification for WebViews that load
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0077](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0077.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Output from [improper_wkwebview](https://github.com/akabe1/akabe1-semgrep-rules/blob/main/ios/swift/webview/improper_wkwebview.yaml) to demonstrate the usage of WKWebView.
 2. Output from [insecure_webview](https://github.com/akabe1/akabe1-semgrep-rules/blob/main/ios/swift/webview/insecure_webview.yaml) shall demonstrate potentially dangerous usage of deprecated UIWebView.
 3. Review justification for WebViews do not unnecessarily access or allow access to local files and content providers and the app implement best practices for WebView settings
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures in [MASTG-TEST-0077](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0077.md) and review the Frida output.
 2. Ensure that WebViews do not unnecessarily access or allow access to local files and content providers and the app implement best practices for loading WebView content and file access.
@@ -2053,28 +2053,28 @@ _L2_
 
 ##### Evidence
 
-L1:
+AL1:
 
 1. Provide screenshots of proper input typing demonstrating that `sensitiveTextField.isSecureTextEntry = true` is in use for passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) fields where the app knows the type of data it is displaying..
 2. Show screenshots of any UI elements where passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) are visible and demonstrate they are masked by default.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0057](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-PLATFORM/MASTG-TEST-0057.md)
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Provided documentation shall demonstrate appropriate input type implementation for the intended use of the input field.
 
-_L2_
+_AL2_
 
 1. Passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) must be properly masked for input fields and suppressed in notifications.
 2. Passwords, pins, credit card information, data commonly found on government IDs (such as social security, driver ID, passport ID) shall only be displayed to the user in clear text through an explicit action, such as clicking a show password button.
@@ -2093,21 +2093,21 @@ _L2_
 
 ##### Evidence
 
-L1: Attach the Info.plist containing the value for `DTPlatformVersion` and `DTXcodeBuild.`
+AL1: Attach the Info.plist containing the value for `DTPlatformVersion` and `DTXcodeBuild.`
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Unzip the IPA file and inspect the Info.plist to confirm the `DTPlatformVersion` and `DTXcodeBuild`  against https://xcodereleases.com/
 
 ##### Verification
 
-_L1 & L2:_ Verify that the app was built with a version of Xcode (DTXcodeBuild) that is   N-2 or above where N is the latest version of Xcode at the time of test. The DTPlatformVersion should also be N-2 where N is the most recent version of iOS at the time of the test.
+_AL1 & AL2:_ Verify that the app was built with a version of Xcode (DTXcodeBuild) that is   N-2 or above where N is the latest version of Xcode at the time of test. The DTPlatformVersion should also be N-2 where N is the most recent version of iOS at the time of the test.
 
 ---
 
@@ -2121,25 +2121,25 @@ _L1 & L2:_ Verify that the app was built with a version of Xcode (DTXcodeBuild) 
 
 ##### Evidence
 
-L1: Attach the HTML output from dependency check  `dependency-check --enableExperimental --scan &lt;source-path>`
+AL1: Attach the HTML output from dependency check  `dependency-check --enableExperimental --scan &lt;source-path>`
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0085](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CODE/MASTG-TEST-0085.md). Specifically the Dynamic Analysis section which uses objection to list the frameworks and bundles.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Review the output from dependency-check to verify that the app does not use any 3P libraries that have a published vulnerability with a severity >= CVSS 7.0.
 
-_L2_
+_AL2_
 
 1. Review the output from objection to verify that the app does not use any 3P libraries that have a published vulnerability with a severity >= CVSS 7.0.
 
@@ -2159,25 +2159,25 @@ An app that uses a vulnerable 3P library can still pass this test if the develop
 
 ##### Evidence
 
-L1: Attach the pdf report generated by [mobsf](http://mobsf.live).
+AL1: Attach the pdf report generated by [mobsf](http://mobsf.live).
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0087](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CODE/MASTG-TEST-0087.md). Specifically the Dynamic Analysis section which uses objection to list compiler flags.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Verify the binary uses PIE ASLR, and stack canaries by observing the IPA BINARY ANALYSIS section of the mobsf report.
 
-_L2_
+_AL2_
 
 1. Verify the binary uses PIE ASLR and stack canaries by observing the output from objection
 
@@ -2195,21 +2195,21 @@ _L2_
 
 ##### Evidence
 
-L1: This only applies to apps that will be distributed outside of the App Store. Attach the output from running the following command: `codesign -dvvv YOURAPP.app`
+AL1: This only applies to apps that will be distributed outside of the App Store. Attach the output from running the following command: `codesign -dvvv YOURAPP.app`
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0081](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-RESILIENCE/MASTG-TEST-0081.md).
 
 ##### Verification
 
-_L1 & L2:_ Verify that the app is signed using the [latest code signature format](https://developer.apple.com/documentation/xcode/using-the-latest-code-signature-format).
+_AL1 & AL2:_ Verify that the app is signed using the [latest code signature format](https://developer.apple.com/documentation/xcode/using-the-latest-code-signature-format).
 
 ---
 
@@ -2223,25 +2223,25 @@ _L1 & L2:_ Verify that the app is signed using the [latest code signature format
 
 ##### Evidence
 
-L1: Attach a screenshot showing that `Strip Debug Symbols During Copy` is set to `YES` in your build settings. If you have a third-party library that this cannot be enabled for, please document this.
+AL1: Attach a screenshot showing that `Strip Debug Symbols During Copy` is set to `YES` in your build settings. If you have a third-party library that this cannot be enabled for, please document this.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0083](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-RESILIENCE/MASTG-TEST-0083.md).
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Developer evidence demonstrates that debugging symbols are disabled in their production version.
 
-_L2_
+_AL2_
 
 1. Output of the analysis shows that debugging symbols are disabled in their production version.
 
@@ -2257,21 +2257,21 @@ _L2_
 
 ##### Evidence
 
-L1: This only applies to apps that will be distributed outside of the App Store. Attach the output from running the following command: `codesign -d --entitlements - YOURAPP.app`
+AL1: This only applies to apps that will be distributed outside of the App Store. Attach the output from running the following command: `codesign -d --entitlements - YOURAPP.app`
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements
 
-_L2_
+_AL2_
 
 1. Follow the testing procedures outlined in [MASTG-TEST-0082](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-RESILIENCE/MASTG-TEST-0082.md) for using `codesign` to check if debugging is enabled.
 
 ##### Verification
 
-_L1 & L2:_ Verify that the app does not allow debugging by ensuring the value for `get-task-allow` is `false`.
+_AL1 & AL2:_ Verify that the app does not allow debugging by ensuring the value for `get-task-allow` is `false`.
 
 ## 2.8 [Privacy](https://mas.owasp.org/MASVS/12-MASVS-PRIVACY/)
 
@@ -2287,25 +2287,25 @@ _L1 & L2:_ Verify that the app does not allow debugging by ensuring the value fo
 
 ##### Evidence
 
-L1: Attachment of the Info.plist file showing permission requests along with descriptions.
+AL1: Attachment of the Info.plist file showing permission requests along with descriptions.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Review Info.plist for adherence with requirement. Perform analysis to validate consent mechanisms upon data requests.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. The app adheres to least privilege principle by only requesting permissions that are needed for its functionality along with descriptive descriptions.
 
-_L2_
+_AL2_
 
 1. The app adheres to least privilege principle by only requesting permissions that are needed for its functionality  with descriptive descriptions.
 
@@ -2321,25 +2321,25 @@ _L2_
 
 ##### Evidence
 
-L1: Provide a URL to the app’s privacy policy.  Provide a screenshot of the  Privacy Nutrition labels  with a mapping of declarations to the privacy policy.
+AL1: Provide a URL to the app’s privacy policy.  Provide a screenshot of the  Privacy Nutrition labels  with a mapping of declarations to the privacy policy.
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Perform a match against data practices displayed in the Privacy Nutrition labels   against data practices explicitly listed in the privacy policy.  Check for data types being transmitted over the network that aren’t declared to users.
 
 ##### Verification
 
-_L1_
+_AL1_
 
 1. Ensure the developer provides a valid privacy policy and the declarations match those in the  Privacy Nutrition labels
 
-_L2_
+_AL2_
 
 1. All data collected should be included explicitly, either within the actual application or somewhere that can be accessed via the application.
 
@@ -2355,18 +2355,18 @@ _L2_
 
 ##### Evidence
 
-L1:  Provide a screenshot that shows an in-app URL which allows users to initiate app account deletion
+AL1:  Provide a screenshot that shows an in-app URL which allows users to initiate app account deletion
 
 ##### Test Procedure
 
-_L1_
+_AL1_
 
 1. Review provided evidence for adherence with requirements.
 
-_L2_
+_AL2_
 
 1. Review App Store label to verify existence of data deletion request mechanism.  Lab confirms availability of URL in app.
 
 ##### Verification
 
-_L1 & L2:_ The app provides an in-app mechanism which allows users to modify and delete their personal data.
+_AL1 & AL2:_ The app provides an in-app mechanism which allows users to modify and delete their personal data.
