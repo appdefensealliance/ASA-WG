@@ -56,25 +56,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 ### Assumptions
 
-The following assumptions are intended to aid the Authorized Labs for baseline security testing.
-
-#### PLATFORM
-
-The mobile application relies upon a trustworthy computing platform that runs a recent version of a mobile operating system (i.e. N-2) from the date of evaluation.   For the purposes of this document, N refers to a major operation system release.
-
-#### PROPER_USER
-
-The user of the application software is not willfully negligent or hostile, and sets a device PIN/Passcode.
-
-#### SENSITIVE_DATA
-
-Data that is of particular concern from a security perspective, including personal identifiable information, credentials, and keys. This is not taking into account regulatory requirements for privacy or compliance for various verticals such as healthcare or finance.
-
-PII is any information that can be used to directly or indirectly identify a specific individual. This data, if mishandled, can lead to harm, discrimination, or privacy violations.
-
-#### TOOLING
-
-The ADA approach emphasizes the use of automation where possible. We expect future tooling investment to assist with gathering of developer evidence for Level 1 assurance.
+See the [ADA Mobile App Specification Assumptions section](https://github.com/appdefensealliance/ASA-WG/blob/main/Mobile%20App%20Profile/Mobile%20App%20Specification.md#assumptions).
 
 # Table of Contents
 
