@@ -15,7 +15,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Alex Duff (Meta) - ASA WG Chair
 * Brooke Davis (Google) - ASA WG Vice Chair
 
-### Mobile Profile Leads
+### Web Profile Leads
 * Brad Ree (Google)
 * Michael Whiteman (Meta)
 
