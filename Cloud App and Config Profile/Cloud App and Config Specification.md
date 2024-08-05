@@ -21,16 +21,39 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Brad Ree (Google)
 
 ### Contributors
-* Cody Martin (Leviathan)
-* Juan Manuel Martinez Hernandez (Dekra)
+* Alex Duff  (Meta)
+* Andrew Kiggins
+* Anushree Shetty  (KPMG)
+* Artur Gartvikh
+* Bhairavi Mehta (TAC Security)
+* Brad Ree (Google)
+* Chris Schneider (Zimperium)
+* Christopher Estrada (NCC Group)
+* Cody Martin (Leviathan Security)
+* Gianluca Braga (Zimperium)
+* Joel Scambray (NCC Group)
+* Jorge Wallace (Dekra)
+* José María Santos López
+* Juan Manuel Martinez Hernandez
 * Julia McLaughlin (Google)
-* Justin Gerace (Meta)
+* Mamachan Anish (KPMG)
+* Mark Stribling (Leviathan Security)
+* Mateo Morales Amador
+* Michael Whiteman (Meta)
+* Nazariy Haliley (Bishop Fox)
+* noelle murata (Leviathan Security)
+* Pamela Dingle  (Microsoft)
+* Rene Guerra (Schellman)
 * Rennie deGraaf (NCC Group)
-* Rupesh Nair (Netsentries )
-* Soledad Antelada Toledano (Google)
+* Richard Harris  (NCC Group)
+* Rupesh Nair (Net Sentries)
+* Ryan Nakamoto (Meta)
+* Sebastian Porst
+* Shad Malloy
+* Tim Bolton (Meta)
 * Tony Balkan (Microsoft)
-* Viktor Sytnik (Leviathan)
-
+* Viktor Sytnik (Leviathan Security)
+  
 # Table of Contents
 
 
