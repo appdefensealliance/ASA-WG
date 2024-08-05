@@ -38,7 +38,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Chris Cinnamo (Zimperium)
 * Christian Schnell (Zimperium)
 * Cody Martin (Leviathan Security)
-* Corey Gagnon
+* Corey Gagnon (Meta)
 * Eugene Liderman (Google)
 * Gianluca Braga (Zimperium)
 * Joel Scambray (NCC Group)
