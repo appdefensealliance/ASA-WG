@@ -748,8 +748,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.1
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the ADA's Dynamic Application Security Testing Guidance. Scan results can be provided by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the ADA's Dynamic Application Security Testing Guidance. Scan results must be provided by an authorized testing lab. 
 
 
 
