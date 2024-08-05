@@ -23,26 +23,54 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Tim Bolton (Meta)
 
 ### Contributors
-
+* Alex Duff (Meta)
+* Ana Vargas
 * Anna Bhirud (Google)
 * Antonio Nappa (Zimperium)
+* Anushree Shetty  (KPMG)
+* Artem Chornyi
+* Artur Gartvikh
+* Asaf Peleg (Zimperium)
+* Bhairavi Mehta (TAC Security)
 * Brad Ree (Google)
+* Brooke Davis (Google)
+* Carlos Holguera
+* Chris Cinnamo (Zimperium)
 * Christian Schnell (Zimperium)
-* Cody Martin (Leviathan)
-* Corey Gagnon (Meta)
+* Cody Martin (Leviathan Security)
+* Corey Gagnon
 * Eugene Liderman (Google)
+* Gianluca Braga (Zimperium)
 * Joel Scambray (NCC Group)
-* Jorge Damian (NowSecure)
-* José María Santos López (Dekra)
-* Juan Manuel Martinez Hernandez (Dekra)
+* Jon Paterson (Zimperium)
+* Jorge Damian
+* Jorge Wallace Ruiz (Dekra)
+* José María Santos López
+* Juan Manuel Martinez Hernandez
+* Julia McLaughlin (Google)
 * Jullian Gerhart (NCC Group)
-* Olivier Tuchon (Google)
-* Peter Mueller (Praetorian)
-* Riccardo Poffo (Mobisec)
-* Rupesh Nair (Netsentries)
-* Syrone Hanks II (Now Secure)
+* Kelly Albrink (Bishop Fox)
+* Mamachan Anish (KPMG)
+* Mark Stribling (Leviathan Security)
+* Mateo Morales Amador
+* Michael Krueger
+* Michael Whiteman (Meta)
+* Nazariy Haliley (Bishop Fox)
+* Nicole Weisenbach (NCC Group)
+* Noelle Murata  (Leviathan Security)
+* Olivier Tuchon
+* Pamela Dingle  (Microsoft)
+* Rubén Lirio (Dekra)
+* Rupesh Nair (Net Sentries)
+* Sebastian Porst
+* Shad Malloy
+* Soledad Antelada Toledano (Google)
+* Syrone Hanks II
 * Thomas Cannon (NCC Group)
-* Yiannis Kozyrakis (Meta)
+* Tim Bolton (Meta)
+* Viktor Sytnik (Leviathan Security)
+* Yiannis Kozyrakis
+* Zach Moreno (Bishop Fox)
 
 ## Introduction
 
