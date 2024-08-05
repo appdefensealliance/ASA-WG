@@ -210,8 +210,8 @@ Burp Suite (Primary Option):
    - Manually append a valid authentication state (headers / tokens / cookies) to scan requests.
    - Manually enumerate application functionality within Burp (while authenticated) to replicate spidering and then initiate scanning from those manually crawled pages & forms (including the previously utilized authenticated state).
 
-Utilize Alternative Scanning Tool:
-   - In cases where a where a testing lab is unable to complete an assessment using Burp Suite due to technical limitations, the lab is permitted to use an alternative scanning tool (e.g., a different DAST product), so long as the testing lab can confirm that the tool covers the ADA's automated test cases from an authenticated state.
+Utilize Alternative Scanning Tool (applicable to authorized labs):
+   - In cases where a where an authorized testing lab is unable to complete an assessment using Burp Suite due to technical limitations, the lab is permitted to use an alternative scanning tool (e.g., a different DAST product), so long as the testing lab can confirm that the tool covers the ADA's automated test cases from an authenticated state.
 
 # 1 Authentication
 ## 1.1 Implement strong password security measures
