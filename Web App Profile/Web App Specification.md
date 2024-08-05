@@ -156,7 +156,9 @@ This specification is designed to be applied to one or more target web applicati
 | --- | ----- |
 | ADA-approved external user authentication service | User authentication / Identity provider which has been reviewed against the ADA authentication requirements. The review may have been done directly against the service or part of an application review. See ADA Approved User Authentication Service. |
 | ASVS | Application Security Verification Standard |
-| Code snippets | Portion of code (either screenshot or text file), which demonstrates the implementation of the security control defined in the audit test case. The full text file, calling functions or underlying libraries do not need to be included. |
+| Authentication material | Sensitive information used to verify the identity of a user or service. These materials can include passwords, API tokens, session cookies, and other types of credentials that are used to authenticate access to a system or application. |
+| Code snippets | Portion of code (either screenshot or text file), which demonstrates the implementation of the security control defined in the audit test case. The full source code, calling functions or underlying libraries do not need to be included. |
+| Confidential data | Non-public information including user data and company confidential information which should only be accessible to authorized applications and systems. |
 | CVE | Common Vulnerabilities and Exposures. [https://www.cve.org/](https://www.cve.org/)|
 | CVSS | Common Vulnerability Scoring System. [https://www.cve.org/](https://www.cve.org/)|
 | Default credentials | Default credentials are any predefined user names and passwords combinations. For example, Admin/Admin. However, Admin with a user defined password would not be a default credential. |
@@ -165,14 +167,12 @@ This specification is designed to be applied to one or more target web applicati
 | Local File Inclusion | The File Inclusion vulnerability allows an attacker to include a file, usually exploiting a “dynamic file inclusion” mechanism implemented in the target application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion) |
 | (L1) ADA Assurance Level 1 (Verified Self Assessment) | The developer provides evidence and statements of compliance to each audit test case. The ADA approved lab reviews the evidence against the requirements. The ADA approved lab does not directly assess the application. |
 | (L2) ADA Assurance Level 2 (Lab Assessment) |  The ADA approved lab evaluates each audit test case directly against the application. In some cases, the developer may need to provide limited information or code snippets. |
-| non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
-| Padding Oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
+| Non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
+| Padding oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
 | Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
-| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, are out of scope. |
-| Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
+| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, is out of scope. | 
+| Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL/TLS web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
 | Scope | Identifies whether a requirement is applicable to web applications, web APIs, or both. Mobile applications that utilize web APIs must comply with both the mobile application and web API specifications. |
-| Confidential data | Non-public information including user data and company confidential information which should only be accessible to authorized applications and systems. |
-| Authentication material | Sensitive information used to verify the identity of a user or service. These materials can include passwords, API tokens, session cookies, and other types of credentials that are used to authenticate access to a system or application. |
 | Remote File Inclusion | Remote File Inclusion (also known as RFI) is the process of including remote files through the exploitation of vulnerable inclusion procedures implemented in the application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion) |
 | WSTG | OWASP Web Security Testing Guide |
 | 3P library | Any library which was not developed by the developer. These libraries may be open source or commercial libraries or SDKs.|
@@ -291,14 +291,7 @@ This requirement prevents unauthorized access to sensitive parts of an applicati
 ### Description
 Applications shall enforce robust access controls at a trusted service layer, ensuring data integrity and applying the principle of least privilege. This includes protecting user/data attributes, limiting user manipulation, failing securely during exceptions, defending against Insecure Direct Object References (IDOR), and using strong anti-CSRF and multi-factor authentication (MFA) for administrative functions.
 ### Rationale
-*Layered Defense*
-Combining URI and resource-level checks provides multiple layers of protection, enhancing security against unauthorized access.
-
-*Fine-grained Control*
-Resource-level permissions allow for precise control over individual objects or data, while URI-level controls offer broader protection of web resources.
-
-*Flexibility*
-This approach supports varying access control needs, ensuring security in diverse application architectures.
+Enforcing least privilege access controls on a trusted service layer helps prevent unauthorized access and manipulation of sensitive data.
 ### Scope
 - Web application
 - Web and mobile APIs
@@ -454,16 +447,9 @@ Dangling DNS records and vulnerable third-party services can allow attackers to 
 ---
 ## 6.5 Do not log credentials or payment details
 ### Description
-Applications must never log sensitive user data, specifically credentials (e.g., passwords, API keys) and payment details (e.g., credit card numbers, CVVs).
+Applications must never log authentication material, such as user credentials (e.g., passwords, API keys) or payment details (e.g., credit card numbers, CVVs).
 ### Rationale
-*Data Compromise Prevention*
-Logging such sensitive data creates unnecessary copies that are themselves targets for attackers. If logs are compromised, critical user information is exposed, significantly increasing the impact of a breach.
-
-*Regulatory Compliance*
-Many data privacy regulations (PCI-DSS, GDPR, etc.) explicitly prohibit the storage of sensitive authentication and financial data, especially in plain text.
-
-*Security Best Practice*
-Avoiding logging sensitive information minimizes the overall attack surface and demonstrates a commitment to responsible data handling.
+Many data privacy regulations (PCI-DSS, GDPR, etc.) explicitly prohibit the storage of sensitive authentication and financial data, especially in plaintext. In addition, avoiding logging sensitive information minimizes the overall attack surface and demonstrates a commitment to responsible data handling.
 ### Scope
 - Web application
 - Web and mobile APIs
