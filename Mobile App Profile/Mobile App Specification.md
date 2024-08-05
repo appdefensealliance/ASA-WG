@@ -106,7 +106,7 @@ The user of the application software is not willfully negligent or hostile, and 
 
 #### Sensitive or Confidential Data
 
-Data that is of particular concern from a security perspective, including user data, user device data, company data, or other types of confidential information. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
+Data that is of particular concern from a security perspective, including user data, user device data, company data, credentials, keys, or other types of confidential information. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
 
 Throughout this document, the phrase "sensitive data" means non-public data such as user data, user device data, company data, or other types of confidential information and should not be confused with the meaning of Sensitive Data under regulations like GDPR or other regulatory regimes.
 
