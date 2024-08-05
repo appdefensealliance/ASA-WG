@@ -96,21 +96,21 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 The following assumptions are intended to aid the Authorized Labs for baseline security testing.
 
-#### Platform
+#### PLATFORM
 
 The mobile application relies upon a trustworthy computing platform that runs a recent version of a mobile operating system (i.e. N-2) from the date of evaluation.   For the purposes of this document, N refers to a major operation system release.
 
-#### Proper User
+#### PROPER_USER
 
 The user of the application software is not willfully negligent or hostile, and sets a device PIN/Passcode.
 
-#### Sensitive or Confidential Data
+#### SENSITIVE_DATA
 
-Data that is of particular concern from a security perspective, including user data, user device data, company data, or other types of confidential information. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
+Data that is of particular concern from a security perspective, including personal identifiable information, credentials, and keys. This is not taking into account regulatory requirements for privacy or compliance for various verticals such as healthcare or finance.
 
-Throughout this documeent, the phrase "sensitive data" means non-public data such as user data, user device data, company data, or other types of confidential information and should not be confused with the meaning of Sensitive Data under regulations like GDPR or other regulatory regimes.
+PII is any information that can be used to directly or indirectly identify a specific individual. This data, if mishandled, can lead to harm, discrimination, or privacy violations.
 
-#### Tooling
+#### TOOLING
 
 The ADA approach emphasizes the use of automation where possible. We expect future tooling investment to assist with gathering of developer evidence for Level 1 assurance.
 
