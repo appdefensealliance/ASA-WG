@@ -114,6 +114,12 @@ PII is any information that can be used to directly or indirectly identify a spe
 
 The ADA approach emphasizes the use of automation where possible. We expect future tooling investment to assist with gathering of developer evidence for Level 1 assurance.
 
+### Definitions
+| Term | Definition |
+| --- | ----- |
+| (AL1) ADA Assurance Level 1 (Verified Self Assessment) | The developer provides evidence and statements of compliance to each audit test case. The ADA approved lab reviews the evidence against the requirements. The ADA approved lab does not directly assess the application. |
+| (AL2) ADA Assurance Level 2 (Lab Assessment) |  The ADA approved lab evaluates each audit test case directly against the application. In some cases, the developer may need to provide limited information or code snippets. |
+
 # Table of Contents
 
 * [1 ANDROID](#1-android)

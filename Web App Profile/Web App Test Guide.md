@@ -190,8 +190,8 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | HTTP parameter pollution | HTTP Parameter Pollution (HPP) is a web application vulnerability exploited by injecting encoded query string delimiters in already existing parameters. [https://en.wikipedia.org/wiki/HTTP_parameter_pollution](https://en.wikipedia.org/wiki/HTTP_parameter_pollution)|
 | IV (Initialization Vector) | A binary vector used as the input to initialize the algorithm for the encryption of a plaintext block sequence to increase security by introducing additional cryptographic variance and to synchronize cryptographic equipment. The initialization vector need not be secret. [https://csrc.nist.gov/glossary/term/initialization_vector](https://csrc.nist.gov/glossary/term/initialization_vector) |
 | Local File Inclusion | The File Inclusion vulnerability allows an attacker to include a file, usually exploiting a “dynamic file inclusion” mechanism implemented in the target application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion) |
-| (L1) ADA Assurance Level 1 (Verified Self Assessment) | The developer provides evidence and statements of compliance to each audit test case. The ADA approved lab reviews the evidence against the requirements. The ADA approved lab does not directly assess the application. |
-| (L2) ADA Assurance Level 2 (Lab Assessment) |  The ADA approved lab evaluates each audit test case directly against the application. In some cases, the developer may need to provide limited information or code snippets. |
+| (AL1) ADA Assurance Level 1 (Verified Self Assessment) | The developer provides evidence and statements of compliance to each audit test case. The ADA approved lab reviews the evidence against the requirements. The ADA approved lab does not directly assess the application. |
+| (AL2) ADA Assurance Level 2 (Lab Assessment) |  The ADA approved lab evaluates each audit test case directly against the application. In some cases, the developer may need to provide limited information or code snippets. |
 | Non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
 | Padding oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
 | Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
@@ -230,25 +230,25 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.2.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide a list of any external user authentication services.
 2. If a proprietary user authentication service is used by the application, provide a written description of the password policy
 3. If a proprietary user authentication service is used by the application, provide a written description of any anti-automation controls in place including multi-factor controls, rate limiting, CAPTCHAs, or soft account lockouts.
 4. If a proprietary user authentication service is used by the application, provide screenshots of the anti-automation controls in action.
 
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review list of external authentication services against ADA approved services.
 2. Review provided evidence for adherence with the requirements
 
-*L2*
+*AL2*
 1. Review list of external authentication services against ADA approved services.
 2. For proprietary authentication services, perform the testing guidance provided by WSTG-ATHN-03 to validate anti-automation controls.
 
@@ -256,7 +256,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.2.1
 **Verification**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, the application shall enforce at least one of the following controls:
    * 2.1. Rate limiting such that no more than 100 failed attempts on a single account per hour shall be allowed.
@@ -274,23 +274,23 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide a list of any external user authentication services.
-2. If a proprietary user authentication service is used by the application, provide a written description of the initial password or activation code process. 
+2. If a proprietary user authentication service is used by the application, provide a written description of the initial password or activation code process.
 3. If a proprietary user authentication service is used by the application, provide screenshots of the initial password or activation code process in action.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review list of external authentication services against ADA approved services.
 2. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Review list of external authentication services against ADA approved services.
 2. For proprietary authentication services, evaluate the application's initial password or activation code generation.
 
@@ -298,7 +298,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 **Verification**
 
 
-*L1*
+*AL1*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, initial password or activation codes documentation shall include the following controls:
    * 2.1. The initial password or codes shall be at least 6 characters long.
@@ -306,7 +306,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
    * 2.3. The initial password or codes shall expire after a short period of time. (24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
    * 2.4. The initial password or codes shall not be permitted to become long term passwords.
 
-*L2*
+*AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, initial password or activation codes shall be validated to include the following controls:
    * 2.1. The initial password or codes shall be at least 6 characters long.
@@ -324,7 +324,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 **Evidence**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Provide a list of any external user authentication services.
 2. If a proprietary user authentication service is used by the application, provide a written description of the password storage methods including any cryptographic protections such as salts or hashing.
 
@@ -333,7 +333,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 **Test Procedure**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Review list of external authentication services against ADA approved services.
 2. Review provided evidence for adherence with the requirements.
 
@@ -342,7 +342,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.4.1
 **Verification**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, cryptographic hashing methods shall follow industry best practices. The list of approved one-way key derivation functions is detailed in NIST 800-63 B section 5.1.1.2.
 
@@ -365,29 +365,29 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 **Evidence**
 
 
-*L1*
+*AL1*
 1. If any default accounts are present on publicly exposed interfaces, a confirmation that default credentials are not used shall be provided.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
    
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Perform the testing guidance provided by WSTG-ATHN-02 to validate default credentials are not present on publicly exposed interfaces.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Default credentials shall not be present on publicly exposed interfaces.
 
-*L2*
+*AL2*
 1. Test results from WSTG-ATHN-02 shall not detect the use of default credentials on publicly exposed interfaces.
 
 ---
@@ -407,7 +407,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 **Evidence**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Provide a list of any external user authentication services.
 2. If a proprietary user authentication service is used by the application, provide a written description of the out of band verifier expiration process.
 
@@ -416,7 +416,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 **Test Procedure**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Review list of external authentication services against ADA approved services.
 2. Review provided evidence for adherence with the requirements
 
@@ -425,7 +425,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 **Verification**
 
 
-*L2 and l2*
+*AL2 and AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, associated out-of-band verifiers shall expire in accordance with the below timeframes:
    - Password reset verifiers (e.g., one time use email links) will expire after 7 days.
@@ -440,22 +440,22 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.3
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide a list of any external user authentication services.
 2. If a proprietary user authentication service is used by the application, provide a written description of the out of band expiration process.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review list of external authentication services against ADA approved services.
 2. Review provided evidence for adherence with the requirements
 
-*L2*
+*AL2*
 1. Review list of external authentication services against ADA approved services.
 2. For proprietary authentication services, evaluate the application out of band verifier process.
 
@@ -463,11 +463,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.3
 **Verification**
 
 
-*L1*
+*AL1*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, out of band verifier shall only be used once.
 
-*L2*
+*AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, evaluation shall verify that the application does not allow the out of band verifier to be used more than once.
 
@@ -480,22 +480,22 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide a list of any external user authentication services.
 2. If a proprietary user authentication service is used by the application, provide a written description of the algorithm used to generate initial authentication codes.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review list of external authentication services against ADA approved services.
 2. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Review list of external authentication services against ADA approved services.
 2. From the application, generate at least three initial authentication codes.
 
@@ -503,11 +503,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 **Verification**
 
 
-*L1*
+*AL1*
 1. An ADA-approved external user authentication service may be used.
 2. Initial authentication code generation shall be securely random (generation of random numbers shall be in a way that is impossible for an attacker to predict or manipulate).
 
-*L2*
+*AL2*
 1. An ADA-approved external user authentication service may be used.
 2. Initial authentication code shall be observed to be random.
 
@@ -520,22 +520,22 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide a list of any external user authentication services.
 2. If a proprietary user authentication service is used by the application, provide a written description of the algorithm used to generate initial authentication codes and also of any rate-limiting applied during the application’s initial authentication code validation process.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review list of external authentication services against ADA approved services.
 2. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Review list of external authentication services against ADA approved services.
 2. Validate application’s adherence with the requirements.
 
@@ -543,12 +543,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.6
 **Verification**
 
 
-*L1*
+*AL1*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, authentication codes shall contain at least 20 bits of entropy (typically a six digital random number is sufficient).
 3. If a non-ADA approved service is used and the authentication secret has less than 64 bits of entropy, the application shall implement a rate-limiting mechanism.
 
-*L2*
+*AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, evaluation shall verify authentication codes contain at least 20 bits of entropy (typically a six digital random number is sufficient).
 3. If a non-ADA approved service is used and the authentication secret has less than 64 bits of entropy, evaluation shall verify the application implements a rate-limiting mechanism.
@@ -572,27 +572,27 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning must be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning must be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
-*L2*
+*AL2*
 1. Perform exposed variable testing procedure defined in WSTG-SESS-04.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 4195072 Password submitted using GET method
@@ -601,7 +601,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 
 2. Either sensitive information shall not be sent via the URL or an option shall exist to send sensitive data within the HTTP body or via Header values.
 
-*L2*
+*AL2*
 
 1. Application requests shall not send passwords or session tokens as a URL parameter and the application API shall not require sensitive data to be sent via the URL.
 
@@ -623,7 +623,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.1
 **Evidence**
 
 
-*L1*
+*AL1*
 
 1. Provide code snippets that show how the logout and expiration functionality is implemented and that demonstrate user session tokens are invalidated when a user logs out or the session is expired.
 
@@ -631,7 +631,7 @@ or;
 
 2. Provide documentation that describes how session tokens are handled on user logout and expiration.
 
-*L2*
+*AL2*
 
 1. N/A (to be collected by labs)
 
@@ -639,11 +639,11 @@ or;
 **Test Procedure**
 
 
-*L1*
+*AL1*
 
 1. Review evidence to validate logout and session expiration functions meet the specified requirements.
 
-*L2* 
+*AL2*
 
 1. Perform session testing procedures defined in WSTG-SESS-06 and WSTG-SESS-07.
 
@@ -651,11 +651,11 @@ or;
 **Verification**
 
 
-*L1*
+*AL1*
 
 1. Server-side session invalidation shall occur upon user logout and session expiration.
 
-*L2*
+*AL2*
 
 1. Test shall confirm that the application performs server-side session invalidation on user logout and session expiration.
 
@@ -668,34 +668,34 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.3
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide code snippets that show how session invalidation is handled for a user after a successful password change.
 
 or;
 
 2. Provide documentation that describes how session invalidation is handled for a user after a successful password change.
 
-*L2*
+*AL2*
 N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review evidence to validate session termination on password change meets the specified requirements.
 
-*L2*
+*AL2*
 1. Perform session invalidation testing procedures defined in WSTG-SESS-07.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. User active sessions shall be terminated or an option is given to inactive active sessions on user password change.
 
-*L2*
+*AL2*
 1. Test shall confirm that application performs server-side session invalidation of user active sessions or option shall be given to inactive active sessions on user password change.
 
 
@@ -707,30 +707,30 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide code snippets, screenshot, or documentation that shows the time period for which stateless tokens are valid (if utilized).
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review evidence to validate session expiration meets the specified requirements.
 
-*L2* 
+*AL2*
 1. Obtain stateless authentication token from target application.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Non-revocable stateless authentication tokens shall have an expiration time within 24 hours of being issued.
 
-*L2*
+*AL2*
 1. Non-revocable stateless authentication tokens shall have an expiration time within 24 hours of being issued.
 
 
@@ -751,32 +751,32 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.1
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
-*L2*
+*AL2*
 1. Perform cookie attribute testing procedure defined in WSTG-SESS-02.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerability:
    - 5243392 TLS cookie without secure flag set
 
-*L2*
+*AL2*
 1. Test shall confirm that application session cookies shall utilize the "Secure" attribute.
 
 
@@ -788,32 +788,32 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.2
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
-*L2*
+*AL2*
 1. Perform cookie attribute testing procedure defined in WSTG-SESS-02.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerability:
    - 500600 Cookie without HttpOnly flag set
 
-*L2*
+*AL2*
 1. Test shall confirm that application session cookies utilize the "HttpOnly" attribute.
 
 
@@ -825,34 +825,34 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.2
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide code snippets of session token creation; showing dynamically generated tokens
 
 or;
 
 2. Provide documentation that describes how session tokens are dynamically generated
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review evidence to validate session tokens meets the specified requirements
 
-*L2* 
+*AL2*
 1. Perform session token testing procedures defined in WSTG-SESS-03
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Session tokens shall be dynamically generated after user authentication.
 
-*L2*
+*AL2*
 1. Test shall confirm that application session tokens are dynamically generated and change after user authentication.
 
 
@@ -864,33 +864,33 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
-*L2*
+*AL2*
 1. Perform testing procedures to validate stateless session tokens are securely generated and validated.  Where stateless tokens utilize JSON Web Tokens (JWT), perform testing procedures defined in WSTG-SESS-10.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 2099456 JWT signature not verified
    - 2099457 JWT none algorithm supported
 
-*L2*
+*AL2*
 1. Test shall confirm that application stateless session token digital signatures are validated using server-side private key.
 
 
@@ -911,34 +911,34 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.7.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide code snippets that shows either the user has a full login session or an account verification process is conducted before allowing user account modifications or sensitive data transaction
 
 or;
 
 2. Provide documentation that describes either the user has a full login session or an account verification process is conducted before allowing user account modifications or sensitive data transaction
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review evidence to validate user authentication meets the specified requirements
 
-*L2* 
+*AL2*
 1. Perform state and authentication testing procedures defined in WSTG-SESS-01
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Either the user shall have a full login session or an account verification process shall be conducted before allowing user account modifications or transaction against sensitive data.
 
-*L2*
+*AL2*
 1. Test shall confirm that a user is required to have a full login session or an account verification process is conducted before allowing user account modifications or transaction against sensitive data.
 
 
@@ -960,12 +960,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Explain / Provide documentation how user authentication and authorization are implemented, what roles and permissions are defined, and how access control rules are enforced when users interact with the application.
 2. Explain / Provide documentation that the principle of least privilege exists - users should only be able to access functions, data files, URLs, controllers, services, and other resources, for which they possess specific authorization.
 Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.3.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
@@ -973,20 +973,20 @@ Note: A single written description shall be used for access control test cases 3
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements
 
-*L2*
+*AL2*
 1. Perform authorization bypass testing as defined in WSTG-ATHZ-02.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Application shall enforce access control rules on a trusted service layer.
 
-*L2*
+*AL2*
 1. Access control decisions shall be uniformly enforced on a trusted service layer.
 
 
@@ -998,31 +998,31 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.2
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Explain / Provide documentation how user authentication and authorization are implemented, what roles and permissions are defined, and how access control rules are enforced when users interact with the application.
 2. Explain / Provide documentation that the principle of least privilege exists - users should only be able to access functions, data files, URLs, controllers, services, and other resources, for which they possess specific authorization.
 Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.3.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Perform authorization bypass testing as defined in WSTG-ATHZ-02.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. User and data attributes and policy information used by access controls shall not be manipulated by the end user.
 
-*L2*
+*AL2*
 1. Test shall confirm that access controls are not be able to be manipulated by the end user unless specifically authorized.
 
 
@@ -1034,12 +1034,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.1.5
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Explain / Provide documentation how user authentication and authorization are implemented, what roles and permissions are defined, and how access control rules are enforced when users interact with the application.
 2. Explain / Provide documentation that the principle of least privilege exists - users should only be able to access functions, data files, URLs, controllers, services, and other resources, for which they possess specific authorization.
 Note: A single written description shall be used for access control test cases 3.1.1 - 3.1.3.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
@@ -1047,20 +1047,20 @@ Note: A single written description shall be used for access control test cases 3
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Perform testing for improper access control error handling as defined in WSTG-ERRH-01.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Access controls shall fail securely.
 
-*L2*
+*AL2*
 1. Test shall confirm that the application's access controls securely failed closed including when an exception occurs.
 
 
@@ -1072,31 +1072,31 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide a list of APIs in which portions of the API/URL or parameters may be passed from the user into the application.
 2. Provide a written description how the APIs are protected from Insecure Direct Object Reference attacks.
 
-*L2*
+*AL2*
 1. Provide a list of APIs in which portions of the API/URL or parameters may be passed from the user into the application.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Perform testing for Insecure Direction Object References as defined in WSTG-ATHZ-04.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. A process shall be in place to mitigate Insecure Direct Object Reference attacks.
 
-*L2*
+*AL2*
 1. Any APIs that accept user facing parameters (or URIs) shall not exhibit signs of Insecure Direct Object References.
 
 
@@ -1108,20 +1108,20 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.2
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
-*L2*
+*AL2*
 1. Perform testing as defined in WSTG-SESS-05 (Testing for Cross Site Request Forgery).
 
 
@@ -1129,11 +1129,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.2
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 2098944 Cross-site request forgery
 
-*L2*
+*AL2*
 1. Application or framework shall enforce effective controls to mitigate Cross Site Request Forgery (CSRF).
 
 
@@ -1145,24 +1145,24 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.2
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
 **Verification**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Burp Suite scan shall not identify the following vulnerability:
    - 6291712 Directory Listing
 
@@ -1186,20 +1186,20 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Evidence**
 
 
-*L1*
-1. If the application uses an OAuth 2.0 integration, provide a written description along with relevant evidence (screenshots, source code, or other documentation) detailing which OAuth 2.0 flow is used.  
+*AL1*
+1. If the application uses an OAuth 2.0 integration, provide a written description along with relevant evidence (screenshots, source code, or other documentation) detailing which OAuth 2.0 flow is used.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
-1. Review evidence to verify which OAuth 2.0 flows are used by the application. 
+*AL1*
+1. Review evidence to verify which OAuth 2.0 flows are used by the application.
 
-*L2*
+*AL2*
 1. Perform the Testing for Deprecated Grant Types steps defined in WSTG-ATHZ-05 (Testing for OAuth Weaknesses).
 
 
@@ -1207,11 +1207,11 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Verification**
 
 
-*L1*
-1. Documentation shall not indicate the use of a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
+*AL1*
+1. Documentation shall not indicate the use of a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow.
 
-*L2*
-1. Test shall confirm that the application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow. 
+*AL2*
+1. Test shall confirm that the application is not using a deprecated OAuth flow, including the Implicit Flow or the Resource Owner Password Credentials Flow.
 
 
 
@@ -1223,20 +1223,20 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Evidence**
 
 
-*L1*
+*AL1*
 1. If the application uses an OAuth 2.0 integration, provide a written description along with relevant evidence (screenshots, source code, or other documentation) detailing how the application uses the state and redirect_uri parameters to prevent common OAuth vulnerabilities.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence to verify the application's usage of the redirect_uri and state parameters.
 
-*L2*
+*AL2*
 1. Perform the Testing for OAuth Client Weaknesses steps defined in WSTG-ATHZ-05 (Testing for OAuth Weaknesses).
 
 
@@ -1244,10 +1244,10 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Verification**
 
 
-*L1*
-1. Application shall securely utilize state and redirect_uri validation to prevent against open redirect and CSRF vulnerabilities. 
+*AL1*
+1. Application shall securely utilize state and redirect_uri validation to prevent against open redirect and CSRF vulnerabilities.
 
-*L2*
+*AL2*
 1. Test shall confirm that the application is not vulnerable to open redirects or CSRF vulnerabilities in the OAuth authorization process.
 
 
@@ -1270,21 +1270,21 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.1
 **Evidence**
 
 
-*L1 and L2*
-1. Provide evidence demonstrating that any application exposed administrative interfaces enforce multi-factor authentication for all accounts. 
+*AL1 and AL2*
+1. Provide evidence demonstrating that any application exposed administrative interfaces enforce multi-factor authentication for all accounts.
 
 
 **Test Procedure**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Review provided evidence for adherence with the requirements.
 
 
 **Verification**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Multi-factor authentication shall be enforced for all administrative accounts.
 
 
@@ -1308,31 +1308,31 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.1.2
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Execute a Qualys SSL Labs scan for the application and provide a PDF export of the test results demonstrating that application meets the aforementioned TLS requirements. In most cases, this should result in a B or higher score.
 
-*L2*
+*AL2*
 1. N/A (to be collected by lab)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review PDF export from Qualys SSL Labs scan.
 
-*L2* 
+*AL2*
 1. Perform the testing guidance defined in WSTG-CRYP-01 to inspect TLS configuration.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 
 1. Application shall meet the TLS configuration defined in NIST SP.800-52r2.
 
-*L2*
+*AL2*
 
 1. Test shall confirm that the application meets the TLS configuration defined in NIST SP.800-52r2.
 
@@ -1353,32 +1353,32 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.2.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Execute a Qualys SSL Labs scan for the application and provide a PDF export of the test results demonstrating that application meets the aforementioned TLS requirements. In most cases, this should result in a B or higher score.
 
-*L2*
+*AL2*
 1. N/A (to be collected by lab)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review PDF export from Qualys SSL Labs scan.
 
-*L2* 
+*AL2*
 1. Perform the testing guidance provided in the Digital Certificates section of WSTG-CRYP-01.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 
 1. Application shall meet the TLS certification requirements defined in NIST SP.800-52r2.
 
 
-*L2*
+*AL2*
 
 1. Test shall confirm that the application meets the TLS certificate requirements defined in NIST SP.800-52r2.
 
@@ -1391,8 +1391,8 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Evidence**
 
 
-*L1 and L2*
-1. Describe any situations in which your application uses the following cryptographic operations: 
+*AL1 and AL2*
+1. Describe any situations in which your application uses the following cryptographic operations:
    * Encryption or decryption
    * Hashing
    * MAC or HMAC
@@ -1408,23 +1408,23 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Test Procedure**
 
 
-*L1*
+*AL1*
 
 1. Review evidence to validate cryptographic operations.
 
 
-*L2*
+*AL2*
 1. Review evidence to validate cryptographic operations. Perform manual testing as appropriate using guidance defined in WSTG-CRYP-04 to validate cryptographic operations.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 
 1. Developer evidence demonstrates that strong cryptography shall be implemented according to industry best practices.
 
-*L2*
+*AL2*
 
 1. Output of the analysis shows that strong cryptography shall be implemented according to industry best practices.
 
@@ -1447,32 +1447,32 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.2.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Describe how your application handles cryptographic failures for the previously identified crypto operations. Provide detailed evidence such as source code, screenshots, or other relevant sources that showcase how the application handles cryptographic failures.
 
-*L2*
+*AL2*
 1. N/A (to be collected by lab)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 
 1. Review the provided evidence to identify potential Padding Oracle scenarios as described in WSTG-CRYP-02.
 
-*L2*
-1. Perform the testing guidance provided by WSTG-CRYP-02 to identify potential Padding Oracles in the application. 
+*AL2*
+1. Perform the testing guidance provided by WSTG-CRYP-02 to identify potential Padding Oracles in the application.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 
 1. Errors or other output resulting from cryptographic failures shall not disclose sensitive information about the operation’s state or reveal any details that could be exploited as a side channel. User-facing error messages shall be vague and consistent regardless of the failure type.
 
-*L2*
+*AL2*
 1. Test shall confirm that errors or other output resulting from cryptographic failures do not disclose sensitive information about the operation's state or reveal any details that could be exploited as a side channel. User-facing error messages shall be vague and consistent regardless of the failure type.
 
 
@@ -1495,33 +1495,33 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.1
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 1. Perform HTTP parameter pollution testing procedure defined in WSTG-INPV-04.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 5248000: Client-side HTTP parameter pollution (reflected)
    - 5248001: Client-side HTTP parameter pollution (stored)
 
-*L2*
+*AL2*
 1. Test shall confirm that application is not vulnerable to HTTP parameter pollution as defined in WSTG-INPV-04.
 
 
@@ -1533,28 +1533,28 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.5
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 1. Perform client-side URL redirect testing procedure defined in WSTG-CLNT-04.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 5243136: Open redirection (reflected)
    - 5243137: Open redirection (stored)
@@ -1562,7 +1562,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.5
    - 5243153: Open redirection (reflected DOM-based)
    - 5243154: Open redirection (stored DOM-based)
 
-*L2*
+*AL2*
 1. Test shall confirm that application restricts redirects to allowlisted URLs or displays a warning when redirecting to untrusted content.
 
 
@@ -1574,28 +1574,28 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.4
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 1. Perform code injection testing procedure defined in WSTG-INPV-11.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 1051904: Server-side JavaScript code injection
    - 1052160: Perl code injection
@@ -1605,8 +1605,8 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.4
    - 1052672: Unidentified code injection
    - 1052448: Expression Language Injection
 
-*L2*
-1. Test shall confirm that application does not allow arbitrary code execution from user input. In scenarios where user-supplied code execution is expected, ensure all user input is sanitized and sandboxed prior to execution. 
+*AL2*
+1. Test shall confirm that application does not allow arbitrary code execution from user input. In scenarios where user-supplied code execution is expected, ensure all user input is sanitized and sandboxed prior to execution.
 
 
 ---
@@ -1617,11 +1617,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.5
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
@@ -1629,23 +1629,23 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.5
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 1. Perform template injection testing procedure defined in WSTG-INPV-18.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 1052800: Server-side template injection
 
-*L2*
-1. Test shall confirm that application is not susceptible to template injection from untrusted input. 
+*AL2*
+1. Test shall confirm that application is not susceptible to template injection from untrusted input.
 
 
 ---
@@ -1656,11 +1656,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.6
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
@@ -1668,24 +1668,24 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.6
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 1. Perform Server-Side Request Forgery (SSRF) testing procedure defined in WSTG-INPV-19.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 1051136: Out-of-band resource load (HTTP)
    - 3146240: External service interaction (DNS)
    - 3146256: External service interaction (HTTP)
 
-*L2*
+*AL2*
 1. Test shall confirm that the application does not initiate arbitrary HTTP or DNS requests to either internal or external resources based on user-supplied input, unless it is a necessary part of the application functionality. In such cases, ensure application implements robust input validation and uses allowlists to restrict requests to trusted and necessary domains or IP addresses.
 
 
@@ -1697,11 +1697,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.10
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
@@ -1709,18 +1709,18 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.10
 **Test Procedure**
 
 
-*L1*
+*AL1*
 Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 Perform the XML injection testing procedure defined in WSTG-INPV-07 and the XPath testing procedure defined in WSTG-INPV-09.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 1050368: XML injection
    - 1050112: XPath injection
@@ -1731,8 +1731,8 @@ Perform the XML injection testing procedure defined in WSTG-INPV-07 and the XPat
 
 
 
-*L2*
-1. Test shall confirm that the application safely parses XML input and is not susceptible to common XML parsing vulnerabilities including XML injection, XML external entities (XXE), or XPath injection. 
+*AL2*
+1. Test shall confirm that the application safely parses XML input and is not susceptible to common XML parsing vulnerabilities including XML injection, XML external entities (XXE), or XPath injection.
 
 
 ---
@@ -1743,11 +1743,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.3
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
@@ -1755,18 +1755,18 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.3
 **Test Procedure**
 
 
-*L1*
+*AL1*
 Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 Perform the reflected Cross-Site Scripting (XSS) testing procedure defined in WSTG-INPV-01 and the stored Cross-Site Scripting (XSS) testing procedure defined in WSTG-INPV-02.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify any of the following vulnerabilities:
    - 2097408: Cross-site scripting (stored)
    - 2097920: Cross-site scripting (reflected)
@@ -1774,7 +1774,7 @@ Perform the reflected Cross-Site Scripting (XSS) testing procedure defined in WS
    - 2097937: Cross-site scripting (reflected DOM-based)
    - 2097938: Cross-site scripting (stored DOM-based)
 
-*L2*
+*AL2*
 1. Test shall confirm that application shall is not susceptible to stored, reflected, or DOM-based Cross-site Scripting (XSS) vulnerabilities.
 
 
@@ -1786,11 +1786,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.4
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 
@@ -1798,24 +1798,24 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.4
 **Test Procedure**
 
 
-*L1*
+*AL1*
 Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 Perform the database injection testing procedure defined in WSTG-INPV-05.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify any of the following vulnerabilities:
    - 1049088: SQL Injection
    - 1049104: SQL Injection (Second Order)
 
 
-*L2*
+*AL2*
 1. Verification shall confirm that application is not vulnerable to SQL injection, including in-band, blind (inferential), and out-of-band attacks.
 
 
@@ -1827,31 +1827,31 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.8
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
+*AL2*
 1. Perform the OS command injection testing procedure defined in WSTG-INPV-12.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify any of the following vulnerabilities:
    - 1048832: OS Command Injection
 
-*L2*
+*AL2*
 1. Verification shall confirm that testing evidence does not indicate the application is vulnerable to OS command injection vulnerabilities from parsing untrusted user input.
 
 
@@ -1863,35 +1863,35 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.9
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
 
-*L2*
-1. Perform the testing procedures defined in the Local File Inclusion (LFI) and Remote File Inclusion (RFI) subsections of WSTG-INPV-11. 
+*AL2*
+1. Perform the testing procedures defined in the Local File Inclusion (LFI) and Remote File Inclusion (RFI) subsections of WSTG-INPV-11.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify any of the following vulnerabilities:
    - 1049344: File path traversal
    - 1051392: File path manipulation
 
 
-*L2*
-1. Verification shall confirm that testing evidence does not indicate application is vulnerable to Local File Inclusion (LFI), Remote File Inclusion (RFI), or related directory traversal attacks. 
+*AL2*
+1. Verification shall confirm that testing evidence does not indicate application is vulnerable to Local File Inclusion (LFI), Remote File Inclusion (RFI), or related directory traversal attacks.
 
 
 ---
@@ -1911,21 +1911,21 @@ External Reference: ASVS Version 4.0.3 Requirement: 12.2.1
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Identify any situations in which the application accepts user file uploads. Describe how the application securely validates file type and prevents file execution. Provide detailed evidence such as source code, screenshots, or other relevant sources.
 
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
-1. Review the provided evidence to validate that application appropriately enforces file upload restrictions. 
+*AL1*
+1. Review the provided evidence to validate that application appropriately enforces file upload restrictions.
 
-*L2*
+*AL2*
 1. Perform the testing procedures defined in WSTG-BUSL-08 and WSTG-BUSL-09.
 
 
@@ -1933,12 +1933,12 @@ External Reference: ASVS Version 4.0.3 Requirement: 12.2.1
 **Verification**
 
 
-*L1*
+*AL1*
 1. Application shall enforce appropriate file type restrictions on file uploads.
 
 
-*L2*
-1. Testing shall confirm that the application restricts file uploads to expected file types and that application prevents direct execution of any uploaded content including HTML, JavaScript, and server-side code. In cases where the application intends for the user to upload executable file types, the application shall appropriately sanitize or sandbox executable files. 
+*AL2*
+1. Testing shall confirm that the application restricts file uploads to expected file types and that application prevents direct execution of any uploaded content including HTML, JavaScript, and server-side code. In cases where the application intends for the user to upload executable file types, the application shall appropriately sanitize or sandbox executable files.
 
 
 ---
@@ -1959,35 +1959,35 @@ External Reference: ASVS Version 4.0.3 Requirement:
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide output of a dependency scan of application and 3P libraries using OWASP dependency check or other ADA approved scanning tools.
 
-*L2*
+*AL2*
 1. Developer to provide lab access to source code repository or application software manifest.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Perform dependency scan of source code repository or scan of developer provided manifest.
 
 
 **Verification**
 
 
-*L1*
-1. The application shall not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
+*AL1*
+1. The application shall not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0.
 
-An application that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
-* The application does not invoke the vulnerable 3P library code, or 
+An application that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that:
+* The application does not invoke the vulnerable 3P library code, or
 * The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
 
-*L2*
-1. Scan shall confirm that the application does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0. 
+*AL2*
+1. Scan shall confirm that the application does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0.
 
 An application that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
 * The application does not invoke the vulnerable 3P library code or 
@@ -2013,31 +2013,31 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.3.2
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
-*L2*
+*AL2*
 1. Verify that web or application server and application framework debug modes are disabled in production to eliminate debug features, developer consoles, and unintended security disclosures.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 1050624: ASP.NET debugging enabled
 
-*L2*
+*AL2*
 1. Verification shall confirm that no debug modes are enabled in production environments.
 
 
@@ -2058,31 +2058,31 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.5.2
 **Evidence**
 
 
-*L1*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+*AL1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab.
 
-*L2*
-1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
+*AL2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab.
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Execute authenticated Burp Suite scan on the target application using the ADA scan configuration.
 
-*L2*
+*AL2*
 1. Verify that the supplied Origin header is not used for authentication or access control decisions, as the Origin header can easily be changed by an attacker.
 
 
 **Verification**
 
 
-*L1*
+*AL1*
 1. Burp Suite scan shall not identify the following vulnerabilities:
    - 2098689: Cross-origin resource sharing: arbitrary origin trusted
 
-*L2*
+*AL2*
 1. Verification shall confirm that origin header is not used for authentication of access control decisions.
 
 
@@ -2103,10 +2103,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 10.3.3
 **Evidence**
 
 
-*L1*
+*AL1*
 1. Provide evidence of DNS configuration for the target domain and subdomains, confirming that either all subdomains are explicitly defined and point to IP addresses or other domains controlled by your organization; or where the record points to a third party owned domain, confirm that the subdomain record isn't configured to point to a non-existing or non-active resource/external service/endpoint.
 
-*L2*
+*AL2*
 1. Provide evidence of DNS configuration for the target domain and subdomains, confirming that either all subdomains are explicitly defined and point to IP addresses or other domains controlled by your organization; or where the record points to a third party owned domain, confirm that the subdomain record isn't configured to point to a non-existing or non-active resource/external service/endpoint.
 2. Provide screenshots of code, configurations, or other systems referenced in the written description.
 
@@ -2114,10 +2114,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 10.3.3
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Verify application for adherence with the requirements as defined in WSTG-CONF-10.
 
 
@@ -2125,10 +2125,10 @@ External Reference: ASVS Version 4.0.3 Requirement: 10.3.3
 **Verification**
 
 
-*L1*
+*AL1*
 1. Appropriate controls to limit subdomain takeovers shall be implemented.
 
-*L2*
+*AL2*
 1. Appropriate controls to limit subdomain takeovers shall be implemented.
 2. Screenshots shall support the controls described in the written description.
 
@@ -2150,7 +2150,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 **Evidence**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Provide a written description highlighting the protections to prevent logging of credentials or payment details.
 2. Provide a sample from a log captured during a login process.
 3. Provide a sample from a log captured during a payment process. (If applicable)
@@ -2159,14 +2159,14 @@ External Reference: ASVS Version 4.0.3 Requirement: 7.1.1
 **Test Procedure**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Review provided evidence for adherence with the requirements
 
 
 **Verification**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Application shall not not log credentials or payment details.
 2. Samples from log files shall not not contain credentials or payment details.
 
@@ -2188,27 +2188,27 @@ External Reference: ASVS Version 4.0.3 Requirement: 8.2.3
 **Evidence**
 
 
-*L1*
-1. Provide a written description of what (if any) confidential data or authentication material is stored in the browser after user logout. 
+*AL1*
+1. Provide a written description of what (if any) confidential data or authentication material is stored in the browser after user logout.
 
-*L2*
+*AL2*
 1. N/A (to be collected by labs)
 
 
 **Test Procedure**
 
 
-*L1*
+*AL1*
 1. Review provided evidence for adherence with the requirements.
 
-*L2*
+*AL2*
 1. Verify application for adherence with the requirements as defined in WSTG-CLNT-12.
 
 
 **Verification**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Confidential data and authentication material stored in browser storage shall be deleted when the user logs out.
 
 
@@ -2229,21 +2229,21 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.4.1
 **Evidence**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Provide a written description along with relevant evidence (source code, screenshots, architecture diagrams, etc.) describing your approach to secrets management for any access tokens, API keys, or other server-side secrets used by the application.
 
 
 **Test Procedure**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. Review provided evidence for adherence with the requirements.
 
 
 **Verification**
 
 
-*L1 and L2*
+*AL1 and AL2*
 1. An appropriate access control policy for server-side secrets shall be documented.
 2. Secrets shall be stored using a cryptographically secure approach. 
 3. Access to secrets shall be logged or monitored.
