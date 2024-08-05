@@ -53,7 +53,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Tim Bolton (Meta)
 * Tony Balkan (Microsoft)
 * Viktor Sytnik (Leviathan Security)
-  
+
 # Table of Contents
 
 
@@ -200,7 +200,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 # Overview
 
-This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-pubilc data such as user data, user device data, company data, or other types of confidential information (excluding highly sensitive financial or medical PII).
+This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-pubilc data such as user data, user device data, company data, credentials, keys, or other types of confidential information. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
 
 
 # Applicability
