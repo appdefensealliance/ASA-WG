@@ -210,8 +210,8 @@ Burp Suite (Primary Option):
    - Manually append a valid authentication state (headers / tokens / cookies) to scan requests.
    - Manually enumerate application functionality within Burp (while authenticated) to replicate spidering and then initiate scanning from those manually crawled pages & forms (including the previously utilized authenticated state).
 
-Utilize Alternative Scanning Tool:
-   - In cases where a where a testing lab is unable to complete an assessment using Burp Suite due to technical limitations, the lab is permitted to use an alternative scanning tool (e.g., a different DAST product), so long as the testing lab can confirm that the tool covers the ADA's automated test cases from an authenticated state.
+Utilize Alternative Scanning Tool (applicable to authorized labs):
+   - In cases where a where an authorized testing lab is unable to complete an assessment using Burp Suite due to technical limitations, the lab is permitted to use an alternative scanning tool (e.g., a different DAST product), so long as the testing lab can confirm that the tool covers the ADA's automated test cases from an authenticated state.
 
 # 1 Authentication
 ## 1.1 Implement strong password security measures
@@ -572,8 +572,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.1.1
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning must be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -748,8 +751,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.1
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -782,8 +788,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.2
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -855,8 +864,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -1096,8 +1108,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.2.2
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -1130,8 +1145,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.2
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -1477,8 +1495,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.1
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -1512,8 +1533,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.1.5
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -1550,8 +1574,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.4
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -1590,8 +1617,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.5
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -1626,8 +1656,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.2.6
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -1664,8 +1697,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.10
 **Evidence**
 
 
-*L1 and L2*
-N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -1707,8 +1743,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.3
 **Evidence**
 
 
-*L1 and L2*
-N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -1747,8 +1786,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.4
 **Evidence**
 
 
-*L1 and L2*
-N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 
@@ -1785,8 +1827,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.8
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 **Test Procedure**
 
@@ -1818,8 +1863,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.9
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -1965,8 +2013,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.3.2
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
@@ -2007,8 +2058,11 @@ External Reference: ASVS Version 4.0.3 Requirement: 14.5.2
 **Evidence**
 
 
-*L1 and L2*
-1. N/A (to be collected by labs)
+*L1*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning may be performed by the developer or by an authorized testing lab. 
+
+*L2*
+1. Testing results from a scan completed using the [ADA's Dynamic Application Security Testing Guidance](#dynamic-application-security-testing-dast-guidance). Scanning shall be performed by an authorized testing lab. 
 
 
 **Test Procedure**
