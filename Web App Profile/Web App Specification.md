@@ -1,5 +1,5 @@
 # App Defense Alliance Web Application Specification
-Version 0.7 - May 25, 2024
+Version 0.9 - August 5, 2024
 
 
 # Revision History
@@ -7,6 +7,7 @@ Version 0.7 - May 25, 2024
 |----|----|-----------------|
 | 0.5 | 5/25/24 | Initial draft based on Web App Tiger Team review of ASVS specification |
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
+| 0.9 | 8/9/24 | Updates from ASA WG leads review of 0.7 spec |
 
 # Contributors
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
@@ -22,7 +23,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 ### Contributors
 * Abdullah Albyati (Google)
 * Alex Duff (Meta)
-* Alexander Cobblah 
+* Alexander Cobblah
 * Anushree Shetty  (KPMG)
 * Artur Gartvikh
 * Bhairavi Mehta (TAC Security)
@@ -59,7 +60,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Tim Bolton (Meta)
 * Viktor Sytnik (Leviathan)
 * Zach Moreno (Bishop Fox)
-  
+
 # Table of Contents
 1 [Authentication](#1-authentication)
 
@@ -170,7 +171,7 @@ This specification is designed to be applied to one or more target web applicati
 | Non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
 | Padding oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
 | Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
-| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, is out of scope. | 
+| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, is out of scope. |
 | Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL/TLS web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
 | Scope | Identifies whether a requirement is applicable to web applications, web APIs, or both. Mobile applications that utilize web APIs must comply with both the mobile application and web API specifications. |
 | Remote File Inclusion | Remote File Inclusion (also known as RFI) is the process of including remote files through the exploitation of vulnerable inclusion procedures implemented in the application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion) |

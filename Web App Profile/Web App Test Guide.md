@@ -1,5 +1,5 @@
-# App Defense Alliance Web Application Testing Guide 
-Version 0.7 - May 25, 2024
+# App Defense Alliance Web Application Testing Guide
+Version 0.9 - August 5, 2024
 
 
 # Revision History
@@ -7,13 +7,14 @@ Version 0.7 - May 25, 2024
 |----|----|-----------------|
 | 0.5 | 5/25/24 | Initial draft based on Web App Tiger Team review of ASVS specification |
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
+| 0.9 | 8/9/24 | Updates from ASA WG leads review of 0.7 spec |
 
 
 # Table of Contents
 1. [Authentication](#1-authentication)
 
    * 1.1 [Implement strong password security measures](#11-implement-strong-password-security-measures)
-   
+
        * 1.1.1 [Authentication is resistant to brute force attacks](#111-authentication-is-resistant-to-brute-force-attacks)
 
        * 1.1.2 [System generated initial passwords or activation codes shall be securely randomly generated and expire after a short period.](#112-system-generated-initial-passwords-or-activation-codes-shall-be-securely-randomly-generated-and-expire-after-a-short-period)
@@ -195,7 +196,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | Non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
 | Padding oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
 | Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
-| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, is out of scope. | 
+| Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, is out of scope. |
 | Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL/TLS web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
 | Scope | Identifies whether a requirement is applicable to web applications, web APIs, or both. Mobile applications that utilize web APIs must comply with both the mobile application and web API specifications. |
 | Remote File Inclusion | Remote File Inclusion (also known as RFI) is the process of including remote files through the exploitation of vulnerable inclusion procedures implemented in the application. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.2-Testing_for_Remote_File_Inclusion) |
@@ -370,7 +371,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.5.4
 
 *AL2*
 1. N/A (to be collected by labs)
-   
+
 **Test Procedure**
 
 
@@ -895,7 +896,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.5.3
 
 
 ---
-## 2.4 Protect sensitive account modifications 
+## 2.4 Protect sensitive account modifications
 ### Description
 Applications must enforce a complete, valid login session or require re-authentication/secondary verification prior to any sensitive actions, such as sensitive data transactions or changes to account settings.
 ### Rationale
@@ -1180,7 +1181,7 @@ OAuth is a widely adopted authorization framework that allows users to grant thi
 
 ---
 ### 3.2.1 Application shall implement only secure and recommended OAuth 2.0 flows, such as the Authorization Code Flow or the Authorization Code Flow with PKCE, while avoiding the use of deprecated flows like the Implicit Flow or the Resource Owner Password Credentials Flow.
-External Reference: ASVS Version 4.0.3 Requirement: 
+External Reference: ASVS Version 4.0.3 Requirement:
 
 
 **Evidence**
@@ -1217,7 +1218,7 @@ External Reference: ASVS Version 4.0.3 Requirement:
 
 ---
 ### 3.2.2 Application shall securely validate the redirect_uri and state parameters during the OAuth 2.0 authorization process to prevent open redirect and CSRF vulnerabilities.
-External Reference: ASVS Version 4.0.3 Requirement: 
+External Reference: ASVS Version 4.0.3 Requirement:
 
 
 **Evidence**
@@ -1291,7 +1292,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 4.3.1
 
 ---
 # 4 Communications
-## 4.1 Protect confidential data through strong cryptography 
+## 4.1 Protect confidential data through strong cryptography
 ### Description
 Applications must enforce strong TLS configurations and cryptographic practices. This includes using up-to-date tools to enable only strong cipher suites (prioritizing the strongest), employing trusted TLS certificates, and ensuring secure failure modes in cryptographic modules to mitigate common cryptographic attacks.
 ### Rationale
@@ -1343,7 +1344,7 @@ The following are out of scope for TLS encryption:
 * Connections that are not used for security sensitive purposes (e.g. anonymized analytics)
 * Connections to local backend web servers
 * Unencrypted connections that have a valid justification provided
-  
+
 
 ---
 ### 4.1.2 Connections to and from the server shall use trusted TLS certificates. Where internally generated or self-signed certificates are used, the server must be configured to only trust specific internal CAs and specific self-signed certificates. All others should be rejected.
@@ -1385,7 +1386,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.2.1
 
 ---
 ### 4.1.3 No instances of weak cryptography which meaningfully impact the confidentiality or integrity of data.
-External Reference: ASVS Version 4.0.3 Requirement: 
+External Reference: ASVS Version 4.0.3 Requirement:
 
 
 **Evidence**
@@ -1895,7 +1896,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 5.3.9
 
 
 ---
-## 5.2 Securely handle untrusted files 
+## 5.2 Securely handle untrusted files
 ### Description
 Web applications must safely process and manage files that originate from untrusted or unknown sources. This includes restricting uploads to expected file types and preventing direct execution of uploaded content containing HTML, JavaScript, or dynamic server-side code.
 ### Rationale
@@ -1947,13 +1948,13 @@ External Reference: ASVS Version 4.0.3 Requirement: 12.2.1
 ### Description
 Developers must verify that the libraries included in their application do not have any known exploitable vulnerabilities.
 ### Rationale
-Attackers can perform automated scans to identify vulnerable applications based on published vulnerabilities. 
+Attackers can perform automated scans to identify vulnerable applications based on published vulnerabilities.
 ### Audit
 
 
 ---
 ### 6.1.1 The application only uses software components without known exploitable vulnerabilities.
-External Reference: ASVS Version 4.0.3 Requirement: 
+External Reference: ASVS Version 4.0.3 Requirement:
 
 
 **Evidence**
@@ -1989,8 +1990,8 @@ An application that uses a 3P library at a version vulnerable to a CVE with CVSS
 *AL2*
 1. Scan shall confirm that the application does not use any 3P libraries at a version vulnerable to a CVE with a severity >= CVSS 7.0.
 
-An application that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that: 
-* The application does not invoke the vulnerable 3P library code or 
+An application that uses a 3P library at a version vulnerable to a CVE with CVSS >= 7.0 can pass this test if the developer provides additional justification that:
+* The application does not invoke the vulnerable 3P library code or
 * The 3P library has not yet made an update available. This is acceptable only if the 3P library has a regular patch process.
 
 
@@ -2245,7 +2246,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.4.1
 
 *AL1 and AL2*
 1. An appropriate access control policy for server-side secrets shall be documented.
-2. Secrets shall be stored using a cryptographically secure approach. 
+2. Secrets shall be stored using a cryptographically secure approach.
 3. Access to secrets shall be logged or monitored.
 
 

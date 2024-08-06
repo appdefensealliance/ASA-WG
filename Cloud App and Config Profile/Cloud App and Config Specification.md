@@ -1,12 +1,13 @@
 # App Defense Alliance Cloud Profile
 ## Specification
-Version 0.7 - May 25, 2024
+Version 0.9 - Aug 5, 2024
 
 # Revision History
 | Version | Date  | Description|
 |----|----|-----------------|
 | 0.5 | 5/8/24 | Initial draft based on Web App Tiger Team review of CIS Cloud Foundations Benchmarks |
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
+| 0.9 | 8/9/24 | Updates from ASA WG leads review of 0.7 spec |
 
 
 # Contributors
@@ -200,7 +201,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 # Overview
 
-This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-pubilc data such as user data, user device data, company data, credentials, keys, or other types of confidential information. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
+This document provides prescriptive guidance for configuring security options for a subset of cloud services offered by Amazon Web Services, Google Cloud Platform, and Microsoft Azure. This profile emphasizes foundational, testable, and architecture agnostic settings that are suitable for applications that process non-public data such as user data, user device data, company data, credentials, keys, or other types of confidential information. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
 
 
 # Applicability
