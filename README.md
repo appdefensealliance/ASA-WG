@@ -4,7 +4,7 @@
 
 Strong application security is imperative in today's digital landscape as applications serve as the primary interface between organizations and their customers, employees, and partners. By prioritizing application security, organizations can safeguard sensitive data, protect against cyberattacks, maintain customer trust, and be better prepared to respond to regulations. Neglecting application security can lead to costly data breaches, reputational damage, and financial losses.
 
-However, the absence of a standardized application security certification introduces significant costs and complexities for software developers. Without a common standard, companies must invest heavily in interpreting and adhering to a multitude of disparate regulations, often resulting in redundant efforts, increased operational costs, and potential inconsistencies in their efforts. This lack of uniformity also hinders efficient risk assessment, resource allocation, and the ability to demonstrate compliance to stakeholders, ultimately impacting business agility and competitiveness.
+However, the absence of a standardized application security certification introduces significant costs and complexities for software developers. Without a common standard, companies must invest heavily in interpreting and adhering to a multitude of disparate regimes, often resulting in redundant efforts, increased operational costs, and potential inconsistencies in their efforts. This lack of uniformity also hinders efficient risk assessment, resource allocation, and the ability to demonstrate compliance to stakeholders, ultimately impacting business agility and competitiveness.
 
 The App Defense Alliance was founded to protect users by preventing threats from reaching their devices and improving app quality across the ecosystem. The App Defense Alliance intends to protect users of mobile and web applications via security standards, validation guidance, and a certification scheme that scales with risk.
 
@@ -12,32 +12,37 @@ The App Defense Alliance was founded to protect users by preventing threats from
 ### Scope
 
 The App Defense Alliance's initial focus is on creating baseline security standards relevant to software developers that process confidential data, specifically in the areas of application security and secure cloud configuration:
-* Application Security - A software developer's application security responsibilities center on building security into the application from inception.  This involves secure coding practices, understanding and mitigating vulnerabilities, and conducting security testing. By actively integrating security into the development lifecycle, developers play a pivotal role in safeguarding the application and protecting sensitive information.
-* Secure Cloud Configuration - Similarly, if the developer is running some or all of their system in a public cloud, it is essential to maintain a secure configuration of cloud assets to prevent unauthorized access to confidential data.
+* Application Security - A software developer's application security responsibilities center on building security into the application from inception.  This involves secure coding practices, understanding and mitigating vulnerabilities, and conducting security testing.
+* Secure Cloud Configuration - Similarly, if the developer is running some or all of their system in a public cloud, it is essential to maintain a secure configuration of cloud assets since confidential information stored in the cloud is a prime target for cyberattacks. Secure configurations help protect data from unauthorized access, theft, and corruption.
 
 The App Defense Alliance does not cover other requirements necessary for an organization to implement a comprehensive information security regime, such as establishing, implementing, maintaining, and continually improving their people, processes, and tools. Organizations are adivsed to consult other resouces such as the ISO 27001 standard.
 
 ### Profiles
 
-The App Defense Alliance’s initial set of profiles are specific to the architecture / technology and are intended to be a baseline set of requirements
+The App Defense Alliance’s initial set of profiles are specific to the architecture or technology and are intended to be a baseline set of requirements relevant to apps that process confidential data. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
 
-Mobile - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices
-Web - application security requirements and associated test guide applicable to developers of web apps and web-accessible APIs
-Cloud - security configuration requirements relevant to the use of IaaS and PaaS services offered by Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure
+* Mobile - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices
+* Web - application security requirements and associated test guide applicable to developers of web apps and web-accessible APIs
+* Cloud - security configuration requirements relevant to the use of IaaS and PaaS services offered by Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure
 
-In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific kinds of applications (e.g., for VPN apps).
+In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
 
 ## Validation
 ### Approach
 
-This App Defense Alliance's validation approach involves a collaborative effort between a standards setting organization (the alliance), software developers, and independent assessors. The App Defense Alliance establishes the criteria for product evaluation. Software developers use these standards to create software and secure cloud configurations that meet these requirements. Independent assessors, acting as neutral evaluators, then assess a developer's product against the standards and are authorize to issue a certification document if so. This process aims to ensure that developers have met the security requirements, providing confidence to stakeholders.
+This App Defense Alliance's validation approach involves a collaborative effort between a standards setting organization (the alliance itself), software developers, and independent assessors.
+1. The App Defense Alliance establishes the criteria for product evaluation.
+2. Software developers use these standards to create software and secure cloud configurations that meet these requirements.
+3. Independent assessors, acting as neutral evaluators, then assess a developer's product against the standards and are authorize to issue a certification document if so.
+
+This process aims to ensure that developers have met the security requirements, providing confidence to stakeholders.
 ### Levels
 
 The App Defense Alliance has adopted a tiered approach to certification that varies the depth and intensity of assessment according to risk level. Higher-risk products undergo more rigorous testing and evaluation compared to lower-risk products. This tiered structure ensures that resources are allocated efficiently while maintaining appropriate levels of scrutiny for products that require greater assurance. There are three Assurance Levels (ALs):
 
-* AL0 - Self Assessment: Low risk products can be self assessed by the developer
-* AL1 - Developer Tested, Lab Reviewed: Medium risk products can be tested such that the developer runs the test cases and submits evidence demonstrating their conformance with the requirements to an independent assessor, who is then responsible for confirming the completeness and suficiency of the evidence
-* AL2 - Lab Tested: High risk products can be tested directly by the independent asssessor, providing the highest level of assurance that a product has met the requirements
+1. AL0 - Self Assessment: Low risk products can be self assessed by the developer
+2. AL1 - Developer Tested, Lab Reviewed: Medium risk products can be tested such that the developer runs the test cases and submits evidence demonstrating their conformance with the requirements to an independent assessor, who is then responsible for confirming the completeness and suficiency of the evidence
+3. AL2 - Lab Tested: High risk products can be tested directly by the independent asssessor, providing the highest level of assurance that a product has met the requirements
 
 ## Summary of Requirements
 ### Mobile
