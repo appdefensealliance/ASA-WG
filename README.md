@@ -15,7 +15,7 @@ The App Defense Alliance's initial focus is on creating baseline security standa
 * Application Security - A software developer's application security responsibilities center on building security into the application from inception.  This involves secure coding practices, understanding and mitigating vulnerabilities, and conducting security testing.
 * Secure Cloud Configuration - Similarly, if the developer is running some or all of their system in a public cloud, it is essential to maintain a secure configuration of cloud assets since confidential information stored in the cloud is a prime target for cyberattacks. Secure configurations help protect data from unauthorized access, theft, and corruption.
 
-The App Defense Alliance does not cover other requirements necessary for an organization to implement a comprehensive information security regime, such as establishing, implementing, maintaining, and continually improving their people, processes, and tools. Organizations are adivsed to consult other resouces such as the ISO 27001 standard.
+The App Defense Alliance does not cover other requirements necessary for an organization to implement a comprehensive information security regime, such as establishing, implementing, maintaining, and continually improving their people, processes, and tools. Organizations are advised to consult other resources such as the ISO 27001 standard.
 
 ### Profiles
 
@@ -41,8 +41,8 @@ This process aims to ensure that developers have met the security requirements, 
 The App Defense Alliance has adopted a tiered approach to certification that varies the depth and intensity of assessment according to risk level. Higher-risk products undergo more rigorous testing and evaluation compared to lower-risk products. This tiered structure ensures that resources are allocated efficiently while maintaining appropriate levels of scrutiny for products that require greater assurance. There are three Assurance Levels (ALs):
 
 1. AL0 - Self Assessment: Low risk products can be self assessed by the developer
-2. AL1 - Developer Tested, Lab Reviewed: Medium risk products can be tested such that the developer runs the test cases and submits evidence demonstrating their conformance with the requirements to an independent assessor, who is then responsible for confirming the completeness and suficiency of the evidence
-3. AL2 - Lab Tested: High risk products can be tested directly by the independent asssessor, providing the highest level of assurance that a product has met the requirements
+2. AL1 - Developer Tested, Lab Reviewed: Medium risk products can be tested such that the developer runs the test cases and submits evidence demonstrating their conformance with the requirements to an independent assessor, who is then responsible for confirming the completeness and sufficiency of the evidence
+3. AL2 - Lab Tested: High risk products can be tested directly by the independent assessor, providing the highest level of assurance that a product has met the requirements
 
 ## Summary of Requirements
 ### Mobile
@@ -52,19 +52,20 @@ The mobile profile outlines a baseline set of security requirements for mobile a
 * Authentication and Authorization: Secure user identification and access control.
 * Network Communication: Protecting data during transmission.
 * Platform Interaction: Secure interaction with the underlying mobile platform.
-* Code Quality: Writing secure and resilient code.
+* Code Quality: Writing secure code and using up to date libraries
 * Security Testing: Thoroughly testing the application for vulnerabilities.
-* Reverse Engineering Protection: Safeguarding the app from unauthorized analysis.
+* App integrity: Ensuring anti-tampering, and anti-analysis mechanisms are in place
 
 ### Web
 
-The web profile provides ab baseline set of requirements for securing web applications. It covers a broad spectrum of security controls, including:
+The web profile provides a baseline set of requirements for securing web applications. It covers a broad spectrum of security controls, including:
 * Input Validation and Output Encoding: Ensuring that user input is properly sanitized and output is properly encoded to prevent vulnerabilities like SQL * injection, cross-site scripting (XSS), and cross-site request forgery (CSRF).
 * Authentication and Session Management: Implementing secure authentication mechanisms and managing user sessions effectively to protect against unauthorized * access.
 * Cryptography: Using strong encryption algorithms and key management practices to protect sensitive data.
 * Access Control: Implementing appropriate access controls to protect resources and data based on user roles and permissions.
 * Error and Exception Handling: Handling errors and exceptions gracefully to prevent information leakage and potential attacks.
-* Security Testing: Conducting thorough security testing throughout the development lifecycle to identify and address vulnerabilities.
+* Security Testing: The profile includes an audit guide and test tool configuration to assist in the process of security testing web applications for conformance.
+* Configuration: Ensuring the application is securely configured and core components up to date to prevent common security risks.
 
 ### Cloud
 
