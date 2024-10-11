@@ -1,6 +1,6 @@
 # Cloud Config and App Profile - Test Plan
 
-Version 0.9 - August 5, 2024
+Version 1.0 - 10-OCT 24
 
 
 
