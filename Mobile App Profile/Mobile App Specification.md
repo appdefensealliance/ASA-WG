@@ -1,15 +1,16 @@
 
 # App Defense Alliance Mobile Application Specification
 
-Version 0.9 - August 5, 2024
+Version 1.0 - 10-OCT 24
 
 ## Revision History
 
 | Version | Date | Description |
 | --- | :--- | :--- |
-| 0.5 | 5/10/24 | Initial draft based on Mobile App Tiger Team review of MASVS specification |
-| 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
-| 0.9 | 8/9/24 | Updates from ASA WG leads review of 0.7 spec |
+| 0.5 | 10-MAY 24 | Initial draft based on Mobile App Tiger Team review of MASVS specification |
+| 0.7 | 25-MAY 24 | Updates from Tiger Team review of 0.5 spec |
+| 0.9 | 9-AUG 24 | Updates from ASA WG leads review of 0.7 spec |
+| 1.0 | 10-OCT 24 | Approved for release by the alliance steering committee |
 
 ## Acknowledgements
 
