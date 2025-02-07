@@ -421,7 +421,7 @@ _AL1_
 
 _AL2_
 
-1. Follow the testing procedures outlined in [MASTG-TEST-0015](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/android/MASVS-CRYPTO/MASTG-TEST-0015.md)
+1. Follow the testing procedures outlined in [MASTG-TEST-0062](https://github.com/OWASP/owasp-mastg/blob/v1.7.0/tests/ios/MASVS-CRYPTO/MASTG-TEST-0062.md)
 
 ##### Verification
 
