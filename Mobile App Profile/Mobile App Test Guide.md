@@ -1,4 +1,4 @@
-# App Defense Alliance Mobile Application Specification
+# App Defense Alliance Mobile Application Testing Guide
 
 Version 1.0 - 10-OCT 24
 
