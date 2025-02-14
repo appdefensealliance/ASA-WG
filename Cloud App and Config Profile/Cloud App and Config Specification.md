@@ -1,14 +1,13 @@
 # App Defense Alliance Cloud Profile
 ## Specification
-Version 1.0 - 10-OCT 24
+Version 0.9 - Aug 5, 2024
 
 # Revision History
 | Version | Date  | Description|
 |----|----|-----------------|
-| 0.5 | 8-MAY 24 | Initial draft based on Web App Tiger Team review of CIS Cloud Foundations Benchmarks |
-| 0.7 | 25-MAY 24 | Updates from Tiger Team review of 0.5 spec |
-| 0.9 | 9-AUG 24 | Updates from ASA WG leads review of 0.7 spec |
-| 1.0 | 10-OCT 24 | Approved for release by the alliance steering committee |
+| 0.5 | 5/8/24 | Initial draft based on Web App Tiger Team review of CIS Cloud Foundations Benchmarks |
+| 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
+| 0.9 | 8/9/24 | Updates from ASA WG leads review of 0.7 spec |
 
 
 # Contributors

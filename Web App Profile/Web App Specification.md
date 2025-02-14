@@ -1,5 +1,5 @@
 # App Defense Alliance Web Application Specification
-Version 1.0 - 10-OCT 24
+Version 0.9 - August 5, 2024
 
 
 # Revision History
@@ -8,7 +8,6 @@ Version 1.0 - 10-OCT 24
 | 0.5 | 5/25/24 | Initial draft based on Web App Tiger Team review of ASVS specification |
 | 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
 | 0.9 | 8/9/24 | Updates from ASA WG leads review of 0.7 spec |
-| 1.0 | 10-OCT 24 | Approved for release by the alliance steering committee |
 
 # Contributors
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.

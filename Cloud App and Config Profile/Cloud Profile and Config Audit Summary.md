@@ -1,7 +1,7 @@
 # App Defense Alliance Cloud App and Config Audit Summary
 ## Audit Requirements Per Platform
 
-Version 1.0 - 10-OCT 24
+Version 0.9 - August 5, 2024
 
 
 
