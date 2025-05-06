@@ -159,7 +159,7 @@ This document provides a summary of the audit requirements sorted by platforms a
 # 3 Google
 | Spec | CIS 2.0 | Description |
 |---|---|----------|
-| [1.2.6](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#126-ensure-that-http-version-is-the-latest-if-used-to-run-the-web-app) | TBD | Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime |
+| [1.2.7](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#126-ensure-that-http-version-is-the-latest-if-used-to-run-the-web-app) | TBD | Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime |
 | [1.3.4](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#134-ensure-block-project-wide-ssh-keys-is-enabled-for-vm-instances) | 4.3 | Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances |
 | [1.5.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#151-ensure-that-ip-forwarding-is-not-enabled-on-instances) | 4.6 | Ensure That IP Forwarding Is Not Enabled on Instances |
 | [1.6.1](https://github.com/appdefensealliance/ASA-WG/blob/main/Cloud%20App%20and%20Config%20Profile/Cloud%20App%20and%20Config%20Test%20Guide.md#161-ensure-that-instances-are-not-configured-to-use-the-default-service-account) | 4.1 | Ensure That Instances Are Not Configured To Use the Default Service Account |
