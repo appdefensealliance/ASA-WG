@@ -1,6 +1,6 @@
 ---
-subtitle: Certification Scheme Overview
 title: App Defense Alliance
+subtitle: Certification Scheme Overview
 ---
 
 Contents
@@ -791,9 +791,7 @@ Passing Certifications will be published by the Scheme Owner with a
 
 # ADA Certification Scheme Certification Decision & Attestation
 
-## Certification Decision
-
-- 
+## Certification Decision 
 
 After the ASTL completes the evaluation, it submits a technical report
 to the Certification Body (CB) for review. The CB then prepares a
@@ -995,8 +993,6 @@ reasons. This ensures that certified products continue to be recognized
 as secure, even if the underlying requirements have changed.
 
 # ADA Certification Scheme Post Certification Market Feedback Process
-
-1.  
 
 # Challenging the Validity of an ADA Certification
 
@@ -1259,3 +1255,5 @@ The Scheme Owner may require additional information.
 October 1, 2024 v1 First Version
 
 Mar 25, 2025 v1.1 Readability clean up
+
+Jul 31, 2025 v1.2 Markdown format
