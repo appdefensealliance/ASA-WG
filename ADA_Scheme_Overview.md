@@ -1,9 +1,7 @@
----
-title: App Defense Alliance
-subtitle: Certification Scheme Overview
----
+# App Defense Alliance
+## Certification Scheme Overview
 
-Contents
+# Contents
 
 [Introduction 4](#introduction)
 

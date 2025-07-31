@@ -1,8 +1,7 @@
----
-title: App Defense Alliance
----
+# App Defense Alliance
+## Security Test Lab Authorization
 
-Contents
+# Contents
 
 [Introduction 3](#introduction)
 
@@ -473,185 +472,25 @@ sections of ISO 17025. If a section is not listed below, there are no
 program specific requirements beyond what is already stated in ISO
 17025.
 
-<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 88%" />
-</colgroup>
-<thead>
-<tr>
-<th><strong>Section</strong></th>
-<th><strong>Reference</strong></th>
-</tr>
-<tr>
-<th>4.1.3</th>
-<th>If a Developer uses their internal testing Laboratory (one that
-meets specified lab requirements under ADA and are an authorized
-assessor), the Laboratory shall have policy and procedures that protect
-the impartiality of the Laboratory to test or otherwise evaluate apps
-manufactured by the Laboratory’s parent organization, and if applicable,
-other developers without regard to the impact of the test results on the
-parent organizations' business interests.</th>
-</tr>
-<tr>
-<th>4.1.4</th>
-<th>The Laboratory shall maintain independence from the developer and
-developer’s assets.</th>
-</tr>
-<tr>
-<th>4.2.1</th>
-<th>Unless required by law or contractual commitments, information the
-Laboratory intends to place in the public domain (i.e., the evaluation
-reports) requires the express consent of the developer or affiliated
-authorizing parties.</th>
-</tr>
-<tr>
-<th>5.2</th>
-<th>Each ADA engagement shall have a designated Engagement Partner and
-Engagement Team (see roles below)</th>
-</tr>
-<tr>
-<th>6.2.2</th>
-<th><p>The CB is responsible to ensure the competence based on other
-certificates or even the experience of specific persons conducting the
-evaluations.</p>
-<p>For the Engagement Team, those performing the assessment must have
-one of the following certifications for Web App and Cloud Config
-Profiles:</p>
-<ul>
-<li><p>Certified Mobile and Web Application Penetration Tester
-(CMWAPT)</p></li>
-<li><p>Offensive Security</p>
-<ul>
-<li><p>Offensive Security Web Expert (OSWE)</p></li>
-<li><p>Offensive Security Certified Professional (OSCP)</p></li>
-</ul></li>
-<li><p>Global Information Assurance Certification (GIAC)</p>
-<ul>
-<li><p>Penetration Tester (GPEN)</p></li>
-<li><p>Certified Web Application Defender (GWEB)</p></li>
-<li><p>Web Application Penetration Tester (GWAPT)</p></li>
-</ul></li>
-<li><p>eWPTX</p></li>
-</ul>
-<p>For the Engagement Team, must have one of the following for Mobile
-App Profile (or be under the supervision of someone with the
-following):</p>
-<ul>
-<li><p>Global Information Assurance Certification (GIAC) Mobile Device
-Security Analyst (GMOB)</p></li>
-<li><p>Certified Mobile Security Engineer (CMSE)</p></li>
-<li><p>INE Mobile Application Penetration Tester (eMAPT)</p></li>
-<li><p>TCM-SEC Mobile Application Penetration Testing</p></li>
-</ul>
-<p>For the Engagement Quality Control reviewer:</p>
-<ul>
-<li><p>Academic training: EQF Level &gt;= 4</p></li>
-<li><p>Complementary training: Knowledge of the technology associated
-with the Evaluation of Cloud Applications or Android Mobile
-Applications.</p></li>
-</ul></th>
-</tr>
-<tr>
-<th>6.2.6</th>
-<th><p><em>(17025 text) The laboratory shall authorize personnel to
-perform specific laboratory activities, including but not limited to,
-the following:</em></p>
-<p>(d) Dispute management (with process defined in Section 7.9.1
-below)</p>
-<p>(e) Remediation guidance</p></th>
-</tr>
-<tr>
-<th>6.3.2</th>
-<th>The lab shall document requirements and conditions necessary for
-performing lab activities including any permanent and temporarily
-instantiated virtual environments used for the purposes of performing an
-assessment or other engagement related procedures.</th>
-</tr>
-<tr>
-<th>6.4.1</th>
-<th>In the case of ADA mobile evaluations against Android (or Quest)
-apps, the lab shall have the capability to test applications on a rooted
-Android mobile (or Quest) device that uses the latest OS version made
-publicly available.</th>
-</tr>
-<tr>
-<th>6.4.1</th>
-<th>Some specific tooling (e.g., open source or commercially available
-application vulnerability scanning software) must meet standards defined
-by ADA Policies and Procedures.</th>
-</tr>
-<tr>
-<th>6.4.3</th>
-<th>Where possible, the lab should test the public version of the
-application from the App Store (specific to mobile apps) to ensure chain
-of custody.</th>
-</tr>
-<tr>
-<th>6.6.2.c</th>
-<th>A laboratory is prohibited from relying on an external service
-provider, in part or in whole, to perform laboratory activities, where
-such an external service provider is not ILAC/Global Accreditation
-Cooperation Incorporated signatory Accreditation Body accredited as an
-authorized assessor, subject to the requirements of this document.</th>
-</tr>
-<tr>
-<th>7.2.2.4.b</th>
-<th>Specifies what types of records the ASTL retains and the assurance
-level</th>
-</tr>
-<tr>
-<th>7.5.1</th>
-<th><p>Additional records to be maintained shall include:</p>
-<ul>
-<li><p>Metadata related to the application in scope for assessment
-(e.g., application build, unique project identifiers, application
-environment configurations, etc.)</p></li>
-<li><p>Assessment type (e.g., Self-initiated, Framework User)</p></li>
-<li><p>Assessment scoping documentation, including:</p>
-<ul>
-<li><p>ADA certification type and tier</p></li>
-<li><p>Developer provided security certifications</p></li>
-<li><p>Agreed upon procedures</p></li>
-</ul></li>
-<li><p>Assessment environment (e.g., systems, scripts, tooling)
-configuration</p></li>
-<li><p>All documentation produced in the course of performing the
-assessment, including assessment procedure inputs and outputs</p></li>
-<li><p>Any other documentation as required by the App Defense Alliance
-Policies and Procedures</p></li>
-</ul>
-<p>A Lab should maintain the documentation for a minimum of 2 years
-after the expiration of the certificate</p></th>
-</tr>
-<tr>
-<th>7.8.2.1</th>
-<th><p><mark>Evaluation Reports shall include:</mark></p>
-<p><mark>1. Specifications which were self assessed and not validated by
-the lab.</mark></p>
-<p><mark>2. Specifications which were not evaluated</mark></p>
-<p><mark>3. Pass/Fail/Inconclusive verdict for each
-requirement</mark></p>
-<p><mark>4. (For Failed requirements) remediation recommendations
-specialized to the application</mark></p>
-<p><mark>5. Statement of conformity with these
-requirements</mark></p></th>
-</tr>
-<tr>
-<th>7.8.3.1.e</th>
-<th>ADA validation reports, with template provided in ADA Policies &amp;
-Procedures</th>
-</tr>
-<tr>
-<th>7.9.1</th>
-<th>The ASTL will be responsible to address the dispute and either
-update the validation report with ADA CB, or inform ADA CB via email
-that the dispute has been resolved</th>
-</tr>
-</thead>
-<tbody>
-</tbody>
-</table>
+| Section  | Reference |
+| ------------- | ------------- |
+|  4.1.3  | If a Developer uses their internal testing Laboratory (one that meets specified lab requirements under ADA and are an authorized assessor), the Laboratory shall have policy and procedures that protect the impartiality of the Laboratory to test or otherwise evaluate apps manufactured by the Laboratory’s parent organization, and if applicable, other developers without regard to the impact of the test results on the parent organizations' business interests.  |
+|  4.1.4  | The Laboratory shall maintain independence from the developer and developer’s assets.  |
+|  4.2.1  | Unless required by law or contractual commitments, information the Laboratory intends to place in the public domain (i.e., the evaluation reports) requires the express consent of the developer or affiliated authorizing parties.  |
+|  5.2  | Each ADA engagement shall have a designated Engagement Partner and Engagement Team (see roles below)  |
+|  6.2.2  | The CB is responsible to ensure the competence based on other certificates or even the experience of specific persons conducting the evaluations.<br><br>For the Engagement Team, those performing the assessment must have one of the following certifications for Web App and Cloud Config Profiles:<br><ul><li>Certified Mobile and Web Application Penetration Tester (CMWAPT)</li><li>Offensive Security</li><ul><li>Offensive Security Web Expert (OSWE)</li><li>Offensive Security Certified Professional (OSCP)</li></ul><li>Global Information Assurance Certification (GIAC)</li><ul><li>Penetration Tester (GPEN)</li><li>Certified Web Application Defender (GWEB)</li><li>Web Application Penetration Tester (GWAPT)</li></ul><li>eWPTX</li></ul><br>For the Engagement Team, must have one of the following for Mobile App Profile (or be under the supervision of someone with the following):<br><ul><li>Global Information Assurance Certification (GIAC) Mobile Device Security Analyst (GMOB)</li><li>Certified Mobile Security Engineer (CMSE)</li><li>INE Mobile Application Penetration Tester (eMAPT)</li><li>TCM-SEC Mobile Application Penetration Testing</li></ul><br>For the Engagement Quality Control reviewer:<ul><li>Academic training:  EQF Level >= 4</li><li>Complementary training:  Knowledge of the technology associated with the Evaluation of Cloud Applications or Android Mobile Applications.</li></ul> |
+|  6.2.6  | *(17025 text) The laboratory shall authorize personnel to perform specific laboratory activities, including but not limited to, the following:*<br>(d) Dispute management (with process defined in Section 7.9.1 below)<br>(e) Remediation guidance |
+|  6.3.2  | The lab shall document requirements and conditions necessary for performing lab activities including any permanent and temporarily instantiated virtual environments used for the purposes of performing an assessment or other engagement related procedures.  |
+|  6.4.1  | In the case of ADA mobile evaluations against Android (or Quest) apps, the lab shall have the capability to test applications on a rooted Android mobile (or Quest) device  that uses the latest OS version made publicly available.  |
+|  6.4.1  | Some specific tooling (e.g., open source or commercially available application vulnerability scanning software) must meet standards defined by ADA Policies and Procedures.   |
+|  6.4.3  | Where possible, the lab should test the public version of the application from the App Store (specific to mobile apps) to ensure chain of custody.  |
+|  6.6.2.c  | A laboratory is prohibited from relying on an external service provider, in part or in whole, to perform laboratory activities, where such an external service provider is not ILAC/Global Accreditation Cooperation Incorporated signatory Accreditation Body accredited as an authorized assessor, subject to the requirements of this document.  |
+|  7.2.2.4.b  | Specifies what types of records the ASTL retains and the assurance level  |
+|  7.5.1  | Additional records to be maintained shall include:<br><ul><li>Metadata related to the application in scope for assessment (e.g., application build, unique project identifiers, application environment configurations, etc.)</li><li>Assessment type (e.g., Self-initiated, Framework User)</li><li>Assessment scoping documentation, including:</li><ul><li>ADA certification type and tier</li><li>Developer provided security certifications</li><li>Agreed upon procedures</li></ul><li>Assessment environment (e.g., systems, scripts, tooling) configuration</li><li>All documentation produced in the course of performing the assessment, including assessment procedure inputs and outputs</li><li>Any other documentation as required by the App Defense Alliance Policies and Procedures</li></ul><br> A Lab should maintain the documentation for a minimum of 2 years after the expiration of the certificate |
+|  7.8.2.1  | Evaluation Reports shall include:<br><ol><li>Specifications which were self assessed and not validated by the lab.</li><li>Specifications which were not evaluated</li><li>Pass/Fail/Inconclusive verdict for each requirement</li><li>(For Failed requirements) remediation recommendations specialized to the application</li><li>Statement of conformity with these requirements</li></ol>  |
+|  7.8.3.1.e  | ADA validation reports, with template provided in ADA Policies & Procedures  |
+|  7.9.1 | The ASTL will be responsible to address the dispute and either update the validation report with ADA CB, or inform ADA CB via email that the dispute has been resolved |
+
 
 The following requirements were omitted as they are not applicable
 relevant to mobile/web testing.
@@ -712,6 +551,11 @@ clarity</p></li>
 <li><p>ISO 17025 Program Specific Terms - significant updates to the
 required qualifications for the engagement team</p></li>
 </ul></th>
+</tr>
+<tr>
+<th>July 31, 2025</th>
+<th>v1.2</th>
+<th>Converted to markdown</th>
 </tr>
 </thead>
 <tbody>

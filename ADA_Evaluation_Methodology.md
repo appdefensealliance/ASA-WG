@@ -1,9 +1,7 @@
----
-subtitle: Evaluation Methodology
-title: App Defense Alliance
----
+# Evaluation Methodology
+## App Defense Alliance
 
-Contents
+# Contents
 
 [Introduction 3](#introduction)
 
