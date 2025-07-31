@@ -59,7 +59,7 @@
 This document forms part of the documentation for the App Defense
 Alliance Certification (ADA Certification) Scheme. An overview of this
 Scheme is available within the [<u>ADA Scheme
-Overview.docx</u>](https://docs.google.com/document/d/1dGNEL5-GwX4DySKBezSFn8Cwk_RXU_MS/edit).
+Overview</u>](ADA_Scheme_Overview.md).
 This Lab Authorization document defines the requirements for ADA
 Security Test Laboratories and sets the standard against which
 authorization is to be assessed and awarded and the processes for that
@@ -101,10 +101,10 @@ ADA Security Test Laboratories (ASTL)
 # References
 
 [<u>ADA Certification Scheme
-Overview</u>](https://docs.google.com/document/d/1dGNEL5-GwX4DySKBezSFn8Cwk_RXU_MS/edit)
+Overview</u>](ADA_Scheme_Overview.md)
 
 [<u>ADA Evaluation
-Methodology</u>](https://docs.google.com/document/d/1zvKSysOXnp2zvS710-v-LlfeImzY-zQk/edit)
+Methodology</u>](ADA_Evaluation_Methodology.md)
 
 # ADA Certification Roles
 

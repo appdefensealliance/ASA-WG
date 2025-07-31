@@ -497,7 +497,7 @@ to:
 4.  Completion of the ISO/IEC 17025 Audit
 
 *Reference the [<u>ADA Lab Authorization
-document</u>](https://docs.google.com/document/d/12qfP4tycV-iNoN34yxQ4ciQNIZ5pC5qI/edit)
+document</u>](ADA_Security_Test_Lab_Authorization.md)
 for details.*
 
 Candidate ASTLs wishing to be authorized should contact the CB and be

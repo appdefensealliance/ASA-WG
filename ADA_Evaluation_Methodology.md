@@ -599,3 +599,5 @@ individual requirements, and it is the responsibility of the ASTL to:
 October 1, 2024 v1.0 First Version
 
 March 25, 2025 v1.1 Revisions per feedback
+
+July 31, 2025 v1.2 Markdown format
