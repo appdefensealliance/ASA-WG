@@ -174,6 +174,8 @@ evaluation:
     tooling and collect evidence in a questionnaire
 
   - Developers can choose to engage an ASTL to assist with testing
+    
+  - Some platforms may require this testing and verification to be performed by ASTL
 
 - Security Assurance Level 2 (AL2): Lab Assessment
 
