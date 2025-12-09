@@ -76,7 +76,7 @@ There are three core artifacts required for all certifications. The contents of 
 
 ## Developer Onboarding Questionnaire
 
-The Developer Onboarding Questionnaire shall be completed by the developer, for all profiles and all assurance levels. However, the specific information is dependent on both the profile and assurance level. In general, the higher the assurance level, the less developer supplied information is required. The Developer Onboarding Questionnaire is confidential and will only be shared between the Developer, ASTL and CB.
+The Developer Onboarding Questionnaire shall be completed by the developer, for all profiles and all assurance levels. However, the specific information is dependent on both the profile and assurance level. In general, the higher the assurance level, the less developer supplied information is required. The Developer Onboarding Questionnaire is confidential and will only be shared between the Developer, ASTL and CB. All questionnaires can be found at this [link](https://github.com/appdefensealliance/ASA-WG/tree/main/Submission%20Forms%20and%20Templates/Developer%20Questionnaires).
 
 
 <table>
@@ -126,6 +126,10 @@ The Developer Test Report is a profile specific test report, which documents whi
 
 For AL0, the developer shall generate the Developer Test Report and keep the copy in their records as it may be required during an audit or other market surveillance activity.
 
+All Test and Compliance Report templates can be found at this [link](https://github.com/appdefensealliance/ASA-WG/tree/main/Submission%20Forms%20and%20Templates/Lab%20Templates). 
+
+<b>*** The CB shall only accept test reports which use these templates. ***</b>
+
 
 <table>
   <tr>
@@ -167,6 +171,10 @@ Cloud App GCP Developer Test Report
 For AL1 and AL2 assessments, the ASTL shall generate the Compliance Report once the application has successfully passed all profile test cases. The report is a truncated version of the Developer Test Report, such that it provides high level summaries of the testing which was performed. Upon review by the CB, the Compliance Report shall be published on the ADA website.
 
 For AL0, the developer shall generate the Compliance Report and then submit it to ADA to be published on the ADA website.
+
+All Test and Compliance Report templates can be found at this [link](https://github.com/appdefensealliance/ASA-WG/tree/main/Submission%20Forms%20and%20Templates/Lab%20Templates). 
+
+<b>*** The CB shall only accept test reports which use these templates. ***</b>
 
 
 <table>
