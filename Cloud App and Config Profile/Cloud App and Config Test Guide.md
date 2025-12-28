@@ -26,7 +26,7 @@ Version 1.0 - 10-OCT 24
 
 [1.2.6 Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App ](#126-ensure-that-http-version-is-the-latest-if-used-to-run-the-web-app)
 
-[1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime ](#126-ensure-that-all-gcp-cloud-functions-are-configured-to-use-a-current-not-deprecated-runtime)
+[1.2.7 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime ](#127-ensure-that-all-gcp-cloud-functions-are-configured-to-use-a-current-not-deprecated-runtime)
 
 [1.3 Encrypt Confidential Data in Transit](#13-encrypt-confidential-data-in-transit)
 
@@ -879,7 +879,7 @@ Evidence or test output indicates that HTTP 2.0 is enabled for each webapp.
 
 ---
 
-### 1.2.6 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime
+### 1.2.7 Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime
 **Platform:** Google
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.

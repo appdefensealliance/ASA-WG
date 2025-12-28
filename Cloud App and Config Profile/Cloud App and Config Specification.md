@@ -263,7 +263,7 @@ When software ceases to be supported, the maintainer of that software will no lo
 | 1.2.4 | Azure | Ensure that 'Python version' is the Latest Stable Version, if Used to Run the Web App |
 | 1.2.5 | Azure | Ensure that 'Java version' is the latest, if used to run the Web App |
 | 1.2.6 | Azure | Ensure that 'HTTP Version' is the Latest, if Used to Run the Web App |
-| 1.2.6 | Google | Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime |
+| 1.2.7 | Google | Ensure that all GCP Cloud functions are configured to use a current (not deprecated) runtime |
 ---
 ## 1.3 Encrypt Confidential Data in Transit
 ### Description
