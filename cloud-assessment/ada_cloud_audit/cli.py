@@ -39,6 +39,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="GCP project ID (required for --provider gcp)",
     )
     parser.add_argument(
+        "--region",
+        default=None,
+        help="AWS default region (e.g. us-east-1). Auto-detected on EC2 instances.",
+    )
+    parser.add_argument(
         "--regions",
         nargs="*",
         default=None,
@@ -102,7 +107,38 @@ def run_assessment(args: argparse.Namespace) -> AssessmentReport:
         session_kwargs = {}
         if args.profile:
             session_kwargs["profile_name"] = args.profile
+        if args.region:
+            session_kwargs["region_name"] = args.region
         session = boto3.Session(**session_kwargs)
+
+        # Ensure the session has a region.  EC2 instance roles and minimal
+        # AWS CLI configs often omit the default region, which causes every
+        # regional service client to fail with "You must specify a region."
+        if session.region_name is None:
+            # Try the EC2 instance metadata service (IMDS) for the
+            # current region — works on any EC2 instance.
+            try:
+                import urllib.request
+                url = "http://169.254.169.254/latest/meta-data/placement/region"
+                req = urllib.request.Request(url, headers={"X-aws-ec2-metadata-token-ttl-seconds": "21600"})
+                # IMDSv2: get token first
+                token_req = urllib.request.Request(
+                    "http://169.254.169.254/latest/api/token",
+                    method="PUT",
+                    headers={"X-aws-ec2-metadata-token-ttl-seconds": "21600"},
+                )
+                token = urllib.request.urlopen(token_req, timeout=2).read().decode()
+                req = urllib.request.Request(url, headers={"X-aws-ec2-metadata-token": token})
+                detected_region = urllib.request.urlopen(req, timeout=2).read().decode().strip()
+            except Exception:
+                detected_region = "us-east-1"
+                logger.warning(
+                    "No AWS region configured and IMDS not available. "
+                    "Falling back to %s. Use --region or AWS_DEFAULT_REGION to override.",
+                    detected_region,
+                )
+            session_kwargs["region_name"] = detected_region
+            session = boto3.Session(**session_kwargs)
 
     checks = get_checks_for_provider(provider)
     if not checks:
