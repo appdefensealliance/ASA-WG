@@ -1,5 +1,5 @@
 
-# App Defense Alliance Mobile Application Specification
+# App Defense Alliance MASA Specification
 
 Version 1.0 - 10-OCT 24
 
@@ -20,7 +20,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Alex Duff (Meta) - ASA WG Chair
 * Brooke Davis (Google) - ASA WG Vice Chair
 
-### Mobile Profile Leads
+### MASA Profile Leads
 * Brooke Davis (Google)
 * Tim Bolton (Meta)
 
@@ -75,6 +75,12 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Viktor Sytnik (Leviathan Security)
 * Yiannis Kozyrakis
 * Zach Moreno (Bishop Fox)
+
+## About This Specification
+
+This specification defines the application security requirements for mobile applications under the App Defense Alliance (ADA) certification scheme. It represents the continuation of the requirements originally established under the Mobile Application Security Assessment (MASA) program as MASA v2, now developed and maintained by the ADA through the Application Security Assessment Working Group (ASA WG). Organizations previously certified under MASA or familiar with the MASA program should refer to this specification as the current version of those requirements.
+
+This specification was previously published as the ADA Mobile App Profile.
 
 ## Introduction
 
