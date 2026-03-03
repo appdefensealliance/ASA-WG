@@ -1,4 +1,4 @@
-# App Defense Alliance Web Application Testing Guide
+# App Defense Alliance CASA Testing Guide
 Version 1.0 - 10-OCT 24
 
 
@@ -9,6 +9,12 @@ Version 1.0 - 10-OCT 24
 | 0.7 | 25-MAY 24 | Updates from Tiger Team review of 0.5 spec |
 | 0.9 | 9-AUG 24 | Updates from ASA WG leads review of 0.7 spec |
 | 1.0 | 10-OCT 24 | Approved for release by the alliance steering committee |
+
+# About This Guide
+
+This testing guide supports the App Defense Alliance (ADA) CASA Specification, providing detailed test cases and acceptance criteria for evaluating web applications and web-accessible APIs. It represents the continuation of the testing guidance originally established under the Cloud Application Security Assessment (CASA) program, now developed and maintained by the ADA through the Application Security Assessment Working Group (ASA WG).
+
+This guide was previously published as the ADA Web Application Testing Guide.
 
 
 # Table of Contents
@@ -205,7 +211,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | 3P library | Any library which was not developed by the developer. These libraries may be open source or commercial libraries or SDKs.|
 
 # Dynamic Application Security Testing (DAST) Guidance
-Various App Defense Alliance (ADA) web profile requirements are designed to be tested and validated utilizing the [Burp Suite](https://portswigger.net/burp) DAST security tool (while employing the approved [ADA Burp Audit Scan Configuration](https://github.com/appdefensealliance/ASA-WG/blob/main/Web%20App%20Profile/ADA%20Burp%20Audit%20Scan%20Configuration.json)).  These ADA DAST testing requirements must be confirmed within the context of an authenticated scan.   Testing labs will have the below options available to them to conduct a DAST scan from an authenticated state:
+Various App Defense Alliance (ADA) web profile requirements are designed to be tested and validated utilizing the [Burp Suite](https://portswigger.net/burp) DAST security tool (while employing the approved [ADA Burp Audit Scan Configuration](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/ADA%20Burp%20Audit%20Scan%20Configuration.json)).  These ADA DAST testing requirements must be confirmed within the context of an authenticated scan.   Testing labs will have the below options available to them to conduct a DAST scan from an authenticated state:
 
 Burp Suite (Primary Option):
    - Utilize [Burp Suite’s built in](https://portswigger.net/burp/documentation/scanner/authenticated-scanning) capabilities to authenticate with the target application.

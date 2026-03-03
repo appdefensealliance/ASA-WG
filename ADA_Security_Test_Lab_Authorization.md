@@ -180,7 +180,7 @@ The three levels of authorization are:
 
 
 
-*   Provisional 1 ASTL - a Lab that has not yet completed their first three evaluations and is under direct oversight by the CB. (Provisional 1 status is per application type, so completion of a web application evaluation does not mean the Laboratory can perform a mobile application evaluation without oversight).
+*   Provisional 1 ASTL - a Lab that has not yet completed their first three evaluations and is under direct oversight by the CB. (Provisional 1 status is per application type, so completion of a CASA evaluation does not mean the Laboratory can perform a mobile application evaluation without oversight).
 *   Provisional 2 ASTL - a Lab that has completed the oversight evaluation which was considered acceptable by the CB, but is still waiting for the ISO/IEC 17025 accreditation to be completed.
 *   Authorized ASTL - a Lab that has both completed oversight evaluations and is ISO/IEC 17025 accredited.
 
@@ -260,7 +260,7 @@ Additional specific requirements for this program are described below.  The numb
    </td>
    <td style="background-color: null">The CB is responsible to ensure the competence based on other certificates or even the experience of specific persons conducting the evaluations.
 <p>
-For the Engagement Team, those performing the assessment must have one of the following certifications for Web App and Cloud Config Profiles:<ul>
+For the Engagement Team, those performing the assessment must have one of the following certifications for CASA and Cloud Config Profiles:<ul>
 
 <li>Certified Mobile and Web Application Penetration Tester (CMWAPT)</li>
 <li>Offensive Security <ul>

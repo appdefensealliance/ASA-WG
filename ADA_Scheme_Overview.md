@@ -301,7 +301,7 @@ To obtain an ADA Certification for one or more applications, developers must fol
 *   Identify one or more applications to be evaluated by the ASTL.
 *   For each application, specify:
     *   The desired security assurance level (e.g., AL0, AL1, or AL2).
-    *   The relevant ADA requirements profile(s) (e.g., mobile, web, cloud, or a combination).
+    *   The relevant ADA requirements profile(s) (e.g., Mobile, CASA, Cloud, or a combination).
 
 
 ### Step 3: Provide Required Information and Assistance

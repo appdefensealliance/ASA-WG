@@ -99,11 +99,11 @@ Mobile App AL2 iOS Onboarding Questionnaire
    </td>
   </tr>
   <tr>
-   <td>Web App
+   <td>CASA
    </td>
-   <td>Web App AL0/AL1 Onboarding Questionnaire
+   <td>CASA AL0/AL1 Onboarding Questionnaire
 <p>
-Web App AL2 Onboarding Questionnaire
+CASA AL2 Onboarding Questionnaire
    </td>
   </tr>
   <tr>
@@ -147,9 +147,9 @@ Mobile App iOS Developer Test Report
    </td>
   </tr>
   <tr>
-   <td>Web App
+   <td>CASA
    </td>
-   <td>Web App Developer Test Report
+   <td>CASA Developer Test Report
    </td>
   </tr>
   <tr>
@@ -191,9 +191,9 @@ All Test and Compliance Report templates can be found at this [link](https://git
    </td>
   </tr>
   <tr>
-   <td>Web App
+   <td>CASA
    </td>
-   <td>Web App Compliance Report
+   <td>CASA Compliance Report
    </td>
   </tr>
   <tr>
