@@ -62,6 +62,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Noelle Murata  (Leviathan Security)
 * Olivier Tuchon
 * Pamela Dingle  (Microsoft)
+* Peter Mueller (Praetorian)
+* Riccardo Poffo (Mobisec)
 * Rubén Lirio (Dekra)
 * Rupesh Nair (Net Sentries)
 * Sebastian Porst
