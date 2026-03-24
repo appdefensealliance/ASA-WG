@@ -427,7 +427,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.7.2
 **Verification**
 
 
-*AL2 and AL2*
+*AL1 and AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, associated out-of-band verifiers shall expire in accordance with the below timeframes:
    - Password reset verifiers (e.g., one time use email links) will expire after 7 days.
