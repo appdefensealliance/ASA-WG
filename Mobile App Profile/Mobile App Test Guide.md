@@ -571,7 +571,7 @@ This test is limited in scope to the mobile app; not the backend.
 For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
 
 * Clients must support TLS1.2 or higher
-* Clients must not support SSAL2.0 or SSL3.0.
+* Clients must not support SSL2.0 or SSL3.0.
 * Clients must not default to TLS1.0 or TLS1.1
 
 ---
@@ -1732,7 +1732,7 @@ This test is limited in scope to the mobile app; not the backend.
 For industry best practices, see section “Minimum Requirements for TLS Clients” in [SP.800-52r2](https://csrc.nist.gov/pubs/sp/800/52/r2/final) and [BSI TR-02102-2](https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/TechGuidelines/TG02102/BSI-TR-02102-2.pdf?__blob=publicationFile&v=6):
 
 * Clients must support TLS1.2 or higher
-* Clients must not support SSAL2.0 or SSL3.0.
+* Clients must not support SSL2.0 or SSL3.0.
 * Clients must not default to TLS1.0 or TLS1.1
 
 ---
