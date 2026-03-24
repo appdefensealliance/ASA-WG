@@ -25,7 +25,6 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 ### Contributors
 
-* Summer Yue (Meta)  
 * Deb Dhuttaguha (Google)  
 * Nic Watson (Google)  
 * Abhiraman Gcl (Google)  
