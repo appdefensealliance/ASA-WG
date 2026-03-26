@@ -15,7 +15,7 @@ The App Defense Alliance's initial focus is on creating baseline security standa
 * Application Security - A software developer's application security responsibilities center on building security into the application from inception.  This involves secure coding practices, understanding and mitigating vulnerabilities, and conducting security testing.
 * Secure Cloud Configuration - Similarly, if the developer is running some or all of their system in a public cloud, it is essential to maintain a secure configuration of cloud assets since confidential information stored in the cloud is a prime target for cyberattacks. Secure configurations help protect data from unauthorized access, theft, and corruption.
 
-The App Defense Alliance does not cover other requirements necessary for an organization to implement a comprehensive information security regime, such as establishing, implementing, maintaining, and continually improving their people, processes, and tools. Organizations are advised to consult other resources such as the ISO 27001 standard.
+The App Defense Alliance does not cover other requirements necessary for an organization to implement a comprehensive information security regime, such as establishing, implementing, maintaining, and continually improving their people, processes, and tools. Organizations are advised to consult other resources such as the ISO/IEC 27001 standard.
 
 ### Profiles
 
