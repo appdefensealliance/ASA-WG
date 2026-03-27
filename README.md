@@ -21,8 +21,8 @@ The App Defense Alliance does not cover other requirements necessary for an orga
 
 The App Defense Alliance’s initial set of profiles are specific to the architecture or technology and are intended to be a baseline set of requirements relevant to apps that process confidential data. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
 
+* CASA - application security requirements and associated test guide applicable to developers of web apps and web-accessible APIs (previously referred to as the Web App Profile)
 * MASA - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices (previously referred to as the Mobile App Profile)
-* Web - application security requirements and associated test guide applicable to developers of web apps and web-accessible APIs
 * Cloud - security configuration requirements relevant to the use of IaaS and PaaS services offered by Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure
 
 In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
@@ -56,9 +56,9 @@ The MASA profile outlines a baseline set of security requirements for mobile app
 * Security Testing: Thoroughly testing the application for vulnerabilities.
 * App integrity: Ensuring anti-tampering, and anti-analysis mechanisms are in place
 
-### Web
+### CASA
 
-The web profile provides a baseline set of requirements for securing web applications. It covers a broad spectrum of security controls, including:
+The CASA profile provides a baseline set of requirements for securing web applications. It covers a broad spectrum of security controls, including:
 * Input Validation and Output Encoding: Ensuring that user input is properly sanitized and output is properly encoded to prevent vulnerabilities like SQL * injection, cross-site scripting (XSS), and cross-site request forgery (CSRF).
 * Authentication and Session Management: Implementing secure authentication mechanisms and managing user sessions effectively to protect against unauthorized * access.
 * Cryptography: Using strong encryption algorithms and key management practices to protect sensitive data.
