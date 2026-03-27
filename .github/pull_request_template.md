@@ -2,11 +2,11 @@
 Fixes # ## 📖 Summary of Changes
 
 ### 🏷️ Unified Release Label
-**Target Version:** `Mobile:X.X | Web:X.X | Cloud:X.X | AI:X.X`
+**Target Version:** `MASA:X.X | CASA:X.X | Cloud:X.X | AI:X.X`
 
 ### 🛠️ Profile Impact
-- [ ] **Mobile:** (Describe changes or mark N/A)
-- [ ] **Web:** (Describe changes or mark N/A)
+- [ ] **MASA:** (Describe changes or mark N/A)
+- [ ] **CASA:** (Describe changes or mark N/A)
 - [ ] **Cloud:** (Describe changes or mark N/A)
 - [ ] **AI:** (Describe changes or mark N/A)
 
