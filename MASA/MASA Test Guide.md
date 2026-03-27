@@ -1,4 +1,4 @@
-# App Defense Alliance Mobile Application Testing Guide
+# App Defense Alliance MASA Testing Guide
 
 Version 1.0 - 10-OCT 24
 
@@ -36,6 +36,12 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Tim Bolton
 * Yiannis Kozyrakis
 
+## About This Guide
+
+This guide provides the testing procedures for mobile applications under the App Defense Alliance (ADA) certification scheme. It represents the continuation of the testing guidance originally established under the Mobile Application Security Assessment (MASA) program as MASA v2, now developed and maintained by the ADA through the Application Security Assessment Working Group (ASA WG). Organizations previously certified under MASA or familiar with the MASA program should refer to this guide as the current version of that testing guidance.
+
+This guide was previously published as the ADA Mobile App Test Guide.
+
 ## Introduction
 
 In today’s digitally-driven world, mobile applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure mobile environment, a robust mobile application security standard and certification program is essential.
@@ -57,7 +63,7 @@ This document is intended for system and application administrators, security sp
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
 
 ### Assumptions
-See the [ADA Mobile App Specification Assumptions section](https://github.com/appdefensealliance/ASA-WG/blob/main/Mobile%20App%20Profile/Mobile%20App%20Specification.md#assumptions).
+See the [ADA MASA Specification Assumptions section](https://github.com/appdefensealliance/ASA-WG/blob/main/MASA/MASA%20Specification.md#assumptions).
 
 # Table of Contents
 

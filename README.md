@@ -15,14 +15,14 @@ The App Defense Alliance's initial focus is on creating baseline security standa
 * Application Security - A software developer's application security responsibilities center on building security into the application from inception.  This involves secure coding practices, understanding and mitigating vulnerabilities, and conducting security testing.
 * Secure Cloud Configuration - Similarly, if the developer is running some or all of their system in a public cloud, it is essential to maintain a secure configuration of cloud assets since confidential information stored in the cloud is a prime target for cyberattacks. Secure configurations help protect data from unauthorized access, theft, and corruption.
 
-The App Defense Alliance does not cover other requirements necessary for an organization to implement a comprehensive information security regime, such as establishing, implementing, maintaining, and continually improving their people, processes, and tools. Organizations are advised to consult other resources such as the ISO 27001 standard.
+The App Defense Alliance does not cover other requirements necessary for an organization to implement a comprehensive information security regime, such as establishing, implementing, maintaining, and continually improving their people, processes, and tools. Organizations are advised to consult other resources such as the ISO/IEC 27001 standard.
 
 ### Profiles
 
 The App Defense Alliance’s initial set of profiles are specific to the architecture or technology and are intended to be a baseline set of requirements relevant to apps that process confidential data. Note that apps in certain verticals such as healthcare or finance may have to meet higher security, privacy, and regulatory requirements.
 
-* Mobile - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices
 * CASA - application security requirements and associated test guide applicable to developers of web apps and web-accessible APIs (previously referred to as the Web App Profile)
+* MASA - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices (previously referred to as the Mobile App Profile)
 * Cloud - security configuration requirements relevant to the use of IaaS and PaaS services offered by Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure
 
 In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
@@ -45,9 +45,9 @@ The App Defense Alliance has adopted a tiered approach to certification that var
 3. AL2 - Lab Tested: High risk products can be tested directly by the independent assessor, providing the highest level of assurance that a product has met the requirements
 
 ## Summary of Requirements
-### Mobile
+### MASA
 
-The mobile profile outlines a baseline set of security requirements for mobile applications such as Android, iOS, and Quest apps. It covers key areas like:
+The MASA profile outlines a baseline set of security requirements for mobile applications such as Android, iOS, and Quest apps. It covers key areas like:
 * Data Security: Proper handling, storage, and transmission of sensitive data.
 * Authentication and Authorization: Secure user identification and access control.
 * Network Communication: Protecting data during transmission.
