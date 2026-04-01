@@ -69,57 +69,57 @@ This specification defines the application security requirements for web applica
 This specification was previously published as the ADA Web App Profile.
 
 # Table of Contents
-1 [Authentication](#1-authentication)
+* [1 Authentication](#1-authentication)
 
-1.1 [Implement strong password security measures](#11-implement-strong-password-security-measures)
+  * [1.1 Implement strong password security measures](#11-implement-strong-password-security-measures)
 
-1.2 [Disable any default accounts for public application access interfaces](#12-disable-any-default-accounts-for-public-application-access-interfaces)
+  * [1.2 Disable any default accounts for public application access interfaces](#12-disable-any-default-accounts-for-public-application-access-interfaces)
 
-1.3 [Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
+  * [1.3 Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
 
-2 [Session Management](#2-session-management)
+* [2 Session Management](#2-session-management)
 
-2.1 [URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
+  * [2.1 URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
 
-2.2 [Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
+  * [2.2 Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
 
-2.3 [Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
+  * [2.3 Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
 
-2.4 [Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
+  * [2.4 Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
 
-3 [Access Control](#3-access-control)
+* [3 Access Control](#3-access-control)
 
-3.1 [Implement access control mechanisms to protect data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
+  * [3.1 Implement access control mechanisms to protect data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
 
-3.2 [Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
+  * [3.2 Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
 
-3.3 [Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
+  * [3.3 Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
 
-4 [Communications](#4-communications)
+* [4 Communications](#4-communications)
 
-4.1 [Protect data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+  * [4.1 Protect data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
 
-5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
+* [5 Data Validation and Sanitization](#5-data-validation-and-sanitization)
 
-5.1 [Implement validation & input sanitation](#51-implement-validation--input-sanitation)
+  * [5.1 Implement validation & input sanitation](#51-implement-validation--input-sanitation)
 
-5.2 [Securely handle untrusted files](#52-securely-handle-untrusted-files)
+  * [5.2 Securely handle untrusted files](#52-securely-handle-untrusted-files)
 
-6 [Configuration](#6-configuration)
+* [6 Configuration](#6-configuration)
 
-6.1 [Keep all components up to date](#61-keep-all-components-up-to-date)
+  * [6.1 Keep all components up to date](#61-keep-all-components-up-to-date)
 
-6.2 [Disable debug modes in production environments](#62-disable-debug-modes-in-production-environments)
+  * [6.2 Disable debug modes in production environments](#62-disable-debug-modes-in-production-environments)
 
-6.3 [The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
+  * [6.3 The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
 
-6.4 [Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
+  * [6.4 Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
 
-6.5 [Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
+  * [6.5 Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
 
-6.6 [Sensitive user data is either not stored in browser storage or is deleted when the user logs out](#66-sensitive-user-data-is-either-not-stored-in-browser-storage-or-is-deleted-when-the-user-logs-out)
+  * [6.6 Sensitive user data is either not stored in browser storage or is deleted when the user logs out](#66-sensitive-user-data-is-either-not-stored-in-browser-storage-or-is-deleted-when-the-user-logs-out)
 
-6.7 [Securely store server-side secrets](#67-securely-store-server-side-secrets)
+  * [6.7 Securely store server-side secrets](#67-securely-store-server-side-secrets)
 
 
 # Introduction
