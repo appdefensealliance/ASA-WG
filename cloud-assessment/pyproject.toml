@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ada-cloud-audit"
+version = "0.1.0"
+description = "ADA Cloud App and Config assessment automation tool"
+requires-python = ">=3.9"
+dependencies = [
+    "boto3>=1.26.0",
+    "python-docx>=0.8.11",
+]
+
+[project.optional-dependencies]
+gcp = [
+    "google-cloud-compute>=1.0",
+    "google-cloud-storage>=2.0",
+    "google-cloud-resource-manager>=1.0",
+    "google-cloud-logging>=3.0",
+    "google-cloud-monitoring>=2.0",
+    "google-cloud-dns>=0.35",
+    "google-cloud-functions>=1.0",
+    "google-cloud-kms>=2.0",
+    "google-cloud-asset>=3.0",
+    "google-cloud-sqladmin>=0.1",
+    "google-auth>=2.0",
+    "google-cloud-essential-contacts>=0.1",
+]
+dev = [
+    "pytest>=7.0",
+    "moto[all]>=4.0",
+]
+
+[project.scripts]
+ada-cloud-audit = "ada_cloud_audit.cli:main"

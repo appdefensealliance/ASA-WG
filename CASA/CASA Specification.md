@@ -69,57 +69,57 @@ This specification defines the application security requirements for web applica
 This specification was previously published as the ADA Web App Profile.
 
 # Table of Contents
-1 [Authentication](#1-authentication)
+* [1 Authentication](#1-authentication)
 
-1.1 [Implement strong password security measures](#11-implement-strong-password-security-measures)
+  * [1.1 Implement strong password security measures](#11-implement-strong-password-security-measures)
 
-1.2 [Disable any default accounts for public application access interfaces](#12-disable-any-default-accounts-for-public-application-access-interfaces)
+  * [1.2 Disable any default accounts for public application access interfaces](#12-disable-any-default-accounts-for-public-application-access-interfaces)
 
-1.3 [Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
+  * [1.3 Out of band verifiers shall be random and not reused](#13-out-of-band-verifiers-shall-be-random-and-not-reused)
 
-2 [Session Management](#2-session-management)
+* [2 Session Management](#2-session-management)
 
-2.1 [URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
+  * [2.1 URLs shall not expose sensitive information](#21-urls-shall-not-expose-sensitive-information)
 
-2.2 [Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
+  * [2.2 Implement session invalidation on logout, user request, and password change](#22-implement-session-invalidation-on-logout-user-request-and-password-change)
 
-2.3 [Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
+  * [2.3 Implement and secure application session tokens](#23-implement-and-secure-application-session-tokens)
 
-2.4 [Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
+  * [2.4 Protect sensitive account modifications](#24-protect-sensitive-account-modifications)
 
-3 [Access Control](#3-access-control)
+* [3 Access Control](#3-access-control)
 
-3.1 [Implement access control mechanisms to protect data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
+  * [3.1 Implement access control mechanisms to protect data and APIs](#31-implement-access-control-mechanisms-to-protect-sensitive-data-and-apis)
 
-3.2 [Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
+  * [3.2 Implement secure OAuth integrations to protect user data and prevent unauthorized access](#32-implement-secure-oauth-integrations-to-protect-user-data-and-prevent-unauthorized-access)
 
-3.3 [Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
+  * [3.3 Application exposed administrative interfaces shall use appropriate multi-factor authentication.](#33-application-exposed-administrative-interfaces-shall-use-appropriate-multi-factor-authentication)
 
-4 [Communications](#4-communications)
+* [4 Communications](#4-communications)
 
-4.1 [Protect data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
+  * [4.1 Protect data through strong cryptography](#41-protect-sensitive-data-through-strong-cryptography)
 
-5 [Data Validation and Sanitization](#5-data-validation-and-sanitization)
+* [5 Data Validation and Sanitization](#5-data-validation-and-sanitization)
 
-5.1 [Implement validation & input sanitation](#51-implement-validation--input-sanitation)
+  * [5.1 Implement validation & input sanitation](#51-implement-validation--input-sanitation)
 
-5.2 [Securely handle untrusted files](#52-securely-handle-untrusted-files)
+  * [5.2 Securely handle untrusted files](#52-securely-handle-untrusted-files)
 
-6 [Configuration](#6-configuration)
+* [6 Configuration](#6-configuration)
 
-6.1 [Keep all components up to date](#61-keep-all-components-up-to-date)
+  * [6.1 Keep all components up to date](#61-keep-all-components-up-to-date)
 
-6.2 [Disable debug modes in production environments](#62-disable-debug-modes-in-production-environments)
+  * [6.2 Disable debug modes in production environments](#62-disable-debug-modes-in-production-environments)
 
-6.3 [The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
+  * [6.3 The origin header shall not be used for authentication of access control decisions](#63-the-origin-header-shall-not-be-used-for-authentication-of-access-control-decisions)
 
-6.4 [Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
+  * [6.4 Protect application from subdomain takeover](#64-protect-application-from-subdomain-takeover)
 
-6.5 [Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
+  * [6.5 Do not log credentials or payment details](#65-do-not-log-credentials-or-payment-details)
 
-6.6 [Sensitive user data is either not stored in browser storage or is deleted when the user logs out](#66-sensitive-user-data-is-either-not-stored-in-browser-storage-or-is-deleted-when-the-user-logs-out)
+  * [6.6 Sensitive user data is either not stored in browser storage or is deleted when the user logs out](#66-sensitive-user-data-is-either-not-stored-in-browser-storage-or-is-deleted-when-the-user-logs-out)
 
-6.7 [Securely store server-side secrets](#67-securely-store-server-side-secrets)
+  * [6.7 Securely store server-side secrets](#67-securely-store-server-side-secrets)
 
 
 # Introduction
@@ -176,7 +176,7 @@ This specification is designed to be applied to one or more target web applicati
 | (AL1) ADA Assurance Level 1 (Verified Self Assessment) | The developer provides evidence and statements of compliance to each audit test case. The ADA approved lab reviews the evidence against the requirements. The ADA approved lab does not directly assess the application. Some platform providers may require this testing and verification to be performed by an ASTL. |
 | (AL2) ADA Assurance Level 2 (Lab Assessment) |  The ADA approved lab evaluates each audit test case directly against the application. In some cases, the developer may need to provide limited information or code snippets. |
 | Non-ADA approved authentication service | Any external user authentication service which has not been assessed against the ADA authentication requirements, or a developer’s proprietary authentication service. |
-| Padding oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
+| Padding oracle | A padding oracle is a function of an application which decrypts encrypted data provided by the client, e.g. internal session state stored on the client, and leaks the state of the validity of the padding after decryption. [https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle](https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/09-Testing_for_Weak_Cryptography/02-Testing_for_Padding_Oracle)|
 | Principle of least privilege | A security principle that a system should restrict the access privileges of users (or processes acting on behalf of users) to the minimum necessary to accomplish assigned tasks. [https://csrc.nist.gov/glossary/term/least_privilege](https://csrc.nist.gov/glossary/term/least_privilege)|
 | Publicly exposed interfaces | Any interface directly accessible on the Internet, either through a URL or IP address. Indirect access, such as access through a VPN or IP whitelisting, is out of scope. |
 | Qualys SSL Labs scan | A free online service which performs a deep analysis of the configuration of any SSL/TLS web server on the public Internet. [https://www.ssllabs.com/ssltest](https://www.ssllabs.com/ssltest)|
@@ -262,7 +262,7 @@ These features protect against unauthorized access.  Logouts and expirations pre
 | --- | ------|
 | [2.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#221-users-shall-have-the-ability-to-logout-of-the-application-logout-or-session-expiration-shall-invalidate-all-stateful-session-tokens-including-refresh-tokens) | Users shall have the ability to logout of the application. Logout or session expiration shall invalidate all stateful session tokens, including refresh tokens.|
 | [2.2.2](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#222-the-application-shall-provide-the-option-or-acts-by-default-to-terminate-all-other-active-sessions-including-stateful-refresh-tokens-after-a-successful-password-change-including-change-via-password-resetrecovery-and-that-this-is-effective-across-the-application-federated-login-if-present-and-any-relying-parties) | The application shall provide the option (or acts by default) to terminate all other active sessions, including stateful refresh tokens, after a successful password change (including change via password reset/recovery), and that this is effective across the application, federated login (if present), and any relying parties.|
-| [2.2.3](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#223-non-revocable-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued) | Non-revocable sateless authentication tokens must expire within 24 hours of being issued|
+| [2.2.3](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#223-non-revocable-stateless-authentication-tokens-must-expire-within-24-hours-of-being-issued) | Non-revocable stateless authentication tokens must expire within 24 hours of being issued|
 
 ---
 ## 2.3 Implement and secure application session tokens
