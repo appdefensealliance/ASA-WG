@@ -1,6 +1,0 @@
-boto3>=1.26.0
-python-docx>=0.8.11
-
-# Dev dependencies
-# pytest>=7.0
-# moto[all]>=4.0
