@@ -7,6 +7,7 @@ Version 0.1 3/9/26
 | Version | Date   | Description                                                        |
 | :------ | :----- | :----------------------------------------------------------------- |
 | 0.1     | 3/9/26 | Initial document outline based on CoSAI MCP security paper threats |
+| 0.2     | 3/26/26 | Added requirements for section 1 (Authentication) and updates for section 11 (Supply Chain) |
 |         |        |                                                                    |
 
 # Contributors
@@ -25,11 +26,11 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 ### Contributors
 
-* Deb Dhuttaguha (Google)  
+* Debdutta Guha(Google)  
 * Nic Watson (Google)  
 * Abhiraman Gcl (Google)  
 * Daniel Bond (Meta)  
-* Tony Balkin (Microsoft)  
+* Tony Balkan (Microsoft)  
 * Dario Freni (Google)
 * TBD
 
@@ -229,28 +230,272 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 Weak or misconfigured authentication in MCP deployments could allow attackers to impersonate legitimate clients or the agents acting on their behalf, corrupting audit trails or gaining unauthorized access to server resources.
 
+### 1.1.1 Mandatory Client-Server Transport Authentication
+
+#### Description
+
+The MCP server must verify the identity of the MCP host (client) before executing any tools or providing resources. For remote connections (SSE), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
+
+#### Rationale
+
+Without identity verification, an attacker could impersonate a legitimate AI agent or host to trigger sensitive tools (e.g., "delete\_database") or extract proprietary data.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static |  **Identify Transport Setup:** Search the MCP server initialization and transport setup code to determine the communication method (e.g., SSE, Stdio). <br><br>**Verify Identity Validation:** Identify where the server validates the 'Authorization' header or client certificates during the handshake or request phase. <br><br>**Check Cryptographic Binding:** Verify that there is a cryptographic binding between the validated identity and the established session to prevent hijacking. <br><br>**Flag Authentication Gaps:** Flag any server implementation that executes tool calls or provides resources without an explicit, successful authentication check.  |
+| Dynamic | **Attempt Unauthenticated Access:** Try to connect to the MCP server or trigger a tool call without providing any authentication credentials to ensure the request is rejected. <br><br>**Test Invalid Credentials:** Provide expired, malformed, or incorrect tokens/keys to verify that the server correctly denies access. <br><br>**Verify Session Persistence:** Ensure that once a session is authenticated, the identity remains consistent and cannot be swapped mid-session.  |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | Out of scope |
+| Mobile | Out of scope |
+| Remote | In Scope |
 
 ## 1.2 Confused Deputy (OAuth Proxy)
 
 Attackers exploit misconfigured roles, credentials, ACLs, trust relationships, or flawed delegation logic to gain elevated permissions and access unauthorized resources. In MCP deployments, this includes privilege escalation, as well as attacks that leverage the MCP server's intermediary role in multi-user token delegation. For example, confused deputy attacks can occur when an MCP server acting as an OAuth proxy fails to properly validate authorization context—allowing attackers to manipulate the server into using another user's credentials to perform privileged operations.
 
+### 1.2.1 Scoped Authorization and User Context Propagation
+
+#### Description
+
+The MCP server must not rely solely on its own service-level credentials to access downstream resources. It must require and validate "User-in-the-loop" context or scoped tokens passed through the MCP request metadata to ensure the end-user has the authority to perform the requested action.
+
+#### Rationale
+
+An MCP server acts as a deputy. If it uses a global admin key to fulfill a request from a low-privilege user, it becomes a 'confused deputy,' allowing the user to escalate privileges via the AI tool.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static |  **Analyze Tool Handlers:** Identify and examine all `callTool` handler functions within the codebase. <br><br>**Verify Token Usage:** Check if the tool logic relies on a hardcoded "Global Admin" or service-level token to access external APIs. <br><br>**Verify Context Extraction:** Confirm the code extracts a user-specific identifier or session token from the metadata or parameters of the MCP request. <br><br>**Check Authorization Logic:** Verify that the extracted user context is used to authorize access to specific downstream resources.  |
+| Dynamic | **Test Privilege Separation:** Attempt to access a resource belonging to User A while authenticated as User B to ensure the request is denied. <br><br>**Verify Scoped Execution:** Trigger a tool call and inspect the downstream API request to confirm it uses a scoped user token rather than a global administrative key. <br><br>**Validate Metadata Propagation:** Ensure that user-in-the-loop context passed through MCP request metadata is correctly honored by the server before executing sensitive actions. |
+
+### 1.2.2: Mandatory Cryptographic Validation of User Context
+
+#### Description 
+
+The MCP server must verify the cryptographic signature of identity tokens or user context metadata provided by the MCP host (Agent) (when possible). If the tool interacts with external third-party APIs (downstream resources), it must utilize an "On-Behalf-Of" flow or exchange the validated user token for a scoped access token. The server shall reject any request where the user context is provided as a simple, unverified string (e.g., a plain `user_id` field).
+
+#### Rationale 
+
+If a developer's tool simply trusts a `user_id` passed by the Agent, a compromised or "confused" Agent could provide "User A's" ID while executing "User B's" request. By requiring cryptographic validation (e.g., verifying a JWT signed by a trusted IdP), the Developer ensures that the user context is authentic and that the Agent cannot escalate privileges by misrepresenting the user.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Identify Token Validation Logic:** Search the codebase for JWT or identity token parsing logic. Verify that the implementation uses a library to check signatures (e.g., `jwt.verify()`) against a trusted public key or JWKS endpoint. <br><br>**Check Downstream Flow:** Inspect outbound API calls to ensure they utilize the validated user context to acquire "On-Behalf-Of" tokens rather than using the server's own administrative credentials. <br><br>**Flag Unverified Identifiers:** Identify and flag any tool handlers that accept user identifiers (like `email` or `uuid`) as plain parameters without verifying an accompanying cryptographic signature  |
+| Dynamic | **Submit Unsigned/Malformed Tokens:** Attempt to trigger a tool call using a token with the signature removed or a header set to `"alg": "none"`. Verify the server returns an authentication error. <br><br>**Payload Tampering:** Provide a validly signed token but modify the `user_id` within the payload. Verify the cryptographic check fails and the request is rejected. <br><br>**Verify Token Exchange:** Intercept downstream traffic to confirm that the MCP server is passing a scoped user-specific token to the final resource, rather than its own service-level key. |
+
+##### Comments {#comments}
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
+
 ## 1.3 Credential Theft/Token Theft
 
 Attackers exploit insecure storage, handling, or transmission of secrets (OAuth tokens, API keys, credentials), enabling impersonation, unauthorized access, or privilege escalation.
+
+### 1.3.1 Externalized Secret Management
+
+#### Description
+
+MCP servers must never contain hardcoded credentials, API keys, or private keys within the source code or configuration files. All sensitive secrets must be retrieved at runtime from an environment variable or a dedicated Secret Management Service (e.g., AWS Secrets Manager, HashiCorp Vault). Developers shall have a policy and procedure in place to periodically rotate sensitive secrets and have revocation protocols in place if a breach is detected.
+
+#### Rationale
+
+MCP servers are often lightweight and distributed; hardcoded secrets are easily leaked through version control or container image inspection, leading to full compromise of the connected tools.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static |  **Scan for Hardcoded Secrets:** Scan the codebase for regex patterns matching high-entropy strings, API keys (e.g., `sk-`, `ghp_`), and hardcoded passwords. <br><br>**Verify Client Initialization:** Check that all external service clients (e.g., OpenAI, Database, Slack) are initialized using `process.env` or a specific configuration provider. <br><br>**Flag String Literals:** Identify and flag any string literals used directly as credentials within the source code or configuration files. <br><br>**Review Rotation Policies:** Verify the existence of documented policies and procedures for periodically rotating sensitive secrets. <br><br>**Confirm Revocation Protocols:** Ensure there are established protocols for immediate secret revocation if a breach is detected.  |
+| Dynamic | **Verify Runtime Retrieval:** Confirm that the MCP server successfully retrieves sensitive secrets from an environment variable or a dedicated Secret Management Service at runtime. <br><br>**Validate Secret Isolation:** Ensure that sensitive credentials are not exposed in the process environment beyond what is necessary for execution.  |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
+### 1.3.2 Secure Downstream Transport
+
+#### Description
+
+The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. For example, tokens shall not be sent in HTTP headers.
+
+#### Rationale
+
+Credential theft often occurs during transit or through the reuse of intercepted long-lived keys. Ensuring encrypted transport mitigates interception risks during the "handling" phase.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Identify Downstream Clients:** Search the codebase for all outgoing network clients (e.g., axios, fetch, requests, pg-client). <br><br>**Verify TLS Enforcement:** Confirm that connection strings and URL constructions strictly use https:// or equivalent secure protocols (e.g., sslmode=require for databases). <br><br>**Protect Data in Transit:** Audit the codebase for any transmission of sensitive information (e.g., auth tokens) and confirm robust encryption is enforced. |
+| Dynamic | **Monitor Outbound Traffic:** Use a network interception tool (e.g., Wireshark or a service mesh proxy) to verify that secrets (Authorization headers, API keys) are never sent over unencrypted (HTTP) connections. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | Out of scope |
+| Remote | In scope (When MCP server is not integrated with Web App) |
 
 ## 1.4 Replay Attacks/Session Hijacking 
 
 Attackers intercept, reuse, or hijack authentication tokens or session identifiers, impersonating legitimate users or agents and executing unauthorized actions.
 
+### 1.4.1 Message Freshness and Session Binding
+
+#### Description
+
+For persistent or stateful transports (e.g., SSE, WebSockets), the MCP server must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
+
+#### Rationale
+
+If an attacker captures a valid MCP tool-call request, they could "replay" it later to trigger the tool again (e.g., a "pay\_invoice" tool) even if the original session has ended.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static |  **Examine Session Management:** Review the session management logic within the MCP transport layer (e.g., SSE, WebSockets). <br><br>**Identify Expiration Timers:** Verify the implementation of an expiration timer (TTL) for active sessions to ensure they are terminated after a defined period of inactivity. <br><br>**Check Freshness Validation:** Confirm the server validates 'timestamp' or 'nonce' fields within incoming JSON-RPC objects to prevent processing stale or duplicate requests.  |
+| Dynamic | **Verify Inactivity Timeouts:** Establish a session and remain inactive to verify the server automatically terminates the connection after the defined timeout period. <br><br>**Test Replay Resistance:** Attempt to capture and resend a previously successful JSON-RPC tool-call request to ensure the server rejects the duplicate based on an expired timestamp or used nonce. <br><br>**Validate Session Termination:** Ensure that once a session is terminated or timed out, any subsequent requests using that session identifier are strictly rejected.  |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
 
 ## 1.5 OAuth/Legacy Auth Weaknesses
 
 Use of outdated, weak, or pass-through authentication and authorization (e.g., basic auth, static API keys) exposes systems to impersonation, privilege misuse, and poor accountability.
 
+### 1.5.1 Strict Redirect URI and State Validation
+
+#### Description
+
+If the MCP server facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
+
+#### Rationale
+
+AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in the OAuth flow can allow attackers to intercept authorization codes and hijack the tool's access to those services.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Locate OAuth Logic:** Identify the OAuth callback or authorization URL construction logic within the server codebase. <br><br>**Verify State Generation:** Ensure that the state parameter is generated using a cryptographically secure random generator. <br><br>**Verify State Validation:** Confirm that the state parameter is strictly validated upon return to prevent Cross-Site Request Forgery (CSRF). <br><br>**Check Redirect URI Construction:** Verify that the redirect\_uri is not dynamically constructed from user-controlled input. **Confirm Allowlist Enforcement:** Ensure the redirect\_uri is checked against a hardcoded or configuration-based allowlist. **Flag Legacy Methods:** Identify and flag any use of legacy authentication methods, such as Basic Auth over HTTP, which are strictly prohibited. |
+| Dynamic | **Verify Redirect URI Validation:** Attempt to use a `redirect_uri` that is not on the pre-defined allowlist to confirm the authorization request fails.  <br><br>**Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected.  |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | Out of scope |
+| Remote | In scope (When MCP server is not integrated with WebApp) |
+
+### 1.5.2 Mandatory Proof Key for Code Exchange (PKCE)
+
+#### Description
+
+When the MCP server initiates an OAuth 2.0 authorization code flow to obtain user credentials for a tool, it must implement and enforce Proof Key for Code Exchange (PKCE) as defined in RFC 7636. The server must generate a unique, high-entropy code\_verifier for every authorization request, send the code\_challenge (derived via the S256 method) to the authorization endpoint, and provide the original code\_verifier during the token exchange step. This requirement applies regardless of whether the client is classified as public or confidential.
+
+#### Rationale
+
+Authorization codes are vulnerable to interception via custom URI scheme hijacking (on mobile/local hosts) or log leakage. PKCE provides a dynamic, cryptographically bound secret that ensures only the entity that initiated the authorization request can successfully exchange the resulting code for a token. This effectively mitigates "Authorization Code Injection" and "Interception" attacks by rendering a stolen code useless to an attacker.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | Perform the following code inspection.<br>**Identify OAuth Initiation Logic:** Locate the code responsible for constructing the initial authorization URL. Verify that it generates a cryptographically secure code\_verifier and includes a code\_challenge and code\_challenge\_method=S256 in the request parameters. <br><br>**Verify Token Exchange:** Locate the function that exchanges the authorization code for an access token. Ensure that the original code\_verifier is retrieved from secure session storage and included in the POST body to the token endpoint. <br><br>**Flag Vulnerabilities:** Flag any OAuth 2.0 implementation that relies solely on a static client\_secret or state parameter without incorporating the PKCE challenge-response mechanism. |
+| Dynamic |  |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | Out of scope |
+| Remote | In scope |
+
 ## 1.6 Session Token Leakage
 
 Exposure or insecure handling of session tokens across MCP components leads to unauthorized access, impersonation, or session hijacking.
 
+### 1.6.1 Automated PII and Credential Masking in Logs
+
+#### Description
+
+The MCP server must implement an interception layer for all logging (stdout/stderr/files) that automatically redacts sensitive information, specifically the Authorization headers, session tokens, and sensitive fields within the tool params (e.g., "password", "api\_key").
+
+#### Rationale
+
+Developers often log full JSON-RPC requests for debugging. If these logs are sent to a centralized logging system, any user with log access can steal active session tokens or sensitive tool inputs.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static |  **Review Logging Calls:** Identify all logging calls (e.g., console.log, logger.info, winston) throughout the codebase. <br><br>**Detect Full Object Logging:** Search for instances where the entire MCP request or headers object is logged directly. <br><br>**Verify Redaction Middleware:** Confirm that a redaction utility or middleware is applied to these objects before they are passed to the logging function. <br><br>**Check Sensitive Key Masking:** Ensure the redaction utility specifically masks sensitive keys such as token, authorization, secret, and sensitive tool parameters like password or api\_key. |
+| Dynamic | **Generate Sensitive Requests:** Trigger JSON-RPC requests containing sensitive information in the headers (e.g., Authorization tokens) or tool parameters (e.g., api\_key). <br><br>**Verify Output Redaction:** Inspect the resulting logs to ensure that all sensitive fields have been successfully masked or redacted before being written to the log sink.  |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
+### 1.6.2 Secure Session Tokens
+
+#### Description
+
+Developers must ensure that session identifiers and authentication tokens used within the MCP ecosystem (between Hosts, Servers, and any intermediate transport layers) are handled as highly sensitive secrets. This includes:
+
+* **Encrypted Transport:** Using secure channels for all token exchanges.  
+* **Secure Storage:** Avoiding the use of local, unencrypted persistent storage for session state.  
+* **Log Redaction:** Ensuring tokens are never written to standard output (stdout), standard error (stderr), or debug log files.  
+* **Minimal Exposure:** Passing tokens through standardized headers or environment variables rather than command-line arguments or URL query parameters.
+
+#### Rationale
+
+In the MCP architecture, the session token is the "keys to the kingdom." If a developer accidentally leaks a token—for instance, by logging the full JSON-RPC initialization message—an attacker with access to those logs can impersonate the Host and execute arbitrary tools on the Server. Because MCP servers often have access to sensitive local files or internal APIs, a leaked session token can lead to immediate and total system compromise.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static |  **Hardocoded Tokens:** Scan the codebase for hardcoded strings that match common token formats (e.g., UUIDs, JWTs, or high-entropy strings).  <br><br>**Logging:** Review all logging statements (e.g., `console.log`, `logging.debug`, `fprintf`) that output the `Session` or `Context` objects.  <br><br>**Initialization:** Verify that the MCP Server implementation does not accept credentials via `argv` (command-line arguments), as these are visible to other users on the system via process listing (`ps aux`).  |
+| Dynamic | **Traffic Analysis:** Intercept the MCP transport layer (e.g., stdio streams or WebSockets) and verify that session tokens are not transmitted in "cleartext" over insecure channels (if remote) or exposed in side-channels.  <br><br>**Log Inspection:** Execute a full MCP session lifecycle (Connect \-\> Tool Call \-\> Disconnect) with "Verbose" logging enabled. Search the resulting log files for the session token string.   <br><br>**Environment Check:** Inspect the process environment and temporary directories during execution to ensure tokens are not written to world-readable files or `.env` files that lack proper permissions.  |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
 
 # 2 Missing or Improper Access Control 
 
@@ -1227,35 +1472,13 @@ TBD
 
 Unauthorized, unmonitored, or hidden MCP server instances create blind spots, increasing risk of undetected compromise and covert data exfiltration. These servers pose governance and compliance risks and may be malicious or easily compromised.
 
+**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
 
 ## 11.2 Supply Chain Compromise (Duplicate) 
 
 Malicious or compromised MCP servers, dependencies, or packages are introduced into the environment, enabling attackers to execute arbitrary code, exfiltrate data, or persist within the infrastructure.
 
-### 11.2.1 TBD
-
-#### Description
-
-TBD
-#### Rationale
-
-TBD
-#### Audit
-
-
-| Audit Component | Verification Method                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| :-------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|                 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-
-
-
-#### Comments
-
-| Scope  | Comment  |
-| :----- | :------- |
-| Local  | In scope |
-| Mobile | In scope |
-| Remote | In scope |
+**Note: This risk is mitigated through the MASA and CASA certification.**
 
 # 12 Insufficient Logging, Monitoring, and Auditability
 
@@ -1281,10 +1504,10 @@ In agentic and MCP-based architectures, the complexity of interactions between u
 
 #### Audit
 
-| Method  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Method  | Description |
+| :------ | :--------------------------------------------------------------------- |
 | Static  | **Verify Structured Format:** Identify all logging statements (e.g., `console.log`, `logger.info`, `winston`) and confirm they utilize a structured format like JSON objects or key-value pairs rather than simple string concatenation. <br><br>**Identify External Tool Execution Paths:** Review the code for AI tool integration and MCP server implementations to identify all functions that execute external tools or access data resources. <br><br>**Check Telemetry Coverage:** Verify that each execution path includes a logging call capturing the identity of the calling agent, the specific tool requested, the input parameters, and the success/failure status. <br><br>**Inspect Metadata and Correlation:** Confirm that critical events (tool execution, API requests, and authentication logic) are logged with relevant metadata, including timestamps and correlation IDs. <br><br>**Audit for Reasoning Traces:** Verify if the "Intent" of the agent is logged to provide an auditable "Reasoning Trace" explaining why an agent took a specific action. <br><br>**Flag Silent Failures:** Identify and flag any instances where a tool is invoked without telemetry or where error states are handled "silently" without an audit entry. <br><br>**Flag Unstructured Calls:** Identify and flag any instances of "print" statements or unstructured logger calls used for operational data. |
-| Dynamic | **Generate Agent Activity:** Interact with the system through the AI agent to trigger various tool calls, API requests, and authentication events. <br><br>**Validate Log Capture:** Inspect the generated logs to confirm that the interaction was captured in its entirety. <br><br>**Confirm Machine-Readability:** Verify that the output logs are valid structured data (e.g., valid JSON) that can be parsed by automated security tools.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Dynamic | **Generate Agent Activity:** Interact with the system through the AI agent to trigger various tool calls, API requests, and authentication events. <br><br>**Validate Log Capture:** Inspect the generated logs to confirm that the interaction was captured in its entirety. <br><br>**Confirm Machine-Readability:** Verify that the output logs are valid structured data (e.g., valid JSON) that can be parsed by automated security tools.  |
 |         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 #### 
