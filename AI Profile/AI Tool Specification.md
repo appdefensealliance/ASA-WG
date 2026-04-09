@@ -1412,59 +1412,67 @@ TBD
 
 Attackers trigger an excessive number of LLM, tool, or other API calls leading to unexpected costs or resource exhaustion and denial of service
 
-### 10.1.1. Req TBD
+### 10.1.1. Financial Resource & Cost Governance
 
 #### Description
 
-TBD
+The AI Tool must be inherently cost-aware. It must identify whether a specific resource (e.g. a premium search API or a paid data scraper) carries a direct financial cost to the user or organization. For these metered resources, the tool must implement the following:
+
+* **Session-Based Cost Tracking:** The tool must calculate and track the cumulative cost of all API calls made during an active session.
+* **The $100 Guardrail:** By default, if the cumulative session cost reaches $100, the tool must automatically intervene by either enforcing a strict rate limit or pausing execution to request explicit user confirmation.
+* **Justified Overrides:** Developers may set a higher dollar threshold only if they provide a documented business justification within the configuration metadata.
+* **Governance Layers:** Enforce mandatory authentication for all tool access and implement per-user/per-tool rate limiting to prevent unauthorized or runaway consumption.
+
 
 #### Rationale
 
-TBD
+AI Tools are "force multipliers" for LLMs. Because these tools often bridge the gap to paid APIs (e.g., GPT-4o, Claude 3.5 Sonnet, or search engines), they represent a direct financial vulnerability. A logic loop or a malicious actor could trigger thousands of dollars in costs in seconds. Unlike traditional DoS, which impacts availability, a DoW attack impacts the viability of the business.
+
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Identify Paid Assets:** Verify that all APIs/resources carrying a financial cost are identified in the codebase. <br><br> **Threshold Verification:** Confirm the implementation of the $100 limit and review documentation for any higher justified limits. <br><br> **Auth Check:** Ensure all cost-incurring resources require a valid, authenticated user context.|
+| Dynamic | **Cost Tracking Validation:** Request the list of metered resources and the specific method used to track costs in real-time during a session. <br><br> **Stress Testing:** Using an automated test harness, simulate high-volume calls to verify that the tool triggers a rate limit or confirmation prompt exactly when the $100 (or justified) limit is hit.|
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 ## 10.2 Payload Limit/DoS
 
 Unrestricted payload sizes or recursion depth in protocols enable denial-of-service via resource exhaustion.
 
-### 10.2.1 Req TBD
+### 10.2.1 Maximum Payload and Recursion Depth Constraints
 
 #### Description
 
-TBD
+The server must strictly enforce configurable limits on the maximum size of incoming request payloads (in bytes) and the maximum depth of nested structures (e.g., JSON objects, arrays, or recursive tool calls).
 
 #### Rationale
 
-TBD
+Unbounded inputs allow attackers to trigger Denial-of-Service (DoS). Large payloads exhaust RAM/bandwidth, while deep recursion can lead to stack overflow errors or CPU spikes during parsing, rendering the server unavailable to legitimate users.
+
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Payload Size Limits:** Inspect the code to verify that payload size limits are implemented. The preferred method is explicit limits, but language provided limits are acceptable. <br><br> **Recursion Depth Limits:** Inspect the code to verify recursion limits are applied during the processing of nested tool calls or nested JSON structures. |
+| Dynamic | **Payload Size Limits:** Using a tool like curl or Postman, attempt to send a payload that exceeds the defined limit (e.g., a 100MB JSON string when the limit is 5MB). <br><br> **Recursion Depth Limits:** Send a JSON object with nesting depth significantly higher than the limit (e.g., 1,000 levels of nested arrays: [[[[...]]]]).|
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 # 11 Supply Chain and Lifecycle Security Failures
 
