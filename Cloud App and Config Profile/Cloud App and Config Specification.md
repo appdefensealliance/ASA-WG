@@ -216,7 +216,9 @@ This profile builds upon the work of the Center for Internet Security (CIS), spe
 
 1. [CIS Amazon Web Services Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/14207)
 2. [CIS Google Cloud Platform Foundation Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/9562)
-3. [CIS Microsoft Azure Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/10624)
+3. [CIS Microsoft Azure Foundations Benchmark v5.0.0](https://workbench.cisecurity.org/benchmarks/10624)
+4. [CIS Microsoft Azure Compute Services Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks)
+5. [CIS Microsoft Azure Database Services Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks)
 
 # Licensing
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-nc-sa/4.0/)
