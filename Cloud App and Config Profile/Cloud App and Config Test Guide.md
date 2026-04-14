@@ -491,7 +491,7 @@ This document is intended for system and application administrators, security sp
 
 This profile builds upon the work of the Center for Internet Security (CIS), specifically their cloud foundations benchmarks.
 
-1. [CIS Amazon Web Services Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/14207)
+1. [CIS Amazon Web Services Foundations Benchmark v7.0.0](https://workbench.cisecurity.org/benchmarks/14207)
 2. [CIS Google Cloud Platform Foundation Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/9562)
 3. [CIS Microsoft Azure Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/10624)
 
@@ -1684,7 +1684,7 @@ Without an incident response plan, an enterprise may not discover an attack in t
 
 **Rationale:** By implementing least privilege for access control, an IAM Role will require an appropriate IAM Policy to allow Support Center Access in order to manage Incidents with AWS Support.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.17
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.15
 
 **Evidence**
 
@@ -1734,7 +1734,7 @@ As time goes by -- and processes and people change within an organization -- it'
 
 **Rationale:** If an AWS account is observed to be behaving in a prohibited or suspicious manner, AWS will attempt to contact the account owner by email and phone using the contact details listed. If this is unsuccessful and the account behavior needs urgent mitigation, proactive measures may be taken, including throttling of traffic between the account exhibiting suspicious behavior and the AWS API endpoints and the Internet. This will result in impaired service to and from the account in question, so it is in both the customers' and AWS' best interests that prompt contact can be established. This is best achieved by setting AWS account contact details to point to resources which have multiple individuals as recipients, such as email aliases and PABX hunt groups.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.1
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.2
 
 **Evidence**
 
@@ -1771,7 +1771,7 @@ Evidence or test output indicates that the tenant is configured with contact inf
 
 **Rationale:** Specifying security-specific contact information will help ensure that security advisories sent by AWS reach the team in your organization that is best equipped to respond to them.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.2
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.3
 
 **Evidence**
 
@@ -2396,7 +2396,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 
 **Rationale:** Deleting access keys associated with the 'root' user account limits vectors by which the account can be compromised. Additionally, deleting the 'root' access keys encourages the creation and use of role based accounts that are least privileged.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.4
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.4
 
 **Evidence**
 
@@ -2439,7 +2439,7 @@ Evidence or test output indicates that no root user account access key exists.
 
 Note: Even if it is known the user will need access keys, require them to create the keys themselves or put in a support ticket to have them created as a separate step from user creation.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.11
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.11 (Retired in v7.0.0)
 
 **Evidence**
 
@@ -2474,7 +2474,7 @@ Providing full administrative privileges instead of restricting to the minimum s
 
 IAM policies that have a statement with "Effect": "Allow" with "Action": "\*" over "Resource": "\*" should be removed.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.16, [AWS Security Hub IAM.1](https://docs.aws.amazon.com/securityhub/latest/userguide/iam-controls.html#iam-1)
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.14, [AWS Security Hub IAM.1](https://docs.aws.amazon.com/securityhub/latest/userguide/iam-controls.html#iam-1)
 
 **Evidence**
 
@@ -2706,7 +2706,7 @@ Evidence or test output indicates that security defaults is enabled on Azure Act
 
 **Rationale:** Setting a password complexity policy increases account resiliency against brute force login attempts.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.8
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.8
 
 **Evidence**
 
@@ -2743,7 +2743,7 @@ Evidence or test output indicates that the IAM password policy requires a minimu
 
 **Rationale:** Access keys are long-term credentials for an IAM user or the AWS account 'root' user. You can use access keys to sign programmatic requests to the AWS CLI or AWS API. One of the best ways to protect your account is to not allow users to have multiple access keys.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.13
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.13 (Retired in v7.0.0)
 
 **Evidence**
 
@@ -2800,7 +2800,7 @@ Evidence or test output indicates that no user has more than one active access k
 
 Access keys should be rotated to ensure that data cannot be accessed with an old key which might have been lost, cracked, or stolen.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.14
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.12
 
 **Evidence**
 
@@ -2856,7 +2856,7 @@ Malicious users automate login attempts using username and password databases fr
 
 **Rationale:** Preventing password reuse increases account resiliency against brute force login attempts.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.9
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.9
 
 **Evidence**
 
@@ -2937,7 +2937,7 @@ Ensuring that dormant accounts are disabled when they're no longer needed reduce
 
 **Rationale:** Disabling or removing unnecessary credentials will reduce the window of opportunity for credentials associated with a compromised or abandoned account to be used.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.12
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.11
 
 **Evidence**
 
@@ -3065,7 +3065,7 @@ As a matter of good practice, users who can take administrative actions should u
 
 **Rationale:** The 'root user' has unrestricted access to and control over all account resources. Use of it is inconsistent with the principles of least privilege and separation of duties, and can lead to unnecessary harm due to error or account compromise.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.7
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.7
 
 **Evidence**
 
@@ -3766,7 +3766,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 
 **Rationale:** Enabling MFA provides increased security for console access as it requires the authenticating principal to possess a device that emits a time-sensitive key and have knowledge of a credential.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.5
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.5
 
 **Evidence**
 
@@ -3872,7 +3872,7 @@ Standardizing the mechanism for granting cloud permissions reduces the risk of a
 
 **Rationale:** Assigning IAM policy only through groups unifies permissions management to a single, flexible layer consistent with organizational functional roles. By unifying permissions management, the likelihood of excessive permissions is reduced.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 1.15
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.13
 
 **Evidence**
 
@@ -4141,7 +4141,7 @@ Organizations need reliable forensic information about access, modification, and
 
 **Rationale:** By enabling S3 bucket logging on target S3 buckets, it is possible to capture all events which may affect objects within any target buckets. Configuring logs to be placed in a separate bucket allows access to log information which can be useful in security and incident response workflows.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.6
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 4.4
 
 **Evidence**
 
@@ -4228,7 +4228,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 
 **Rationale:** Allowing public access to CloudTrail log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.3
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.3 (Retired in v7.0.0)
 
 **Evidence**
 
@@ -4619,7 +4619,7 @@ Logs may contain indications of compromise, so it's important to review logs reg
 
 Monitoring for single-factor console logins will increase visibility into accounts that are not protected by MFA. These types of accounts are more susceptible to compromise and unauthorized access.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.2
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.2
 
 **Evidence**
 
@@ -4742,7 +4742,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 Cloud Watch is an AWS native service that allows you to observe and monitor resources and applications. CloudTrail Logs can also be sent to an external Security information and event management (SIEM) environment for monitoring and alerting.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.3
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.3
 
 **Evidence**
 
@@ -4856,7 +4856,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 Monitoring changes to IAM policies will help ensure authentication and authorization controls remain intact.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.4
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.4
 
 **Evidence**
 
@@ -4968,7 +4968,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 **Rationale:** Monitoring changes to CloudTrail's configuration will help ensure sustained visibility to activities performed in the AWS account.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.5
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.5
 
 **Evidence**
 
@@ -5073,7 +5073,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 Monitoring changes to S3 bucket policies may reduce time to detect and correct permissive policies on sensitive S3 buckets.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.8
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.8
 
 **Evidence**
 
@@ -5178,7 +5178,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 Monitoring changes to network gateways will help ensure that all ingress/egress traffic traverses the VPC border via a controlled path.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.12
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.12
 
 **Evidence**
 
@@ -5283,7 +5283,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 Monitoring changes to route tables will help ensure that all VPC traffic flows through an expected path and prevent any accidental or intentional modifications that may lead to uncontrolled network traffic. An alarm should be triggered every time an AWS API call is performed to create, replace, delete, or disassociate a Route Table.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.13
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.13
 
 **Evidence**
 
@@ -5387,7 +5387,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 VPCs in AWS are logically isolated virtual networks that can be used to launch AWS resources. Monitoring changes to VPC configuration will help ensure VPC traffic flow is not getting impacted. Changes to VPCs can impact network accessibility from the public internet and additionally impact VPC traffic flow to and from resources launched in the VPC.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.14
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.14
 
 **Evidence**
 
@@ -5492,7 +5492,7 @@ Evidence or test output indicates that there is at least one active multi-region
 
 Monitoring AWS Organizations changes can help you prevent any unwanted, accidental or intentional modifications that may lead to unauthorized access or other security breaches. This monitoring technique helps you to ensure that any unexpected changes performed within your AWS Organizations can be investigated and any unwanted changes can be rolled back.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 4.15
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.15
 
 **Evidence**
 
@@ -6146,7 +6146,7 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 * ensuring that a multi-regions trail exists will ensure that `Global Service Logging` is enabled for a trail by default to capture recording of events generated on AWS global services
 * for a multi-regions trail, ensuring that management events configured for all types of Read/Writes ensures recording of management operations that are performed on all resources in an AWS account.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.1
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 4.1
 
 **Evidence**
 
@@ -6203,7 +6203,7 @@ Evidence or test output indicates that CloudTrail is enabled in all regions.
 
 **Rationale:** Sending CloudTrail logs to CloudWatch Logs will facilitate real-time and historic activity logging based on user, API, resource, and IP address, and provides opportunity to establish alarms and notifications for anomalous or sensitive account activity.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.4
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 3.4 (Retired in v7.0.0)
 
 **Evidence**
 
@@ -7213,7 +7213,7 @@ Evidence or test output indicates that RSASHA1 is not used for the zone-signing 
 
 **Rationale:** Allowing Version 1 of the service may open EC2 instances to Server-Side Request Forgery (SSRF) attacks, so Amazon recommends utilizing Version 2 for better instance security.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.6
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 6.7
 
 **Evidence**
 
@@ -7449,7 +7449,7 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 
 **Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.1
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 6.2
 
 **Status:** This requirement has been withdrawn in favor of 4.3.6 and 4.3.7
 
@@ -7460,7 +7460,7 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 
 **Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.2
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 6.3
 
 **Evidence**
 
@@ -7491,7 +7491,7 @@ Evidence or test output indicates that no security group allows ingress to port 
 
 **Rationale:** Public access to remote server administration ports, such as 22 and 3389, increases resource attack surface and unnecessarily raises the risk of resource compromise.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 5.3
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 6.4
 
 **Evidence**
 
@@ -7797,7 +7797,7 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 **Rationale:** Encrypting data at rest reduces the likelihood that it is unintentionally exposed and can nullify the impact of disclosure if the encryption remains unbroken.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.2.1
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 6.1.1
 
 **Evidence**
 
@@ -7843,7 +7843,7 @@ Evidence or test output indicates that all regions are configured such that EBS 
 
 **Rationale:** Data should be encrypted at rest to reduce the risk of a data breach via direct access to the storage device.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.4.1
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 3.3.1
 
 **Evidence**
 
@@ -7918,7 +7918,7 @@ Amazon S3 `Block public access (account settings)` prevents the accidental or ma
 
 Whether blocking public access to all or some buckets is an organizational decision that should be based on data sensitivity, least privilege, and use case.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.1.4
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 3.1.4
 
 **Evidence**
 
@@ -8638,7 +8638,7 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 **Rationale:** Databases are likely to hold sensitive and critical data, it is highly recommended to implement encryption in order to protect your data from unauthorized access or disclosure. With RDS encryption enabled, the data stored on the instance's underlying storage, the automated backups, read replicas, and snapshots, are all encrypted.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.3.1; [Amazon Relational Database Service controls - AWS Security Hub](https://docs.aws.amazon.com/securityhub/latest/userguide/rds-controls.html#rds-3)
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 3.2.1; [Amazon Relational Database Service controls - AWS Security Hub](https://docs.aws.amazon.com/securityhub/latest/userguide/rds-controls.html#rds-3)
 
 **Evidence**
 
@@ -8776,7 +8776,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 
 **Rationale:** Ensure that no public-facing RDS database instances are provisioned in your AWS account and restrict unauthorized access in order to minimize security risks. When the RDS instance allows unrestricted access (0.0.0.0/0), everyone and everything on the Internet can establish a connection to your database and this can increase the opportunity for malicious activities such as brute force attacks, PostgreSQL injections, or DoS/DDoS attacks.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.3.3
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 3.2.3
 
 **Evidence**
 
@@ -9559,7 +9559,7 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 
 **Rationale:** AWS RDS will occasionally deprecate minor engine versions and provide new ones for an upgrade. When the last version number within the release is replaced, the version changed is considered minor. With Auto Minor Version Upgrade feature enabled, the version upgrades will occur automatically during the specified maintenance window so your RDS instances can get the new features, bug fixes, and security patches for their database engines.
 
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v2.0.0, Section 2.3.2
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 3.2.2
 
 **Evidence**
 
