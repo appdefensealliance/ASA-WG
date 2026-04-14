@@ -1100,8 +1100,8 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 |---|-----|----------|
 | 4.3.1 | Azure | Ensure that RDP access from the Internet is evaluated and restricted |
 | 4.3.2 | Azure | Ensure that SSH access from the Internet is evaluated and restricted |
-| 4.3.3 | Google | Ensure That SSH Access Is Restricted From the Internet |
-| 4.3.4 | Google | Ensure That RDP Access Is Restricted From the Internet |
+| 4.3.3 | Google | REMOVED — Reclassified to Level 2 in CIS v4.0.0 |
+| 4.3.4 | Google | REMOVED — Reclassified to Level 2 in CIS v4.0.0 |
 | 4.3.5 | AWS | Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.6 | AWS | Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.7 | AWS | Ensure no security groups allow ingress from ::/0 to remote server administration ports |

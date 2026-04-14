@@ -7360,87 +7360,15 @@ Evidence or test output indicates that no network security group is configured t
 
 ---
 
-### 4.3.3 Ensure That SSH Access Is Restricted From the Internet
-**Platform:** Google
+### 4.3.3 REMOVED — Reclassified to Level 2 in CIS v4.0.0
 
-**Rationale:** GCP `Firewall Rules` within a `VPC Network` apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `SSH` with the default `Port 22`. Generic access from the Internet to a specific IP Range needs to be restricted.
-
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.6
-
-**Evidence**
-
-**From Google Cloud Console**
-
-
-
-1. Go to `VPC network`.
-2. Go to the `Firewall Rules`.
-3. Ensure that `Port` is not equal to `22` and `Action` is not set to `Allow`.
-4. Ensure `IP Ranges` is not equal to `0.0.0.0/0` under `Source filters`.
-
-**From Google Cloud CLI**
-
-gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed)'
-
-Ensure that there is no rule matching the below criteria:
-   * `SOURCE_RANGES` is `0.0.0.0/0`
-   * AND `DIRECTION` is `INGRESS`
-   * AND IPProtocol is `tcp` or `ALL`
-   * AND `PORTS` is set to `22` or `range containing 22` or `Null (not set)`
-
-Note:
-
-
-
-   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
-   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
-
-**Verification**
-
-Evidence or test output indicates that no firewall rule allows inbound connections to port 22 from the unrestricted public internet.
-
+**Status:** Removed — This requirement (Ensure That SSH Access Is Restricted From the Internet) was reclassified from Level 1 to Level 2 in CIS Google Cloud Platform Foundation Benchmark v4.0.0 (Section 3.6).
 
 ---
 
-### 4.3.4 Ensure That RDP Access Is Restricted From the Internet
-**Platform:** Google
+### 4.3.4 REMOVED — Reclassified to Level 2 in CIS v4.0.0
 
-**Rationale:** GCP `Firewall Rules` within a `VPC Network`. These rules apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `RDP` with the default `Port 3389`. Generic access from the Internet to a specific IP Range should be restricted.
-
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.7
-
-**Evidence**
-
-**From Google Cloud Console**
-
-
-
-1. Go to `VPC network`.
-2. Go to the `Firewall Rules`.
-3. Ensure `Port` is not equal to `3389` and `Action` is not `Allow`.
-4. Ensure `IP Ranges` is not equal to `0.0.0.0/0` under `Source filters`.
-
-**From Google Cloud CLI**
-
-gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed.ports)'
-
-Ensure that there is no rule matching the below criteria:
-   * `SOURCE_RANGES` is `0.0.0.0/0`
-   * AND `DIRECTION` is `INGRESS`
-   * AND IPProtocol is `TCP` or `ALL`
-   * AND `PORTS` is set to `3389` or `range containing 3389` or `Null (not set)`
-
-Note:
-
-
-
-   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
-   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
-
-**Verification**
-
-Evidence or test output indicates that no firewall rule allows inbound connections to port 3389 from the unrestricted public internet.
-
+**Status:** Removed — This requirement (Ensure That RDP Access Is Restricted From the Internet) was reclassified from Level 1 to Level 2 in CIS Google Cloud Platform Foundation Benchmark v4.0.0 (Section 3.7).
 
 ---
 
