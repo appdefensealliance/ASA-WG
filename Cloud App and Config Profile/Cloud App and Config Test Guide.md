@@ -106,6 +106,8 @@ Version 1.0 - 10-OCT 24
 
 [2.7.1 Ensure no 'root' user account access key exists](#271-ensure-no-root-user-account-access-key-exists)
 
+[2.7.2 REMOVED — Retired in CIS v7.0.0](#272-removed--retired-in-cis-v700)
+
 [2.7.3 Ensure IAM policies that allow full  "\*:\*"  administrative privileges are not attached](#273-ensure-iam-policies-that-allow-full--administrative-privileges-are-not-attached)
 
 [2.7.4 Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects'](#274-ensure-that-guest-users-access-restrictions-is-set-to-guest-user-access-is-restricted-to-properties-and-memberships-of-their-own-directory-objects)
@@ -119,6 +121,8 @@ Version 1.0 - 10-OCT 24
 [2.8.1 Ensure Security Defaults is enabled on Azure Active Directory](#281-ensure-security-defaults-is-enabled-on-azure-active-directory)
 
 [2.8.2 Ensure IAM password policy requires minimum length of 14 or greater](#282-ensure-iam-password-policy-requires-minimum-length-of-14-or-greater)
+
+[2.8.3 REMOVED — Retired in CIS v7.0.0](#283-removed--retired-in-cis-v700)
 
 [2.8.4 Ensure access keys are rotated every 90 days or less](#284-ensure-access-keys-are-rotated-every-90-days-or-less)
 
@@ -210,6 +214,8 @@ Version 1.0 - 10-OCT 24
 
 [3.5 Configure Data Access Control Lists](#35-configure-data-access-control-lists)
 
+[3.5.1 REMOVED — Retired in CIS v7.0.0](#351-removed--retired-in-cis-v700)
+
 [3.5.2 Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible](#352-ensure-the-storage-container-storing-the-activity-logs-is-not-publicly-accessible)
 
 [3.6 Establish and Maintain a Secure Configuration Process](#36-establish-and-maintain-a-secure-configuration-process)
@@ -267,6 +273,8 @@ Version 1.0 - 10-OCT 24
 [3.11 Collect Detailed Audit Logs](#311-collect-detailed-audit-logs)
 
 [3.11.1 Ensure CloudTrail is enabled in all regions](#3111-ensure-cloudtrail-is-enabled-in-all-regions)
+
+[3.11.2 REMOVED — Retired in CIS v7.0.0](#3112-removed--retired-in-cis-v700)
 
 [3.11.3 Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data](#3113-ensure-that-azure-monitor-resource-logging-is-enabled-for-all-services-that-manage-store-or-secure-confidential-data)
 
@@ -2424,6 +2432,12 @@ Evidence or test output indicates that no root user account access key exists.
 
 ---
 
+### 2.7.2 REMOVED — Retired in CIS v7.0.0
+
+**Status:** Removed — This requirement (Do not setup access keys during initial user setup) was retired in CIS AWS Foundations Benchmark v7.0.0 (previously CIS v2.0.0 Section 1.11).
+
+---
+
 ### 2.7.3 Ensure IAM policies that allow full "\*:\*" administrative privileges are not attached
 **Platform:** AWS
 
@@ -2694,6 +2708,12 @@ Ensure the output of the above command includes "MinimumPasswordLength": 14 (or 
 
 Evidence or test output indicates that the IAM password policy requires a minimum length of 14 or greater.
 
+
+---
+
+### 2.8.3 REMOVED — Retired in CIS v7.0.0
+
+**Status:** Removed — This requirement (Ensure there is only one active access key available for any single IAM user) was retired in CIS AWS Foundations Benchmark v7.0.0 (previously CIS v2.0.0 Section 1.13).
 
 ---
 
@@ -4124,6 +4144,12 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 
 ### Audit
 
+
+---
+
+### 3.5.1 REMOVED — Retired in CIS v7.0.0
+
+**Status:** Removed — This requirement (Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible) was retired in CIS AWS Foundations Benchmark v7.0.0 (previously CIS v2.0.0 Section 3.3). S3 now blocks public access by default; covered by existing check 5.5.1 (S3 Block Public Access).
 
 ---
 
@@ -6017,6 +6043,12 @@ Ensure there is at least one Event Selector for a Trail with `IncludeManagementE
 
 Evidence or test output indicates that CloudTrail is enabled in all regions.
 
+
+---
+
+### 3.11.2 REMOVED — Retired in CIS v7.0.0
+
+**Status:** Removed — This requirement (Ensure CloudTrail trails are integrated with CloudWatch Logs) was retired in CIS AWS Foundations Benchmark v7.0.0 (previously CIS v2.0.0 Section 3.4).
 
 ---
 
