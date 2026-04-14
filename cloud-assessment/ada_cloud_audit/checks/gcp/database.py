@@ -450,3 +450,45 @@ def _check_user_options(session: GCPSession) -> RequirementResult:
 
 # Override the factory-generated user_options check with the proper one
 check_user_options = _check_user_options
+
+
+check_user_connections = _make_flag_check(
+    "6.6.3",
+    "Ensure 'user Connections' Database Flag for Cloud SQL SQL Server Instance Is Set to a Non-limiting Value",
+    "user connections", "0", "SQLSERVER",
+    absent_fails=False,  # Default (not set) is acceptable
+)
+
+
+def check_automated_backups(session: GCPSession) -> RequirementResult:
+    """ADA 6.12.2: Ensure Cloud SQL instances are configured with automated backups."""
+    spec_id = "6.12.2"
+    title = "Ensure That Cloud SQL Database Instances Are Configured With Automated Backups"
+
+    try:
+        instances = list_sql_instances(session)
+    except Exception as e:
+        return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
+                         f"Error listing Cloud SQL instances: {e}")
+
+    if not instances:
+        return make_result(spec_id, title, "GCP", Verdict.PASS,
+                         "No Cloud SQL instances found")
+
+    non_compliant = []
+    compliant = []
+    for inst in instances:
+        name = inst.get("name", "unknown")
+        backup_cfg = inst.get("settings", {}).get("backupConfiguration", {})
+        if backup_cfg.get("enabled", False):
+            compliant.append(name)
+        else:
+            non_compliant.append(f"{name} (automated backups not enabled)")
+
+    if non_compliant:
+        return make_result(spec_id, title, "GCP", Verdict.FAIL,
+                         "Instances without automated backups:\n" + "\n".join(non_compliant),
+                         {"non_compliant": non_compliant, "compliant": compliant})
+    return make_result(spec_id, title, "GCP", Verdict.PASS,
+                     f"All {len(compliant)} Cloud SQL instances have automated backups enabled",
+                     {"compliant": compliant})
