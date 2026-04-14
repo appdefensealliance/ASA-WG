@@ -1295,6 +1295,7 @@ Industry-recommended hardening configuration templates reduce the attack surface
 | Spec | Platform | Description |
 |---|-----|----------|
 | 6.1.1 | Google | Ensure That the ‘Local_infile’ Database Flag for a Cloud SQL MySQL Instance Is Set to ‘Off’ |
+| 6.1.2 | AWS | Ensure Multi-AZ deployments are used for enhanced availability in Amazon RDS |
 
 ---
 

@@ -383,6 +383,8 @@ Version 1.0 - 10-OCT 24
 
 [6.1.1 Ensure That the ‘Local_infile’ Database Flag for a Cloud SQL MySQL Instance Is Set to ‘Off’](#611-ensure-that-the-local_infile-database-flag-for-a-cloud-sql-mysql-instance-is-set-to-off)
 
+[6.1.2 Ensure Multi-AZ deployments are used for enhanced availability in Amazon RDS](#612-ensure-multi-az-deployments-are-used-for-enhanced-availability-in-amazon-rds)
+
 [6.2 Allowlist Authorized Scripts](#62-allowlist-authorized-scripts)
 
 [6.2.1 Ensure 'external scripts enabled' database flag for Cloud SQL SQL Server instance is set to 'off'](#621-ensure-external-scripts-enabled-database-flag-for-cloud-sql-sql-server-instance-is-set-to-off)
@@ -8358,6 +8360,39 @@ gcloud sql instances describe INSTANCE_NAME --format=json | jq '.settings.databa
 **Verification**
 
 Evidence or test output indicates that Cloud SQL MySQL instance(s) have the Local_infile database flag set to off.
+
+
+---
+
+### 6.1.2 Ensure Multi-AZ deployments are used for enhanced availability in Amazon RDS
+**Platform:** AWS
+
+**Rationale:** Database availability is crucial for maintaining service uptime, particularly for applications critical to the business. Multi-AZ deployments provide enhanced availability and durability using synchronous replication to a standby instance in a different Availability Zone, with automatic failover in the event of infrastructure failure.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 3.2.4
+
+**Evidence**
+
+**From Console:**
+
+1. Login to the AWS Management Console and open the RDS dashboard at `https://console.aws.amazon.com/rds/`
+2. In the navigation pane, select `Databases`
+3. Select each RDS instance and navigate to the `Configuration` tab
+4. Under the `Availability` section, check the `Multi-AZ` status — it should display `Yes`
+
+**From Command Line:**
+
+1. Run the following command to list all RDS instances and their Multi-AZ status:
+
+```
+aws rds describe-db-instances --query 'DBInstances[*].[DBInstanceIdentifier,MultiAZ,Engine]' --output table
+```
+
+2. Verify that `MultiAZ` is `true` for all production database instances.
+
+**Verification**
+
+Evidence or test output indicates that Multi-AZ deployments are enabled for RDS instances. Note that the decision of which databases require Multi-AZ is context-dependent; development/test databases may not require Multi-AZ.
 
 
 ---
