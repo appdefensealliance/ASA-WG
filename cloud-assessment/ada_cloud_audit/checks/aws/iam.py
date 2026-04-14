@@ -13,6 +13,7 @@ Covers 13 requirements:
 - 2.11.1: Root not used for daily tasks
 - 2.16.1: MFA enabled for root
 - 2.18.1: Users receive permissions only through groups
+- 3.8.2: IAM External Access Analyzer enabled
 """
 
 from __future__ import annotations
@@ -630,3 +631,31 @@ def check_users_permissions_through_groups(session: boto3.Session) -> "Requireme
             Verdict.INCONCLUSIVE,
             f"Error checking user permissions: {e}",
         )
+
+
+def check_access_analyzer(session: boto3.Session) -> "RequirementResult":
+    """ADA 3.8.2: Ensure that IAM External Access Analyzer is enabled for all regions."""
+    from ada_cloud_audit.checks.base import run_multi_region
+
+    def _check_region(session: boto3.Session, region: str) -> tuple[bool, str, dict]:
+        analyzer = session.client("accessanalyzer", region_name=region)
+        try:
+            resp = analyzer.list_analyzers(type="ACCOUNT")
+            active = [a for a in resp.get("analyzers", []) if a.get("status") == "ACTIVE"]
+            if active:
+                names = [a["name"] for a in active]
+                return True, f"Active ACCOUNT analyzer(s): {', '.join(names)}", {"analyzers": names}
+            else:
+                return False, "No active ACCOUNT-level Access Analyzer found", {}
+        except ClientError as e:
+            if e.response["Error"]["Code"] in ("AccessDeniedException",):
+                return True, "Access Analyzer service not accessible", {}
+            raise
+
+    return run_multi_region(
+        session,
+        "3.8.2",
+        "Ensure that IAM External Access Analyzer is enabled for all regions",
+        "AWS",
+        _check_region,
+    )

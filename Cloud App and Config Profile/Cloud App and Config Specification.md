@@ -943,6 +943,7 @@ Tools can help to identify vulnerabilities that require remediation.
 | Spec | Platform | Description |
 |---|-----|----------|
 | 3.8.1 | Azure | Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On' |
+| 3.8.2 | AWS | Ensure that IAM External Access Analyzer is enabled for all regions |
 
 ---
 
