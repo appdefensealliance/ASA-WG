@@ -543,7 +543,6 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 | Spec | Platform | Description |
 |---|-----|----------|
 | 2.7.1 | AWS | Ensure no 'root' user account access key exists |
-| 2.7.2 | Aws | Do not setup access keys during initial user setup for all IAM users that have a console password |
 | 2.7.3 | AWS | Ensure IAM policies that allow full "_:_" administrative privileges are not attached |
 | 2.7.4 | Azure | Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects' |
 | 2.7.5 | Google | Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level |
@@ -569,7 +568,6 @@ Establish and maintain a secure configuration process for enterprise assets (end
 |---|-----|----------|
 | 2.8.1 | Azure | Ensure Security Defaults is enabled on Azure Active Directory |
 | 2.8.2 | AWS | Ensure IAM password policy requires minimum length of 14 or greater |
-| 2.8.3 | AWS | Ensure there is only one active access key available for any single IAM user |
 | 2.8.4 | AWS | Ensure access keys are rotated every 90 days or less |
 
 ---
@@ -879,7 +877,6 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 3.5.1 | AWS | Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible  |
 | 3.5.2 | Azure | Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible |
 
 ---
@@ -1019,7 +1016,6 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 | Spec | Platform | Description |
 |---|-----|----------|
 | 3.11.1 | AWS | Ensure CloudTrail is enabled in all regions |
-| 3.11.2 | AWS | Ensure CloudTrail trails are integrated with CloudWatch Logs |
 | 3.11.3 | Azure | Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data |
 | 3.11.4 | Azure | Ensure that logging for Azure Key Vault is 'Enabled' |
 | 3.11.5 | Azure | Ensure that Activity Log Alert exists for Create Policy Assignment |

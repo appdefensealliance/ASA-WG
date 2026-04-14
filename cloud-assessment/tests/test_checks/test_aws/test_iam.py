@@ -12,7 +12,6 @@ from ada_cloud_audit.checks.aws.iam import (
     check_root_access_keys,
     check_no_full_admin_policies,
     check_password_policy_length,
-    check_one_active_access_key,
     check_password_reuse_prevention,
     check_root_mfa,
     check_users_permissions_through_groups,
@@ -163,30 +162,6 @@ def test_check_no_full_admin_policies_fail():
     result = check_no_full_admin_policies(session)
     assert result.verdict == Verdict.FAIL
     assert "FullAdminPolicy" in result.evidence
-
-
-@mock_aws
-def test_check_one_active_access_key_pass():
-    session = boto3.Session(region_name="us-east-1")
-    iam = session.client("iam")
-    iam.create_user(UserName="user1")
-    iam.create_access_key(UserName="user1")
-
-    result = check_one_active_access_key(session)
-    assert result.verdict == Verdict.PASS
-
-
-@mock_aws
-def test_check_one_active_access_key_fail():
-    session = boto3.Session(region_name="us-east-1")
-    iam = session.client("iam")
-    iam.create_user(UserName="user1")
-    iam.create_access_key(UserName="user1")
-    iam.create_access_key(UserName="user1")
-
-    result = check_one_active_access_key(session)
-    assert result.verdict == Verdict.FAIL
-    assert "user1" in result.evidence
 
 
 @mock_aws
