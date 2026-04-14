@@ -701,6 +701,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 | 2.14.6 | Azure | Ensure Multi-factor Authentication is Required for Risky Sign-ins |
 | 2.14.7 | Google | Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts |
 | 2.14.8 | Azure | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users |
+| 2.14.9 | AWS | Ensure MFA is enabled for all IAM users that have a console password |
 
 ---
 
