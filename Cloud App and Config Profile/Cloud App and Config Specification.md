@@ -411,6 +411,7 @@ Establish and maintain a data recovery process. In the process, address the scop
 | Spec | Platform | Description |
 |---|-----|----------|
 | 2.1.1 | Azure | Ensure the Key Vault is Recoverable |
+| 2.1.2 | Azure | Ensure Key Vault Public Network Access is Disabled |
 
 ---
 
@@ -477,6 +478,7 @@ Actively manage (inventory, track, and correct) all software (operating systems 
 | 2.4.1 | Azure | Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent |
 | 2.4.2 | Azure | Ensure that 'Users can add gallery apps to My Apps' is set to 'No' |
 | 2.4.3 | Azure | Ensure That ‘Users Can Register Applications’ Is Set to ‘No’ |
+| 2.4.4 | Azure | Ensure that ‘Restrict non-admin users from creating tenants’ is set to ‘Yes’ |
 
 ---
 
@@ -500,6 +502,7 @@ Develop processes and technical controls to identify, classify, securely handle,
 | 2.5.2 | Azure | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in Non-RBAC Key Vaults. |
 | 2.5.3 | Azure | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults |
 | 2.5.4 | Azure | Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults |
+| 2.5.5 | Azure | Ensure certificate Validity Period is less than or equal to 12 months |
 
 
 ---
@@ -571,6 +574,8 @@ Establish and maintain a secure configuration process for enterprise assets (end
 | 2.8.2 | AWS | Ensure IAM password policy requires minimum length of 14 or greater |
 | 2.8.3 | AWS | Ensure there is only one active access key available for any single IAM user |
 | 2.8.4 | AWS | Ensure access keys are rotated every 90 days or less |
+| 2.8.7 | Azure | Ensure that account 'Lockout threshold' is less than or equal to '10' |
+| 2.8.8 | Azure | Ensure that account 'Lockout duration in seconds' is greater than or equal to '60' |
 
 ---
 
@@ -633,6 +638,11 @@ As a matter of good practice, users who can take administrative actions should u
 | 2.11.2 | Azure | Ensure That 'Notify all admins when other admins reset their password?' is set to 'Yes' |
 | 2.11.3 | Azure | Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes' |
 | 2.11.4 | Azure | Ensure That No Custom Subscription Administrator Roles Exist |
+| 2.11.6 | Azure | Ensure that Azure admin accounts are not used for daily operations |
+| 2.11.7 | Azure | Ensure that use of the 'User Access Administrator' role is restricted |
+| 2.11.8 | Azure | Ensure that all 'privileged' role assignments are periodically reviewed |
+| 2.11.9 | Azure | Ensure fewer than 5 users have global administrator assignment |
+| 2.11.10 | Azure | Ensure there are between 2 and 3 subscription owners |
 | 2.11.5 | Google | Ensure That Service Account Has No Admin Privileges |
 
 
@@ -701,6 +711,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 | 2.14.6 | Azure | Ensure Multi-factor Authentication is Required for Risky Sign-ins |
 | 2.14.7 | Google | Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts |
 | 2.14.8 | Azure | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users |
+| 2.14.10 | Azure | Ensure that 'multifactor authentication' is 'enabled' for all users |
 
 ---
 
@@ -819,6 +830,7 @@ Tools must be tuned to reduce the prevalence of both false negatives and false p
 | Spec | Platform | Description |
 |---|-----|----------|
 | 3.2.1 | Azure | Ensure That 'Notify about alerts with the following severity' is Set to 'High' |
+| 3.2.2 | Azure | Ensure that 'Notify about attack paths with the following risk level or higher' is enabled |
 
 ---
 
@@ -1032,6 +1044,9 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 | 3.11.12 | Azure | Ensure that Activity Log Alert exists for Delete SQL Server Firewall Rule |
 | 3.11.13 | Azure | Ensure that Activity Log Alert exists for Create or Update Public IP Address rule |
 | 3.11.14 | Azure | Ensure that Activity Log Alert exists for Delete Public IP Address rule |
+| 3.11.15 | Azure | Ensure that a 'Diagnostic Setting' exists for Subscription Activity Logs |
+| 3.11.16 | Azure | Ensure Diagnostic Setting captures appropriate categories |
+| 3.11.17 | Azure | Ensure that an Activity Log Alert exists for Service Health |
 
 
 ---
@@ -1105,6 +1120,11 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 | 4.3.5 | AWS | Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.6 | AWS | Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.7 | AWS | Ensure no security groups allow ingress from ::/0 to remote server administration ports |
+| 4.3.9 | Azure | Ensure that UDP access from the Internet is evaluated and restricted |
+| 4.3.10 | Azure | Ensure that HTTP(S) access from the Internet is evaluated and restricted |
+| 4.3.11 | Azure | Ensure subnets are associated with network security groups |
+| 4.3.12 | Azure | Ensure the SSL policy min protocol version is set to TLSv1_2 or higher on Azure Application Gateway |
+| 4.3.13 | Azure | Ensure HTTP2 is set to Enabled on Azure Application Gateway |
 
 
 ---
@@ -1130,6 +1150,10 @@ Organizations need to establish and maintain data recovery practices sufficient 
 | Spec | Platform | Description |
 |---|-----|----------|
 | 5.1.1 | Azure | Ensure Soft Delete is Enabled for Azure Containers and Blob Storage |
+| 5.1.2 | Azure | Ensure soft delete for Azure File Shares is Enabled |
+| 5.1.3 | Azure | Ensure SMB protocol version is set to SMB 3.1.1 or higher for SMB file shares |
+| 5.1.4 | Azure | Ensure SMB channel encryption is set to AES-256-GCM or higher |
+| 5.1.5 | Azure | Ensure that soft delete for containers on Azure Blob Storage is Enabled |
 
 ---
 
@@ -1149,6 +1173,7 @@ Malicious actors can exploit insecure services, poor firewall and network config
 | Spec | Platform | Description |
 |---|-----|----------|
 | 5.2.1 | Azure | Ensure Default Network Access Rule for Storage Accounts is Set to Deny |
+| 5.2.2 | Azure | Ensure that Public Network Access is Disabled for storage accounts |
 
 ---
 
@@ -1251,6 +1276,7 @@ Secure management of assets and software guards against malicious users from bei
 | Spec | Platform | Description |
 |---|-----|----------|
 | 5.7.1 | Azure | Ensure that Storage Account Access Keys are Periodically Regenerated |
+| 5.7.2 | Azure | Ensure Allow storage account key access for Azure Storage Accounts is Disabled |
 
 ---
 
