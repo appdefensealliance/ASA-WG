@@ -492,7 +492,7 @@ This document is intended for system and application administrators, security sp
 This profile builds upon the work of the Center for Internet Security (CIS), specifically their cloud foundations benchmarks.
 
 1. [CIS Amazon Web Services Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/14207)
-2. [CIS Google Cloud Platform Foundation Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/9562)
+2. [CIS Google Cloud Platform Foundation Benchmark v4.0.0](https://workbench.cisecurity.org/benchmarks/9562)
 3. [CIS Microsoft Azure Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/10624)
 
 
@@ -1105,7 +1105,7 @@ Evidence or test output indicates that no webapp is deployed with FtpsState of A
 
 **Rationale:** Project-wide SSH keys are stored in Compute/Project-meta-data. Project wide SSH keys can be used to login into all the instances within the project. Using project-wide SSH keys eases the SSH key management but if compromised, poses the security risk which can impact all the instances within the project. It is recommended to use Instance specific SSH keys which can limit the attack surface if the SSH keys are compromised.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.3
 
 **Evidence**
 
@@ -1229,7 +1229,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 
 **Rationale:** Compute Engine instance cannot forward a packet unless the source IP address of the packet matches the IP address of the instance. Similarly, GCP won't deliver a packet whose destination IP address is different than the IP address of the instance receiving the packet. However, both capabilities are required if you want to use instances to help route packets. To enable this source and destination IP check, disable the `canIpForward` field, which allows an instance to send and receive packets with non-matching destination or source IPs.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.6
 
 **Evidence**
 
@@ -1287,7 +1287,7 @@ Products typically ship with insecure defaults that, if not configured securely,
 
 The default Compute Engine service account is named `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.1
 
 **Evidence**
 
@@ -1338,7 +1338,7 @@ Evidence or test output indicates that no VM instance is configured to use the d
 
 When an instance is configured with `Compute Engine default service account` with Scope `Allow full access to all Cloud APIs`, based on IAM roles assigned to the user(s) accessing Instance, it may allow user to perform cloud operations/API calls that user is not supposed to perform leading to successful privilege escalation.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.2
 
 **Evidence**
 
@@ -1399,7 +1399,7 @@ The interactive serial console does not support IP-based access restrictions suc
 
 Therefore interactive serial console support should be disabled.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.5
 
 **Evidence**
 
@@ -1529,7 +1529,7 @@ Evidence or test output indicates that every web app is assigned a unique princi
 
 **Rationale:** Enabling osLogin ensures that SSH keys used to connect to instances are mapped with IAM users. Revoking access to an IAM user will revoke all the SSH keys associated with that particular user. It facilitates centralized and automated SSH key pair management which is useful in handling cases like response to compromised SSH key pairs and/or revocation of external/third-party/Vendor users.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.4
 
 **Evidence**
 
@@ -1814,7 +1814,7 @@ Evidence or test output indicates that the tenant is configured with security co
 
 **Rationale:** Many Google Cloud services, such as Cloud Billing, send out notifications to share important information with Google Cloud users. By default, these notifications are sent to members with certain Identity and Access Management (IAM) roles. With Essential Contacts, you can customize who receives notifications by providing your own list of contacts.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.16
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.16
 
 **Evidence**
 
@@ -2296,7 +2296,7 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 **Rationale:** It is recommended to use the Secret Manager, because environment variables are stored unencrypted, and accessible for all users who have access to the code.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.18
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.17
 
 **Evidence**
 
@@ -2578,7 +2578,7 @@ Based on business needs, there could be multiple user-managed service accounts c
 
 In order to implement `least privileges` best practices, IAM users should not be assigned the `Service Account User` or `Service Account Token Creator` roles at the project level. Instead, these roles should be assigned to a user for a specific service account, giving that user access to the service account. The `Service Account User` allows a user to bind a service account to a long-running job service, whereas the `Service Account Token Creator` role allows a user to directly impersonate (or assert) the identity of a service account.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.6
 
 **Evidence**
 
@@ -2617,7 +2617,7 @@ Evidence or test output indicates that IAM users are not assigned the service ac
 
 **Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if confidential data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.9
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.9
 
 **Evidence**
 
@@ -3214,7 +3214,7 @@ Evidence or test output indicates that no custom subscription administrator role
 
 **Rationale:** Service accounts represent service-level security of the Resources (application or a VM) which can be determined by the roles assigned to it. Enrolling ServiceAccount with Admin rights gives full access to an assigned application or a VM. A ServiceAccount Access holder can perform critical actions like delete, update change settings, etc. without user intervention. For this reason, it's recommended that service accounts not have Admin rights.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.5
 
 **Evidence**
 
@@ -3278,7 +3278,7 @@ Centralizing makes administration simpler and therefore reduces risks related to
 
 **Rationale:** It is recommended fully-managed corporate Google accounts be used for increased visibility, auditing, and controlling access to Cloud Platform resources. Email accounts based outside of the user's organization, such as personal accounts, should not be used for business purposes.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.1
 
 **Evidence**
 
@@ -3596,7 +3596,7 @@ Evidence or test output indicates that MFA is required for risky sign ins.
 
 **Rationale:** Multi-factor authentication requires more than one mechanism to authenticate a user. This secures user logins from attackers exploiting stolen or weak credentials.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.2
 
 **Evidence**
 
@@ -3935,7 +3935,7 @@ It is necessary to first identify the systems and devices that need to be secure
 
 It is recommended that GCP Cloud Asset Inventory be enabled for all GCP projects.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.13
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.13
 
 **Evidence**
 
@@ -5622,7 +5622,7 @@ It is recommended to have an effective default audit config configured in such a
 3. Logs should be captured for all users, i.e., there are no exempted users in any of the audit config sections. This will ensure overriding the audit config will not contradict the requirement.
 
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.1
 
 **Evidence**
 
@@ -5682,7 +5682,7 @@ Evidence or test output indicates that cloud audit logging is enabled comprehens
 
 Note: For full capture of DNS, firewall must block egress UDP/53 (DNS) and TCP/443 (DNS over HTTPS) to prevent client from using external DNS name server for resolution.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.12
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.12
 
 **Evidence**
 
@@ -5738,7 +5738,7 @@ Having log files of what actions have taken place by users and also system event
 
 **Rationale:** Log entries are held in Cloud Logging. To aggregate logs, export them to a SIEM. To keep them longer, it is recommended to set up a log sink. Exporting involves writing a filter that selects the log entries to export, and choosing a destination in Cloud Storage, BigQuery, or Cloud Pub/Sub. The filter and destination are held in an object called a sink. To ensure all log entries are exported to sinks, ensure that there is no filter configured for a sink. Sinks can be created in projects, organizations, folders, and billing accounts.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.2
 
 **Status:** This requirement has been withdrawn in favor of 3.10.5.
 
@@ -5757,7 +5757,7 @@ Having log files of what actions have taken place by users and also system event
 * Adding `role\Owner` to a user/service-account
 * Removing a user/Service account from `role\Owner`
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.4
 
 **Evidence**
 
@@ -5854,7 +5854,7 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 Configuring the metric filter and alerts for audit configuration changes ensures the recommended state of audit configuration is maintained so that all activities in the project are audit-able at any point in time.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.5
 
 **Evidence**
 
@@ -5941,7 +5941,7 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 **Rationale:** Google Cloud IAM provides predefined roles that give granular access to specific Google Cloud Platform resources and prevent unwanted access to other resources. However, to cater to organization-specific needs, Cloud IAM also provides the ability to create custom roles. Project owners and administrators with the Organization Role Administrator role or the IAM Role Administrator role can create custom roles. Monitoring role creation, deletion and updating activities will help in identifying any over-privileged role at early stages.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.6
 
 **Evidence**
 
@@ -6944,7 +6944,7 @@ Encryption protects confidential data when transmitted over untrusted network co
 
 **Rationale:** Load balancers are used to efficiently distribute traffic across multiple servers. Both SSL proxy and HTTPS load balancers are external load balancers, meaning they distribute traffic from the Internet to a GCP network. GCP customers can configure load balancer SSL policies with a minimum TLS version (1.0, 1.1, or 1.2) that clients can use to establish a connection, along with a profile (Compatible, Modern, Restricted, or Custom) that specifies permissible cipher suites. To comply with users using outdated protocols, GCP load balancers can be configured to permit insecure cipher suites. In fact, the GCP default SSL policy uses a minimum TLS version of 1.0 and a Compatible profile, which allows the widest range of insecure cipher suites. As a result, it is easy for customers to configure a load balancer without even knowing that they are permitting outdated cipher suites.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.9
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.9
 
 **Evidence**
 
@@ -7073,7 +7073,7 @@ This CIS Control provides guidance for securing hardware and software. As delive
 
 **Rationale:** Legacy networks have a single network IPv4 prefix range and a single gateway IP address for the whole network. The network is global in scope and spans all cloud regions. Subnetworks cannot be created in a legacy network and are unable to switch from legacy to auto or custom subnet networks. Legacy networks can have an impact for high network traffic projects and are subject to a single point of contention or failure.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.2
 
 **Evidence**
 
@@ -7114,7 +7114,7 @@ Evidence or test output indicates that no project contains a network having the 
 **Platform:** Google
 **Rationale:** Domain Name System Security Extensions (DNSSEC) adds security to the DNS protocol by enabling DNS responses to be validated. Having a trustworthy DNS that translates a domain name like www.example.com into its associated IP address is an increasingly important building block of today’s web-based applications. Attackers can hijack this process of domain/IP lookup and redirect users to a malicious site through DNS hijacking and man-in-the-middle attacks. DNSSEC helps mitigate the risk of such attacks by cryptographically signing DNS records. As a result, it prevents attackers from issuing fake DNS responses that may misdirect browsers to nefarious websites.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.3
 
 **Evidence**
 
@@ -7165,7 +7165,7 @@ Evidence or test output indicates that DNSSEC is enabled for all managed zones h
 
 The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the user can select the DNSSEC signing algorithms and the denial-of-existence type. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If there is a need to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.4
 
 **Evidence**
 
@@ -7189,7 +7189,7 @@ Evidence or test output indicates that RSASHA1 is not used for the key-signing k
 
 The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the DNSSEC signing algorithms and the denial-of-existence type can be selected. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If the need exists to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.5
 
 **Evidence**
 
@@ -7365,7 +7365,7 @@ Evidence or test output indicates that no network security group is configured t
 
 **Rationale:** GCP `Firewall Rules` within a `VPC Network` apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `SSH` with the default `Port 22`. Generic access from the Internet to a specific IP Range needs to be restricted.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.6
 
 **Evidence**
 
@@ -7407,7 +7407,7 @@ Evidence or test output indicates that no firewall rule allows inbound connectio
 
 **Rationale:** GCP `Firewall Rules` within a `VPC Network`. These rules apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `RDP` with the default `Port 3389`. Generic access from the Internet to a specific IP Range should be restricted.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.7
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.7
 
 **Evidence**
 
@@ -8060,7 +8060,7 @@ Evidence or test output indicates that `Public access level` is disabled for sto
 
 **Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any confidential data. Hence, ensure that anonymous or public access to a bucket is not allowed.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 5.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 5.1
 
 **Evidence**
 
@@ -8321,7 +8321,7 @@ To explicitly cause the server to refuse LOAD DATA LOCAL statements (regardless 
 
 Due to security issues associated with the `local_infile` flag, it is recommended to disable it. This requirement is applicable to MySQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.1.3
 
 **Evidence**
 
@@ -8386,7 +8386,7 @@ Unauthorized scripts can be used by malicious users to take over a system or tak
 
 **Rationale:** `external scripts enabled` allows the execution of scripts with certain remote language extensions. This property is OFF by default. When Advanced Analytics Services is installed, setup can optionally set this property to true. As the External Scripts Enabled feature allows scripts external to SQL such as files located in an R library to be executed, which could adversely affect the security of the system, hence this should be disabled. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.1
 
 **Evidence**
 
@@ -8580,7 +8580,7 @@ Evidence or test output indicates that all MySQL flexible database servers are c
 
 **Rationale:** SQL database connections if successfully trapped (MITM); can reveal confidential data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.4
 
 **Evidence**
 
@@ -8957,7 +8957,7 @@ Evidence or test output indicates that no Azure SQL Database instance allows ing
 
 An authorized network should not have IPs/networks configured to `0.0.0.0/0` which will allow access to the instance from anywhere in the world. Note that authorized networks apply only to instances with public IPs.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.5
 
 **Evidence**
 
@@ -8997,7 +8997,7 @@ Evidence or test output indicates that no Cloud SQL Database instances allow ing
 
 **Rationale:** 'skip_show_database' database flag prevents people from using the SHOW DATABASES statement if they do not have the SHOW DATABASES privilege. This can improve security if you have concerns about users being able to see databases belonging to other users. Its effect depends on the SHOW DATABASES privilege: If the variable value is ON, the SHOW DATABASES statement is permitted only to users who have the SHOW DATABASES privilege, and the statement displays all database names. If the value is OFF, SHOW DATABASES is permitted to all users, but displays the names of only those databases for which the user has the SHOW DATABASES or other privilege. This requirement is applicable to Mysql database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.1.2
 
 **Evidence**
 
@@ -9043,7 +9043,7 @@ Evidence or test output indicates that all Cloud SQL MySQL instance(s) have the 
 
 **Rationale:** Use the `cross db ownership` for chaining option to configure cross-database ownership chaining for an instance of Microsoft SQL Server. This server option allows you to control cross-database ownership chaining at the database level or to allow cross-database ownership chaining for all databases. Enabling `cross db ownership` is not recommended unless all of the databases hosted by the instance of SQL Server must participate in cross-database ownership chaining and you are aware of the security implications of this setting. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.2
 
 **Evidence**
 
@@ -9079,7 +9079,7 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) have
 
 **Rationale:** A contained database includes all database settings and metadata required to define the database and has no configuration dependencies on the instance of the Database Engine where the database is installed. Users can connect to the database without authenticating a login at the Database Engine level. Isolating the database from the Database Engine makes it possible to easily move the database to another instance of SQL Server. Contained databases have some unique threats that should be understood and mitigated by SQL Server Database Engine administrators. Most of the threats are related to the USER WITH PASSWORD authentication process, which moves the authentication boundary from the Database Engine level to the database level, hence this is recommended to disable this flag. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.7
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.7
 
 **Evidence**
 
@@ -9136,7 +9136,7 @@ This CIS Control provides guidance for securing hardware and software. As delive
 
 A user can override these defaults by using the SET statement. You can configure user options dynamically for new logins. After you change the setting of user options, new login sessions use the new setting; current login sessions are not affected. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.4
 
 **Evidence**
 
@@ -9172,7 +9172,7 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) do n
 
 **Rationale:** Microsoft SQL Trace Flags are frequently used to diagnose performance issues or to debug stored procedures or complex computer systems, but they may also be recommended by Microsoft Support to address behavior that is negatively impacting a specific workload. All documented trace flags and those recommended by Microsoft Support are fully supported in a production environment when used as directed. `3625(trace log)` Limits the amount of information returned to users who are not members of the sysadmin fixed server role, by masking the parameters of some error messages using '******'. Setting this in a Google Cloud flag for the instance allows for security through obscurity and prevents the disclosure of sensitive information, hence it is recommended to set this flag globally to on to prevent the flag having been left off, or changed by bad actors. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.6
 
 **Evidence**
 
@@ -9281,7 +9281,7 @@ Secure management of assets and software guards against malicious users from bei
 
 **Rationale:** Setting database access only to private will reduce attack surface.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.9
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.6
 
 **Evidence**
 
@@ -9351,7 +9351,7 @@ Products typically ship with insecure defaults that, if not configured securely,
 
 **Rationale:** At the time of MySQL Instance creation, not providing an administrative password allows anyone to connect to the SQL database instance with administrative privileges. The root password should be set to ensure only authorized users have these privileges.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.1.1
 
 **Evidence**
 
@@ -9420,7 +9420,7 @@ Uninstalling and disabling unnecessary services reduces the target area of your 
 
 **Rationale:** The `remote access` option controls the execution of stored procedures from local or remote servers on which instances of SQL Server are running. The default value for this option is 1. This grants permission to run local stored procedures from remote servers or remote stored procedures from the local server. To prevent local stored procedures from being run from a remote server or remote stored procedures from being run on the local server, this must be disabled. The Remote Access option controls the execution of local stored procedures on remote servers or remote stored procedures on local servers. 'Remote access' functionality can be abused to launch a Denial-of-Service (DoS) attack on remote servers by off-loading query processing to a target, hence this should be disabled. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.5
 
 **Evidence**
 
@@ -9900,7 +9900,7 @@ Evidence or test output indicates that all SQL Server instances are configured w
 
 **Rationale:** PostgreSQL does not log attempted connections by default. Enabling the `log_connections` setting will create log entries for each attempted connection as well as successful completion of client authentication which can be useful in troubleshooting issues and to determine any unusual connection attempts to the server. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.2
 
 **Evidence**
 
@@ -9937,7 +9937,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** PostgreSQL does not log session details such as duration and session end by default. Enabling the `log_disconnections` setting will create log entries at the end of each session which can be useful in troubleshooting issues and determine any unusual activity across a time period. The `log_disconnections` and `log_connections` work hand in hand and generally, the pair would be enabled/disabled together. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.3
 
 **Evidence**
 
@@ -9976,7 +9976,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.5
 
 **Evidence**
 
@@ -10012,7 +10012,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** Auditing helps in troubleshooting operational problems and also permits forensic analysis. If `log_min_error_statement` is not set to the correct value, messages may not be classified as error messages appropriately. Considering general log messages as error messages would make it difficult to find actual errors and considering only stricter severity levels as error messages may skip actual errors to log their SQL statements. The `log_min_error_statement` flag should be set to `ERROR` or stricter. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.6
 
 **Evidence**
 
@@ -10049,7 +10049,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** Logging SQL statements may include sensitive information that should not be recorded in logs. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.7
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.7
 
 **Evidence**
 
@@ -10086,7 +10086,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** As numerous other requirements in this section consist of turning on flags for logging purposes, your organization will need a way to manage these logs. You may have a solution already in place. If you do not, consider installing and enabling the open source pgaudit extension within PostgreSQL and enabling its corresponding flag of `cloudsql.enable_pgaudit`. This flag and installing the extension enables database auditing in PostgreSQL through the open-source pgAudit extension. This extension provides detailed session and object logging to comply with government, financial, & ISO standards and provides auditing capabilities to mitigate threats by monitoring security events on the instance. Enabling the flag and settings later in this requirement will send these logs to Google Logs Explorer so that you can access them in a central location. This requirement is applicable only to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.8
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.8
 
 **Evidence**
 

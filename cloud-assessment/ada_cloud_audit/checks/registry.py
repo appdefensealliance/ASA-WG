@@ -100,7 +100,7 @@ def _register_gcp_checks() -> None:
 
     PROVIDER_REGISTRIES[Provider.GCP] = {
         # Compute (7 checks)
-        "1.2.6": gcp_compute.check_cloud_functions_runtimes,
+        "1.2.7": gcp_compute.check_cloud_functions_runtimes,
         "1.3.4": gcp_compute.check_block_project_ssh_keys,
         "1.5.1": gcp_compute.check_ip_forwarding,
         "1.6.1": gcp_compute.check_default_service_account,

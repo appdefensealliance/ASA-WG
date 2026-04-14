@@ -215,7 +215,7 @@ This document is intended for system and application administrators, security sp
 This profile builds upon the work of the Center for Internet Security (CIS), specifically their cloud foundations benchmarks.
 
 1. [CIS Amazon Web Services Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/14207)
-2. [CIS Google Cloud Platform Foundation Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/9562)
+2. [CIS Google Cloud Platform Foundation Benchmark v4.0.0](https://workbench.cisecurity.org/benchmarks/9562)
 3. [CIS Microsoft Azure Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/10624)
 
 # Licensing
