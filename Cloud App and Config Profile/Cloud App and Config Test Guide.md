@@ -116,6 +116,8 @@ Version 1.0 - 10-OCT 24
 
 [2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible](#276-ensure-that-cloud-kms-cryptokeys-are-not-anonymously-or-publicly-accessible)
 
+[2.7.9 Ensure KMS Encryption Keys Are Rotated Within a Period of 90 Days](#279-ensure-kms-encryption-keys-are-rotated-within-a-period-of-90-days)
+
 [2.8 Establish and Maintain a Secure Configuration Process](#28-establish-and-maintain-a-secure-configuration-process)
 
 [2.8.1 Ensure Security Defaults is enabled on Azure Active Directory](#281-ensure-security-defaults-is-enabled-on-azure-active-directory)
@@ -2646,6 +2648,43 @@ gcloud kms keys get-iam-policy [key_name] --keyring=[key_ring_name] --location=g
 **Verification**
 
 Evidence or test output indicates that cloud KML cryptokeys are not anonymously or publicly accessible.
+
+
+---
+
+### 2.7.9 Ensure KMS Encryption Keys Are Rotated Within a Period of 90 Days
+**Platform:** Google
+
+**Rationale:** Rotating encryption keys on a regular schedule limits the blast radius if a key is compromised. A 90-day rotation period ensures that data encrypted with a given key version is re-protected under a new key version within a known, bounded window, reducing the amount of data exposed by a single compromised key.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.10
+
+**Evidence**
+
+**From Google Cloud CLI**
+
+
+
+1. List all Cloud KMS `Cryptokeys`.
+
+
+```
+gcloud kms keys list --keyring=<keyring> --location=<location> --format=json
+```
+
+
+
+2. For each key, verify that `rotationPeriod` is set and is no longer than `7776000s` (90 days), and that `nextRotationTime` is set to a future date.
+
+
+```
+gcloud kms keys describe <key_name> --keyring=<keyring> --location=<location> --format=json | jq '{rotationPeriod, nextRotationTime}'
+```
+
+
+**Verification**
+
+Evidence or test output indicates that all KMS encryption keys have a rotation period of 90 days or less and a scheduled next rotation time.
 
 
 ---

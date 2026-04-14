@@ -1,10 +1,11 @@
 """GCP IAM checks for ADA Cloud assessment.
 
-Covers 7 requirements:
+Covers 8 requirements:
 - 2.3.5: Essential Contacts configured for organization
 - 2.6.1: Secrets not stored in Cloud Functions env vars
 - 2.7.5: IAM users not assigned SA User/Token Creator roles at project level
 - 2.7.6: Cloud KMS cryptokeys not publicly accessible
+- 2.7.9: KMS encryption keys rotated within 90 days
 - 2.11.5: Service accounts have no admin privileges
 - 2.12.1: Corporate login credentials used (no @gmail.com)
 - 2.14.7: MFA enabled for all non-service accounts (INCONCLUSIVE)
@@ -295,3 +296,69 @@ def check_mfa_non_service(session: GCPSession) -> RequirementResult:
         "Manual verification required: check Admin Console > Security > 2-Step Verification "
         "to confirm MFA is enforced for all non-service accounts.",
     )
+
+
+# Maximum allowed rotation period: 90 days in seconds
+_MAX_ROTATION_PERIOD_SECONDS = 7776000
+
+
+def check_kms_key_rotation(session: GCPSession) -> RequirementResult:
+    """ADA 2.7.9: Ensure KMS encryption keys are rotated within 90 days."""
+    spec_id = "2.7.9"
+    title = "Ensure KMS encryption keys are rotated within a period of 90 days"
+
+    try:
+        from google.cloud import kms_v1
+        from google.protobuf import duration_pb2  # noqa: F401
+
+        client = kms_v1.KeyManagementServiceClient(credentials=session.credentials)
+
+        parent = f"projects/{session.project_id}/locations/-"
+        non_compliant = []
+        total_keys = 0
+
+        try:
+            for key_ring in client.list_key_rings(parent=parent):
+                for crypto_key in client.list_crypto_keys(parent=key_ring.name):
+                    # Only symmetric encrypt/decrypt keys support automatic rotation
+                    if crypto_key.purpose != kms_v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT:
+                        continue
+
+                    total_keys += 1
+                    rotation_period = crypto_key.rotation_period
+                    next_rotation_time = crypto_key.next_rotation_time
+
+                    if not rotation_period or rotation_period.total_seconds() == 0:
+                        non_compliant.append(
+                            f"{crypto_key.name}: no rotation period configured"
+                        )
+                    elif rotation_period.total_seconds() > _MAX_ROTATION_PERIOD_SECONDS:
+                        days = int(rotation_period.total_seconds() / 86400)
+                        non_compliant.append(
+                            f"{crypto_key.name}: rotation period is {days} days (>90)"
+                        )
+                    elif not next_rotation_time:
+                        non_compliant.append(
+                            f"{crypto_key.name}: no next rotation time scheduled"
+                        )
+        except Exception as e:
+            if "PERMISSION_DENIED" in str(e) or "403" in str(e):
+                return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
+                                 f"Insufficient permissions to list KMS keys: {e}")
+            raise
+
+        if total_keys == 0:
+            return make_result(spec_id, title, "GCP", Verdict.PASS,
+                             "No symmetric Cloud KMS encryption keys found")
+
+        if non_compliant:
+            return make_result(spec_id, title, "GCP", Verdict.FAIL,
+                             "KMS keys not rotated within 90 days:\n" + "\n".join(non_compliant),
+                             {"non_compliant": non_compliant, "total_keys": total_keys})
+
+        return make_result(spec_id, title, "GCP", Verdict.PASS,
+                         f"All {total_keys} symmetric KMS keys have rotation period <= 90 days",
+                         {"total_keys": total_keys})
+    except Exception as e:
+        return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
+                         f"Error checking KMS key rotation: {e}")

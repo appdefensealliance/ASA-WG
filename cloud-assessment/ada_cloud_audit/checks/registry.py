@@ -108,11 +108,12 @@ def _register_gcp_checks() -> None:
         "1.7.1": gcp_compute.check_serial_port,
         "1.8.2": gcp_compute.check_oslogin,
 
-        # IAM (7 checks)
+        # IAM (8 checks)
         "2.3.5": gcp_iam.check_essential_contacts,
         "2.6.1": gcp_iam.check_secrets_in_functions,
         "2.7.5": gcp_iam.check_sa_user_role,
         "2.7.6": gcp_iam.check_kms_public_access,
+        "2.7.9": gcp_iam.check_kms_key_rotation,
         "2.11.5": gcp_iam.check_sa_admin_privileges,
         "2.12.1": gcp_iam.check_corporate_credentials,
         "2.14.7": gcp_iam.check_mfa_non_service,
