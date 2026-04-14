@@ -83,6 +83,108 @@ def _register_aws_checks() -> None:
     }
 
 
+def _register_azure_checks() -> None:
+    """Register Azure checks if azure packages are installed."""
+    try:
+        from ada_cloud_audit.checks.azure import (
+            compute as az_compute,
+            database as az_database,
+            logging as az_logging,
+            networking as az_networking,
+            security as az_security,
+            storage as az_storage,
+        )
+    except ImportError:
+        logger.debug("Azure dependencies not installed, skipping Azure check registration")
+        return
+
+    PROVIDER_REGISTRIES[Provider.AZURE] = {
+        # Compute / App Service (9 checks)
+        "1.2.2": az_compute.check_functions_runtime,
+        "1.2.3": az_compute.check_php_version,
+        "1.2.4": az_compute.check_python_version,
+        "1.2.5": az_compute.check_java_version,
+        "1.2.6": az_compute.check_http_version,
+        "1.3.1": az_compute.check_https_only,
+        "1.3.2": az_compute.check_tls_version,
+        "1.3.3": az_compute.check_ftp_disabled,
+        "1.8.1": az_compute.check_app_service_auth,
+
+        # Security - Key Vault (7 checks)
+        "2.1.1": az_security.check_key_vault_recoverable,
+        "2.1.2": az_security.check_key_vault_public_access,
+        "2.5.1": az_security.check_key_expiry_rbac,
+        "2.5.2": az_security.check_key_expiry_non_rbac,
+        "2.5.3": az_security.check_secret_expiry_rbac,
+        "2.5.4": az_security.check_secret_expiry_non_rbac,
+        "2.5.5": az_security.check_cert_validity,
+
+        # Security - Defender (6 checks)
+        "3.2.1": az_security.check_notify_severity_high,
+        "3.2.2": az_security.check_notify_attack_paths,
+        "3.3.1": az_security.check_owner_role_notifications,
+        "3.3.2": az_security.check_additional_email,
+        "3.6.1": az_security.check_security_benchmark_policies,
+        "3.7.1": az_security.check_defender_vm_updates,
+
+        # Logging (16 checks)
+        "3.10.7": az_logging.check_audit_log_retention,
+        "3.11.3": az_logging.check_resource_logging,
+        "3.11.4": az_logging.check_key_vault_logging,
+        "3.11.5": az_logging.check_alert_create_policy,
+        "3.11.6": az_logging.check_alert_delete_policy,
+        "3.11.7": az_logging.check_alert_create_nsg,
+        "3.11.8": az_logging.check_alert_delete_nsg,
+        "3.11.9": az_logging.check_alert_create_security,
+        "3.11.10": az_logging.check_alert_delete_security,
+        "3.11.11": az_logging.check_alert_create_sql_fw,
+        "3.11.12": az_logging.check_alert_delete_sql_fw,
+        "3.11.13": az_logging.check_alert_create_public_ip,
+        "3.11.14": az_logging.check_alert_delete_public_ip,
+        "3.11.15": az_logging.check_diagnostic_setting_exists,
+        "3.11.16": az_logging.check_diagnostic_categories,
+        "3.11.17": az_logging.check_alert_service_health,
+
+        # Networking (7 checks)
+        "4.3.1": az_networking.check_rdp_restricted,
+        "4.3.2": az_networking.check_ssh_restricted,
+        "4.3.9": az_networking.check_udp_restricted,
+        "4.3.10": az_networking.check_https_restricted,
+        "4.3.11": az_networking.check_subnets_have_nsgs,
+        "4.3.12": az_networking.check_app_gateway_tls,
+        "4.3.13": az_networking.check_app_gateway_http2,
+
+        # Storage (14 checks)
+        "5.1.1": az_storage.check_blob_soft_delete,
+        "5.1.2": az_storage.check_file_share_soft_delete,
+        "5.1.3": az_storage.check_smb_protocol_version,
+        "5.1.4": az_storage.check_smb_encryption,
+        "5.1.5": az_storage.check_container_soft_delete,
+        "5.2.1": az_storage.check_default_network_deny,
+        "5.2.2": az_storage.check_public_network_access_disabled,
+        "5.3.1": az_storage.check_secure_transfer,
+        "5.3.2": az_storage.check_min_tls_version,
+        "5.5.2": az_storage.check_blob_public_access_disabled,
+        "5.6.1": az_storage.check_key_rotation_reminders,
+        "5.7.1": az_storage.check_access_keys_regenerated,
+        "5.7.2": az_storage.check_storage_key_access_disabled,
+        "5.8.1": az_storage.check_sas_expiry,
+
+        # Database (11 checks)
+        "6.3.1": az_database.check_pg_ssl,
+        "6.3.2": az_database.check_mysql_ssl,
+        "6.3.3": az_database.check_mysql_tls,
+        "6.4.2": az_database.check_sql_encryption,
+        "6.5.2": az_database.check_sql_firewall,
+        "6.11.1": az_database.check_sql_ad_admin,
+        "6.13.1": az_database.check_pg_log_checkpoints,
+        "6.13.2": az_database.check_pg_log_connections,
+        "6.13.3": az_database.check_pg_log_disconnections,
+        "6.14.1": az_database.check_pg_log_retention,
+        "6.15.1": az_database.check_sql_auditing,
+    }
+
+
 def _register_gcp_checks() -> None:
     """Register GCP checks if google-cloud packages are installed."""
     try:
@@ -162,6 +264,7 @@ def _register_gcp_checks() -> None:
 
 
 _register_aws_checks()
+_register_azure_checks()
 _register_gcp_checks()
 
 
