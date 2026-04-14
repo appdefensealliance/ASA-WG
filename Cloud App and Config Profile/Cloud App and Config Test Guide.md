@@ -126,6 +126,8 @@ Version 1.0 - 10-OCT 24
 
 [2.8.4 Ensure access keys are rotated every 90 days or less](#284-ensure-access-keys-are-rotated-every-90-days-or-less)
 
+[2.8.6 Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account](#286-ensure-that-there-are-only-gcp-managed-service-account-keys-for-each-service-account)
+
 [2.9 Use Unique Passwords](#29-use-unique-passwords)
 
 [2.9.1 Ensure IAM password policy prevents password reuse](#291-ensure-iam-password-policy-prevents-password-reuse)
@@ -2830,6 +2832,36 @@ aws iam get-credential-report --query 'Content' --output text | base64 -d
 **Verification**
 
 Evidence or test output indicates that no user has an active access key with the last rotated date greater than 90 days in the past.
+
+
+---
+
+### 2.8.6 Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account
+**Platform:** Google
+
+**Rationale:** User-managed service account keys increase the risk of credential exposure. GCP-managed keys are automatically rotated by Google and cannot be downloaded, reducing the attack surface.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.4
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to IAM & Admin > Service Accounts
+2. For each service account, click on the account and go to the Keys tab
+3. Ensure no keys of type `USER_MANAGED` exist
+
+**From Google Cloud CLI:**
+
+```
+gcloud iam service-accounts keys list --iam-account=<sa-email> --managed-by=user
+```
+
+If any keys are returned, user-managed keys exist for that service account.
+
+**Verification**
+
+Evidence or test output indicates that no service accounts have user-managed keys.
 
 
 ---

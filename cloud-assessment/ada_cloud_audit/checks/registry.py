@@ -116,6 +116,7 @@ def _register_gcp_checks() -> None:
         "2.11.5": gcp_iam.check_sa_admin_privileges,
         "2.12.1": gcp_iam.check_corporate_credentials,
         "2.14.7": gcp_iam.check_mfa_non_service,
+        "2.8.6": gcp_iam.check_gcp_managed_sa_keys,
 
         # Logging (8 checks)
         "3.1.1": gcp_logging.check_cloud_asset_inventory,
