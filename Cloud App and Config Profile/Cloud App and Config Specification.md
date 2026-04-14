@@ -1032,6 +1032,7 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 | 3.11.12 | Azure | Ensure that Activity Log Alert exists for Delete SQL Server Firewall Rule |
 | 3.11.13 | Azure | Ensure that Activity Log Alert exists for Create or Update Public IP Address rule |
 | 3.11.14 | Azure | Ensure that Activity Log Alert exists for Delete Public IP Address rule |
+| 3.11.15 | AWS | Ensure all AWS-managed web front-end services have access logging enabled |
 
 
 ---

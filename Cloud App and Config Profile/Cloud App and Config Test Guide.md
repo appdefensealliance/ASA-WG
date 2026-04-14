@@ -300,6 +300,8 @@ Version 1.0 - 10-OCT 24
 
 [3.11.14 Ensure that Activity Log Alert exists for Delete Public IP Address rule](#31114-ensure-that-activity-log-alert-exists-for-delete-public-ip-address-rule)
 
+[3.11.15 Ensure all AWS-managed web front-end services have access logging enabled](#31115-ensure-all-aws-managed-web-front-end-services-have-access-logging-enabled)
+
 [4 Networking](#4-networking)
 
 [4.1 Encrypt Confidential Data in Transit](#41-encrypt-confidential-data-in-transit)
@@ -6913,6 +6915,64 @@ Get-AzActivityLogAlert -SubscriptionId <subscription ID>|where-object {$_.Condit
 **Verification**
 
 Evidence or test output indicates that an activity log alert exists for Delete Public IP Address Rule
+
+
+---
+
+### 3.11.15 Ensure all AWS-managed web front-end services have access logging enabled
+**Platform:** AWS
+
+**Rationale:** AWS-managed web front-end services (CloudFront, ALB/NLB, API Gateway) represent the primary HTTP(S) ingress points into AWS accounts. CloudTrail logs management actions but does not capture the content of HTTP requests/responses, leaving a critical visibility gap. Access logs from these services enable detection of anomalous patterns, forensic analysis of incidents, and compliance proof that internet-facing entry points were monitored.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 4.10
+
+**Evidence**
+
+**CloudFront Distributions:**
+
+1. List distributions:
+```
+aws cloudfront list-distributions --query 'DistributionList.Items[*].[Id,DomainName]'
+```
+
+2. For each distribution, check logging:
+```
+aws cloudfront get-distribution --id <distribution_id> --query 'Distribution.DistributionConfig.Logging'
+```
+
+3. Verify `Enabled` is `true`.
+
+**Application/Network Load Balancers:**
+
+1. List load balancers:
+```
+aws elbv2 describe-load-balancers --query 'LoadBalancers[*].[LoadBalancerArn,LoadBalancerName,Type]'
+```
+
+2. For each, check access logging:
+```
+aws elbv2 describe-load-balancer-attributes --load-balancer-arn <lb_arn> --query 'Attributes[?Key==`access_logs.s3.enabled`].Value'
+```
+
+3. Verify the value is `true`.
+
+**API Gateway:**
+
+1. List REST APIs:
+```
+aws apigateway get-rest-apis --query 'items[*].[id,name]'
+```
+
+2. For each API, list stages and check access log settings:
+```
+aws apigateway get-stages --rest-api-id <api_id> --query 'item[*].[stageName,accessLogSettings]'
+```
+
+3. Verify that `accessLogSettings` is configured with a destination ARN.
+
+**Verification**
+
+Evidence or test output indicates that access logging is enabled on all AWS-managed web front-end services. Manual review is required as the specific services in use vary by deployment.
 
 
 ---

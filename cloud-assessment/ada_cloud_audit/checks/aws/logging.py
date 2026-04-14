@@ -7,6 +7,7 @@ Covers 14 requirements:
 - 3.10.6: Audit logs retained >= 90 days
 - 3.11.1: CloudTrail enabled in all regions
 - 3.11.2: CloudTrail integrated with CloudWatch Logs
+- 3.11.15: Web front-end access logging enabled
 """
 
 from __future__ import annotations
@@ -599,4 +600,73 @@ def check_cloudtrail_cloudwatch_integration(session: boto3.Session) -> "Requirem
             "AWS",
             Verdict.INCONCLUSIVE,
             f"Error checking CloudTrail CloudWatch integration: {e}",
+        )
+
+
+def check_web_frontend_logging(session: boto3.Session) -> "RequirementResult":
+    """ADA 3.11.15: Ensure all AWS-managed web front-end services have access logging enabled."""
+    findings = []
+    services_checked = []
+
+    # Check CloudFront distributions
+    try:
+        cf = session.client("cloudfront")
+        dists = cf.list_distributions()
+        items = dists.get("DistributionList", {}).get("Items", [])
+        services_checked.append("CloudFront")
+        for dist in items:
+            dist_id = dist["Id"]
+            domain = dist.get("DomainName", "")
+            logging_cfg = dist.get("DefaultCacheBehavior", {})
+            # Need full config for logging
+            try:
+                full = cf.get_distribution(Id=dist_id)
+                log_enabled = full["Distribution"]["DistributionConfig"].get("Logging", {}).get("Enabled", False)
+                if not log_enabled:
+                    findings.append(f"CloudFront {dist_id} ({domain}): access logging disabled")
+            except ClientError:
+                findings.append(f"CloudFront {dist_id}: unable to check logging config")
+    except ClientError:
+        findings.append("CloudFront: unable to list distributions")
+
+    # Check ALB/NLB
+    try:
+        elbv2 = session.client("elbv2")
+        paginator = elbv2.get_paginator("describe_load_balancers")
+        services_checked.append("ELBv2")
+        for page in paginator.paginate():
+            for lb in page["LoadBalancers"]:
+                lb_arn = lb["LoadBalancerArn"]
+                lb_name = lb.get("LoadBalancerName", "")
+                try:
+                    attrs = elbv2.describe_load_balancer_attributes(LoadBalancerArn=lb_arn)
+                    log_enabled = False
+                    for attr in attrs.get("Attributes", []):
+                        if attr["Key"] == "access_logs.s3.enabled" and attr["Value"] == "true":
+                            log_enabled = True
+                    if not log_enabled:
+                        findings.append(f"{lb.get('Type', 'LB')} {lb_name}: access logging disabled")
+                except ClientError:
+                    findings.append(f"LB {lb_name}: unable to check attributes")
+    except ClientError:
+        findings.append("ELBv2: unable to list load balancers")
+
+    if not findings:
+        return make_result(
+            "3.11.15",
+            "Ensure all AWS-managed web front-end services have access logging enabled",
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            f"Services checked ({', '.join(services_checked)}): no issues found. "
+            "Manual review required for API Gateway stages.",
+            {"services_checked": services_checked},
+        )
+    else:
+        return make_result(
+            "3.11.15",
+            "Ensure all AWS-managed web front-end services have access logging enabled",
+            "AWS",
+            Verdict.FAIL,
+            "Web front-end services without access logging:\n" + "\n".join(findings),
+            {"findings": findings, "services_checked": services_checked},
         )
