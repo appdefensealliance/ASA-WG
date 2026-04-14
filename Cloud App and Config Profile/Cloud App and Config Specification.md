@@ -571,6 +571,7 @@ Establish and maintain a secure configuration process for enterprise assets (end
 | 2.8.2 | AWS | Ensure IAM password policy requires minimum length of 14 or greater |
 | 2.8.3 | AWS | Ensure there is only one active access key available for any single IAM user |
 | 2.8.4 | AWS | Ensure access keys are rotated every 90 days or less |
+| 2.8.5 | AWS | Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed |
 
 ---
 

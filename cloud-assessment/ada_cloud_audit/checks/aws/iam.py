@@ -13,6 +13,7 @@ Covers 13 requirements:
 - 2.11.1: Root not used for daily tasks
 - 2.16.1: MFA enabled for root
 - 2.18.1: Users receive permissions only through groups
+- 2.8.5: Expired SSL/TLS certs removed from IAM
 """
 
 from __future__ import annotations
@@ -629,4 +630,55 @@ def check_users_permissions_through_groups(session: boto3.Session) -> "Requireme
             "AWS",
             Verdict.INCONCLUSIVE,
             f"Error checking user permissions: {e}",
+        )
+
+
+def check_expired_ssl_certs(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.8.5: Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed."""
+    iam = session.client("iam")
+    try:
+        certs = iam.list_server_certificates()["ServerCertificateMetadataList"]
+        now = datetime.now(timezone.utc)
+        expired = []
+
+        for cert in certs:
+            expiration = cert.get("Expiration")
+            if expiration and expiration < now:
+                expired.append(
+                    f"{cert['ServerCertificateName']} (expired {expiration.isoformat()})"
+                )
+
+        if not certs:
+            return make_result(
+                "2.8.5",
+                "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+                "AWS",
+                Verdict.PASS,
+                "No SSL/TLS certificates stored in IAM",
+            )
+        elif not expired:
+            return make_result(
+                "2.8.5",
+                "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+                "AWS",
+                Verdict.PASS,
+                f"All {len(certs)} IAM-stored SSL/TLS certificates are valid (not expired)",
+                {"total_certs": len(certs)},
+            )
+        else:
+            return make_result(
+                "2.8.5",
+                "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+                "AWS",
+                Verdict.FAIL,
+                f"Expired SSL/TLS certificates in IAM:\n" + "\n".join(expired),
+                {"expired": expired, "total_certs": len(certs)},
+            )
+    except ClientError as e:
+        return make_result(
+            "2.8.5",
+            "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            f"Error checking SSL/TLS certificates: {e}",
         )
