@@ -334,6 +334,8 @@ Version 1.0 - 10-OCT 24
 
 [4.3.7 Ensure no security groups allow ingress from ::/0 to remote server administration ports](#437-ensure-no-security-groups-allow-ingress-from-0-to-remote-server-administration-ports)
 
+[4.3.8 Ensure CIFS access is restricted to trusted networks to prevent unauthorized access](#438-ensure-cifs-access-is-restricted-to-trusted-networks-to-prevent-unauthorized-access)
+
 
 [5 Storage](#5-storage)
 
@@ -7513,6 +7515,45 @@ Perform the following to determine if the account is configured as prescribed:
 **Verification**
 
 Evidence or test output indicates that no security group allows ingress to port 22 or port 3389 from ::/0
+
+
+---
+
+### 4.3.8 Ensure CIFS access is restricted to trusted networks to prevent unauthorized access
+**Platform:** AWS
+
+**Rationale:** Common Internet File System (CIFS) is a network file-sharing protocol. Unrestricted CIFS access on port 445 can expose file shares to unauthorized users, leading to data breaches. Security groups should not allow ingress from 0.0.0.0/0 or ::/0 on port 445.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 6.1.2
+
+**Evidence**
+
+**From Console:**
+
+1. Login to the AWS Management Console
+2. Navigate to the EC2 Dashboard and select `Security Groups` under `Network & Security`
+3. For each security group, review the inbound rules
+4. Check for rules that allow access from `0.0.0.0/0` or `::/0` on port 445
+
+**From Command Line:**
+
+1. List all security groups:
+
+```
+aws ec2 describe-security-groups --region <region>
+```
+
+2. Check for unrestricted CIFS access on port 445:
+
+```
+aws ec2 describe-security-groups --region <region> --group-ids <sg-id> --query "SecurityGroups[*].IpPermissions[?((IpProtocol=='-1') || (FromPort<=\`445\` && ToPort>=\`445\`))].{IpProtocol:IpProtocol,FromPort:FromPort,ToPort:ToPort,CIDRv4:IpRanges[*].CidrIp,CIDRv6:Ipv6Ranges[*].CidrIpv6}"
+```
+
+3. Look for `0.0.0.0/0` or `::/0` in the output. Repeat for all regions.
+
+**Verification**
+
+Evidence or test output indicates that no security group allows unrestricted CIFS access (port 445) from 0.0.0.0/0 or ::/0.
 
 
 ---

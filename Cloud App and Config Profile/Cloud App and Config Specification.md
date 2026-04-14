@@ -1105,6 +1105,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 | 4.3.5 | AWS | Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.6 | AWS | Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.7 | AWS | Ensure no security groups allow ingress from ::/0 to remote server administration ports |
+| 4.3.8 | AWS | Ensure CIFS access is restricted to trusted networks to prevent unauthorized access |
 
 
 ---
