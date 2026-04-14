@@ -47,6 +47,7 @@ def _register_aws_checks() -> None:
         "2.11.1": iam.check_root_usage,
         "2.16.1": iam.check_root_mfa,
         "2.18.1": iam.check_users_permissions_through_groups,
+        "2.7.7": iam.check_cloudshell_access,
 
         # Logging & Monitoring
         "3.4.1": logging_checks.check_cloudtrail_s3_access_logging,
