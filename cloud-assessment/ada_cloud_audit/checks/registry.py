@@ -89,6 +89,7 @@ def _register_azure_checks() -> None:
         from ada_cloud_audit.checks.azure import (
             compute as az_compute,
             database as az_database,
+            identity as az_identity,
             logging as az_logging,
             networking as az_networking,
             security as az_security,
@@ -99,6 +100,10 @@ def _register_azure_checks() -> None:
         return
 
     PROVIDER_REGISTRIES[Provider.AZURE] = {
+        # Removed checks (return NOT_APPLICABLE)
+        "1.1.1": az_identity.check_approved_extensions,
+        "1.4.1": az_identity.check_managed_disks,
+
         # Compute / App Service (9 checks)
         "1.2.2": az_compute.check_functions_runtime,
         "1.2.3": az_compute.check_php_version,
@@ -109,6 +114,29 @@ def _register_azure_checks() -> None:
         "1.3.2": az_compute.check_tls_version,
         "1.3.3": az_compute.check_ftp_disabled,
         "1.8.1": az_compute.check_app_service_auth,
+
+        # Identity / Entra ID (21 checks — INCONCLUSIVE stubs, requires Microsoft Graph)
+        "2.4.1": az_identity.check_user_consent,
+        "2.4.2": az_identity.check_gallery_apps,
+        "2.4.3": az_identity.check_register_apps,
+        "2.7.4": az_identity.check_guest_access_restrictions,
+        "2.8.1": az_identity.check_security_defaults,
+        "2.9.2": az_identity.check_bad_password_list,
+        "2.10.2": az_identity.check_guest_users_reviewed,
+        "2.11.2": az_identity.check_notify_admin_password_reset,
+        "2.11.3": az_identity.check_restrict_admin_portal,
+        "2.11.4": az_identity.check_no_custom_sub_admin_roles,
+        "2.13.1": az_identity.check_reconfirm_auth_info,
+        "2.14.1": az_identity.check_reset_methods,
+        "2.14.2": az_identity.check_mfa_register_devices,
+        "2.14.3": az_identity.check_mfa_privileged,
+        "2.14.4": az_identity.check_mfa_remember_disabled,
+        "2.14.5": az_identity.check_mfa_policy_all_users,
+        "2.14.6": az_identity.check_mfa_risky_signins,
+        "2.14.8": az_identity.check_mfa_non_privileged,
+        "2.15.1": az_identity.check_mfa_admin_groups,
+        "2.15.2": az_identity.check_mfa_azure_management,
+        "2.17.1": az_identity.check_notify_password_resets,
 
         # Security - Key Vault (7 checks)
         "2.1.1": az_security.check_key_vault_recoverable,
@@ -124,8 +152,10 @@ def _register_azure_checks() -> None:
         "3.2.2": az_security.check_notify_attack_paths,
         "3.3.1": az_security.check_owner_role_notifications,
         "3.3.2": az_security.check_additional_email,
+        "3.5.2": az_identity.check_storage_activity_logs,
         "3.6.1": az_security.check_security_benchmark_policies,
         "3.7.1": az_security.check_defender_vm_updates,
+        "3.8.1": az_identity.check_auto_provisioning,
 
         # Logging (16 checks)
         "3.10.7": az_logging.check_audit_log_retention,
@@ -176,6 +206,7 @@ def _register_azure_checks() -> None:
         "6.3.3": az_database.check_mysql_tls,
         "6.4.2": az_database.check_sql_encryption,
         "6.5.2": az_database.check_sql_firewall,
+        "6.7.1": az_identity.check_pg_allow_azure_services,
         "6.11.1": az_database.check_sql_ad_admin,
         "6.13.1": az_database.check_pg_log_checkpoints,
         "6.13.2": az_database.check_pg_log_connections,
