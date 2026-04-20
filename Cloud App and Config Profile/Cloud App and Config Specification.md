@@ -571,6 +571,7 @@ Establish and maintain a secure configuration process for enterprise assets (end
 | 2.8.2 | AWS | Ensure IAM password policy requires minimum length of 14 or greater |
 | 2.8.3 | AWS | REMOVED — Retired in CIS v7.0.0 |
 | 2.8.4 | AWS | Ensure access keys are rotated every 90 days or less |
+| 2.8.6 | Google | Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account |
 
 ---
 
