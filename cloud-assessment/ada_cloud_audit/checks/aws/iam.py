@@ -11,6 +11,7 @@ Covers 11 requirements:
 - 2.11.1: Root not used for daily tasks
 - 2.16.1: MFA enabled for root
 - 2.18.1: Users receive permissions only through groups
+- 2.14.9: MFA enabled for all IAM console users
 """
 
 from __future__ import annotations
@@ -530,4 +531,48 @@ def check_users_permissions_through_groups(session: boto3.Session) -> "Requireme
             "AWS",
             Verdict.INCONCLUSIVE,
             f"Error checking user permissions: {e}",
+        )
+
+
+def check_iam_mfa_all_users(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.14.9: Ensure MFA is enabled for all IAM users that have a console password."""
+    try:
+        report = get_credential_report(session)
+        violating_users = []
+
+        for row in report:
+            user = row.get("user", "")
+            if user == "<root_account>":
+                continue
+            pwd_enabled = row.get("password_enabled", "false").lower()
+            if pwd_enabled == "true":
+                mfa_active = row.get("mfa_active", "false").lower()
+                if mfa_active != "true":
+                    violating_users.append(user)
+
+        if not violating_users:
+            return make_result(
+                "2.14.9",
+                "Ensure MFA is enabled for all IAM users that have a console password",
+                "AWS",
+                Verdict.PASS,
+                "All IAM users with console passwords have MFA enabled",
+                {"violating_users": []},
+            )
+        else:
+            return make_result(
+                "2.14.9",
+                "Ensure MFA is enabled for all IAM users that have a console password",
+                "AWS",
+                Verdict.FAIL,
+                f"IAM users with console passwords but no MFA:\n" + "\n".join(violating_users),
+                {"violating_users": violating_users},
+            )
+    except ClientError as e:
+        return make_result(
+            "2.14.9",
+            "Ensure MFA is enabled for all IAM users that have a console password",
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            f"Error checking MFA status: {e}",
         )

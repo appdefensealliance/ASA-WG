@@ -176,6 +176,8 @@ Version 1.0 - 10-OCT 24
 
 [2.14.8 Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users ](#2148-ensure-that-multi-factor-auth-status-is-enabled-for-all-non-privileged-users)
 
+[2.14.9 Ensure MFA is enabled for all IAM users that have a console password](#2149-ensure-mfa-is-enabled-for-all-iam-users-that-have-a-console-password)
+
 [2.15 Require MFA for Remote Network Access](#215-require-mfa-for-remote-network-access)
 
 [2.15.1 Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups ](#2151-ensure-that-a-multi-factor-authentication-policy-exists-for-administrative-groups)
@@ -3593,6 +3595,40 @@ If the output contains any of the `$D.userPrincipleName`, then this requirement 
 **Verification**
 
 Evidence or test output indicates that MFA is enabled for all non-privileged users.
+
+
+---
+
+### 2.14.9 Ensure MFA is enabled for all IAM users that have a console password
+**Platform:** AWS
+
+**Rationale:** Multi-Factor Authentication (MFA) adds an extra layer of authentication assurance beyond traditional credentials. With MFA enabled, when a user signs in to the AWS Console, they are prompted for their username and password as well as an authentication code from their physical or virtual MFA device. It is recommended that MFA be enabled for all IAM users that have a console password.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.10
+
+**Evidence**
+
+**From Console:**
+
+1. Sign in to the AWS Management Console and open the IAM console at `https://console.aws.amazon.com/iam`
+2. In the left pane, select `Users`
+3. If the `MFA` or `Password age` columns are not visible, click the gear icon in the upper right corner and enable them
+4. Ensure that for each user where the `Password age` column shows a value, the `MFA` column shows `Virtual`, `U2F Security Key`, or `Hardware`
+
+**From Command Line:**
+
+1. Generate and download the IAM credential report:
+
+```
+aws iam generate-credential-report
+aws iam get-credential-report --query 'Content' --output text | base64 -d
+```
+
+2. For each user where `password_enabled` is `true`, verify that `mfa_active` is also `true`.
+
+**Verification**
+
+Evidence or test output indicates that MFA is enabled for all IAM users that have a console password.
 
 
 ---
