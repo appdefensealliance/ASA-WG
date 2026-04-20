@@ -13,6 +13,19 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+azure = [
+    "azure-identity>=1.12.0",
+    "azure-mgmt-storage>=21.0",
+    "azure-mgmt-network>=25.0",
+    "azure-mgmt-keyvault>=10.0",
+    "azure-mgmt-monitor>=6.0",
+    "azure-mgmt-security>=5.0",
+    "azure-mgmt-sql>=4.0",
+    "azure-mgmt-rdbms>=10.0",
+    "azure-mgmt-web>=7.0",
+    "azure-keyvault-keys>=4.8",
+    "azure-keyvault-secrets>=4.7",
+]
 gcp = [
     "google-cloud-compute>=1.0",
     "google-cloud-storage>=2.0",
