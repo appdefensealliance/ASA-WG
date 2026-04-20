@@ -501,7 +501,9 @@ This profile builds upon the work of the Center for Internet Security (CIS), spe
 
 1. [CIS Amazon Web Services Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/14207)
 2. [CIS Google Cloud Platform Foundation Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/9562)
-3. [CIS Microsoft Azure Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/10624)
+3. [CIS Microsoft Azure Foundations Benchmark v5.0.0](https://workbench.cisecurity.org/benchmarks/10624)
+4. [CIS Microsoft Azure Compute Services Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks)
+5. [CIS Microsoft Azure Database Services Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks)
 
 
 # 1 Compute
@@ -527,7 +529,7 @@ It is necessary to first identify the software that needs to be secured before t
 
 **Rationale:** Azure virtual machine extensions are small applications that provide post-deployment configuration and automation tasks on Azure virtual machines. These extensions run with administrative privileges and could potentially access anything on a virtual machine. The Azure Portal and community provide several such extensions. Each organization should carefully evaluate these extensions and ensure that only those that are approved for use are actually implemented.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 7.5
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.5
 
 **Evidence**
 
@@ -677,7 +679,7 @@ Evidence or test output indicates that all Azure Functions are:
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.6
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.3 (PHP)
 
 **Evidence**
 
@@ -730,7 +732,7 @@ Evidence or test output indicates that the developer has configured App Service 
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected. Using the latest full version will keep your stack secure to vulnerabilities and exploits.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.7
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.2 (Python)
 
 **Evidence**
 
@@ -785,7 +787,7 @@ Evidence or test output indicates that -- if used to run the web app -- the deve
 
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest software version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.8
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.1 (Java)
 
 **Evidence**
 
@@ -840,7 +842,7 @@ Evidence or test output indicates that -- if used to run the web app -- the deve
 **Rationale:** Newer versions may contain security enhancements and additional functionality. Using the latest version is recommended in order to take advantage of enhancements and new capabilities. With each software installation, organizations need to determine if a given update meets their requirements. They must also verify the compatibility and support provided for any additional software against the update revision that is selected.
 
 HTTP 2.0 has additional performance improvements on the head-of-line blocking problem present in HTTP 1.1, along with improved header compression and prioritization of requests. HTTP 2.0 no longer supports HTTP 1.1's chunked transfer encoding mechanism, as it provides its own, more efficient, mechanisms for data streaming.\
-External Reference: CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.9
+External Reference: CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.6 (HTTP Version)
 
 **Evidence**
 
@@ -940,7 +942,7 @@ Encryption protects confidential data when transmitted over untrusted network co
 
 **Rationale:** Enabling HTTPS-only traffic will redirect all non-secure HTTP requests to HTTPS ports. HTTPS uses the TLS/SSL protocol to provide a secure connection which is both encrypted and authenticated. It is therefore important to support HTTPS for the security benefits.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.2
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.7 (HTTPS)
 
 **Evidence**
 
@@ -990,7 +992,7 @@ Evidence or test output indicates that each Azure App Service webapp is configur
 
 **Rationale:** App service currently allows the web app to set TLS versions 1.0, 1.1 and 1.2. It is highly recommended to use the latest TLS 1.2 version for web app secure connections.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.3
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.8 (TLS)
 
 **Evidence**
 
@@ -1045,7 +1047,7 @@ Evidence or test output indicates that each webapp is configured to require TLS 
 
 **Rationale:** Azure FTP deployment endpoints are public. An attacker listening to traffic on a wifi network used by a remote employee or a corporate network could see login traffic in clear-text which would then grant them full control of the code base of the app or service. This finding is more severe if User Credentials for deployment are set at the subscription level rather than using the default Application Credentials which are unique per App.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.10
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.5 (FTP)
 
 **Evidence**
 
@@ -1170,7 +1172,7 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 For ARM-deployed Virtual Machines, Azure Adviser will at some point recommend moving VHDs to managed disks both from a security and cost management perspective.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 7.2
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.2
 
 **Evidence**
 
@@ -1479,7 +1481,7 @@ Centralizing makes administration simpler and therefore reduces risks related to
 
 **Rationale:** App Service provides a highly scalable, self-patching web hosting service in Azure. It also provides a managed identity for apps, which is a turn-key solution for securing access to Azure SQL Database and other Azure services.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 9.5
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.12 (App Service Auth)
 
 **Evidence**
 
@@ -1609,7 +1611,7 @@ enableSoftDelete only ensures that Key Vault is not deleted permanently and will
 
 Enabling both the parameters on Key Vaults ensures that Key Vaults and their objects cannot be deleted/purged permanently.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.5
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.5
 
 **Evidence**
 
@@ -1895,7 +1897,7 @@ Actively manage (inventory, track, and correct) all software (operating systems 
 
 **Rationale:** If Azure Active Directory is running as an identity provider for third-party applications, permissions and consent should be limited to administrators or pre-approved. Malicious applications may attempt to exfiltrate data or abuse privileged user accounts.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.11
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.11
 
 **Evidence**
 
@@ -1933,7 +1935,7 @@ Evidence or test output indicates that `User consent for applications` is set to
 
 **Rationale:** Unless Azure Active Directory is running as an identity provider for third-party applications, do not allow users to use their identity outside of your cloud environment. User profiles contain private information such as phone numbers and email addresses which could then be sold off to other third parties without requiring any further consent from the user.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.13
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.13
 
 **Evidence**
 
@@ -1959,7 +1961,7 @@ Evidence or test output indicates that `Users can add gallery apps to My Apps` i
 
 **Rationale:** It is recommended to only allow an administrator to register custom-developed applications. This ensures that the application undergoes a formal security review and approval process prior to exposing Azure Active Directory data. Certain users like developers or other high-request users may also be delegated permissions to prevent them from waiting on an administrative user. Your organization should review your policies and decide your needs.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.14
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.14
 
 **Evidence**
 
@@ -2014,7 +2016,7 @@ Develop processes and technical controls to identify, classify, securely handle,
 
 **Rationale:** Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. The `exp` (expiration date) attribute identifies the expiration date on or after which the key MUST NOT be used for encryption of new data, wrapping of new keys, and signing. By default, keys never expire. It is thus recommended that keys be rotated in the key vault and set an explicit expiration date for all keys to help enforce the key rotation. This ensures that the keys cannot be used beyond their assigned lifetimes.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.1
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.1
 
 **Evidence**
 
@@ -2084,7 +2086,7 @@ Evidence or test output indicates that an expiration date is set for all keys in
 
 **Rationale:** Azure Key Vault enables users to store and use cryptographic keys within the Microsoft Azure environment. The `exp` (expiration date) attribute identifies the expiration date on or after which the key MUST NOT be used for a cryptographic operation. By default, keys never expire. It is thus recommended that keys be rotated in the key vault and set an explicit expiration date for all keys. This ensures that the keys cannot be used beyond their assigned lifetimes.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.2
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.2
 
 **Evidence**
 
@@ -2153,7 +2155,7 @@ Evidence or test output indicates that an expiration date is set for all keys in
 
 **Rationale:** The Azure Key Vault enables users to store and keep secrets within the Microsoft Azure environment. Secrets in the Azure Key Vault are octet sequences with a maximum size of 25k bytes each. The `exp` (expiration date) attribute identifies the expiration date on or after which the secret MUST NOT be used. By default, secrets never expire. It is thus recommended to rotate secrets in the key vault and set an explicit expiration date for all secrets. This ensures that the secrets cannot be used beyond their assigned lifetimes.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.3
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.3
 
 **Evidence**
 
@@ -2214,7 +2216,7 @@ Evidence or test output indicates that an expiration date is set for all secrets
 
 **Rationale:** The Azure Key Vault enables users to store and keep secrets within the Microsoft Azure environment. Secrets in the Azure Key Vault are octet sequences with a maximum size of 25k bytes each. The `exp` (expiration date) attribute identifies the expiration date on or after which the secret MUST NOT be used. By default, secrets never expire. It is thus recommended to rotate secrets in the key vault and set an explicit expiration date for all secrets. This ensures that the secrets cannot be used beyond their assigned lifetimes.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 8.4
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.4
 
 **Evidence**
 
@@ -2507,7 +2509,7 @@ Evidence or test output indicates that no customer-managed IAM policy that allow
 
 The recommended option is the 3rd, most restrictive: "Guest user access is restricted to their own directory object".
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.15
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.15
 
 **Evidence**
 
@@ -2661,7 +2663,7 @@ For example, doing the following:
 * Challenging users with MFA - when necessary, based on factors such as location, device, role, and task.
 * Disabling authentication from legacy authentication clients, which can’t do MFA.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.1
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.1.1
 
 **Evidence**
 
@@ -2854,7 +2856,7 @@ Evidence or test output indicates that the IAM password policy prevents password
 
 **Rationale:** Enabling this gives your organization further customization on what secure passwords are allowed. Setting a bad password list enables your organization to fine-tune its password policy further, depending on your needs. Removing easy-to-guess passwords increases the security of access to your Azure resources.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.7
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.7
 
 **Evidence**
 
@@ -2961,7 +2963,7 @@ Evidence or test output indicates that no dormant credentials exist as defined b
 
 **Rationale:** Guest users in the Azure AD are generally required for collaboration purposes in Office 365, and may also be required for Azure functions in enterprises with multiple Azure tenants. Guest users are typically added outside your employee on-boarding/off-boarding process and could potentially be overlooked indefinitely, leading to a potential vulnerability. To prevent this, guest users should be reviewed on a regular basis. During this audit, guest users should also be determined to not have administrative privileges.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.5
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.5
 
 **Evidence**
 
@@ -3070,7 +3072,7 @@ Evidence or test output indicates the root account is not being used for any pur
 
 **Rationale:** Global Administrator accounts are sensitive. Any password reset activity notification, when sent to all Global Administrators, ensures that all Global administrators can passively confirm if such a reset is a common pattern within their group. For example, if all Global Administrators change their password every 30 days, any password reset activity before that may require administrator(s) to evaluate any unusual activity and confirm its origin.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.10
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.10
 
 **Evidence**
 
@@ -3097,7 +3099,7 @@ Evidence or test output indicates that the `Notify all admins when other admins 
 
 **Rationale:** The Azure AD administrative portal has accesss to confidential data and permission settings. All non-administrators should be prohibited from accessing any Azure AD data in the administration portal to avoid exposure.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.17
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.17
 
 **Evidence**
 
@@ -3123,7 +3125,7 @@ Evidence or test output indicates that `Restrict access to Azure AD administrati
 
 **Rationale:** Classic subscription admin roles offer basic access management and include Account Administrator, Service Administrator, and Co-Administrators. It is recommended the least necessary permissions be given initially. Permissions can be added as needed by the account holder. This ensures the account holder cannot perform actions which were not intended.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.23
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.23
 
 **Evidence**
 
@@ -3300,7 +3302,7 @@ Ensuring that access grants are revoked when they're no longer needed reduces th
 
 **Rationale:** This setting is necessary if you have set up 'Require users to register when signing in option'. If authentication re-confirmation is disabled, registered users will never be prompted to re-confirm their existing authentication information. If the authentication information for a user changes, such as a phone number or email, then the password reset information for that user reverts to the previously registered authentication information.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.8
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.8
 
 **Evidence**
 
@@ -3344,7 +3346,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 
 **Rationale:** A Self-service Password Reset (SSPR) through Azure Multi-factor Authentication (MFA) ensures the user's identity is confirmed using two separate methods of identification. With multiple methods set, an attacker would have to compromise both methods before they could maliciously reset a user's password.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.6
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.6
 
 **Evidence**
 
@@ -3371,7 +3373,7 @@ Evidence or test output indicates that the `Number of methods required to reset 
 
 **Rationale:** Multi-factor authentication is recommended when adding devices to Azure AD. When set to `Yes`, users who are adding devices from the internet must first use the second method of authentication before their device is successfully added to the directory. This ensures that rogue devices are not added to the domain using a compromised user account. _Note:_ Some Microsoft documentation suggests using conditional access policies for joining a domain from certain whitelisted networks or devices. Even with these in place, using Multi-Factor Authentication is still recommended, as it creates a process for review before joining the domain.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.22
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.22
 
 **Evidence**
 
@@ -3397,7 +3399,7 @@ Evidence or test output indicates that `Require MFA to register or join devices 
 
 **Rationale:** Multi-factor authentication requires an individual to present a minimum of two separate forms of authentication before access is granted. Multi-factor authentication provides additional assurance that the individual attempting to gain access is who they claim to be. With multi-factor authentication, an attacker would need to compromise at least two different authentication mechanisms, increasing the difficulty of compromise and thus reducing the risk.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.2
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.1.2
 
 **Evidence**
 
@@ -3478,7 +3480,7 @@ Evidence or test output indicates that `MFA Status is `Enabled` for all privileg
 
 **Rationale:** Remembering Multi-Factor Authentication (MFA) for devices and browsers allows users to have the option to bypass MFA for a set number of days after performing a successful sign-in using MFA. This can enhance usability by minimizing the number of times a user may need to perform two-step verification on the same device. However, if an account or device is compromised, remembering MFA for trusted devices may affect security. Hence, it is recommended that users not be allowed to bypass MFA.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.4
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.1.4
 
 **Evidence**
 
@@ -3505,7 +3507,7 @@ Evidence or test output indicates that `Allow users to remember MFA on devices t
 
 **Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.4
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.4
 
 **Evidence**
 
@@ -3532,7 +3534,7 @@ Evidence or test output indicates that a MFA policy exists for all users.
 
 **Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.5
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.5
 
 **Evidence**
 
@@ -3583,7 +3585,7 @@ Evidence or test output indicates that MFA is enabled for all non service accoun
 
 **Rationale:** Multi-factor authentication requires an individual to present a minimum of two separate forms of authentication before access is granted. Multi-factor authentication provides additional assurance that the individual attempting to gain access is who they claim to be. With multi-factor authentication, an attacker would need to compromise at least two different authentication mechanisms, increasing the difficulty of compromise and thus reducing the risk.**
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.1.3
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.1.3
 
 **Evidence**
 
@@ -3691,7 +3693,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 
 **Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative accounts to authenticated personnel.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.3
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.3
 
 **Evidence**
 
@@ -3718,7 +3720,7 @@ Evidence or test output indicates that a MFA policy exists for administrative gr
 
 **Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative actions and to prevent intruders from changing settings.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.2.6
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.6
 
 **Evidence**
 
@@ -3824,7 +3826,7 @@ Centralizing makes administration simpler and therefore reduces risks related to
 
 **Rationale:** User notification on password reset is a proactive way of confirming password reset activity. It helps the user to recognize unauthorized password reset activities.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 1.9
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.9
 
 **Evidence**
 
@@ -3990,7 +3992,7 @@ Tools must be tuned to reduce the prevalence of both false negatives and false p
 
 **Rationale:** Enabling security alert emails ensures that security alert emails are received from Microsoft. This ensures that the right people are aware of any potential security issues and are able to mitigate the risk.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.20
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.20
 
 **Evidence**
 
@@ -4044,7 +4046,7 @@ As time goes by -- and processes and people change within an organization -- it'
 
 **Rationale:** Enabling security alert emails to subscription owners ensures that they receive security alert emails from Microsoft. This ensures that they are aware of any potential security issues and can mitigate the risk in a timely fashion.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.18
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.18
 
 **Evidence**
 
@@ -4081,7 +4083,7 @@ Evidence or test output indicates that people with the role "owner" are subscrib
 
 **Rationale:** Microsoft Defender for Cloud emails the Subscription Owner to notify them about security alerts. Adding your Security Contact's email address to the 'Additional email addresses' field ensures that your organization's Security Team is included in these alerts. This ensures that the proper people are aware of any potential compromise in order to mitigate the risk in a timely fashion.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.19
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.19
 
 **Evidence**
 
@@ -4230,7 +4232,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 
 **Rationale:** Allowing public access to activity log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.1.3
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.1.3
 
 **Evidence**
 
@@ -4341,7 +4343,7 @@ This CIS Control provides guidance for securing hardware and software. As delive
 
 **Rationale:** A security policy defines the desired configuration of your workloads and helps ensure compliance with company or regulatory security requirements. ASC Default policy is associated with every subscription by default. ASC default policy assignment is a set of security recommendations based on best practices. Enabling recommendations in ASC default policy ensures that Azure security center provides the ability to monitor all of the supported recommendations and optionally allow automated action for a few of the supported recommendations.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.14
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.14
 
 **Evidence**
 
@@ -4422,7 +4424,7 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 
 The Azure Security Center retrieves a list of available security and critical updates from Windows Update or Windows Server Update Services (WSUS), depending on which service is configured on a Windows VM. The security center also checks for the latest updates in Linux systems. If a VM is missing a system update, the security center will recommend system updates be applied.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.13
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.13
 
 **Evidence**
 
@@ -4468,7 +4470,7 @@ Tools can help to identify vulnerabilities that require remediation.
 
 **Rationale:** When `Log Analytics agent for Azure VMs` is turned on, Microsoft Defender for Cloud provisions the Microsoft Monitoring Agent on all existing supported Azure virtual machines and any new ones that are created. The Microsoft Monitoring Agent scans for various security-related configurations and events such as system updates, OS vulnerabilities, endpoint protection, and provides alerts.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 2.1.15
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.15
 
 **Evidence**
 
@@ -6129,7 +6131,7 @@ Evidence or test output indicates that CloudTrail is enabled in all regions.
 
 **Rationale:** A lack of monitoring reduces the visibility into the data plane, and therefore an organization's ability to detect reconnaissance, authorization attempts or other malicious activity. Unlike Activity Logs, Resource Logs are not enabled by default. Specifically, without monitoring it would be impossible to tell which entities had accessed a data store that was breached. In addition, alerts for failed attempts to access APIs for Web Services or Databases are only possible when logging is enabled.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.4
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.4
 
 **Evidence**
 
@@ -6197,7 +6199,7 @@ Evidence or test output indicates that Azure Monitor Resource Logging is enabled
 
 **Rationale:** Monitoring how and when key vaults are accessed, and by whom, enables an audit trail of interactions with confidential information, keys, and certificates managed by Azure Keyvault. Enabling logging for Key Vault saves information in an Azure storage account which the user provides. This creates a new container named insights-logs-auditevent automatically for the specified storage account. This same storage account can be used for collecting logs for multiple key vaults.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.1.5
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.1.5
 
 **Evidence**
 
@@ -6279,7 +6281,7 @@ Evidence or test output indicates that logging for Azure Key Vault is enabled.
 
 **Rationale:** Monitoring for create policy assignment events gives insight into changes done in "Azure policy - assignments" and can reduce the time it takes to detect unsolicited changes.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.1
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.1
 
 **Evidence**
 
@@ -6332,7 +6334,7 @@ Evidence or test output indicates that an activity log alert exists for Create P
 
 **Rationale:** Monitoring for delete policy assignment events gives insight into changes done in "azure policy - assignments" and can reduce the time it takes to detect unsolicited changes.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.2
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.2
 
 **Evidence**
 
@@ -6383,7 +6385,7 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 
 **Rationale:** Monitoring for Create or Update Network Security Group events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.3
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.3
 
 **Evidence**
 
@@ -6434,7 +6436,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 
 **Rationale:** Monitoring for "Delete Network Security Group" events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.4
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.4
 
 **Evidence**
 
@@ -6485,7 +6487,7 @@ Evidence or test output indicates that an activity log alert exists for Delete N
 
 **Rationale:** Monitoring for Create or Update Security Solution events gives insight into changes to the active security solutions and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.5
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.5
 
 **Evidence**
 
@@ -6536,7 +6538,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 
 **Rationale:** Monitoring for Delete Security Solution events gives insight into changes to the active security solutions and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.6
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.6
 
 **Evidence**
 
@@ -6587,7 +6589,7 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 
 **Rationale:** Monitoring for Create or Update SQL Server Firewall Rule events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.7
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.7
 
 **Evidence**
 
@@ -6638,7 +6640,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 
 **Rationale:** Monitoring for Delete SQL Server Firewall Rule events gives insight into SQL network access changes and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.8
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.8
 
 **Evidence**
 
@@ -6689,7 +6691,7 @@ Evidence or test output indicates that an activity log alert exists for Delete S
 
 **Rationale:** Monitoring for Create or Update Public IP Address events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.9
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.9
 
 **Evidence**
 
@@ -6740,7 +6742,7 @@ Evidence or test output indicates that an activity log alert exists for Create o
 
 **Rationale:** Monitoring for Delete Public IP Address events gives insight into network access changes and may reduce the time it takes to detect suspicious activity.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 5.2.10
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.2.10
 
 **Evidence**
 
@@ -7138,7 +7140,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 
 **Rationale:** The potential security problem with using RDP over the Internet is that attackers can use various brute force techniques to gain access to Azure Virtual Machines. Once the attackers gain access, they can use a virtual machine as a launch point for compromising other machines on an Azure Virtual Network or even attack networked devices outside of Azure.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 6.1
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 6.1
 
 **Evidence**
 
@@ -7186,7 +7188,7 @@ Evidence or test output indicates that no network security group is configured t
 
 **Rationale:** The potential security problem with using SSH over the Internet is that attackers can use various brute force techniques to gain access to Azure Virtual Machines. Once the attackers gain access, they can use a virtual machine as a launch point for compromising other machines on the Azure Virtual Network or even attack networked devices outside of Azure.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 6.2
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 6.2
 
 **Evidence**
 
@@ -7380,7 +7382,7 @@ Organizations need to establish and maintain data recovery practices sufficient 
 
 **Rationale:** Containers and Blob Storage data can be incorrectly deleted. An attacker/malicious user may do this deliberately in order to cause disruption. Deleting an Azure Storage blob causes immediate data loss. Enabling this configuration for Azure storage ensures that even if blobs/data were deleted from the storage account, Blobs/data objects are recoverable for a particular time which is set in the "Retention policies," ranging from 7 days to 365 days.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.11
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.11
 
 **Evidence**
 
@@ -7444,7 +7446,7 @@ Malicious actors can exploit insecure services, poor firewall and network config
 
 **Rationale:** Storage accounts should be configured to deny access to traffic from all networks (including internet traffic). Access can be granted to traffic from specific Azure Virtual networks, allowing a secure network boundary for specific applications to be built. Access can also be granted to public internet IP address ranges to enable connections from specific internet or on-premises clients. When network rules are configured, only applications from allowed networks can access a storage account. When calling from an allowed network, applications continue to require proper authorization (a valid access key or SAS token) to access the storage account.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.8
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.8
 
 **Evidence**
 
@@ -7522,7 +7524,7 @@ Encryption protects confidential data when transmitted over untrusted network co
 
 **Rationale:** The secure transfer option enhances the security of a storage account by only allowing requests to the storage account by a secure connection. For example, when calling REST APIs to access storage accounts, the connection must use HTTPS. Any requests using HTTP will be rejected when 'secure transfer required' is enabled. When using the Azure files service, connection without encryption will fail, including scenarios using SMB 2.1, SMB 3.0 without encryption, and some flavors of the Linux SMB client. Because Azure storage doesn’t support HTTPS for custom domain names, this option is not applied when using a custom domain name.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.1
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.1
 
 **Evidence**
 
@@ -7556,7 +7558,7 @@ Evidence or test output indicates that all storage accounts are configured such 
 
 **Rationale:** TLS 1.0 has known vulnerabilities and has been replaced by later versions of the TLS protocol. Continued use of this legacy protocol affects the security of data in transit.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.15
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.15
 
 **Evidence**
 
@@ -7852,7 +7854,7 @@ Evidence or test output indicates that all S3 buckets are configured such that t
 
 **Rationale:** The default configuration for a storage account permits a user with appropriate permissions to configure public (anonymous) access to containers and blobs in a storage account. Keep in mind that public access to a container is always turned off by default and must be explicitly configured to permit anonymous requests. It grants read-only access to these resources without sharing the account key, and without requiring a shared access signature. It is recommended not to provide anonymous access to blob containers until, and unless, it is strongly desired. A shared access signature token or Azure AD RBAC should be used for providing controlled and timed access to blob containers. If no anonymous access is needed on any container in the storage account, it’s recommended to set allowBlobPublicAccess false at the account level, which forbids any container to accept anonymous access in the future.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.7
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.7
 
 **Evidence**
 
@@ -7991,7 +7993,7 @@ Cryptographic key rotation periods will vary depending on your organization's se
 
 For the purposes of this requirement, 90 days are prescribed as the reminder frequency. Review and adjustment of the 90 day period is recommended, and may even be necessary. Your organization's security requirements should dictate the appropriate setting.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.3
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.3
 
 **Evidence**
 
@@ -8038,7 +8040,7 @@ Cryptographic key rotation periods will vary depending on your organization's se
 
 For the purposes of this requirement, 90 days are prescribed as the reminder frequency. Review and adjustment of the 90 day period is recommended, and may even be necessary. Your organization's security requirements should dictate the appropriate setting.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.4
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.4
 
 **Evidence**
 
@@ -8115,7 +8117,7 @@ Ensuring that access grants are revoked when they're no longer needed reduces th
 
 **Rationale:** A shared access signature (SAS) is a URI that grants restricted access rights to Azure Storage resources. A shared access signature can be provided to clients who should not be trusted with the storage account key but for whom it may be necessary to delegate access to certain storage account resources. Providing a shared access signature URI to these clients allows them access to a resource for a specified period of time. This time should be set as low as possible and preferably no longer than an hour.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 3.6
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 3.6
 
 **Evidence**
 
@@ -8310,7 +8312,7 @@ Encryption protects confidential data when transmitted over untrusted network co
 
 **Rationale:** `SSL connectivity` helps to provide a new layer of security by connecting database servers to client applications using Secure Sockets Layer (SSL). Enforcing SSL connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.1
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.10 (PostgreSQL SSL)
 
 **Evidence**
 
@@ -8355,7 +8357,7 @@ Evidence or test output indicates that all PostgreSQL database servers are confi
 
 **Rationale:** SSL connectivity helps to provide a new layer of security by connecting database servers to client applications using Secure Sockets Layer (SSL). Enforcing SSL connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.4.1
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 5.8 (MySQL SSL)
 
 **Evidence**
 
@@ -8390,7 +8392,7 @@ Evidence or test output indicates that all Standard MySQL database servers are c
 
 **Rationale:** TLS connectivity helps to provide a new layer of security by connecting database servers to client applications using Transport Layer Security (TLS). Enforcing TLS connections between database server and client applications helps protect against "man in the middle" attacks by encrypting the data stream between the server and application.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.4.2
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 5.9 (MySQL TLS)
 
 **Evidence**
 
@@ -8563,7 +8565,7 @@ Evidence or test output indicates that all RDS instances are configured with enc
 
 **Rationale:** Azure SQL Database transparent data encryption helps protect against the threat of malicious activity by performing real-time encryption and decryption of the database, associated backups, and transaction log files at rest without requiring changes to the application.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.5
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 9.6 (SQL encryption)
 
 **Evidence**
 
@@ -8756,7 +8758,7 @@ Additionally, a custom rule can be set up with StartIp of 0.0.0.0 and EndIP of 2
 
 In order to reduce the potential attack surface for a SQL server, firewall rules should be defined with more granular IP addresses by referencing the range of addresses available from specific data centers.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.2
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 9.3 (SQL firewall)
 
 **Evidence**
 
@@ -9096,7 +9098,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 
 **Rationale:** If access from Azure services is enabled, the server's firewall will accept connections from all Azure resources, including resources not in your subscription. This is usually not a desired configuration. Instead, set up firewall rules to allow access from specific network ranges or VNET rules to allow access from specific virtual networks.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.7
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 4.3.7 (Not in Database Services v2.0.0 L1)
 
 **Evidence**
 
@@ -9357,7 +9359,7 @@ Centralizing makes administration simpler and therefore reduces risks related to
 * Azure AD supports connections from SQL Server Management Studio that use Active Directory Universal Authentication, which includes Multi-Factor Authentication (MFA). MFA includes strong authentication with a range of easy verification options — phone call, text message, smart cards with pin, or mobile app notification.
 
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.4
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 9.5 (SQL Entra admin)
 
 **Evidence**
 
@@ -9502,7 +9504,7 @@ Having log files of what actions have taken place by users and also system event
 
 **Rationale:** Enabling `log_checkpoints` helps the PostgreSQL Database to `Log each checkpoint` in turn generates query and error logs. However, access to transaction logs is not supported. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.2
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.7 (PostgreSQL log_checkpoints)
 
 **Evidence**
 
@@ -9548,7 +9550,7 @@ Evidence or test output indicates that all PostgreSQL instances are configured w
 
 **Rationale:** Enabling `log_connections` helps PostgreSQL Database to log attempted connection to the server, as well as successful completion of client authentication. Log data can be used to identify, troubleshoot, and repair configuration errors and suboptimal performance.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.3
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.9 (PostgreSQL log_connections)
 
 **Evidence**
 
@@ -9594,7 +9596,7 @@ Evidence or test output indicates that all PostgreSQL instances are configured w
 
 **Rationale:** Enabling `log_disconnections` helps PostgreSQL Database to `Logs end of a session`, including duration, which in turn generates query and error logs. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.4
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.8 (PostgreSQL log_disconnections)
 
 **Evidence**
 
@@ -9657,7 +9659,7 @@ Once configured, logs may generate large volumes of data. Organizations must ens
 
 **Rationale:** Configuring `log_retention_days` determines the duration in days that `Azure Database for PostgreSQL` retains log files. Query and error logs can be used to identify, troubleshoot, and repair configuration errors and sub-optimal performance.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.3.6
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.6 (PostgreSQL log_retention)
 
 **Evidence**
 
@@ -9724,7 +9726,7 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 
 Auditing tracks database events and writes them to an audit log in the Azure storage account. It also helps to maintain regulatory compliance, understand database activity, and gain insight into discrepancies and anomalies that could indicate business concerns or suspected security violations.
 
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v2.0.0, Section 4.1.1
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 9.1 (SQL auditing)
 
 **Evidence**
 
