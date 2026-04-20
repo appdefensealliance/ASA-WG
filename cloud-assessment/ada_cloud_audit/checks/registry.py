@@ -132,8 +132,6 @@ def _register_gcp_checks() -> None:
         "4.2.2": gcp_networking.check_dnssec,
         "4.2.3": gcp_networking.check_dnssec_key_signing,
         "4.2.4": gcp_networking.check_dnssec_zone_signing,
-        "4.3.3": gcp_networking.check_ssh_firewall,
-        "4.3.4": gcp_networking.check_rdp_firewall,
 
         # Storage (1 check)
         "5.5.3": gcp_storage.check_bucket_public_access,
