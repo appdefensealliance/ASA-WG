@@ -66,6 +66,7 @@ def _register_aws_checks() -> None:
         "4.3.5": compute.check_nacl_admin_ports_withdrawn,
         "4.3.6": compute.check_sg_ipv4_admin_ports,
         "4.3.7": compute.check_sg_ipv6_admin_ports,
+        "4.3.8": compute.check_cifs_restricted,
 
         # Data Protection - Storage
         "5.4.1": storage.check_ebs_encryption,
