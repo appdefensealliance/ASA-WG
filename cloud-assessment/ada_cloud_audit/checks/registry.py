@@ -37,10 +37,8 @@ def _register_aws_checks() -> None:
         "2.3.1": account.check_contact_info,
         "2.3.2": account.check_security_contact,
         "2.7.1": iam.check_root_access_keys,
-        "2.7.2": iam.check_no_access_keys_at_setup,
         "2.7.3": iam.check_no_full_admin_policies,
         "2.8.2": iam.check_password_policy_length,
-        "2.8.3": iam.check_one_active_access_key,
         "2.8.4": iam.check_access_keys_rotated,
         "2.9.1": iam.check_password_reuse_prevention,
         "2.10.1": iam.check_credentials_unused,
@@ -51,7 +49,6 @@ def _register_aws_checks() -> None:
 
         # Logging & Monitoring
         "3.4.1": logging_checks.check_cloudtrail_s3_access_logging,
-        "3.5.1": logging_checks.check_cloudtrail_s3_not_public,
         "3.9.1": logging_checks.check_console_signin_no_mfa,
         "3.9.2": logging_checks.check_root_account_usage,
         "3.9.3": logging_checks.check_iam_policy_changes,
@@ -63,7 +60,6 @@ def _register_aws_checks() -> None:
         "3.9.9": logging_checks.check_organizations_changes,
         "3.10.6": logging_checks.check_audit_log_retention,
         "3.11.1": logging_checks.check_cloudtrail_all_regions,
-        "3.11.2": logging_checks.check_cloudtrail_cloudwatch_integration,
 
         # Networking
         "4.2.5": compute.check_ec2_imdsv2,

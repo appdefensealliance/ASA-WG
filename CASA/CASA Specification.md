@@ -121,6 +121,14 @@ This specification was previously published as the ADA Web App Profile.
 
 6.7 [Securely store server-side secrets](#67-securely-store-server-side-secrets)
 
+7 [Webhook Security](#7-webhook-security)
+
+7.1 [Enforce transport security for webhook communications](#71-enforce-transport-security-for-webhook-communications)
+
+7.2 [Authenticate and verify webhook payload integrity](#72-authenticate-and-verify-webhook-payload-integrity)
+
+7.3 [Protect webhook integrations against abuse](#73-protect-webhook-integrations-against-abuse)
+
 
 # Introduction
 In today's digitally-driven world, web applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure web environment, a robust web application security standard and certification program is essential.
@@ -492,3 +500,64 @@ Secrets management helps protect API keys, access tokens, and other server-side 
 | Spec | Description |
 | --- | ------|
 | [6.7.1](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#671-the-application-shall-securely-store-access-tokens-api-keys-and-other-server-side-secrets) | The application shall securely store access tokens, API keys, and other server-side secrets.|
+
+---
+# 7 Webhook Security
+## 7.1 Enforce transport security for webhook communications
+### Description
+Applications that send or receive webhooks shall enforce transport-layer security for all webhook communications. Webhook providers shall refuse to deliver events to unencrypted HTTP endpoints. Webhook consumers shall reject incoming webhook requests received over unencrypted connections.
+### Rationale
+Webhook payloads frequently contain confidential data, authentication material, or event notifications that trigger state-changing operations. Transmitting this data over unencrypted HTTP exposes both the payload content and any authentication mechanisms (such as HMAC signatures or shared secrets) to interception by network-level adversaries.
+### Scope
+- Web application
+- Web and mobile APIs
+### Audit
+| Spec | Description |
+| --- | ------|
+| [7.1.1](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#711-webhook-communications-shall-be-transmitted-exclusively-over-https-using-tls-12-or-higher) | Webhook communications shall be transmitted exclusively over HTTPS using TLS 1.2 or higher.|
+| [7.1.2](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#712-webhook-providers-shall-verify-endpoint-ownership-before-delivering-events) | Webhook providers shall verify endpoint ownership before delivering events.|
+
+**Complements**: 4.1.1 (TLS enforcement for application connections)
+
+---
+## 7.2 Authenticate and verify webhook payload integrity
+### Description
+Applications that receive webhooks shall verify the authenticity and integrity of incoming webhook payloads using cryptographic signature verification. Relying solely on endpoint obscurity (unguessable URLs) or static API keys in headers is not sufficient. The verification mechanism shall include replay protection to prevent the reuse of intercepted payloads.
+### Rationale
+Without payload signature verification, an attacker who discovers a webhook endpoint URL can forge arbitrary payloads to trigger unauthorized actions in the receiving application. HMAC-SHA256 signature verification, combined with signed timestamps for replay protection, is the established industry baseline endorsed by the Standard Webhooks specification, Stripe, GitHub, and other major webhook providers.
+### Scope
+- Web application
+- Web and mobile APIs
+### Audit
+| Spec | Description |
+| --- | ------|
+| [7.2.1](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#721-webhook-payloads-shall-be-authenticated-using-hmac-sha256-or-stronger-cryptographic-signature-verification) | Webhook payloads shall be authenticated using HMAC-SHA256 (or stronger) cryptographic signature verification.|
+| [7.2.2](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#722-signature-verification-shall-use-timing-safe-comparison-functions) | Signature verification shall use timing-safe comparison functions.|
+| [7.2.3](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#723-webhook-payloads-shall-include-replay-protection-via-signed-timestamps) | Webhook payloads shall include replay protection via signed timestamps.|
+
+**Complements**: 6.7.1 (secure storage of server-side secrets, including webhook signing secrets)
+
+---
+## 7.3 Protect webhook integrations against abuse
+### Description
+Applications that implement webhook functionality shall protect against common abuse patterns. Webhook providers that accept user-supplied destination URLs shall implement Server-Side Request Forgery (SSRF) mitigations. Webhook signing secrets shall be managed with the same rigor as other server-side credentials.
+### Rationale
+Webhook providers that allow user-supplied callback URLs without SSRF protections can be exploited by attackers to scan internal networks, access cloud metadata services, or exfiltrate data through the provider's infrastructure. Webhook secrets that are hardcoded in source control or shared across multiple consumer endpoints increase the blast radius of a credential compromise.
+### Scope
+- Web application
+- Web and mobile APIs
+### Audit
+| Spec | Description |
+| --- | ------|
+| [7.3.1](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#731-webhook-providers-shall-implement-ssrf-mitigations-for-user-supplied-callback-urls) | Webhook providers shall implement SSRF mitigations for user-supplied callback URLs.|
+| [7.3.2](https://github.com/appdefensealliance/ASA-WG/blob/main/CASA/CASA%20Test%20Guide.md#732-webhook-signing-secrets-shall-not-be-hardcoded-in-source-code-or-stored-in-version-control) | Webhook signing secrets shall not be hardcoded in source code or stored in version control.|
+
+**Complements**: 5.1.5 (SSRF prevention), 6.7.1 (server-side secrets management)
+
+**Leading Practices for Higher-Sensitivity Contexts**: For webhook integrations handling financial transactions, payment state changes, or highly sensitive PII, organizations may consider implementing additional controls beyond the baseline requirements above. These elevated practices are not required for CASA certification but represent defense-in-depth measures appropriate for high-sensitivity use cases:
+- **Strict idempotency controls** using unique event IDs to prevent within-window replay of duplicate deliveries
+- **Zero-downtime key rotation** via concurrent multi-signature support during secret transitions
+- **Dataless notifications** (thin payloads) where the webhook contains only an event ID, requiring the consumer to fetch full event data via an authenticated API callback
+- **Asymmetric signatures** (RSA, Ed25519) providing non-repudiation guarantees stronger than symmetric HMAC
+- **Mutual TLS (mTLS)** for transport-layer mutual authentication between provider and consumer
+- **Webhook health monitoring and auto-disablement** to prevent stale endpoints from silently accumulating sensitive data
