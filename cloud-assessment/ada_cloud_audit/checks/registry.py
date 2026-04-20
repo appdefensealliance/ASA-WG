@@ -77,6 +77,7 @@ def _register_aws_checks() -> None:
         "6.5.1": database.check_rds_public_access,
         "6.12.1": database.check_rds_auto_minor_upgrade,
         "6.15.8": database.check_rds_logging_enabled,
+        "6.1.2": database.check_rds_multi_az,
     }
 
 
