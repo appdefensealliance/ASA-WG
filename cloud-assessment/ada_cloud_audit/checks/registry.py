@@ -37,20 +37,18 @@ def _register_aws_checks() -> None:
         "2.3.1": account.check_contact_info,
         "2.3.2": account.check_security_contact,
         "2.7.1": iam.check_root_access_keys,
-        "2.7.2": iam.check_no_access_keys_at_setup,
         "2.7.3": iam.check_no_full_admin_policies,
         "2.8.2": iam.check_password_policy_length,
-        "2.8.3": iam.check_one_active_access_key,
         "2.8.4": iam.check_access_keys_rotated,
         "2.9.1": iam.check_password_reuse_prevention,
         "2.10.1": iam.check_credentials_unused,
         "2.11.1": iam.check_root_usage,
         "2.16.1": iam.check_root_mfa,
         "2.18.1": iam.check_users_permissions_through_groups,
+        "2.14.9": iam.check_iam_mfa_all_users,
 
         # Logging & Monitoring
         "3.4.1": logging_checks.check_cloudtrail_s3_access_logging,
-        "3.5.1": logging_checks.check_cloudtrail_s3_not_public,
         "3.9.1": logging_checks.check_console_signin_no_mfa,
         "3.9.2": logging_checks.check_root_account_usage,
         "3.9.3": logging_checks.check_iam_policy_changes,
@@ -70,6 +68,7 @@ def _register_aws_checks() -> None:
         "4.3.5": compute.check_nacl_admin_ports_withdrawn,
         "4.3.6": compute.check_sg_ipv4_admin_ports,
         "4.3.7": compute.check_sg_ipv6_admin_ports,
+        "4.3.8": compute.check_cifs_restricted,
 
         # Data Protection - Storage
         "5.4.1": storage.check_ebs_encryption,
@@ -81,6 +80,140 @@ def _register_aws_checks() -> None:
         "6.5.1": database.check_rds_public_access,
         "6.12.1": database.check_rds_auto_minor_upgrade,
         "6.15.8": database.check_rds_logging_enabled,
+        "6.1.2": database.check_rds_multi_az,
+    }
+
+
+def _register_azure_checks() -> None:
+    """Register Azure checks if azure packages are installed."""
+    try:
+        from ada_cloud_audit.checks.azure import (
+            compute as az_compute,
+            database as az_database,
+            identity as az_identity,
+            logging as az_logging,
+            networking as az_networking,
+            security as az_security,
+            storage as az_storage,
+        )
+    except ImportError:
+        logger.debug("Azure dependencies not installed, skipping Azure check registration")
+        return
+
+    PROVIDER_REGISTRIES[Provider.AZURE] = {
+        # Removed checks (return NOT_APPLICABLE)
+        "1.1.1": az_identity.check_approved_extensions,
+        "1.4.1": az_identity.check_managed_disks,
+
+        # Compute / App Service (9 checks)
+        "1.2.2": az_compute.check_functions_runtime,
+        "1.2.3": az_compute.check_php_version,
+        "1.2.4": az_compute.check_python_version,
+        "1.2.5": az_compute.check_java_version,
+        "1.2.6": az_compute.check_http_version,
+        "1.3.1": az_compute.check_https_only,
+        "1.3.2": az_compute.check_tls_version,
+        "1.3.3": az_compute.check_ftp_disabled,
+        "1.8.1": az_compute.check_app_service_auth,
+
+        # Identity / Entra ID (21 checks — INCONCLUSIVE stubs, requires Microsoft Graph)
+        "2.4.1": az_identity.check_user_consent,
+        "2.4.2": az_identity.check_gallery_apps,
+        "2.4.3": az_identity.check_register_apps,
+        "2.7.4": az_identity.check_guest_access_restrictions,
+        "2.8.1": az_identity.check_security_defaults,
+        "2.9.2": az_identity.check_bad_password_list,
+        "2.10.2": az_identity.check_guest_users_reviewed,
+        "2.11.2": az_identity.check_notify_admin_password_reset,
+        "2.11.3": az_identity.check_restrict_admin_portal,
+        "2.11.4": az_identity.check_no_custom_sub_admin_roles,
+        "2.13.1": az_identity.check_reconfirm_auth_info,
+        "2.14.1": az_identity.check_reset_methods,
+        "2.14.2": az_identity.check_mfa_register_devices,
+        "2.14.3": az_identity.check_mfa_privileged,
+        "2.14.4": az_identity.check_mfa_remember_disabled,
+        "2.14.5": az_identity.check_mfa_policy_all_users,
+        "2.14.6": az_identity.check_mfa_risky_signins,
+        "2.14.8": az_identity.check_mfa_non_privileged,
+        "2.15.1": az_identity.check_mfa_admin_groups,
+        "2.15.2": az_identity.check_mfa_azure_management,
+        "2.17.1": az_identity.check_notify_password_resets,
+
+        # Security - Key Vault (7 checks)
+        "2.1.1": az_security.check_key_vault_recoverable,
+        "2.1.2": az_security.check_key_vault_public_access,
+        "2.5.1": az_security.check_key_expiry_rbac,
+        "2.5.2": az_security.check_key_expiry_non_rbac,
+        "2.5.3": az_security.check_secret_expiry_rbac,
+        "2.5.4": az_security.check_secret_expiry_non_rbac,
+        "2.5.5": az_security.check_cert_validity,
+
+        # Security - Defender (6 checks)
+        "3.2.1": az_security.check_notify_severity_high,
+        "3.2.2": az_security.check_notify_attack_paths,
+        "3.3.1": az_security.check_owner_role_notifications,
+        "3.3.2": az_security.check_additional_email,
+        "3.5.2": az_identity.check_storage_activity_logs,
+        "3.6.1": az_security.check_security_benchmark_policies,
+        "3.7.1": az_security.check_defender_vm_updates,
+        "3.8.1": az_identity.check_auto_provisioning,
+
+        # Logging (16 checks)
+        "3.10.7": az_logging.check_audit_log_retention,
+        "3.11.3": az_logging.check_resource_logging,
+        "3.11.4": az_logging.check_key_vault_logging,
+        "3.11.5": az_logging.check_alert_create_policy,
+        "3.11.6": az_logging.check_alert_delete_policy,
+        "3.11.7": az_logging.check_alert_create_nsg,
+        "3.11.8": az_logging.check_alert_delete_nsg,
+        "3.11.9": az_logging.check_alert_create_security,
+        "3.11.10": az_logging.check_alert_delete_security,
+        "3.11.11": az_logging.check_alert_create_sql_fw,
+        "3.11.12": az_logging.check_alert_delete_sql_fw,
+        "3.11.13": az_logging.check_alert_create_public_ip,
+        "3.11.14": az_logging.check_alert_delete_public_ip,
+        "3.11.15": az_logging.check_diagnostic_setting_exists,
+        "3.11.16": az_logging.check_diagnostic_categories,
+        "3.11.17": az_logging.check_alert_service_health,
+
+        # Networking (7 checks)
+        "4.3.1": az_networking.check_rdp_restricted,
+        "4.3.2": az_networking.check_ssh_restricted,
+        "4.3.9": az_networking.check_udp_restricted,
+        "4.3.10": az_networking.check_https_restricted,
+        "4.3.11": az_networking.check_subnets_have_nsgs,
+        "4.3.12": az_networking.check_app_gateway_tls,
+        "4.3.13": az_networking.check_app_gateway_http2,
+
+        # Storage (14 checks)
+        "5.1.1": az_storage.check_blob_soft_delete,
+        "5.1.2": az_storage.check_file_share_soft_delete,
+        "5.1.3": az_storage.check_smb_protocol_version,
+        "5.1.4": az_storage.check_smb_encryption,
+        "5.1.5": az_storage.check_container_soft_delete,
+        "5.2.1": az_storage.check_default_network_deny,
+        "5.2.2": az_storage.check_public_network_access_disabled,
+        "5.3.1": az_storage.check_secure_transfer,
+        "5.3.2": az_storage.check_min_tls_version,
+        "5.5.2": az_storage.check_blob_public_access_disabled,
+        "5.6.1": az_storage.check_key_rotation_reminders,
+        "5.7.1": az_storage.check_access_keys_regenerated,
+        "5.7.2": az_storage.check_storage_key_access_disabled,
+        "5.8.1": az_storage.check_sas_expiry,
+
+        # Database (11 checks)
+        "6.3.1": az_database.check_pg_ssl,
+        "6.3.2": az_database.check_mysql_ssl,
+        "6.3.3": az_database.check_mysql_tls,
+        "6.4.2": az_database.check_sql_encryption,
+        "6.5.2": az_database.check_sql_firewall,
+        "6.7.1": az_identity.check_pg_allow_azure_services,
+        "6.11.1": az_database.check_sql_ad_admin,
+        "6.13.1": az_database.check_pg_log_checkpoints,
+        "6.13.2": az_database.check_pg_log_connections,
+        "6.13.3": az_database.check_pg_log_disconnections,
+        "6.14.1": az_database.check_pg_log_retention,
+        "6.15.1": az_database.check_sql_auditing,
     }
 
 
@@ -117,6 +250,7 @@ def _register_gcp_checks() -> None:
         "2.11.5": gcp_iam.check_sa_admin_privileges,
         "2.12.1": gcp_iam.check_corporate_credentials,
         "2.14.7": gcp_iam.check_mfa_non_service,
+        "2.8.6": gcp_iam.check_gcp_managed_sa_keys,
 
         # Logging (8 checks)
         "3.1.1": gcp_logging.check_cloud_asset_inventory,
@@ -134,8 +268,6 @@ def _register_gcp_checks() -> None:
         "4.2.2": gcp_networking.check_dnssec,
         "4.2.3": gcp_networking.check_dnssec_key_signing,
         "4.2.4": gcp_networking.check_dnssec_zone_signing,
-        "4.3.3": gcp_networking.check_ssh_firewall,
-        "4.3.4": gcp_networking.check_rdp_firewall,
 
         # Storage (1 check)
         "5.5.3": gcp_storage.check_bucket_public_access,
@@ -163,6 +295,7 @@ def _register_gcp_checks() -> None:
 
 
 _register_aws_checks()
+_register_azure_checks()
 _register_gcp_checks()
 
 

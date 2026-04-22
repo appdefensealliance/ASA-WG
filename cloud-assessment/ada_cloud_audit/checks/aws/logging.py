@@ -1,8 +1,7 @@
 """AWS Logging and Monitoring checks for ADA Cloud assessment.
 
-Covers 14 requirements:
+Covers 12 requirements:
 - 3.4.1: CloudTrail S3 bucket access logging
-- 3.5.1: CloudTrail S3 bucket not publicly accessible
 - 3.9.1-3.9.9: CloudWatch metric filter monitoring (9 checks)
 - 3.10.6: Audit logs retained >= 90 days
 - 3.11.1: CloudTrail enabled in all regions
@@ -241,90 +240,6 @@ def check_cloudtrail_s3_access_logging(session: boto3.Session) -> "RequirementRe
             "AWS",
             Verdict.INCONCLUSIVE,
             f"Error checking CloudTrail S3 bucket logging: {e}",
-        )
-
-
-def check_cloudtrail_s3_not_public(session: boto3.Session) -> "RequirementResult":
-    """ADA 3.5.1: Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible."""
-    ct = session.client("cloudtrail")
-    s3 = session.client("s3")
-    try:
-        trails = ct.describe_trails()["trailList"]
-        if not trails:
-            return make_result(
-                "3.5.1",
-                "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
-                "AWS",
-                Verdict.FAIL,
-                "No CloudTrail trails configured",
-            )
-
-        failing_buckets = []
-        passing_buckets = []
-
-        for trail in trails:
-            bucket = trail.get("S3BucketName", "")
-            if not bucket:
-                continue
-            issues = []
-
-            # Check ACL
-            try:
-                acl = s3.get_bucket_acl(Bucket=bucket)
-                for grant in acl.get("Grants", []):
-                    grantee_uri = grant.get("Grantee", {}).get("URI", "")
-                    if "AllUsers" in grantee_uri or "AuthenticatedUsers" in grantee_uri:
-                        issues.append(f"ACL grants access to {grantee_uri}")
-            except ClientError:
-                pass
-
-            # Check bucket policy
-            try:
-                import json
-                policy_str = s3.get_bucket_policy(Bucket=bucket)["Policy"]
-                policy = json.loads(policy_str)
-                for stmt in policy.get("Statement", []):
-                    if stmt.get("Effect") == "Allow":
-                        principal = stmt.get("Principal", "")
-                        if principal == "*" or (isinstance(principal, dict) and principal.get("AWS") == "*"):
-                            # Check for conditions that restrict access
-                            condition = stmt.get("Condition", {})
-                            if not condition:
-                                issues.append("Bucket policy allows public access (Principal: *)")
-            except ClientError as e:
-                if e.response["Error"]["Code"] != "NoSuchBucketPolicy":
-                    pass
-
-            if issues:
-                failing_buckets.append(f"{bucket}: {'; '.join(issues)}")
-            else:
-                passing_buckets.append(bucket)
-
-        if not failing_buckets:
-            return make_result(
-                "3.5.1",
-                "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
-                "AWS",
-                Verdict.PASS,
-                f"CloudTrail S3 bucket(s) are not publicly accessible: {', '.join(passing_buckets)}",
-                {"passing_buckets": passing_buckets},
-            )
-        else:
-            return make_result(
-                "3.5.1",
-                "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
-                "AWS",
-                Verdict.FAIL,
-                f"CloudTrail S3 bucket(s) with public access:\n" + "\n".join(failing_buckets),
-                {"failing_buckets": failing_buckets, "passing_buckets": passing_buckets},
-            )
-    except ClientError as e:
-        return make_result(
-            "3.5.1",
-            "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
-            "AWS",
-            Verdict.INCONCLUSIVE,
-            f"Error checking CloudTrail S3 bucket access: {e}",
         )
 
 
