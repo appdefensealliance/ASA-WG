@@ -241,7 +241,7 @@ It is necessary to first identify the software that needs to be secured before t
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 1.1.1 | Azure | Ensure that Only Approved Extensions Are Installed |
+| 1.1.1 | Azure | REMOVED — Not in CIS Azure Foundations v5.0.0 L1 |
 
 ---
 ## 1.2 Ensure Authorized Software is Currently Supported
@@ -304,7 +304,7 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 | Spec | Platform | Description |
 |---|-----|----------|
-| 1.4.1 | Azure | Ensure Virtual Machines are utilizing Managed Disks |
+| 1.4.1 | Azure | REMOVED — Not in CIS Azure Foundations v5.0.0 L1 |
 
 ---
 
@@ -478,7 +478,7 @@ Actively manage (inventory, track, and correct) all software (operating systems 
 | Spec | Platform | Description |
 |---|-----|----------|
 | 2.4.1 | Azure | Ensure <code>User consent for applications</code> is set to <code>Do not allow user consent |
-| 2.4.2 | Azure | Ensure that 'Users can add gallery apps to My Apps' is set to 'No' |
+| 2.4.2 | Azure | REMOVED — Not in CIS Azure Foundations v5.0.0 |
 | 2.4.3 | Azure | Ensure That ‘Users Can Register Applications’ Is Set to ‘No’ |
 | 2.4.4 | Azure | Ensure that ‘Restrict non-admin users from creating tenants’ is set to ‘Yes’ |
 
@@ -710,8 +710,8 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 | 2.14.2 | Azure | Ensure that 'Require Multi-Factor Authentication to register or join devices with Azure AD' is set to 'Yes' |
 | 2.14.3 | Azure | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Privileged Users |
 | 2.14.4 | Azure | Ensure that 'Allow users to remember multi-factor authentication on devices they trust' is Disabled |
-| 2.14.5 | Azure | Ensure that A Multi-factor Authentication Policy Exists for All Users |
-| 2.14.6 | Azure | Ensure Multi-factor Authentication is Required for Risky Sign-ins |
+| 2.14.5 | Azure | REMOVED — Reclassified to Level 2 in CIS v5.0.0 (5.2.4) |
+| 2.14.6 | Azure | REMOVED — Reclassified to Level 2 in CIS v5.0.0 (5.2.5) |
 | 2.14.7 | Google | Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts |
 | 2.14.8 | Azure | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users |
 | 2.14.9 | AWS | Ensure MFA is enabled for all IAM users that have a console password |
@@ -734,8 +734,8 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 2.15.1 | Azure | Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups |
-| 2.15.2 | Azure | Ensure Multi-factor Authentication is Required for Azure Management |
+| 2.15.1 | Azure | REMOVED — Reclassified to Level 2 in CIS v5.0.0 (5.2.7) |
+| 2.15.2 | Azure | REMOVED — Reclassified to Level 2 in CIS v5.0.0 (5.2.6) |
 
 
 ---
@@ -896,7 +896,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 | Spec | Platform | Description |
 |---|-----|----------|
 | 3.5.1 | AWS | REMOVED — Retired in CIS v7.0.0; covered by 5.5.1 (S3 Block Public Access) |
-| 3.5.2 | Azure | Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible |
+| 3.5.2 | Azure | REMOVED — Not in CIS Azure Foundations v5.0.0 L1 |
 
 ---
 
@@ -958,7 +958,7 @@ Tools can help to identify vulnerabilities that require remediation.
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 3.8.1 | Azure | Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On' |
+| 3.8.1 | Azure | REMOVED — Removed from CIS Azure Foundations v5.0.0 |
 
 ---
 
@@ -1464,7 +1464,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 6.7.1 | Azure | Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled |
+| 6.7.1 | Azure | REMOVED — Not in CIS Azure Database Services v2.0.0 L1 |
 
 ---
 
