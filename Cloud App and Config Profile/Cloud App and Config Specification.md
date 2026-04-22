@@ -22,6 +22,18 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Alex Duff (Meta)
 * Brad Ree (Google)
 
+### Abbreviated Terms
+| Abbreviation | Full Term |
+| --- | ----- |
+| MFA | Multi-Factor Authentication|
+| TLS | Transport Layer Security|
+| OpenSSH | Open Secure Shell|
+| IAM | Identity and Access Management|
+| MDM | Mobile Device Management|
+| SSO | Single Sign-On|
+| SCAP | Security Content Automation Protocol|
+| CIS | Center for Internet Security|
+
 ### Contributors
 * Alex Duff  (Meta)
 * Andrew Kiggins
