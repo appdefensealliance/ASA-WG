@@ -1,6 +1,6 @@
 """AWS IAM checks for ADA Cloud assessment.
 
-Covers 14 requirements:
+Covers 15 requirements:
 - 2.2.1: Support role for AWS Support
 - 2.7.1: No root access keys
 - 2.7.3: No full admin IAM policies attached
@@ -12,6 +12,7 @@ Covers 14 requirements:
 - 2.16.1: MFA enabled for root
 - 2.18.1: Users receive permissions only through groups
 - 2.7.7: CloudShell access restricted
+- 2.7.8: No unrestricted Principal * in resource policies
 - 2.8.5: Expired SSL/TLS certs removed from IAM
 - 3.8.2: IAM External Access Analyzer enabled
 - 2.14.9: MFA enabled for all IAM console users
@@ -668,6 +669,56 @@ def check_access_analyzer(session: boto3.Session) -> "RequirementResult":
         _check_region,
     )
 
+
+def check_resource_policy_principal(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.7.8: Ensure AWS resource policies do not allow unrestricted access using Principal *."""
+    import json as _json
+
+    s3 = session.client("s3")
+    findings = []
+
+    # Check S3 bucket policies
+    try:
+        buckets = s3.list_buckets().get("Buckets", [])
+        for bucket in buckets:
+            name = bucket["Name"]
+            try:
+                policy_str = s3.get_bucket_policy(Bucket=name)["Policy"]
+                policy = _json.loads(policy_str)
+                for stmt in policy.get("Statement", []):
+                    if stmt.get("Effect") != "Allow":
+                        continue
+                    principal = stmt.get("Principal", "")
+                    is_wildcard = (
+                        principal == "*"
+                        or (isinstance(principal, dict) and principal.get("AWS") == "*")
+                    )
+                    if is_wildcard and not stmt.get("Condition"):
+                        findings.append(f"S3 bucket '{name}': Allow Principal * without conditions")
+            except ClientError as e:
+                if e.response["Error"]["Code"] != "NoSuchBucketPolicy":
+                    pass
+    except ClientError:
+        findings.append("S3: Unable to list buckets (access denied)")
+
+    if not findings:
+        return make_result(
+            "2.7.8",
+            'Ensure AWS resource policies do not allow unrestricted access using "Principal": "*"',
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            "S3 bucket policies checked — no unrestricted Principal found. "
+            "Manual review required for SQS, SNS, and Lambda resource policies.",
+        )
+    else:
+        return make_result(
+            "2.7.8",
+            'Ensure AWS resource policies do not allow unrestricted access using "Principal": "*"',
+            "AWS",
+            Verdict.FAIL,
+            "Resource policies with unrestricted Principal *:\n" + "\n".join(findings),
+            {"findings": findings},
+        )
 
 
 def check_iam_mfa_all_users(session: boto3.Session) -> "RequirementResult":

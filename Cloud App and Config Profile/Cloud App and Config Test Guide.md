@@ -124,6 +124,8 @@ Version 1.0 - 10-OCT 24
 
 [2.7.7 Ensure access to AWSCloudShellFullAccess is restricted](#277-ensure-access-to-awscloudshellFullaccess-is-restricted)
 
+[2.7.8 Ensure AWS resource policies do not allow unrestricted access using Principal *](#278-ensure-aws-resource-policies-do-not-allow-unrestricted-access-using-principal-)
+
 [2.8 Establish and Maintain a Secure Configuration Process](#28-establish-and-maintain-a-secure-configuration-process)
 
 [2.8.1 Ensure Security Defaults is enabled on Azure Active Directory](#281-ensure-security-defaults-is-enabled-on-azure-active-directory)
@@ -2813,6 +2815,45 @@ Evidence or test output indicates that cloud KML cryptokeys are not anonymously 
 
 ---
 
+### 2.7.8 Ensure AWS resource policies do not allow unrestricted access using "Principal": "*"
+**Platform:** AWS
+
+**Rationale:** Resource-based policies on S3 buckets, SQS queues, SNS topics, and Lambda functions that specify `"Principal": "*"` with `"Effect": "Allow"` without restrictive conditions grant access to any AWS principal in any account. This significantly increases the risk of unauthorized data access, resource abuse, or data exfiltration.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.21
+
+**Evidence**
+
+**From Command Line:**
+
+1. Identify resources that support resource-based policies (S3 buckets, SQS queues, SNS topics, Lambda functions)
+
+2. Retrieve and review policies for each resource type:
+
+S3 Bucket Policies:
+```
+aws s3api get-bucket-policy --bucket <bucket_name>
+```
+
+SQS Queue Policies:
+```
+aws sqs get-queue-attributes --queue-url <queue_url> --attribute-names Policy
+```
+
+SNS Topic Policies:
+```
+aws sns get-topic-attributes --topic-arn <topic_arn>
+```
+
+Lambda Resource Policies:
+```
+aws lambda get-policy --function-name <function_name>
+```
+
+3. For each policy, check for statements with `"Effect": "Allow"` and `"Principal": "*"` or `{"AWS": "*"}`. If found, verify that restrictive conditions (such as `aws:PrincipalOrgID`, `aws:SourceVpc`, `aws:SourceAccount`, etc.) limit access to trusted identities.
+
+**Verification**
+
 ### 2.7.7 Ensure access to AWSCloudShellFullAccess is restricted
 **Platform:** AWS
 
@@ -2844,6 +2885,11 @@ aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSCloudSh
 **Verification**
 
 Evidence or test output indicates that access to AWSCloudShellFullAccess is restricted to only authorized entities. Manual review is required to determine if the level of access is appropriate.
+
+
+---
+
+Evidence or test output indicates that no resource policies allow unrestricted access via `"Principal": "*"` without appropriate conditions. Manual review is required to evaluate condition adequacy.
 
 
 ---

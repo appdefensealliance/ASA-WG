@@ -554,6 +554,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 | 2.7.5 | Google | Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level |
 | 2.7.6 | Google | Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible |
 | 2.7.7 | AWS | Ensure access to AWSCloudShellFullAccess is restricted |
+| 2.7.8 | AWS | Ensure AWS resource policies do not allow unrestricted access using "Principal": "*" |
 | 2.7.9 | Google | Ensure KMS Encryption Keys Are Rotated Within a Period of 90 Days |
 
 
