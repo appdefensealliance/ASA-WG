@@ -214,9 +214,11 @@ This document is intended for system and application administrators, security sp
 
 This profile builds upon the work of the Center for Internet Security (CIS), specifically their cloud foundations benchmarks.
 
-1. [CIS Amazon Web Services Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/14207)
+1. [CIS Amazon Web Services Foundations Benchmark v7.0.0](https://workbench.cisecurity.org/benchmarks/14207)
 2. [CIS Google Cloud Platform Foundation Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/9562)
-3. [CIS Microsoft Azure Foundations Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks/10624)
+3. [CIS Microsoft Azure Foundations Benchmark v5.0.0](https://workbench.cisecurity.org/benchmarks/10624)
+4. [CIS Microsoft Azure Compute Services Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks)
+5. [CIS Microsoft Azure Database Services Benchmark v2.0.0](https://workbench.cisecurity.org/benchmarks)
 
 # Licensing
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -543,7 +545,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 | Spec | Platform | Description |
 |---|-----|----------|
 | 2.7.1 | AWS | Ensure no 'root' user account access key exists |
-| 2.7.2 | Aws | Do not setup access keys during initial user setup for all IAM users that have a console password |
+| 2.7.2 | AWS | REMOVED — Retired in CIS v7.0.0 |
 | 2.7.3 | AWS | Ensure IAM policies that allow full "_:_" administrative privileges are not attached |
 | 2.7.4 | Azure | Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects' |
 | 2.7.5 | Google | Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level |
@@ -569,8 +571,9 @@ Establish and maintain a secure configuration process for enterprise assets (end
 |---|-----|----------|
 | 2.8.1 | Azure | Ensure Security Defaults is enabled on Azure Active Directory |
 | 2.8.2 | AWS | Ensure IAM password policy requires minimum length of 14 or greater |
-| 2.8.3 | AWS | Ensure there is only one active access key available for any single IAM user |
+| 2.8.3 | AWS | REMOVED — Retired in CIS v7.0.0 |
 | 2.8.4 | AWS | Ensure access keys are rotated every 90 days or less |
+| 2.8.6 | Google | Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account |
 
 ---
 
@@ -701,6 +704,7 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 | 2.14.6 | Azure | REMOVED — Reclassified to Level 2 in CIS v5.0.0 (5.2.5) |
 | 2.14.7 | Google | Ensure that Multi-Factor Authentication is 'Enabled' for All Non-Service Accounts |
 | 2.14.8 | Azure | Ensure that 'Multi-Factor Auth Status' is 'Enabled' for all Non-Privileged Users |
+| 2.14.9 | AWS | Ensure MFA is enabled for all IAM users that have a console password |
 
 ---
 
@@ -879,7 +883,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 3.5.1 | AWS | Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible  |
+| 3.5.1 | AWS | REMOVED — Retired in CIS v7.0.0; covered by 5.5.1 (S3 Block Public Access) |
 | 3.5.2 | Azure | REMOVED — Not in CIS Azure Foundations v5.0.0 L1 |
 
 ---
@@ -1019,7 +1023,7 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 | Spec | Platform | Description |
 |---|-----|----------|
 | 3.11.1 | AWS | Ensure CloudTrail is enabled in all regions |
-| 3.11.2 | AWS | Ensure CloudTrail trails are integrated with CloudWatch Logs |
+| 3.11.2 | AWS | REMOVED — Retired in CIS v7.0.0 |
 | 3.11.3 | Azure | Ensure that Azure Monitor Resource Logging is Enabled for All Services that Manage, Store, or Secure Confidential Data |
 | 3.11.4 | Azure | Ensure that logging for Azure Key Vault is 'Enabled' |
 | 3.11.5 | Azure | Ensure that Activity Log Alert exists for Create Policy Assignment |
@@ -1100,11 +1104,12 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 |---|-----|----------|
 | 4.3.1 | Azure | Ensure that RDP access from the Internet is evaluated and restricted |
 | 4.3.2 | Azure | Ensure that SSH access from the Internet is evaluated and restricted |
-| 4.3.3 | Google | Ensure That SSH Access Is Restricted From the Internet |
-| 4.3.4 | Google | Ensure That RDP Access Is Restricted From the Internet |
+| 4.3.3 | Google | REMOVED — Reclassified to Level 2 in CIS v4.0.0 |
+| 4.3.4 | Google | REMOVED — Reclassified to Level 2 in CIS v4.0.0 |
 | 4.3.5 | AWS | Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.6 | AWS | Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.7 | AWS | Ensure no security groups allow ingress from ::/0 to remote server administration ports |
+| 4.3.8 | AWS | Ensure CIFS access is restricted to trusted networks to prevent unauthorized access |
 
 
 ---
@@ -1295,6 +1300,7 @@ Industry-recommended hardening configuration templates reduce the attack surface
 | Spec | Platform | Description |
 |---|-----|----------|
 | 6.1.1 | Google | Ensure That the ‘Local_infile’ Database Flag for a Cloud SQL MySQL Instance Is Set to ‘Off’ |
+| 6.1.2 | AWS | Ensure Multi-AZ deployments are used for enhanced availability in Amazon RDS |
 
 ---
 
