@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_Changes targeting the next release (v2.0.0)._
+_Changes targeting the next release (v2.2.0)._
 
 ### Changed
 - Removed embedded Revision History tables from MASA, CASA, and Cloud App & Config spec documents; version history is now tracked via GitHub Releases and CHANGELOG.md
@@ -18,6 +18,7 @@ _Changes targeting the next release (v2.0.0)._
 - Added issue and PR templates for standards management workflow
 
 ### Added
+- Initial **Desktop Application Security Assessment (DASA)** profile: `DASA/DASA Specification.md` and `DASA/DASA Test Guide.md` — a baseline security profile for Windows, macOS, and Linux desktop applications, adapted from AFINE DASVS v1.0.0, NIAP PP_APP v2.0, and the OWASP Desktop App Security Top 10. This is the initial version of the profile; additional domains are tracked for future iterations (see Coverage Notes). (#306)
 - `CONTRIBUTING.md` — Standards management lifecycle documentation
 - `CHANGELOG.md` — Version history tracking
 - `LICENSE` — CC BY-SA 4.0 licensing terms
