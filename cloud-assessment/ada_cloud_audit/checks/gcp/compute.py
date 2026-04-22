@@ -1,7 +1,7 @@
 """GCP Compute checks for ADA Cloud assessment.
 
 Covers 7 requirements:
-- 1.2.6: Cloud Functions use current runtimes
+- 1.2.7: Cloud Functions use current runtimes
 - 1.3.4: Block Project-Wide SSH Keys enabled for VM instances
 - 1.5.1: IP Forwarding not enabled on instances
 - 1.6.1: Instances not using default service account
@@ -29,8 +29,8 @@ DEPRECATED_RUNTIMES = {
 
 
 def check_cloud_functions_runtimes(session: GCPSession) -> RequirementResult:
-    """ADA 1.2.6: Ensure Cloud Functions use current (not deprecated) runtimes."""
-    spec_id = "1.2.6"
+    """ADA 1.2.7: Ensure Cloud Functions use current (not deprecated) runtimes."""
+    spec_id = "1.2.7"
     title = "Ensure that all Cloud Functions are configured to use a current runtime"
 
     try:
