@@ -68,6 +68,8 @@ Version 1.0 - 10-OCT 24
 
 [2.1.1 Ensure the Key Vault is Recoverable](#211-ensure-the-key-vault-is-recoverable)
 
+[2.1.2 Ensure Key Vault Public Network Access is Disabled](#212-ensure-key-vault-public-network-access-is-disabled)
+
 [2.2 Designate Personnel to Manage Incident Handling](#22-designate-personnel-to-manage-incident-handling)
 
 [2.2.1 Ensure a support role has been created to manage incidents with AWS Support](#221-ensure-a-support-role-has-been-created-to-manage-incidents-with-aws-support)
@@ -88,6 +90,8 @@ Version 1.0 - 10-OCT 24
 
 [2.4.3 Ensure That ‘Users Can Register Applications’ Is Set to ‘No’](#243-ensure-that-users-can-register-applications-is-set-to-no)
 
+[2.4.4 Ensure Restrict Non-Admin Users from Creating Tenants is Set to Yes](#244-ensure-restrict-non-admin-users-from-creating-tenants-is-set-to-yes)
+
 [2.5 Establish and Maintain a Data Management Process](#25-establish-and-maintain-a-data-management-process)
 
 [2.5.1 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Keys in RBAC Key Vaults](#251-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-keys-in-rbac-key-vaults)
@@ -97,6 +101,8 @@ Version 1.0 - 10-OCT 24
 [2.5.3 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in RBAC Key Vaults](#253-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-secrets-in-rbac-key-vaults)
 
 [2.5.4 Ensure that the Expiration Date that is no more than 90 days in the future is set for all Secrets in Non-RBAC Key Vaults](#254-ensure-that-the-expiration-date-that-is-no-more-than-90-days-in-the-future-is-set-for-all-secrets-in-non-rbac-key-vaults)
+
+[2.5.5 Ensure Certificate Validity Period Does Not Exceed 12 Months](#255-ensure-certificate-validity-period-does-not-exceed-12-months)
 
 [2.6 Encrypt Confidential Data at Rest](#26-encrypt-confidential-data-at-rest)
 
@@ -128,6 +134,10 @@ Version 1.0 - 10-OCT 24
 
 [2.8.6 Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account](#286-ensure-that-there-are-only-gcp-managed-service-account-keys-for-each-service-account)
 
+[2.8.7 Ensure That Account Lockout Threshold is Set Appropriately](#287-ensure-that-account-lockout-threshold-is-set-appropriately)
+
+[2.8.8 Ensure That Account Lockout Duration is Set Appropriately](#288-ensure-that-account-lockout-duration-is-set-appropriately)
+
 [2.9 Use Unique Passwords](#29-use-unique-passwords)
 
 [2.9.1 Ensure IAM password policy prevents password reuse](#291-ensure-iam-password-policy-prevents-password-reuse)
@@ -149,6 +159,16 @@ Version 1.0 - 10-OCT 24
 [2.11.3 Ensure That 'Restrict access to Azure AD administration portal' is Set to 'Yes'](#2113-ensure-that-restrict-access-to-azure-ad-administration-portal-is-set-to-yes)
 
 [2.11.4 Ensure That No Custom Subscription Administrator Roles Exist](#2114-ensure-that-no-custom-subscription-administrator-roles-exist)
+
+[2.11.6 Ensure Administrative Accounts Are Separate and Cloud-Only](#2116-ensure-administrative-accounts-are-separate-and-cloud-only)
+
+[2.11.7 Ensure User Access Administrator Role Assignment is Restricted and Limited](#2117-ensure-user-access-administrator-role-assignment-is-restricted-and-limited)
+
+[2.11.8 Ensure a Regular Review of Privileged Role Assignments is Performed](#2118-ensure-a-regular-review-of-privileged-role-assignments-is-performed)
+
+[2.11.9 Ensure Fewer Than 5 Users Have Global Administrator Assignment](#2119-ensure-fewer-than-5-users-have-global-administrator-assignment)
+
+[2.11.10 Ensure That 'Subscription Entering AAD Directory' and 'Subscription Leaving AAD Directory' Have 2-3 Owners](#21110-ensure-that-subscription-entering-aad-directory-and-subscription-leaving-aad-directory-have-2-3-owners)
 
 [2.11.5 Ensure That Service Account Has No Admin Privileges](#2115-ensure-that-service-account-has-no-admin-privileges)
 
@@ -180,6 +200,8 @@ Version 1.0 - 10-OCT 24
 
 [2.14.9 Ensure MFA is enabled for all IAM users that have a console password](#2149-ensure-mfa-is-enabled-for-all-iam-users-that-have-a-console-password)
 
+[2.14.10 Ensure That Multi-Factor Authentication is Enabled for All Users](#21410-ensure-that-multi-factor-authentication-is-enabled-for-all-users)
+
 [2.15 Require MFA for Remote Network Access](#215-require-mfa-for-remote-network-access)
 
 [2.15.1 Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups ](#2151-ensure-that-a-multi-factor-authentication-policy-exists-for-administrative-groups)
@@ -205,6 +227,8 @@ Version 1.0 - 10-OCT 24
 [3.2 Tune Security Event Alerting Thresholds](#32-tune-security-event-alerting-thresholds)
 
 [3.2.1 Ensure That 'Notify about alerts with the following severity' is Set to 'High'](#321-ensure-that-notify-about-alerts-with-the-following-severity-is-set-to-high)
+
+[3.2.2 Ensure That 'Notify About Alerts with Attack Paths Risk Level' is Set](#322-ensure-that-notify-about-alerts-with-attack-paths-risk-level-is-set)
 
 [3.3 Establish and Maintain Contact Information for Reporting Security Incidents](#33-establish-and-maintain-contact-information-for-reporting-security-incidents)
 
@@ -304,6 +328,12 @@ Version 1.0 - 10-OCT 24
 
 [3.11.14 Ensure that Activity Log Alert exists for Delete Public IP Address rule](#31114-ensure-that-activity-log-alert-exists-for-delete-public-ip-address-rule)
 
+[3.11.15 Ensure a Diagnostic Setting Exists](#31115-ensure-a-diagnostic-setting-exists)
+
+[3.11.16 Ensure Diagnostic Setting Captures Appropriate Categories](#31116-ensure-diagnostic-setting-captures-appropriate-categories)
+
+[3.11.17 Ensure a Service Health Alert Exists](#31117-ensure-a-service-health-alert-exists)
+
 [4 Networking](#4-networking)
 
 [4.1 Encrypt Confidential Data in Transit](#41-encrypt-confidential-data-in-transit)
@@ -328,6 +358,16 @@ Version 1.0 - 10-OCT 24
 
 [4.3.2 Ensure that SSH access from the Internet is evaluated and restricted](#432-ensure-that-ssh-access-from-the-internet-is-evaluated-and-restricted)
 
+[4.3.9 Ensure that UDP Access from the Internet is Evaluated and Restricted](#439-ensure-that-udp-access-from-the-internet-is-evaluated-and-restricted)
+
+[4.3.10 Ensure that HTTP(S) Access from the Internet is Evaluated and Restricted](#4310-ensure-that-https-access-from-the-internet-is-evaluated-and-restricted)
+
+[4.3.11 Ensure that All Subnets Have a Network Security Group Associated](#4311-ensure-that-all-subnets-have-a-network-security-group-associated)
+
+[4.3.12 Ensure Application Gateway has WAF Enabled and Uses OWASP 3.2 or Higher Rule Set with No Disabled Rules](#4312-ensure-application-gateway-has-waf-enabled-and-uses-owasp-32-or-higher-rule-set-with-no-disabled-rules)
+
+[4.3.13 Ensure Application Gateway Uses HTTP/2](#4313-ensure-application-gateway-uses-http2)
+
 [4.3.3 Ensure That SSH Access Is Restricted From the Internet](#433-ensure-that-ssh-access-is-restricted-from-the-internet)
 
 [4.3.4 Ensure That RDP Access Is Restricted From the Internet](#434-ensure-that-rdp-access-is-restricted-from-the-internet)
@@ -347,9 +387,19 @@ Version 1.0 - 10-OCT 24
 
 [5.1.1 Ensure Soft Delete is Enabled for Azure Containers and Blob Storage](#511-ensure-soft-delete-is-enabled-for-azure-containers-and-blob-storage)
 
+[5.1.2 Ensure Soft Delete is Enabled for Azure File Shares](#512-ensure-soft-delete-is-enabled-for-azure-file-shares)
+
+[5.1.3 Ensure SMB Protocol Version is 3.1.1 for File Shares](#513-ensure-smb-protocol-version-is-311-for-file-shares)
+
+[5.1.4 Ensure SMB Channel Encryption is Enabled for File Shares](#514-ensure-smb-channel-encryption-is-enabled-for-file-shares)
+
+[5.1.5 Ensure Soft Delete is Enabled for Azure Containers](#515-ensure-soft-delete-is-enabled-for-azure-containers)
+
 [5.2 Establish and Maintain a Secure Network Architecture](#52-establish-and-maintain-a-secure-network-architecture)
 
 [5.2.1 Ensure Default Network Access Rule for Storage Accounts is Set to Deny](#521-ensure-default-network-access-rule-for-storage-accounts-is-set-to-deny)
+
+[5.2.2 Ensure Public Network Access is Disabled for Storage Accounts](#522-ensure-public-network-access-is-disabled-for-storage-accounts)
 
 [5.3 Encrypt Confidential Data in Transit](#53-encrypt-confidential-data-in-transit)
 
@@ -378,6 +428,8 @@ Version 1.0 - 10-OCT 24
 [5.7 Securely Manage Enterprise Assets and Software](#57-securely-manage-enterprise-assets-and-software)
 
 [5.7.1 Ensure that Storage Account Access Keys are Periodically Regenerated](#571-ensure-that-storage-account-access-keys-are-periodically-regenerated)
+
+[5.7.2 Ensure Storage Account Key Access is Disabled](#572-ensure-storage-account-key-access-is-disabled)
 
 [5.8 Establish an Access Revoking Process](#58-establish-an-access-revoking-process)
 
@@ -1115,7 +1167,7 @@ Evidence or test output indicates that no webapp is deployed with FtpsState of A
 
 **Rationale:** Project-wide SSH keys are stored in Compute/Project-meta-data. Project wide SSH keys can be used to login into all the instances within the project. Using project-wide SSH keys eases the SSH key management but if compromised, poses the security risk which can impact all the instances within the project. It is recommended to use Instance specific SSH keys which can limit the attack surface if the SSH keys are compromised.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.3
 
 **Evidence**
 
@@ -1239,7 +1291,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 
 **Rationale:** Compute Engine instance cannot forward a packet unless the source IP address of the packet matches the IP address of the instance. Similarly, GCP won't deliver a packet whose destination IP address is different than the IP address of the instance receiving the packet. However, both capabilities are required if you want to use instances to help route packets. To enable this source and destination IP check, disable the `canIpForward` field, which allows an instance to send and receive packets with non-matching destination or source IPs.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.6
 
 **Evidence**
 
@@ -1297,7 +1349,7 @@ Products typically ship with insecure defaults that, if not configured securely,
 
 The default Compute Engine service account is named `[PROJECT_NUMBER]-compute@developer.gserviceaccount.com`.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.1
 
 **Evidence**
 
@@ -1348,7 +1400,7 @@ Evidence or test output indicates that no VM instance is configured to use the d
 
 When an instance is configured with `Compute Engine default service account` with Scope `Allow full access to all Cloud APIs`, based on IAM roles assigned to the user(s) accessing Instance, it may allow user to perform cloud operations/API calls that user is not supposed to perform leading to successful privilege escalation.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.2
 
 **Evidence**
 
@@ -1409,7 +1461,7 @@ The interactive serial console does not support IP-based access restrictions suc
 
 Therefore interactive serial console support should be disabled.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.5
 
 **Evidence**
 
@@ -1539,7 +1591,7 @@ Evidence or test output indicates that every web app is assigned a unique princi
 
 **Rationale:** Enabling osLogin ensures that SSH keys used to connect to instances are mapped with IAM users. Revoking access to an IAM user will revoke all the SSH keys associated with that particular user. It facilitates centralized and automated SSH key pair management which is useful in handling cases like response to compromised SSH key pairs and/or revocation of external/third-party/Vendor users.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 4.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.4
 
 **Evidence**
 
@@ -1667,6 +1719,38 @@ Examine the results of the above command for the `EnablePurgeProtection` setting
 **Verification**
 
 Evidence or test output indicates that the Key Vault is recoverable.
+
+
+---
+
+### 2.1.2 Ensure Key Vault Public Network Access is Disabled
+**Platform:** Azure
+
+**Rationale:** Disabling public network access for Azure Key Vault ensures that the Key Vault is not accessible over the public internet. By restricting access to private endpoints and selected virtual networks, the risk of unauthorized access to sensitive keys, secrets, and certificates is significantly reduced. This helps protect cryptographic material from exposure to internet-based threats.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.3.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Key Vaults`
+2. For each Key Vault, click on `Networking`
+3. Ensure that `Public network access` is set to `Disabled`
+
+**From Azure CLI**
+
+List all Key Vaults and check their public network access settings:
+
+```
+az keyvault list --query "[].{name:name, publicNetworkAccess:properties.publicNetworkAccess}"
+```
+
+Ensure that `publicNetworkAccess` is set to `Disabled` for all Key Vaults.
+
+**Verification**
+
+Evidence or test output indicates that public network access is disabled for all Key Vaults.
 
 
 ---
@@ -1824,7 +1908,7 @@ Evidence or test output indicates that the tenant is configured with security co
 
 **Rationale:** Many Google Cloud services, such as Cloud Billing, send out notifications to share important information with Google Cloud users. By default, these notifications are sent to members with certain Identity and Access Management (IAM) roles. With Essential Contacts, you can customize who receives notifications by providing your own list of contacts.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.16
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.16
 
 **Evidence**
 
@@ -1989,6 +2073,29 @@ Command should return `UsersPermissionToCreateLOBAppsEnabled` with the value of 
 **Verification**
 
 Evidence or test output indicates that `Users can register applications` is set to `No`.
+
+
+---
+
+### 2.4.4 Ensure Restrict Non-Admin Users from Creating Tenants is Set to Yes
+**Platform:** Azure
+
+**Rationale:** Non-admin users should not be allowed to create new Azure AD tenants. Unrestricted tenant creation can lead to shadow IT, where resources are created and managed outside the oversight of the organization's IT and security teams. This can result in unmonitored environments that may not adhere to the organization's security policies and compliance requirements.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.4
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Microsoft Entra ID` (Azure Active Directory)
+2. Select `Users`
+3. Select `User settings`
+4. Ensure that `Restrict non-admin users from creating tenants` is set to `Yes`
+
+**Verification**
+
+Evidence or test output indicates that non-admin users are restricted from creating tenants.
 
 
 ---
@@ -2282,6 +2389,45 @@ Evidence or test output indicates that an expiration date is set for all secrets
 
 ---
 
+### 2.5.5 Ensure Certificate Validity Period Does Not Exceed 12 Months
+**Platform:** Azure
+
+**Rationale:** Certificates with excessively long validity periods increase the risk of compromise going undetected and reduce the opportunity to update cryptographic algorithms. Limiting certificate validity to 12 months or less ensures regular rotation, reduces the window of exposure if a certificate's private key is compromised, and aligns with industry best practices for certificate lifecycle management.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.3.11
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Key vaults`
+2. For each Key Vault, click on `Certificates`
+3. For each certificate, review the validity period
+4. Ensure that no certificate has a validity period exceeding 12 months
+
+**From Azure CLI**
+
+List all certificates in each Key Vault and check their validity periods:
+
+```
+az keyvault list --query "[].name" -o tsv
+```
+
+For each Key Vault:
+
+```
+az keyvault certificate list --vault-name <KeyVaultName> --query "[].{name:name, notBefore:attributes.notBefore, expires:attributes.expires}"
+```
+
+Calculate the validity period for each certificate and ensure it does not exceed 12 months.
+
+**Verification**
+
+Evidence or test output indicates that all certificate validity periods do not exceed 12 months.
+
+
+---
+
 
 ## 2.6 Encrypt Confidential Data at Rest
 
@@ -2306,7 +2452,7 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 **Rationale:** It is recommended to use the Secret Manager, because environment variables are stored unencrypted, and accessible for all users who have access to the code.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.18
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.17
 
 **Evidence**
 
@@ -2589,7 +2735,7 @@ Based on business needs, there could be multiple user-managed service accounts c
 
 In order to implement `least privileges` best practices, IAM users should not be assigned the `Service Account User` or `Service Account Token Creator` roles at the project level. Instead, these roles should be assigned to a user for a specific service account, giving that user access to the service account. The `Service Account User` allows a user to bind a service account to a long-running job service, whereas the `Service Account Token Creator` role allows a user to directly impersonate (or assert) the identity of a service account.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.6
 
 **Evidence**
 
@@ -2628,7 +2774,7 @@ Evidence or test output indicates that IAM users are not assigned the service ac
 
 **Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` allows anyone to access the dataset. Such access might not be desirable if confidential data is stored at the location. In this case, ensure that anonymous and/or public access to a Cloud KMS `cryptokey` is not allowed.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.9
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.9
 
 **Evidence**
 
@@ -2842,6 +2988,52 @@ aws iam get-credential-report --query 'Content' --output text | base64 -d
 **Verification**
 
 Evidence or test output indicates that no user has an active access key with the last rotated date greater than 90 days in the past.
+
+
+---
+
+### 2.8.7 Ensure That Account Lockout Threshold is Set Appropriately
+**Platform:** Azure
+
+**Rationale:** Account lockout policies help protect against brute force password attacks by temporarily locking an account after a specified number of failed sign-in attempts. Setting an appropriate lockout threshold balances security against denial-of-service risks. A threshold that is too high may allow brute force attacks to succeed, while a threshold that is too low may result in excessive lockouts from legitimate users.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.6
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Microsoft Entra ID` > `Security`
+2. Select `Authentication methods` > `Password protection`
+3. Review the `Lockout threshold` setting
+4. Ensure that the lockout threshold is configured to an appropriate value (recommended: 10 or fewer failed attempts)
+
+**Verification**
+
+Evidence or test output indicates that the account lockout threshold is set to an appropriate value.
+
+
+---
+
+### 2.8.8 Ensure That Account Lockout Duration is Set Appropriately
+**Platform:** Azure
+
+**Rationale:** The account lockout duration determines how long an account remains locked after exceeding the lockout threshold. Setting an appropriate duration ensures that brute force attacks are effectively mitigated while minimizing the impact on legitimate users who may accidentally trigger a lockout. A duration that is too short may not provide adequate protection, while a duration that is too long may create unnecessary disruption.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Microsoft Entra ID` > `Security`
+2. Select `Authentication methods` > `Password protection`
+3. Review the `Lockout duration in seconds` setting
+4. Ensure that the lockout duration is configured to an appropriate value (recommended: 60 seconds or more)
+
+**Verification**
+
+Evidence or test output indicates that the account lockout duration is set to an appropriate value.
 
 
 ---
@@ -3251,12 +3443,189 @@ Evidence or test output indicates that no custom subscription administrator role
 
 ---
 
+### 2.11.6 Ensure Administrative Accounts Are Separate and Cloud-Only
+**Platform:** Azure
+
+**Rationale:** Administrative accounts with elevated privileges should not be used for daily tasks such as reading email, browsing the web, or other non-administrative activities. Using dedicated cloud-only accounts for administration reduces the attack surface by ensuring that administrative credentials are not exposed to threats that target regular user activities. Separating administrative accounts from daily-use accounts limits the impact of a compromised user account.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.3.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Microsoft Entra ID` > `Roles and administrators`
+2. Review accounts assigned to privileged roles (e.g., Global Administrator, Privileged Role Administrator)
+3. Ensure that these accounts are dedicated administrative accounts and are not used for daily activities
+4. Verify that administrative accounts are cloud-only (not synced from on-premises Active Directory)
+
+**From Azure CLI**
+
+List role assignments for privileged roles:
+
+```
+az role assignment list --all --query "[?contains(roleDefinitionName, 'Administrator') || contains(roleDefinitionName, 'Owner')].{principalName:principalName, roleDefinitionName:roleDefinitionName}"
+```
+
+Cross-reference the listed accounts to verify they are dedicated administrative accounts not used for daily tasks.
+
+**Verification**
+
+Evidence or test output indicates that administrative accounts are separate from daily-use accounts and are cloud-only.
+
+
+---
+
+### 2.11.7 Ensure User Access Administrator Role Assignment is Restricted and Limited
+**Platform:** Azure
+
+**Rationale:** The User Access Administrator role allows users to manage access to Azure resources by assigning roles. This is a highly privileged role that can be used to escalate privileges or grant unauthorized access. Restricting this role to a limited number of trusted individuals reduces the risk of unauthorized access management and ensures that role assignments are controlled and auditable.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.3.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Subscriptions`
+2. Select a subscription
+3. Click on `Access control (IAM)`
+4. Click on `Role assignments`
+5. Filter by Role: `User Access Administrator`
+6. Review the list of users/groups assigned this role and ensure it is limited to authorized personnel only
+
+**From Azure CLI**
+
+List all User Access Administrator role assignments:
+
+```
+az role assignment list --all --query "[?roleDefinitionName=='User Access Administrator'].{principalName:principalName, principalType:principalType, scope:scope}"
+```
+
+Ensure the number of assignments is minimal and limited to authorized personnel.
+
+**Verification**
+
+Evidence or test output indicates that User Access Administrator role assignment is restricted and limited to authorized personnel.
+
+
+---
+
+### 2.11.8 Ensure a Regular Review of Privileged Role Assignments is Performed
+**Platform:** Azure
+
+**Rationale:** Privileged role assignments should be regularly reviewed to ensure that only authorized users retain elevated access. Over time, role assignments can accumulate as users change positions, leave the organization, or no longer require elevated privileges. Regular reviews help identify and remove unnecessary privileged access, reducing the risk of unauthorized actions and maintaining the principle of least privilege.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.3.4
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Microsoft Entra ID` > `Roles and administrators`
+2. For each privileged role (e.g., Global Administrator, Privileged Role Administrator, Security Administrator):
+   - Click on the role
+   - Review the list of assigned users
+   - Verify that each assignment is still necessary and appropriate
+3. Check `Privileged Identity Management` (PIM) if available for access review configurations
+
+**From Azure CLI**
+
+List all privileged role assignments:
+
+```
+az role assignment list --all --query "[?contains(roleDefinitionName, 'Administrator') || contains(roleDefinitionName, 'Owner')].{principalName:principalName, roleDefinitionName:roleDefinitionName, createdOn:createdOn}"
+```
+
+Review the output to identify any stale or unnecessary privileged role assignments.
+
+**Verification**
+
+Evidence or test output indicates that a regular review of privileged role assignments has been performed and documented.
+
+
+---
+
+### 2.11.9 Ensure Fewer Than 5 Users Have Global Administrator Assignment
+**Platform:** Azure
+
+**Rationale:** The Global Administrator role provides unrestricted access to all aspects of the Azure environment. Having too many Global Administrators increases the attack surface and the risk of unauthorized or accidental changes to critical settings. Limiting the number of Global Administrators to fewer than 5 follows the principle of least privilege and ensures that this highly sensitive role is reserved for only those who absolutely require it.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.26
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Microsoft Entra ID` > `Roles and administrators`
+2. Click on `Global Administrator`
+3. Count the number of users assigned to this role
+4. Ensure that fewer than 5 users are assigned the Global Administrator role
+
+**From Azure CLI**
+
+List all Global Administrator role assignments:
+
+```
+az role assignment list --all --query "[?roleDefinitionName=='Owner'].{principalName:principalName, principalType:principalType}" --output table
+```
+
+Additionally, check Entra ID directory roles:
+
+```
+az ad group member list --group "Global Administrator" --query "[].{displayName:displayName, userPrincipalName:userPrincipalName}"
+```
+
+Ensure that fewer than 5 users are assigned the Global Administrator role.
+
+**Verification**
+
+Evidence or test output indicates that fewer than 5 users have Global Administrator assignment.
+
+
+---
+
+### 2.11.10 Ensure That 'Subscription Entering AAD Directory' and 'Subscription Leaving AAD Directory' Have 2-3 Owners
+**Platform:** Azure
+
+**Rationale:** Azure subscriptions should have between 2 and 3 owners to ensure proper access management. Having only one owner creates a single point of failure where loss of that account could result in loss of administrative access. Having too many owners increases the attack surface and the risk of unauthorized changes. Maintaining 2-3 owners provides adequate redundancy while limiting exposure.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.27
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Subscriptions`
+2. For each subscription, click on `Access control (IAM)`
+3. Click on `Role assignments`
+4. Filter by Role: `Owner`
+5. Count the number of Owner role assignments
+6. Ensure there are between 2 and 3 Owner assignments per subscription
+
+**From Azure CLI**
+
+List Owner role assignments for each subscription:
+
+```
+az role assignment list --all --query "[?roleDefinitionName=='Owner'].{principalName:principalName, principalType:principalType, scope:scope}" --output table
+```
+
+Ensure that each subscription has between 2 and 3 Owner role assignments.
+
+**Verification**
+
+Evidence or test output indicates that each subscription has between 2 and 3 owners.
+
+
+---
+
 ### 2.11.5 Ensure That Service Account Has No Admin Privileges
 **Platform:** Google
 
 **Rationale:** Service accounts represent service-level security of the Resources (application or a VM) which can be determined by the roles assigned to it. Enrolling ServiceAccount with Admin rights gives full access to an assigned application or a VM. A ServiceAccount Access holder can perform critical actions like delete, update change settings, etc. without user intervention. For this reason, it's recommended that service accounts not have Admin rights.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.5
 
 **Evidence**
 
@@ -3320,7 +3689,7 @@ Centralizing makes administration simpler and therefore reduces risks related to
 
 **Rationale:** It is recommended fully-managed corporate Google accounts be used for increased visibility, auditing, and controlling access to Cloud Platform resources. Email accounts based outside of the user's organization, such as personal accounts, should not be used for business purposes.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.1
 
 **Evidence**
 
@@ -3638,7 +4007,7 @@ Evidence or test output indicates that MFA is required for risky sign ins.
 
 **Rationale:** Multi-factor authentication requires more than one mechanism to authenticate a user. This secures user logins from attackers exploiting stolen or weak credentials.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 1.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.2
 
 **Evidence**
 
@@ -3711,6 +4080,37 @@ If the output contains any of the `$D.userPrincipleName`, then this requirement 
 **Verification**
 
 Evidence or test output indicates that MFA is enabled for all non-privileged users.
+
+
+---
+
+### 2.14.10 Ensure That Multi-Factor Authentication is Enabled for All Users
+**Platform:** Azure
+
+**Rationale:** Multi-factor authentication (MFA) adds a critical layer of security by requiring users to provide two or more forms of authentication before access is granted. Enabling MFA for all users, not just privileged or non-privileged subsets, ensures comprehensive protection across the entire organization. This prevents unauthorized access even if a user's password is compromised through phishing, brute force, or credential stuffing attacks.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.1.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. From Azure Home select the Portal Menu
+2. Select `Microsoft Entra ID` (Azure Active Directory)
+3. Select `Users`
+4. Select `All Users`
+5. Click on `Per-User MFA` button on the top bar
+6. Ensure that for all users, `MULTI-FACTOR AUTH STATUS` is `Enabled` or `Enforced`
+
+Alternatively, check via Conditional Access policies:
+
+1. Navigate to `Microsoft Entra ID` > `Security` > `Conditional Access`
+2. Review policies to ensure an MFA policy exists targeting `All users`
+3. Verify the policy is `Enabled` and requires MFA for sign-in
+
+**Verification**
+
+Evidence or test output indicates that multi-factor authentication is enabled for all users.
 
 
 ---
@@ -4011,7 +4411,7 @@ It is necessary to first identify the systems and devices that need to be secure
 
 It is recommended that GCP Cloud Asset Inventory be enabled for all GCP projects.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.13
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.13
 
 **Evidence**
 
@@ -4098,6 +4498,41 @@ az account get-access-token --query "{subscription:subscription,accessToken:acce
 **Verification**
 
 Evidence or test output indicates that email notifications for high-severity (or higher) events are enabled.
+
+
+---
+
+### 3.2.2 Ensure That 'Notify About Alerts with Attack Paths Risk Level' is Set
+**Platform:** Azure
+
+**Rationale:** Microsoft Defender for Cloud can identify attack paths that represent potential routes an attacker could take to compromise resources. Configuring email notifications for attack path risk levels ensures that security teams are promptly informed about potential attack vectors, enabling faster response and remediation of security risks.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 8.1.15
+
+**Evidence**
+
+**From Azure Portal**
+
+1. From Azure Home select the Portal Menu
+2. Select `Microsoft Defender for Cloud`
+3. Click on `Environment Settings`
+4. Click on the appropriate Management Group, Subscription, or Workspace
+5. Click on `Email notifications`
+6. Ensure that notification settings for attack path risk levels are configured appropriately
+
+**From Azure CLI**
+
+Review the Defender for Cloud email notification settings:
+
+```
+az account get-access-token --query "{subscription:subscription,accessToken:accessToken}" --out tsv | xargs -L1 bash -c 'curl -X GET -H "Authorization: Bearer $1" -H "Content-Type: application/json" https://management.azure.com/subscriptions/$0/providers/Microsoft.Security/securityContacts?api-version=2020-01-01-preview' | jq '.|.[] | select(.name=="default")'|jq '.properties.notificationsByRole'
+```
+
+Ensure that the notification configuration includes attack path risk level alerts.
+
+**Verification**
+
+Evidence or test output indicates that email notifications are configured for attack path risk levels.
 
 
 ---
@@ -5699,7 +6134,7 @@ It is recommended to have an effective default audit config configured in such a
 3. Logs should be captured for all users, i.e., there are no exempted users in any of the audit config sections. This will ensure overriding the audit config will not contradict the requirement.
 
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.1
 
 **Evidence**
 
@@ -5759,7 +6194,7 @@ Evidence or test output indicates that cloud audit logging is enabled comprehens
 
 Note: For full capture of DNS, firewall must block egress UDP/53 (DNS) and TCP/443 (DNS over HTTPS) to prevent client from using external DNS name server for resolution.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.12
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.12
 
 **Evidence**
 
@@ -5815,7 +6250,7 @@ Having log files of what actions have taken place by users and also system event
 
 **Rationale:** Log entries are held in Cloud Logging. To aggregate logs, export them to a SIEM. To keep them longer, it is recommended to set up a log sink. Exporting involves writing a filter that selects the log entries to export, and choosing a destination in Cloud Storage, BigQuery, or Cloud Pub/Sub. The filter and destination are held in an object called a sink. To ensure all log entries are exported to sinks, ensure that there is no filter configured for a sink. Sinks can be created in projects, organizations, folders, and billing accounts.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.2
 
 **Status:** This requirement has been withdrawn in favor of 3.10.5.
 
@@ -5834,7 +6269,7 @@ Having log files of what actions have taken place by users and also system event
 * Adding `role\Owner` to a user/service-account
 * Removing a user/Service account from `role\Owner`
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.4
 
 **Evidence**
 
@@ -5931,7 +6366,7 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 Configuring the metric filter and alerts for audit configuration changes ensures the recommended state of audit configuration is maintained so that all activities in the project are audit-able at any point in time.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.5
 
 **Evidence**
 
@@ -6018,7 +6453,7 @@ Evidence or test output indicates that log metric filter(s) and alert(s) exist f
 
 **Rationale:** Google Cloud IAM provides predefined roles that give granular access to specific Google Cloud Platform resources and prevent unwanted access to other resources. However, to cater to organization-specific needs, Cloud IAM also provides the ability to create custom roles. Project owners and administrators with the Organization Role Administrator role or the IAM Role Administrator role can create custom roles. Monitoring role creation, deletion and updating activities will help in identifying any over-privileged role at early stages.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 2.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.6
 
 **Evidence**
 
@@ -6995,6 +7430,106 @@ Evidence or test output indicates that an activity log alert exists for Delete P
 
 ---
 
+### 3.11.15 Ensure a Diagnostic Setting Exists
+**Platform:** Azure
+
+**Rationale:** A diagnostic setting controls how a diagnostic log is exported. Diagnostic settings allow for the configuration of logs and metrics to be sent to various destinations such as Log Analytics workspaces, Storage Accounts, or Event Hubs. Ensuring a diagnostic setting exists for key resources is fundamental to maintaining visibility into the operational and security state of Azure resources.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 6.1.1.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to the `Monitor` blade
+2. Click on `Diagnostic settings`
+3. Ensure that a diagnostic setting exists for the subscription
+
+**From Azure CLI**
+
+List all diagnostic settings for the subscription:
+
+```
+az monitor diagnostic-settings subscription list --subscription <subscription-id>
+```
+
+Ensure that at least one diagnostic setting is configured and that logs are being sent to an appropriate destination (Log Analytics workspace, Storage Account, or Event Hub).
+
+**Verification**
+
+Evidence or test output indicates that a diagnostic setting exists for the subscription.
+
+
+---
+
+### 3.11.16 Ensure Diagnostic Setting Captures Appropriate Categories
+**Platform:** Azure
+
+**Rationale:** A diagnostic setting should capture all relevant log categories to ensure comprehensive audit logging. The categories include Administrative, Security, ServiceHealth, Alert, Recommendation, Policy, Autoscale, and ResourceHealth. Capturing all categories ensures that all relevant events are logged for security analysis and compliance purposes.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 6.1.1.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to the `Monitor` blade
+2. Click on `Diagnostic settings`
+3. Click on the existing diagnostic setting
+4. Ensure that the following categories are enabled: Administrative, Security, ServiceHealth, Alert, Recommendation, Policy, Autoscale, and ResourceHealth
+
+**From Azure CLI**
+
+List diagnostic settings and review their categories:
+
+```
+az monitor diagnostic-settings subscription list --subscription <subscription-id> --query "[].logs"
+```
+
+Ensure that all required categories (Administrative, Security, ServiceHealth, Alert, Recommendation, Policy, Autoscale, ResourceHealth) are enabled.
+
+**Verification**
+
+Evidence or test output indicates that the diagnostic setting captures all appropriate categories.
+
+
+---
+
+### 3.11.17 Ensure a Service Health Alert Exists
+**Platform:** Azure
+
+**Rationale:** Service Health alerts notify you about Azure service incidents, planned maintenance, and health advisories that could impact your resources. Creating alerts for Service Health events ensures that the appropriate personnel are notified promptly about issues that could affect the availability and security of Azure resources.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 6.1.2.11
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to the `Monitor` blade
+2. Click on `Alerts`
+3. Click on `Alert rules`
+4. Look for an alert rule with a condition targeting `Service Health`
+5. Ensure the alert covers all service health event types (Service issue, Planned maintenance, Health advisories)
+6. Verify that an appropriate Action Group is configured
+
+**From Azure CLI**
+
+List activity log alerts and look for service health alerts:
+
+```
+az monitor activity-log alert list --subscription <subscription-id> --query "[].{Name:name,Enabled:enabled,Condition:condition.allOf}"
+```
+
+Ensure that at least one alert rule exists with conditions targeting Service Health events.
+
+**Verification**
+
+Evidence or test output indicates that a service health alert exists covering all relevant event types.
+
+
+---
+
 
 # 4 Networking
 
@@ -7022,7 +7557,7 @@ Encryption protects confidential data when transmitted over untrusted network co
 
 **Rationale:** Load balancers are used to efficiently distribute traffic across multiple servers. Both SSL proxy and HTTPS load balancers are external load balancers, meaning they distribute traffic from the Internet to a GCP network. GCP customers can configure load balancer SSL policies with a minimum TLS version (1.0, 1.1, or 1.2) that clients can use to establish a connection, along with a profile (Compatible, Modern, Restricted, or Custom) that specifies permissible cipher suites. To comply with users using outdated protocols, GCP load balancers can be configured to permit insecure cipher suites. In fact, the GCP default SSL policy uses a minimum TLS version of 1.0 and a Compatible profile, which allows the widest range of insecure cipher suites. As a result, it is easy for customers to configure a load balancer without even knowing that they are permitting outdated cipher suites.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.9
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.9
 
 **Evidence**
 
@@ -7151,7 +7686,7 @@ This CIS Control provides guidance for securing hardware and software. As delive
 
 **Rationale:** Legacy networks have a single network IPv4 prefix range and a single gateway IP address for the whole network. The network is global in scope and spans all cloud regions. Subnetworks cannot be created in a legacy network and are unable to switch from legacy to auto or custom subnet networks. Legacy networks can have an impact for high network traffic projects and are subject to a single point of contention or failure.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.2
 
 **Evidence**
 
@@ -7192,7 +7727,7 @@ Evidence or test output indicates that no project contains a network having the 
 **Platform:** Google
 **Rationale:** Domain Name System Security Extensions (DNSSEC) adds security to the DNS protocol by enabling DNS responses to be validated. Having a trustworthy DNS that translates a domain name like www.example.com into its associated IP address is an increasingly important building block of today’s web-based applications. Attackers can hijack this process of domain/IP lookup and redirect users to a malicious site through DNS hijacking and man-in-the-middle attacks. DNSSEC helps mitigate the risk of such attacks by cryptographically signing DNS records. As a result, it prevents attackers from issuing fake DNS responses that may misdirect browsers to nefarious websites.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.3
 
 **Evidence**
 
@@ -7243,7 +7778,7 @@ Evidence or test output indicates that DNSSEC is enabled for all managed zones h
 
 The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the user can select the DNSSEC signing algorithms and the denial-of-existence type. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If there is a need to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.4
 
 **Evidence**
 
@@ -7267,7 +7802,7 @@ Evidence or test output indicates that RSASHA1 is not used for the key-signing k
 
 The algorithm used for key signing should be a recommended one and it should be strong. When enabling DNSSEC for a managed zone, or creating a managed zone with DNSSEC, the DNSSEC signing algorithms and the denial-of-existence type can be selected. Changing the DNSSEC settings is only effective for a managed zone if DNSSEC is not already enabled. If the need exists to change the settings for a managed zone where it has been enabled, turn DNSSEC off and then re-enable it with different settings.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.5
 
 **Evidence**
 
@@ -7438,13 +7973,263 @@ Evidence or test output indicates that no network security group is configured t
 
 ---
 
+### 4.3.9 Ensure that UDP Access from the Internet is Evaluated and Restricted
+**Platform:** Azure
+
+**Rationale:** The potential security problem with broadly opening UDP to the Internet is that attackers can use DDoS amplification techniques to reflect traffic through unprotected UDP services. UDP services such as DNS, NTP, and SNMP can be abused for amplification attacks if exposed to the public internet without proper restrictions.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Open the `Networking` blade for the specific Virtual Machine in Azure portal
+2. Verify that the `INBOUND PORT RULES` **does not** have a rule allowing UDP from any source
+
+**From Azure CLI**
+
+List Network security groups with corresponding non-default Security rules:
+
+```
+az network nsg list --query [*].[name,securityRules]
+```
+
+Ensure that none of the NSGs have security rules allowing:
+
+```
+"access" : "Allow"
+"destinationPortRange" : "*" or any UDP port range
+"direction" : "Inbound"
+"protocol" : "UDP"
+"sourceAddressPrefix" : "*" or "0.0.0.0" or "<nw>/0" or "/0" or "internet" or "any"
+```
+
+**Verification**
+
+Evidence or test output indicates that no network security group is configured to allow unrestricted inbound UDP access from the internet.
+
+
+---
+
+### 4.3.10 Ensure that HTTP(S) Access from the Internet is Evaluated and Restricted
+**Platform:** Azure
+
+**Rationale:** Allowing unrestricted HTTP and HTTPS access from the internet to Azure resources increases the attack surface. While some web-facing services may require HTTP(S) access, this should be restricted to known IP ranges and not broadly opened to all internet sources. Unrestricted HTTP(S) access can lead to web application attacks, data exfiltration, and unauthorized access.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.4
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Open the `Networking` blade for the specific Virtual Machine in Azure portal
+2. Verify that the `INBOUND PORT RULES` **does not** have a rule allowing HTTP (port 80) or HTTPS (port 443) from any source
+
+**From Azure CLI**
+
+List Network security groups with corresponding non-default Security rules:
+
+```
+az network nsg list --query [*].[name,securityRules]
+```
+
+Ensure that none of the NSGs have security rules allowing:
+
+```
+"access" : "Allow"
+"destinationPortRange" : "80" or "443" or "*" or "[port range containing 80 or 443]"
+"direction" : "Inbound"
+"protocol" : "TCP"
+"sourceAddressPrefix" : "*" or "0.0.0.0" or "<nw>/0" or "/0" or "internet" or "any"
+```
+
+**Verification**
+
+Evidence or test output indicates that no network security group is configured to allow unrestricted inbound HTTP(S) access from the internet.
+
+
+---
+
+### 4.3.11 Ensure that All Subnets Have a Network Security Group Associated
+**Platform:** Azure
+
+**Rationale:** Network Security Groups (NSGs) provide a layer of network filtering that controls traffic flow to and from Azure resources within a virtual network. Every subnet should have an NSG associated with it to ensure that all traffic is subject to security rules. Subnets without an NSG have no network-level access control, which could allow unrestricted traffic flow.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.11
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Virtual networks`
+2. For each virtual network, click on `Subnets`
+3. Ensure that each subnet has a Network Security Group associated with it
+
+**From Azure CLI**
+
+List all subnets and their associated NSGs:
+
+```
+az network vnet list --query "[].{name:name, subnets:subnets[].{subnetName:name, nsg:networkSecurityGroup.id}}"
+```
+
+Ensure that no subnet has a `null` or empty NSG association (excluding special-purpose subnets like GatewaySubnet).
+
+**Verification**
+
+Evidence or test output indicates that all subnets have a Network Security Group associated.
+
+
+---
+
+### 4.3.12 Ensure Application Gateway has WAF Enabled and Uses OWASP 3.2 or Higher Rule Set with No Disabled Rules
+**Platform:** Azure
+
+**Rationale:** Azure Application Gateway with Web Application Firewall (WAF) provides centralized protection of web applications from common exploits and vulnerabilities. The WAF should use the latest OWASP rule set to ensure comprehensive protection. Having TLS policies configured properly ensures secure communication. Disabling WAF rules reduces the security coverage and may leave applications vulnerable to known attack patterns.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.12
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Application Gateways`
+2. For each Application Gateway, click on `Web application firewall`
+3. Ensure WAF is enabled and set to `Prevention` mode
+4. Verify the OWASP rule set version is 3.2 or higher
+5. Check that no rules are disabled
+
+**From Azure CLI**
+
+List all Application Gateways and their WAF configuration:
+
+```
+az network application-gateway list --query "[].{name:name, wafConfig:webApplicationFirewallConfiguration, sslPolicy:sslPolicy}"
+```
+
+Ensure that `webApplicationFirewallConfiguration.enabled` is `true`, `firewallMode` is `Prevention`, and the rule set version is 3.2 or higher.
+
+**Verification**
+
+Evidence or test output indicates that all Application Gateways have WAF enabled with OWASP 3.2 or higher rule set and no disabled rules.
+
+
+---
+
+### 4.3.13 Ensure Application Gateway Uses HTTP/2
+**Platform:** Azure
+
+**Rationale:** HTTP/2 is a major revision of the HTTP protocol that provides significant performance improvements over HTTP/1.1, including header compression and multiplexing. HTTP/2 also provides improved security through mandatory TLS negotiation. Enabling HTTP/2 on Application Gateway ensures improved performance and security for web applications served through the gateway.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.13
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Application Gateways`
+2. For each Application Gateway, click on `Configuration`
+3. Ensure that `HTTP2` is set to `Enabled`
+
+**From Azure CLI**
+
+List all Application Gateways and check their HTTP/2 setting:
+
+```
+az network application-gateway list --query "[].{name:name, http2:enableHttp2}"
+```
+
+Ensure that `enableHttp2` is set to `true` for all Application Gateways.
+
+**Verification**
+
+Evidence or test output indicates that HTTP/2 is enabled for all Application Gateways.
+
+
+---
+
+### 4.3.3 Ensure That SSH Access Is Restricted From the Internet
+**Platform:** Google
+
+**Rationale:** GCP `Firewall Rules` within a `VPC Network` apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `SSH` with the default `Port 22`. Generic access from the Internet to a specific IP Range needs to be restricted.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.6
+
+**Evidence**
+
+**From Google Cloud Console**
+
+
+
+1. Go to `VPC network`.
+2. Go to the `Firewall Rules`.
+3. Ensure that `Port` is not equal to `22` and `Action` is not set to `Allow`.
+4. Ensure `IP Ranges` is not equal to `0.0.0.0/0` under `Source filters`.
+
+**From Google Cloud CLI**
+
+gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed)'
+
+Ensure that there is no rule matching the below criteria:
+   * `SOURCE_RANGES` is `0.0.0.0/0`
+   * AND `DIRECTION` is `INGRESS`
+   * AND IPProtocol is `tcp` or `ALL`
+   * AND `PORTS` is set to `22` or `range containing 22` or `Null (not set)`
+
+Note:
+
+
+
+   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
+   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
+
+**Verification**
+
 ### 4.3.3 REMOVED — Reclassified to Level 2 in CIS v4.0.0
 
 **Status:** Removed — This requirement (Ensure That SSH Access Is Restricted From the Internet) was reclassified from Level 1 to Level 2 in CIS Google Cloud Platform Foundation Benchmark v4.0.0 (Section 3.6).
 
 ---
 
-### 4.3.4 REMOVED — Reclassified to Level 2 in CIS v4.0.0
+### 4.3.4 Ensure That RDP Access Is Restricted From the Internet
+**Platform:** Google
+
+**Rationale:** GCP `Firewall Rules` within a `VPC Network`. These rules apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `RDP` with the default `Port 3389`. Generic access from the Internet to a specific IP Range should be restricted.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.7
+
+**Evidence**
+
+**From Google Cloud Console**
+
+
+
+1. Go to `VPC network`.
+2. Go to the `Firewall Rules`.
+3. Ensure `Port` is not equal to `3389` and `Action` is not `Allow`.
+4. Ensure `IP Ranges` is not equal to `0.0.0.0/0` under `Source filters`.
+
+**From Google Cloud CLI**
+
+gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed.ports)'
+
+Ensure that there is no rule matching the below criteria:
+   * `SOURCE_RANGES` is `0.0.0.0/0`
+   * AND `DIRECTION` is `INGRESS`
+   * AND IPProtocol is `TCP` or `ALL`
+   * AND `PORTS` is set to `3389` or `range containing 3389` or `Null (not set)`
+
+Note:
+
+
+
+   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
+   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
+
+**Verification**
+
+Evidence or test output indicates that no firewall rule allows inbound connections to port 3389 from the unrestricted public internet.
 
 **Status:** Removed — This requirement (Ensure That RDP Access Is Restricted From the Internet) was reclassified from Level 1 to Level 2 in CIS Google Cloud Platform Foundation Benchmark v4.0.0 (Section 3.7).
 
@@ -7631,6 +8416,137 @@ Evidence or test output indicates that soft delete is enabled for all Azure Cont
 
 ---
 
+### 5.1.2 Ensure Soft Delete is Enabled for Azure File Shares
+**Platform:** Azure
+
+**Rationale:** Azure file shares can be accidentally deleted or corrupted. Enabling soft delete for file shares ensures that deleted shares can be recovered within the retention period, preventing permanent data loss due to accidental or malicious deletion.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.1.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage Accounts`
+2. For each storage account, navigate to `File shares` under `Data storage`
+3. Click on `Properties` or navigate to `Data protection`
+4. Ensure that soft delete for file shares is enabled with an appropriate retention period
+
+**From Azure CLI**
+
+List all storage accounts and check file share soft delete settings:
+
+```
+az storage account file-service-properties show --account-name <StorageAccountName> --resource-group <ResourceGroup> --query "shareDeleteRetentionPolicy"
+```
+
+Ensure that `enabled` is set to `true` and `days` is set to an appropriate retention period.
+
+**Verification**
+
+Evidence or test output indicates that soft delete is enabled for all Azure file shares.
+
+
+---
+
+### 5.1.3 Ensure SMB Protocol Version is 3.1.1 for File Shares
+**Platform:** Azure
+
+**Rationale:** SMB 3.1.1 is the most secure version of the SMB protocol and includes important security improvements such as pre-authentication integrity and encryption negotiation. Using older versions of SMB may expose file shares to known vulnerabilities and attacks. Enforcing SMB 3.1.1 ensures that file share connections use the strongest available security protections.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.1.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage Accounts`
+2. For each storage account, navigate to `File shares` under `Data storage`
+3. Click on `Settings` or `Configuration`
+4. Ensure that the minimum SMB protocol version is set to `SMB 3.1.1`
+
+**From Azure CLI**
+
+Check the SMB settings for each storage account:
+
+```
+az storage account file-service-properties show --account-name <StorageAccountName> --resource-group <ResourceGroup> --query "protocolSettings.smb"
+```
+
+Ensure that the minimum SMB channel encryption and protocol versions enforce SMB 3.1.1.
+
+**Verification**
+
+Evidence or test output indicates that SMB protocol version 3.1.1 is enforced for all Azure file shares.
+
+
+---
+
+### 5.1.4 Ensure SMB Channel Encryption is Enabled for File Shares
+**Platform:** Azure
+
+**Rationale:** SMB channel encryption ensures that data transferred between the client and the Azure file share is encrypted in transit. Without encryption, data transmitted over the SMB protocol could be intercepted by attackers. Enabling SMB encryption provides confidentiality and integrity protection for file share data.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.1.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage Accounts`
+2. For each storage account, navigate to `File shares` under `Data storage`
+3. Click on `Settings` or `Configuration`
+4. Ensure that SMB channel encryption is enabled (AES-256-GCM or AES-128-GCM)
+
+**From Azure CLI**
+
+Check the SMB encryption settings for each storage account:
+
+```
+az storage account file-service-properties show --account-name <StorageAccountName> --resource-group <ResourceGroup> --query "protocolSettings.smb.channelEncryption"
+```
+
+Ensure that channel encryption is enabled and set to a secure value.
+
+**Verification**
+
+Evidence or test output indicates that SMB channel encryption is enabled for all Azure file shares.
+
+
+---
+
+### 5.1.5 Ensure Soft Delete is Enabled for Azure Containers
+**Platform:** Azure
+
+**Rationale:** Container soft delete protects against accidental or malicious deletion of containers within a storage account. When enabled, deleted containers are retained for a specified period, allowing recovery of the container and its contents. This provides an additional layer of data protection and helps prevent permanent data loss.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.2.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage Accounts`
+2. For each storage account, navigate to `Data protection` under `Data management`
+3. Ensure that `Enable soft delete for containers` is checked with an appropriate retention period
+
+**From Azure CLI**
+
+Check container soft delete settings for each storage account:
+
+```
+az storage account blob-service-properties show --account-name <StorageAccountName> --resource-group <ResourceGroup> --query "containerDeleteRetentionPolicy"
+```
+
+Ensure that `enabled` is set to `true` and `days` is set to an appropriate retention period.
+
+**Verification**
+
+Evidence or test output indicates that soft delete is enabled for all Azure containers.
+
+
+---
+
 
 ## 5.2 Establish and Maintain a Secure Network Architecture
 ### Description
@@ -7705,6 +8621,38 @@ DefaultAction : Deny
 **Verification**
 
 Evidence or test output indicates that all storage accounts are configured such that the default action is set to Deny.
+
+
+---
+
+### 5.2.2 Ensure Public Network Access is Disabled for Storage Accounts
+**Platform:** Azure
+
+**Rationale:** Disabling public network access for storage accounts improves security by ensuring that the storage account is not exposed to the public internet. Restricting access to the storage account to only authorized virtual networks and private endpoints reduces the attack surface and helps prevent unauthorized access to sensitive data.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.3.2.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage Accounts`
+2. For each storage account, navigate to `Networking` under `Security + networking`
+3. Ensure that `Public network access` is set to `Disabled`
+
+**From Azure CLI**
+
+List all storage accounts and check the `publicNetworkAccess` property:
+
+```
+az storage account list --query "[].{name:name, resourceGroup:resourceGroup, publicNetworkAccess:publicNetworkAccess}"
+```
+
+Ensure that `publicNetworkAccess` is set to `Disabled` for all storage accounts.
+
+**Verification**
+
+Evidence or test output indicates that public network access is disabled for all storage accounts.
 
 
 ---
@@ -8105,7 +9053,7 @@ Evidence or test output indicates that `Public access level` is disabled for sto
 
 **Rationale:** Allowing anonymous or public access grants permissions to anyone to access bucket content. Such access might not be desired if you are storing any confidential data. Hence, ensure that anonymous or public access to a bucket is not allowed.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 5.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 5.1
 
 **Evidence**
 
@@ -8300,6 +9248,38 @@ Evidence or test output indicates that all storage account access keys have been
 
 ---
 
+### 5.7.2 Ensure Storage Account Key Access is Disabled
+**Platform:** Azure
+
+**Rationale:** Shared key authorization provides a storage account access key that grants full access to the data within the storage account. Disabling shared key authorization forces clients to use Azure Active Directory (Azure AD) or a shared access signature (SAS) for authorization. Azure AD provides superior security and ease of use over shared key authorization, as it does not require storing access keys in application code or configuration.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.3.1.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage Accounts`
+2. For each storage account, navigate to `Configuration` under `Settings`
+3. Ensure that `Allow storage account key access` is set to `Disabled`
+
+**From Azure CLI**
+
+List all storage accounts and check the `allowSharedKeyAccess` property:
+
+```
+az storage account list --query "[].{name:name, resourceGroup:resourceGroup, allowSharedKeyAccess:allowSharedKeyAccess}"
+```
+
+Ensure that `allowSharedKeyAccess` is set to `false` for all storage accounts.
+
+**Verification**
+
+Evidence or test output indicates that storage account key access is disabled for all storage accounts.
+
+
+---
+
 
 ## 5.8 Establish an Access Revoking Process
 
@@ -8366,7 +9346,7 @@ To explicitly cause the server to refuse LOAD DATA LOCAL statements (regardless 
 
 Due to security issues associated with the `local_infile` flag, it is recommended to disable it. This requirement is applicable to MySQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.1.3
 
 **Evidence**
 
@@ -8464,7 +9444,7 @@ Unauthorized scripts can be used by malicious users to take over a system or tak
 
 **Rationale:** `external scripts enabled` allows the execution of scripts with certain remote language extensions. This property is OFF by default. When Advanced Analytics Services is installed, setup can optionally set this property to true. As the External Scripts Enabled feature allows scripts external to SQL such as files located in an R library to be executed, which could adversely affect the security of the system, hence this should be disabled. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.1
 
 **Evidence**
 
@@ -8658,7 +9638,7 @@ Evidence or test output indicates that all MySQL flexible database servers are c
 
 **Rationale:** SQL database connections if successfully trapped (MITM); can reveal confidential data like credentials, database queries, query outputs etc. For security, it is recommended to always use SSL encryption when connecting to your instance. This requirement is applicable for Postgresql, MySql generation 1, MySql generation 2 and SQL Server 2017 instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.4
 
 **Evidence**
 
@@ -9035,7 +10015,7 @@ Evidence or test output indicates that no Azure SQL Database instance allows ing
 
 An authorized network should not have IPs/networks configured to `0.0.0.0/0` which will allow access to the instance from anywhere in the world. Note that authorized networks apply only to instances with public IPs.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.5
 
 **Evidence**
 
@@ -9075,7 +10055,7 @@ Evidence or test output indicates that no Cloud SQL Database instances allow ing
 
 **Rationale:** 'skip_show_database' database flag prevents people from using the SHOW DATABASES statement if they do not have the SHOW DATABASES privilege. This can improve security if you have concerns about users being able to see databases belonging to other users. Its effect depends on the SHOW DATABASES privilege: If the variable value is ON, the SHOW DATABASES statement is permitted only to users who have the SHOW DATABASES privilege, and the statement displays all database names. If the value is OFF, SHOW DATABASES is permitted to all users, but displays the names of only those databases for which the user has the SHOW DATABASES or other privilege. This requirement is applicable to Mysql database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.1.2
 
 **Evidence**
 
@@ -9121,7 +10101,7 @@ Evidence or test output indicates that all Cloud SQL MySQL instance(s) have the 
 
 **Rationale:** Use the `cross db ownership` for chaining option to configure cross-database ownership chaining for an instance of Microsoft SQL Server. This server option allows you to control cross-database ownership chaining at the database level or to allow cross-database ownership chaining for all databases. Enabling `cross db ownership` is not recommended unless all of the databases hosted by the instance of SQL Server must participate in cross-database ownership chaining and you are aware of the security implications of this setting. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.2
 
 **Evidence**
 
@@ -9157,7 +10137,7 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) have
 
 **Rationale:** A contained database includes all database settings and metadata required to define the database and has no configuration dependencies on the instance of the Database Engine where the database is installed. Users can connect to the database without authenticating a login at the Database Engine level. Isolating the database from the Database Engine makes it possible to easily move the database to another instance of SQL Server. Contained databases have some unique threats that should be understood and mitigated by SQL Server Database Engine administrators. Most of the threats are related to the USER WITH PASSWORD authentication process, which moves the authentication boundary from the Database Engine level to the database level, hence this is recommended to disable this flag. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.7
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.7
 
 **Evidence**
 
@@ -9214,7 +10194,7 @@ This CIS Control provides guidance for securing hardware and software. As delive
 
 A user can override these defaults by using the SET statement. You can configure user options dynamically for new logins. After you change the setting of user options, new login sessions use the new setting; current login sessions are not affected. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.4
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.4
 
 **Evidence**
 
@@ -9250,7 +10230,7 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) do n
 
 **Rationale:** Microsoft SQL Trace Flags are frequently used to diagnose performance issues or to debug stored procedures or complex computer systems, but they may also be recommended by Microsoft Support to address behavior that is negatively impacting a specific workload. All documented trace flags and those recommended by Microsoft Support are fully supported in a production environment when used as directed. `3625(trace log)` Limits the amount of information returned to users who are not members of the sysadmin fixed server role, by masking the parameters of some error messages using '******'. Setting this in a Google Cloud flag for the instance allows for security through obscurity and prevents the disclosure of sensitive information, hence it is recommended to set this flag globally to on to prevent the flag having been left off, or changed by bad actors. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.6
 
 **Evidence**
 
@@ -9359,7 +10339,7 @@ Secure management of assets and software guards against malicious users from bei
 
 **Rationale:** Setting database access only to private will reduce attack surface.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.9
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.6
 
 **Evidence**
 
@@ -9429,7 +10409,7 @@ Products typically ship with insecure defaults that, if not configured securely,
 
 **Rationale:** At the time of MySQL Instance creation, not providing an administrative password allows anyone to connect to the SQL database instance with administrative privileges. The root password should be set to ensure only authorized users have these privileges.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.1.1
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.1.1
 
 **Evidence**
 
@@ -9498,7 +10478,7 @@ Uninstalling and disabling unnecessary services reduces the target area of your 
 
 **Rationale:** The `remote access` option controls the execution of stored procedures from local or remote servers on which instances of SQL Server are running. The default value for this option is 1. This grants permission to run local stored procedures from remote servers or remote stored procedures from the local server. To prevent local stored procedures from being run from a remote server or remote stored procedures from being run on the local server, this must be disabled. The Remote Access option controls the execution of local stored procedures on remote servers or remote stored procedures on local servers. 'Remote access' functionality can be abused to launch a Denial-of-Service (DoS) attack on remote servers by off-loading query processing to a target, hence this should be disabled. This requirement is applicable to SQL Server database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.3.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.5
 
 **Evidence**
 
@@ -9978,7 +10958,7 @@ Evidence or test output indicates that all SQL Server instances are configured w
 
 **Rationale:** PostgreSQL does not log attempted connections by default. Enabling the `log_connections` setting will create log entries for each attempted connection as well as successful completion of client authentication which can be useful in troubleshooting issues and to determine any unusual connection attempts to the server. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.2
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.2
 
 **Evidence**
 
@@ -10015,7 +10995,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** PostgreSQL does not log session details such as duration and session end by default. Enabling the `log_disconnections` setting will create log entries at the end of each session which can be useful in troubleshooting issues and determine any unusual activity across a time period. The `log_disconnections` and `log_connections` work hand in hand and generally, the pair would be enabled/disabled together. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.3
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.3
 
 **Evidence**
 
@@ -10054,7 +11034,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.5
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.5
 
 **Evidence**
 
@@ -10090,7 +11070,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** Auditing helps in troubleshooting operational problems and also permits forensic analysis. If `log_min_error_statement` is not set to the correct value, messages may not be classified as error messages appropriately. Considering general log messages as error messages would make it difficult to find actual errors and considering only stricter severity levels as error messages may skip actual errors to log their SQL statements. The `log_min_error_statement` flag should be set to `ERROR` or stricter. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.6
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.6
 
 **Evidence**
 
@@ -10127,7 +11107,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** Logging SQL statements may include sensitive information that should not be recorded in logs. This requirement is applicable to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.7
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.7
 
 **Evidence**
 
@@ -10164,7 +11144,7 @@ Evidence or test output indicates that all Cloud SQL PostgreSQL instance(s) have
 
 **Rationale:** As numerous other requirements in this section consist of turning on flags for logging purposes, your organization will need a way to manage these logs. You may have a solution already in place. If you do not, consider installing and enabling the open source pgaudit extension within PostgreSQL and enabling its corresponding flag of `cloudsql.enable_pgaudit`. This flag and installing the extension enables database auditing in PostgreSQL through the open-source pgAudit extension. This extension provides detailed session and object logging to comply with government, financial, & ISO standards and provides auditing capabilities to mitigate threats by monitoring security events on the instance. Enabling the flag and settings later in this requirement will send these logs to Google Logs Explorer so that you can access them in a central location. This requirement is applicable only to PostgreSQL database instances.
 
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 6.2.8
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.8
 
 **Evidence**
 
