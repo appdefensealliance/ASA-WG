@@ -132,6 +132,8 @@ Version 1.0 - 10-OCT 24
 
 [2.8.4 Ensure access keys are rotated every 90 days or less](#284-ensure-access-keys-are-rotated-every-90-days-or-less)
 
+[2.8.5 Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed](#285-ensure-that-all-expired-ssltls-certificates-stored-in-aws-iam-are-removed)
+
 [2.8.6 Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account](#286-ensure-that-there-are-only-gcp-managed-service-account-keys-for-each-service-account)
 
 [2.8.7 Ensure That Account Lockout Threshold is Set Appropriately](#287-ensure-that-account-lockout-threshold-is-set-appropriately)
@@ -2990,6 +2992,38 @@ aws iam get-credential-report --query 'Content' --output text | base64 -d
 **Verification**
 
 Evidence or test output indicates that no user has an active access key with the last rotated date greater than 90 days in the past.
+
+
+---
+
+### 2.8.5 Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed
+**Platform:** AWS
+
+**Rationale:** Removing expired SSL/TLS certificates eliminates the risk that an invalid certificate will be deployed accidentally to a resource such as AWS Elastic Load Balancer (ELB), which can damage the credibility of the application or website behind the ELB. As a best practice, it is recommended to delete expired certificates and migrate certificate management to AWS Certificate Manager (ACM) where supported.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.17
+
+**Evidence**
+
+**From Command Line:**
+
+1. Run the following command to list all IAM-stored server certificates:
+
+```
+aws iam list-server-certificates
+```
+
+2. Examine the `Expiration` field for each certificate returned. If any certificate has an `Expiration` date in the past, it should be removed.
+
+3. To delete an expired certificate:
+
+```
+aws iam delete-server-certificate --server-certificate-name <certificate_name>
+```
+
+**Verification**
+
+Evidence or test output indicates that no expired SSL/TLS certificates are stored in AWS IAM.
 
 
 ---
