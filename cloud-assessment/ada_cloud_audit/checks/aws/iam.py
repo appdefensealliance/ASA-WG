@@ -1,12 +1,10 @@
 """AWS IAM checks for ADA Cloud assessment.
 
-Covers 13 requirements:
+Covers 12 requirements:
 - 2.2.1: Support role for AWS Support
 - 2.7.1: No root access keys
-- 2.7.2: No access keys at initial user setup
 - 2.7.3: No full admin IAM policies attached
 - 2.8.2: Password policy minimum length >= 14
-- 2.8.3: One active access key per user
 - 2.8.4: Access keys rotated every 90 days
 - 2.9.1: Password policy prevents reuse
 - 2.10.1: Credentials unused 45+ days disabled
@@ -14,6 +12,7 @@ Covers 13 requirements:
 - 2.16.1: MFA enabled for root
 - 2.18.1: Users receive permissions only through groups
 - 2.7.7: CloudShell access restricted
+- 2.14.9: MFA enabled for all IAM console users
 """
 
 from __future__ import annotations
@@ -95,59 +94,6 @@ def check_root_access_keys(session: boto3.Session) -> "RequirementResult":
             "AWS",
             Verdict.INCONCLUSIVE,
             f"Error checking root access keys: {e}",
-        )
-
-
-def check_no_access_keys_at_setup(session: boto3.Session) -> "RequirementResult":
-    """ADA 2.7.2: Do not setup access keys during initial user setup for all IAM users
-    that have a console password."""
-    try:
-        report = get_credential_report(session)
-        violating_users = []
-        for row in report:
-            if row.get("user") == "<root_account>":
-                continue
-            if row.get("password_enabled", "false").lower() != "true":
-                continue
-            user_created = row.get("user_creation_time", "")
-            for key_num in ("1", "2"):
-                active = row.get(f"access_key_{key_num}_active", "false").lower()
-                last_rotated = row.get(f"access_key_{key_num}_last_rotated", "N/A")
-                if active == "true" and last_rotated not in ("N/A", "not_supported"):
-                    # Check if key was created at the same time as user (within 5 minutes)
-                    try:
-                        user_dt = datetime.fromisoformat(user_created.replace("Z", "+00:00"))
-                        key_dt = datetime.fromisoformat(last_rotated.replace("Z", "+00:00"))
-                        if abs((key_dt - user_dt).total_seconds()) < 300:
-                            violating_users.append(row["user"])
-                    except (ValueError, TypeError):
-                        pass
-
-        if not violating_users:
-            return make_result(
-                "2.7.2",
-                "Do not setup access keys during initial user setup for all IAM users that have a console password",
-                "AWS",
-                Verdict.PASS,
-                "No IAM users with console passwords have access keys created at initial setup",
-                {"violating_users": []},
-            )
-        else:
-            return make_result(
-                "2.7.2",
-                "Do not setup access keys during initial user setup for all IAM users that have a console password",
-                "AWS",
-                Verdict.FAIL,
-                f"Users with access keys created at initial setup: {', '.join(violating_users)}",
-                {"violating_users": violating_users},
-            )
-    except ClientError as e:
-        return make_result(
-            "2.7.2",
-            "Do not setup access keys during initial user setup for all IAM users that have a console password",
-            "AWS",
-            Verdict.INCONCLUSIVE,
-            f"Error checking access keys at setup: {e}",
         )
 
 
@@ -259,50 +205,6 @@ def check_password_policy_length(session: boto3.Session) -> "RequirementResult":
             "AWS",
             Verdict.INCONCLUSIVE,
             f"Error checking password policy: {e}",
-        )
-
-
-def check_one_active_access_key(session: boto3.Session) -> "RequirementResult":
-    """ADA 2.8.3: Ensure there is only one active access key available for any single IAM user."""
-    iam = session.client("iam")
-    try:
-        users = []
-        paginator = iam.get_paginator("list_users")
-        for page in paginator.paginate():
-            users.extend(page["Users"])
-
-        violating_users = []
-        for user in users:
-            keys = iam.list_access_keys(UserName=user["UserName"])["AccessKeyMetadata"]
-            active_keys = [k for k in keys if k["Status"] == "Active"]
-            if len(active_keys) > 1:
-                violating_users.append(user["UserName"])
-
-        if not violating_users:
-            return make_result(
-                "2.8.3",
-                "Ensure there is only one active access key available for any single IAM user",
-                "AWS",
-                Verdict.PASS,
-                "No IAM user has more than one active access key",
-                {"violating_users": []},
-            )
-        else:
-            return make_result(
-                "2.8.3",
-                "Ensure there is only one active access key available for any single IAM user",
-                "AWS",
-                Verdict.FAIL,
-                f"Users with more than one active access key: {', '.join(violating_users)}",
-                {"violating_users": violating_users},
-            )
-    except ClientError as e:
-        return make_result(
-            "2.8.3",
-            "Ensure there is only one active access key available for any single IAM user",
-            "AWS",
-            Verdict.INCONCLUSIVE,
-            f"Error checking access keys: {e}",
         )
 
 
@@ -683,4 +585,48 @@ def check_cloudshell_access(session: boto3.Session) -> "RequirementResult":
             "AWS",
             Verdict.INCONCLUSIVE,
             f"Error checking CloudShell access: {e}",
+        )
+
+
+def check_iam_mfa_all_users(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.14.9: Ensure MFA is enabled for all IAM users that have a console password."""
+    try:
+        report = get_credential_report(session)
+        violating_users = []
+
+        for row in report:
+            user = row.get("user", "")
+            if user == "<root_account>":
+                continue
+            pwd_enabled = row.get("password_enabled", "false").lower()
+            if pwd_enabled == "true":
+                mfa_active = row.get("mfa_active", "false").lower()
+                if mfa_active != "true":
+                    violating_users.append(user)
+
+        if not violating_users:
+            return make_result(
+                "2.14.9",
+                "Ensure MFA is enabled for all IAM users that have a console password",
+                "AWS",
+                Verdict.PASS,
+                "All IAM users with console passwords have MFA enabled",
+                {"violating_users": []},
+            )
+        else:
+            return make_result(
+                "2.14.9",
+                "Ensure MFA is enabled for all IAM users that have a console password",
+                "AWS",
+                Verdict.FAIL,
+                f"IAM users with console passwords but no MFA:\n" + "\n".join(violating_users),
+                {"violating_users": violating_users},
+            )
+    except ClientError as e:
+        return make_result(
+            "2.14.9",
+            "Ensure MFA is enabled for all IAM users that have a console password",
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            f"Error checking MFA status: {e}",
         )
