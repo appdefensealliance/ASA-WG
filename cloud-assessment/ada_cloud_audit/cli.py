@@ -94,14 +94,25 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def run_assessment(args: argparse.Namespace) -> AssessmentReport:
     """Run all checks for the specified provider and return the assessment report."""
-    provider = Provider(args.provider.upper())
+    provider = Provider[args.provider.upper()]
 
     # Create provider-specific session
     if provider == Provider.AZURE:
+
+        logging.getLogger("azure").setLevel(logging.ERROR)
+        logging.getLogger("azure.identity").setLevel(logging.ERROR)
+        logging.getLogger("azure.core").setLevel(logging.ERROR)
+
         from azure.identity import DefaultAzureCredential
         from ada_cloud_audit.checks.azure.base import AzureSession
 
         credential = DefaultAzureCredential()
+        try:
+            credential.get_token("https://management.azure.com/.default")
+        except Exception as e:
+            logger.error("Azure authentication failed (could not acquire ARM token): %s", e)
+            sys.exit(1)
+
         subscription_id = args.subscription or os.environ.get("AZURE_SUBSCRIPTION_ID")
         if not subscription_id:
             logger.error("Azure subscription ID required. Use --subscription or set AZURE_SUBSCRIPTION_ID.")
