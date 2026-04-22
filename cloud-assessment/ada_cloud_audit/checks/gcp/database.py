@@ -1,12 +1,13 @@
 """GCP Database checks for ADA Cloud assessment.
 
-Covers 19 requirements for Cloud SQL instances:
-- 6.1.1, 6.2.1, 6.5.4-6.5.6, 6.6.1-6.6.2, 6.10.1: Database flag checks
+Covers 20 requirements for Cloud SQL instances:
+- 6.1.1, 6.2.1, 6.5.4-6.5.6, 6.6.1-6.6.3, 6.10.1: Database flag checks
 - 6.15.2-6.15.7: PostgreSQL logging flags
 - 6.3.4: SSL required for all connections
 - 6.5.3: No 0.0.0.0/0 in authorized networks
 - 6.8.1: Instance IP assignment set to private
 - 6.9.1: MySQL anonymous admin login (INCONCLUSIVE)
+- 6.12.2: Cloud SQL configured with automated backups
 """
 
 from __future__ import annotations

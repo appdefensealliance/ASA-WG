@@ -1,6 +1,6 @@
 """AWS Compute and Networking checks for ADA Cloud assessment.
 
-Covers 4 requirements:
+Covers 6 requirements:
 - 1.2.1: Lambda functions use current runtimes
 - 4.2.5: EC2 Metadata Service only allows IMDSv2
 - 4.3.5: WITHDRAWN (auto NA)
