@@ -12,6 +12,14 @@ Version 1.0 - 10-OCT 24
 
 [1.1.1 Ensure that Only Approved Extensions Are Installed](#111-ensure-that-only-approved-extensions-are-installed)
 
+[1.1.2 Ensure Virtual Machines Are Utilizing Managed Disks](#112-ensure-virtual-machines-are-utilizing-managed-disks)
+
+[1.1.3 Ensure Only Approved Extensions Are Installed on Virtual Machines](#113-ensure-only-approved-extensions-are-installed-on-virtual-machines)
+
+[1.1.2 Ensure Virtual Machines Are Utilizing Managed Disks](#112-ensure-virtual-machines-are-utilizing-managed-disks)
+
+[1.1.3 Ensure Only Approved Extensions Are Installed on Virtual Machines](#113-ensure-only-approved-extensions-are-installed-on-virtual-machines)
+
 [1.2 Ensure Authorized Software is Currently Supported](#12-ensure-authorized-software-is-currently-supported)
 
 [1.2.1 Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime](#121-ensure-that-all-aws-lambda-functions-are-configured-to-use-a-current-not-deprecated-runtime)
@@ -38,19 +46,95 @@ Version 1.0 - 10-OCT 24
 
 [1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances ](#134-ensure-block-project-wide-ssh-keys-is-enabled-for-vm-instances)
 
+[1.3.5 Ensure End-to-End TLS Is Enabled for App Service Apps](#135-ensure-end-to-end-tls-is-enabled-for-app-service-apps)
+
+[1.3.6 Ensure End-to-End TLS Is Enabled for App Service Slots](#136-ensure-end-to-end-tls-is-enabled-for-app-service-slots)
+
+[1.3.7 Ensure End-to-End TLS Is Enabled for Function Apps](#137-ensure-end-to-end-tls-is-enabled-for-function-apps)
+
+[1.3.8 Ensure End-to-End TLS Is Enabled for Function App Slots](#138-ensure-end-to-end-tls-is-enabled-for-function-app-slots)
+
+[1.3.9 Ensure Remote Debugging Is Disabled for App Service Apps](#139-ensure-remote-debugging-is-disabled-for-app-service-apps)
+
+[1.3.10 Ensure Remote Debugging Is Disabled for App Service Slots](#1310-ensure-remote-debugging-is-disabled-for-app-service-slots)
+
+[1.3.11 Ensure Remote Debugging Is Disabled for Function Apps](#1311-ensure-remote-debugging-is-disabled-for-function-apps)
+
+[1.3.12 Ensure Remote Debugging Is Disabled for Function App Slots](#1312-ensure-remote-debugging-is-disabled-for-function-app-slots)
+
+[1.3.13 Ensure App Service Environment Is Provisioned with v3 or Higher](#1313-ensure-app-service-environment-is-provisioned-with-v3-or-higher)
+
+[1.3.14 Ensure App Service Environment Has TLS 1.0 and 1.1 Disabled](#1314-ensure-app-service-environment-has-tls-10-and-11-disabled)
+
+[1.3.15 Ensure App Service Environment Has Cipher Suite Ordering Configured](#1315-ensure-app-service-environment-has-cipher-suite-ordering-configured)
+
+[1.3.16 Ensure SSL Is Configured for CycleCloud](#1316-ensure-ssl-is-configured-for-cyclecloud)
+
 [1.4 Encrypt Confidential Data at Rest](#14-encrypt-confidential-data-at-rest)
 
 [1.4.1 Ensure Virtual Machines are utilizing Managed Disks](#141-ensure-virtual-machines-are-utilizing-managed-disks)
 
+[1.4.2 Ensure Batch Pool Disk Encryption Is Enabled](#142-ensure-batch-pool-disk-encryption-is-enabled)
+
+[1.4.3 Ensure Local Authentication Methods for Batch Accounts Are Disabled](#143-ensure-local-authentication-methods-for-batch-accounts-are-disabled)
+
+[1.4.4 Ensure Trusted Launch Is Enabled on Virtual Machines](#144-ensure-trusted-launch-is-enabled-on-virtual-machines)
+
+[1.4.5 Ensure Encryption at Host Is Enabled for Virtual Machines](#145-ensure-encryption-at-host-is-enabled-for-virtual-machines)
+
 [1.5 Implement and Manage a Firewall on Servers](#15-implement-and-manage-a-firewall-on-servers)
 
 [1.5.1 Ensure That IP Forwarding Is Not Enabled on Instances](#151-ensure-that-ip-forwarding-is-not-enabled-on-instances)
+
+[1.5.2 Ensure Public Network Access Is Disabled for App Service Apps](#152-ensure-public-network-access-is-disabled-for-app-service-apps)
+
+[1.5.3 Ensure Public Network Access Is Disabled for App Service Slots](#153-ensure-public-network-access-is-disabled-for-app-service-slots)
+
+[1.5.4 Ensure Public Network Access Is Disabled for Function Apps](#154-ensure-public-network-access-is-disabled-for-function-apps)
+
+[1.5.5 Ensure Public Network Access Is Disabled for Function App Slots](#155-ensure-public-network-access-is-disabled-for-function-app-slots)
+
+[1.5.6 Ensure App Service Apps Are Integrated with a Virtual Network](#156-ensure-app-service-apps-are-integrated-with-a-virtual-network)
+
+[1.5.7 Ensure App Service Slots Are Integrated with a Virtual Network](#157-ensure-app-service-slots-are-integrated-with-a-virtual-network)
+
+[1.5.8 Ensure Function Apps Are Integrated with a Virtual Network](#158-ensure-function-apps-are-integrated-with-a-virtual-network)
+
+[1.5.9 Ensure Function App Slots Are Integrated with a Virtual Network](#159-ensure-function-app-slots-are-integrated-with-a-virtual-network)
+
+[1.5.10 Ensure All Traffic Is Routed Through VNet for App Service Apps](#1510-ensure-all-traffic-is-routed-through-vnet-for-app-service-apps)
+
+[1.5.11 Ensure All Traffic Is Routed Through VNet for App Service Slots](#1511-ensure-all-traffic-is-routed-through-vnet-for-app-service-slots)
+
+[1.5.12 Ensure All Traffic Is Routed Through VNet for Function Apps](#1512-ensure-all-traffic-is-routed-through-vnet-for-function-apps)
+
+[1.5.13 Ensure All Traffic Is Routed Through VNet for Function App Slots](#1513-ensure-all-traffic-is-routed-through-vnet-for-function-app-slots)
+
+[1.5.14 Ensure Private VNets Are Used for Container Instances](#1514-ensure-private-vnets-are-used-for-container-instances)
+
+[1.5.15 Ensure a Managed Identity Is Used for Container Instances](#1515-ensure-a-managed-identity-is-used-for-container-instances)
+
+[1.5.16 Ensure Least Privilege for Container Instance Managed Identity](#1516-ensure-least-privilege-for-container-instance-managed-identity)
+
+[1.5.17 Ensure Public Network Access Is Disabled for Batch Accounts](#1517-ensure-public-network-access-is-disabled-for-batch-accounts)
+
+[1.5.18 Ensure VM Disk Network Access Is Not Set to Enable Public Access](#1518-ensure-vm-disk-network-access-is-not-set-to-enable-public-access)
+
+[1.5.19 Ensure VM Data Access Authentication Mode Is Enabled](#1519-ensure-vm-data-access-authentication-mode-is-enabled)
 
 [1.6 Manage Default Accounts on Enterprise Assets and Software ](#16-manage-default-accounts-on-enterprise-assets-and-software)
 
 [1.6.1 Ensure That Instances Are Not Configured To Use the Default Service Account](#161-ensure-that-instances-are-not-configured-to-use-the-default-service-account)
 
 [1.6.2 Ensure That Instances Are Not Configured To Use the Default Service Account With Full Access to All Cloud APIs](#162-ensure-that-instances-are-not-configured-to-use-the-default-service-account-with-full-access-to-all-cloud-apis)
+
+[1.6.3 Ensure Managed Identities Are Configured for App Service Apps](#163-ensure-managed-identities-are-configured-for-app-service-apps)
+
+[1.6.4 Ensure Managed Identities Are Configured for App Service Slots](#164-ensure-managed-identities-are-configured-for-app-service-slots)
+
+[1.6.5 Ensure Managed Identities Are Configured for Function Apps](#165-ensure-managed-identities-are-configured-for-function-apps)
+
+[1.6.6 Ensure Managed Identities Are Configured for Function App Slots](#166-ensure-managed-identities-are-configured-for-function-app-slots)
 
 [1.7 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software](#17-uninstall-or-disable-unnecessary-services-on-enterprise-assets-and-software)
 
@@ -144,6 +228,14 @@ Version 1.0 - 10-OCT 24
 
 [2.8.8 Ensure That Account Lockout Duration is Set Appropriately](#288-ensure-that-account-lockout-duration-is-set-appropriately)
 
+[2.8.9 Ensure Basic Auth Publishing Credentials Are Disabled for App Service Apps](#289-ensure-basic-auth-publishing-credentials-are-disabled-for-app-service-apps)
+
+[2.8.10 Ensure Basic Auth Publishing Credentials Are Disabled for App Service Slots](#2810-ensure-basic-auth-publishing-credentials-are-disabled-for-app-service-slots)
+
+[2.8.11 Ensure Basic Auth Publishing Credentials Are Disabled for Function Apps](#2811-ensure-basic-auth-publishing-credentials-are-disabled-for-function-apps)
+
+[2.8.12 Ensure Basic Auth Publishing Credentials Are Disabled for Function App Slots](#2812-ensure-basic-auth-publishing-credentials-are-disabled-for-function-app-slots)
+
 [2.9 Use Unique Passwords](#29-use-unique-passwords)
 
 [2.9.1 Ensure IAM password policy prevents password reuse](#291-ensure-iam-password-policy-prevents-password-reuse)
@@ -155,6 +247,10 @@ Version 1.0 - 10-OCT 24
 [2.10.1 Ensure credentials unused for 45 days or greater are disabled ](#2101-ensure-credentials-unused-for-45-days-or-greater-are-disabled)
 
 [2.10.2 Ensure Guest Users Are Reviewed on a Regular Basis ](#2102-ensure-guest-users-are-reviewed-on-a-regular-basis)
+
+[2.10.4 Ensure Disabled Accounts Do Not Have Permissions](#2104-ensure-disabled-accounts-do-not-have-permissions)
+
+[2.10.5 Ensure Tenant Creator Role Assignments Are Reviewed Periodically](#2105-ensure-tenant-creator-role-assignments-are-reviewed-periodically)
 
 [2.11 Restrict Administrator Privileges to Dedicated Administrator Accounts](#211-restrict-administrator-privileges-to-dedicated-administrator-accounts)
 
@@ -226,6 +322,8 @@ Version 1.0 - 10-OCT 24
 
 [2.18.1 Ensure IAM Users Receive Permissions Only Through Groups](#2181-ensure-iam-users-receive-permissions-only-through-groups)
 
+[2.18.2 Ensure All Non-Privileged Role Assignments Are Reviewed Periodically](#2182-ensure-all-non-privileged-role-assignments-are-reviewed-periodically)
+
 [3.1 Establish and Maintain Detailed Enterprise Asset Inventory](#31-establish-and-maintain-detailed-enterprise-asset-inventory)
 
 [3.1.1 Ensure Cloud Asset Inventory Is Enabled](#311-ensure-cloud-asset-inventory-is-enabled)
@@ -265,6 +363,22 @@ Version 1.0 - 10-OCT 24
 [3.8.1 Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On'](#381-ensure-that-auto-provisioning-of-log-analytics-agent-for-azure-vms-is-set-to-on)
 
 [3.8.2 Ensure that IAM External Access Analyzer is enabled for all regions](#382-ensure-that-iam-external-access-analyzer-is-enabled-for-all-regions)
+
+[3.8.3 Ensure Azure Databricks Is Deployed in a Customer-Managed VNet](#383-ensure-azure-databricks-is-deployed-in-a-customer-managed-vnet)
+
+[3.8.4 Ensure NSGs Are Configured for Databricks Subnets](#384-ensure-nsgs-are-configured-for-databricks-subnets)
+
+[3.8.5 Ensure Users and Groups Are Synced from Entra ID to Databricks](#385-ensure-users-and-groups-are-synced-from-entra-id-to-databricks)
+
+[3.8.6 Ensure Unity Catalog Is Configured for Azure Databricks](#386-ensure-unity-catalog-is-configured-for-azure-databricks)
+
+[3.8.7 Ensure PAT Usage Is Restricted and Expiry Is Enforced for Databricks](#387-ensure-pat-usage-is-restricted-and-expiry-is-enforced-for-databricks)
+
+[3.8.8 Ensure Diagnostic Log Delivery Is Configured for Azure Databricks](#388-ensure-diagnostic-log-delivery-is-configured-for-azure-databricks)
+
+[3.8.9 Ensure No Public IP Is Enabled for Azure Databricks](#389-ensure-no-public-ip-is-enabled-for-azure-databricks)
+
+[3.8.10 Ensure Public Network Access Is Disabled for Azure Databricks](#3810-ensure-public-network-access-is-disabled-for-azure-databricks)
 
 [3.9 Conduct Audit Log Reviews](#39-conduct-audit-log-reviews)
 
@@ -342,6 +456,8 @@ Version 1.0 - 10-OCT 24
 
 [3.11.17 Ensure a Service Health Alert Exists](#31117-ensure-a-service-health-alert-exists)
 
+[3.11.18 Ensure Diagnostics Logs Are Enabled for Batch Accounts](#31118-ensure-diagnostics-logs-are-enabled-for-batch-accounts)
+
 [4 Networking](#4-networking)
 
 [4.1 Encrypt Confidential Data in Transit](#41-encrypt-confidential-data-in-transit)
@@ -359,6 +475,8 @@ Version 1.0 - 10-OCT 24
 [4.2.4 Ensure That RSASHA1 Is Not Used for the Zone-Signing Key in Cloud DNS DNSSEC](#424-ensure-that-rsasha1-is-not-used-for-the-zone-signing-key-in-cloud-dns-dnssec)
 
 [4.2.5 Ensure that EC2 Metadata Service only allows IMDSv2](#425-ensure-that-ec2-metadata-service-only-allows-imdsv2)
+
+[4.2.6 Ensure Public IP Addresses Are Evaluated Periodically](#426-ensure-public-ip-addresses-are-evaluated-periodically)
 
 [4.3 Implement and Manage a Firewall on Servers](#43-implement-and-manage-a-firewall-on-servers)
 
@@ -409,6 +527,8 @@ Version 1.0 - 10-OCT 24
 
 [5.2.2 Ensure Public Network Access is Disabled for Storage Accounts](#522-ensure-public-network-access-is-disabled-for-storage-accounts)
 
+[5.2.3 Ensure Cross-Tenant Replication Is Disabled for Storage Accounts](#523-ensure-cross-tenant-replication-is-disabled-for-storage-accounts)
+
 [5.3 Encrypt Confidential Data in Transit](#53-encrypt-confidential-data-in-transit)
 
 [5.3.1 Ensure that 'Secure transfer required' is set to 'Enabled'](#531-ensure-that-secure-transfer-required-is-set-to-enabled)
@@ -429,6 +549,8 @@ Version 1.0 - 10-OCT 24
 
 [5.5.3 Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible](#553-ensure-that-cloud-storage-bucket-is-not-anonymously-or-publicly-accessible)
 
+[5.5.5 Ensure Default to Entra Authorization in the Azure Portal Is Enabled for Storage](#555-ensure-default-to-entra-authorization-in-the-azure-portal-is-enabled-for-storage)
+
 [5.6 Establish and Maintain a Secure Configuration Process](#56-establish-and-maintain-a-secure-configuration-process)
 
 [5.6.1 Ensure that 'Enable key rotation reminders' is enabled for each Storage Account](#561-ensure-that-enable-key-rotation-reminders-is-enabled-for-each-storage-account)
@@ -438,6 +560,8 @@ Version 1.0 - 10-OCT 24
 [5.7.1 Ensure that Storage Account Access Keys are Periodically Regenerated](#571-ensure-that-storage-account-access-keys-are-periodically-regenerated)
 
 [5.7.2 Ensure Storage Account Key Access is Disabled](#572-ensure-storage-account-key-access-is-disabled)
+
+[5.7.3 Ensure ARM Delete Locks Are Applied to Storage Accounts](#573-ensure-arm-delete-locks-are-applied-to-storage-accounts)
 
 [5.8 Establish an Access Revoking Process](#58-establish-an-access-revoking-process)
 
@@ -465,6 +589,20 @@ Version 1.0 - 10-OCT 24
 
 [6.3.4 Ensure That the Cloud SQL Database Instance Requires All Incoming Connections To Use SSL](#634-ensure-that-the-cloud-sql-database-instance-requires-all-incoming-connections-to-use-ssl)
 
+[6.3.5 Ensure Entra ID Authentication Is Configured for Azure Cache for Redis](#635-ensure-entra-id-authentication-is-configured-for-azure-cache-for-redis)
+
+[6.3.6 Ensure SSL Only Is Enabled for Azure Cache for Redis](#636-ensure-ssl-only-is-enabled-for-azure-cache-for-redis)
+
+[6.3.7 Ensure TLS 1.2 or Higher Is Required for Azure Cache for Redis](#637-ensure-tls-12-or-higher-is-required-for-azure-cache-for-redis)
+
+[6.3.8 Ensure Entra ID-Only Authentication Is Enabled for MySQL Flexible Server](#638-ensure-entra-id-only-authentication-is-enabled-for-mysql-flexible-server)
+
+[6.3.9 Ensure Entra ID-Only Authentication Is Enabled for PostgreSQL Flexible Server](#639-ensure-entra-id-only-authentication-is-enabled-for-postgresql-flexible-server)
+
+[6.3.10 Ensure ssl_min_protocol_version Is Set to TLSv1.2 for PostgreSQL Flexible Server](#6310-ensure-ssl_min_protocol_version-is-set-to-tlsv12-for-postgresql-flexible-server)
+
+[6.3.11 Ensure Minimum TLS Version Is Set to 1.2 for Azure SQL Database](#6311-ensure-minimum-tls-version-is-set-to-12-for-azure-sql-database)
+
 [6.4 Encrypt Confidential Data at Rest](#64-encrypt-confidential-data-at-rest)
 
 [6.4.1 Ensure that encryption-at-rest is enabled for RDS Instances](#641-ensure-that-encryption-at-rest-is-enabled-for-rds-instances)
@@ -485,15 +623,21 @@ Version 1.0 - 10-OCT 24
 
 [6.5.6 Ensure that the 'contained database authentication' database flag for Cloud SQL on the SQL Server instance is set to 'off'](#656-ensure-that-the-contained-database-authentication-database-flag-for-cloud-sql-on-the-sql-server-instance-is-set-to-off)
 
+[6.5.7 Ensure Local Authentication Is Disabled for Cosmos DB](#657-ensure-local-authentication-is-disabled-for-cosmos-db)
+
 [6.6 Establish and Maintain a Secure Configuration Process](#66-establish-and-maintain-a-secure-configuration-process)
 
 [6.6.1 Ensure 'user options' database flag for Cloud SQL SQL Server instance is not configured](#661-ensure-user-options-database-flag-for-cloud-sql-sql-server-instance-is-not-configured)
 
 [6.6.2 Ensure '3625 (trace flag)' database flag for all Cloud SQL Server instances is set to 'on'](#662-ensure-3625-trace-flag-database-flag-for-all-cloud-sql-server-instances-is-set-to-on)
 
+[6.6.4 Ensure connection_throttle.enable Is Set to ON for PostgreSQL Flexible Server](#664-ensure-connection_throttleenable-is-set-to-on-for-postgresql-flexible-server)
+
 [6.7 Implement and Manage a Firewall on Servers](#67-implement-and-manage-a-firewall-on-servers)
 
 [6.7.1 Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled](#671-ensure-allow-access-to-azure-services-for-postgresql-database-server-is-disabled)
+
+[6.7.2 Ensure Cosmos DB Firewall Rules Are Configured](#672-ensure-cosmos-db-firewall-rules-are-configured)
 
 [6.8 Securely Manage Enterprise Assets and Software](#68-securely-manage-enterprise-assets-and-software)
 
@@ -543,6 +687,23 @@ Version 1.0 - 10-OCT 24
 
 [6.15.7 Ensure That 'cloudsql.enable_pgaudit' Database Flag for each Cloud Sql Postgresql Instance Is Set to 'on' For Centralized Logging](#6157-ensure-that-cloudsqlenable_pgaudit-database-flag-for-each-cloud-sql-postgresql-instance-is-set-to-on-for-centralized-logging)
 
+[6.15.8 Database Logging Should Be Enabled](#6158-database-logging-should-be-enabled)
+
+[6.15.9 Ensure Diagnostic Logging Is Enabled for Cosmos DB](#6159-ensure-diagnostic-logging-is-enabled-for-cosmos-db)
+
+[6.15.10 Ensure SQL Database Audit Retention Is Greater Than 90 Days](#61510-ensure-sql-database-audit-retention-is-greater-than-90-days)
+
+
+[6.16 Centralize Account Management for Database Services](#616-centralize-account-management-for-database-services)
+
+[6.16.1 Ensure Managed Identity Is Used for Azure Cache for Redis](#6161-ensure-managed-identity-is-used-for-azure-cache-for-redis)
+
+[6.16.2 Ensure Access Keys Authentication Is Disabled for Azure Cache for Redis](#6162-ensure-access-keys-authentication-is-disabled-for-azure-cache-for-redis)
+
+[6.16.3 Ensure Stable Update Channel Is Used for Azure Cache for Redis](#6163-ensure-stable-update-channel-is-used-for-azure-cache-for-redis)
+
+[6.16.4 Ensure Managed Identities Are Configured for Data Factory](#6164-ensure-managed-identities-are-configured-for-data-factory)
+
 
 
 # Overview
@@ -585,6 +746,10 @@ It is necessary to first identify the software that needs to be secured before t
 ---
 
 ### 1.1.1 Ensure that Only Approved Extensions Are Installed
+
+[1.1.2 Ensure Virtual Machines Are Utilizing Managed Disks](#112-ensure-virtual-machines-are-utilizing-managed-disks)
+
+[1.1.3 Ensure Only Approved Extensions Are Installed on Virtual Machines](#113-ensure-only-approved-extensions-are-installed-on-virtual-machines)
 **Platform:** Azure
 
 **Rationale:** Azure virtual machine extensions are small applications that provide post-deployment configuration and automation tasks on Azure virtual machines. These extensions run with administrative privileges and could potentially access anything on a virtual machine. The Azure Portal and community provide several such extensions. Each organization should carefully evaluate these extensions and ensure that only those that are approved for use are actually implemented.
@@ -636,6 +801,68 @@ Developer states that they have reviewed the list of extensions and that each on
 
 
 ---
+
+
+---
+
+### 1.1.2 Ensure Virtual Machines Are Utilizing Managed Disks
+**Platform:** Azure
+
+**Rationale:** Managed disks are by default encrypted on the underlying hardware, so no additional encryption is required for basic protection. Management of the disks is handled by Azure, reducing the risk of human error and increasing reliability. Managed disks also provide better security by tightly controlling access via Azure RBAC.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 20.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Virtual machines`.
+2. For each virtual machine, click on its name to go to its overview.
+3. Under `Settings`, click `Disks`.
+4. Ensure that each disk listed uses `Managed` disk type.
+
+**From Azure CLI**
+
+```
+az vm list --query '[*].{Name:name, ResourceGroup:resourceGroup, ManagedDisk:storageProfile.osDisk.managedDisk.id}' --output table
+```
+
+Ensure that the `ManagedDisk` column has a value for each VM (not null).
+
+**Verification**
+
+Evidence shows that all virtual machines are utilizing Managed Disks.
+
+
+
+---
+
+### 1.1.3 Ensure Only Approved Extensions Are Installed on Virtual Machines
+**Platform:** Azure
+
+**Rationale:** Azure virtual machine extensions are small applications that provide post-deployment configuration and automation tasks on Azure virtual machines. These extensions run with administrative privileges and could potentially access anything on a virtual machine. Each organization should carefully evaluate these extensions and ensure that only those approved for use are actually implemented.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 20.6
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Virtual machines`.
+2. For each virtual machine, click on the server name to select it.
+3. Under `Settings`, click `Extensions + applications`.
+4. Ensure that all listed extensions are approved by the organization for use.
+
+**From Azure CLI**
+
+```
+az vm extension list --vm-name <vmName> --resource-group <resourceGroupName> --query [*].name
+```
+
+**Verification**
+
+Developer states that they have reviewed the list of extensions and that each one is approved for use.
+
 
 
 ## 1.2 Ensure Authorized Software is Currently Supported
@@ -1171,6 +1398,30 @@ Evidence or test output indicates that no webapp is deployed with FtpsState of A
 ---
 
 ### 1.3.4 Ensure “Block Project-Wide SSH Keys” Is Enabled for VM Instances
+
+[1.3.5 Ensure End-to-End TLS Is Enabled for App Service Apps](#135-ensure-end-to-end-tls-is-enabled-for-app-service-apps)
+
+[1.3.6 Ensure End-to-End TLS Is Enabled for App Service Slots](#136-ensure-end-to-end-tls-is-enabled-for-app-service-slots)
+
+[1.3.7 Ensure End-to-End TLS Is Enabled for Function Apps](#137-ensure-end-to-end-tls-is-enabled-for-function-apps)
+
+[1.3.8 Ensure End-to-End TLS Is Enabled for Function App Slots](#138-ensure-end-to-end-tls-is-enabled-for-function-app-slots)
+
+[1.3.9 Ensure Remote Debugging Is Disabled for App Service Apps](#139-ensure-remote-debugging-is-disabled-for-app-service-apps)
+
+[1.3.10 Ensure Remote Debugging Is Disabled for App Service Slots](#1310-ensure-remote-debugging-is-disabled-for-app-service-slots)
+
+[1.3.11 Ensure Remote Debugging Is Disabled for Function Apps](#1311-ensure-remote-debugging-is-disabled-for-function-apps)
+
+[1.3.12 Ensure Remote Debugging Is Disabled for Function App Slots](#1312-ensure-remote-debugging-is-disabled-for-function-app-slots)
+
+[1.3.13 Ensure App Service Environment Is Provisioned with v3 or Higher](#1313-ensure-app-service-environment-is-provisioned-with-v3-or-higher)
+
+[1.3.14 Ensure App Service Environment Has TLS 1.0 and 1.1 Disabled](#1314-ensure-app-service-environment-has-tls-10-and-11-disabled)
+
+[1.3.15 Ensure App Service Environment Has Cipher Suite Ordering Configured](#1315-ensure-app-service-environment-has-cipher-suite-ordering-configured)
+
+[1.3.16 Ensure SSL Is Configured for CycleCloud](#1316-ensure-ssl-is-configured-for-cyclecloud)
 **Platform:** Google
 
 **Rationale:** Project-wide SSH keys are stored in Compute/Project-meta-data. Project wide SSH keys can be used to login into all the instances within the project. Using project-wide SSH keys eases the SSH key management but if compromised, poses the security risk which can impact all the instances within the project. It is recommended to use Instance specific SSH keys which can limit the attack surface if the SSH keys are compromised.
@@ -1205,6 +1456,396 @@ Evidence or test output indicates that every compute instance is configured to b
 
 
 ---
+
+
+---
+
+### 1.3.5 Ensure End-to-End TLS Is Enabled for App Service Apps
+**Platform:** Azure
+
+**Rationale:** End-to-end TLS ensures data is encrypted from the client to the backend, not just to the front-end load balancer. Without end-to-end encryption, traffic between the App Service front-end and the application code could be intercepted within the Azure infrastructure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Settings`, click `Configuration`.
+4. Under `General settings`, ensure `Minimum Inbound TLS Version` is set to `1.2` and end-to-end TLS encryption is enabled.
+
+**From Azure CLI**
+
+```
+az webapp config show --resource-group <resource-group> --name <app-name> --query minTlsVersion
+```
+
+Ensure that `1.2` is returned.
+
+**Verification**
+
+Evidence or test output confirms that end-to-end tls is enabled for app service apps.
+
+
+
+---
+
+### 1.3.6 Ensure End-to-End TLS Is Enabled for App Service Slots
+**Platform:** Azure
+
+**Rationale:** End-to-end TLS ensures data is encrypted from the client to the backend, not just to the front-end load balancer. Without end-to-end encryption, traffic between the App Service front-end and the application code could be intercepted within the Azure infrastructure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.2.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `General settings`, ensure `Minimum Inbound TLS Version` is set to `1.2` and end-to-end TLS encryption is enabled.
+
+**From Azure CLI**
+
+```
+az webapp config show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query minTlsVersion
+```
+
+Ensure that `1.2` is returned.
+
+**Verification**
+
+Evidence or test output confirms that end-to-end tls is enabled for app service slots.
+
+
+
+---
+
+### 1.3.7 Ensure End-to-End TLS Is Enabled for Function Apps
+**Platform:** Azure
+
+**Rationale:** End-to-end TLS ensures data is encrypted from the client to the backend, not just to the front-end load balancer. Without end-to-end encryption, traffic between the App Service front-end and the application code could be intercepted within the Azure infrastructure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.3.8
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Settings`, click `Configuration`.
+4. Under `General settings`, ensure `Minimum Inbound TLS Version` is set to `1.2` and end-to-end TLS encryption is enabled.
+
+**From Azure CLI**
+
+```
+az functionapp config show --resource-group <resource-group> --name <app-name> --query minTlsVersion
+```
+
+Ensure that `1.2` is returned.
+
+**Verification**
+
+Evidence or test output confirms that end-to-end tls is enabled for function apps.
+
+
+
+---
+
+### 1.3.8 Ensure End-to-End TLS Is Enabled for Function App Slots
+**Platform:** Azure
+
+**Rationale:** End-to-end TLS ensures data is encrypted from the client to the backend, not just to the front-end load balancer. Without end-to-end encryption, traffic between the App Service front-end and the application code could be intercepted within the Azure infrastructure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.4.8
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `General settings`, ensure `Minimum Inbound TLS Version` is set to `1.2` and end-to-end TLS encryption is enabled.
+
+**From Azure CLI**
+
+```
+az webapp config show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query minTlsVersion
+```
+
+Ensure that `1.2` is returned.
+
+**Verification**
+
+Evidence or test output confirms that end-to-end tls is enabled for function app slots.
+
+
+
+---
+
+### 1.3.9 Ensure Remote Debugging Is Disabled for App Service Apps
+**Platform:** Azure
+
+**Rationale:** Remote debugging requires inbound communication to the application. Turning off remote debugging shuts down inbound access through the debugging port. If remote debugging is left enabled, an attacker could attach a debugger to the application, providing full access to the runtime environment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.10
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Settings`, click `Configuration`.
+4. Under `General settings`, ensure `Remote Debugging` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az webapp config show --resource-group <resource-group> --name <app-name> --query remoteDebuggingEnabled
+```
+
+Ensure that `false` is returned.
+
+**Verification**
+
+Evidence or test output confirms that remote debugging is disabled for all app service apps.
+
+
+
+---
+
+### 1.3.10 Ensure Remote Debugging Is Disabled for App Service Slots
+**Platform:** Azure
+
+**Rationale:** Remote debugging requires inbound communication to the application. Turning off remote debugging shuts down inbound access through the debugging port. If remote debugging is left enabled, an attacker could attach a debugger to the application, providing full access to the runtime environment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.2.10
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Configuration`.
+6. Under `General settings`, ensure `Remote Debugging` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az webapp config show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query remoteDebuggingEnabled
+```
+
+Ensure that `false` is returned.
+
+**Verification**
+
+Evidence or test output confirms that remote debugging is disabled for all app service slots.
+
+
+
+---
+
+### 1.3.11 Ensure Remote Debugging Is Disabled for Function Apps
+**Platform:** Azure
+
+**Rationale:** Remote debugging requires inbound communication to the application. Turning off remote debugging shuts down inbound access through the debugging port. If remote debugging is left enabled, an attacker could attach a debugger to the application, providing full access to the runtime environment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.3.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Settings`, click `Configuration`.
+4. Under `General settings`, ensure `Remote Debugging` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az functionapp config show --resource-group <resource-group> --name <app-name> --query remoteDebuggingEnabled
+```
+
+Ensure that `false` is returned.
+
+**Verification**
+
+Evidence or test output confirms that remote debugging is disabled for all function apps.
+
+
+
+---
+
+### 1.3.12 Ensure Remote Debugging Is Disabled for Function App Slots
+**Platform:** Azure
+
+**Rationale:** Remote debugging requires inbound communication to the application. Turning off remote debugging shuts down inbound access through the debugging port. If remote debugging is left enabled, an attacker could attach a debugger to the application, providing full access to the runtime environment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.4.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Configuration`.
+6. Under `General settings`, ensure `Remote Debugging` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az functionapp config show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query remoteDebuggingEnabled
+```
+
+Ensure that `false` is returned.
+
+**Verification**
+
+Evidence or test output confirms that remote debugging is disabled for all function app slots.
+
+
+
+---
+
+### 1.3.13 Ensure App Service Environment Is Provisioned with v3 or Higher
+**Platform:** Azure
+
+**Rationale:** App Service Environment (ASE) v1 and v2 are deprecated and will be retired. ASE v3 provides enhanced security, performance, and networking capabilities. Running an older version of ASE exposes the environment to potential vulnerabilities that are not addressed in legacy versions.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Service Environments`.
+2. For each ASE, check the `Version` column or click the name and review the overview.
+3. Ensure the ASE version is `v3` or higher.
+
+**From Azure CLI**
+
+```
+az appservice ase list --query '[*].{Name:name, Kind:kind}' --output table
+```
+
+Ensure that the output shows ASEv3 (kind includes `ASEV3`).
+
+**Verification**
+
+Evidence confirms all App Service Environments are provisioned with v3 or higher.
+
+
+
+---
+
+### 1.3.14 Ensure App Service Environment Has TLS 1.0 and 1.1 Disabled
+**Platform:** Azure
+
+**Rationale:** TLS 1.0 and 1.1 are known to be susceptible to attacks. Disabling older TLS versions on the App Service Environment ensures that only secure protocol versions are used for encrypted communication.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Service Environments`.
+2. Click the name of an ASE.
+3. Under `Settings`, click `TLS/SSL settings`.
+4. Ensure that `Minimum TLS Version` is set to `1.2`.
+
+**From Azure CLI**
+
+```
+az appservice ase show --name <ase-name> --resource-group <resource-group> --query clusterSettings
+```
+
+Review the output and ensure `MinTlsVersion` is set to `1.2`.
+
+**Verification**
+
+Evidence confirms TLS 1.0 and 1.1 are disabled on all App Service Environments.
+
+
+
+---
+
+### 1.3.15 Ensure App Service Environment Has Cipher Suite Ordering Configured
+**Platform:** Azure
+
+**Rationale:** Configuring cipher suite ordering ensures that the App Service Environment uses strong, modern cipher suites and prioritizes them appropriately. Without explicit ordering, weaker cipher suites may be negotiated, reducing the security of encrypted connections.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.10
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Service Environments`.
+2. Click the name of an ASE.
+3. Under `Settings`, click `TLS/SSL settings`.
+4. Ensure cipher suite ordering is configured with strong, approved cipher suites.
+
+**From Azure CLI**
+
+```
+az appservice ase show --name <ase-name> --resource-group <resource-group> --query clusterSettings
+```
+
+Review the output for `FrontEndSSLCipherSuiteOrder` setting.
+
+**Verification**
+
+Evidence confirms cipher suite ordering is configured for all App Service Environments.
+
+
+
+---
+
+### 1.3.16 Ensure SSL Is Configured for CycleCloud
+**Platform:** Azure
+
+**Rationale:** CycleCloud provides a web interface for managing HPC clusters. Without SSL/TLS configured, communications with the CycleCloud web interface are transmitted in plain text, exposing credentials and configuration data to potential interception.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 4.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to the VM running CycleCloud.
+2. Connect to the CycleCloud instance.
+3. Verify that the web interface is accessible only via HTTPS.
+4. Ensure a valid SSL/TLS certificate is installed.
+
+**From Azure CLI**
+
+Verify the CycleCloud configuration:
+```
+cyclecloud config show | grep -i ssl
+```
+
+Ensure SSL is enabled and configured with a valid certificate.
+
+**Verification**
+
+Evidence confirms SSL/TLS is configured for all CycleCloud instances.
+
 
 
 ## 1.4 Encrypt Confidential Data at Rest
@@ -1276,6 +1917,134 @@ Evidence or test output indicates that every VM is using a managed disk.
 ---
 
 
+---
+
+### 1.4.2 Ensure Batch Pool Disk Encryption Is Enabled
+**Platform:** Azure
+
+**Rationale:** Enabling disk encryption for Batch pools ensures that temporary disks and cached data on compute nodes are encrypted at rest. This protects sensitive data processed by batch workloads from unauthorized access if the underlying storage media is compromised.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 15.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Batch accounts`.
+2. Click the name of a Batch account.
+3. Under `Features`, click `Pools`.
+4. For each pool, verify that disk encryption is enabled.
+
+**From Azure CLI**
+
+```
+az batch pool list --account-name <batch-account> --query '[*].{Name:id, DiskEncryption:diskEncryptionConfiguration}'
+```
+
+Ensure `diskEncryptionConfiguration` is set for each pool.
+
+**Verification**
+
+Evidence confirms disk encryption is enabled for all Batch pools.
+
+
+
+---
+
+### 1.4.3 Ensure Local Authentication Methods for Batch Accounts Are Disabled
+**Platform:** Azure
+
+**Rationale:** Disabling local authentication methods forces the use of Microsoft Entra ID authentication for Batch accounts, which provides centralized identity management, audit logging, and enforcement of conditional access policies.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 15.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Batch accounts`.
+2. Click the name of a Batch account.
+3. Under `Settings`, click `Keys`.
+4. Ensure local authentication (Shared Key) is disabled.
+
+**From Azure CLI**
+
+```
+az batch account show --name <batch-account> --resource-group <resource-group> --query allowedAuthenticationModes
+```
+
+Ensure the output does not include `SharedKey` or `TaskAuthenticationToken`.
+
+**Verification**
+
+Evidence confirms local authentication methods are disabled for all Batch accounts.
+
+
+
+---
+
+### 1.4.4 Ensure Trusted Launch Is Enabled on Virtual Machines
+**Platform:** Azure
+
+**Rationale:** Trusted Launch protects against advanced and persistent attack techniques. It provides Secure Boot, vTPM, and boot integrity monitoring to ensure VMs boot with verified components and are not compromised by rootkits or boot-level malware.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 20.10
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Virtual machines`.
+2. For each virtual machine, click on its name.
+3. Under `Security`, verify that `Security type` is set to `Trusted launch virtual machines`.
+4. Ensure `Secure boot` and `vTPM` are enabled.
+
+**From Azure CLI**
+
+```
+az vm list --query '[*].{Name:name, ResourceGroup:resourceGroup, SecurityType:securityProfile.securityType}' --output table
+```
+
+Ensure `SecurityType` is `TrustedLaunch` for each VM.
+
+**Verification**
+
+Evidence confirms Trusted Launch is enabled on all virtual machines.
+
+
+
+---
+
+### 1.4.5 Ensure Encryption at Host Is Enabled for Virtual Machines
+**Platform:** Azure
+
+**Rationale:** With encryption at host enabled, data stored on the VM host is encrypted at rest and flows encrypted to the Storage service. This provides end-to-end encryption for temporary disks, ephemeral OS disks, and cached data, complementing Azure Disk Encryption.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 20.11
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Virtual machines`.
+2. For each virtual machine, click on its name.
+3. Under `Settings`, click `Disks`.
+4. Verify that `Encryption at host` is enabled.
+
+**From Azure CLI**
+
+```
+az vm list --query '[*].{Name:name, ResourceGroup:resourceGroup, EncryptionAtHost:securityProfile.encryptionAtHost}' --output table
+```
+
+Ensure `EncryptionAtHost` is `true` for each VM.
+
+**Verification**
+
+Evidence confirms encryption at host is enabled for all virtual machines.
+
+
+
 ## 1.5 Implement and Manage a Firewall on Servers
 
 
@@ -1332,6 +2101,600 @@ Evidence or test output indicates that no compute instance is configured with CA
 
 
 ---
+
+
+---
+
+### 1.5.2 Ensure Public Network Access Is Disabled for App Service Apps
+**Platform:** Azure
+
+**Rationale:** Disabling public network access ensures that the app is only accessible via private endpoints or VNet integration. This reduces the attack surface by preventing direct access from the public internet.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.14
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Settings`, click `Networking`.
+4. Ensure `Public network access` is set to `Disabled`.
+
+**From Azure CLI**
+
+```
+az webapp show --resource-group <resource-group> --name <app-name> --query publicNetworkAccess
+```
+
+Ensure that `Disabled` is returned.
+
+**Verification**
+
+Evidence confirms public network access is disabled.
+
+
+
+---
+
+### 1.5.3 Ensure Public Network Access Is Disabled for App Service Slots
+**Platform:** Azure
+
+**Rationale:** Disabling public network access ensures that the app is only accessible via private endpoints or VNet integration. This reduces the attack surface by preventing direct access from the public internet.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.2.13
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Networking`.
+6. Ensure `Public network access` is set to `Disabled`.
+
+**From Azure CLI**
+
+```
+az webapp show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query publicNetworkAccess
+```
+
+Ensure that `Disabled` is returned.
+
+**Verification**
+
+Evidence confirms public network access is disabled.
+
+
+
+---
+
+### 1.5.4 Ensure Public Network Access Is Disabled for Function Apps
+**Platform:** Azure
+
+**Rationale:** Disabling public network access ensures that the app is only accessible via private endpoints or VNet integration. This reduces the attack surface by preventing direct access from the public internet.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.3.13
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Settings`, click `Networking`.
+4. Ensure `Public network access` is set to `Disabled`.
+
+**From Azure CLI**
+
+```
+az functionapp show --resource-group <resource-group> --name <app-name> --query publicNetworkAccess
+```
+
+Ensure that `Disabled` is returned.
+
+**Verification**
+
+Evidence confirms public network access is disabled.
+
+
+
+---
+
+### 1.5.5 Ensure Public Network Access Is Disabled for Function App Slots
+**Platform:** Azure
+
+**Rationale:** Disabling public network access ensures that the app is only accessible via private endpoints or VNet integration. This reduces the attack surface by preventing direct access from the public internet.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.4.12
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Networking`.
+6. Ensure `Public network access` is set to `Disabled`.
+
+**From Azure CLI**
+
+```
+az functionapp show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query publicNetworkAccess
+```
+
+Ensure that `Disabled` is returned.
+
+**Verification**
+
+Evidence confirms public network access is disabled.
+
+
+
+---
+
+### 1.5.6 Ensure App Service Apps Are Integrated with a Virtual Network
+**Platform:** Azure
+
+**Rationale:** VNet integration enables the app to access resources in or through a virtual network without exposing them to the public internet. This improves security by keeping traffic within the Azure backbone network.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.18
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Settings`, click `Networking`.
+4. Under `Outbound Traffic`, verify `VNet integration` is configured.
+
+**From Azure CLI**
+
+```
+az webapp vnet-integration list --resource-group <resource-group> --name <app-name>
+```
+
+Ensure that the output shows a VNet integration is configured.
+
+**Verification**
+
+Evidence confirms VNet integration is configured.
+
+
+
+---
+
+### 1.5.7 Ensure App Service Slots Are Integrated with a Virtual Network
+**Platform:** Azure
+
+**Rationale:** VNet integration enables the app to access resources in or through a virtual network without exposing them to the public internet. This improves security by keeping traffic within the Azure backbone network.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.2.14
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Networking`.
+6. Under `Outbound Traffic`, verify `VNet integration` is configured.
+
+**From Azure CLI**
+
+```
+az webapp vnet-integration list --resource-group <resource-group> --name <app-name> --slot <slot-name>
+```
+
+Ensure that the output shows a VNet integration is configured.
+
+**Verification**
+
+Evidence confirms VNet integration is configured.
+
+
+
+---
+
+### 1.5.8 Ensure Function Apps Are Integrated with a Virtual Network
+**Platform:** Azure
+
+**Rationale:** VNet integration enables the app to access resources in or through a virtual network without exposing them to the public internet. This improves security by keeping traffic within the Azure backbone network.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.3.14
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Settings`, click `Networking`.
+4. Under `Outbound Traffic`, verify `VNet integration` is configured.
+
+**From Azure CLI**
+
+```
+az functionapp vnet-integration list --resource-group <resource-group> --name <app-name>
+```
+
+Ensure that the output shows a VNet integration is configured.
+
+**Verification**
+
+Evidence confirms VNet integration is configured.
+
+
+
+---
+
+### 1.5.9 Ensure Function App Slots Are Integrated with a Virtual Network
+**Platform:** Azure
+
+**Rationale:** VNet integration enables the app to access resources in or through a virtual network without exposing them to the public internet. This improves security by keeping traffic within the Azure backbone network.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.4.13
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Networking`.
+6. Under `Outbound Traffic`, verify `VNet integration` is configured.
+
+**From Azure CLI**
+
+```
+az functionapp vnet-integration list --resource-group <resource-group> --name <app-name> --slot <slot-name>
+```
+
+Ensure that the output shows a VNet integration is configured.
+
+**Verification**
+
+Evidence confirms VNet integration is configured.
+
+
+
+---
+
+### 1.5.10 Ensure All Traffic Is Routed Through VNet for App Service Apps
+**Platform:** Azure
+
+**Rationale:** By default, even with VNet integration, only RFC 1918 traffic is routed through the VNet. Enabling the "Route All" setting ensures all outbound traffic from the app flows through the VNet, allowing NSGs and UDRs to apply to all traffic for inspection and control.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.20
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Settings`, click `Networking`.
+4. Under `Outbound Traffic`, click `VNet integration`.
+5. Ensure `Route All` is enabled.
+
+**From Azure CLI**
+
+```
+az webapp config show --resource-group <resource-group> --name <app-name> --query vnetRouteAllEnabled
+```
+
+Ensure that `true` is returned.
+
+**Verification**
+
+Evidence confirms all traffic is routed through VNet.
+
+
+
+---
+
+### 1.5.11 Ensure All Traffic Is Routed Through VNet for App Service Slots
+**Platform:** Azure
+
+**Rationale:** By default, even with VNet integration, only RFC 1918 traffic is routed through the VNet. Enabling the "Route All" setting ensures all outbound traffic from the app flows through the VNet, allowing NSGs and UDRs to apply to all traffic for inspection and control.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.2.16
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Networking`.
+6. Under `Outbound Traffic`, click `VNet integration`.
+7. Ensure `Route All` is enabled.
+
+**From Azure CLI**
+
+```
+az webapp config show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query vnetRouteAllEnabled
+```
+
+Ensure that `true` is returned.
+
+**Verification**
+
+Evidence confirms all traffic is routed through VNet.
+
+
+
+---
+
+### 1.5.12 Ensure All Traffic Is Routed Through VNet for Function Apps
+**Platform:** Azure
+
+**Rationale:** By default, even with VNet integration, only RFC 1918 traffic is routed through the VNet. Enabling the "Route All" setting ensures all outbound traffic from the app flows through the VNet, allowing NSGs and UDRs to apply to all traffic for inspection and control.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.3.16
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Settings`, click `Networking`.
+4. Under `Outbound Traffic`, click `VNet integration`.
+5. Ensure `Route All` is enabled.
+
+**From Azure CLI**
+
+```
+az functionapp config show --resource-group <resource-group> --name <app-name> --query vnetRouteAllEnabled
+```
+
+Ensure that `true` is returned.
+
+**Verification**
+
+Evidence confirms all traffic is routed through VNet.
+
+
+
+---
+
+### 1.5.13 Ensure All Traffic Is Routed Through VNet for Function App Slots
+**Platform:** Azure
+
+**Rationale:** By default, even with VNet integration, only RFC 1918 traffic is routed through the VNet. Enabling the "Route All" setting ensures all outbound traffic from the app flows through the VNet, allowing NSGs and UDRs to apply to all traffic for inspection and control.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.4.15
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Networking`.
+6. Under `Outbound Traffic`, click `VNet integration`.
+7. Ensure `Route All` is enabled.
+
+**From Azure CLI**
+
+```
+az functionapp config show --resource-group <resource-group> --name <app-name> --slot <slot-name> --query vnetRouteAllEnabled
+```
+
+Ensure that `true` is returned.
+
+**Verification**
+
+Evidence confirms all traffic is routed through VNet.
+
+
+
+---
+
+### 1.5.14 Ensure Private VNets Are Used for Container Instances
+**Platform:** Azure
+
+**Rationale:** Deploying container instances in a private VNet prevents exposure to the public internet. This ensures that container workloads are only accessible within the organization's network boundary, reducing the risk of unauthorized access.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 3.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Container instances`.
+2. For each container group, click on its name.
+3. Under `Settings`, click `Networking`.
+4. Ensure the container group is deployed in a virtual network.
+
+**From Azure CLI**
+
+```
+az container list --query '[*].{Name:name, ResourceGroup:resourceGroup, SubnetIds:subnetIds}'
+```
+
+Ensure `subnetIds` is populated for each container group.
+
+**Verification**
+
+Evidence confirms container instances are deployed in private VNets.
+
+
+
+---
+
+### 1.5.15 Ensure a Managed Identity Is Used for Container Instances
+**Platform:** Azure
+
+**Rationale:** Using managed identities for container instances eliminates the need to store credentials in code or configuration. This reduces the risk of credential exposure and simplifies the management of service-to-service authentication.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 3.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Container instances`.
+2. For each container group, click on its name.
+3. Under `Settings`, click `Identity`.
+4. Ensure a managed identity (system-assigned or user-assigned) is configured.
+
+**From Azure CLI**
+
+```
+az container list --query '[*].{Name:name, Identity:identity.type}'
+```
+
+Ensure the `Identity` field shows a managed identity type for each container group.
+
+**Verification**
+
+Evidence confirms managed identities are used for container instances.
+
+
+
+---
+
+### 1.5.16 Ensure Least Privilege for Container Instance Managed Identity
+**Platform:** Azure
+
+**Rationale:** The managed identity assigned to a container instance should have only the minimum permissions necessary. Over-privileged identities increase the blast radius if the container is compromised.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 3.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Container instances`.
+2. For each container group, click on its name.
+3. Under `Settings`, click `Identity`.
+4. Note the managed identity.
+5. Go to the resource(s) the container accesses and review role assignments for the identity.
+6. Ensure the identity has only the minimum required permissions.
+
+**From Azure CLI**
+
+```
+az role assignment list --assignee <managed-identity-principal-id> --query '[*].{Role:roleDefinitionName, Scope:scope}'
+```
+
+Review the roles assigned and ensure they follow least privilege.
+
+**Verification**
+
+Evidence confirms managed identities for container instances follow the principle of least privilege.
+
+
+
+---
+
+### 1.5.17 Ensure Public Network Access Is Disabled for Batch Accounts
+**Platform:** Azure
+
+**Rationale:** Disabling public network access for Batch accounts ensures that the management plane is only accessible through private endpoints. This reduces the risk of unauthorized access and data exfiltration from batch workloads.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 15.5
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Batch accounts`.
+2. Click the name of a Batch account.
+3. Under `Settings`, click `Networking`.
+4. Ensure `Public network access` is set to `Disabled`.
+
+**From Azure CLI**
+
+```
+az batch account show --name <batch-account> --resource-group <resource-group> --query publicNetworkAccess
+```
+
+Ensure that `Disabled` is returned.
+
+**Verification**
+
+Evidence confirms public network access is disabled for all Batch accounts.
+
+
+
+---
+
+### 1.5.18 Ensure VM Disk Network Access Is Not Set to Enable Public Access
+**Platform:** Azure
+
+**Rationale:** Disabling public access to VM disks prevents unauthorized users from accessing disk data over the internet. Disk export and upload operations should be restricted to private endpoints or trusted networks.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 20.4
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Disks`.
+2. For each disk, click on its name.
+3. Under `Settings`, click `Networking`.
+4. Ensure `Network access` is NOT set to `Enable public access from all networks`.
+
+**From Azure CLI**
+
+```
+az disk list --query '[*].{Name:name, ResourceGroup:resourceGroup, NetworkAccess:networkAccessPolicy}'
+```
+
+Ensure `NetworkAccess` is not set to `AllowAll`.
+
+**Verification**
+
+Evidence confirms VM disk network access is not set to allow public access from all networks.
+
+
+
+---
+
+### 1.5.19 Ensure VM Data Access Authentication Mode Is Enabled
+**Platform:** Azure
+
+**Rationale:** Enabling data access authentication mode ensures that all data plane access to managed disks requires Azure Active Directory authentication. This prevents anonymous access and ensures audit logging of disk operations.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 20.5
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Disks`.
+2. For each disk, click on its name.
+3. Under `Settings`, click `Networking`.
+4. Ensure `Enable data access authentication mode` is checked.
+
+**From Azure CLI**
+
+```
+az disk list --query '[*].{Name:name, ResourceGroup:resourceGroup, DataAccessAuthMode:dataAccessAuthMode}'
+```
+
+Ensure `DataAccessAuthMode` is set to `AzureActiveDirectory`.
+
+**Verification**
+
+Evidence confirms data access authentication mode is enabled for all VM disks.
+
 
 
 ## 1.6 Manage Default Accounts on Enterprise Assets and Software
@@ -1441,6 +2804,138 @@ Evidence or test output indicates that no instance is configured to use the defa
 
 
 ---
+
+
+---
+
+### 1.6.3 Ensure Managed Identities Are Configured for App Service Apps
+**Platform:** Azure
+
+**Rationale:** Managed identities allow the application to authenticate to Azure services without storing credentials in code. Using managed identities eliminates the need for hard-coded credentials and reduces the risk of credential exposure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.13
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Settings`, click `Identity`.
+4. Ensure a managed identity (System assigned or User assigned) is configured and `Status` is `On`.
+
+**From Azure CLI**
+
+```
+az webapp identity show --resource-group <resource-group> --name <app-name>
+```
+
+Ensure a managed identity is configured.
+
+**Verification**
+
+Evidence confirms managed identities are configured.
+
+
+
+---
+
+### 1.6.4 Ensure Managed Identities Are Configured for App Service Slots
+**Platform:** Azure
+
+**Rationale:** Managed identities allow the application to authenticate to Azure services without storing credentials in code. Using managed identities eliminates the need for hard-coded credentials and reduces the risk of credential exposure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.2.12
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Identity`.
+6. Ensure a managed identity (System assigned or User assigned) is configured and `Status` is `On`.
+
+**From Azure CLI**
+
+```
+az webapp identity show --resource-group <resource-group> --name <app-name> --slot <slot-name>
+```
+
+Ensure a managed identity is configured.
+
+**Verification**
+
+Evidence confirms managed identities are configured.
+
+
+
+---
+
+### 1.6.5 Ensure Managed Identities Are Configured for Function Apps
+**Platform:** Azure
+
+**Rationale:** Managed identities allow the application to authenticate to Azure services without storing credentials in code. Using managed identities eliminates the need for hard-coded credentials and reduces the risk of credential exposure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.3.12
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Settings`, click `Identity`.
+4. Ensure a managed identity (System assigned or User assigned) is configured and `Status` is `On`.
+
+**From Azure CLI**
+
+```
+az functionapp identity show --resource-group <resource-group> --name <app-name>
+```
+
+Ensure a managed identity is configured.
+
+**Verification**
+
+Evidence confirms managed identities are configured.
+
+
+
+---
+
+### 1.6.6 Ensure Managed Identities Are Configured for Function App Slots
+**Platform:** Azure
+
+**Rationale:** Managed identities allow the application to authenticate to Azure services without storing credentials in code. Using managed identities eliminates the need for hard-coded credentials and reduces the risk of credential exposure.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.4.11
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Identity`.
+6. Ensure a managed identity (System assigned or User assigned) is configured and `Status` is `On`.
+
+**From Azure CLI**
+
+```
+az functionapp identity show --resource-group <resource-group> --name <app-name> --slot <slot-name>
+```
+
+Ensure a managed identity is configured.
+
+**Verification**
+
+Evidence confirms managed identities are configured.
+
 
 
 ## 1.7 Uninstall or Disable Unnecessary Services on Enterprise Assets and Software
@@ -3157,6 +4652,142 @@ Evidence or test output indicates that the account lockout duration is set to an
 
 ---
 
+
+---
+
+### 2.8.9 Ensure Basic Auth Publishing Credentials Are Disabled for App Service Apps
+**Platform:** Azure
+
+**Rationale:** Basic authentication uses a username and password for publishing and deployment operations. These credentials can be intercepted or brute-forced. Disabling basic authentication forces the use of more secure methods such as Entra ID-based deployment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.1.4
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Settings`, click `Configuration`.
+4. Under `General settings`, ensure `Basic Auth Publishing Credentials` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az resource show --resource-group <resource-group> --name ftp --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name> --query properties.allow
+az resource show --resource-group <resource-group> --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name> --query properties.allow
+```
+
+Ensure both return `false`.
+
+**Verification**
+
+Evidence confirms basic auth publishing credentials are disabled.
+
+
+
+---
+
+### 2.8.10 Ensure Basic Auth Publishing Credentials Are Disabled for App Service Slots
+**Platform:** Azure
+
+**Rationale:** Basic authentication uses a username and password for publishing and deployment operations. These credentials can be intercepted or brute-forced. Disabling basic authentication forces the use of more secure methods such as Entra ID-based deployment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.2.4
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `App Services`.
+2. Click the name of an app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Configuration`.
+6. Under `General settings`, ensure `Basic Auth Publishing Credentials` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az resource show --resource-group <resource-group> --name ftp --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name>/slots/<slot-name> --query properties.allow
+az resource show --resource-group <resource-group> --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name>/slots/<slot-name> --query properties.allow
+```
+
+Ensure both return `false`.
+
+**Verification**
+
+Evidence confirms basic auth publishing credentials are disabled.
+
+
+
+---
+
+### 2.8.11 Ensure Basic Auth Publishing Credentials Are Disabled for Function Apps
+**Platform:** Azure
+
+**Rationale:** Basic authentication uses a username and password for publishing and deployment operations. These credentials can be intercepted or brute-forced. Disabling basic authentication forces the use of more secure methods such as Entra ID-based deployment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.3.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Settings`, click `Configuration`.
+4. Under `General settings`, ensure `Basic Auth Publishing Credentials` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az resource show --resource-group <resource-group> --name ftp --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name> --query properties.allow
+az resource show --resource-group <resource-group> --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name> --query properties.allow
+```
+
+Ensure both return `false`.
+
+**Verification**
+
+Evidence confirms basic auth publishing credentials are disabled.
+
+
+
+---
+
+### 2.8.12 Ensure Basic Auth Publishing Credentials Are Disabled for Function App Slots
+**Platform:** Azure
+
+**Rationale:** Basic authentication uses a username and password for publishing and deployment operations. These credentials can be intercepted or brute-forced. Disabling basic authentication forces the use of more secure methods such as Entra ID-based deployment.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 2.4.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Function Apps`.
+2. Click the name of a function app.
+3. Under `Deployment`, click `Deployment slots`.
+4. Click the name of a slot.
+5. Under `Settings`, click `Configuration`.
+6. Under `General settings`, ensure `Basic Auth Publishing Credentials` is set to `Off`.
+
+**From Azure CLI**
+
+```
+az resource show --resource-group <resource-group> --name ftp --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name>/slots/<slot-name> --query properties.allow
+az resource show --resource-group <resource-group> --name scm --namespace Microsoft.Web --resource-type basicPublishingCredentialsPolicies --parent sites/<app-name>/slots/<slot-name> --query properties.allow
+```
+
+Ensure both return `false`.
+
+**Verification**
+
+Evidence confirms basic auth publishing credentials are disabled.
+
+
 ### 2.8.6 Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account
 **Platform:** Google
 
@@ -3395,6 +5026,71 @@ Developer states that they have reviewed guest users and that all users are stil
 
 
 ---
+
+
+---
+
+### 2.10.4 Ensure Disabled Accounts Do Not Have Permissions
+**Platform:** Azure
+
+**Rationale:** Disabled accounts should not retain access to resources, as this poses a security risk. Removing role assignments mitigates potential unauthorized access and enforces the principle of least privilege.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.3.5
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Microsoft Entra ID`.
+2. Under `Manage`, click `Users`.
+3. Click `Add filter`, select `Account enabled`, set the toggle to `No`, and click `Apply`.
+4. For each disabled user account, click on the display name.
+5. Click `Azure role assignments`.
+6. Ensure that no read, write, or owner roles are assigned to the user account.
+
+**From PowerShell**
+
+```
+$user = Get-AzureADUser -ObjectId <object-id>
+$user.AccountEnabled
+Get-AzRoleAssignment -ObjectId $user.ObjectId
+```
+
+If `AccountEnabled` is `False`, ensure no read, write, or owner roles are assigned.
+
+**Verification**
+
+Evidence confirms that disabled user accounts do not have read, write, or owner permissions.
+
+
+
+---
+
+### 2.10.5 Ensure 'Tenant Creator' Role Assignments Are Reviewed Periodically
+**Platform:** Azure
+
+**Rationale:** Unnecessary Tenant Creator role assignments increase the risk of privilege escalation and unauthorized access. Periodic review ensures assignments are accurate and appropriate.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.3.6
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Microsoft Entra ID`.
+2. Under `Manage`, click `Roles and administrators`.
+3. In the search bar, type `Tenant Creator`.
+4. Click the role.
+5. Review the assignments and ensure that they are appropriate.
+
+**From Azure CLI**
+
+There is no direct CLI command for this check. Use the Azure Portal procedure above.
+
+**Verification**
+
+Evidence confirms Tenant Creator role assignments have been reviewed and are appropriate.
+
 
 
 ## 2.11 Restrict Administrator Privileges to Dedicated Administrator Accounts
@@ -4506,6 +6202,41 @@ Evidence or test output indicates that IAM users receive permissions only throug
 ---
 
 
+---
+
+### 2.18.2 Ensure All Non-Privileged Role Assignments Are Reviewed Periodically
+**Platform:** Azure
+
+**Rationale:** To ensure the principle of least privilege is followed, non-privileged role assignments should be reviewed periodically to confirm that users are granted only the minimum level of permissions they need to perform their tasks.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.3.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Subscriptions`.
+2. Click the name of a subscription.
+3. Click `Access control (IAM)`.
+4. Click `Role assignments`.
+5. Click `Job function roles`.
+6. For each role, ensure the assignments are appropriate.
+7. Repeat for each subscription.
+
+**From Azure CLI**
+
+```
+az role assignment list --scope /subscriptions/<subscription-id> --query '[*].{Principal:principalName, Role:roleDefinitionName}'
+```
+
+Review the output and ensure all assignments follow least privilege.
+
+**Verification**
+
+Evidence confirms non-privileged role assignments have been reviewed and are appropriate.
+
+
+
 # 3 Logging and Monitoring
 ## 3.1 Establish and Maintain Detailed Enterprise Asset Inventory
 ### Description
@@ -5257,6 +6988,259 @@ Evidence or test output indicates that IAM External Access Analyzer is enabled i
 
 
 ---
+
+
+---
+
+### 3.8.3 Ensure Azure Databricks Is Deployed in a Customer-Managed VNet
+**Platform:** Azure
+
+**Rationale:** Using a customer-managed VNet ensures better control over network security and aligns with zero-trust architecture principles. It allows for restricted outbound internet access, integration with on-premises networks, fine-grained NSG policies, and Private Link for secure API access.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Databricks Workspaces`.
+2. Select a workspace.
+3. Under `Networking`, check if the workspace is deployed in a Customer-Managed VNet.
+4. If the Virtual Network field shows `Databricks-Managed VNet`, it is non-compliant.
+
+**From Azure CLI**
+
+```
+az network vnet show --resource-group <resource-group-name> --name <vnet-name>
+```
+
+Ensure that Databricks subnets are present in the VNet configuration.
+
+**Verification**
+
+Evidence confirms Azure Databricks workspaces are deployed in customer-managed VNets.
+
+
+
+---
+
+### 3.8.4 Ensure NSGs Are Configured for Databricks Subnets
+**Platform:** Azure
+
+**Rationale:** Using NSGs with both explicit allow and deny rules provides clear documentation and control over permitted and prohibited traffic. This strengthens the security posture of Databricks environments by ensuring only essential communication is permitted.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to `Virtual Networks` > `Subnets`.
+2. Review NSG assignments for Databricks subnets.
+
+**From Azure CLI**
+
+```
+az network nsg list --query "[].{Name:name, Rules:securityRules}"
+```
+
+Review the output and ensure NSGs are properly configured for Databricks subnets.
+
+**Verification**
+
+Evidence confirms NSGs are configured for all Databricks subnets.
+
+
+
+---
+
+### 3.8.5 Ensure Users and Groups Are Synced from Entra ID to Databricks
+**Platform:** Azure
+
+**Rationale:** Syncing users and groups from Microsoft Entra ID centralizes access control, enforces the least privilege principle, reduces administrative overhead, and ensures auditability and compliance with industry regulations.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.4
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Microsoft Entra ID`.
+2. Under `Manage`, click `Enterprise applications`.
+3. Click the Azure Databricks SCIM application.
+4. Under `Provisioning`, confirm that SCIM provisioning is enabled and running.
+5. Under `Provisioning Logs`, verify the last successful sync.
+
+**From Databricks**
+
+6. Go to `Admin Console` > `Identity and Access Management`.
+7. Confirm that Users and Groups match those assigned in Microsoft Entra ID.
+
+**Verification**
+
+Evidence confirms users and groups are synced from Entra ID to Databricks via SCIM provisioning.
+
+
+
+---
+
+### 3.8.6 Ensure Unity Catalog Is Configured for Azure Databricks
+**Platform:** Azure
+
+**Rationale:** Unity Catalog provides centralized governance for managing and securing data in Azure Databricks. It enforces centralized access control policies, enables identity-based authentication, improves compliance, and prevents unauthorized data access through table-, row-, and column-level security.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.5
+
+**Evidence**
+
+**From Azure Databricks**
+
+1. As an account admin, log into the account console.
+2. Click `Workspaces`.
+3. Find the workspace and check the `Metastore` column.
+4. If a metastore name is present, the workspace is enabled for Unity Catalog.
+
+Alternatively, run the following SQL query:
+```
+SELECT CURRENT_METASTORE();
+```
+
+If the query returns a metastore ID, Unity Catalog is enabled.
+
+**Verification**
+
+Evidence confirms Unity Catalog is configured for all Azure Databricks workspaces.
+
+
+
+---
+
+### 3.8.7 Ensure PAT Usage Is Restricted and Expiry Is Enforced for Databricks
+**Platform:** Azure
+
+**Rationale:** Restricting usage and enforcing expiry for personal access tokens reduces exposure to long-lived tokens, minimizes the risk of API abuse if compromised, and aligns with security best practices.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.6
+
+**Evidence**
+
+**From Azure Databricks**
+
+Review PAT settings:
+1. Navigate to the Azure Databricks workspace.
+2. Click the `Settings` icon and select `Admin Console`.
+3. Go to the `Advanced` tab.
+4. Under `Personal Access Tokens`, verify that token creation is restricted to approved users/groups and that a maximum token lifetime is enforced.
+
+**From Databricks CLI**
+
+```
+databricks workspace-conf get-status enableTokens
+databricks workspace-conf get-status maxTokenLifetimeDays
+```
+
+Ensure `enableTokens` is appropriately restricted and `maxTokenLifetimeDays` is set (e.g., 90 days).
+
+**Verification**
+
+Evidence confirms PAT usage is restricted and expiry is enforced for all Databricks workspaces.
+
+
+
+---
+
+### 3.8.8 Ensure Diagnostic Log Delivery Is Configured for Azure Databricks
+**Platform:** Azure
+
+**Rationale:** Diagnostic logging provides visibility into security and operational activities within Databricks workspaces while maintaining an audit trail for forensic investigations, and supports compliance with regulatory standards.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Databricks`.
+2. Select a workspace.
+3. In the left-hand menu, select `Monitoring` > `Diagnostic settings`.
+4. Verify that a diagnostic setting is configured with appropriate log categories (accounts, clusters, notebook, jobs).
+
+**From Azure CLI**
+
+```
+az monitor diagnostic-settings list --resource <databricks-resource-id>
+```
+
+If the output is empty, no diagnostic settings are configured.
+
+**Verification**
+
+Evidence confirms diagnostic log delivery is configured for all Azure Databricks workspaces.
+
+
+
+---
+
+### 3.8.9 Ensure 'No Public IP' Is Enabled for Azure Databricks
+**Platform:** Azure
+
+**Rationale:** Enabling secure cluster connectivity (No Public IP) limits exposure to the public internet, improving security and reducing the risk of external attacks on Databricks compute clusters.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Databricks`.
+2. Click the name of a workspace.
+3. Under `Settings`, click `Networking`.
+4. Ensure `Deploy Azure Databricks workspace with Secure Cluster Connectivity (No Public IP)` is set to `Enabled`.
+
+**From Azure CLI**
+
+```
+az databricks workspace show --resource-group <resource-group> --name <workspace> --query parameters.enableNoPublicIp.value
+```
+
+Ensure that `true` is returned.
+
+**Verification**
+
+Evidence confirms No Public IP is enabled for all Azure Databricks workspaces.
+
+
+
+---
+
+### 3.8.10 Ensure Public Network Access Is Disabled for Azure Databricks
+**Platform:** Azure
+
+**Rationale:** Disabling public network access improves security by ensuring that Azure Databricks workspaces are not exposed on the public internet. Access is limited to private endpoints within trusted networks.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.10
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Databricks`.
+2. Click the name of a workspace.
+3. Under `Settings`, click `Networking`.
+4. Ensure `Allow Public Network Access` is set to `Disabled`.
+
+**From Azure CLI**
+
+```
+az databricks workspace show --resource-group <resource-group> --name <workspace> --query publicNetworkAccess
+```
+
+Ensure that `Disabled` is returned.
+
+**Verification**
+
+Evidence confirms public network access is disabled for all Azure Databricks workspaces.
+
 
 
 ## 3.9 Conduct Audit Log Reviews
@@ -7684,6 +9668,38 @@ Evidence or test output indicates that a service health alert exists covering al
 ---
 
 
+---
+
+### 3.11.18 Ensure Diagnostics Logs Are Enabled for Batch Accounts
+**Platform:** Azure
+
+**Rationale:** Diagnostic logs for Batch accounts provide critical information about operations, errors, and security events. These logs are essential for troubleshooting, auditing, and detecting potentially malicious activity.
+
+**External Reference:** CIS Microsoft Azure Compute Services Benchmark v2.0.0, Section 15.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Batch accounts`.
+2. Click the name of a Batch account.
+3. Under `Monitoring`, click `Diagnostic settings`.
+4. Ensure a diagnostic setting is configured with appropriate log categories.
+
+**From Azure CLI**
+
+```
+az monitor diagnostic-settings list --resource <batch-account-resource-id>
+```
+
+Ensure diagnostic settings are configured.
+
+**Verification**
+
+Evidence confirms diagnostic logs are enabled for all Batch accounts.
+
+
+
 # 4 Networking
 
 
@@ -8012,6 +10028,38 @@ Evidence or test output indicates that EC2 Metadata Service only allows IMSDv2.
 
 
 ---
+
+
+---
+
+### 4.2.6 Ensure Public IP Addresses Are Evaluated Periodically
+**Platform:** Azure
+
+**Rationale:** Public IP Addresses allocated to the tenant should be periodically reviewed for necessity. Public IP Addresses that are not intentionally assigned and controlled present a publicly facing vector for threat actors and significant risk to the tenant.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Open the `All Resources` blade.
+2. Click `Add Filter` and select: Filter: `Type`, Operator: `Equals`, Value: `Public IP address`.
+3. Click `Apply`.
+4. For each Public IP address, review the `Associated to` field and determine if the associated resource is still relevant.
+
+**From Azure CLI**
+
+```
+az network public-ip list
+```
+
+For each Public IP address, review the associated resource and ensure it is still necessary.
+
+**Verification**
+
+Evidence confirms all Public IP addresses have been reviewed and are necessary, with appropriate controls in place for associated resources.
+
 
 
 ## 4.3 Implement and Manage a Firewall on Servers
@@ -8811,6 +10859,38 @@ Evidence or test output indicates that public network access is disabled for all
 ---
 
 
+---
+
+### 5.2.3 Ensure Cross-Tenant Replication Is Disabled for Storage Accounts
+**Platform:** Azure
+
+**Rationale:** Disabling Cross Tenant Replication minimizes the risk of unauthorized data access and ensures that data governance policies are strictly adhered to. This control prevents accidental sharing of sensitive information across tenant boundaries.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.3.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage Accounts`.
+2. For each storage account, under `Data management`, click `Object replication`.
+3. Click `Advanced settings`.
+4. Ensure `Allow cross-tenant replication` is not checked.
+
+**From Azure CLI**
+
+```
+az storage account list --query "[*].[name,allowCrossTenantReplication]"
+```
+
+Ensure `false` is returned for each storage account.
+
+**Verification**
+
+Evidence confirms cross-tenant replication is disabled for all storage accounts.
+
+
+
 ## 5.3 Encrypt Confidential Data in Transit
 ### Description
 
@@ -9275,6 +11355,38 @@ Evidence or test output indicates that all cloud storage buckets are configured 
 ---
 
 
+---
+
+### 5.5.5 Ensure Default to Entra Authorization in the Azure Portal Is Enabled for Storage
+**Platform:** Azure
+
+**Rationale:** Microsoft Entra ID provides superior security and ease of use over Shared Key for authorizing access to storage data. When this property is enabled, the Azure portal authorizes requests to blobs, files, queues, and tables with Microsoft Entra ID by default.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.3.3.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Storage accounts`.
+2. Click the name of a storage account.
+3. Under `Settings`, click `Configuration`.
+4. Ensure `Default to Microsoft Entra authorization in the Azure portal` is set to `Enabled`.
+
+**From Azure CLI**
+
+```
+az storage account list --query "[*].[name,defaultToOAuthAuthentication]"
+```
+
+Ensure `true` is returned for each storage account.
+
+**Verification**
+
+Evidence confirms default Entra authorization is enabled for all storage accounts.
+
+
+
 ## 5.6 Establish and Maintain a Secure Configuration Process
 
 ### Description
@@ -9432,6 +11544,37 @@ Evidence or test output indicates that storage account key access is disabled fo
 
 
 ---
+
+
+---
+
+### 5.7.3 Ensure ARM Delete Locks Are Applied to Storage Accounts
+**Platform:** Azure
+
+**Rationale:** Applying a Delete lock on storage accounts protects the availability of data by preventing the accidental or unauthorized deletion of the entire storage account. It is a fundamental protective control that can prevent data loss.
+
+**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 9.3.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Navigate to the storage account in the Azure portal.
+2. Under `Settings`, click `Locks`.
+3. Ensure that a `Delete` lock exists on the storage account.
+
+**From Azure CLI**
+
+```
+az lock list --resource-group <resource-group> --resource-name <storage-account> --resource-type "Microsoft.Storage/storageAccounts"
+```
+
+Ensure a lock with `level` set to `CanNotDelete` exists.
+
+**Verification**
+
+Evidence confirms ARM delete locks are applied to all storage accounts.
+
 
 
 ## 5.8 Establish an Access Revoking Process
@@ -9824,6 +11967,231 @@ Evidence or test output indicates that Cloud SQL database instance(s) are config
 
 
 ---
+
+
+---
+
+### 6.3.5 Ensure Entra ID Authentication Is Configured for Azure Cache for Redis
+**Platform:** Azure
+
+**Rationale:** Microsoft Entra ID authentication for Azure Cache for Redis provides centralized identity management and enables the use of conditional access policies. It replaces the less secure access keys authentication method.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 2.1
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cache for Redis`.
+2. Click the name of a Redis cache.
+3. Under `Settings`, click `Authentication`.
+4. Ensure `Microsoft Entra Authentication` is enabled.
+
+**From Azure CLI**
+
+```
+az redis show --name <redis-name> --resource-group <resource-group> --query redisConfiguration.aadEnabled
+```
+
+Ensure the value is `true`.
+
+**Verification**
+
+Evidence confirms Entra ID authentication is configured for all Azure Cache for Redis instances.
+
+
+
+---
+
+### 6.3.6 Ensure 'SSL Only' Is Enabled for Azure Cache for Redis
+**Platform:** Azure
+
+**Rationale:** Enabling SSL ensures that all communication between clients and the Redis cache is encrypted, protecting data in transit from interception.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 2.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cache for Redis`.
+2. Click the name of a Redis cache.
+3. Under `Settings`, click `Advanced settings`.
+4. Ensure `Allow access only via SSL` is set to `Yes` (non-SSL port is disabled).
+
+**From Azure CLI**
+
+```
+az redis show --name <redis-name> --resource-group <resource-group> --query enableNonSslPort
+```
+
+Ensure the value is `false`.
+
+**Verification**
+
+Evidence confirms SSL-only access is enabled for all Azure Cache for Redis instances.
+
+
+
+---
+
+### 6.3.7 Ensure TLS 1.2 or Higher Is Required for Azure Cache for Redis
+**Platform:** Azure
+
+**Rationale:** TLS 1.0 and 1.1 are known to have security vulnerabilities. Requiring TLS 1.2 or higher ensures that connections to the Redis cache use a secure protocol version.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 2.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cache for Redis`.
+2. Click the name of a Redis cache.
+3. Under `Settings`, click `Advanced settings`.
+4. Ensure `Minimum TLS version` is set to `1.2`.
+
+**From Azure CLI**
+
+```
+az redis show --name <redis-name> --resource-group <resource-group> --query minimumTlsVersion
+```
+
+Ensure the value is `1.2`.
+
+**Verification**
+
+Evidence confirms TLS 1.2 or higher is required for all Azure Cache for Redis instances.
+
+
+
+---
+
+### 6.3.8 Ensure Entra ID-Only Authentication Is Enabled for MySQL Flexible Server
+**Platform:** Azure
+
+**Rationale:** Enabling Entra ID-only authentication for MySQL Flexible Server disables local MySQL authentication, ensuring all access is managed through centralized identity governance. This provides better audit trails and enforces organizational security policies.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 5.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Database for MySQL flexible servers`.
+2. Click the name of a server.
+3. Under `Settings`, click `Authentication`.
+4. Ensure `Microsoft Entra authentication only` is selected.
+
+**From Azure CLI**
+
+```
+az mysql flexible-server show --name <server-name> --resource-group <resource-group> --query authConfig
+```
+
+Ensure `activeDirectoryAuth` is `Enabled` and `passwordAuth` is `Disabled`.
+
+**Verification**
+
+Evidence confirms Entra ID-only authentication is enabled for all MySQL Flexible Servers.
+
+
+
+---
+
+### 6.3.9 Ensure Entra ID-Only Authentication Is Enabled for PostgreSQL Flexible Server
+**Platform:** Azure
+
+**Rationale:** Enabling Entra ID-only authentication for PostgreSQL Flexible Server ensures all access is managed through centralized identity governance, providing better audit trails and enforcement of organizational security policies.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Database for PostgreSQL flexible servers`.
+2. Click the name of a server.
+3. Under `Settings`, click `Authentication`.
+4. Ensure `Microsoft Entra authentication only` is selected.
+
+**From Azure CLI**
+
+```
+az postgres flexible-server show --name <server-name> --resource-group <resource-group> --query authConfig
+```
+
+Ensure `activeDirectoryAuth` is `Enabled` and `passwordAuth` is `Disabled`.
+
+**Verification**
+
+Evidence confirms Entra ID-only authentication is enabled for all PostgreSQL Flexible Servers.
+
+
+
+---
+
+### 6.3.10 Ensure 'ssl_min_protocol_version' Is Set to TLSv1.2 for PostgreSQL Flexible Server
+**Platform:** Azure
+
+**Rationale:** Older TLS versions have known vulnerabilities. Setting the minimum SSL protocol version to TLSv1.2 ensures that connections use a secure protocol, protecting data in transit.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.11
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Database for PostgreSQL flexible servers`.
+2. Click the name of a server.
+3. Under `Settings`, click `Server parameters`.
+4. Search for `ssl_min_protocol_version`.
+5. Ensure the value is set to `TLSv1.2`.
+
+**From Azure CLI**
+
+```
+az postgres flexible-server parameter show --resource-group <resource-group> --server-name <server-name> --name ssl_min_protocol_version --query value
+```
+
+Ensure the value is `TLSv1.2`.
+
+**Verification**
+
+Evidence confirms ssl_min_protocol_version is set to TLSv1.2 for all PostgreSQL Flexible Servers.
+
+
+
+---
+
+### 6.3.11 Ensure Minimum TLS Version Is Set to 1.2 for Azure SQL Database
+**Platform:** Azure
+
+**Rationale:** TLS 1.0 and 1.1 have known vulnerabilities. Setting the minimum TLS version to 1.2 ensures that connections to the SQL Database use a secure protocol.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 9.8
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `SQL servers`.
+2. Click the name of a SQL server.
+3. Under `Security`, click `Networking`.
+4. Ensure `Minimum TLS version` is set to `1.2`.
+
+**From Azure CLI**
+
+```
+az sql server show --name <server-name> --resource-group <resource-group> --query minimalTlsVersion
+```
+
+Ensure the value is `1.2`.
+
+**Verification**
+
+Evidence confirms minimum TLS version is set to 1.2 for all Azure SQL Database servers.
+
 
 
 ## 6.4 Encrypt Confidential Data at Rest
@@ -10322,6 +12690,38 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) have
 ---
 
 
+---
+
+### 6.5.7 Ensure Local Authentication Is Disabled for Cosmos DB
+**Platform:** Azure
+
+**Rationale:** Disabling local authentication for Cosmos DB forces the use of Entra ID authentication, providing centralized identity management and reducing the risk of key-based credential exposure.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 3.3
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cosmos DB`.
+2. Click the name of an account.
+3. Under `Settings`, click `Keys`.
+4. Ensure local authentication (primary/secondary keys) is disabled.
+
+**From Azure CLI**
+
+```
+az cosmosdb show --name <account-name> --resource-group <resource-group> --query disableLocalAuth
+```
+
+Ensure the value is `true`.
+
+**Verification**
+
+Evidence confirms local authentication is disabled for all Cosmos DB accounts.
+
+
+
 ## 6.6 Establish and Maintain a Secure Configuration Process
 
 
@@ -10415,6 +12815,39 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) have
 ---
 
 
+---
+
+### 6.6.4 Ensure 'connection_throttle.enable' Is Set to 'ON' for PostgreSQL Flexible Server
+**Platform:** Azure
+
+**Rationale:** Connection throttling helps protect the database from brute-force login attacks by temporarily blocking IP addresses with too many login failures. This limits the effectiveness of password-guessing attacks.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 6.5
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Database for PostgreSQL flexible servers`.
+2. Click the name of a server.
+3. Under `Settings`, click `Server parameters`.
+4. Search for `connection_throttle.enable`.
+5. Ensure the value is set to `ON`.
+
+**From Azure CLI**
+
+```
+az postgres flexible-server parameter show --resource-group <resource-group> --server-name <server-name> --name connection_throttle.enable --query value
+```
+
+Ensure the value is `ON`.
+
+**Verification**
+
+Evidence confirms connection_throttle.enable is set to ON for all PostgreSQL Flexible Servers.
+
+
+
 ## 6.7 Implement and Manage a Firewall on Servers
 
 
@@ -10467,6 +12900,38 @@ Evidence or test output indicates that all PostgreSQL database server instances 
 
 
 ---
+
+
+---
+
+### 6.7.2 Ensure Cosmos DB Firewall Rules Are Configured
+**Platform:** Azure
+
+**Rationale:** Configuring firewall rules for Cosmos DB restricts access to only approved networks and IP addresses, reducing the risk of unauthorized access to the database.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 3.6
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cosmos DB`.
+2. Click the name of an account.
+3. Under `Settings`, click `Networking`.
+4. Ensure firewall rules are configured to restrict access to approved IP ranges or virtual networks.
+
+**From Azure CLI**
+
+```
+az cosmosdb show --name <account-name> --resource-group <resource-group> --query "{PublicAccess:publicNetworkAccess, IPRules:ipRules, VNetRules:virtualNetworkRules}"
+```
+
+Ensure IP rules and/or virtual network rules are configured appropriately.
+
+**Verification**
+
+Evidence confirms Cosmos DB firewall rules are configured to restrict access to approved networks.
+
 
 
 ## 6.8 Securely Manage Enterprise Assets and Software
@@ -11416,3 +13881,214 @@ Evidence or test output indicates that database logging is enabled for all datab
 
 
 ---
+
+
+---
+
+### 6.15.9 Ensure Diagnostic Logging Is Enabled for Cosmos DB
+**Platform:** Azure
+
+**Rationale:** Diagnostic logs for Cosmos DB capture requests, data access patterns, and errors. These logs are essential for security monitoring, compliance, and troubleshooting.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 3.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cosmos DB`.
+2. Click the name of an account.
+3. Under `Monitoring`, click `Diagnostic settings`.
+4. Ensure a diagnostic setting is configured with appropriate log categories.
+
+**From Azure CLI**
+
+```
+az monitor diagnostic-settings list --resource <cosmos-db-resource-id>
+```
+
+Ensure diagnostic settings are configured.
+
+**Verification**
+
+Evidence confirms diagnostic logging is enabled for all Cosmos DB accounts.
+
+
+
+---
+
+### 6.15.10 Ensure SQL Database Audit Retention Is Greater Than 90 Days
+**Platform:** Azure
+
+**Rationale:** Audit logs should be retained for at least 90 days to support forensic investigations and compliance requirements. Insufficient retention may result in loss of critical audit data needed for security incident analysis.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 9.7
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `SQL servers`.
+2. Click the name of a SQL server.
+3. Under `Security`, click `Auditing`.
+4. Review the audit log destination and ensure retention is set to 90 days or greater.
+
+**From Azure CLI**
+
+```
+az sql server audit-policy show --name <server-name> --resource-group <resource-group> --query retentionDays
+```
+
+Ensure the value is `90` or greater.
+
+**Verification**
+
+Evidence confirms SQL database audit retention is set to 90 days or greater.
+
+
+
+---
+
+
+## 6.16 Centralize Account Management for Database Services
+
+
+### Description
+
+Centralize account management through a directory or identity service for database services. Ensure managed identities are used where supported.
+
+
+### Rationale
+
+Centralizing makes administration simpler and therefore reduces risks related to unauthorized account creation or usage. Managed identities eliminate the need for hard-coded credentials.
+
+
+### Audit
+
+
+---
+
+### 6.16.1 Ensure Managed Identity Is Used for Azure Cache for Redis
+**Platform:** Azure
+
+**Rationale:** Using managed identities for Azure Cache for Redis eliminates the need for managing and rotating credentials, reducing the risk of credential exposure.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 2.5
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cache for Redis`.
+2. Click the name of a Redis cache.
+3. Under `Settings`, click `Identity`.
+4. Ensure a managed identity (System assigned or User assigned) is configured.
+
+**From Azure CLI**
+
+```
+az redis show --name <redis-name> --resource-group <resource-group> --query identity
+```
+
+Ensure a managed identity is configured.
+
+**Verification**
+
+Evidence confirms managed identities are used for all Azure Cache for Redis instances.
+
+
+
+---
+
+### 6.16.2 Ensure Access Keys Authentication Is Disabled for Azure Cache for Redis
+**Platform:** Azure
+
+**Rationale:** Disabling access key authentication forces the use of Entra ID authentication, providing better security through centralized identity management, conditional access, and audit logging.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 2.9
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cache for Redis`.
+2. Click the name of a Redis cache.
+3. Under `Settings`, click `Authentication`.
+4. Ensure access keys authentication is disabled.
+
+**From Azure CLI**
+
+```
+az redis show --name <redis-name> --resource-group <resource-group> --query disableAccessKeyAuthentication
+```
+
+Ensure the value is `true`.
+
+**Verification**
+
+Evidence confirms access key authentication is disabled for all Azure Cache for Redis instances.
+
+
+
+---
+
+### 6.16.3 Ensure Stable Update Channel Is Used for Azure Cache for Redis
+**Platform:** Azure
+
+**Rationale:** Using the stable update channel ensures that Redis instances receive well-tested updates and security patches without exposure to potential issues from preview or early-access features.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 2.10
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Azure Cache for Redis`.
+2. Click the name of a Redis cache.
+3. Under `Settings`, click `Advanced settings`.
+4. Ensure the update channel is set to `Stable`.
+
+**From Azure CLI**
+
+```
+az redis show --name <redis-name> --resource-group <resource-group> --query updateChannel
+```
+
+Ensure the value is `Stable`.
+
+**Verification**
+
+Evidence confirms the stable update channel is used for all Azure Cache for Redis instances.
+
+
+
+---
+
+### 6.16.4 Ensure Managed Identities Are Configured for Data Factory
+**Platform:** Azure
+
+**Rationale:** Data Factory uses managed identities to authenticate to other Azure services. Using managed identities eliminates the need for storing credentials in Data Factory pipelines and linked services, reducing the risk of credential exposure.
+
+**External Reference:** CIS Microsoft Azure Database Services Benchmark v2.0.0, Section 4.2
+
+**Evidence**
+
+**From Azure Portal**
+
+1. Go to `Data factories`.
+2. Click the name of a Data Factory.
+3. Under `Settings`, click `Managed identities`.
+4. Ensure a system-assigned or user-assigned managed identity is configured.
+
+**From Azure CLI**
+
+```
+az datafactory show --name <factory-name> --resource-group <resource-group> --query identity
+```
+
+Ensure a managed identity is configured.
+
+**Verification**
+
+Evidence confirms managed identities are configured for all Data Factory instances.
+

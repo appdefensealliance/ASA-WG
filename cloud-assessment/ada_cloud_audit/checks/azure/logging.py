@@ -1,6 +1,6 @@
 """Azure Logging and Monitoring checks for ADA Cloud assessment.
 
-Covers 16 requirements:
+Covers 17 requirements:
 - 3.10.7: Audit logs retained 90 days (custom)
 - 3.11.3: Azure Monitor Resource Logging enabled
 - 3.11.4: Key Vault logging enabled
@@ -8,6 +8,7 @@ Covers 16 requirements:
 - 3.11.15: Diagnostic Setting for Subscription Activity Logs
 - 3.11.16: Diagnostic Setting captures appropriate categories
 - 3.11.17: Activity Log Alert for Service Health
+- 3.11.19: Batch account diagnostics enabled
 """
 
 from __future__ import annotations
@@ -191,3 +192,40 @@ def check_alert_service_health(session: AzureSession) -> RequirementResult:
     return _check_activity_log_alert(session, "3.11.17",
         "Ensure that an Activity Log Alert exists for Service Health",
         "Microsoft.Resourcehealth/healthevent/Activated/action")
+
+
+def check_batch_diagnostics(session: AzureSession) -> RequirementResult:
+    """ADA 3.11.19: Ensure diagnostic settings are enabled for Batch accounts."""
+    spec_id = "3.11.19"
+    title = "Ensure Diagnostic Settings are Enabled for Azure Batch Accounts"
+    try:
+        from azure.mgmt.batch import BatchManagementClient
+        from azure.mgmt.monitor import MonitorManagementClient
+
+        batch_client = BatchManagementClient(session.credential, session.subscription_id)
+        monitor_client = MonitorManagementClient(session.credential, session.subscription_id)
+        accounts = list(batch_client.batch_account.list())
+
+        if not accounts:
+            return make_result(spec_id, title, "Azure", Verdict.PASS,
+                             "No Batch accounts found")
+
+        non_compliant = []
+        for acct in accounts:
+            settings = list(monitor_client.diagnostic_settings.list(acct.id))
+            has_logging = any(
+                any(getattr(log, "enabled", False)
+                    for log in getattr(s, "logs", []))
+                for s in settings
+            )
+            if not has_logging:
+                non_compliant.append(acct.name)
+
+        if non_compliant:
+            return make_result(spec_id, title, "Azure", Verdict.FAIL,
+                             "Batch accounts without diagnostic settings:\n" +
+                             "\n".join(non_compliant))
+        return make_result(spec_id, title, "Azure", Verdict.PASS,
+                         f"All {len(accounts)} Batch accounts have diagnostic settings enabled")
+    except Exception as e:
+        return make_result(spec_id, title, "Azure", Verdict.INCONCLUSIVE, f"Error: {e}")
