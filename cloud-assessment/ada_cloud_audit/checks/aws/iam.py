@@ -1,6 +1,6 @@
 """AWS IAM checks for ADA Cloud assessment.
 
-Covers 13 requirements:
+Covers 14 requirements:
 - 2.2.1: Support role for AWS Support
 - 2.7.1: No root access keys
 - 2.7.3: No full admin IAM policies attached
@@ -11,6 +11,7 @@ Covers 13 requirements:
 - 2.11.1: Root not used for daily tasks
 - 2.16.1: MFA enabled for root
 - 2.18.1: Users receive permissions only through groups
+- 2.7.7: CloudShell access restricted
 - 2.8.5: Expired SSL/TLS certs removed from IAM
 - 3.8.2: IAM External Access Analyzer enabled
 - 2.14.9: MFA enabled for all IAM console users
@@ -536,6 +537,59 @@ def check_users_permissions_through_groups(session: boto3.Session) -> "Requireme
         )
 
 
+def check_cloudshell_access(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.7.7: Ensure access to AWSCloudShellFullAccess is restricted."""
+    iam = session.client("iam")
+    try:
+        policy_arn = "arn:aws:iam::aws:policy/AWSCloudShellFullAccess"
+        resp = iam.list_entities_for_policy(PolicyArn=policy_arn)
+        users = resp.get("PolicyUsers", [])
+        groups = resp.get("PolicyGroups", [])
+        roles = resp.get("PolicyRoles", [])
+
+        entities = (
+            [f"User: {u['UserName']}" for u in users]
+            + [f"Group: {g['GroupName']}" for g in groups]
+            + [f"Role: {r['RoleName']}" for r in roles]
+        )
+
+        if not entities:
+            return make_result(
+                "2.7.7",
+                "Ensure access to AWSCloudShellFullAccess is restricted",
+                "AWS",
+                Verdict.PASS,
+                "AWSCloudShellFullAccess policy is not attached to any entity",
+            )
+        else:
+            return make_result(
+                "2.7.7",
+                "Ensure access to AWSCloudShellFullAccess is restricted",
+                "AWS",
+                Verdict.INCONCLUSIVE,
+                f"AWSCloudShellFullAccess is attached to {len(entities)} entity(ies). "
+                f"Manual review required to verify access is appropriately restricted:\n"
+                + "\n".join(entities),
+                {"entities": entities},
+            )
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "NoSuchEntity":
+            return make_result(
+                "2.7.7",
+                "Ensure access to AWSCloudShellFullAccess is restricted",
+                "AWS",
+                Verdict.PASS,
+                "AWSCloudShellFullAccess policy not found (CloudShell may not be available in this partition)",
+            )
+        return make_result(
+            "2.7.7",
+            "Ensure access to AWSCloudShellFullAccess is restricted",
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            f"Error checking CloudShell access: {e}",
+        )
+
+
 def check_expired_ssl_certs(session: boto3.Session) -> "RequirementResult":
     """ADA 2.8.5: Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed."""
     iam = session.client("iam")
@@ -613,6 +667,7 @@ def check_access_analyzer(session: boto3.Session) -> "RequirementResult":
         "AWS",
         _check_region,
     )
+
 
 
 def check_iam_mfa_all_users(session: boto3.Session) -> "RequirementResult":

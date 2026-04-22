@@ -122,6 +122,8 @@ Version 1.0 - 10-OCT 24
 
 [2.7.6 Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible](#276-ensure-that-cloud-kms-cryptokeys-are-not-anonymously-or-publicly-accessible)
 
+[2.7.7 Ensure access to AWSCloudShellFullAccess is restricted](#277-ensure-access-to-awscloudshellFullaccess-is-restricted)
+
 [2.8 Establish and Maintain a Secure Configuration Process](#28-establish-and-maintain-a-secure-configuration-process)
 
 [2.8.1 Ensure Security Defaults is enabled on Azure Active Directory](#281-ensure-security-defaults-is-enabled-on-azure-active-directory)
@@ -2807,6 +2809,41 @@ gcloud kms keys get-iam-policy [key_name] --keyring=[key_ring_name] --location=g
 **Verification**
 
 Evidence or test output indicates that cloud KML cryptokeys are not anonymously or publicly accessible.
+
+
+---
+
+### 2.7.7 Ensure access to AWSCloudShellFullAccess is restricted
+**Platform:** AWS
+
+**Rationale:** AWS CloudShell provides browser-based shell access to AWS resources. The AWSCloudShellFullAccess managed policy grants full CloudShell permissions including file upload/download capabilities, which could be used for data exfiltration if not properly restricted. Access should be limited to users who specifically require it.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.20
+
+**Evidence**
+
+**From Console:**
+
+1. Sign in to the AWS Management Console and open the IAM console at `https://console.aws.amazon.com/iam`
+2. In the left navigation panel, select `Policies`
+3. Search for `AWSCloudShellFullAccess`
+4. Select the policy and navigate to the `Entities attached` tab
+5. Review the list of users, groups, and roles that have this policy attached
+6. Verify that only authorized entities have this broad access
+
+**From Command Line:**
+
+1. Run the following command to list entities with the AWSCloudShellFullAccess policy:
+
+```
+aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSCloudShellFullAccess
+```
+
+2. Review the output and verify that only authorized users, groups, and roles have the policy attached.
+
+**Verification**
+
+Evidence or test output indicates that access to AWSCloudShellFullAccess is restricted to only authorized entities. Manual review is required to determine if the level of access is appropriate.
 
 
 ---
