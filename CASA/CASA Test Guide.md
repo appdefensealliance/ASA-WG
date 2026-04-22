@@ -166,6 +166,24 @@ This guide was previously published as the ADA Web Application Testing Guide.
 
        * 6.7.1 [The application shall securely store access tokens, API keys, and other server-side secrets.](#671-the-application-shall-securely-store-access-tokens-api-keys-and-other-server-side-secrets)
 
+7. [Webhook Security](#7-webhook-security)
+
+   * 7.1 [Enforce transport security for webhook communications](#71-enforce-transport-security-for-webhook-communications)
+
+       * 7.1.1 [Webhook communications shall be transmitted exclusively over HTTPS using TLS 1.2 or higher.](#711-webhook-communications-shall-be-transmitted-exclusively-over-https-using-tls-12-or-higher)
+       * 7.1.2 [Webhook providers shall verify endpoint ownership before delivering events.](#712-webhook-providers-shall-verify-endpoint-ownership-before-delivering-events)
+
+   * 7.2 [Authenticate and verify webhook payload integrity](#72-authenticate-and-verify-webhook-payload-integrity)
+
+       * 7.2.1 [Webhook payloads shall be authenticated using HMAC-SHA256 (or stronger) cryptographic signature verification.](#721-webhook-payloads-shall-be-authenticated-using-hmac-sha256-or-stronger-cryptographic-signature-verification)
+       * 7.2.2 [Signature verification shall use timing-safe comparison functions.](#722-signature-verification-shall-use-timing-safe-comparison-functions)
+       * 7.2.3 [Webhook payloads shall include replay protection via signed timestamps.](#723-webhook-payloads-shall-include-replay-protection-via-signed-timestamps)
+
+   * 7.3 [Protect webhook integrations against abuse](#73-protect-webhook-integrations-against-abuse)
+
+       * 7.3.1 [Webhook providers shall implement SSRF mitigations for user-supplied callback URLs.](#731-webhook-providers-shall-implement-ssrf-mitigations-for-user-supplied-callback-urls)
+       * 7.3.2 [Webhook signing secrets shall not be hardcoded in source code or stored in version control.](#732-webhook-signing-secrets-shall-not-be-hardcoded-in-source-code-or-stored-in-version-control)
+
 
 # Introduction
 In today's digitally-driven world, web applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure web environment, a robust web application security standard and certification program is essential.
@@ -2255,6 +2273,295 @@ External Reference: ASVS Version 4.0.3 Requirement: 6.4.1
 1. An appropriate access control policy for server-side secrets shall be documented.
 2. Secrets shall be stored using a cryptographically secure approach.
 3. Access to secrets shall be logged or monitored.
+
+
+---
+
+# 7 Webhook Security
+## 7.1 Enforce transport security for webhook communications
+### Description
+Applications that send or receive webhooks shall enforce transport-layer security for all webhook communications.
+### Rationale
+Webhook payloads frequently contain confidential data or trigger state-changing operations. Transmitting this data over unencrypted HTTP exposes both the payload and any authentication mechanisms to interception.
+### Audit
+
+
+---
+### 7.1.1 Webhook communications shall be transmitted exclusively over HTTPS using TLS 1.2 or higher.
+External Reference: Standard Webhooks Specification; Snyk Webhook Security Best Practices
+
+
+**Evidence**
+
+
+*AL1*
+1. Provide a written statement confirming whether the application sends or receives webhooks. If the application does not use webhooks, this section is not applicable.
+2. If the application is a webhook provider: provide evidence that webhook delivery is configured to require HTTPS endpoints only (e.g., configuration screenshots showing HTTP endpoints are rejected, or code snippets showing URL validation logic).
+3. If the application is a webhook consumer: provide evidence that the webhook receiving endpoint enforces HTTPS (e.g., server configuration, load balancer settings, or deployment evidence showing the endpoint is only accessible via HTTPS).
+
+
+*AL2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*AL1*
+1. Review provided evidence to confirm that webhook endpoints use HTTPS exclusively.
+2. If the developer states that webhooks are not used, accept the statement and mark as Not Applicable.
+
+*AL2*
+1. If the application is a webhook provider: attempt to register a webhook with an `http://` URL and verify that it is rejected.
+2. If the application is a webhook consumer: send a test request to the webhook endpoint over HTTP and verify that it is rejected or not accessible.
+3. Verify that the TLS configuration on webhook endpoints meets the requirements of 4.1.1 (TLS 1.2+, secure cipher suites).
+
+
+**Verification**
+
+
+*AL1 and AL2*
+1. Applications that do not use webhooks are exempt from this requirement.
+2. Webhook providers shall refuse to deliver webhooks to `http://` endpoints.
+3. Webhook consumer endpoints shall only be accessible over HTTPS with TLS 1.2 or higher.
+
+
+---
+### 7.1.2 Webhook providers shall verify endpoint ownership before delivering events.
+External Reference: W3C WebSub Recommendation §5.3 (Hub Verifies Intent of the Subscriber); GitHub Webhook Validation
+
+
+**Evidence**
+
+
+*AL1*
+1. If the application is a webhook provider: provide a written description of the endpoint ownership verification mechanism used before delivering webhook events. This may include a challenge-response handshake (e.g., sending a verification token to the callback URL that must be echoed back), manual verification of endpoint ownership, or equivalent controls.
+2. If the application is a webhook consumer only: this spec is not applicable.
+
+
+*AL2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*AL1*
+1. Review the described endpoint ownership verification mechanism for adequacy.
+
+*AL2*
+1. Attempt to register a webhook with a callback URL that the tester controls but has not completed the ownership verification flow. Verify that the provider does not deliver events until verification is completed.
+
+
+**Verification**
+
+
+*AL1 and AL2*
+1. Webhook consumer-only applications are exempt from this requirement.
+2. Webhook providers shall verify that the subscriber controls the callback URL before delivering events, using a challenge-response mechanism or equivalent control.
+
+
+---
+## 7.2 Authenticate and verify webhook payload integrity
+### Description
+Applications that receive webhooks shall verify the authenticity and integrity of incoming webhook payloads using cryptographic signature verification with replay protection.
+### Rationale
+Without payload signature verification, an attacker who discovers a webhook endpoint URL can forge arbitrary payloads to trigger unauthorized actions. HMAC-SHA256 with signed timestamps is the established industry baseline.
+### Audit
+
+
+---
+### 7.2.1 Webhook payloads shall be authenticated using HMAC-SHA256 (or stronger) cryptographic signature verification.
+External Reference: Standard Webhooks Specification; Stripe Webhook Signatures; GitHub Webhook Validation
+
+
+**Evidence**
+
+
+*AL1*
+1. If the application is a webhook provider: provide a written description of the payload signing mechanism, including the algorithm used (e.g., HMAC-SHA256), the header name used to transmit the signature, and how signing secrets are provisioned per endpoint.
+2. If the application is a webhook consumer: provide a written description and code snippets showing how incoming webhook signatures are verified, including the algorithm used and how the raw request body is used for verification (not a parsed/re-serialized version).
+
+
+*AL2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*AL1*
+1. Review the provided signing/verification mechanism for correctness.
+2. Confirm that HMAC-SHA256 or a stronger algorithm (e.g., HMAC-SHA512, Ed25519, RSA) is used.
+3. Confirm that the signature is computed over the raw request body.
+
+*AL2*
+1. If the application is a webhook consumer: send a webhook request with a valid payload but an invalid or missing signature. Verify that it is rejected (HTTP 401/403 or equivalent).
+2. Send a webhook request with a valid signature but a modified payload body. Verify that it is rejected.
+
+
+**Verification**
+
+
+*AL1 and AL2*
+1. Webhook payloads shall be signed using HMAC-SHA256 or a stronger cryptographic algorithm.
+2. Webhook consumers shall verify signatures against the raw request body before processing.
+3. Requests with missing, invalid, or mismatched signatures shall be rejected.
+
+
+---
+### 7.2.2 Signature verification shall use timing-safe comparison functions.
+External Reference: GitHub Webhook Validation; OWASP Cryptographic Failures
+
+
+**Evidence**
+
+
+*AL1*
+1. Provide code snippets showing the signature comparison implementation. The comparison must use a constant-time / timing-safe function (e.g., `hmac.compare_digest()` in Python, `crypto.timingSafeEqual()` in Node.js, `hash_equals()` in PHP, or equivalent).
+
+
+*AL2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*AL1*
+1. Review the code snippet to confirm that a timing-safe comparison function is used for signature verification.
+2. Verify that standard string equality operators (e.g., `==`, `===`, `strcmp`) are not used for signature comparison.
+
+*AL2*
+1. Review the application's signature verification code to confirm that a timing-safe comparison function is used.
+
+
+**Verification**
+
+
+*AL1 and AL2*
+1. Signature comparison shall use a constant-time / timing-safe function to prevent timing side-channel attacks.
+
+
+---
+### 7.2.3 Webhook payloads shall include replay protection via signed timestamps.
+External Reference: Standard Webhooks Specification; Stripe Webhook Signatures
+
+
+**Evidence**
+
+
+*AL1*
+1. If the application is a webhook provider: describe how the timestamp is included in the signature base string and transmitted to the consumer (e.g., the timestamp is prepended to the payload before HMAC computation and sent in a header).
+2. If the application is a webhook consumer: provide code snippets showing (a) that the timestamp is extracted from the webhook request, (b) that the timestamp is validated against a tolerance window, and (c) that the timestamp is part of the data over which the signature is verified (i.e., the timestamp is included in the HMAC input, not verified independently).
+
+
+*AL2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*AL1*
+1. Review the provided evidence to confirm that the timestamp is part of the signed payload (not a standalone header that can be modified independently).
+2. Confirm that a reasonable tolerance window is enforced (industry standard is 5 minutes).
+
+*AL2*
+1. Send a webhook request with a valid signature but a timestamp older than the tolerance window. Verify that it is rejected.
+2. Modify the timestamp header without updating the signature and verify that the request is rejected.
+
+
+**Verification**
+
+
+*AL1 and AL2*
+1. The webhook timestamp shall be included in the signature base string (i.e., covered by the HMAC computation).
+2. Webhook consumers shall reject payloads with timestamps outside a defined tolerance window (recommended: 5 minutes).
+3. Modification of the timestamp without a corresponding valid signature shall cause rejection.
+
+
+---
+## 7.3 Protect webhook integrations against abuse
+### Description
+Applications that implement webhook functionality shall protect against SSRF abuse and manage webhook secrets securely.
+### Rationale
+Webhook providers accepting user-supplied callback URLs without SSRF protections can be exploited to scan internal networks or access cloud metadata services. Webhook secrets hardcoded in source control increase the blast radius of credential compromise.
+### Audit
+
+
+---
+### 7.3.1 Webhook providers shall implement SSRF mitigations for user-supplied callback URLs.
+External Reference: OWASP Server-Side Request Forgery Prevention Cheat Sheet
+
+
+**Evidence**
+
+
+*AL1*
+1. If the application is a webhook provider that accepts user-supplied callback URLs: provide a written description of the SSRF mitigations in place, including how private/internal IP ranges are blocked (e.g., `127.0.0.0/8`, `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `169.254.169.254`).
+2. If the application does not accept user-supplied callback URLs (e.g., URLs are configured by administrators only, or the application is a webhook consumer only): provide a written statement and this spec is not applicable.
+
+
+*AL2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*AL1*
+1. Review the described SSRF mitigations for completeness (coverage of RFC 1918 ranges, loopback, link-local, and cloud metadata addresses).
+
+*AL2*
+1. Attempt to register webhook callback URLs targeting private IP ranges (e.g., `https://127.0.0.1/webhook`, `https://10.0.0.1/callback`, `http://169.254.169.254/latest/meta-data/`). Verify that these are rejected.
+2. Test for DNS rebinding by registering a callback URL that resolves to a public IP initially but can be rebound to an internal address.
+
+
+**Verification**
+
+
+*AL1 and AL2*
+1. Applications that do not accept user-supplied callback URLs are exempt from this requirement.
+2. Webhook providers shall block delivery to private/internal IP ranges, loopback addresses, and cloud metadata endpoints.
+3. Complements requirement 5.1.5 (general SSRF prevention).
+
+
+---
+### 7.3.2 Webhook signing secrets shall not be hardcoded in source code or stored in version control.
+External Reference: Standard Webhooks Specification; Svix Common Webhook Signature Failure Modes
+
+
+**Evidence**
+
+
+*AL1*
+1. Provide a written description of how webhook signing secrets are provisioned, stored, and managed. This should confirm that secrets are stored using an appropriate secrets management approach (e.g., environment variables, secrets manager, key vault) and are not committed to source code repositories.
+2. If applicable, confirm that each webhook consumer endpoint receives a unique signing secret (i.e., secrets are not shared across multiple consumer endpoints).
+
+
+*AL2*
+1. N/A (to be collected by labs)
+
+
+**Test Procedure**
+
+
+*AL1*
+1. Review the provided secrets management description for adherence with requirement 6.7.1.
+2. Confirm that the described approach does not involve hardcoding secrets in application source code.
+
+*AL2*
+1. Review the application's webhook configuration and secret storage mechanism to confirm that signing secrets are not present in source code, configuration files committed to version control, or client-accessible artifacts.
+
+
+**Verification**
+
+
+*AL1 and AL2*
+1. Webhook signing secrets shall be stored using a secure secrets management approach consistent with requirement 6.7.1.
+2. Secrets shall not be hardcoded in source code or committed to version control.
+3. Each webhook consumer endpoint should receive a unique signing secret to limit the blast radius of compromise.
 
 
 ---
