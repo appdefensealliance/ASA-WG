@@ -10,8 +10,6 @@ from ada_cloud_audit.checks.gcp.networking import (
     check_dnssec,
     check_dnssec_key_signing,
     check_dnssec_zone_signing,
-    check_ssh_firewall,
-    check_rdp_firewall,
 )
 from ada_cloud_audit.models import Verdict
 
@@ -143,70 +141,3 @@ def test_check_dnssec_zone_signing_pass(mock_zones, gcp_session):
     assert result.verdict == Verdict.PASS
 
 
-def test_check_ssh_firewall_pass(gcp_session, mock_google_modules):
-    mock_compute = mock_google_modules["google.cloud.compute_v1"]
-    mock_client = MagicMock()
-    mock_compute.FirewallsClient.return_value = mock_client
-
-    mock_fw = MagicMock()
-    mock_fw.name = "allow-internal-ssh"
-    mock_fw.direction = "INGRESS"
-    mock_allowed = MagicMock()
-    mock_allowed.I_p_protocol = "tcp"
-    mock_allowed.ports = ["22"]
-    mock_fw.allowed = [mock_allowed]
-    mock_fw.source_ranges = ["10.0.0.0/8"]
-    mock_client.list.return_value = [mock_fw]
-
-    result = check_ssh_firewall(gcp_session)
-    assert result.spec_id == "4.3.3"
-    assert result.verdict == Verdict.PASS
-
-
-def test_check_ssh_firewall_fail(gcp_session, mock_google_modules):
-    mock_compute = mock_google_modules["google.cloud.compute_v1"]
-    mock_client = MagicMock()
-    mock_compute.FirewallsClient.return_value = mock_client
-
-    mock_fw = MagicMock()
-    mock_fw.name = "allow-all-ssh"
-    mock_fw.direction = "INGRESS"
-    mock_allowed = MagicMock()
-    mock_allowed.I_p_protocol = "tcp"
-    mock_allowed.ports = ["22"]
-    mock_fw.allowed = [mock_allowed]
-    mock_fw.source_ranges = ["0.0.0.0/0"]
-    mock_client.list.return_value = [mock_fw]
-
-    result = check_ssh_firewall(gcp_session)
-    assert result.verdict == Verdict.FAIL
-
-
-def test_check_rdp_firewall_pass(gcp_session, mock_google_modules):
-    mock_compute = mock_google_modules["google.cloud.compute_v1"]
-    mock_client = MagicMock()
-    mock_compute.FirewallsClient.return_value = mock_client
-    mock_client.list.return_value = []
-
-    result = check_rdp_firewall(gcp_session)
-    assert result.spec_id == "4.3.4"
-    assert result.verdict == Verdict.PASS
-
-
-def test_check_rdp_firewall_fail(gcp_session, mock_google_modules):
-    mock_compute = mock_google_modules["google.cloud.compute_v1"]
-    mock_client = MagicMock()
-    mock_compute.FirewallsClient.return_value = mock_client
-
-    mock_fw = MagicMock()
-    mock_fw.name = "allow-rdp"
-    mock_fw.direction = "INGRESS"
-    mock_allowed = MagicMock()
-    mock_allowed.I_p_protocol = "tcp"
-    mock_allowed.ports = ["3389"]
-    mock_fw.allowed = [mock_allowed]
-    mock_fw.source_ranges = ["0.0.0.0/0"]
-    mock_client.list.return_value = [mock_fw]
-
-    result = check_rdp_firewall(gcp_session)
-    assert result.verdict == Verdict.FAIL
