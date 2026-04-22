@@ -553,6 +553,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 | 2.7.4 | Azure | Ensure That 'Guest users access restrictions' is set to 'Guest user access is restricted to properties and memberships of their own directory objects' |
 | 2.7.5 | Google | Ensure That IAM Users Are Not Assigned the Service Account User or Service Account Token Creator Roles at Project Level |
 | 2.7.6 | Google | Ensure That Cloud KMS Cryptokeys Are Not Anonymously or Publicly Accessible |
+| 2.7.9 | Google | Ensure KMS Encryption Keys Are Rotated Within a Period of 90 Days |
 
 
 ---
@@ -619,6 +620,7 @@ Ensuring that dormant accounts are disabled when they're no longer needed reduce
 |---|-----|----------|
 | 2.10.1 | AWS | Ensure credentials unused for 45 days or greater are disabled |
 | 2.10.2 | Azure | Ensure Guest Users Are Reviewed on a Regular Basis |
+| 2.10.3 | Google | Ensure User-Managed/External Keys for Service Accounts Are Rotated Every 90 Days or Fewer |
 
 ---
 
@@ -1242,6 +1244,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 | 5.5.1 | AWS | Ensure that S3 Buckets are configured with 'Block public access (bucket settings)' |
 | 5.5.2 | Azure | Ensure that 'Public access level' is disabled for storage accounts with blob containers |
 | 5.5.3 | Google | Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible |
+| 5.5.4 | Google | Ensure That BigQuery Datasets Are Not Anonymously or Publicly Accessible |
 
 ---
 
@@ -1443,6 +1446,7 @@ This CIS Control provides guidance for securing hardware and software. As delive
 |---|-----|----------|
 | 6.6.1 | Google | Ensure 'user options' database flag for Cloud SQL SQL Server instance is not configured |
 | 6.6.2 | Google | Ensure '3625 (trace flag)' database flag for all Cloud SQL Server instances is set to 'on' |
+| 6.6.3 | Google | Ensure 'user Connections' Database Flag for Cloud SQL SQL Server Instance Is Set to a Non-limiting Value |
 
 
 ---
@@ -1565,6 +1569,7 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 | Spec | Platform | Description |
 |---|-----|----------|
 | 6.12.1 | AWS | Ensure Auto Minor Version Upgrade feature is Enabled for RDS Instances |
+| 6.12.2 | Google | Ensure That Cloud SQL Database Instances Are Configured With Automated Backups |
 
 ---
 
