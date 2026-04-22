@@ -24,7 +24,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--provider",
-        choices=["aws", "gcp"],
+        choices=["aws", "azure", "gcp"],
         default="aws",
         help="Cloud provider to assess (default: aws)",
     )
@@ -37,6 +37,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--project",
         default=None,
         help="GCP project ID (required for --provider gcp)",
+    )
+    parser.add_argument(
+        "--subscription",
+        default=None,
+        help="Azure subscription ID (required for --provider azure, or set AZURE_SUBSCRIPTION_ID)",
     )
     parser.add_argument(
         "--region",
@@ -92,7 +97,17 @@ def run_assessment(args: argparse.Namespace) -> AssessmentReport:
     provider = Provider(args.provider.upper())
 
     # Create provider-specific session
-    if provider == Provider.GCP:
+    if provider == Provider.AZURE:
+        from azure.identity import DefaultAzureCredential
+        from ada_cloud_audit.checks.azure.base import AzureSession
+
+        credential = DefaultAzureCredential()
+        subscription_id = args.subscription or os.environ.get("AZURE_SUBSCRIPTION_ID")
+        if not subscription_id:
+            logger.error("Azure subscription ID required. Use --subscription or set AZURE_SUBSCRIPTION_ID.")
+            sys.exit(1)
+        session = AzureSession(credential=credential, subscription_id=subscription_id)
+    elif provider == Provider.GCP:
         import google.auth
         from ada_cloud_audit.checks.gcp.base import GCPSession
 
@@ -206,7 +221,9 @@ def main(argv: list[str] | None = None) -> None:
 
     print(f"\nADA Cloud Assessment Tool")
     print(f"Provider: {args.provider.upper()}")
-    if args.provider.upper() == "GCP":
+    if args.provider.upper() == "AZURE":
+        print(f"Subscription: {args.subscription or os.environ.get('AZURE_SUBSCRIPTION_ID', '(not set)')}")
+    elif args.provider.upper() == "GCP":
         project_id = args.project or "(default from credentials)"
         print(f"Project: {project_id}")
     else:
