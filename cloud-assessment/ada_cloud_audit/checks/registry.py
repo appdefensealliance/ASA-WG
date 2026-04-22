@@ -46,6 +46,8 @@ def _register_aws_checks() -> None:
         "2.16.1": iam.check_root_mfa,
         "2.18.1": iam.check_users_permissions_through_groups,
         "2.7.7": iam.check_cloudshell_access,
+        "2.8.5": iam.check_expired_ssl_certs,
+        "3.8.2": iam.check_access_analyzer,
         "2.14.9": iam.check_iam_mfa_all_users,
 
         # Logging & Monitoring
@@ -61,6 +63,8 @@ def _register_aws_checks() -> None:
         "3.9.9": logging_checks.check_organizations_changes,
         "3.10.6": logging_checks.check_audit_log_retention,
         "3.11.1": logging_checks.check_cloudtrail_all_regions,
+        "3.11.2": logging_checks.check_cloudtrail_cloudwatch_integration,
+        "3.11.15": logging_checks.check_web_frontend_logging,
 
         # Networking
         "4.2.5": compute.check_ec2_imdsv2,
@@ -220,6 +224,7 @@ def _register_gcp_checks() -> None:
     """Register GCP checks if google-cloud packages are installed."""
     try:
         from ada_cloud_audit.checks.gcp import (
+            bigquery as gcp_bigquery,
             compute as gcp_compute,
             iam as gcp_iam,
             logging as gcp_logging,
@@ -233,7 +238,7 @@ def _register_gcp_checks() -> None:
 
     PROVIDER_REGISTRIES[Provider.GCP] = {
         # Compute (7 checks)
-        "1.2.6": gcp_compute.check_cloud_functions_runtimes,
+        "1.2.7": gcp_compute.check_cloud_functions_runtimes,
         "1.3.4": gcp_compute.check_block_project_ssh_keys,
         "1.5.1": gcp_compute.check_ip_forwarding,
         "1.6.1": gcp_compute.check_default_service_account,
@@ -241,11 +246,14 @@ def _register_gcp_checks() -> None:
         "1.7.1": gcp_compute.check_serial_port,
         "1.8.2": gcp_compute.check_oslogin,
 
-        # IAM (7 checks)
+        # IAM (10 checks)
         "2.3.5": gcp_iam.check_essential_contacts,
         "2.6.1": gcp_iam.check_secrets_in_functions,
         "2.7.5": gcp_iam.check_sa_user_role,
         "2.7.6": gcp_iam.check_kms_public_access,
+        "2.7.9": gcp_iam.check_kms_key_rotation,
+        "2.8.6": gcp_iam.check_gcp_managed_sa_keys,
+        "2.10.3": gcp_iam.check_sa_key_rotation,
         "2.11.5": gcp_iam.check_sa_admin_privileges,
         "2.12.1": gcp_iam.check_corporate_credentials,
         "2.14.7": gcp_iam.check_mfa_non_service,
@@ -268,8 +276,9 @@ def _register_gcp_checks() -> None:
         "4.2.3": gcp_networking.check_dnssec_key_signing,
         "4.2.4": gcp_networking.check_dnssec_zone_signing,
 
-        # Storage (1 check)
+        # Storage (2 checks)
         "5.5.3": gcp_storage.check_bucket_public_access,
+        "5.5.4": gcp_bigquery.check_bigquery_public_access,
 
         # Database (19 checks)
         "6.1.1": gcp_database.check_local_infile,
@@ -290,6 +299,8 @@ def _register_gcp_checks() -> None:
         "6.15.5": gcp_database.check_log_min_error_statement,
         "6.15.6": gcp_database.check_log_min_duration_statement,
         "6.15.7": gcp_database.check_pgaudit,
+        "6.6.3": gcp_database.check_user_connections,
+        "6.12.2": gcp_database.check_automated_backups,
     }
 
 

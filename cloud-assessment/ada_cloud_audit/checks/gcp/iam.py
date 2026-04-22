@@ -337,3 +337,95 @@ def check_gcp_managed_sa_keys(session: GCPSession) -> RequirementResult:
     except Exception as e:
         return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
                          f"Error checking service account keys: {e}")
+
+
+
+def check_sa_key_rotation(session: GCPSession) -> RequirementResult:
+    """ADA 2.10.3: Ensure user-managed SA keys are rotated every 90 days."""
+    spec_id = "2.10.3"
+    title = "Ensure User-Managed/External Keys for Service Accounts Are Rotated Every 90 Days or Fewer"
+
+    try:
+        from datetime import datetime, timezone, timedelta
+        from googleapiclient import discovery
+
+        service = discovery.build("iam", "v1", credentials=session.credentials)
+        sa_list = service.projects().serviceAccounts().list(
+            name=f"projects/{session.project_id}"
+        ).execute()
+
+        accounts = sa_list.get("accounts", [])
+        if not accounts:
+            return make_result(spec_id, title, "GCP", Verdict.PASS,
+                             "No service accounts found")
+
+        now = datetime.now(timezone.utc)
+        threshold = timedelta(days=90)
+        violating = []
+
+        for sa in accounts:
+            email = sa.get("email", "")
+            keys_resp = service.projects().serviceAccounts().keys().list(
+                name=f"projects/{session.project_id}/serviceAccounts/{email}",
+                keyTypes=["USER_MANAGED"],
+            ).execute()
+            for key in keys_resp.get("keys", []):
+                valid_after = key.get("validAfterTime", "")
+                if valid_after:
+                    try:
+                        key_dt = datetime.fromisoformat(valid_after.replace("Z", "+00:00"))
+                        if (now - key_dt) > threshold:
+                            violating.append(f"{email} (key created {valid_after})")
+                    except (ValueError, TypeError):
+                        pass
+
+        if violating:
+            return make_result(spec_id, title, "GCP", Verdict.FAIL,
+                             "SA keys older than 90 days:\n" + "\n".join(violating),
+                             {"violating": violating})
+        return make_result(spec_id, title, "GCP", Verdict.PASS,
+                         "All user-managed SA keys are within the 90-day rotation window")
+    except Exception as e:
+        return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
+                         f"Error checking SA key rotation: {e}")
+
+
+def check_kms_key_rotation(session: GCPSession) -> RequirementResult:
+    """ADA 2.7.9: Ensure KMS encryption keys are rotated within 90 days."""
+    spec_id = "2.7.9"
+    title = "Ensure KMS Encryption Keys Are Rotated Within a Period of 90 Days"
+
+    try:
+        from google.cloud import kms_v1
+
+        client = kms_v1.KeyManagementServiceClient(credentials=session.credentials)
+        parent = f"projects/{session.project_id}/locations/-"
+
+        non_compliant = []
+        total_keys = 0
+
+        for ring in client.list_key_rings(request={"parent": parent}):
+            for key in client.list_crypto_keys(request={"parent": ring.name}):
+                if key.purpose != kms_v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT:
+                    continue
+                total_keys += 1
+                rotation = key.rotation_period
+                if not rotation or rotation.total_seconds() > 7776000:  # 90 days
+                    non_compliant.append(
+                        f"{key.name} (rotation: {'not set' if not rotation else f'{int(rotation.total_seconds() / 86400)}d'})"
+                    )
+
+        if total_keys == 0:
+            return make_result(spec_id, title, "GCP", Verdict.PASS,
+                             "No symmetric encryption KMS keys found")
+
+        if non_compliant:
+            return make_result(spec_id, title, "GCP", Verdict.FAIL,
+                             "KMS keys without 90-day rotation:\n" + "\n".join(non_compliant),
+                             {"non_compliant": non_compliant, "total_keys": total_keys})
+        return make_result(spec_id, title, "GCP", Verdict.PASS,
+                         f"All {total_keys} KMS keys have rotation period <= 90 days",
+                         {"total_keys": total_keys})
+    except Exception as e:
+        return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
+                         f"Error checking KMS key rotation: {e}")
