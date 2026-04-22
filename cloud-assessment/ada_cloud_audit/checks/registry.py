@@ -65,7 +65,7 @@ def _register_aws_checks() -> None:
         "3.10.6": logging_checks.check_audit_log_retention,
         "3.11.1": logging_checks.check_cloudtrail_all_regions,
         "3.11.2": logging_checks.check_cloudtrail_cloudwatch_integration,
-        "3.11.15": logging_checks.check_web_frontend_logging,
+        "3.11.18": logging_checks.check_web_frontend_logging,
 
         # Networking
         "4.2.5": compute.check_ec2_imdsv2,
@@ -247,7 +247,7 @@ def _register_gcp_checks() -> None:
         "1.7.1": gcp_compute.check_serial_port,
         "1.8.2": gcp_compute.check_oslogin,
 
-        # IAM (10 checks)
+        # IAM (9 checks)
         "2.3.5": gcp_iam.check_essential_contacts,
         "2.6.1": gcp_iam.check_secrets_in_functions,
         "2.7.5": gcp_iam.check_sa_user_role,
@@ -258,7 +258,6 @@ def _register_gcp_checks() -> None:
         "2.11.5": gcp_iam.check_sa_admin_privileges,
         "2.12.1": gcp_iam.check_corporate_credentials,
         "2.14.7": gcp_iam.check_mfa_non_service,
-        "2.8.6": gcp_iam.check_gcp_managed_sa_keys,
 
         # Logging (8 checks)
         "3.1.1": gcp_logging.check_cloud_asset_inventory,
