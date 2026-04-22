@@ -1,6 +1,6 @@
 """AWS IAM checks for ADA Cloud assessment.
 
-Covers 12 requirements:
+Covers 15 requirements:
 - 2.2.1: Support role for AWS Support
 - 2.7.1: No root access keys
 - 2.7.3: No full admin IAM policies attached
@@ -11,7 +11,10 @@ Covers 12 requirements:
 - 2.11.1: Root not used for daily tasks
 - 2.16.1: MFA enabled for root
 - 2.18.1: Users receive permissions only through groups
+- 2.7.7: CloudShell access restricted
 - 2.7.8: No unrestricted Principal * in resource policies
+- 2.8.5: Expired SSL/TLS certs removed from IAM
+- 3.8.2: IAM External Access Analyzer enabled
 - 2.14.9: MFA enabled for all IAM console users
 """
 
@@ -533,6 +536,138 @@ def check_users_permissions_through_groups(session: boto3.Session) -> "Requireme
             Verdict.INCONCLUSIVE,
             f"Error checking user permissions: {e}",
         )
+
+
+def check_cloudshell_access(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.7.7: Ensure access to AWSCloudShellFullAccess is restricted."""
+    iam = session.client("iam")
+    try:
+        policy_arn = "arn:aws:iam::aws:policy/AWSCloudShellFullAccess"
+        resp = iam.list_entities_for_policy(PolicyArn=policy_arn)
+        users = resp.get("PolicyUsers", [])
+        groups = resp.get("PolicyGroups", [])
+        roles = resp.get("PolicyRoles", [])
+
+        entities = (
+            [f"User: {u['UserName']}" for u in users]
+            + [f"Group: {g['GroupName']}" for g in groups]
+            + [f"Role: {r['RoleName']}" for r in roles]
+        )
+
+        if not entities:
+            return make_result(
+                "2.7.7",
+                "Ensure access to AWSCloudShellFullAccess is restricted",
+                "AWS",
+                Verdict.PASS,
+                "AWSCloudShellFullAccess policy is not attached to any entity",
+            )
+        else:
+            return make_result(
+                "2.7.7",
+                "Ensure access to AWSCloudShellFullAccess is restricted",
+                "AWS",
+                Verdict.INCONCLUSIVE,
+                f"AWSCloudShellFullAccess is attached to {len(entities)} entity(ies). "
+                f"Manual review required to verify access is appropriately restricted:\n"
+                + "\n".join(entities),
+                {"entities": entities},
+            )
+    except ClientError as e:
+        if e.response["Error"]["Code"] == "NoSuchEntity":
+            return make_result(
+                "2.7.7",
+                "Ensure access to AWSCloudShellFullAccess is restricted",
+                "AWS",
+                Verdict.PASS,
+                "AWSCloudShellFullAccess policy not found (CloudShell may not be available in this partition)",
+            )
+        return make_result(
+            "2.7.7",
+            "Ensure access to AWSCloudShellFullAccess is restricted",
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            f"Error checking CloudShell access: {e}",
+        )
+
+
+def check_expired_ssl_certs(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.8.5: Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed."""
+    iam = session.client("iam")
+    try:
+        certs = iam.list_server_certificates()["ServerCertificateMetadataList"]
+        now = datetime.now(timezone.utc)
+        expired = []
+
+        for cert in certs:
+            expiration = cert.get("Expiration")
+            if expiration and expiration < now:
+                expired.append(
+                    f"{cert['ServerCertificateName']} (expired {expiration.isoformat()})"
+                )
+
+        if not certs:
+            return make_result(
+                "2.8.5",
+                "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+                "AWS",
+                Verdict.PASS,
+                "No SSL/TLS certificates stored in IAM",
+            )
+        elif not expired:
+            return make_result(
+                "2.8.5",
+                "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+                "AWS",
+                Verdict.PASS,
+                f"All {len(certs)} IAM-stored SSL/TLS certificates are valid (not expired)",
+                {"total_certs": len(certs)},
+            )
+        else:
+            return make_result(
+                "2.8.5",
+                "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+                "AWS",
+                Verdict.FAIL,
+                f"Expired SSL/TLS certificates in IAM:\n" + "\n".join(expired),
+                {"expired": expired, "total_certs": len(certs)},
+            )
+    except ClientError as e:
+        return make_result(
+            "2.8.5",
+            "Ensure that all expired SSL/TLS certificates stored in AWS IAM are removed",
+            "AWS",
+            Verdict.INCONCLUSIVE,
+            f"Error checking SSL/TLS certificates: {e}",
+        )
+
+
+def check_access_analyzer(session: boto3.Session) -> "RequirementResult":
+    """ADA 3.8.2: Ensure that IAM External Access Analyzer is enabled for all regions."""
+    from ada_cloud_audit.checks.base import run_multi_region
+
+    def _check_region(session: boto3.Session, region: str) -> tuple[bool, str, dict]:
+        analyzer = session.client("accessanalyzer", region_name=region)
+        try:
+            resp = analyzer.list_analyzers(type="ACCOUNT")
+            active = [a for a in resp.get("analyzers", []) if a.get("status") == "ACTIVE"]
+            if active:
+                names = [a["name"] for a in active]
+                return True, f"Active ACCOUNT analyzer(s): {', '.join(names)}", {"analyzers": names}
+            else:
+                return False, "No active ACCOUNT-level Access Analyzer found", {}
+        except ClientError as e:
+            if e.response["Error"]["Code"] in ("AccessDeniedException",):
+                return True, "Access Analyzer service not accessible", {}
+            raise
+
+    return run_multi_region(
+        session,
+        "3.8.2",
+        "Ensure that IAM External Access Analyzer is enabled for all regions",
+        "AWS",
+        _check_region,
+    )
 
 
 def check_resource_policy_principal(session: boto3.Session) -> "RequirementResult":
