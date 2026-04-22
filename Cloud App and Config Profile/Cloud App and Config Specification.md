@@ -962,6 +962,7 @@ Tools can help to identify vulnerabilities that require remediation.
 | Spec | Platform | Description |
 |---|-----|----------|
 | 3.8.1 | Azure | REMOVED — Removed from CIS Azure Foundations v5.0.0 |
+| 3.8.2 | AWS | Ensure that IAM External Access Analyzer is enabled for all regions |
 
 ---
 

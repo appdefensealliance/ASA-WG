@@ -260,6 +260,8 @@ Version 1.0 - 10-OCT 24
 
 [3.8.1 Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On'](#381-ensure-that-auto-provisioning-of-log-analytics-agent-for-azure-vms-is-set-to-on)
 
+[3.8.2 Ensure that IAM External Access Analyzer is enabled for all regions](#382-ensure-that-iam-external-access-analyzer-is-enabled-for-all-regions)
+
 [3.9 Conduct Audit Log Reviews](#39-conduct-audit-log-reviews)
 
 [3.9.1 Ensure management console sign-in without MFA is monitored](#391-ensure-management-console-sign-in-without-mfa-is-monitored)
@@ -5135,6 +5137,40 @@ Ensure output for `Id Name AutoProvision` is `/subscriptions//providers/Microsof
 **Verification**
 
 Evidence or test output indicates that auto provisioning of the log analytics agent for Azure VMs is enabled.
+
+
+---
+
+### 3.8.2 Ensure that IAM External Access Analyzer is enabled for all regions
+**Platform:** AWS
+
+**Rationale:** IAM Access Analyzer continuously monitors resource policies to identify resources shared with external entities. Enabling it in all regions ensures comprehensive detection of unintended access across the entire AWS account.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.18
+
+**Evidence**
+
+**From Console:**
+
+1. Sign in to the AWS Management Console
+2. Open the IAM console at `https://console.aws.amazon.com/iam/`
+3. In the left navigation panel, select `Access Analyzer`
+4. Ensure that at least one analyzer with type `ACCOUNT` exists and is `ACTIVE`
+5. Repeat for each region
+
+**From Command Line:**
+
+1. Run the following command in each region:
+
+```
+aws accessanalyzer list-analyzers --region <region> --query 'analyzers[?type==`ACCOUNT`].{name:name,status:status}'
+```
+
+2. Verify that at least one ACCOUNT-level analyzer exists and has status `ACTIVE` in each enabled region.
+
+**Verification**
+
+Evidence or test output indicates that IAM External Access Analyzer is enabled in all regions.
 
 
 ---

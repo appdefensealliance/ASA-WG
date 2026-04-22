@@ -46,6 +46,7 @@ def _register_aws_checks() -> None:
         "2.16.1": iam.check_root_mfa,
         "2.18.1": iam.check_users_permissions_through_groups,
         "2.8.5": iam.check_expired_ssl_certs,
+        "3.8.2": iam.check_access_analyzer,
         "2.14.9": iam.check_iam_mfa_all_users,
 
         # Logging & Monitoring
