@@ -6,6 +6,7 @@ Covers 4 requirements:
 - 4.3.5: WITHDRAWN (auto NA)
 - 4.3.6: No security groups allow 0.0.0.0/0 ingress to admin ports
 - 4.3.7: No security groups allow ::/0 ingress to admin ports
+- 4.3.8: CIFS access restricted to trusted networks
 """
 
 from __future__ import annotations
@@ -216,4 +217,92 @@ def check_sg_ipv6_admin_ports(session: boto3.Session) -> "RequirementResult":
         "::/0",
         "4.3.7",
         "Ensure no security groups allow ingress from ::/0 to remote server administration ports",
+    )
+
+
+# Port 445 (CIFS) restriction
+CIFS_PORTS = {445}
+
+
+def _check_security_groups_cifs(
+    session: boto3.Session, cidr_key: str, cidr_value: str, spec_id: str, title: str
+) -> "RequirementResult":
+    """Check security groups for unrestricted CIFS port 445 access."""
+
+    def _check_region(session: boto3.Session, region: str) -> tuple[bool, str, dict]:
+        ec2 = session.client("ec2", region_name=region)
+        try:
+            paginator = ec2.get_paginator("describe_security_groups")
+            non_compliant = []
+            for page in paginator.paginate():
+                for sg in page["SecurityGroups"]:
+                    sg_id = sg["GroupId"]
+                    sg_name = sg.get("GroupName", "")
+                    for rule in sg.get("IpPermissions", []):
+                        ip_protocol = rule.get("IpProtocol", "")
+                        from_port = rule.get("FromPort", 0)
+                        to_port = rule.get("ToPort", 65535)
+
+                        if ip_protocol == "-1":
+                            from_port = 0
+                            to_port = 65535
+
+                        if ip_protocol not in ("-1", "tcp", "udp", "6", "17"):
+                            continue
+
+                        cifs_exposed = any(
+                            _port_in_range(from_port, to_port, p) for p in CIFS_PORTS
+                        )
+                        if not cifs_exposed:
+                            continue
+
+                        ranges = (
+                            rule.get("IpRanges", [])
+                            if cidr_key == "CidrIp"
+                            else rule.get("Ipv6Ranges", [])
+                        )
+                        for ip_range in ranges:
+                            if ip_range.get(cidr_key) == cidr_value:
+                                non_compliant.append(
+                                    f"{sg_id} ({sg_name}): port 445 open to {cidr_value}"
+                                )
+        except ClientError as e:
+            if e.response["Error"]["Code"] in ("AuthFailure", "OptInRequired"):
+                return True, "Region not accessible", {}
+            raise
+
+        if non_compliant:
+            return (
+                False,
+                f"Security groups with unrestricted CIFS access: {'; '.join(non_compliant)}",
+                {"non_compliant": non_compliant},
+            )
+        return True, f"No security groups allow {cidr_value} ingress to port 445", {}
+
+    return run_multi_region(session, spec_id, title, "AWS", _check_region)
+
+
+def check_cifs_restricted(session: boto3.Session) -> "RequirementResult":
+    """ADA 4.3.8: Ensure CIFS access is restricted to trusted networks."""
+    # Check both IPv4 and IPv6
+    result_v4 = _check_security_groups_cifs(
+        session, "CidrIp", "0.0.0.0/0", "4.3.8",
+        "Ensure CIFS access is restricted to trusted networks to prevent unauthorized access",
+    )
+    if result_v4.verdict == Verdict.FAIL:
+        return result_v4
+
+    result_v6 = _check_security_groups_cifs(
+        session, "CidrIpv6", "::/0", "4.3.8",
+        "Ensure CIFS access is restricted to trusted networks to prevent unauthorized access",
+    )
+    if result_v6.verdict == Verdict.FAIL:
+        return result_v6
+
+    return make_result(
+        "4.3.8",
+        "Ensure CIFS access is restricted to trusted networks to prevent unauthorized access",
+        "AWS",
+        Verdict.PASS,
+        "No security groups allow unrestricted CIFS access (port 445) from 0.0.0.0/0 or ::/0",
     )

@@ -1,6 +1,6 @@
 """GCP IAM checks for ADA Cloud assessment.
 
-Covers 7 requirements:
+Covers 8 requirements:
 - 2.3.5: Essential Contacts configured for organization
 - 2.6.1: Secrets not stored in Cloud Functions env vars
 - 2.7.5: IAM users not assigned SA User/Token Creator roles at project level
@@ -8,6 +8,7 @@ Covers 7 requirements:
 - 2.11.5: Service accounts have no admin privileges
 - 2.12.1: Corporate login credentials used (no @gmail.com)
 - 2.14.7: MFA enabled for all non-service accounts (INCONCLUSIVE)
+- 2.8.6: Only GCP-managed service account keys
 """
 
 from __future__ import annotations
@@ -295,3 +296,44 @@ def check_mfa_non_service(session: GCPSession) -> RequirementResult:
         "Manual verification required: check Admin Console > Security > 2-Step Verification "
         "to confirm MFA is enforced for all non-service accounts.",
     )
+
+
+def check_gcp_managed_sa_keys(session: GCPSession) -> RequirementResult:
+    """ADA 2.8.6: Ensure only GCP-managed service account keys exist."""
+    spec_id = "2.8.6"
+    title = "Ensure That There Are Only GCP-Managed Service Account Keys for Each Service Account"
+
+    try:
+        from googleapiclient import discovery
+
+        service = discovery.build("iam", "v1", credentials=session.credentials)
+        sa_list = service.projects().serviceAccounts().list(
+            name=f"projects/{session.project_id}"
+        ).execute()
+
+        accounts = sa_list.get("accounts", [])
+        if not accounts:
+            return make_result(spec_id, title, "GCP", Verdict.PASS,
+                             "No service accounts found in the project")
+
+        violating = []
+        for sa in accounts:
+            email = sa.get("email", "")
+            keys_resp = service.projects().serviceAccounts().keys().list(
+                name=f"projects/{session.project_id}/serviceAccounts/{email}",
+                keyTypes=["USER_MANAGED"],
+            ).execute()
+            user_keys = keys_resp.get("keys", [])
+            if user_keys:
+                violating.append(f"{email} ({len(user_keys)} user-managed key(s))")
+
+        if violating:
+            return make_result(spec_id, title, "GCP", Verdict.FAIL,
+                             "Service accounts with user-managed keys:\n" + "\n".join(violating),
+                             {"violating": violating, "total_accounts": len(accounts)})
+        return make_result(spec_id, title, "GCP", Verdict.PASS,
+                         f"All {len(accounts)} service accounts use only GCP-managed keys",
+                         {"total_accounts": len(accounts)})
+    except Exception as e:
+        return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
+                         f"Error checking service account keys: {e}")
