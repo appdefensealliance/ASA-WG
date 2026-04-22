@@ -60,6 +60,8 @@ def _register_aws_checks() -> None:
         "3.9.9": logging_checks.check_organizations_changes,
         "3.10.6": logging_checks.check_audit_log_retention,
         "3.11.1": logging_checks.check_cloudtrail_all_regions,
+        "3.11.2": logging_checks.check_cloudtrail_cloudwatch_integration,
+        "3.11.15": logging_checks.check_web_frontend_logging,
 
         # Networking
         "4.2.5": compute.check_ec2_imdsv2,
