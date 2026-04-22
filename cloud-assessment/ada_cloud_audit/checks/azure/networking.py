@@ -1,6 +1,6 @@
 """Azure Networking checks for ADA Cloud assessment.
 
-Covers 7 requirements:
+Covers 8 requirements:
 - 4.3.1: RDP access restricted from internet
 - 4.3.2: SSH access restricted from internet
 - 4.3.9: UDP access restricted from internet
@@ -8,6 +8,7 @@ Covers 7 requirements:
 - 4.3.11: Subnets associated with NSGs
 - 4.3.12: App Gateway SSL policy min TLSv1_2
 - 4.3.13: App Gateway HTTP2 enabled
+- 4.3.14: Public IP addresses evaluation
 """
 
 from __future__ import annotations
@@ -275,3 +276,33 @@ def check_app_gateway_http2(session: AzureSession) -> RequirementResult:
         return make_result("4.3.13",
             "Ensure HTTP2 is set to Enabled on Azure Application Gateway",
             "Azure", Verdict.INCONCLUSIVE, f"Error: {e}")
+
+
+def check_public_ip_evaluation(session: AzureSession) -> RequirementResult:
+    """ADA 4.3.14: Evaluate all public IP addresses."""
+    spec_id = "4.3.14"
+    title = "Ensure All Public IP Addresses are Evaluated for Necessity"
+    try:
+        from azure.mgmt.network import NetworkManagementClient
+
+        client = NetworkManagementClient(session.credential, session.subscription_id)
+        public_ips = list(client.public_ip_addresses.list_all())
+
+        if not public_ips:
+            return make_result(spec_id, title, "Azure", Verdict.PASS,
+                             "No public IP addresses found in the subscription")
+
+        ip_list = []
+        for pip in public_ips:
+            ip_addr = getattr(pip, "ip_address", "N/A") or "not allocated"
+            assoc = getattr(pip, "ip_configuration", None)
+            assoc_id = getattr(assoc, "id", "unassociated") if assoc else "unassociated"
+            ip_list.append(
+                f"{pip.name}: {ip_addr} (associated: {assoc_id})")
+
+        return make_result(spec_id, title, "Azure", Verdict.INCONCLUSIVE,
+                         f"Found {len(public_ips)} public IP address(es). "
+                         f"Manual review required to confirm necessity:\n" +
+                         "\n".join(ip_list))
+    except Exception as e:
+        return make_result(spec_id, title, "Azure", Verdict.INCONCLUSIVE, f"Error: {e}")
