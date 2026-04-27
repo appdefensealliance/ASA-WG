@@ -8,7 +8,7 @@ Version 0.1 3/9/26
 | :------ | :----- | :----------------------------------------------------------------- |
 | 0.1     | 3/9/26 | Initial document outline based on CoSAI MCP security paper threats |
 | 0.2     | 3/26/26 | Added requirements for section 1 (Authentication) and updates for section 11 (Supply Chain) |
-|         |        |                                                                    |
+| 0.3     | 4/27/26 | Added Section 13 (Data Retention, Geographic Governance, Model Allowlisting, External Data Sources, and Parameter Governance) | 
 
 # Contributors
 
@@ -32,6 +32,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Daniel Bond (Meta)  
 * Tony Balkan (Microsoft)  
 * Dario Freni (Google)
+* Antonio Nappa (Zimperium)
 * TBD
 
 # Table of Contents
@@ -169,6 +170,20 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 [12.1 Invisible Agent Activity	60](#12.1-invisible-agent-activity)
 
 [12.2 Lack of Observability	60](#12.2-lack-of-observability)
+
+[13 Data Retention and Geographic Data Governance	63](#13-data-retention-and-geographic-data-governance)
+
+[13.1 Temporal Over-Retention of AI Data	64](#13.1-temporal-over-retention-of-ai-data)
+
+[13.2 Geographic Data Misgovernance	69](#13.2-geographic-data-misgovernance)
+
+[13.3 Compliance Transparency and Accountability	74](#13.3-compliance-transparency-and-accountability)
+
+[13.4 Model Allowlisting and Restriction	76](#13.4-model-allowlisting-and-restriction)
+
+[13.5 External Data Source Governance	81](#13.5-external-data-source-governance)
+
+[13.6 Model Configuration and Parameter Governance	86](#13.6-model-configuration-and-parameter-governance)
 
 # Introduction
 
@@ -1516,7 +1531,54 @@ In agentic and MCP-based architectures, the complexity of interactions between u
 | :------ | :--------------------------------------------------------------------- |
 | Static  | **Verify Structured Format:** Identify all logging statements (e.g., `console.log`, `logger.info`, `winston`) and confirm they utilize a structured format like JSON objects or key-value pairs rather than simple string concatenation. <br><br>**Identify External Tool Execution Paths:** Review the code for AI tool integration and MCP server implementations to identify all functions that execute external tools or access data resources. <br><br>**Check Telemetry Coverage:** Verify that each execution path includes a logging call capturing the identity of the calling agent, the specific tool requested, the input parameters, and the success/failure status. <br><br>**Inspect Metadata and Correlation:** Confirm that critical events (tool execution, API requests, and authentication logic) are logged with relevant metadata, including timestamps and correlation IDs. <br><br>**Audit for Reasoning Traces:** Verify if the "Intent" of the agent is logged to provide an auditable "Reasoning Trace" explaining why an agent took a specific action. <br><br>**Flag Silent Failures:** Identify and flag any instances where a tool is invoked without telemetry or where error states are handled "silently" without an audit entry. <br><br>**Flag Unstructured Calls:** Identify and flag any instances of "print" statements or unstructured logger calls used for operational data. |
 | Dynamic | **Generate Agent Activity:** Interact with the system through the AI agent to trigger various tool calls, API requests, and authentication events. <br><br>**Validate Log Capture:** Inspect the generated logs to confirm that the interaction was captured in its entirety. <br><br>**Confirm Machine-Readability:** Verify that the output logs are valid structured data (e.g., valid JSON) that can be parsed by automated security tools.  |
-|         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+|         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 #### Comments
+
+| Scope  | Comment                                                             |
+| :----- | :------------------------------------------------------------------ |
+| Local  | In scope                                                            |
+| Mobile | In scope                                                            |
+| Remote | Would this be in scope as the user may not have access to the logs? |
+|        |                                                                     |
+
+# 13 Data Retention and Geographic Data Governance
+
+AI Tools process, cache, and may persist sensitive user data across inference logs, prompt histories, embedding/vector stores, model artifacts, and agentic execution traces. Without explicit retention controls, geographic governance, model provenance validation, data source management, and parameter guardrails, these tools create regulatory exposure, enable data exfiltration, and undermine model safety alignment.
+
+This threat category addresses six interrelated risk areas:
+
+- **Temporal over-retention (CS-25):** AI Tool data persists beyond its useful life, expanding the blast radius of any breach and violating data minimization principles.
+- **Geographic data misgovernance (CS-26):** AI-related data is stored, processed, or transmitted to jurisdictions that violate applicable data protection law or user expectations.
+- **Compliance transparency gaps:** Users and assessors cannot verify that the AI Tool satisfies applicable data protection and AI-specific obligations.
+- **Unrestricted model usage:** AI Tools connect to unapproved, sanctioned, or unsafe models without validation or restriction.
+- **Ungoverned external data access:** AI Tools bridge LLMs to organizational data lakes and document stores without scoping, authentication, or boundary enforcement.
+- **Parameter manipulation:** Security-sensitive model configuration (temperature, filters, guardrails) is exposed to tampering via tool arguments or prompt injection.
+
+#### Framework Mapping
+
+* OWASP ASVS v5.0 §14.1.6 (Retention Classification)
+* OWASP ASVS v5.0 §14.1.1 (Protection Documentation)
+* OWASP Top 10 for LLM Applications 2025 — LLM02 (Sensitive Information Disclosure), LLM09 (Misinformation)
+* OWASP Top 10 for Agentic Applications 2026
+* EU AI Act (2024/1689) — Art. 10 (Data Governance), Art. 12 (Record-Keeping), Art. 18 (Documentation Retention), Art. 19 (Log Retention)
+* GDPR (2016/679) — Art. 5(1)(e) (Storage Limitation), Art. 17 (Right to Erasure), Art. 30 (ROPA), Chapter V (Transfers)
+* CCPA/CPRA — §1798.105 (Deletion), §1798.100 (Disclosure)
+* U.S. DOJ Data Security Program (eff. October 2025)
+* OFAC Sanctions / EU Restrictive Measures
+* NIST AI RMF (AI 100-1) — GOVERN, MAP, MEASURE functions
+* NIST Cyber AI Profile (IR 8596)
+
+## 13.1 Temporal Over-Retention of AI Data
+TBD
+## 13.2 Geographic Data Misgovernance
+TBD
+## 13.3 Compliance Transparency and Accountability
+TBD
+## 13.4 Model Allowlisting and Restriction
+TBD
+## 13.5 External Data Source Governance
+TBD
+## 13.6 Model Configuration and Parameter Governance
+TBD
 
 #### 
 
