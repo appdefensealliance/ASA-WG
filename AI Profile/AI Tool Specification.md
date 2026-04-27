@@ -816,61 +816,41 @@ TBD
 
 Attackers leverage MCP components to steal or corrupt sensitive data, reroute messages, or manipulate outputs, often via compromised servers or poisoned tools.
 
-### 5.1.1 Req TBD
+### 5.1.1 Exfiltration Defense
+The system SHALL implement a defense-in-depth architecture to prevent sensitive data leakage. It should also prevent the transmission of any data in transit, at rest, and during processing to the Agent that was not explicitly intended for the current task. MCP implementations must treat the AI Agent as an untrusted principal. 
+
 
 #### Description
 
-TBD
+The AI tool (e.g., MCP Server) MUST implement strict access controls, memory isolation, and input validation to ensure that any confidential material held internally—including internal API keys, service credentials, local configuration files, and private caching states—cannot be exfiltrated, exposed, modified, or corrupted through the tool’s exposed execution pathways or APIs. The tool MUST enforce a rigid boundary between its internal operational secrets and the execution context handling agent requests.
+
 
 #### Rationale
 
-TBD
+AI tools often require highly privileged credentials (e.g., database passwords, OAuth tokens) to function. If an Agent is subverted via Indirect Prompt Injection (IPI), it may attempt to instruct the tool to read its own internal configuration or "leak" supplementary data retrieved from a backend. By isolating internal secrets and enforcing strict output schemas, the "blast radius" of a compromised agent is contained; the request simply becomes technically impossible to fulfill.
+
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static |**Secret Lifecycle Mapping:** Identify all points where the tool loads (Get), refreshes (Update), or clears (Delete) internal credentials. <br><br> **Automated Secret Hunting:** Execute high-entropy scans (e.g., TruffleHog, Gitleaks) to find hardcoded "sk-", "ghp_", or mock credentials in source code and config snippets. <br><br> **Secrets management:** Verify secrets are retrieved into memory-safe buffers. <br><br> **Path & Reflection Verification:** Confirm zero code paths exist where agent input can dynamically dictate file paths targeting local secret files. <br><br> **Taint & Reflection Analysis:** Trace Agent-controlled inputs to ensure they cannot reach sinks that allow dynamic file system access or memory reflection (e.g., eval(), unsafe-load).  |
+| Dynamic |**Internal Exfiltration Probe:** Submit traversal payloads (e.g., /etc/secrets/, ../../../../etc/secrets) and commands to dump environment variables. <br>  **Pass:** The tool must block or drop all requests; internal mock keys (e.g., test_secret_key_123) must never appear in responses. <br><br> **Exfiltration Stress Test:** Command the AI Tool to output internally held secrets data. <br>   **Pass:** No internally held secret is in the response. <br><br> **Corruption & Integrity Test:** Submit payloads attempting to overwrite local configuration or exhaust memory. <br>   **Pass:** The tool's internal configuration must remain uncorrupted and operational for subsequent benign requests.  |
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 ## 5.2 File System Exposure/Path Traversal (Duplicate)
 
 Improper validation of file paths or tool arguments enables access to or exfiltration of files outside intended directories, exposing credentials and sensitive data.
 
-### 5.2.1 Req TBD
+**Note: This is a duplicate threat**
 
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### 
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
 
 # 6 Missing Integrity/Verification Controls 
 
@@ -878,115 +858,56 @@ TBD
 
 Attackers embed hidden malicious instructions within data sources (databases, documents, API responses) that MCP servers retrieve and provide to LLMs, causing the poisoned content to execute as commands when processed, effectively achieving persistent prompt injection through trusted data channels rather than direct user input. Unlike Prompt Injection (MCP-12): Malicious instructions are embedded in backend data sources, not user-provided prompts. Unlike Tool Poisoning (MCP-2): Poisons the actual data/content retrieved by tools, not the tool definitions themselves. This attack surface may be expanded with transitive or composed MCP server calls.
 
-### 6.1.1 Req TBD
-
-#### Description
-
-#### Rationale
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### 
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: Mitigations for this risk are out of scope for the AI Tool specification. This threat will be addressed in the AI Agent specification.**
 
 ## 6.2 Typosquatting/Confusion Attacks 
 
 Malicious actors create MCP servers or tools with names/descriptions similar to legitimate ones, tricking clients or AI agents into invoking harmful tools due to naming confusion or LLM hallucination. The MCP specification provides guidance on making tool origins and inputs visible to users and recommends human-in-the-loop approval for tool invocations (User Interaction Model), but consent fatigue—where users reflexively approve prompts without careful review—can significantly undermine these protections.
 
-### 6.2.1 Req TBD
+### 6.2.1 Semantic Integrity and Descriptive Accuracy
 
 #### Description
 
-TBD
+The tool's metadata—including its name, description, and the definitions of its functions/APIs—must accurately reflect its actual behavior and internal logic. Developers must ensure that:
+
+* The **natural language description** provided to the AI agent matches the functional capabilities of the code.  
+* **API parameters** are named and described according to their actual use (e.g., a parameter named `zip_code` should not be used to smuggle an `api_key`).  
+* The tool does not contain **undocumented "easter egg" functions** or side effects that deviate significantly from the stated purpose.
 
 #### Rationale
 
-TBD
+In the context of AI Agents (like those using the Model Context Protocol), the agent relies almost entirely on the tool's description to decide *when* and *how* to call it.
+
+* **Deceptive Mapping:** If a tool is named `fetch_weather` but actually executes `delete_database`, the AI agent can be tricked into performing malicious actions under the guise of a benign request.  
+* **Prompt Injection via Metadata:** Misleading descriptions can be used as a "Trojan Horse" to influence the LLM’s reasoning, leading it to ignore system instructions or exfiltrate data to the tool's backend.  
+* **Trust Erosion:** Users must be able to audit a tool’s intent by reading its manifest without needing to reverse-engineer the entire codebase.
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Manifest Review:** Compare the `description` fields in the tool’s configuration (e.g., `mcp.json` or similar) against the function names and variable types.  **Code-to-Metadata Mapping:** Verify that for every exported function, the docstring and metadata capture the primary purpose of the logic. Check for "Dead Code" or "Shadow Parameters" that are defined in the code but omitted or misrepresented in the tool’s public description. **Heuristic Analysis:** Flag tools that use generic or intentionally vague descriptions (e.g., "Run utility") for complex or high-privilege code blocks.  |
+| Dynamic | **Functional Verification:** Execute the tool with a series of standard inputs and verify that the output and side effects (file changes, network calls, etc.) align with the tool’s description. **I/O Monitoring:** Monitor network traffic during execution. If a "Calculator" tool initiates an outbound HTTPS request to an unknown domain, it fails the integrity check. Inspect system calls to ensure the tool is only accessing resources relevant to its description (e.g., a "Word Counter" should not be reading the user's SSH keys). **Agent-Simulated Testing:** Provide the tool to a "clean" AI Agent and ask it to describe what the tool does based on its metadata. Compare the agent's understanding against the developer’s actual code implementation to identify semantic gaps.  |
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 ## 6.3 Shadow MCP Servers
 
 Unauthorized, unmonitored, or hidden MCP server instances create blind spots, increasing risk of undetected compromise and covert data exfiltration. These servers pose governance and compliance risks and may be malicious or easily compromised.
 
-### 6.3.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
 
 ## 6.4 Supply Chain Compromise and Privileged host-base Attacks
 
 Malicious or compromised MCP servers, dependencies, or packages are introduced into the environment, enabling attackers to execute arbitrary code, exfiltrate data, or persist within the infrastructure.
 
-### 6.4.1 Req TBD
-
-#### Description
-
-TBD 
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: This risk is mitigated through the MASA and CASA certification.**
 
 # 7 Session and Transport Security Failures
 
@@ -994,208 +915,72 @@ TBD
 
 Exploiting insecure network transport (lack of TLS, improper certificate validation, or missing mutual authentication) to intercept, modify, or reroute data between MCP components, enabling data theft or manipulation.
 
-### 7.1.1 Req TBD
+### 7.1.1 Integrated Transport Security and Message Integrity
 
 #### Description
 
-TBD
+To mitigate Man-in-the-Middle (MitM) and message integrity risks, the system must enforce a unified secure transport layer and message-level protection. For remote connections, communication must be encrypted using TLS 1.3+ with strict X.509 certificate and trust chain validation (rejecting plaintext, expired, or untrusted endpoints). For local connections, the system must bypass the network stack in favor of secure Inter-Process Communication (IPC)—such as Unix domain sockets or Windows Named Pipes—protected by strict OS-level permissions. 
 
 #### Rationale
 
-TBD
+This requirement establishes a multi-layered defense. High-grade encryption and secure IPC prevent unauthorized eavesdropping on the wire or within the host. Strict certificate validation ensures the client is communicating with the legitimate server, rather than an attacker's proxy. Lastly, message-level signing guarantees that even if a transport-level vulnerability exists, the underlying tool calls and responses remain immutable and can only be executed once.
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Protocol Check:** Inspect configuration files (e.g., `server_config.json`) to ensure the minimum TLS version is pinned to `1.3` and that legacy ciphers are disabled. **Validation Check:** Verify that the client implementation does not include flags that bypass certificate validation (e.g., `NODE_TLS_REJECT_UNAUTHORIZED=0` or `verify=False`). **IPC Check:** Review the transport initialization code to ensure local deployments use socket paths or named pipes rather than `localhost` or `127.0.0.1`.  |
+| Dynamic | **Downgrade Attack Test:** Attempt to initiate a connection using TLS 1.2 or lower; the server must refuse the handshake. **Trust Chain Test:** Point the MCP client to a server with a self-signed or expired certificate; the client must terminate the connection immediately. **Replay Attack Test:** Intercept a valid tool call and attempt to resend it to the server; the server must reject the message as a duplicate based on the nonce/timestamp. **Local Isolation Test:** Attempt to read from the IPC socket or pipe using a secondary, non-privileged system user; the operating system should deny access based on the file permissions.  |
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
-## 7.2 Insufficient Integrity Checks (Duplicate) 
+## 7.2 Insufficient Integrity Checks (Duplicate)
 
 Absence of signature or integrity validation on MCP messages and responses enables replay, spoofing, or delivery of poisoned results.
 
-### 7.2.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: Message integrity checks are addressed under “7.1.1 Integrated Transport Security and Message Integrity”**
 
 ## 7.3 Unrestricted Network Access
 
 MCP servers or clients with open outbound or inbound network access can download malicious payloads, exfiltrate data, or connect to command-and-control infrastructure. Malicious or compromised MCP servers allow attackers to move laterally using stored credentials and exploiting poor network segmentation and isolation.
 
-### 7.3.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### 
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: User network security is out of scope for the AI Tool specification. Further, malicious behavior is addressed in 6.2.1 Semantic Integrity and Descriptive Accuracy.**
 
 ## 7.4 Protocol Security Gaps
 
 Weaknesses in MCP protocol/transport layers (e.g., missing payload limits, no TLS, unauthenticated requests) enable DoS, spoofing, or unauthorized command execution.
 
-### 7.4.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: This threat is addressed by the other authentication, session and transport security controls contained in this document and the underlying CASA and MASA specifications.**
 
 ## 7.5 Insecure Descriptor Handling
 
 Improper management of transport descriptors (e.g., stdio) allows attackers to hijack or interfere with data streams and process communications.
 
-### 7.5.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
 
 ## 7.6 CSRF Protection Missing
 
 Lack of Cross-Site Request Forgery (CSRF) controls on HTTP/SSE transports enables attackers to forge or replay unauthorized requests.
 
-### 7.6.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: Out of scope for all HTTP APIs.**
 
 ### 7.7 CORS/Origin Policy Bypass
 
 Missing or weak cross-origin policies allow unauthorized data leaks via cross-origin resource sharing (CORS) in browser-based or web transports.
 
-### 7.7.1 Req TBD
+**Note: Out of scope for all HTTP APIs.**
 
-#### Description
+## 7.8 Replay Attacks/Session Hijacking (Duplicate)
 
-TBD
+Attackers intercept, reuse, or hijack authentication tokens or session identifiers, impersonating legitimate users or agents and executing unauthorized actions.
 
-#### Rationale
-
-TBD
-
-#### 
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: See section 1.4.1 for security requirements.**
 
 # 8 Network Binding/Isolation Failures
 
