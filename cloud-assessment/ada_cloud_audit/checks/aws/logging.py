@@ -6,7 +6,7 @@ Covers 12 requirements:
 - 3.10.6: Audit logs retained >= 90 days
 - 3.11.1: CloudTrail enabled in all regions
 - 3.11.2: CloudTrail integrated with CloudWatch Logs
-- 3.11.15: Web front-end access logging enabled
+- 3.11.18: Web front-end access logging enabled
 """
 
 from __future__ import annotations
@@ -568,7 +568,7 @@ def check_web_frontend_logging(session: boto3.Session) -> "RequirementResult":
 
     if not findings:
         return make_result(
-            "3.11.15",
+            "3.11.18",
             "Ensure all AWS-managed web front-end services have access logging enabled",
             "AWS",
             Verdict.INCONCLUSIVE,
@@ -578,7 +578,7 @@ def check_web_frontend_logging(session: boto3.Session) -> "RequirementResult":
         )
     else:
         return make_result(
-            "3.11.15",
+            "3.11.18",
             "Ensure all AWS-managed web front-end services have access logging enabled",
             "AWS",
             Verdict.FAIL,
