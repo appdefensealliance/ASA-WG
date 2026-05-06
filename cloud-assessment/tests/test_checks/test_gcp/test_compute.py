@@ -166,7 +166,7 @@ def test_check_cloud_functions_runtimes_pass_no_functions(gcp_session, mock_goog
     mock_client.list_functions.return_value = []
 
     result = check_cloud_functions_runtimes(gcp_session)
-    assert result.spec_id == "1.2.6"
+    assert result.spec_id == "1.2.7"
     assert result.verdict == Verdict.PASS
 
 

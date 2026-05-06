@@ -304,8 +304,8 @@ def check_default_entra_authorization(session: AzureSession) -> RequirementResul
             return "defaultToOAuthAuthentication is not enabled"
         return None
 
-    return _check_storage_property(session, "5.9.1",
-        "Ensure Default to Microsoft Entra Authorization in Azure Portal is Enabled", _check)
+    return _check_storage_property(session, "5.5.5",
+        "Ensure Default to Entra Authorization in the Azure Portal is Enabled for Storage", _check)
 
 
 def check_cross_tenant_replication(session: AzureSession) -> RequirementResult:
@@ -316,14 +316,14 @@ def check_cross_tenant_replication(session: AzureSession) -> RequirementResult:
             return "allowCrossTenantReplication is not disabled"
         return None
 
-    return _check_storage_property(session, "5.7.3",
+    return _check_storage_property(session, "5.2.3",
         "Ensure Cross-Tenant Replication is Disabled for Storage Accounts", _check)
 
 
 def check_arm_delete_lock(session: AzureSession) -> RequirementResult:
     """ADA 5.1.6: Ensure ARM delete locks are configured on storage accounts."""
-    spec_id = "5.1.6"
-    title = "Ensure ARM Delete Locks are Configured on Storage Accounts"
+    spec_id = "5.7.3"
+    title = "Ensure ARM Delete Locks Are Applied to Storage Accounts"
     try:
         from azure.mgmt.resource.locks import ManagementLockClient
 

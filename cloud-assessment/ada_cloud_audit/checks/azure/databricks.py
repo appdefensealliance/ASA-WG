@@ -28,8 +28,8 @@ def _list_databricks_workspaces(session: AzureSession) -> list:
 
 def check_vnet_deployment(session: AzureSession) -> RequirementResult:
     """ADA 1.9.1: Ensure Databricks workspace is deployed in a VNet."""
-    spec_id = "1.9.1"
-    title = "Ensure Databricks Workspace is Deployed in a Customer-Managed VNet"
+    spec_id = "3.8.3"
+    title = "Ensure Azure Databricks is Deployed in a Customer-Managed VNet"
     try:
         workspaces = _list_databricks_workspaces(session)
 
@@ -60,8 +60,8 @@ def check_vnet_deployment(session: AzureSession) -> RequirementResult:
 
 def check_nsg_on_subnets(session: AzureSession) -> RequirementResult:
     """ADA 1.9.2: Ensure NSGs are associated with Databricks subnets."""
-    spec_id = "1.9.2"
-    title = "Ensure NSGs are Associated with Databricks Subnets"
+    spec_id = "3.8.4"
+    title = "Ensure NSGs are Configured for Databricks Subnets"
     try:
         from azure.mgmt.network import NetworkManagementClient
 
@@ -122,8 +122,8 @@ def check_nsg_on_subnets(session: AzureSession) -> RequirementResult:
 
 def check_entra_id_sync(session: AzureSession) -> RequirementResult:
     """ADA 1.9.3: Ensure Entra ID identity sync is configured via SCIM."""
-    return make_result("1.9.3",
-        "Ensure Entra ID Identity Sync (SCIM) is Configured for Databricks",
+    return make_result("3.8.5",
+        "Ensure Users and Groups are Synced from Entra ID to Databricks",
         "Azure", Verdict.INCONCLUSIVE,
         "SCIM provisioning configuration requires access to the Databricks workspace "
         "admin console or SCIM API. Manual verification required: check that SCIM "
@@ -132,8 +132,8 @@ def check_entra_id_sync(session: AzureSession) -> RequirementResult:
 
 def check_unity_catalog(session: AzureSession) -> RequirementResult:
     """ADA 1.9.4: Ensure Unity Catalog is configured for data governance."""
-    return make_result("1.9.4",
-        "Ensure Unity Catalog is Configured for Databricks Data Governance",
+    return make_result("3.8.6",
+        "Ensure Unity Catalog is Configured for Azure Databricks",
         "Azure", Verdict.INCONCLUSIVE,
         "Unity Catalog configuration requires access to the Databricks account "
         "console or workspace APIs. Manual verification required: check that Unity "
@@ -142,8 +142,8 @@ def check_unity_catalog(session: AzureSession) -> RequirementResult:
 
 def check_pat_restrictions(session: AzureSession) -> RequirementResult:
     """ADA 1.9.5: Ensure PAT token management policies are enforced."""
-    return make_result("1.9.5",
-        "Ensure Personal Access Token (PAT) Restrictions are Configured",
+    return make_result("3.8.7",
+        "Ensure PAT Usage is Restricted and Expiry is Enforced for Databricks",
         "Azure", Verdict.INCONCLUSIVE,
         "PAT token management policies require access to the Databricks workspace "
         "admin settings. Manual verification required: check that token lifetime "
@@ -152,8 +152,8 @@ def check_pat_restrictions(session: AzureSession) -> RequirementResult:
 
 def check_diagnostic_logs(session: AzureSession) -> RequirementResult:
     """ADA 1.9.6: Ensure diagnostic logs are enabled for Databricks."""
-    spec_id = "1.9.6"
-    title = "Ensure Diagnostic Logs are Enabled for Databricks Workspaces"
+    spec_id = "3.8.8"
+    title = "Ensure Diagnostic Log Delivery is Configured for Azure Databricks"
     try:
         from azure.mgmt.monitor import MonitorManagementClient
 
@@ -187,8 +187,8 @@ def check_diagnostic_logs(session: AzureSession) -> RequirementResult:
 
 def check_no_public_ip(session: AzureSession) -> RequirementResult:
     """ADA 1.9.7: Ensure 'No Public IP' is enabled for Databricks clusters."""
-    spec_id = "1.9.7"
-    title = "Ensure No Public IP (NPIP) is Enabled for Databricks Clusters"
+    spec_id = "3.8.9"
+    title = "Ensure 'No Public IP' is Enabled for Azure Databricks"
     try:
         workspaces = _list_databricks_workspaces(session)
 
@@ -219,8 +219,8 @@ def check_no_public_ip(session: AzureSession) -> RequirementResult:
 
 def check_public_network_access(session: AzureSession) -> RequirementResult:
     """ADA 1.9.8: Ensure public network access is disabled for Databricks."""
-    spec_id = "1.9.8"
-    title = "Ensure Public Network Access is Disabled for Databricks Workspaces"
+    spec_id = "3.8.10"
+    title = "Ensure Public Network Access is Disabled for Azure Databricks"
     try:
         workspaces = _list_databricks_workspaces(session)
 

@@ -276,7 +276,8 @@ When software ceases to be supported, the maintainer of that software will no lo
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 1.2.1 | AWS | Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime | 1.2.2 | Azure | Ensure that all Azure Functions are configured to use a current (not deprecated) runtime |
+| 1.2.1 | AWS | Ensure that all AWS Lambda functions are configured to use a current (not deprecated) runtime |
+| 1.2.2 | Azure | Ensure that all Azure Functions are configured to use a current (not deprecated) runtime |
 | 1.2.3 | Azure | Ensure That 'PHP version' is the Latest, If Used to Run the Web App |
 | 1.2.4 | Azure | Ensure that 'Python version' is the Latest Stable Version, if Used to Run the Web App |
 | 1.2.5 | Azure | Ensure that 'Java version' is the latest, if used to run the Web App |
@@ -1126,8 +1127,8 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 | 3.11.15 | Azure | Ensure that a 'Diagnostic Setting' exists for Subscription Activity Logs |
 | 3.11.16 | Azure | Ensure Diagnostic Setting captures appropriate categories |
 | 3.11.17 | Azure | Ensure that an Activity Log Alert exists for Service Health |
-| 3.11.18 | Azure | Ensure Diagnostics Logs Are Enabled for Batch Accounts |
 | 3.11.18 | AWS | Ensure all AWS-managed web front-end services have access logging enabled |
+| 3.11.19 | Azure | Ensure Diagnostics Logs Are Enabled for Batch Accounts |
 
 
 ---
@@ -1622,7 +1623,7 @@ Uninstalling and disabling unnecessary services reduces the target area of your 
 ---
 
 
-### 6.11 Centralize Account Management
+## 6.11 Centralize Account Management
 
 
 ### Description

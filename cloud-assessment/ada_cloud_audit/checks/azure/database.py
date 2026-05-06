@@ -366,7 +366,7 @@ def check_sql_ad_admin(session: AzureSession) -> RequirementResult:
 
 def check_pg_entra_only_auth(session: AzureSession) -> RequirementResult:
     """ADA 6.3.5: Ensure PostgreSQL uses Entra-only authentication."""
-    spec_id = "6.3.5"
+    spec_id = "6.3.9"
     title = "Ensure Entra ID-Only Authentication is Enabled for PostgreSQL Flexible Servers"
     try:
         from azure.mgmt.rdbms.postgresql_flexibleservers import PostgreSQLManagementClient
@@ -405,15 +405,15 @@ def check_pg_entra_only_auth(session: AzureSession) -> RequirementResult:
 
 def check_pg_connection_throttle(session: AzureSession) -> RequirementResult:
     """ADA 6.13.4: Ensure 'connection_throttle.enable' is ON for PostgreSQL."""
-    return _check_pg_config(session, "6.13.4",
-        "Ensure Server Parameter 'connection_throttle.enable' is set to 'ON' for PostgreSQL",
+    return _check_pg_config(session, "6.6.4",
+        "Ensure 'connection_throttle.enable' Is Set to 'ON' for PostgreSQL Flexible Server",
         "connection_throttle.enable", "on")
 
 
 def check_pg_ssl_min_version(session: AzureSession) -> RequirementResult:
     """ADA 6.3.6: Ensure ssl_min_protocol_version is TLSv1.2 for PostgreSQL."""
-    return _check_pg_config(session, "6.3.6",
-        "Ensure 'ssl_min_protocol_version' is set to 'TLSv1.2' for PostgreSQL",
+    return _check_pg_config(session, "6.3.10",
+        "Ensure 'ssl_min_protocol_version' Is Set to TLSv1.2 for PostgreSQL Flexible Server",
         "ssl_min_protocol_version", "TLSv1.2",
         compare_fn=lambda v: v in ("TLSv1.2", "TLSv1.3"))
 
@@ -422,7 +422,7 @@ def check_pg_ssl_min_version(session: AzureSession) -> RequirementResult:
 
 def check_mysql_entra_only_auth(session: AzureSession) -> RequirementResult:
     """ADA 6.11.2: Ensure MySQL uses Entra-only authentication."""
-    spec_id = "6.11.2"
+    spec_id = "6.3.8"
     title = "Ensure Entra ID-Only Authentication is Enabled for MySQL Flexible Servers"
     try:
         from azure.mgmt.rdbms.mysql_flexibleservers import MySQLManagementClient
@@ -461,7 +461,7 @@ def check_mysql_entra_only_auth(session: AzureSession) -> RequirementResult:
 
 def check_sql_audit_retention(session: AzureSession) -> RequirementResult:
     """ADA 6.15.9: Ensure SQL audit retention is > 90 days."""
-    spec_id = "6.15.9"
+    spec_id = "6.15.10"
     title = "Ensure SQL Auditing Retention is Greater Than 90 Days"
     try:
         from azure.mgmt.sql import SqlManagementClient
@@ -501,7 +501,7 @@ def check_sql_audit_retention(session: AzureSession) -> RequirementResult:
 
 def check_sql_min_tls(session: AzureSession) -> RequirementResult:
     """ADA 6.3.7: Ensure SQL Server minimum TLS version is 1.2."""
-    spec_id = "6.3.7"
+    spec_id = "6.3.11"
     title = "Ensure SQL Server Minimum TLS Version is Set to 1.2"
     try:
         from azure.mgmt.sql import SqlManagementClient
@@ -545,8 +545,8 @@ def _list_redis_caches(session: AzureSession) -> list:
 
 def check_redis_entra_auth(session: AzureSession) -> RequirementResult:
     """ADA 6.16.1: Ensure Redis uses Entra ID authentication."""
-    spec_id = "6.16.1"
-    title = "Ensure Entra ID Authentication is Enabled for Azure Cache for Redis"
+    spec_id = "6.3.5"
+    title = "Ensure Entra ID Authentication Is Configured for Azure Cache for Redis"
     try:
         caches = _list_redis_caches(session)
 
@@ -579,7 +579,7 @@ def check_redis_entra_auth(session: AzureSession) -> RequirementResult:
 
 def check_redis_ssl_only(session: AzureSession) -> RequirementResult:
     """ADA 6.16.2: Ensure Redis non-SSL port is disabled."""
-    spec_id = "6.16.2"
+    spec_id = "6.3.6"
     title = "Ensure Non-SSL Port is Disabled for Azure Cache for Redis"
     try:
         caches = _list_redis_caches(session)
@@ -606,7 +606,7 @@ def check_redis_ssl_only(session: AzureSession) -> RequirementResult:
 
 def check_redis_tls_version(session: AzureSession) -> RequirementResult:
     """ADA 6.16.3: Ensure Redis minimum TLS version is 1.2."""
-    spec_id = "6.16.3"
+    spec_id = "6.3.7"
     title = "Ensure Minimum TLS Version is 1.2 for Azure Cache for Redis"
     try:
         caches = _list_redis_caches(session)
@@ -637,7 +637,7 @@ def check_redis_tls_version(session: AzureSession) -> RequirementResult:
 
 def check_redis_managed_identity(session: AzureSession) -> RequirementResult:
     """ADA 6.16.4: Ensure Redis has managed identity configured."""
-    spec_id = "6.16.4"
+    spec_id = "6.16.1"
     title = "Ensure Managed Identity is Configured for Azure Cache for Redis"
     try:
         caches = _list_redis_caches(session)
@@ -665,7 +665,7 @@ def check_redis_managed_identity(session: AzureSession) -> RequirementResult:
 
 def check_redis_access_keys_disabled(session: AzureSession) -> RequirementResult:
     """ADA 6.16.5: Ensure Redis access key authentication is disabled."""
-    spec_id = "6.16.5"
+    spec_id = "6.16.2"
     title = "Ensure Access Key Authentication is Disabled for Azure Cache for Redis"
     try:
         caches = _list_redis_caches(session)
@@ -693,7 +693,7 @@ def check_redis_access_keys_disabled(session: AzureSession) -> RequirementResult
 
 def check_redis_update_channel(session: AzureSession) -> RequirementResult:
     """ADA 6.16.6: Ensure Redis uses a stable update channel."""
-    spec_id = "6.16.6"
+    spec_id = "6.16.3"
     title = "Ensure Stable Update Channel is Configured for Azure Cache for Redis"
     try:
         caches = _list_redis_caches(session)
@@ -723,7 +723,7 @@ def check_redis_update_channel(session: AzureSession) -> RequirementResult:
 
 def check_cosmos_local_auth_disabled(session: AzureSession) -> RequirementResult:
     """ADA 6.17.1: Ensure Cosmos DB local authentication is disabled."""
-    spec_id = "6.17.1"
+    spec_id = "6.5.7"
     title = "Ensure Local Authentication is Disabled for Cosmos DB Accounts"
     try:
         from azure.mgmt.cosmosdb import CosmosDBManagementClient
@@ -754,7 +754,7 @@ def check_cosmos_local_auth_disabled(session: AzureSession) -> RequirementResult
 
 def check_cosmos_firewall(session: AzureSession) -> RequirementResult:
     """ADA 6.17.2: Ensure Cosmos DB has firewall rules configured."""
-    spec_id = "6.17.2"
+    spec_id = "6.7.2"
     title = "Ensure Firewall Rules are Configured for Cosmos DB Accounts"
     try:
         from azure.mgmt.cosmosdb import CosmosDBManagementClient
@@ -790,7 +790,7 @@ def check_cosmos_firewall(session: AzureSession) -> RequirementResult:
 
 def check_cosmos_logging(session: AzureSession) -> RequirementResult:
     """ADA 6.17.3: Ensure diagnostic logging is enabled for Cosmos DB."""
-    spec_id = "6.17.3"
+    spec_id = "6.15.9"
     title = "Ensure Diagnostic Logging is Enabled for Cosmos DB Accounts"
     try:
         from azure.mgmt.cosmosdb import CosmosDBManagementClient
@@ -831,7 +831,7 @@ def check_cosmos_logging(session: AzureSession) -> RequirementResult:
 
 def check_data_factory_managed_identity(session: AzureSession) -> RequirementResult:
     """ADA 6.18.1: Ensure Data Factory has managed identities configured."""
-    spec_id = "6.18.1"
+    spec_id = "6.16.4"
     title = "Ensure Managed Identities are Configured for Azure Data Factory"
     try:
         from azure.mgmt.datafactory import DataFactoryManagementClient

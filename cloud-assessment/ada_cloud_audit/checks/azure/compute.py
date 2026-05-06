@@ -268,8 +268,8 @@ def check_e2e_tls(session: AzureSession) -> RequirementResult:
             return f"clientCertMode is {client_cert or 'not set'} (expected Required or Optional)"
         return None
 
-    return _check_web_app_property(session, "1.3.4",
-        "Ensure End-to-End TLS is Enabled for App Service", _check)
+    return _check_web_app_property(session, "1.3.5",
+        "Ensure End-to-End TLS Is Enabled for App Service Apps", _check)
 
 
 def check_remote_debugging(session: AzureSession) -> RequirementResult:
@@ -279,8 +279,8 @@ def check_remote_debugging(session: AzureSession) -> RequirementResult:
             return "remote debugging is enabled"
         return None
 
-    return _check_web_app_property(session, "1.3.5",
-        "Ensure Remote Debugging is Turned Off for App Service", _check)
+    return _check_web_app_property(session, "1.3.9",
+        "Ensure Remote Debugging Is Disabled for App Service Apps", _check)
 
 
 def check_app_managed_identity(session: AzureSession) -> RequirementResult:
@@ -292,8 +292,8 @@ def check_app_managed_identity(session: AzureSession) -> RequirementResult:
             return "no managed identity configured"
         return None
 
-    return _check_web_app_property(session, "1.3.6",
-        "Ensure Managed Identities are Configured for App Service", _check)
+    return _check_web_app_property(session, "1.6.3",
+        "Ensure Managed Identities Are Configured for App Service Apps", _check)
 
 
 def check_app_public_network(session: AzureSession) -> RequirementResult:
@@ -304,8 +304,8 @@ def check_app_public_network(session: AzureSession) -> RequirementResult:
             return f"publicNetworkAccess is {public_access}"
         return None
 
-    return _check_web_app_property(session, "1.3.7",
-        "Ensure Public Network Access is Disabled for App Service", _check)
+    return _check_web_app_property(session, "1.5.2",
+        "Ensure Public Network Access Is Disabled for App Service Apps", _check)
 
 
 def check_vnet_integration(session: AzureSession) -> RequirementResult:
@@ -316,8 +316,8 @@ def check_vnet_integration(session: AzureSession) -> RequirementResult:
             return "VNet integration not configured (no virtualNetworkSubnetId)"
         return None
 
-    return _check_web_app_property(session, "1.3.8",
-        "Ensure VNet Integration is Enabled for App Service", _check)
+    return _check_web_app_property(session, "1.5.6",
+        "Ensure App Service Apps Are Integrated with a Virtual Network", _check)
 
 
 def check_vnet_route_all(session: AzureSession) -> RequirementResult:
@@ -328,14 +328,14 @@ def check_vnet_route_all(session: AzureSession) -> RequirementResult:
             return "vnetRouteAllEnabled is not true"
         return None
 
-    return _check_web_app_property(session, "1.3.9",
-        "Ensure All Traffic is Routed Through VNet for App Service", _check)
+    return _check_web_app_property(session, "1.5.10",
+        "Ensure All Traffic Is Routed Through VNet for App Service Apps", _check)
 
 
 def check_basic_auth_disabled(session: AzureSession) -> RequirementResult:
     """ADA 1.3.10: Ensure basic authentication is disabled for App Service."""
-    spec_id = "1.3.10"
-    title = "Ensure Basic Authentication is Disabled for App Service Deployments"
+    spec_id = "2.8.9"
+    title = "Ensure Basic Auth Publishing Credentials Are Disabled for App Service Apps"
     try:
         from azure.mgmt.web import WebSiteManagementClient
 
@@ -374,8 +374,8 @@ def check_basic_auth_disabled(session: AzureSession) -> RequirementResult:
 
 def check_ase_version(session: AzureSession) -> RequirementResult:
     """ADA 1.4.2: Ensure App Service Environment is v3+."""
-    spec_id = "1.4.2"
-    title = "Ensure App Service Environment is Version 3 or Higher"
+    spec_id = "1.3.13"
+    title = "Ensure App Service Environment Is Provisioned with v3 or Higher"
     try:
         from azure.mgmt.web import WebSiteManagementClient
 
@@ -404,8 +404,8 @@ def check_ase_version(session: AzureSession) -> RequirementResult:
 
 def check_ase_tls_disabled(session: AzureSession) -> RequirementResult:
     """ADA 1.4.3: Ensure TLS 1.0 and 1.1 are disabled in ASE."""
-    return make_result("1.4.3",
-        "Ensure TLS 1.0 and 1.1 are Disabled in App Service Environment",
+    return make_result("1.3.14",
+        "Ensure App Service Environment Has TLS 1.0 and 1.1 Disabled",
         "Azure", Verdict.INCONCLUSIVE,
         "ASE TLS settings require checking cluster settings via the ASE API. "
         "Manual verification required: check that InternalEncryption and "
@@ -414,8 +414,8 @@ def check_ase_tls_disabled(session: AzureSession) -> RequirementResult:
 
 def check_ase_cipher_suite(session: AzureSession) -> RequirementResult:
     """ADA 1.4.4: Ensure custom cipher suite ordering is configured for ASE."""
-    return make_result("1.4.4",
-        "Ensure Custom Cipher Suite Ordering is Configured for App Service Environment",
+    return make_result("1.3.15",
+        "Ensure App Service Environment Has Cipher Suite Ordering Configured",
         "Azure", Verdict.INCONCLUSIVE,
         "ASE cipher suite ordering requires checking cluster settings. "
         "Manual verification required: check FrontEndSSLCipherSuiteOrder in "
@@ -426,8 +426,8 @@ def check_ase_cipher_suite(session: AzureSession) -> RequirementResult:
 
 def check_container_private_vnet(session: AzureSession) -> RequirementResult:
     """ADA 1.5.2: Ensure container groups are deployed in private VNets."""
-    spec_id = "1.5.2"
-    title = "Ensure Container Groups are Deployed in Private VNets"
+    spec_id = "1.5.14"
+    title = "Ensure Private VNets Are Used for Container Instances"
     try:
         from azure.mgmt.containerinstance import ContainerInstanceManagementClient
 
@@ -457,8 +457,8 @@ def check_container_private_vnet(session: AzureSession) -> RequirementResult:
 
 def check_container_managed_identity(session: AzureSession) -> RequirementResult:
     """ADA 1.5.3: Ensure container groups have managed identities."""
-    spec_id = "1.5.3"
-    title = "Ensure Container Groups Have Managed Identities Configured"
+    spec_id = "1.5.15"
+    title = "Ensure a Managed Identity Is Used for Container Instances"
     try:
         from azure.mgmt.containerinstance import ContainerInstanceManagementClient
 
@@ -489,8 +489,8 @@ def check_container_managed_identity(session: AzureSession) -> RequirementResult
 
 def check_container_least_privilege(session: AzureSession) -> RequirementResult:
     """ADA 1.5.4: Ensure containers run with least privilege capabilities."""
-    return make_result("1.5.4",
-        "Ensure Containers Run with Least Privilege Capabilities",
+    return make_result("1.5.16",
+        "Ensure Least Privilege for Container Instance Managed Identity",
         "Azure", Verdict.INCONCLUSIVE,
         "Container capability restrictions must be verified by examining each "
         "container's security context configuration. Manual verification required: "
@@ -501,8 +501,8 @@ def check_container_least_privilege(session: AzureSession) -> RequirementResult:
 
 def check_batch_disk_encryption(session: AzureSession) -> RequirementResult:
     """ADA 1.6.3: Ensure Batch account disk encryption is configured."""
-    spec_id = "1.6.3"
-    title = "Ensure Batch Account Disk Encryption is Configured"
+    spec_id = "1.4.2"
+    title = "Ensure Batch Pool Disk Encryption Is Enabled"
     try:
         from azure.mgmt.batch import BatchManagementClient
 
@@ -532,8 +532,8 @@ def check_batch_disk_encryption(session: AzureSession) -> RequirementResult:
 
 def check_batch_local_auth_disabled(session: AzureSession) -> RequirementResult:
     """ADA 1.6.4: Ensure Batch account local authentication is disabled."""
-    spec_id = "1.6.4"
-    title = "Ensure Batch Account Local Authentication is Disabled"
+    spec_id = "1.4.3"
+    title = "Ensure Local Authentication Methods for Batch Accounts Are Disabled"
     try:
         from azure.mgmt.batch import BatchManagementClient
 
@@ -564,8 +564,8 @@ def check_batch_local_auth_disabled(session: AzureSession) -> RequirementResult:
 
 def check_batch_public_access(session: AzureSession) -> RequirementResult:
     """ADA 1.6.5: Ensure Batch account public network access is disabled."""
-    spec_id = "1.6.5"
-    title = "Ensure Batch Account Public Network Access is Disabled"
+    spec_id = "1.5.17"
+    title = "Ensure Public Network Access Is Disabled for Batch Accounts"
     try:
         from azure.mgmt.batch import BatchManagementClient
 
@@ -633,8 +633,8 @@ def check_batch_diagnostics(session: AzureSession) -> RequirementResult:
 
 def check_vm_managed_disks(session: AzureSession) -> RequirementResult:
     """ADA 1.10.1: Ensure VMs use managed disks."""
-    spec_id = "1.10.1"
-    title = "Ensure Virtual Machines are Utilizing Managed Disks"
+    spec_id = "1.1.2"
+    title = "Ensure Virtual Machines Are Utilizing Managed Disks"
     try:
         from azure.mgmt.compute import ComputeManagementClient
 
@@ -676,8 +676,8 @@ def check_vm_managed_disks(session: AzureSession) -> RequirementResult:
 
 def check_disk_network_access(session: AzureSession) -> RequirementResult:
     """ADA 1.10.2: Ensure disk network access is restricted."""
-    spec_id = "1.10.2"
-    title = "Ensure Managed Disk Network Access is Restricted"
+    spec_id = "1.5.18"
+    title = "Ensure VM Disk Network Access Is Not Set to Enable Public Access"
     try:
         from azure.mgmt.compute import ComputeManagementClient
 
@@ -707,8 +707,8 @@ def check_disk_network_access(session: AzureSession) -> RequirementResult:
 
 def check_disk_data_access_auth(session: AzureSession) -> RequirementResult:
     """ADA 1.10.3: Ensure disk data access auth mode is configured."""
-    spec_id = "1.10.3"
-    title = "Ensure Managed Disk Data Access Authentication Mode is Configured"
+    spec_id = "1.5.19"
+    title = "Ensure VM Data Access Authentication Mode Is Enabled"
     try:
         from azure.mgmt.compute import ComputeManagementClient
 
@@ -743,7 +743,7 @@ def check_disk_data_access_auth(session: AzureSession) -> RequirementResult:
 
 def check_vm_approved_extensions(session: AzureSession) -> RequirementResult:
     """ADA 1.10.4: Ensure only approved VM extensions are installed."""
-    spec_id = "1.10.4"
+    spec_id = "1.1.3"
     title = "Ensure Only Approved Extensions Are Installed on Virtual Machines"
     try:
         from azure.mgmt.compute import ComputeManagementClient
@@ -779,8 +779,8 @@ def check_vm_approved_extensions(session: AzureSession) -> RequirementResult:
 
 def check_trusted_launch(session: AzureSession) -> RequirementResult:
     """ADA 1.10.5: Ensure Trusted Launch is enabled for VMs."""
-    spec_id = "1.10.5"
-    title = "Ensure Trusted Launch is Enabled for Virtual Machines"
+    spec_id = "1.4.4"
+    title = "Ensure Trusted Launch Is Enabled on Virtual Machines"
     try:
         from azure.mgmt.compute import ComputeManagementClient
 
@@ -811,8 +811,8 @@ def check_trusted_launch(session: AzureSession) -> RequirementResult:
 
 def check_encryption_at_host(session: AzureSession) -> RequirementResult:
     """ADA 1.10.6: Ensure Encryption at Host is enabled for VMs."""
-    spec_id = "1.10.6"
-    title = "Ensure Encryption at Host is Enabled for Virtual Machines"
+    spec_id = "1.4.5"
+    title = "Ensure Encryption at Host Is Enabled for Virtual Machines"
     try:
         from azure.mgmt.compute import ComputeManagementClient
 
