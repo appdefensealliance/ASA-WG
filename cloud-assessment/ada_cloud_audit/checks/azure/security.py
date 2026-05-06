@@ -1,6 +1,6 @@
 """Azure Security checks for ADA Cloud assessment.
 
-Covers 15 requirements:
+Covers 13 requirements:
 Key Vault:
 - 2.1.1: Key Vault recoverable (purge protection)
 - 2.1.2: Key Vault Public Network Access disabled

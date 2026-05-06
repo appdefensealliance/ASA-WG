@@ -1,14 +1,16 @@
 """GCP IAM checks for ADA Cloud assessment.
 
-Covers 8 requirements:
+Covers 10 requirements:
 - 2.3.5: Essential Contacts configured for organization
 - 2.6.1: Secrets not stored in Cloud Functions env vars
 - 2.7.5: IAM users not assigned SA User/Token Creator roles at project level
 - 2.7.6: Cloud KMS cryptokeys not publicly accessible
+- 2.7.9: KMS encryption keys rotated within 90 days
+- 2.8.6: Only GCP-managed service account keys
+- 2.10.3: User-managed SA keys rotated every 90 days
 - 2.11.5: Service accounts have no admin privileges
 - 2.12.1: Corporate login credentials used (no @gmail.com)
 - 2.14.7: MFA enabled for all non-service accounts (INCONCLUSIVE)
-- 2.8.6: Only GCP-managed service account keys
 """
 
 from __future__ import annotations
