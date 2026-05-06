@@ -65,6 +65,8 @@ def _register_aws_checks() -> None:
         "3.9.7": logging_checks.check_route_table_changes,
         "3.9.8": logging_checks.check_vpc_changes,
         "3.9.9": logging_checks.check_organizations_changes,
+        "3.9.12": logging_checks.check_security_group_changes,
+        "3.9.13": logging_checks.check_nacl_changes,
         "3.10.6": logging_checks.check_audit_log_retention,
         "3.11.1": logging_checks.check_cloudtrail_all_regions,
         "3.11.2": logging_checks.check_cloudtrail_cloudwatch_integration,
@@ -334,14 +336,18 @@ def _register_gcp_checks() -> None:
         return
 
     PROVIDER_REGISTRIES[Provider.GCP] = {
-        # Compute (7 checks)
+        # Compute (11 checks)
         "1.2.7": gcp_compute.check_cloud_functions_runtimes,
         "1.3.4": gcp_compute.check_block_project_ssh_keys,
+        "1.3.17": gcp_compute.check_app_engine_https,
         "1.5.1": gcp_compute.check_ip_forwarding,
+        "1.5.20": gcp_compute.check_no_public_ip,
         "1.6.1": gcp_compute.check_default_service_account,
         "1.6.2": gcp_compute.check_default_sa_full_access,
         "1.7.1": gcp_compute.check_serial_port,
         "1.8.2": gcp_compute.check_oslogin,
+        "1.8.3": gcp_compute.check_shielded_vm,
+        "3.7.2": gcp_compute.check_vm_os_updates,
 
         # IAM (9 checks)
         "2.3.5": gcp_iam.check_essential_contacts,
@@ -355,7 +361,7 @@ def _register_gcp_checks() -> None:
         "2.12.1": gcp_iam.check_corporate_credentials,
         "2.14.7": gcp_iam.check_mfa_non_service,
 
-        # Logging (8 checks)
+        # Logging (9 checks)
         "3.1.1": gcp_logging.check_cloud_asset_inventory,
         "3.9.10": gcp_logging.check_audit_logging,
         "3.9.11": gcp_logging.check_dns_logging,
@@ -364,6 +370,7 @@ def _register_gcp_checks() -> None:
         "3.10.3": gcp_logging.check_audit_config_changes,
         "3.10.4": gcp_logging.check_custom_role_changes,
         "3.10.5": gcp_logging.check_log_retention,
+        "3.10.8": gcp_logging.check_bucket_lock_retention,
 
         # Networking (7 checks)
         "4.1.1": gcp_networking.check_ssl_policies,
@@ -374,11 +381,12 @@ def _register_gcp_checks() -> None:
         "4.3.3": gcp_networking.check_ssh_restricted,  # Removed — L2 in CIS v4
         "4.3.4": gcp_networking.check_rdp_restricted,  # Removed — L2 in CIS v4
 
-        # Storage (2 checks)
+        # Storage (3 checks)
         "5.5.3": gcp_storage.check_bucket_public_access,
         "5.5.4": gcp_bigquery.check_bigquery_public_access,
+        "5.5.6": gcp_storage.check_uniform_bucket_access,
 
-        # Database (19 checks)
+        # Database (21 checks)
         "6.1.1": gcp_database.check_local_infile,
         "6.2.1": gcp_database.check_external_scripts,
         "6.3.4": gcp_database.check_ssl_required,
@@ -397,6 +405,8 @@ def _register_gcp_checks() -> None:
         "6.15.5": gcp_database.check_log_min_error_statement,
         "6.15.6": gcp_database.check_log_min_duration_statement,
         "6.15.7": gcp_database.check_pgaudit,
+        "6.15.11": gcp_database.check_log_error_verbosity,
+        "6.15.12": gcp_database.check_log_statement,
         "6.6.3": gcp_database.check_user_connections,
         "6.12.2": gcp_database.check_automated_backups,
     }

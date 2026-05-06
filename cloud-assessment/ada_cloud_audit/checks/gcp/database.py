@@ -1,8 +1,10 @@
 """GCP Database checks for ADA Cloud assessment.
 
-Covers 20 requirements for Cloud SQL instances:
+Covers 22 requirements for Cloud SQL instances:
 - 6.1.1, 6.2.1, 6.5.4-6.5.6, 6.6.1-6.6.3, 6.10.1: Database flag checks
 - 6.15.2-6.15.7: PostgreSQL logging flags
+- 6.15.11: PostgreSQL log_error_verbosity flag
+- 6.15.12: PostgreSQL log_statement flag
 - 6.3.4: SSL required for all connections
 - 6.5.3: No 0.0.0.0/0 in authorized networks
 - 6.8.1: Instance IP assignment set to private
@@ -492,4 +494,84 @@ def check_automated_backups(session: GCPSession) -> RequirementResult:
                          {"non_compliant": non_compliant, "compliant": compliant})
     return make_result(spec_id, title, "GCP", Verdict.PASS,
                      f"All {len(compliant)} Cloud SQL instances have automated backups enabled",
+                     {"compliant": compliant})
+
+
+def check_log_error_verbosity(session: GCPSession) -> RequirementResult:
+    """ADA 6.15.11: Ensure 'log_error_verbosity' database flag for Cloud SQL PostgreSQL is set to DEFAULT or stricter."""
+    VALID_VALUES = {"default", "verbose"}
+    spec_id = "6.15.11"
+    title = "Ensure 'Log_error_verbosity' Database Flag for Cloud SQL PostgreSQL Instance Is Set to 'DEFAULT' or Stricter"
+
+    try:
+        instances = list_sql_instances(session)
+    except Exception as e:
+        return make_result(spec_id, title, "Google", Verdict.INCONCLUSIVE,
+                         f"Error listing Cloud SQL instances: {e}")
+
+    filtered = [i for i in instances if "POSTGRES" in i.get("databaseVersion", "").upper()]
+    if not filtered:
+        return make_result(spec_id, title, "Google", Verdict.PASS,
+                         "No PostgreSQL Cloud SQL instances found")
+
+    non_compliant = []
+    compliant = []
+    for inst in filtered:
+        name = inst.get("name", "unknown")
+        value = _get_flag_value(inst, "log_error_verbosity")
+        if value is None:
+            non_compliant.append(f"{name} (flag 'log_error_verbosity' not set)")
+        elif value.lower() in VALID_VALUES:
+            compliant.append(name)
+        else:
+            non_compliant.append(
+                f"{name} (log_error_verbosity = '{value}', expected 'DEFAULT' or 'VERBOSE')"
+            )
+
+    if non_compliant:
+        return make_result(spec_id, title, "Google", Verdict.FAIL,
+                         "Non-compliant instances:\n" + "\n".join(non_compliant),
+                         {"non_compliant": non_compliant, "compliant": compliant})
+    return make_result(spec_id, title, "Google", Verdict.PASS,
+                     f"All {len(compliant)} PostgreSQL instances have log_error_verbosity set to DEFAULT or stricter",
+                     {"compliant": compliant})
+
+
+def check_log_statement(session: GCPSession) -> RequirementResult:
+    """ADA 6.15.12: Ensure 'log_statement' database flag for Cloud SQL PostgreSQL is set appropriately."""
+    VALID_VALUES = {"ddl", "mod", "all"}
+    spec_id = "6.15.12"
+    title = "Ensure 'Log_statement' Database Flag for Cloud SQL PostgreSQL Instance Is Set Appropriately"
+
+    try:
+        instances = list_sql_instances(session)
+    except Exception as e:
+        return make_result(spec_id, title, "Google", Verdict.INCONCLUSIVE,
+                         f"Error listing Cloud SQL instances: {e}")
+
+    filtered = [i for i in instances if "POSTGRES" in i.get("databaseVersion", "").upper()]
+    if not filtered:
+        return make_result(spec_id, title, "Google", Verdict.PASS,
+                         "No PostgreSQL Cloud SQL instances found")
+
+    non_compliant = []
+    compliant = []
+    for inst in filtered:
+        name = inst.get("name", "unknown")
+        value = _get_flag_value(inst, "log_statement")
+        if value is None:
+            non_compliant.append(f"{name} (flag 'log_statement' not set)")
+        elif value.lower() in VALID_VALUES:
+            compliant.append(name)
+        else:
+            non_compliant.append(
+                f"{name} (log_statement = '{value}', expected 'ddl', 'mod', or 'all')"
+            )
+
+    if non_compliant:
+        return make_result(spec_id, title, "Google", Verdict.FAIL,
+                         "Non-compliant instances:\n" + "\n".join(non_compliant),
+                         {"non_compliant": non_compliant, "compliant": compliant})
+    return make_result(spec_id, title, "Google", Verdict.PASS,
+                     f"All {len(compliant)} PostgreSQL instances have log_statement set appropriately",
                      {"compliant": compliant})
