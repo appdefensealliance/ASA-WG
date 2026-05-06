@@ -91,6 +91,8 @@ SECTIONS = {
     "1.6": "Manage Default Accounts on Enterprise Assets and Software",
     "1.7": "Uninstall or Disable Unnecessary Services on Enterprise Assets and Software",
     "1.8": "Centralize Account Management",
+    "1.9": "Ensure Secure Configuration of Platform Services",
+    "1.10": "Ensure Secure Configuration of Virtual Machines",
     "2.1": "Establish and Maintain a Data Recovery Process",
     "2.2": "Designate Personnel to Manage Incident Handling",
     "2.3": "Establish and Maintain Contact Information for Reporting Security Incidents",
@@ -131,6 +133,7 @@ SECTIONS = {
     "5.6": "Establish and Maintain a Secure Configuration Process",
     "5.7": "Securely Manage Enterprise Assets and Software",
     "5.8": "Establish an Access Revoking Process",
+    "5.9": "Establish and Maintain a Secure Configuration Process",
     "6.1": "Use Standard Hardening Configuration Templates for Application Infrastructure",
     "6.2": "Allowlist Authorized Scripts",
     "6.3": "Encrypt Confidential Data in Transit",
@@ -147,6 +150,8 @@ SECTIONS = {
     "6.14": "Ensure Adequate Audit Log Storage",
     "6.15": "Collect Detailed Audit Logs",
     "6.16": "Centralize Account Management for Database Services",
+    "6.17": "Ensure Secure Configuration of NoSQL Services",
+    "6.18": "Ensure Secure Configuration of Data Integration Services",
 }
 
 
