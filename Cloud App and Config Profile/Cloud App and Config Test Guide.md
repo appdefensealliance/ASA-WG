@@ -66,6 +66,7 @@ Version 1.0 - 10-OCT 24
 
 [1.3.16 Ensure SSL Is Configured for CycleCloud](#1316-ensure-ssl-is-configured-for-cyclecloud)
 
+[1.3.17 Ensure App Engine Applications Enforce HTTPS Connections](#1317-ensure-app-engine-applications-enforce-https-connections)
 
 [1.4 Encrypt Confidential Data at Rest](#14-encrypt-confidential-data-at-rest)
 
@@ -119,6 +120,7 @@ Version 1.0 - 10-OCT 24
 
 [1.5.19 Ensure VM Data Access Authentication Mode Is Enabled](#1519-ensure-vm-data-access-authentication-mode-is-enabled)
 
+[1.5.20 Ensure That Compute Instances Do Not Have Public IP Addresses](#1520-ensure-that-compute-instances-do-not-have-public-ip-addresses)
 
 [1.6 Manage Default Accounts on Enterprise Assets and Software ](#16-manage-default-accounts-on-enterprise-assets-and-software)
 
@@ -144,6 +146,7 @@ Version 1.0 - 10-OCT 24
 
 [1.8.2 Ensure Oslogin Is Enabled for a Project](#182-ensure-oslogin-is-enabled-for-a-project)
 
+[1.8.3 Ensure Compute Instances Are Launched With Shielded VM Enabled](#183-ensure-compute-instances-are-launched-with-shielded-vm-enabled)
 
 [2 Identity and Access Management](#2-identity-and-access-management)
 
@@ -407,7 +410,9 @@ Version 1.0 - 10-OCT 24
 
 [3.9.9 Ensure AWS Organizations changes are monitored](#399-ensure-aws-organizations-changes-are-monitored)
 
+[3.9.12 Ensure security group changes are monitored](#3912-ensure-security-group-changes-are-monitored)
 
+[3.9.13 Ensure Network Access Control Lists (NACL) changes are monitored](#3913-ensure-network-access-control-lists-nacl-changes-are-monitored)
 
 [3.9.10 Ensure That Cloud Audit Logging Is Configured Properly](#3910-ensure-that-cloud-audit-logging-is-configured-properly)
 
@@ -566,6 +571,7 @@ Version 1.0 - 10-OCT 24
 
 [5.5.5 Ensure Default to Entra Authorization in the Azure Portal Is Enabled for Storage](#555-ensure-default-to-entra-authorization-in-the-azure-portal-is-enabled-for-storage)
 
+[5.5.6 Ensure That Cloud Storage Buckets Have Uniform Bucket-Level Access Enabled](#556-ensure-that-cloud-storage-buckets-have-uniform-bucket-level-access-enabled)
 
 [5.6 Establish and Maintain a Secure Configuration Process](#56-establish-and-maintain-a-secure-configuration-process)
 
@@ -713,7 +719,9 @@ Version 1.0 - 10-OCT 24
 
 [6.15.10 Ensure SQL Database Audit Retention Is Greater Than 90 Days](#61510-ensure-sql-database-audit-retention-is-greater-than-90-days)
 
+[6.15.11 Ensure 'Log_error_verbosity' Database Flag for Cloud SQL PostgreSQL Instance Is Set to 'DEFAULT' or Stricter](#61511-ensure-log_error_verbosity-database-flag-for-cloud-sql-postgresql-instance-is-set-to-default-or-stricter)
 
+[6.15.12 Ensure 'Log_statement' Database Flag for Cloud SQL PostgreSQL Instance Is Set Appropriately](#61512-ensure-log_statement-database-flag-for-cloud-sql-postgresql-instance-is-set-appropriately)
 
 
 [6.16 Centralize Account Management for Database Services](#616-centralize-account-management-for-database-services)
@@ -1814,6 +1822,36 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 ---
 
+### 1.3.17 Ensure App Engine Applications Enforce HTTPS Connections
+**Platform:** Google
+
+**Rationale:** By default, App Engine applications can be accessed via both HTTP and HTTPS. Enforcing HTTPS ensures that all data transmitted between the client and the application is encrypted, protecting against eavesdropping and man-in-the-middle attacks.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.10
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Navigate to `App Engine` > `Settings`.
+2. Review the application's `app.yaml` configuration.
+3. Verify that all handlers have `secure: always` configured.
+
+**From Command Line:**
+
+Review the application's `app.yaml` file and ensure all handlers include:
+```
+handlers:
+- url: /.*
+  secure: always
+```
+
+**Verification**
+
+Evidence or test output indicates that the App Engine application enforces HTTPS connections for all handlers.
+
+---
+
 ### 1.4.1 REMOVED — Not in CIS Azure Foundations v5.0.0 L1
 
 **Status:** Removed — Not in CIS Azure Foundations v5.0.0 L1 (was: Ensure Virtual Machines are utilizing Managed Disks)
@@ -2618,6 +2656,35 @@ Products typically ship with insecure defaults that, if not configured securely,
 
 ---
 
+### 1.5.20 Ensure That Compute Instances Do Not Have Public IP Addresses
+**Platform:** Google
+
+**Rationale:** Compute instances should not be configured with external IP addresses to reduce the attack surface. Instances should use Cloud NAT or a load balancer for outbound and inbound connectivity respectively.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.9
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `Compute Engine` > `VM instances`.
+2. For each instance, click on the instance name.
+3. Under `Network interfaces`, verify that `External IP` is set to `None`.
+
+**From Command Line:**
+
+```
+gcloud compute instances list --format="table(name,zone,networkInterfaces[0].accessConfigs[0].natIP)"
+```
+
+Verify that no instances have an external IP address assigned.
+
+**Verification**
+
+Evidence or test output indicates that no compute instances have public IP addresses assigned.
+
+---
+
 ### 1.6.1 Ensure That Instances Are Not Configured To Use the Default Service Account
 **Platform:** Google
 
@@ -3029,6 +3096,33 @@ Evidence or test output indicates that every web app is assigned a unique princi
 Evidence or test output indicates that all compute instances are configured with enable-oslogin set to true.
 
 
+
+---
+
+### 1.8.3 Ensure Compute Instances Are Launched With Shielded VM Enabled
+**Platform:** Google
+
+**Rationale:** Shielded VMs are virtual machines hardened with a set of security controls: Secure Boot, vTPM, and Integrity Monitoring. These provide verifiable integrity of the VM boot process and protection against rootkits and bootkits.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.8
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `Compute Engine` > `VM instances`.
+2. For each instance, click on the instance name.
+3. Under `Security and access`, verify that `Secure Boot`, `vTPM`, and `Integrity Monitoring` are all enabled.
+
+**From Command Line:**
+
+```
+gcloud compute instances list --format="table(name,zone,shieldedInstanceConfig.enableSecureBoot,shieldedInstanceConfig.enableVtpm,shieldedInstanceConfig.enableIntegrityMonitoring)"
+```
+
+**Verification**
+
+Evidence or test output indicates that all compute instances have Shielded VM fully enabled (Secure Boot, vTPM, and Integrity Monitoring).
 
 ---
 
@@ -6508,6 +6602,27 @@ Evidence or test output indicates that there are no unpatched servers or virtual
 
 ---
 
+### 3.7.2 Ensure the Latest Operating System Updates Are Installed On Your Virtual Machines in All Projects
+**Platform:** Google
+
+**Rationale:** Keeping operating systems up to date is essential for security. Unpatched systems are vulnerable to known exploits. Google Cloud's VM Manager provides OS patch management capabilities to help ensure VMs are patched.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 4.12
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Navigate to `Compute Engine` > `VM Manager` > `OS patch management`.
+2. Review the patch compliance status for all VMs.
+3. Verify that all VMs have recent OS patches applied.
+
+**Verification**
+
+Evidence or test output indicates that all virtual machines have the latest operating system updates installed, or that OS patch management is configured and reporting compliance.
+
+---
+
 
 ## 3.8 Perform Automated Vulnerability Scans of Internal Enterprise Assets
 
@@ -7823,6 +7938,51 @@ Evidence or test output indicates that there is at least one active multi-region
 
 ---
 
+### 3.9.12 Ensure security group changes are monitored
+**Platform:** AWS
+
+**Rationale:** Monitoring security group changes helps detect unauthorized modifications to network access controls. Real-time monitoring of API calls related to security group modifications provides visibility into potential security misconfigurations.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.10
+
+**Evidence**
+
+**From Console:**
+
+1. Navigate to `CloudWatch` > `Logs` > `Metric filters`.
+2. Verify a metric filter exists for the CloudTrail log group with a filter pattern matching security group change events (AuthorizeSecurityGroupIngress, AuthorizeSecurityGroupEgress, RevokeSecurityGroupIngress, RevokeSecurityGroupEgress, CreateSecurityGroup, DeleteSecurityGroup).
+3. Verify an alarm exists for the metric.
+4. Verify the alarm has an SNS topic with at least one active subscriber.
+
+**Verification**
+
+Evidence or test output indicates that a metric filter, alarm, and SNS subscriber are configured for security group change events.
+
+
+---
+
+### 3.9.13 Ensure Network Access Control Lists (NACL) changes are monitored
+**Platform:** AWS
+
+**Rationale:** Monitoring NACL changes helps detect unauthorized modifications to network-level access controls. NACLs operate at the subnet level and changes could impact network security across multiple resources.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 5.11
+
+**Evidence**
+
+**From Console:**
+
+1. Navigate to `CloudWatch` > `Logs` > `Metric filters`.
+2. Verify a metric filter exists for the CloudTrail log group with a filter pattern matching NACL change events (CreateNetworkAcl, CreateNetworkAclEntry, DeleteNetworkAcl, DeleteNetworkAclEntry, ReplaceNetworkAclEntry, ReplaceNetworkAclAssociation).
+3. Verify an alarm exists for the metric.
+4. Verify the alarm has an SNS topic with at least one active subscriber.
+
+**Verification**
+
+Evidence or test output indicates that a metric filter, alarm, and SNS subscriber are configured for NACL change events.
+
+---
+
 ### 3.9.10 Ensure That Cloud Audit Logging Is Configured Properly
 **Platform:** Google
 
@@ -8340,6 +8500,36 @@ Evidence or test output indicates that CloudWatch log groups that store audit lo
 No verification is required for this requirement, so long as Microsoft's default log retention period remains greater than or equal to this requirement's specified retention period.
 
 
+
+---
+
+### 3.10.8 Ensure That Retention Policies on Cloud Storage Buckets Used for Exporting Logs Are Configured Using Bucket Lock
+**Platform:** Google
+
+**Rationale:** Log sinks export log entries to destinations such as Cloud Storage buckets. Configuring retention policies with Bucket Lock on these buckets ensures that logs cannot be deleted or modified before the retention period expires, supporting compliance and forensic requirements.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 2.3
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Navigate to `Logging` > `Log Router` to identify log sink destinations.
+2. For each Cloud Storage bucket used as a log sink destination, navigate to `Cloud Storage` > `Buckets`.
+3. Click on the bucket name, then go to `Protection` tab.
+4. Verify that a retention policy is configured and Bucket Lock is enabled.
+
+**From Command Line:**
+
+```
+gsutil retention get gs://<bucket_name>
+```
+
+Verify that the retention policy is set and the bucket is locked.
+
+**Verification**
+
+Evidence or test output indicates that log export buckets have retention policies configured with Bucket Lock enabled.
 
 ---
 
@@ -10910,6 +11100,34 @@ Establish and maintain a secure configuration process for enterprise assets (end
 ### Audit
 
 
+
+---
+
+### 5.5.6 Ensure That Cloud Storage Buckets Have Uniform Bucket-Level Access Enabled
+**Platform:** Google
+
+**Rationale:** Uniform bucket-level access simplifies access management by disabling object-level ACLs and using only IAM policies for access control. This reduces the risk of misconfiguration from having multiple access control systems.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 5.2
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Navigate to `Cloud Storage` > `Buckets`.
+2. For each bucket, click on the bucket name.
+3. Go to the `Permissions` tab.
+4. Verify that `Access control` is set to `Uniform`.
+
+**From Command Line:**
+
+```
+gcloud storage buckets describe gs://<bucket_name> --format="value(iamConfiguration.uniformBucketLevelAccess.enabled)"
+```
+
+**Verification**
+
+Evidence or test output indicates that all Cloud Storage buckets have uniform bucket-level access enabled.
 
 ---
 
@@ -13489,6 +13707,69 @@ Evidence confirms SQL database audit retention is set to 90 days or greater.
 
 
 
+
+---
+
+### 6.15.11 Ensure 'Log_error_verbosity' Database Flag for Cloud SQL PostgreSQL Instance Is Set to 'DEFAULT' or Stricter
+**Platform:** Google
+
+**Rationale:** The `log_error_verbosity` flag controls the amount of detail written to the server log for each message that is logged. Setting this to at least DEFAULT (or VERBOSE for more detail) ensures that sufficient information is captured for debugging and security monitoring.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.1
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `SQL` in the Cloud Console.
+2. Select each PostgreSQL instance.
+3. Navigate to the `Flags` section.
+4. Verify that `log_error_verbosity` is set to `DEFAULT` or `VERBOSE`.
+
+**From Command Line:**
+
+```
+gcloud sql instances list --format="value(name)" | while read INSTANCE; do
+  echo "Instance: $INSTANCE"
+  gcloud sql instances describe $INSTANCE --format="value(settings.databaseFlags)"
+done
+```
+
+**Verification**
+
+Evidence or test output indicates that the `log_error_verbosity` flag is set to `DEFAULT` or `VERBOSE` (not `TERSE`) for all Cloud SQL PostgreSQL instances.
+
+
+---
+
+### 6.15.12 Ensure 'Log_statement' Database Flag for Cloud SQL PostgreSQL Instance Is Set Appropriately
+**Platform:** Google
+
+**Rationale:** The `log_statement` flag controls which SQL statements are logged. Setting this to `ddl`, `mod`, or `all` (rather than `none`) provides an audit trail of database schema changes and data modifications.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.2.4
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `SQL` in the Cloud Console.
+2. Select each PostgreSQL instance.
+3. Navigate to the `Flags` section.
+4. Verify that `log_statement` is set to `ddl`, `mod`, or `all`.
+
+**From Command Line:**
+
+```
+gcloud sql instances list --format="value(name)" | while read INSTANCE; do
+  echo "Instance: $INSTANCE"
+  gcloud sql instances describe $INSTANCE --format="value(settings.databaseFlags)"
+done
+```
+
+**Verification**
+
+Evidence or test output indicates that the `log_statement` flag is not set to `none` for all Cloud SQL PostgreSQL instances.
 
 ---
 

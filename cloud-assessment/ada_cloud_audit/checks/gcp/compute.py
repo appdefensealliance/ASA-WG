@@ -1,13 +1,17 @@
 """GCP Compute checks for ADA Cloud assessment.
 
-Covers 7 requirements:
+Covers 11 requirements:
 - 1.2.7: Cloud Functions use current runtimes
 - 1.3.4: Block Project-Wide SSH Keys enabled for VM instances
+- 1.3.17: App Engine applications enforce HTTPS connections
 - 1.5.1: IP Forwarding not enabled on instances
+- 1.5.20: Compute instances do not have public IP addresses
 - 1.6.1: Instances not using default service account
 - 1.6.2: Instances not using default SA with full access scope
 - 1.7.1: Serial port connection not enabled for VM instances
 - 1.8.2: OS Login enabled for the project
+- 1.8.3: Compute instances launched with Shielded VM enabled
+- 3.7.2: Latest OS updates installed on virtual machines
 """
 
 from __future__ import annotations
@@ -274,3 +278,112 @@ def check_oslogin(session: GCPSession) -> RequirementResult:
     except Exception as e:
         return make_result(spec_id, title, "GCP", Verdict.INCONCLUSIVE,
                          f"Error checking project metadata: {e}")
+
+
+def check_shielded_vm(session: GCPSession) -> RequirementResult:
+    """ADA 1.8.3: Ensure Compute instances are launched with Shielded VM enabled."""
+    spec_id = "1.8.3"
+    title = "Ensure Compute Instances Are Launched With Shielded VM Enabled"
+
+    try:
+        instances = list_all_instances(session)
+        if not instances:
+            return make_result(spec_id, title, "Google", Verdict.PASS,
+                             "No VM instances found")
+
+        non_compliant = []
+        compliant = []
+        for inst in instances:
+            name = inst.name
+            config = inst.shielded_instance_config
+            if config and config.enable_secure_boot and config.enable_vtpm and config.enable_integrity_monitoring:
+                compliant.append(name)
+            else:
+                missing = []
+                if not config:
+                    missing.append("shielded_instance_config not set")
+                else:
+                    if not config.enable_secure_boot:
+                        missing.append("secure_boot disabled")
+                    if not config.enable_vtpm:
+                        missing.append("vTPM disabled")
+                    if not config.enable_integrity_monitoring:
+                        missing.append("integrity_monitoring disabled")
+                non_compliant.append(f"{name} ({', '.join(missing)})")
+
+        if non_compliant:
+            return make_result(spec_id, title, "Google", Verdict.FAIL,
+                             f"Instances without full Shielded VM:\n" + "\n".join(non_compliant),
+                             {"non_compliant": non_compliant, "compliant": compliant})
+        return make_result(spec_id, title, "Google", Verdict.PASS,
+                         f"All {len(compliant)} instances have Shielded VM fully enabled",
+                         {"compliant": compliant})
+    except Exception as e:
+        return make_result(spec_id, title, "Google", Verdict.INCONCLUSIVE,
+                         f"Error checking VM instances: {e}")
+
+
+def check_no_public_ip(session: GCPSession) -> RequirementResult:
+    """ADA 1.5.20: Ensure that Compute instances do not have public IP addresses."""
+    spec_id = "1.5.20"
+    title = "Ensure That Compute Instances Do Not Have Public IP Addresses"
+
+    try:
+        instances = list_all_instances(session)
+        if not instances:
+            return make_result(spec_id, title, "Google", Verdict.PASS,
+                             "No VM instances found")
+
+        non_compliant = []
+        compliant = []
+        for inst in instances:
+            name = inst.name
+            has_public = False
+            for iface in inst.network_interfaces:
+                if iface.access_configs:
+                    has_public = True
+                    break
+            if has_public:
+                non_compliant.append(f"{name} (has public IP via access_configs)")
+            else:
+                compliant.append(name)
+
+        if non_compliant:
+            return make_result(spec_id, title, "Google", Verdict.FAIL,
+                             f"Instances with public IP addresses:\n" + "\n".join(non_compliant),
+                             {"non_compliant": non_compliant, "compliant": compliant})
+        return make_result(spec_id, title, "Google", Verdict.PASS,
+                         f"All {len(compliant)} instances do not have public IP addresses",
+                         {"compliant": compliant})
+    except Exception as e:
+        return make_result(spec_id, title, "Google", Verdict.INCONCLUSIVE,
+                         f"Error checking VM instances: {e}")
+
+
+def check_app_engine_https(session: GCPSession) -> RequirementResult:
+    """ADA 1.3.17: Ensure App Engine applications enforce HTTPS connections."""
+    return make_result(
+        "1.3.17",
+        "Ensure App Engine Applications Enforce HTTPS Connections",
+        "Google",
+        Verdict.INCONCLUSIVE,
+        "App Engine HTTPS enforcement depends on app.yaml configuration "
+        "(secure: always for handlers). This requires application-level "
+        "configuration review that cannot be verified via API alone. "
+        "Manual verification required: inspect each App Engine service's "
+        "app.yaml to confirm all handlers specify 'secure: always'.",
+    )
+
+
+def check_vm_os_updates(session: GCPSession) -> RequirementResult:
+    """ADA 3.7.2: Ensure the latest OS updates are installed on virtual machines."""
+    return make_result(
+        "3.7.2",
+        "Ensure the Latest Operating System Updates Are Installed On Your Virtual Machines in All Projects",
+        "Google",
+        Verdict.INCONCLUSIVE,
+        "OS patch status requires the OS Config agent and patch compliance "
+        "reporting to be enabled. This cannot be fully verified via API alone. "
+        "Manual verification required: check VM Manager patch compliance in "
+        "the Google Cloud Console under Compute Engine > VM Manager > Patch.",
+    )

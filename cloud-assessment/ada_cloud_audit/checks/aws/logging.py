@@ -1,8 +1,10 @@
 """AWS Logging and Monitoring checks for ADA Cloud assessment.
 
-Covers 12 requirements:
+Covers 14 requirements:
 - 3.4.1: CloudTrail S3 bucket access logging
 - 3.9.1-3.9.9: CloudWatch metric filter monitoring (9 checks)
+- 3.9.12: Security group changes monitored
+- 3.9.13: NACL changes monitored
 - 3.10.6: Audit logs retained >= 90 days
 - 3.11.1: CloudTrail enabled in all regions
 - 3.11.2: CloudTrail integrated with CloudWatch Logs
@@ -291,6 +293,16 @@ _METRIC_FILTER_CHECKS = {
         "description": "AWS Organizations changes",
         "keywords": ["organizations.amazonaws.com", "AcceptHandshake"],
     },
+    "3.9.12": {
+        "title": "Ensure security group changes are monitored",
+        "description": "security group changes",
+        "keywords": ["AuthorizeSecurityGroupIngress", "CreateSecurityGroup"],
+    },
+    "3.9.13": {
+        "title": "Ensure Network Access Control Lists (NACL) changes are monitored",
+        "description": "NACL changes",
+        "keywords": ["CreateNetworkAcl", "DeleteNetworkAcl"],
+    },
 }
 
 
@@ -337,6 +349,8 @@ check_network_gateway_changes = _make_metric_filter_check("3.9.6", _METRIC_FILTE
 check_route_table_changes = _make_metric_filter_check("3.9.7", _METRIC_FILTER_CHECKS["3.9.7"])
 check_vpc_changes = _make_metric_filter_check("3.9.8", _METRIC_FILTER_CHECKS["3.9.8"])
 check_organizations_changes = _make_metric_filter_check("3.9.9", _METRIC_FILTER_CHECKS["3.9.9"])
+check_security_group_changes = _make_metric_filter_check("3.9.12", _METRIC_FILTER_CHECKS["3.9.12"])
+check_nacl_changes = _make_metric_filter_check("3.9.13", _METRIC_FILTER_CHECKS["3.9.13"])
 
 
 def check_audit_log_retention(session: boto3.Session) -> "RequirementResult":

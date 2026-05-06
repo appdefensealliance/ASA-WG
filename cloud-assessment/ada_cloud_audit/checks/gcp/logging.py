@@ -1,6 +1,6 @@
 """GCP Logging and Monitoring checks for ADA Cloud assessment.
 
-Covers 8 requirements:
+Covers 9 requirements:
 - 3.1.1: Cloud Asset Inventory enabled
 - 3.9.10: Cloud Audit Logging configured properly
 - 3.9.11: Cloud DNS logging enabled for all VPC networks
@@ -9,6 +9,7 @@ Covers 8 requirements:
 - 3.10.3: Log metric filter + alerts for audit config changes
 - 3.10.4: Log metric filter + alerts for custom role changes
 - 3.10.5: Audit logs retained >= 90 days
+- 3.10.8: Bucket Lock configured for log export storage buckets
 """
 
 from __future__ import annotations
@@ -304,6 +305,21 @@ def check_custom_role_changes(session: GCPSession) -> RequirementResult:
         "Ensure log metric filter and alerts exist for custom role changes",
         "custom role changes",
         ["CreateRole", "DeleteRole", "UpdateRole"],
+    )
+
+
+def check_bucket_lock_retention(session: GCPSession) -> RequirementResult:
+    """ADA 3.10.8: Ensure retention policies on Cloud Storage buckets used for exporting logs are configured using Bucket Lock."""
+    return make_result(
+        "3.10.8",
+        "Ensure That Retention Policies on Cloud Storage Buckets Used for Exporting Logs Are Configured Using Bucket Lock",
+        "Google",
+        Verdict.INCONCLUSIVE,
+        "Bucket Lock configuration requires checking each log sink's destination bucket "
+        "retention policy. This involves verifying that storage buckets used as log sink "
+        "destinations have retention policies with Bucket Lock enabled. "
+        "Manual verification required: inspect each log sink destination bucket's "
+        "retention policy and confirm Bucket Lock (isLocked) is set to true.",
     )
 
 

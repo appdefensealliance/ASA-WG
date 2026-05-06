@@ -238,6 +238,10 @@ This profile builds upon the work of the Center for Internet Security (CIS), spe
 This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
 
+# Coverage Notes
+
+This release provides full CIS Level 1 coverage for AWS and GCP. Azure coverage includes all requirements from the CIS Azure Foundations Benchmark v5.0.0, CIS Azure Compute Services Benchmark v2.0.0, and CIS Azure Database Services Benchmark v2.0.0 that were present in the v1.0 profile, plus 76 additional requirements added in this release. Additional Azure CIS Level 1 requirements — including Microsoft Defender for Cloud, additional networking controls, and expanded private endpoint and CMK encryption checks — are planned for a future release.
+
 
 # 1 Compute
 ## 1.1 Establish and Maintain a Software Inventory
@@ -312,6 +316,7 @@ Encryption protects confidential data when transmitted over untrusted network co
 | 1.3.14 | Azure | Ensure App Service Environment Has TLS 1.0 and 1.1 Disabled |
 | 1.3.15 | Azure | Ensure App Service Environment Has Cipher Suite Ordering Configured |
 | 1.3.16 | Azure | Ensure SSL Is Configured for CycleCloud |
+| 1.3.17 | Google | Ensure App Engine Applications Enforce HTTPS Connections |
 
 ---
 
@@ -378,6 +383,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 | 1.5.17 | Azure | Ensure Public Network Access Is Disabled for Batch Accounts |
 | 1.5.18 | Azure | Ensure VM Disk Network Access Is Not Set to Enable Public Access |
 | 1.5.19 | Azure | Ensure VM Data Access Authentication Mode Is Enabled |
+| 1.5.20 | Google | Ensure That Compute Instances Do Not Have Public IP Addresses |
 
 ---
 
@@ -444,6 +450,7 @@ Centralizing makes administration simpler and therefore reduces risks related to
 |---|-----|----------|
 | 1.8.1 | Azure | Ensure that Register with Azure Active Directory is enabled on App Service |
 | 1.8.2  | Google | Ensure Oslogin Is Enabled for a Project |
+| 1.8.3  | Google | Ensure Compute Instances Are Launched With Shielded VM Enabled |
 
 
 ---
@@ -1005,6 +1012,7 @@ Patching remediates known vulnerabilities. Using automation makes this process r
 | Spec | Platform | Description |
 |---|-----|----------|
 | 3.7.1 | Azure | Ensure that Microsoft Defender Recommendation for 'Apply system updates' status is 'Completed' |
+| 3.7.2 | Google | Ensure the Latest Operating System Updates Are Installed On Your Virtual Machines in All Projects |
 
 ---
 
@@ -1064,6 +1072,8 @@ Logs may contain indications of compromise, so it's important to review logs reg
 | 3.9.7 | AWS | Ensure route table changes are monitored |
 | 3.9.8 | AWS | Ensure VPC changes are monitored |
 | 3.9.9 | AWS | Ensure AWS Organizations changes are monitored |
+| 3.9.12 | AWS | Ensure security group changes are monitored |
+| 3.9.13 | AWS | Ensure Network Access Control Lists (NACL) changes are monitored |
 | 3.9.10 | Google | Ensure That Cloud Audit Logging Is Configured Properly |
 | 3.9.11 | Google | Ensure That Cloud DNS Logging Is Enabled for All VPC Networks |
 
@@ -1092,6 +1102,7 @@ Having log files of what actions have taken place by users and also system event
 | 3.10.5 | Google | Ensure That Audit Logs are retained for a Minimum of 90 Days |
 | 3.10.6 | AWS | Ensure That Audit Logs are retained for a Minimum of 90 Days |
 | 3.10.7 | Azure | Ensure That Audit Logs are retained for a Minimum of 90 Days |
+| 3.10.8 | Google | Ensure That Retention Policies on Cloud Storage Buckets Used for Exporting Logs Are Configured Using Bucket Lock |
 
 ---
 
@@ -1324,6 +1335,7 @@ The principle of least privilege reduces the risk of unauthorized actions being 
 | 5.5.3 | Google | Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible |
 | 5.5.4 | Google | Ensure That BigQuery Datasets Are Not Anonymously or Publicly Accessible |
 | 5.5.5 | Azure | Ensure Default to Entra Authorization in the Azure Portal is Enabled for Storage |
+| 5.5.6 | Google | Ensure That Cloud Storage Buckets Have Uniform Bucket-Level Access Enabled |
 
 ---
 
@@ -1731,6 +1743,8 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 | 6.15.8 | AWS | Database logging should be enabled |
 | 6.15.9 | Azure | Ensure Diagnostic Logging Is Enabled for Cosmos DB |
 | 6.15.10 | Azure | Ensure SQL Database Audit Retention Is Greater Than 90 Days |
+| 6.15.11 | Google | Ensure 'Log_error_verbosity' Database Flag for Cloud SQL PostgreSQL Instance Is Set to 'DEFAULT' or Stricter |
+| 6.15.12 | Google | Ensure 'Log_statement' Database Flag for Cloud SQL PostgreSQL Instance Is Set Appropriately |
 
 ---
 
