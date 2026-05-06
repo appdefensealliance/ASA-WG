@@ -37,8 +37,10 @@ def _register_aws_checks() -> None:
         "2.3.1": account.check_contact_info,
         "2.3.2": account.check_security_contact,
         "2.7.1": iam.check_root_access_keys,
+        "2.7.2": iam.check_root_access_keys_rotate,  # Removed in CIS v7
         "2.7.3": iam.check_no_full_admin_policies,
         "2.8.2": iam.check_password_policy_length,
+        "2.8.3": iam.check_password_policy_symbols,  # Removed in CIS v7
         "2.8.4": iam.check_access_keys_rotated,
         "2.9.1": iam.check_password_reuse_prevention,
         "2.10.1": iam.check_credentials_unused,
@@ -53,6 +55,7 @@ def _register_aws_checks() -> None:
 
         # Logging & Monitoring
         "3.4.1": logging_checks.check_cloudtrail_s3_access_logging,
+        "3.5.1": logging_checks.check_s3_bucket_logging_removed,  # Removed in CIS v7
         "3.9.1": logging_checks.check_console_signin_no_mfa,
         "3.9.2": logging_checks.check_root_account_usage,
         "3.9.3": logging_checks.check_iam_policy_changes,
@@ -110,7 +113,11 @@ def _register_azure_checks() -> None:
         "1.1.1": az_identity.check_approved_extensions,
         "1.4.1": az_identity.check_managed_disks,
 
-        # Compute / App Service — original (9 checks)
+        # Compute / Virtual Machines (2 checks)
+        "1.1.2": az_compute.check_vm_managed_disks,
+        "1.1.3": az_compute.check_vm_approved_extensions,
+
+        # Compute / App Service — runtime & config (9 checks)
         "1.2.2": az_compute.check_functions_runtime,
         "1.2.3": az_compute.check_php_version,
         "1.2.4": az_compute.check_python_version,
@@ -121,48 +128,42 @@ def _register_azure_checks() -> None:
         "1.3.3": az_compute.check_ftp_disabled,
         "1.8.1": az_compute.check_app_service_auth,
 
-        # Compute / App Service — new (7 checks)
-        "1.3.4": az_compute.check_e2e_tls,
-        "1.3.5": az_compute.check_remote_debugging,
-        "1.3.6": az_compute.check_app_managed_identity,
-        "1.3.7": az_compute.check_app_public_network,
-        "1.3.8": az_compute.check_vnet_integration,
-        "1.3.9": az_compute.check_vnet_route_all,
-        "1.3.10": az_compute.check_basic_auth_disabled,
+        # Compute / App Service — TLS & debugging (2 checks)
+        "1.3.5": az_compute.check_e2e_tls,
+        "1.3.9": az_compute.check_remote_debugging,
 
         # Compute / App Service Environment (3 checks)
-        "1.4.2": az_compute.check_ase_version,
-        "1.4.3": az_compute.check_ase_tls_disabled,
-        "1.4.4": az_compute.check_ase_cipher_suite,
+        "1.3.13": az_compute.check_ase_version,
+        "1.3.14": az_compute.check_ase_tls_disabled,
+        "1.3.15": az_compute.check_ase_cipher_suite,
+
+        # Compute / Batch — encryption & auth (2 checks)
+        "1.4.2": az_compute.check_batch_disk_encryption,
+        "1.4.3": az_compute.check_batch_local_auth_disabled,
+
+        # Compute / Virtual Machines — security (2 checks)
+        "1.4.4": az_compute.check_trusted_launch,
+        "1.4.5": az_compute.check_encryption_at_host,
+
+        # Compute / App Service — network access (2 checks)
+        "1.5.2": az_compute.check_app_public_network,
+        "1.5.6": az_compute.check_vnet_integration,
+        "1.5.10": az_compute.check_vnet_route_all,
 
         # Compute / Container Instances (3 checks)
-        "1.5.2": az_compute.check_container_private_vnet,
-        "1.5.3": az_compute.check_container_managed_identity,
-        "1.5.4": az_compute.check_container_least_privilege,
+        "1.5.14": az_compute.check_container_private_vnet,
+        "1.5.15": az_compute.check_container_managed_identity,
+        "1.5.16": az_compute.check_container_least_privilege,
 
-        # Compute / Batch (4 checks)
-        "1.6.3": az_compute.check_batch_disk_encryption,
-        "1.6.4": az_compute.check_batch_local_auth_disabled,
-        "1.6.5": az_compute.check_batch_public_access,
-        "1.6.6": az_compute.check_batch_diagnostics,
+        # Compute / Batch — network (1 check)
+        "1.5.17": az_compute.check_batch_public_access,
 
-        # Compute / Databricks (8 checks)
-        "1.9.1": az_databricks.check_vnet_deployment,
-        "1.9.2": az_databricks.check_nsg_on_subnets,
-        "1.9.3": az_databricks.check_entra_id_sync,
-        "1.9.4": az_databricks.check_unity_catalog,
-        "1.9.5": az_databricks.check_pat_restrictions,
-        "1.9.6": az_databricks.check_diagnostic_logs,
-        "1.9.7": az_databricks.check_no_public_ip,
-        "1.9.8": az_databricks.check_public_network_access,
+        # Compute / Virtual Machines — network (2 checks)
+        "1.5.18": az_compute.check_disk_network_access,
+        "1.5.19": az_compute.check_disk_data_access_auth,
 
-        # Compute / Virtual Machines (6 checks)
-        "1.10.1": az_compute.check_vm_managed_disks,
-        "1.10.2": az_compute.check_disk_network_access,
-        "1.10.3": az_compute.check_disk_data_access_auth,
-        "1.10.4": az_compute.check_vm_approved_extensions,
-        "1.10.5": az_compute.check_trusted_launch,
-        "1.10.6": az_compute.check_encryption_at_host,
+        # Compute / App Service — managed identity (1 check)
+        "1.6.3": az_compute.check_app_managed_identity,
 
         # Identity / Entra ID — Microsoft Graph API checks
         "2.4.1": az_identity.check_user_consent,
@@ -171,6 +172,7 @@ def _register_azure_checks() -> None:
         "2.4.4": az_identity.check_restrict_tenant_creation,
         "2.7.4": az_identity.check_guest_access_restrictions,
         "2.8.1": az_identity.check_security_defaults,
+        "2.8.9": az_compute.check_basic_auth_disabled,
         "2.9.2": az_identity.check_bad_password_list,
         "2.10.2": az_identity.check_guest_users_reviewed,
         "2.10.4": az_identity.check_disabled_accounts_permissions,
@@ -215,6 +217,16 @@ def _register_azure_checks() -> None:
         "3.7.1": az_security.check_defender_vm_updates,
         "3.8.1": az_identity.check_auto_provisioning,
 
+        # Databricks (8 checks)
+        "3.8.3": az_databricks.check_vnet_deployment,
+        "3.8.4": az_databricks.check_nsg_on_subnets,
+        "3.8.5": az_databricks.check_entra_id_sync,
+        "3.8.6": az_databricks.check_unity_catalog,
+        "3.8.7": az_databricks.check_pat_restrictions,
+        "3.8.8": az_databricks.check_diagnostic_logs,
+        "3.8.9": az_databricks.check_no_public_ip,
+        "3.8.10": az_databricks.check_public_network_access,
+
         # Logging (17 checks)
         "3.10.7": az_logging.check_audit_log_retention,
         "3.11.3": az_logging.check_resource_logging,
@@ -235,6 +247,7 @@ def _register_azure_checks() -> None:
         "3.11.19": az_logging.check_batch_diagnostics,
 
         # Networking (8 checks)
+        "4.2.6": az_networking.check_public_ip_evaluation,
         "4.3.1": az_networking.check_rdp_restricted,
         "4.3.2": az_networking.check_ssh_restricted,
         "4.3.9": az_networking.check_udp_restricted,
@@ -242,7 +255,6 @@ def _register_azure_checks() -> None:
         "4.3.11": az_networking.check_subnets_have_nsgs,
         "4.3.12": az_networking.check_app_gateway_tls,
         "4.3.13": az_networking.check_app_gateway_http2,
-        "4.3.14": az_networking.check_public_ip_evaluation,
 
         # Storage (17 checks)
         "5.1.1": az_storage.check_blob_soft_delete,
@@ -250,60 +262,58 @@ def _register_azure_checks() -> None:
         "5.1.3": az_storage.check_smb_protocol_version,
         "5.1.4": az_storage.check_smb_encryption,
         "5.1.5": az_storage.check_container_soft_delete,
-        "5.1.6": az_storage.check_arm_delete_lock,
         "5.2.1": az_storage.check_default_network_deny,
         "5.2.2": az_storage.check_public_network_access_disabled,
+        "5.2.3": az_storage.check_cross_tenant_replication,
         "5.3.1": az_storage.check_secure_transfer,
         "5.3.2": az_storage.check_min_tls_version,
         "5.5.2": az_storage.check_blob_public_access_disabled,
+        "5.5.5": az_storage.check_default_entra_authorization,
         "5.6.1": az_storage.check_key_rotation_reminders,
         "5.7.1": az_storage.check_access_keys_regenerated,
         "5.7.2": az_storage.check_storage_key_access_disabled,
-        "5.7.3": az_storage.check_cross_tenant_replication,
+        "5.7.3": az_storage.check_arm_delete_lock,
         "5.8.1": az_storage.check_sas_expiry,
-        "5.9.1": az_storage.check_default_entra_authorization,
 
-        # Database — original (11 checks)
+        # Database — PostgreSQL (7 checks)
         "6.3.1": az_database.check_pg_ssl,
-        "6.3.2": az_database.check_mysql_ssl,
-        "6.3.3": az_database.check_mysql_tls,
-        "6.4.2": az_database.check_sql_encryption,
-        "6.5.2": az_database.check_sql_firewall,
-        "6.7.1": az_identity.check_pg_allow_azure_services,
-        "6.11.1": az_database.check_sql_ad_admin,
+        "6.3.9": az_database.check_pg_entra_only_auth,
+        "6.3.10": az_database.check_pg_ssl_min_version,
+        "6.6.4": az_database.check_pg_connection_throttle,
         "6.13.1": az_database.check_pg_log_checkpoints,
         "6.13.2": az_database.check_pg_log_connections,
         "6.13.3": az_database.check_pg_log_disconnections,
         "6.14.1": az_database.check_pg_log_retention,
-        "6.15.1": az_database.check_sql_auditing,
 
-        # Database — PostgreSQL additions (3 checks)
-        "6.3.5": az_database.check_pg_entra_only_auth,
-        "6.3.6": az_database.check_pg_ssl_min_version,
-        "6.13.4": az_database.check_pg_connection_throttle,
-
-        # Database — MySQL addition (1 check)
-        "6.11.2": az_database.check_mysql_entra_only_auth,
-
-        # Database — SQL additions (2 checks)
-        "6.3.7": az_database.check_sql_min_tls,
-        "6.15.9": az_database.check_sql_audit_retention,
+        # Database — MySQL (3 checks)
+        "6.3.2": az_database.check_mysql_ssl,
+        "6.3.3": az_database.check_mysql_tls,
+        "6.3.8": az_database.check_mysql_entra_only_auth,
 
         # Database — Redis (6 checks)
-        "6.16.1": az_database.check_redis_entra_auth,
-        "6.16.2": az_database.check_redis_ssl_only,
-        "6.16.3": az_database.check_redis_tls_version,
-        "6.16.4": az_database.check_redis_managed_identity,
-        "6.16.5": az_database.check_redis_access_keys_disabled,
-        "6.16.6": az_database.check_redis_update_channel,
+        "6.3.5": az_database.check_redis_entra_auth,
+        "6.3.6": az_database.check_redis_ssl_only,
+        "6.3.7": az_database.check_redis_tls_version,
+        "6.16.1": az_database.check_redis_managed_identity,
+        "6.16.2": az_database.check_redis_access_keys_disabled,
+        "6.16.3": az_database.check_redis_update_channel,
+
+        # Database — SQL (5 checks)
+        "6.3.11": az_database.check_sql_min_tls,
+        "6.4.2": az_database.check_sql_encryption,
+        "6.5.2": az_database.check_sql_firewall,
+        "6.11.1": az_database.check_sql_ad_admin,
+        "6.15.1": az_database.check_sql_auditing,
+        "6.15.10": az_database.check_sql_audit_retention,
 
         # Database — Cosmos DB (3 checks)
-        "6.17.1": az_database.check_cosmos_local_auth_disabled,
-        "6.17.2": az_database.check_cosmos_firewall,
-        "6.17.3": az_database.check_cosmos_logging,
+        "6.5.7": az_database.check_cosmos_local_auth_disabled,
+        "6.7.1": az_identity.check_pg_allow_azure_services,
+        "6.7.2": az_database.check_cosmos_firewall,
+        "6.15.9": az_database.check_cosmos_logging,
 
         # Database — Data Factory (1 check)
-        "6.18.1": az_database.check_data_factory_managed_identity,
+        "6.16.4": az_database.check_data_factory_managed_identity,
     }
 
 
@@ -361,6 +371,8 @@ def _register_gcp_checks() -> None:
         "4.2.2": gcp_networking.check_dnssec,
         "4.2.3": gcp_networking.check_dnssec_key_signing,
         "4.2.4": gcp_networking.check_dnssec_zone_signing,
+        "4.3.3": gcp_networking.check_ssh_restricted,  # Removed — L2 in CIS v4
+        "4.3.4": gcp_networking.check_rdp_restricted,  # Removed — L2 in CIS v4
 
         # Storage (2 checks)
         "5.5.3": gcp_storage.check_bucket_public_access,

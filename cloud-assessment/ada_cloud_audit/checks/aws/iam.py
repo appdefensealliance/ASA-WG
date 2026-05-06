@@ -763,3 +763,25 @@ def check_iam_mfa_all_users(session: boto3.Session) -> "RequirementResult":
             Verdict.INCONCLUSIVE,
             f"Error checking MFA status: {e}",
         )
+
+
+def check_root_access_keys_rotate(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.7.2: REMOVED — Retired in CIS AWS Foundations v7.0.0 (was CIS v2.0.0 Section 1.11)."""
+    return make_result(
+        "2.7.2",
+        "Ensure access keys are rotated every 90 days or less",
+        "AWS",
+        Verdict.NOT_APPLICABLE,
+        "Removed — Retired in CIS AWS Foundations Benchmark v7.0.0",
+    )
+
+
+def check_password_policy_symbols(session: boto3.Session) -> "RequirementResult":
+    """ADA 2.8.3: REMOVED — Retired in CIS AWS Foundations v7.0.0 (was CIS v2.0.0 Section 1.13)."""
+    return make_result(
+        "2.8.3",
+        "Ensure IAM password policy require at least one symbol",
+        "AWS",
+        Verdict.NOT_APPLICABLE,
+        "Removed — Retired in CIS AWS Foundations Benchmark v7.0.0",
+    )

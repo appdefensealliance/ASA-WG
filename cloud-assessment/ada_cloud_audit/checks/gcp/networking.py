@@ -218,3 +218,29 @@ def check_dnssec_zone_signing(session: GCPSession) -> RequirementResult:
     )
 
 
+def check_ssh_restricted(session) -> "RequirementResult":
+    """ADA 4.3.3: REMOVED — Reclassified to Level 2 in CIS GCP v4.0.0."""
+    from ada_cloud_audit.checks.base import make_result
+    from ada_cloud_audit.models import Verdict
+    return make_result(
+        "4.3.3",
+        "Ensure that SSH access is restricted from the internet",
+        "Google",
+        Verdict.NOT_APPLICABLE,
+        "Removed — Reclassified to Level 2 in CIS GCP Foundation Benchmark v4.0.0",
+    )
+
+
+def check_rdp_restricted(session) -> "RequirementResult":
+    """ADA 4.3.4: REMOVED — Reclassified to Level 2 in CIS GCP v4.0.0."""
+    from ada_cloud_audit.checks.base import make_result
+    from ada_cloud_audit.models import Verdict
+    return make_result(
+        "4.3.4",
+        "Ensure that RDP access is restricted from the internet",
+        "Google",
+        Verdict.NOT_APPLICABLE,
+        "Removed — Reclassified to Level 2 in CIS GCP Foundation Benchmark v4.0.0",
+    )
+
+

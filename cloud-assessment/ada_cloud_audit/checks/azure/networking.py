@@ -280,8 +280,8 @@ def check_app_gateway_http2(session: AzureSession) -> RequirementResult:
 
 def check_public_ip_evaluation(session: AzureSession) -> RequirementResult:
     """ADA 4.3.14: Evaluate all public IP addresses."""
-    spec_id = "4.3.14"
-    title = "Ensure All Public IP Addresses are Evaluated for Necessity"
+    spec_id = "4.2.6"
+    title = "Ensure Public IP Addresses Are Evaluated Periodically"
     try:
         from azure.mgmt.network import NetworkManagementClient
 

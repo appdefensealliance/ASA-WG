@@ -327,7 +327,7 @@ def _make_metric_filter_check(spec_id: str, config: dict):
     return check_fn
 
 
-# Generate the 9 metric filter check functions
+# Generate the 11 metric filter check functions
 check_console_signin_no_mfa = _make_metric_filter_check("3.9.1", _METRIC_FILTER_CHECKS["3.9.1"])
 check_root_account_usage = _make_metric_filter_check("3.9.2", _METRIC_FILTER_CHECKS["3.9.2"])
 check_iam_policy_changes = _make_metric_filter_check("3.9.3", _METRIC_FILTER_CHECKS["3.9.3"])
@@ -439,83 +439,14 @@ def check_cloudtrail_all_regions(session: boto3.Session) -> "RequirementResult":
 
 
 def check_cloudtrail_cloudwatch_integration(session: boto3.Session) -> "RequirementResult":
-    """ADA 3.11.2: Ensure CloudTrail trails are integrated with CloudWatch Logs."""
-    ct = session.client("cloudtrail")
-    try:
-        trails = ct.describe_trails()["trailList"]
-        if not trails:
-            return make_result(
-                "3.11.2",
-                "Ensure CloudTrail trails are integrated with CloudWatch Logs",
-                "AWS",
-                Verdict.FAIL,
-                "No CloudTrail trails configured",
-            )
-
-        integrated_trails = []
-        non_integrated = []
-
-        for trail in trails:
-            name = trail.get("Name", "unknown")
-            cw_arn = trail.get("CloudWatchLogsLogGroupArn", "")
-            if cw_arn:
-                # Check if delivery is recent
-                try:
-                    status = ct.get_trail_status(Name=trail.get("TrailARN") or name)
-                    last_delivery = status.get("LatestCloudWatchLogsDeliveryTime")
-                    if last_delivery:
-                        age = datetime.now(timezone.utc) - last_delivery
-                        if age < timedelta(days=2):
-                            integrated_trails.append(
-                                f"{name} (last delivery: {last_delivery.isoformat()})"
-                            )
-                        else:
-                            non_integrated.append(
-                                f"{name} (stale delivery: {last_delivery.isoformat()})"
-                            )
-                    else:
-                        non_integrated.append(f"{name} (no delivery timestamp)")
-                except ClientError:
-                    integrated_trails.append(f"{name} (CloudWatch ARN set)")
-            else:
-                non_integrated.append(f"{name} (no CloudWatch Logs integration)")
-
-        if integrated_trails and not non_integrated:
-            return make_result(
-                "3.11.2",
-                "Ensure CloudTrail trails are integrated with CloudWatch Logs",
-                "AWS",
-                Verdict.PASS,
-                f"CloudTrail integrated with CloudWatch Logs:\n" + "\n".join(integrated_trails),
-                {"integrated": integrated_trails},
-            )
-        elif integrated_trails:
-            return make_result(
-                "3.11.2",
-                "Ensure CloudTrail trails are integrated with CloudWatch Logs",
-                "AWS",
-                Verdict.PASS,
-                f"At least one trail integrated:\n" + "\n".join(integrated_trails)
-                + f"\nNon-integrated:\n" + "\n".join(non_integrated),
-                {"integrated": integrated_trails, "non_integrated": non_integrated},
-            )
-        else:
-            return make_result(
-                "3.11.2",
-                "Ensure CloudTrail trails are integrated with CloudWatch Logs",
-                "AWS",
-                Verdict.FAIL,
-                f"No CloudTrail trails integrated with CloudWatch Logs:\n" + "\n".join(non_integrated),
-                {"non_integrated": non_integrated},
-            )
-    except ClientError as e:
-        return make_result(
-            "3.11.2",
-            "Ensure CloudTrail trails are integrated with CloudWatch Logs",
-            "AWS",
-            Verdict.INCONCLUSIVE,
-            f"Error checking CloudTrail CloudWatch integration: {e}",
-        )
+    """ADA 3.11.2: REMOVED — Retired in CIS AWS Foundations v7.0.0 (was CIS v2.0.0 Section 3.4)."""
+    return make_result(
+        "3.11.2",
+        "Ensure CloudTrail trails are integrated with CloudWatch Logs",
+        "AWS",
+        Verdict.NOT_APPLICABLE,
+        "Removed — Retired in CIS AWS Foundations Benchmark v7.0.0",
+    )
 
 
 def check_web_frontend_logging(session: boto3.Session) -> "RequirementResult":
@@ -585,3 +516,14 @@ def check_web_frontend_logging(session: boto3.Session) -> "RequirementResult":
             "Web front-end services without access logging:\n" + "\n".join(findings),
             {"findings": findings, "services_checked": services_checked},
         )
+
+
+def check_s3_bucket_logging_removed(session: boto3.Session) -> "RequirementResult":
+    """ADA 3.5.1: REMOVED — Retired in CIS AWS Foundations v7.0.0 (was CIS v2.0.0 Section 3.3)."""
+    return make_result(
+        "3.5.1",
+        "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
+        "AWS",
+        Verdict.NOT_APPLICABLE,
+        "Removed — Retired in CIS AWS Foundations Benchmark v7.0.0",
+    )

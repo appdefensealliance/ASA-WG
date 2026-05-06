@@ -197,7 +197,7 @@ def check_alert_service_health(session: AzureSession) -> RequirementResult:
 def check_batch_diagnostics(session: AzureSession) -> RequirementResult:
     """ADA 3.11.19: Ensure diagnostic settings are enabled for Batch accounts."""
     spec_id = "3.11.19"
-    title = "Ensure Diagnostic Settings are Enabled for Azure Batch Accounts"
+    title = "Ensure Diagnostics Logs Are Enabled for Batch Accounts"
     try:
         from azure.mgmt.batch import BatchManagementClient
         from azure.mgmt.monitor import MonitorManagementClient
