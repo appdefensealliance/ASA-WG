@@ -1,11 +1,12 @@
 """Azure Storage checks for ADA Cloud assessment.
 
-Covers 14 requirements:
+Covers 17 requirements:
 - 5.1.1: Soft Delete enabled for blobs
 - 5.1.2: Soft delete for Azure File Shares
 - 5.1.3: SMB protocol version 3.1.1+
 - 5.1.4: SMB channel encryption AES-256-GCM+
 - 5.1.5: Soft delete for containers
+- 5.1.6: ARM delete lock on storage accounts
 - 5.2.1: Default network access deny
 - 5.2.2: Public network access disabled
 - 5.3.1: Secure transfer required
@@ -14,7 +15,9 @@ Covers 14 requirements:
 - 5.6.1: Key rotation reminders
 - 5.7.1: Access keys periodically regenerated
 - 5.7.2: Storage account key access disabled
+- 5.7.3: Cross-tenant replication disabled
 - 5.8.1: SAS tokens expire (INCONCLUSIVE)
+- 5.9.1: Default Entra authorization in portal
 """
 
 from __future__ import annotations
@@ -289,3 +292,74 @@ def check_sas_expiry(session: AzureSession) -> RequirementResult:
         "Azure", Verdict.INCONCLUSIVE,
         "SAS token expiry cannot be determined from account configuration alone. "
         "Manual verification required: review SAS token generation practices.")
+
+
+# --- Additional Storage checks ---
+
+def check_default_entra_authorization(session: AzureSession) -> RequirementResult:
+    """ADA 5.9.1: Ensure Default Entra Authorization in Azure Portal."""
+    def _check(acct):
+        default_oauth = getattr(acct, "default_to_o_auth_authentication", False)
+        if not default_oauth:
+            return "defaultToOAuthAuthentication is not enabled"
+        return None
+
+    return _check_storage_property(session, "5.9.1",
+        "Ensure Default to Microsoft Entra Authorization in Azure Portal is Enabled", _check)
+
+
+def check_cross_tenant_replication(session: AzureSession) -> RequirementResult:
+    """ADA 5.7.3: Ensure cross-tenant replication is disabled."""
+    def _check(acct):
+        allow_cross = getattr(acct, "allow_cross_tenant_replication", True)
+        if allow_cross is not False:
+            return "allowCrossTenantReplication is not disabled"
+        return None
+
+    return _check_storage_property(session, "5.7.3",
+        "Ensure Cross-Tenant Replication is Disabled for Storage Accounts", _check)
+
+
+def check_arm_delete_lock(session: AzureSession) -> RequirementResult:
+    """ADA 5.1.6: Ensure ARM delete locks are configured on storage accounts."""
+    spec_id = "5.1.6"
+    title = "Ensure ARM Delete Locks are Configured on Storage Accounts"
+    try:
+        from azure.mgmt.resource.locks import ManagementLockClient
+
+        accounts = _list_storage_accounts(session)
+
+        if not accounts:
+            return make_result(spec_id, title, "Azure", Verdict.PASS,
+                             "No storage accounts found")
+
+        lock_client = ManagementLockClient(session.credential, session.subscription_id)
+        non_compliant = []
+
+        for acct in accounts:
+            try:
+                locks = list(lock_client.management_locks.list_at_resource_level(
+                    resource_group_name=acct.id.split("/")[4],
+                    resource_provider_namespace="Microsoft.Storage",
+                    parent_resource_path="",
+                    resource_type="storageAccounts",
+                    resource_name=acct.name,
+                ))
+                has_delete_lock = any(
+                    getattr(lock, "level", "") == "CanNotDelete"
+                    for lock in locks
+                )
+                if not has_delete_lock:
+                    non_compliant.append(
+                        f"{acct.name} (no CanNotDelete lock)")
+            except Exception:
+                non_compliant.append(f"{acct.name} (unable to check locks)")
+
+        if non_compliant:
+            return make_result(spec_id, title, "Azure", Verdict.FAIL,
+                             "Storage accounts without delete locks:\n" +
+                             "\n".join(non_compliant))
+        return make_result(spec_id, title, "Azure", Verdict.PASS,
+                         f"All {len(accounts)} storage accounts have ARM delete locks")
+    except Exception as e:
+        return make_result(spec_id, title, "Azure", Verdict.INCONCLUSIVE, f"Error: {e}")
