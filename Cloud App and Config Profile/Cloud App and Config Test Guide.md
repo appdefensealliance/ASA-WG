@@ -126,6 +126,8 @@ Version 1.0 - 10-OCT 24
 
 [2.7.8 Ensure AWS resource policies do not allow unrestricted access using Principal *](#278-ensure-aws-resource-policies-do-not-allow-unrestricted-access-using-principal-)
 
+[2.7.9 Ensure KMS Encryption Keys Are Rotated Within a Period of 90 Days](#279-ensure-kms-encryption-keys-are-rotated-within-a-period-of-90-days)
+
 [2.8 Establish and Maintain a Secure Configuration Process](#28-establish-and-maintain-a-secure-configuration-process)
 
 [2.8.1 Ensure Security Defaults is enabled on Azure Active Directory](#281-ensure-security-defaults-is-enabled-on-azure-active-directory)
@@ -155,6 +157,8 @@ Version 1.0 - 10-OCT 24
 [2.10.1 Ensure credentials unused for 45 days or greater are disabled ](#2101-ensure-credentials-unused-for-45-days-or-greater-are-disabled)
 
 [2.10.2 Ensure Guest Users Are Reviewed on a Regular Basis ](#2102-ensure-guest-users-are-reviewed-on-a-regular-basis)
+
+[2.10.3 Ensure User-Managed/External Keys for Service Accounts Are Rotated Every 90 Days or Fewer](#2103-ensure-user-managedexternal-keys-for-service-accounts-are-rotated-every-90-days-or-fewer)
 
 [2.11 Restrict Administrator Privileges to Dedicated Administrator Accounts](#211-restrict-administrator-privileges-to-dedicated-administrator-accounts)
 
@@ -342,6 +346,8 @@ Version 1.0 - 10-OCT 24
 
 [3.11.17 Ensure a Service Health Alert Exists](#31117-ensure-a-service-health-alert-exists)
 
+[3.11.18 Ensure all AWS-managed web front-end services have access logging enabled](#31118-ensure-all-aws-managed-web-front-end-services-have-access-logging-enabled)
+
 [4 Networking](#4-networking)
 
 [4.1 Encrypt Confidential Data in Transit](#41-encrypt-confidential-data-in-transit)
@@ -429,6 +435,8 @@ Version 1.0 - 10-OCT 24
 
 [5.5.3 Ensure That Cloud Storage Bucket Is Not Anonymously or Publicly Accessible](#553-ensure-that-cloud-storage-bucket-is-not-anonymously-or-publicly-accessible)
 
+[5.5.4 Ensure That BigQuery Datasets Are Not Anonymously or Publicly Accessible](#554-ensure-that-bigquery-datasets-are-not-anonymously-or-publicly-accessible)
+
 [5.6 Establish and Maintain a Secure Configuration Process](#56-establish-and-maintain-a-secure-configuration-process)
 
 [5.6.1 Ensure that 'Enable key rotation reminders' is enabled for each Storage Account](#561-ensure-that-enable-key-rotation-reminders-is-enabled-for-each-storage-account)
@@ -491,6 +499,8 @@ Version 1.0 - 10-OCT 24
 
 [6.6.2 Ensure '3625 (trace flag)' database flag for all Cloud SQL Server instances is set to 'on'](#662-ensure-3625-trace-flag-database-flag-for-all-cloud-sql-server-instances-is-set-to-on)
 
+[6.6.3 Ensure 'User Connections' Database Flag for Cloud SQL SQL Server Instance Is Set to a Non-limiting Value](#663-ensure-user-connections-database-flag-for-cloud-sql-sql-server-instance-is-set-to-a-non-limiting-value)
+
 [6.7 Implement and Manage a Firewall on Servers](#67-implement-and-manage-a-firewall-on-servers)
 
 [6.7.1 Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled](#671-ensure-allow-access-to-azure-services-for-postgresql-database-server-is-disabled)
@@ -514,6 +524,8 @@ Version 1.0 - 10-OCT 24
 [6.12 Perform Automated Application Patch Management](#612-perform-automated-application-patch-management)
 
 [6.12.1 Ensure Auto Minor Version Upgrade feature is Enabled for RDS Instances](#6121-ensure-auto-minor-version-upgrade-feature-is-enabled-for-rds-instances)
+
+[6.12.2 Ensure That Cloud SQL Database Instances Are Configured With Automated Backups](#6122-ensure-that-cloud-sql-database-instances-are-configured-with-automated-backups)
 
 [6.13 Collect Audit Logs](#613-collect-audit-logs)
 
@@ -542,6 +554,8 @@ Version 1.0 - 10-OCT 24
 [6.15.6 Ensure That the ‘Log_min_duration_statement’ Database Flag for Cloud SQL PostgreSQL Instance Is Set to ‘-1′ (Disabled)](#6156-ensure-that-the-log_min_duration_statement-database-flag-for-cloud-sql-postgresql-instance-is-set-to-1-disabled)
 
 [6.15.7 Ensure That 'cloudsql.enable_pgaudit' Database Flag for each Cloud Sql Postgresql Instance Is Set to 'on' For Centralized Logging](#6157-ensure-that-cloudsqlenable_pgaudit-database-flag-for-each-cloud-sql-postgresql-instance-is-set-to-on-for-centralized-logging)
+
+[6.15.8 Database logging should be enabled](#6158-database-logging-should-be-enabled)
 
 
 
@@ -584,56 +598,9 @@ It is necessary to first identify the software that needs to be secured before t
 
 ---
 
-### 1.1.1 Ensure that Only Approved Extensions Are Installed
-**Platform:** Azure
+### 1.1.1 REMOVED — Not in CIS Azure Foundations v5.0.0 L1
 
-**Rationale:** Azure virtual machine extensions are small applications that provide post-deployment configuration and automation tasks on Azure virtual machines. These extensions run with administrative privileges and could potentially access anything on a virtual machine. The Azure Portal and community provide several such extensions. Each organization should carefully evaluate these extensions and ensure that only those that are approved for use are actually implemented.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.5
-
-**Evidence**
-
-**From Azure Portal**
-
-1. Go to `Virtual machines`.
-2. For each virtual machine, click on the server name to select it go to
-3. In the new column menu, under `Settings` Click on `Extensions + applications`.
-4. Ensure that all the listed extensions are approved by your organization for use.
-
-**From Azure CLI**
-
-Use the below command to list the extensions attached to a VM, and ensure the listed extensions are approved for use.
-
-
-```
-az vm extension list --vm-name <vmName> --resource-group <sourceGroupName> --query [*].name
-```
-
-
-**From PowerShell**
-
-Get a list of VMs.
-
-
-```
-Get-AzVM
-```
-
-
-For each VM run the following command.
-
-
-```
-Get-AzVMExtension -ResourceGroupName <VM Resource Group> -VMName <VM Name>
-```
-
-
-Review each `Name`, `ExtensionType`, and `ProvisioningState` to make sure no unauthorized extensions are installed on any virtual machines.
-
-**Verification**
-
-Developer states that they have reviewed the list of extensions and that each one of them is approved for use.
-
+**Status:** Removed — Not in CIS Azure Foundations v5.0.0 L1 (was: Ensure Only Approved Extensions Are Installed)
 
 ---
 
@@ -1225,53 +1192,9 @@ Encryption at rest protects against some risks of unauthorized access to data, f
 
 ---
 
-### 1.4.1 Ensure Virtual Machines are utilizing Managed Disks
-**Platform:** Azure
+### 1.4.1 REMOVED — Not in CIS Azure Foundations v5.0.0 L1
 
-**Rationale:** Managed disks are by default encrypted on the underlying hardware, so no additional encryption is required for basic protection. It is available if additional encryption is required. Managed disks are by design more resilient than storage accounts.
-
-For ARM-deployed Virtual Machines, Azure Adviser will at some point recommend moving VHDs to managed disks both from a security and cost management perspective.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 7.2
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. Using the search feature, go to `Virtual Machines`
-2. Click the `Manage view` dropdown, then select `Edit columns`
-3. Add `Uses managed disks` to the selected columns
-4. Select `Save`
-5. Ensure all virtual machines listed are using managed disks
-
-**From PowerShell**
-
-
-```
-Get-AzVM | ForEach-Object {"Name: " + $_.Name;"ManagedDisk Id: " + $_.StorageProfile.OsDisk.ManagedDisk.Id;""}
-```
-
-
-Example output:
-
-
-```
-Name: vm1
-ManagedDisk Id: /disk1/id
-
-Name: vm2
-ManagedDisk Id: /disk2/id
-```
-
-
-If the 'ManagedDisk Id' field is empty the os disk for that vm is not managed.
-
-**Verification**
-
-Evidence or test output indicates that every VM is using a managed disk.
-
+**Status:** Removed — Not in CIS Azure Foundations v5.0.0 L1 (was: Ensure Virtual Machines are utilizing Managed Disks)
 
 ---
 
@@ -2022,29 +1945,9 @@ Evidence or test output indicates that `User consent for applications` is set to
 
 ---
 
-### 2.4.2 Ensure that 'Users can add gallery apps to My Apps' is set to 'No'
-**Platform:** Azure
+### 2.4.2 REMOVED — Not in CIS Azure Foundations v5.0.0
 
-**Rationale:** Unless Azure Active Directory is running as an identity provider for third-party applications, do not allow users to use their identity outside of your cloud environment. User profiles contain private information such as phone numbers and email addresses which could then be sold off to other third parties without requiring any further consent from the user.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.13
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. From Azure Home select the Portal Menu
-2. Select `Azure Active Directory`
-3. Then `Users`
-4. Select `User settings`
-5. Then `Manage how end users launch and view their applications`, and ensure that `Users can add gallery apps to My Apps` is set to `No`
-
-**Verification**
-
-Evidence or test output indicates that `Users can add gallery apps to My Apps` is set to `No`.
-
+**Status:** Removed — Not in CIS Azure Foundations v5.0.0 (was: Ensure that 'Users can add gallery apps to their Access Panel' is set to 'No')
 
 ---
 
@@ -2815,6 +2718,41 @@ Evidence or test output indicates that cloud KML cryptokeys are not anonymously 
 
 ---
 
+### 2.7.7 Ensure access to AWSCloudShellFullAccess is restricted
+**Platform:** AWS
+
+**Rationale:** AWS CloudShell provides browser-based shell access to AWS resources. The AWSCloudShellFullAccess managed policy grants full CloudShell permissions including file upload/download capabilities, which could be used for data exfiltration if not properly restricted. Access should be limited to users who specifically require it.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.20
+
+**Evidence**
+
+**From Console:**
+
+1. Sign in to the AWS Management Console and open the IAM console at `https://console.aws.amazon.com/iam`
+2. In the left navigation panel, select `Policies`
+3. Search for `AWSCloudShellFullAccess`
+4. Select the policy and navigate to the `Entities attached` tab
+5. Review the list of users, groups, and roles that have this policy attached
+6. Verify that only authorized entities have this broad access
+
+**From Command Line:**
+
+1. Run the following command to list entities with the AWSCloudShellFullAccess policy:
+
+```
+aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSCloudShellFullAccess
+```
+
+2. Review the output and verify that only authorized users, groups, and roles have the policy attached.
+
+**Verification**
+
+Evidence or test output indicates that access to AWSCloudShellFullAccess is restricted to only authorized entities. Manual review is required to determine if the level of access is appropriate.
+
+
+---
+
 ### 2.7.8 Ensure AWS resource policies do not allow unrestricted access using "Principal": "*"
 **Platform:** AWS
 
@@ -2854,42 +2792,37 @@ aws lambda get-policy --function-name <function_name>
 
 **Verification**
 
-### 2.7.7 Ensure access to AWSCloudShellFullAccess is restricted
-**Platform:** AWS
-
-**Rationale:** AWS CloudShell provides browser-based shell access to AWS resources. The AWSCloudShellFullAccess managed policy grants full CloudShell permissions including file upload/download capabilities, which could be used for data exfiltration if not properly restricted. Access should be limited to users who specifically require it.
-
-**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 2.20
-
-**Evidence**
-
-**From Console:**
-
-1. Sign in to the AWS Management Console and open the IAM console at `https://console.aws.amazon.com/iam`
-2. In the left navigation panel, select `Policies`
-3. Search for `AWSCloudShellFullAccess`
-4. Select the policy and navigate to the `Entities attached` tab
-5. Review the list of users, groups, and roles that have this policy attached
-6. Verify that only authorized entities have this broad access
-
-**From Command Line:**
-
-1. Run the following command to list entities with the AWSCloudShellFullAccess policy:
-
-```
-aws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSCloudShellFullAccess
-```
-
-2. Review the output and verify that only authorized users, groups, and roles have the policy attached.
-
-**Verification**
-
-Evidence or test output indicates that access to AWSCloudShellFullAccess is restricted to only authorized entities. Manual review is required to determine if the level of access is appropriate.
+Evidence or test output indicates that no resource policies allow unrestricted access via `"Principal": "*"` without appropriate conditions. Manual review is required to evaluate condition adequacy.
 
 
 ---
 
-Evidence or test output indicates that no resource policies allow unrestricted access via `"Principal": "*"` without appropriate conditions. Manual review is required to evaluate condition adequacy.
+### 2.7.9 Ensure KMS Encryption Keys Are Rotated Within a Period of 90 Days
+**Platform:** Google
+
+**Rationale:** Google Cloud Key Management Service stores cryptographic keys in a hierarchical structure designed for access control management. Rotation of encryption keys reduces the exposure if a key is compromised, as data encrypted with a new key version cannot be accessed with a previous key version.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.10
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `Cryptographic Keys` in the KMS section
+2. Click on the configured key ring
+3. For each key, verify the `Rotation period` is set to 90 days or fewer
+
+**From Google Cloud CLI:**
+
+```
+gcloud kms keys list --keyring=<key_ring_name> --location=<location> --format=json
+```
+
+For each key, verify the `rotationPeriod` is set to `7776000s` (90 days) or less and that `nextRotationTime` is set.
+
+**Verification**
+
+Evidence or test output indicates that all KMS encryption keys have a rotation period of 90 days or fewer.
 
 
 ---
@@ -3392,6 +3325,37 @@ Get-AzureADUser |Where-Object {$_.UserType -like "Guest"} |Select-Object Display
 Evidence or test output indicates there are no active guest users that have been inactive for greater than 90 days.
 
 Developer states that they have reviewed guest users and that all users are still required and not inactive.
+
+
+---
+
+### 2.10.3 Ensure User-Managed/External Keys for Service Accounts Are Rotated Every 90 Days or Fewer
+**Platform:** Google
+
+**Rationale:** Rotating service account keys reduces the window of opportunity for a compromised key to be used. User-managed keys are not automatically rotated by GCP and must be managed manually.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 1.7
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `IAM & Admin` > `Service Accounts`
+2. For each service account, click on the account and navigate to the `Keys` tab
+3. For any keys of type `USER_MANAGED`, check the `Created` date
+4. Verify no key has a creation date older than 90 days
+
+**From Google Cloud CLI:**
+
+```
+gcloud iam service-accounts keys list --iam-account=<sa-email> --managed-by=user --format=json
+```
+
+Check the `validAfterTime` for each key. If any key was created more than 90 days ago, it should be rotated.
+
+**Verification**
+
+Evidence or test output indicates that all user-managed service account keys have been rotated within the last 90 days.
 
 
 ---
@@ -4068,56 +4032,15 @@ Evidence or test output indicates that `Allow users to remember MFA on devices t
 
 ---
 
-### 2.14.5 Ensure that A Multi-factor Authentication Policy Exists for All Users
-**Platform:** Azure
+### 2.14.5 REMOVED — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.4)
 
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.4
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. From Azure Home open the Portal Menu in the top left, and select `Azure Active Directory`.
-2. Scroll down in the menu on the left, and select `Security`.
-3. Select on the left side `Conditional Access`.
-4. Select the policy you wish to audit.
-5. View under `Users and Groups` the corresponding users and groups to whom the policy is applied.
-6. View under `Exclude` to determine which users and groups to whom the policy is not applied.
-
-**Verification**
-
-Evidence or test output indicates that a MFA policy exists for all users.
-
+**Status:** Removed — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.4) (was: Ensure that A Multi-factor Authentication Policy Exists for All Users)
 
 ---
 
-### 2.14.6 Ensure Multi-factor Authentication is Required for Risky Sign-ins
-**Platform:** Azure
+### 2.14.6 REMOVED — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.5)
 
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the potential of accounts being compromised and limiting access to authenticated personnel.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.5
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. From Azure Home select the Portal Menu and select `Security`.
-2. Select on the left side `Conditional Access`.
-3. Select the policy you wish to audit.
-4. View under `Users and Groups` the corresponding users and groups to whom the policy is applied.
-5. View under `Exclude` to determine which users and groups to whom the policy is not applied.
-
-**Verification**
-
-Evidence or test output indicates that MFA is required for risky sign ins.
-
+**Status:** Removed — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.5) (was: Ensure Multi-factor Authentication is Required for Risky Sign-ins)
 
 ---
 
@@ -4285,57 +4208,15 @@ Requiring MFA makes it harder for malicious attackers to takeover accounts, e.g.
 
 ---
 
-### 2.15.1 Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups
-**Platform:** Azure
+### 2.15.1 REMOVED — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.7)
 
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative accounts to authenticated personnel.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.3
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. From Azure Home open the Portal Menu in the top left, and select `Azure Active Directory`.
-2. Select `Security`.
-3. Select `Conditional Access`.
-4. Select the policy you wish to audit.
-5. View under `Users and Groups` the corresponding users and groups to whom the policy is applied. Be certain the emergency access account is not in the list.
-6. View under `Exclude` to determine which Users and groups to whom the policy is not applied.
-
-**Verification**
-
-Evidence or test output indicates that a MFA policy exists for administrative groups.
-
+**Status:** Removed — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.7) (was: Ensure that A Multi-factor Authentication Policy Exists for Administrative Groups)
 
 ---
 
-### 2.15.2 Ensure Multi-factor Authentication is Required for Azure Management
-**Platform:** Azure
+### 2.15.2 REMOVED — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.6)
 
-**Rationale:** Enabling multi-factor authentication is a recommended setting to limit the use of Administrative actions and to prevent intruders from changing settings.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 1.2.6
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. From Azure Home select the Portal Menu and select `Azure Active Directory`.
-2. Scroll down in the menu on the left, and select `Security`.
-3. Select on the left side `Conditional Access`.
-4. Select the policy you wish to audit.
-5. View under `Users and Groups` the corresponding users and groups to whom the policy is applied.
-6. View under `Exclude` to determine which Users and groups to whom the policy is not applied.
-
-**Verification**
-
-Evidence or test output indicates that MFA is required for azure management.
-
+**Status:** Removed — Reclassified to Level 2 in CIS Azure Foundations v5.0.0 (Section 5.2.6) (was: Ensure that A Multi-factor Authentication Policy Exists for Azure Management)
 
 ---
 
@@ -4936,97 +4817,9 @@ Evidence or test output indicates that the CloudTrail destination bucket(s) do n
 
 ---
 
-### 3.5.2 Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible
-**Platform:** Azure
+### 3.5.2 REMOVED — Not in CIS Azure Foundations v5.0.0 L1
 
-**Rationale:** Allowing public access to activity log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 5.1.3
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. From Azure Home select the Portal Menu
-2. Select `Diagnostic Settings` in the left column.
-3. In section `Storage Account`, note the name of the Storage account
-4. Close `Diagnostic settings`. Close the `Monitor - Activity Log` blade.
-5. In left menu, Click `Storage Accounts`
-6. For each storage account, go to the `Configuration` setting
-7. Check if Blob public access is `Disabled`.
-
-**From Azure CLI**
-
-
-
-1. Get storage account id configured with Diagnostic Settings:
-
-
-```
-az monitor diagnostic-settings subscription list --subscription $subscription.Id --query 'value[*].storageAccountId'
-
-```
-
-
-
-2. Ensure the container storing activity logs (insights-activity-logs) is not publicly accessible:
-
-
-```
-az storage container list --account-name <Storage Account Name> --query "[?name=='insights-activity-logs']"
-```
-
-
-If this command returns output and no errors, the storage account is publicly accessible.
-
-
-
-3. Otherwise, list `Storage Account Keys` for the storage account.
-
-
-```
-az storage account keys list --resource-group <storage account resource group> --account-name <storage account name>
-
-```
-
-
-
-4. Use a key to determine if the `Container` is also publicly accessible (in the event the storage account is)
-
-
-```
-az storage container list --account-name <Storage Account Name> --query "[?name=='insights-activity-logs']" --sas-token "<base64 key value from step 3>"
-```
-
-
-Ensure `publicAccess` is set to `null` in the output of the command in step 4.
-
-**From PowerShell**
-
-Create a new storage account context with either a Storage-level SAS token with at least read/list permissions for Blob > Service, Container, Object.
-
-
-```
-$context = New-AzStorageContext -StorageAccountName <storage account name> -SasToken "<SAS token>"
-```
-
-
-Use the newly created storage account context to determine if the `insights-activity-logs` container is publicly accessible.
-
-
-```
-Get-AzStorageContainer -Context $context -name "insights-activity-logs"
-```
-
-
-Ensure `PublicAccess` is `empty` or set to `null`, `0`, or `off`.
-
-**Verification**
-
-Evidence or test output indicates that the Storage Container(s) containing activity logs does not grant public access.
-
+**Status:** Removed — Not in CIS Azure Foundations v5.0.0 L1 (was: Ensure the Storage Container Storing the Activity Logs is not Publicly Accessible)
 
 ---
 
@@ -5174,53 +4967,9 @@ Tools can help to identify vulnerabilities that require remediation.
 
 ---
 
-### 3.8.1 Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On'
-**Platform:** Azure
+### 3.8.1 REMOVED — Removed from CIS Azure Foundations v5.0.0
 
-**Rationale:** When `Log Analytics agent for Azure VMs` is turned on, Microsoft Defender for Cloud provisions the Microsoft Monitoring Agent on all existing supported Azure virtual machines and any new ones that are created. The Microsoft Monitoring Agent scans for various security-related configurations and events such as system updates, OS vulnerabilities, endpoint protection, and provides alerts.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 2.1.15
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. From Azure Home select the Portal Menu
-2. Select `Microsoft Defender for Cloud`
-3. Then `Environment Settings`
-4. Select a subscription
-5. Click on `Settings & Monitoring`
-6. Ensure that `Log Analytics agent/Azure Monitor agent` is set to `On`
-
-Repeat the above for any additional subscriptions.
-
-**From Azure CLI**
-
-Ensure the output of the below command is `On`
-
-
-```
-az account get-access-token --query "{subscription:subscription,accessToken:accessToken}" --out tsv | xargs -L1 bash -c 'curl -X GET -H "Authorization: Bearer $1" -H "Content-Type: application/json" https://management.azure.com/subscriptions/<subscriptionID>/providers/Microsoft.Security/autoProvisioningSettings?api-version=2017-08-01-preview' | jq '.|.value[] | select(.name=="default")'|jq '.properties.autoProvision'
-```
-
-
-**Using PowerShell**
-
-
-```
-Connect-AzAccount
-Get-AzSecurityAutoProvisioningSetting
-```
-
-
-Ensure output for `Id Name AutoProvision` is `/subscriptions//providers/Microsoft.Security/autoProvisioningSettings/default default On`
-
-**Verification**
-
-Evidence or test output indicates that auto provisioning of the log analytics agent for Azure VMs is enabled.
-
+**Status:** Removed — Removed from CIS Azure Foundations v5.0.0 (was: Ensure that Auto provisioning of 'Log Analytics agent for Azure VMs' is Set to 'On')
 
 ---
 
@@ -7683,6 +7432,40 @@ Evidence or test output indicates that a service health alert exists covering al
 
 ---
 
+### 3.11.18 Ensure all AWS-managed web front-end services have access logging enabled
+**Platform:** AWS
+
+**Rationale:** Ensuring access logging is enabled on web-facing services like CloudFront distributions, Application Load Balancers, and API Gateways provides visibility into incoming requests. These logs are essential for security monitoring, incident response, and compliance requirements.
+
+**External Reference:** CIS Amazon Web Services Foundations Benchmark v7.0.0, Section 4.10
+
+**Evidence**
+
+**From Console:**
+
+1. **CloudFront:** Navigate to CloudFront > Distributions. For each distribution, verify that `Standard logging` is set to `On`.
+2. **ALB/NLB:** Navigate to EC2 > Load Balancers. For each load balancer, check the `Attributes` tab and verify `Access logs` is `Enabled`.
+3. **API Gateway:** Navigate to API Gateway. For each API, verify that logging is configured in the Stage settings.
+
+**From Command Line:**
+
+1. Check CloudFront distributions:
+```
+aws cloudfront get-distribution --id <dist_id> --query 'Distribution.DistributionConfig.Logging.Enabled'
+```
+
+2. Check ELBv2 load balancers:
+```
+aws elbv2 describe-load-balancer-attributes --load-balancer-arn <lb_arn> --query "Attributes[?Key=='access_logs.s3.enabled'].Value"
+```
+
+**Verification**
+
+Evidence or test output indicates that all AWS-managed web front-end services have access logging enabled.
+
+
+---
+
 
 # 4 Networking
 
@@ -8302,87 +8085,13 @@ Evidence or test output indicates that HTTP/2 is enabled for all Application Gat
 
 ---
 
-### 4.3.3 Ensure That SSH Access Is Restricted From the Internet
-**Platform:** Google
-
-**Rationale:** GCP `Firewall Rules` within a `VPC Network` apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `SSH` with the default `Port 22`. Generic access from the Internet to a specific IP Range needs to be restricted.
-
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v2.0.0, Section 3.6
-
-**Evidence**
-
-**From Google Cloud Console**
-
-
-
-1. Go to `VPC network`.
-2. Go to the `Firewall Rules`.
-3. Ensure that `Port` is not equal to `22` and `Action` is not set to `Allow`.
-4. Ensure `IP Ranges` is not equal to `0.0.0.0/0` under `Source filters`.
-
-**From Google Cloud CLI**
-
-gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed)'
-
-Ensure that there is no rule matching the below criteria:
-   * `SOURCE_RANGES` is `0.0.0.0/0`
-   * AND `DIRECTION` is `INGRESS`
-   * AND IPProtocol is `tcp` or `ALL`
-   * AND `PORTS` is set to `22` or `range containing 22` or `Null (not set)`
-
-Note:
-
-
-
-   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
-   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
-
-**Verification**
-
 ### 4.3.3 REMOVED — Reclassified to Level 2 in CIS v4.0.0
 
 **Status:** Removed — This requirement (Ensure That SSH Access Is Restricted From the Internet) was reclassified from Level 1 to Level 2 in CIS Google Cloud Platform Foundation Benchmark v4.0.0 (Section 3.6).
 
 ---
 
-### 4.3.4 Ensure That RDP Access Is Restricted From the Internet
-**Platform:** Google
-
-**Rationale:** GCP `Firewall Rules` within a `VPC Network`. These rules apply to outgoing (egress) traffic from instances and incoming (ingress) traffic to instances in the network. Egress and ingress traffic flows are controlled even if the traffic stays within the network (for example, instance-to-instance communication). For an instance to have outgoing Internet access, the network must have a valid Internet gateway route or custom route whose destination IP is specified. This route simply defines the path to the Internet, to avoid the most general `(0.0.0.0/0)` destination `IP Range` specified from the Internet through `RDP` with the default `Port 3389`. Generic access from the Internet to a specific IP Range should be restricted.
-
-**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 3.7
-
-**Evidence**
-
-**From Google Cloud Console**
-
-
-
-1. Go to `VPC network`.
-2. Go to the `Firewall Rules`.
-3. Ensure `Port` is not equal to `3389` and `Action` is not `Allow`.
-4. Ensure `IP Ranges` is not equal to `0.0.0.0/0` under `Source filters`.
-
-**From Google Cloud CLI**
-
-gcloud compute firewall-rules list --format=table'(name,direction,sourceRanges,allowed.ports)'
-
-Ensure that there is no rule matching the below criteria:
-   * `SOURCE_RANGES` is `0.0.0.0/0`
-   * AND `DIRECTION` is `INGRESS`
-   * AND IPProtocol is `TCP` or `ALL`
-   * AND `PORTS` is set to `3389` or `range containing 3389` or `Null (not set)`
-
-Note:
-
-
-
-   * When ALL TCP ports are allowed in a rule, PORT does not have any value set (`NULL`)
-   * When ALL Protocols are allowed in a rule, PORT does not have any value set (`NULL`)
-
-**Verification**
-
-Evidence or test output indicates that no firewall rule allows inbound connections to port 3389 from the unrestricted public internet.
+### 4.3.4 REMOVED — Reclassified to Level 2 in CIS v4.0.0
 
 **Status:** Removed — This requirement (Ensure That RDP Access Is Restricted From the Internet) was reclassified from Level 1 to Level 2 in CIS Google Cloud Platform Foundation Benchmark v4.0.0 (Section 3.7).
 
@@ -9270,6 +8979,36 @@ No role should contain `allUsers` and/or `allAuthenticatedUsers` as a member.
 **Verification**
 
 Evidence or test output indicates that all cloud storage buckets are configured to block anonymous or public access.
+
+
+---
+
+### 5.5.4 Ensure That BigQuery Datasets Are Not Anonymously or Publicly Accessible
+**Platform:** Google
+
+**Rationale:** Granting permissions to `allUsers` or `allAuthenticatedUsers` on BigQuery datasets provides access to anyone on the internet or any authenticated GCP user. Access to datasets should be granted on a per-user or per-group basis to ensure proper access control.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 7.1
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `BigQuery` in the Cloud Console
+2. Select a dataset and click `Sharing` > `Permissions`
+3. Ensure no principal is set to `allUsers` or `allAuthenticatedUsers`
+
+**From Google Cloud CLI:**
+
+```
+bq show --format=prettyjson <project_id>:<dataset_name>
+```
+
+Review the `access` section. Ensure no entry contains `"specialGroup": "projectWriters"`, `"specialGroup": "allAuthenticatedUsers"`, or `"iamMember": "allUsers"`.
+
+**Verification**
+
+Evidence or test output indicates that no BigQuery datasets are anonymously or publicly accessible.
 
 
 ---
@@ -10414,6 +10153,37 @@ Evidence or test output indicates that all Cloud SQL SQL Server instance(s) have
 
 ---
 
+### 6.6.3 Ensure 'User Connections' Database Flag for Cloud SQL SQL Server Instance Is Set to a Non-limiting Value
+**Platform:** Google
+
+**Rationale:** The `user connections` option specifies the maximum number of simultaneous user connections allowed on a SQL Server instance. Setting this to 0 (the default) means the maximum number of user connections is determined automatically. Explicitly setting a non-zero value could inadvertently limit legitimate connections to the database.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.3.7
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `SQL` in the Cloud Console
+2. Select the SQL Server instance
+3. Navigate to `Flags` section
+4. Ensure the `user connections` flag is set to `0` or is not configured (default)
+
+**From Google Cloud CLI:**
+
+```
+gcloud sql instances describe <instance_name> --format=json
+```
+
+Review `settings.databaseFlags`. If a flag with name `user connections` exists, verify its value is `0`.
+
+**Verification**
+
+Evidence or test output indicates that the `user connections` flag is set to a non-limiting value (0 or default) for all Cloud SQL SQL Server instances.
+
+
+---
+
 
 ## 6.7 Implement and Manage a Firewall on Servers
 
@@ -10433,38 +10203,9 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 
 ---
 
-### 6.7.1 Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled
-**Platform:** Azure
+### 6.7.1 REMOVED — Not in CIS Azure Database Services v2.0.0 L1
 
-**Rationale:** If access from Azure services is enabled, the server's firewall will accept connections from all Azure resources, including resources not in your subscription. This is usually not a desired configuration. Instead, set up firewall rules to allow access from specific network ranges or VNET rules to allow access from specific virtual networks.
-
-**External Reference:** CIS Microsoft Azure Foundations Benchmark v5.0.0, Section 4.3.7 (Not in Database Services v2.0.0 L1)
-
-**Evidence**
-
-**From Azure Portal**
-
-
-
-1. Login to Azure Portal using [https://portal.azure.com](https://portal.azure.com/).
-2. Go to `Azure Database for PostgreSQL servers`.
-3. For each database, click on `Connection security`.
-4. Under `Firewall rules`, ensure `Allow access to Azure services` is set to `No`.
-
-**From Azure CLI**
-
-Ensure the output of the below command does not include a rule with the name AllowAllWindowsAzureIps or "startIpAddress": "0.0.0.0" & "endIpAddress": "0.0.0.0",
-
-
-```
-az postgres server firewall-rule list --resource-group <resourceGroupName> --server <serverName>
-```
-
-
-**Verification**
-
-Evidence or test output indicates that all PostgreSQL database server instances are configured with Allow access to Azure services disabled.
-
+**Status:** Removed — Not in CIS Azure Database Services v2.0.0 L1 (was: Ensure 'Allow access to Azure services' for PostgreSQL Database Server is disabled)
 
 ---
 
@@ -10818,6 +10559,37 @@ aws rds describe-db-instances --region <regionName> --db-instance-identifier <db
 **Verification**
 
 Evidence or test output indicates that auto minor version update feature is enabled for all RDS instances.
+
+
+---
+
+### 6.12.2 Ensure That Cloud SQL Database Instances Are Configured With Automated Backups
+**Platform:** Google
+
+**Rationale:** Automated backups help ensure that database instances can be restored in the event of data loss, corruption, or other incidents. Regular automated backups are a fundamental part of a disaster recovery strategy.
+
+**External Reference:** CIS Google Cloud Platform Foundation Benchmark v4.0.0, Section 6.7
+
+**Evidence**
+
+**From Google Cloud Console:**
+
+1. Go to `SQL` in the Cloud Console
+2. Select each Cloud SQL instance
+3. Navigate to `Backups` section
+4. Ensure `Automated backups` is set to `Enabled`
+
+**From Google Cloud CLI:**
+
+```
+gcloud sql instances list --format=json
+```
+
+For each instance, check `settings.backupConfiguration.enabled` is `true`.
+
+**Verification**
+
+Evidence or test output indicates that all Cloud SQL database instances have automated backups enabled.
 
 
 ---

@@ -22,6 +22,18 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Alex Duff (Meta)
 * Brad Ree (Google)
 
+### Abbreviated Terms
+| Abbreviation | Full Term |
+| --- | ----- |
+| MFA | Multi-Factor Authentication|
+| TLS | Transport Layer Security|
+| OpenSSH | Open Secure Shell|
+| IAM | Identity and Access Management|
+| MDM | Mobile Device Management|
+| SSO | Single Sign-On|
+| SCAP | Security Content Automation Protocol|
+| CIS | Center for Internet Security|
+
 ### Contributors
 * Alex Duff  (Meta)
 * Andrew Kiggins
@@ -1057,6 +1069,7 @@ Detailed logs with timestamps provide a record of user activity, system events, 
 | 3.11.15 | Azure | Ensure that a 'Diagnostic Setting' exists for Subscription Activity Logs |
 | 3.11.16 | Azure | Ensure Diagnostic Setting captures appropriate categories |
 | 3.11.17 | Azure | Ensure that an Activity Log Alert exists for Service Health |
+| 3.11.18 | AWS | Ensure all AWS-managed web front-end services have access logging enabled |
 
 
 ---
@@ -1204,7 +1217,7 @@ Encryption protects confidential data when transmitted over untrusted network co
 | Spec | Platform | Description |
 |---|-----|----------|
 | 5.3.1 | Azure | Ensure that 'Secure transfer required' is set to 'Enabled' |
-| 5.3.2  Azure | Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2" |
+| 5.3.2 | Azure | Ensure the "Minimum TLS version" for storage accounts is set to "Version 1.2" |
 
 ---
 
