@@ -1095,7 +1095,7 @@ Having log files of what actions have taken place by users and also system event
 ### Audit
 | Spec | Platform | Description |
 |---|-----|----------|
-| 3.10.1 | Google | Ensure That Sinks Are Configured for All Log Entries |
+| 3.10.1 | Google | REMOVED — Withdrawn in favor of 3.10.5 |
 | 3.10.2 | Google | Ensure Log Metric Filter and Alerts Exist for Project Ownership Assignments/Changes |
 | 3.10.3 | Google | Ensure That the Log Metric Filter and Alerts Exist for Audit Configuration Changes |
 | 3.10.4 | Google | Ensure That the Log Metric Filter and Alerts Exist for Custom Role Changes |
@@ -1211,7 +1211,7 @@ Firewalls help to prevent unauthorized users from accessing servers or sending m
 | 4.3.2 | Azure | Ensure that SSH access from the Internet is evaluated and restricted |
 | 4.3.3 | Google | REMOVED — Reclassified to Level 2 in CIS v4.0.0 |
 | 4.3.4 | Google | REMOVED — Reclassified to Level 2 in CIS v4.0.0 |
-| 4.3.5 | AWS | Ensure no Network ACLs allow ingress from 0.0.0.0/0 to remote server administration ports |
+| 4.3.5 | AWS | REMOVED — Withdrawn in favor of 4.3.6 and 4.3.7 |
 | 4.3.6 | AWS | Ensure no security groups allow ingress from 0.0.0.0/0 to remote server administration ports |
 | 4.3.7 | AWS | Ensure no security groups allow ingress from ::/0 to remote server administration ports |
 | 4.3.8 | AWS | Ensure CIFS access is restricted to trusted networks to prevent unauthorized access |
