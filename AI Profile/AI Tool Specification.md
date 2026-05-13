@@ -983,89 +983,46 @@ Attackers intercept, reuse, or hijack authentication tokens or session identifie
 **Note: See section 1.4.1 for security requirements.**
 
 # 8 Network Binding/Isolation Failures
+This category addresses failures in restricting the communication and execution environment of MCP components. Attackers exploit open network access or weak isolation to exfiltrate data, download malicious payloads, or move laterally within an infrastructure. 
 
 ## 8.1 Shadow MCP Servers (Duplicate)
 
-Unauthorized, unmonitored, or hidden MCP server instances create blind spots, increasing risk of undetected compromise and covert data exfiltration. These servers pose governance and compliance risks and may be malicious or easily compromised.
-
-### 8.1.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
 
 ## 8.2 Improper Multitenancy
 
-An attacker may exploit weak isolation between tenants or users, such as shared memory between processes, sessions, or secrets and credentials, to access or manipulate unauthorized data.
+An attacker may exploit weak isolation between tenants or users, such as shared memory between processes, sessions, or secrets and credentials, to access or manipulate unauthorized data. Weak isolation between different user sessions at the tool layer can lead to "Session Bleed," where User A's data persists in memory and is inadvertently accessed by User B
 
-### 8.2.1 Req TBD
+### 8.2.1 Mandatory Stateless Request-Level Isolation
 
 #### Description
+The AI Tool must treat every request as an independent, atomic unit. The system must implement a “Process, Respond, Purge” lifecycle, performing a “Contest Reset: or forcibly restarting the tool process between different user contexts
+
 
 #### Rationale
+Mandatory statelessness is the primary technical control against Cross-Tenant Data Leakage (CTDL). It ensures that no user-specific data or internal reasoning traces used by the tool to fulfill a request linger in memory for a subsequent request.
+
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Identify Global State:** Search the tool codebase for global variables, static caches, or singleton patterns used to store user-specific data |
+| Dynamic | **Test for Session Bleed:** Execute a tool call for "User A" containing unique identifiable data. Immediately follow with a tool call from "User B." Inspect the response for User B for any fragments of User A’s data|
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 ## 8.3 Unrestricted Network Access (Duplicate)
 
 MCP servers or clients with open outbound or inbound network access can download malicious payloads, exfiltrate data, or connect to command-and-control infrastructure. Malicious or compromised MCP servers allow attackers to move laterally using stored credentials and exploiting poor network segmentation and isolation.
 
-### 8.3.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: This is a duplicate of 7.3**
 
 ## 8.4 Malicious Command Execution
 
@@ -1073,59 +1030,60 @@ Compromised or rogue MCP servers execute arbitrary or malicious payloads (ransom
 
 ### 
 
-### 8.4.1 Req TBD
+### 8.4.1 Detect and Block Unsafe Sinks
 
 #### Description
 
-TBD
+The AI Tool must operate within a hardened runtime that identifies and blocks code patterns facilitating sandbox escapes, such as os.system(), subprocess.Popen(shell=True), or eval(). Any tool that passes arguments to system-level calls must utilize parameterized arguments and path canonicalization.
 
 #### Rationale
 
-TBD
+Proactively identifying insecure coding patterns during development mitigates the risk of Command Injection and Directory Traversal, which serve as primary vectors for bypassing tool sandboxes.
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Pattern Scan:** Identify use of unsafe functions like eval() or shell-enabled subprocess calls. Flag any dynamic URL generation not checked against an allowlist |
+| Dynamic | **Sandbox Escape Probing:** Attempt to use an Attacker LLM to generate tool-call JSON designed to execute a shell command (e.g., `ls ; rm -rf`). Verify the runtime blocks the execution. |
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | Out of Scope |
+| Remote | In Scope |
 
 ## 8.5 Dependency/Update Attack
 
 Attackers compromise MCP dependencies or update channels (e.g., “rug pull” attacks), swapping benign code for malicious versions after trust is established. MCP servers may also introduce new capabilities (e.g., tools or prompts) that have not been vetted or approved for use.
 
-### 8.5.1 Req TBD
+### 8.5.1 Resource Pinning and Signature Verification
 
 #### Description
 
-TBD
+The AI Tool must implement strict version pinning for all third-party plugins and dependencies using strict equality (e.g., "1.4.0" rather than ">=1.4.0"). All model weights and tool packages must have valid digital signatures and be verified against known cryptographic hashes.
 
 #### Rationale
 
-TBD
+Resource pinning ensures that updates are a deliberate developer decision, preventing "Rug Pull" attacks where a dependency is automatically updated to a compromised version. This forces a "temporal delay" that eliminates a major class of common ecosystem vulnerabilities.
+
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Check Dependency Files:** Verify that package.json or requirements.txt use strict version pinning. Review the Software Bill of Materials (SBOM) for unmitigated vulnerabilities. |
+| Dynamic | **Update Verification:** Attempt to point the tool to a mocked update repository with a mismatched signature to confirm the update is rejected. |
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope|
+| Mobile | In Scope |
+| Remote | In Scope |
 
 # 9 Trust Boundary and Privilege Design Failures
 
@@ -1133,63 +1091,35 @@ TBD
 
 MCP server developers may implement overly permissive tools, assuming the LLM will invoke them correctly and safely. However, model-level controls (trained refusals, safety classifiers, etc.) are not ironclad—even capable models can be manipulated through prompt injection, make errors in judgment, or be replaced with weaker models that lack equivalent safeguards.
 
-### 9.1.1 Req TBD
+### 9.1.1 Data Minimization
 
 #### Description
-
-TBD
+The AI Tool shall minimize the data being exposed to align with the use case the tool supports. The tool’s output schema and database queries shall be limited to necessary fields to support the functions stated need.For example, a tool which provides the current travel rewards points balance should not return the user’s credit card number and social security number.
 
 #### Rationale
-
-TBD
-
-#### 
+Overly permissive tools may expose the user’s data, or result in actions which the user never intended an agent to be able to perform.
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static |Verify the function inputs and outputs only include the necessary data to fulfill the tool’s description and function’s stated need.  |
+| Dynamic | Execute each of the tool’s functions and verify the function inputs and outputs only include the necessary data to fulfill the tool’s description and function’s stated need. |
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope|
+| Mobile | In Scope |
+| Remote | In Scope |
 
 ## 9.2 Consent/User Approval Fatigue
 
 Flooding users with excessive consent or permission prompts, causing habituation and leading to blind approval of potentially dangerous or malicious actions.
 
-### 9.2.1 Req TBD
+**Note: User approval and user approval fatigue is out of scope for the AI Tool specification and is addressed in the AI Agent specification.**
 
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### 
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
 
 # 10 Resource Management/Rate Limiting Absence
 
