@@ -503,13 +503,6 @@ In the MCP architecture, the session token is the "keys to the kingdom." If a de
 
 Missing or insufficient human-in-the-loop consent checks can allow an MCP server to take risky actions not authorized by the user.
 
-Discussion Points:
-
-1. I believe most agents will provide tool approvals as they also control the user interface.  
-2. It would be nice to require approval for sensitive (or non-routine) operations, but I am not sure if the agents will implement these controls  
-3. The MCP protocol does support [elicitations](https://modelcontextprotocol.io/specification/draft/client/elicitation), but it is unclear if this will pop up every time a user hits a function with the elicitation and thus could lead to fatigue.  
-   
-
 ### 2.1.1 Req TBD
 
 #### Description
@@ -539,66 +532,121 @@ TBD
 
 An attacker may exploit weak isolation between tenants or users, such as shared memory between processes, sessions, or secrets and credentials, to access or manipulate unauthorized data.
 
-
-## 2.3 Confused Deputy (OAuth Proxy) (Duplicate)
-
-Attackers exploit misconfigured roles, credentials, ACLs, trust relationships, or flawed delegation logic to gain elevated permissions and access unauthorized resources. In MCP deployments, this includes privilege escalation, as well as attacks that leverage the MCP server's intermediary role in multi-user token delegation. For example, confused deputy attacks can occur when an MCP server acting as an OAuth proxy fails to properly validate authorization context—allowing attackers to manipulate the server into using another user's credentials to perform privileged operations.
-
-### 2.3.1 Req TBD
-
+### 2.2.1 Stateless Request Level Isolation
 #### Description
+To prevent "Session Bleed" (where data from a previous request persists in memory and affects the next), the server must treat every request as an independent atomic unit.
 
-TBD
+* **No Global State:** The server must not store user-specific data in global variables or static caches.
+
+* **Memory Clearing:** If the runtime environment (e.g., Python/Node.js) is reused across requests for different tenants, the server must perform a "Context Reset" or be forcibly restarted between different tenant contexts.
+
+* **Unique Request IDs:** Every incoming request from the Agent must be tagged with a unique Request ID. All logs and internal traces must use this ID to ensure auditability of data boundaries
 
 #### Rationale
-
-TBD
+Mandatory Statelessness is the primary technical control against Cross-Tenant Data Leakage (CTDL), ensuring that a third-party MCP server maintains a strict isolation boundary between independent user sessions. By requiring a "Process, Respond, Purge" lifecycle, we eliminate "session bleed"—where data from one user lingers in memory or global variables and is inadvertently accessed by a subsequent request from a different tenant. This architecture shifts the security boundary away from potentially flawed application logic and onto Google’s hardened infrastructure, removing the possibility of state-based side-channel attacks and ensuring that every transaction is a self-contained, auditable event with no memory of prior sensitive contexts.
 
 #### Audit
-
-| Method  | Description |
-| :------ | :---------- |
-| Static  |             |
-| Dynamic |             |
+| Method | Description |
+| :---- | :---- |
+| Static |  **Global State Analysis:** Search the codebase for global variables, static caches, or singleton patterns used to store user-specific data or session metadata. Verify that all user-specific data is confined to the local scope of the request handler. <br><br> **Verify Context Reset:** If the server uses a persistent runtime (e.g., Node.js or Python) across different requests, identify the mechanism used to clear in-memory state between executions. Flag any implementation that lacks an explicit "Context Reset" or process recycling logic for different tenant contexts.<br><br> **Check Request ID Propagation:** Verify that the server initializes a unique Request ID for every incoming JSON-RPC object. Ensure this ID is passed to all internal sub-functions and included in every structured log entry generated during that request's lifecycle. |
+| Dynamic | Perform the following runtime testing:<br><br>**Test for Session Bleed:** Execute a sequence of tool calls using "User A" credentials containing unique, identifiable data (e.g., a "search_files" tool with a specific keyword). Immediately follow with a tool call from "User B." Inspect the response for User B and the server logs to ensure no fragments of User A's data or keywords appear in User B's execution context.<br><br>**Verify Log Correlation:** Trigger multiple concurrent tool calls. Inspect the generated logs to confirm that every log line is tagged with a unique Request ID and that logs for different requests do not intermingle data under the same identifier.<br><br>**Check Memory Isolation:** In a multi-tenant test environment, observe the memory footprint or process lifecycle to verify that the server either restarts or explicitly purges tenant-specific heap data after the completion of a request. |
 
 #### Comments
 
 | Scope  | Comment |
 | :----- | :------ |
-| Local  |         |
-| Mobile |         |
-| Remote |         |
+| Local  | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
+
+
+### 2.2.2 User Identity Propagation
+#### Description
+If more than one user is supported, the AI Tool must not "assume" which user it is acting for based on the connection alone.
+
+* **Token Validation:** Every request must include a short-lived Identity Token that identifies the specific user.
+
+* **Scoped Access:** The server’s internal logic must use this token to scope all database queries (e.g., SELECT * FROM docs WHERE owner_id = {JWT.sub}), or access to other user specific data or APIs.
+
+* **Hard Fail on Missing Identity:** If a request arrives without a valid, verifiable identity token, the server must return a 401 Unauthorized and terminate the execution thread immediately.
+
+#### Rationale
+Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring that every action performed by an MCP server is explicitly tied to a verified user or organization through short-lived, cryptographically signed identity tokens. By mandating that the server validate these tokens for every incoming request, we eliminate "Implicit Authorization" and prevent Direct Object Reference (IDOR) attacks where one tenant might attempt to access another's data by guessing a resource ID. This requirement forces the third-party server to operate within a "Zero Trust" framework, where access to any underlying data or tool is strictly scoped to the identity contained within the request payload, providing a verifiable and auditable cryptographic link between the user's intent and the server's execution.
+
+#### Audit
+
+| Method  | Description |
+| :------ | :---------- |
+| Static | **Identify Token Handling:** Search the codebase for the point where incoming requests are received. Verify that the user’s identity (e.g., JWT, OAuth token, or User ID) is extracted and explicitly passed into the tool execution context.<br><br> **Verify Downstream Authentication:** Inspect the client initialization for downstream services (e.g., a Database client or GitHub API client). Ensure that these clients are instantiated using the propagated user token rather than a hardcoded administrative or "app-level" API key.<br><br>**Check Middleware Injection:** If using a framework, verify that the identity propagation is enforced via middleware and cannot be bypassed by individual tool implementations.|
+| Dynamic | Perform the following runtime testing: <br><br>**Verify Permission Enforcement:** Attempt to call a tool (e.g., read_file) targeting a resource that "User A" owns but "User B" does not. Authenticate as "User B" and verify that the tool returns a 403 Forbidden or 401 Unauthorized error from the downstream resource.<br><br>**Inspect Downstream Logs:** Execute a tool call and then inspect the audit logs of the downstream service (e.g., AWS CloudTrail or GitHub Audit Logs). Confirm that the action was recorded under the end-user's identity and not the MCP server’s service account name.<br><br>**Token Scoping Test:** Provide the MCP server with a scoped or "limited" token for a user. Attempt to execute a tool that requires permissions outside of that scope. Verify that the tool execution fails at the resource level, proving that the server is respecting the specific token's limitations. |
+
+
+
+#### Comments
+
+| Scope  | Comment |
+| :----- | :------ |
+| Local  | In Scope |
+| Mobile | Out of Scope |
+| Remote | In Scope |
+
+### 2.2.3 Ensure Sandbox Protections
+#### Description
+Identify and block code patterns that facilitate sandbox escapes or multi-tenant data leakage. Mandating the detection of "unsafe sinks"—such as direct shell execution, unvalidated file system operations, and unrestricted network sockets—ensures that the AI Tool remains isolated. Any code that passes user-supplied tool arguments to system-level calls must undergo rigorous path canonicalization and validation against a pre-defined allowlist to prevent build-breaking security violations.
+
+#### Rationale
+Enforcing these programmatic constraints aligns the AI Tool architecture with the principle of "Least Privilege," ensuring inherent compatibility with hardened runtimes. Proactively identifying and remediating insecure coding patterns during the development phase mitigates the risk of Directory Traversal and Command Injection vulnerabilities, which serve as primary vectors for bypassing execution sandboxes. Such a stance is critical in multi-tenant environments to ensure that even a compromised or manipulated model cannot programmatically execute unauthorized actions on the host system or access data belonging to other users.
+
+#### Audit
+| Method  | Description |
+| :------ | :---------- |
+| Static | Detect Unsafe Execution: <br> **Pattern:** Identify use of os.system(), subprocess.Popen(shell=True), or eval(). <br> **Flag:** High Risk. MCP tools must use parameterized arguments and avoid shell execution to prevent command injection leading to sandbox escapes.<br><br> Detect Missing Path Validation: <br> **Pattern:** Identify file I/O operations (e.g., open(), fs.readFile()) where the input path is concatenated with user-provided strings without a call to a normalization function (e.g., os.path.abspath() or path.resolve()).<br> **Flag:** Medium/High Risk. This prevents directory traversal attacks that bypass sandbox directory restrictions. <br><br> Detect Hardcoded Network Requests:<br> **Pattern:** Identify HTTP/Socket libraries (e.g., requests.get, http.request) where the destination URL is dynamically generated from LLM-provided tool arguments without being checked against a static Allowlist.<br> **Flag:** Medium Risk. Prevents SSRF (Server-Side Request Forgery) from the sandbox to the internal network. |
+| Dynamic | |
+
+
+#### Comments
+
+| Scope  | Comment |
+| :----- | :------ |
+| Local  | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
+
+
+## 2.3 Confused Deputy (OAuth Proxy) (Duplicate)
+
+Attackers exploit misconfigured roles, credentials, ACLs, trust relationships, or flawed delegation logic to gain elevated permissions and access unauthorized resources. In MCP deployments, this includes privilege escalation, as well as attacks that leverage the MCP server's intermediary role in multi-user token delegation. For example, confused deputy attacks can occur when an MCP server acting as an OAuth proxy fails to properly validate authorization context—allowing attackers to manipulate the server into using another user's credentials to perform privileged operations.
+
+**Note: This threat is a duplicate of 1.2. See that section for the security requirements.**
 
 ## 2.4 Excessive Permissions/Overexposure 
 
 AI agents, MCP servers, or tools are granted more privileges than necessary, increasing risk of abuse or compromise in case of attack or misconfiguration.
 
-### 2.4.1 Req TBD
+### 2.4.1 Principle of Least Privilege and Scoped Permissions
 
 #### Description
-
-TBD
-
-#### 
+MCP servers must operate with the minimum privileges necessary. Implementations must reduce scopes to least privilege, such as removing write scopes when only read access is required.
 
 #### Rationale
 
-TBD
+AI agents, MCP servers, or tools granted more privileges than necessary drastically increase the blast radius in the event of an attack or misconfiguration. Without strict least privilege by design, a compromised agent can easily escalate privileges, move laterally, or corrupt sensitive data.
+
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Review IAM and RBAC:** Audit role-based access control (RBAC) configurations, Identity and Access Management (IAM) policies, and OAuth token exchanges to ensure requested scopes match the exact operational requirements of the tools.<br><br>**Analyze Scope Definitions:** Inspect tool definition files and server configurations to ensure they explicitly reduce scopes for least privilege, such as not requesting write scopes when only read access is required. Flag any tools requesting broad administrative rights or wildcard (*) access.  |
+| Dynamic | **Test Scope Boundaries:** Authenticate a session using a properly scoped "read-only" token. Attempt to invoke an MCP tool that performs a "write," "update," or "delete" operation.<br><br>**Verify Rejection:** Confirm that the server explicitly rejects the action at the resource level and returns an unauthorized/forbidden error, proving the server respects the specific token's limitations. |
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 # 3 Input Validation/Sanitization Failures 
 
@@ -606,84 +654,61 @@ TBD
 
 Unvalidated or unsanitized user inputs, prompts, or tool arguments lead to execution of unauthorized system commands, resulting in data compromise or system takeover.
 
-### 3.1.1 Req TBD
+### 3.1.1 Parameterized Arguments and Unsafe Sink Blocking
 
 #### Description
+The MCP server must enforce strict input validation, sanitization, and parameterization across all execution contexts. It must actively identify and block the use of unsafe execution sinks (such as eval(), os.system(), or subprocess.Popen(shell=True)) and mandate the use of parameterized arguments for any underlying system calls or queries. All inputs must be validated using strict allowlists at every trust boundary.
 
 #### Rationale
+Developers incorrectly assume that user input processed through an LLM is inherently safe, bypassing established secure coding practices. In reality, the LLM transforms but does not sanitize malicious payloads. Without strict parameterized boundaries, an attacker can manipulate tool arguments to execute arbitrary shell commands, leading to total system compromise and sandbox escapes.
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Identify Unsafe Execution Sinks:** Scan the server codebase for high-risk functions that evaluate strings as code or execute shell commands directly (e.g., os.system, eval()).<br><br>**Verify Parameterization:** Inspect database queries and system calls to ensure they utilize parameterized execution methods rather than dynamic string concatenation.<br><br>**Check Validation Logic:** Confirm that all tool parameters are strictly validated against predefined allowlists before being processed. |
+| Dynamic | **Fuzz Tool Parameters:** Submit crafted command injection payloads (e.g., ; rm -rf /, $(whoami), or & ping attacker.com) via the LLM prompt or directly into the MCP tool arguments. <br><br>**Verify Safe Rejection:** Confirm that the MCP server neutralizes the payload, treats it as a literal string parameter, or explicitly rejects the request with an error, preventing the underlying command from executing.|
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 ## 3.2 File System Exposure/Path Traversal (Duplicate)
 
 Improper validation of file paths or tool arguments enables access to or exfiltration of files outside intended directories, exposing credentials and sensitive data
 
-### 3.2.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note: This threat is a duplicate of 5.2. See that section for the security requirements.**
 
 ## 3.3 Insufficient Integrity Checks
 
 Absence of signature or integrity validation on MCP messages and responses enables replay, spoofing, or delivery of poisoned results.
 
-### 3.3.1 Req TBD
+### 3.3.1 Cryptographic Message Integrity Validation
 
 #### Description
-
-TBD
+MCP implementations must require and enforce cryptographic integrity checks on all messages, tool definitions, and resource responses. Tool developers must include mechanisms such as message authentication codes (MACs) or digital signatures to ensure end-to-end integrity and prevent the undetected modification of critical system components or payloads during transit.
 
 #### Rationale
-
-TBD
+Without integrity verification, malicious actors or compromised intermediaries can intercept and modify tool definitions, forge messages, or inject poisoned data into resource responses. Because the AI model implicitly trusts the context and data returned by connected tools, tampered payloads can seamlessly trigger prompt injections or execute unauthorized behavior.
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static |  |
-| Dynamic |  |
+| Static | **Review Integrity Mechanisms:** Inspect the message handling and transport layer code to verify the implementation of cryptographic signatures or HMAC validation for incoming JSON-RPC payloads.<br><br>**Verify Key Management:** Ensure that the public keys or shared secrets used for signature validation are stored securely and retrieved safely at runtime.<br><br>**Check Enforcement Logic:** Confirm that the server explicitly drops or rejects messages that lack a signature or fail the integrity validation check.|
+| Dynamic | **Attempt Payload Tampering:** Intercept a legitimate, signed MCP tool invocation or resource response using a proxy. Modify the data payload (e.g., change a tool argument or alter a schema description) without recalculating the cryptographic signature.<br><br>**Verify Mismatch Rejection:** Submit the tampered message to the client or server. Verify that the receiving component detects the integrity mismatch and immediately drops the connection or rejects the payload .|
 
 #### Comments
 
 | Scope | Comment |
 | :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 # 4 Data/Control Boundary Distinction Failure
 
