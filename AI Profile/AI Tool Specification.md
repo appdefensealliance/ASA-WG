@@ -1,14 +1,5 @@
 # AI Tool Security Specification
 
-Version 0.1 3/9/26
-
-# Revision History
-
-| Version | Date   | Description                                                        |
-| :------ | :----- | :----------------------------------------------------------------- |
-| 0.1     | 3/9/26 | Initial document outline based on CoSAI MCP security paper threats |
-| 0.2     | 3/26/26 | Added requirements for section 1 (Authentication) and updates for section 11 (Supply Chain) |
-|         |        |                                                                    |
 
 # Contributors
 
@@ -714,126 +705,33 @@ Without integrity verification, malicious actors or compromised intermediaries c
 
 ## 4.1 Tool Definition Poisoning
 
-*Tool poisoning* is an indirect form of Prompt Injection (MCP-T4-05) in which [Tool](https://modelcontextprotocol.io/specification/2025-06-18/server/tools#protocol-messages) metadata, configuration, or descriptors have been modified in order to provide new instructions or other manipulation to make an AI model act in an unintended fashion. Because the AI model implicitly trusts the context and data returned by its connected tools, the attacker can inject malicious payloads or hidden instructions (a form of Indirect Prompt Injection) into the tool's response. When the AI ingests this compromised data, it processes the Tool metadata as legitimate instructions.
+Malicious modification of tool metadata, configuration, or descriptors injected into clients via the tools/list method. This can cause AI agents or MCP components to invoke, trust, or execute compromised tools, potentially leading to data leaks or system compromise. As the MCP specification notes, 'descriptions of tool behavior such as annotations should be considered untrusted, unless obtained from a trusted server' (Key Principles), making tool poisoning a recognized risk when clients connect to unvetted servers.
 
-#### Framework Mapping
-
-* [OWASP MCP03:2025 Tool Poisoning](https://owasp.org/www-project-mcp-top-10/2025/MCP03-2025%E2%80%93Tool-Poisoning)  
-* [CoSAI WS4: Designing Agentic Systems: Input/Instruction Boundary Distinction Failures](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/model-context-protocol-security.md#mcp-t4-inputinstruction-boundary-distinction-failure)
-
-### 4.1.1 TBD
-
-#### Description
-
-TBD
-#### Rationale
-
-TBD
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope  | Comment |
-| :----- | :------ |
-| Local  |         |
-| Mobile |         |
-| Remote |         |
+**Note:** This threat is out of scope for the AI Tool specification.
 
 
 ## 4.2 Full Schema Poisoning
 
 Attackers compromise entire tool schema definitions at the structural level, injecting hidden parameters, altered return types, or malicious default values that affect all subsequent tool invocations while maintaining apparent compatibility and evading detection by appearing legitimate to monitoring systems.
 
-Unlike Tool Poisoning (MCP-2): Goes beyond poisoning individual tool metadata to compromise the entire structural definition and type system of tools.
+Unlike Tool Poisoning: Goes beyond poisoning individual tool metadata to compromise the entire structural definition and type system of tools.
 
-### TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method  | Description |
-| :------ | :---------- |
-| Static  |             |
-| Dynamic |             |
-
-#### Comments
-
-| Scope  | Comment |
-| :----- | :------ |
-| Local  |         |
-| Mobile |         |
-| Remote |         |
-
+**Note:** This threat is out of scope for the AI Tool specification.
 
 ## 4.3 Resource Content Poisoning
 
-Attackers embed hidden malicious instructions within data sources (databases, documents, API responses) that MCP servers retrieve and provide to LLMs, causing the poisoned content to execute as commands when processed, effectively achieving persistent prompt injection through trusted data channels rather than direct user input. Unlike Prompt Injection (MCP-12): Malicious instructions are embedded in backend data sources, not user-provided prompts. Unlike Tool Poisoning (MCP-2): Poisons the actual data/content retrieved by tools, not the tool definitions themselves. This attack surface may be expanded with transitive or composed MCP server calls.
+Attackers embed hidden malicious instructions within data sources (databases, documents, API responses) that MCP servers retrieve and provide to LLMs, causing the poisoned content to execute as commands when processed, effectively achieving persistent prompt injection through trusted data channels rather than direct user input. Unlike Prompt Injection: Malicious instructions are embedded in backend data sources, not user-provided prompts. 
 
-### 4.3.1 Req TBD
+Unlike Tool Poisoning: Poisons the actual data/content retrieved by tools, not the tool definitions themselves. This attack surface may be expanded with transitive or composed MCP server calls.
 
-#### Description
+**Note:** This threat is out of scope for the AI tool specificaiton.
 
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
 
 ## 4.4 Prompt Injection
 
 LLMs have insufficient boundaries between input data and instructions. Attackers craft malicious inputs to manipulate LLMs or MCP components to perform unintended or harmful actions such as data exfiltration, privilege escalation, or unauthorized command execution. These malicious instructions can be sent directly to the LLM (e.g., via Sampling or when the MCP tool uses its own LLM) or indirectly by embedding instructions in prompts, resources, or tool metadata. This threat exists whenever untrusted input can reach the LLM's context window.
 
-### 4.4.1 Req TBD
-
-#### Description
-
-TBD
-
-#### Rationale
-
-TBD
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local |  |
-| Mobile |  |
-| Remote |  |
+**Note:** This threat is out of scope for the AI tool specificaiton.
 
 # 5 Inadequate Data Protection and Confidentiality Controls 
 
@@ -1256,9 +1154,7 @@ In agentic and MCP-based architectures, the complexity of interactions between u
 | :------ | :--------------------------------------------------------------------- |
 | Static  | **Verify Structured Format:** Identify all logging statements (e.g., `console.log`, `logger.info`, `winston`) and confirm they utilize a structured format like JSON objects or key-value pairs rather than simple string concatenation. <br><br>**Identify External Tool Execution Paths:** Review the code for AI tool integration and MCP server implementations to identify all functions that execute external tools or access data resources. <br><br>**Check Telemetry Coverage:** Verify that each execution path includes a logging call capturing the identity of the calling agent, the specific tool requested, the input parameters, and the success/failure status. <br><br>**Inspect Metadata and Correlation:** Confirm that critical events (tool execution, API requests, and authentication logic) are logged with relevant metadata, including timestamps and correlation IDs. <br><br>**Audit for Reasoning Traces:** Verify if the "Intent" of the agent is logged to provide an auditable "Reasoning Trace" explaining why an agent took a specific action. <br><br>**Flag Silent Failures:** Identify and flag any instances where a tool is invoked without telemetry or where error states are handled "silently" without an audit entry. <br><br>**Flag Unstructured Calls:** Identify and flag any instances of "print" statements or unstructured logger calls used for operational data. |
 | Dynamic | **Generate Agent Activity:** Interact with the system through the AI agent to trigger various tool calls, API requests, and authentication events. <br><br>**Validate Log Capture:** Inspect the generated logs to confirm that the interaction was captured in its entirety. <br><br>**Confirm Machine-Readability:** Verify that the output logs are valid structured data (e.g., valid JSON) that can be parsed by automated security tools.  |
-|         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-
-#### 
+|         |   |
 
 #### Comments
 
@@ -1280,7 +1176,7 @@ Logs are frequently replicated across multiple systems, stored in centralized re
 
 #### Audit
 
-| Method  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Method  | Description                   |
 | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Static  | **Identify Sensitive Variables:** Search the codebase for variables and keys that typically contain sensitive information, such as `password`, `token`, `apiKey`, `secret`, `email`, `ssn`, `authorization`, or `bearer`. <br><br>**Trace Logging Sinks:** Identify all locations where logging functions (e.g., `console.log`, `logger.info`, `winston`) are called. Verify if the sensitive variables identified above are passed directly into these functions. <br><br>**Verify Redaction Middleware:** Confirm the application utilizes a centralized redaction middleware or a dedicated sanitization helper function designed to scrub or mask inputs before they reach the logging layer. <br><br>**Check Raw Data Logging:** Inspect code to ensure that raw user prompts or raw API responses—which may contain PII or proprietary data—are not logged without an explicit filtering mechanism. <br><br>**Verify Identity Masking:** Confirm that specific User IDs or unique PII identifiers are not written to the logs in plain text. |
 | Dynamic | **Generate Sensitive Telemetry:** Interact with the AI Tool through the agent and perform actions designed to generate sensitive data (e.g., entering a mock password, providing an API key, or sharing PII). <br><br>**Inspect Log Output:** Access the generated logs and verify that any sensitive data entered during the interaction has been successfully redacted, masked, or filtered out.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
