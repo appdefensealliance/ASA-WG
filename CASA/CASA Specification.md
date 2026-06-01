@@ -18,7 +18,7 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 * Brooke Davis (Google) - ASA WG Vice Chair
 
 ### CASA Profile Leads
-* Brad Ree (Google)
+* Debdutta Guha (Google)
 * Michael Whiteman (Meta)
 
 ### Contributors
