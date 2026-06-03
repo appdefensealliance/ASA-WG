@@ -1,15 +1,8 @@
 # App Defense Alliance MASA Testing Guide
 
-Version 1.0 - 10-OCT 24
+Version 2.2.0 - 2026-06-02
 
-## Revision History
-
-| Version | Date | Description |
-| --- | :--- | :--- |
-| 0.5 | 5/10/24 | Initial draft based on Mobile App Tiger Team review of MASVS specification |
-| 0.7 | 5/25/24 | Updates from Tiger Team review of 0.5 spec |
-| 0.9 | 8/9/24 | Updates from ASA WG leads review of 0.7 spec |
-| 1.0 | 10-OCT 24 | Approved for release by the alliance steering committee |
+> **Version history** is maintained via [GitHub Releases](https://github.com/appdefensealliance/ASA-WG/releases) and [`CHANGELOG.md`](../CHANGELOG.md).
 
 ## Contributors
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:

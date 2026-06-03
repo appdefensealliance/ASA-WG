@@ -1,16 +1,9 @@
 
 # App Defense Alliance MASA Specification
 
-Version 1.0 - 10-OCT 24
+Version 2.2.0 - 2026-06-02
 
-## Revision History
-
-| Version | Date | Description |
-| --- | :--- | :--- |
-| 0.5 | 10-MAY 24 | Initial draft based on Mobile App Tiger Team review of MASVS specification |
-| 0.7 | 25-MAY 24 | Updates from Tiger Team review of 0.5 spec |
-| 0.9 | 9-AUG 24 | Updates from ASA WG leads review of 0.7 spec |
-| 1.0 | 10-OCT 24 | Approved for release by the alliance steering committee |
+> **Version history** is maintained via [GitHub Releases](https://github.com/appdefensealliance/ASA-WG/releases) and [`CHANGELOG.md`](../CHANGELOG.md).
 
 ## Acknowledgements
 
