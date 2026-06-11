@@ -18,7 +18,7 @@ _Changes targeting the next release (v2.2.0)._
 - Added issue and PR templates for standards management workflow
 
 ### Added
-- Initial **Desktop Application Security Assessment (DASA)** profile: `DASA/DASA Specification.md` and `DASA/DASA Test Guide.md` — a baseline security profile for Windows, macOS, and Linux desktop applications, adapted from AFINE DASVS v1.0.0, NIAP PP_APP v2.0, and the OWASP Desktop App Security Top 10. This is the initial version of the profile; additional domains are tracked for future iterations (see Coverage Notes). (#306)
+- Initial **Desktop Application Security Assessment (DASA)** profile: `DASA/DASA Specification.md` and `DASA/DASA Test Guide.md` — a baseline security profile for Windows, macOS, and Linux desktop applications, adapted from AFINE DASVS v1.0.0, NIAP PP_APP v2.0, and the OWASP Desktop App Security Top 10. This is the initial version of the profile; additional domains are tracked for future iterations (see Coverage Notes). Includes the DASA submission artifacts: developer onboarding questionnaires (AL0 & AL1, AL2) and lab report templates (Compliance Report, Developer Test Report). (#306, #350)
 - `CONTRIBUTING.md` — Standards management lifecycle documentation
 - `CHANGELOG.md` — Version history tracking
 - `LICENSE` — CC BY-SA 4.0 licensing terms
