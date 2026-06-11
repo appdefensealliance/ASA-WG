@@ -1,7 +1,7 @@
 
 # App Defense Alliance MASA Specification
 
-Version 2.2.0 - 2026-06-02
+Version 2.1.1 - 2026-06-03
 
 > **Version history** is maintained via [GitHub Releases](https://github.com/appdefensealliance/ASA-WG/releases) and [`CHANGELOG.md`](../CHANGELOG.md).
 
