@@ -1,5 +1,5 @@
 # App Defense Alliance DASA Specification
-Version 2.2.0 - 2026-06-09
+Version 2.2.0 - 2026-06-11
 
 > **Version history** is maintained via [GitHub Releases](https://github.com/appdefensealliance/ASA-WG/releases) and [`CHANGELOG.md`](../CHANGELOG.md).
 
