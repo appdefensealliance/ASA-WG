@@ -54,7 +54,7 @@ When the WG is ready to propose a release:
    - Move items from `[Unreleased]` to the new version section.
    - Include the date and a summary of all changes.
    - Update the top-of-file version stamp in each changed spec to the target release version.
-   - Update the "Specification Version" box in each affected Lab Template (`Submission Forms and Templates/Lab Templates/*.docx`) to the target release version, so the report templates stay in sync with the specs they reference.
+   - Update the "Specification Version" box in each affected Lab Template (`Submission Forms and Templates/Lab Templates/*.docx`) and Developer Questionnaire (`Submission Forms and Templates/Developer Questionnaires/*.xlsx`) to the target release version, so the report templates and onboarding questionnaires stay in sync with the specs they reference.
 3. **Open a PR targeting `main`** from the release branch.
    - Title: `Release vX.Y.Z`
    - Body: Summary of all included WG PRs and their issue references.
@@ -93,7 +93,7 @@ This project uses [Semantic Versioning](https://semver.org/):
 
 Per-document **Revision History tables are not maintained**. The canonical change history is GitHub Releases (semver tags on `main`) and `CHANGELOG.md`. Each published artifact carries a single `Version X.Y.Z — DATE` stamp at the top so standalone copies remain citable; this stamp is updated on the release branch during Stage 3 (alongside the `CHANGELOG.md` update) and reflects the release tag applied in Stage 4.
 
-The Lab Templates (`Submission Forms and Templates/Lab Templates/*.docx`) each carry a "Specification Version" box identifying the spec version a report was produced against. This box is updated on the release branch during Stage 3, in the same step as the spec version stamps, so the templates always reference the current released specification version.
+The Lab Templates (`Submission Forms and Templates/Lab Templates/*.docx`) and Developer Questionnaires (`Submission Forms and Templates/Developer Questionnaires/*.xlsx`) each carry a "Specification Version" box identifying the spec version a report or onboarding submission was produced against. This box is updated on the release branch during Stage 3, in the same step as the spec version stamps, so these artifacts always reference the current released specification version.
 ## Consensus & Voting
 
 - **Default:** Consensus is reached via PR discussion and recorded by the WG Chair.
