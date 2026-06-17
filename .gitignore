@@ -19,3 +19,7 @@ build/
 .pytest_cache/
 htmlcov/
 .coverage
+
+# AI assistant (contributor-local, not published)
+CLAUDE.md
+.claude/
