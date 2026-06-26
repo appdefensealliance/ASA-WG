@@ -97,7 +97,7 @@ This guide was previously published as the ADA Web Application Testing Guide.
 
        * 4.1.2 [Connections to and from the server shall use trusted TLS certificates.](#412-connections-to-and-from-the-server-shall-use-trusted-tls-certificates-where-internally-generated-or-self-signed-certificates-are-used-the-server-must-be-configured-to-only-trust-specific-internal-cas-and-specific-self-signed-certificates-all-others-should-be-rejected)
 
-       *  [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-sensitive-data)
+       * 4.1.3 [No instances of weak cryptography which meaningfully impact the confidentiality or integrity of sensitive data.](#413-no-instances-of-weak-cryptography-which-meaningfully-impact-the-confidentiality-or-integrity-of-data)
 
        * 4.1.4 [All cryptographic modules shall fail securely, and errors are handled in a way that does not enable Padding Oracle attacks.](#414-all-cryptographic-modules-shall-fail-securely-and-errors-are-handled-in-a-way-that-does-not-enable-padding-oracle-attacks)
 
