@@ -225,7 +225,7 @@ Weak or misconfigured authentication in MCP deployments could allow attackers to
 
 #### Description
 
-The MCP server must verify the identity of the MCP host (client) before executing any tools or providing resources. For remote connections (SSE), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
+The MCP server must verify the identity of the MCP host (client) before executing any tools or providing resources. For remote connections (Streamable HTTP), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
 
 #### Rationale
 
@@ -235,7 +235,7 @@ Without identity verification, an attacker could impersonate a legitimate AI age
 
 | Method | Description |
 | :---- | :---- |
-| Static |  **Identify Transport Setup:** Search the MCP server initialization and transport setup code to determine the communication method (e.g., SSE, Stdio). <br><br>**Verify Identity Validation:** Identify where the server validates the 'Authorization' header or client certificates during the handshake or request phase. <br><br>**Check Cryptographic Binding:** Verify that there is a cryptographic binding between the validated identity and the established session to prevent hijacking. <br><br>**Flag Authentication Gaps:** Flag any server implementation that executes tool calls or provides resources without an explicit, successful authentication check.  |
+| Static |  **Identify Transport Setup:** Search the MCP server initialization and transport setup code to determine the communication method (e.g., Streamable HTTP, Stdio). <br><br>**Verify Identity Validation:** Identify where the server validates the 'Authorization' header or client certificates during the handshake or request phase. <br><br>**Check Cryptographic Binding:** Verify that there is a cryptographic binding between the validated identity and the established session to prevent hijacking. <br><br>**Flag Authentication Gaps:** Flag any server implementation that executes tool calls or provides resources without an explicit, successful authentication check.  |
 | Dynamic | **Attempt Unauthenticated Access:** Try to connect to the MCP server or trigger a tool call without providing any authentication credentials to ensure the request is rejected. <br><br>**Test Invalid Credentials:** Provide expired, malformed, or incorrect tokens/keys to verify that the server correctly denies access. <br><br>**Verify Session Persistence:** Ensure that once a session is authenticated, the identity remains consistent and cannot be swapped mid-session.  |
 
 #### Comments
@@ -354,7 +354,7 @@ Attackers intercept, reuse, or hijack authentication tokens or session identifie
 
 #### Description
 
-For persistent or stateful transports (e.g., SSE, WebSockets), the MCP server must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
+For persistent or stateful transports (e.g., Streamable HTTP), the MCP server must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
 
 #### Rationale
 
@@ -364,7 +364,7 @@ If an attacker captures a valid MCP tool-call request, they could "replay" it la
 
 | Method | Description |
 | :---- | :---- |
-| Static |  **Examine Session Management:** Review the session management logic within the MCP transport layer (e.g., SSE, WebSockets). <br><br>**Identify Expiration Timers:** Verify the implementation of an expiration timer (TTL) for active sessions to ensure they are terminated after a defined period of inactivity. <br><br>**Check Freshness Validation:** Confirm the server validates 'timestamp' or 'nonce' fields within incoming JSON-RPC objects to prevent processing stale or duplicate requests.  |
+| Static |  **Examine Session Management:** Review the session management logic within the MCP transport layer (e.g., Streamable HTTP). <br><br>**Identify Expiration Timers:** Verify the implementation of an expiration timer (TTL) for active sessions to ensure they are terminated after a defined period of inactivity. <br><br>**Check Freshness Validation:** Confirm the server validates 'timestamp' or 'nonce' fields within incoming JSON-RPC objects to prevent processing stale or duplicate requests.  |
 | Dynamic | **Verify Inactivity Timeouts:** Establish a session and remain inactive to verify the server automatically terminates the connection after the defined timeout period. <br><br>**Test Replay Resistance:** Attempt to capture and resend a previously successful JSON-RPC tool-call request to ensure the server rejects the duplicate based on an expired timestamp or used nonce. <br><br>**Validate Session Termination:** Ensure that once a session is terminated or timed out, any subsequent requests using that session identifier are strictly rejected.  |
 
 #### Comments
@@ -889,7 +889,7 @@ Improper management of transport descriptors (e.g., stdio) allows attackers to h
 
 ## 7.6 CSRF Protection Missing
 
-Lack of Cross-Site Request Forgery (CSRF) controls on HTTP/SSE transports enables attackers to forge or replay unauthorized requests.
+Lack of Cross-Site Request Forgery (CSRF) controls on Streamable HTTP transport enables attackers to forge or replay unauthorized requests.
 
 **Note: Out of scope for all HTTP APIs.**
 
