@@ -781,7 +781,32 @@ Improper validation of file paths or tool arguments enables access to or exfiltr
 
 Attackers embed hidden malicious instructions within data sources (databases, documents, API responses) that MCP servers retrieve and provide to LLMs, causing the poisoned content to execute as commands when processed, effectively achieving persistent prompt injection through trusted data channels rather than direct user input. Unlike Prompt Injection (MCP-12): Malicious instructions are embedded in backend data sources, not user-provided prompts. Unlike Tool Poisoning (MCP-2): Poisons the actual data/content retrieved by tools, not the tool definitions themselves. This attack surface may be expanded with transitive or composed MCP server calls.
 
-**Note: Mitigations for this risk are out of scope for the AI Tool specification. This threat will be addressed in the AI Agent specification.**
+**Note:** *Mitigation of the resource-content-poisoning attack* — treating retrieved/external content as untrusted so it cannot act as an instruction — is a **consumer-side** control performed by the AI Agent (AI Agent Specification §3.1.2; Agent–Tool Interface Contract C2 Agent obligation), not by the AI Tool. Indirect prompt injection cannot be prevented by the producer marking its output: a benign Tool cannot reliably distinguish embedded instructions from data, and a malicious Tool will not tag honestly (CoSAI MCP Security §6.2, MCP-T4). The AI Tool carries only the narrow, verifiable honest-behaviour duty in §6.1.1 below.
+
+### 6.1.1 No Embedded Model-Directed Control Directives
+
+#### Description
+
+The AI Tool MUST NOT embed model-directed control directives or instructions within the content it returns to the Agent — including operation results, retrieved/resource content, and its own tool/function descriptions and schemas. The AI Tool MUST NOT rely on the model or Agent to enforce the Tool's own security constraints; it MUST validate its own inputs and enforce its own authorization independently of the model. The AI Tool MAY provide provenance or "data vs. control" tags as defense-in-depth, but these MUST NOT be relied upon as a security boundary.
+
+#### Rationale
+
+Indirect prompt injection is not preventable by the producer marking its output (a benign Tool cannot reliably separate instructions from data in arbitrary content, and a malicious Tool will not tag honestly), so the load-bearing defence is the Agent treating all Tool Output as untrusted (Agent–Tool Interface Contract C2 Agent obligation; AI Agent Specification §3.1.2). The Tool's residual, testable duty is simply not to be an injection vector itself and not to delegate its own security to the model — consistent with CoSAI MCP Security §3.2.8: "Tool implementations should not rely on the LLM to perform security-critical operations, validate inputs, or enforce constraints."
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | Review tool/function descriptions, schemas, and output-construction code to confirm no imperative instructions directed at the model are embedded (e.g., "ignore previous instructions", role/turn markers, tool-chaining commands). Confirm input validation and authorization are enforced in Tool code and do not depend on model cooperation. |
+| Dynamic | Exercise the Tool and inspect returned content, descriptions, and schemas for embedded model-directed instructions or control tokens. Confirm the Tool rejects invalid or unauthorized requests regardless of any accompanying natural-language content. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
 
 ## 6.2 Typosquatting/Confusion Attacks 
 

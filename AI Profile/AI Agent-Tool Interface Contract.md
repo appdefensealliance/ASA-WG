@@ -37,10 +37,10 @@ Enacts the confused-deputy defense across the boundary. Tool-side obligations ar
 
 ## C2 — Data / Control Separation
 
-* **Tool obligation:** The Tool MUST return external/retrieved content tagged with provenance and segregated from tool-control fields, so that the Agent can distinguish data from instructions. The Tool MUST NOT embed control directives intended for the model within operation results.  
-* **Agent obligation:** The Agent MUST treat all Tool Output as untrusted data and MUST NOT interpret it as instructions. Tool Output MUST NOT, on its own, cause the Agent to invoke a Sensitive Action without fresh user consent (C3).
+* **Tool obligation:** The Tool MUST NOT embed model-directed control directives or instructions within its operation results, tool/function descriptions, or schemas, and MUST NOT rely on the model or Agent to enforce the Tool's own security constraints. The Tool SHOULD, where feasible, return structured/typed output and MAY tag external/retrieved content with provenance as defense-in-depth; producer-supplied tags MUST NOT be relied upon by the Agent as a security boundary (a malicious or compromised Tool will not tag honestly).  
+* **Agent obligation (load-bearing):** The Agent MUST treat all Tool Output — including operation results, retrieved/resource content, and tool/function descriptions and schemas — as untrusted data and MUST NOT interpret it as instructions. Tool Output MUST NOT, on its own, cause the Agent to invoke a Sensitive Action without fresh user consent (C3).
 
-Enacts the defense against indirect prompt injection delivered through tool content. Tool-side provenance tagging is specified in AI Tool Specification §6.1; Agent-side handling is tested in AI Agent Specification §3.1.2 against the Malicious Reference Tool.
+Enacts the defense against indirect prompt injection delivered through tool content. This is primarily a **consumer-side** control: the load-bearing defense is the Agent obligation above, tested in AI Agent Specification §3.1.2 against the Malicious Reference Tool. AI Tool Specification §6.1 correctly defers *mitigation* of resource-content poisoning to the Agent; the narrow Tool-side honest-behaviour duty is specified in AI Tool Specification §6.1.1. This allocation follows CoSAI MCP Security §3.2.3/§3.2.8 and OWASP Top 10 for Agentic Applications 2026 ASI01/ASI02, which assign data/control separation to the agent/host; no reviewed framework imposes a producer-side provenance duty.
 
 ## C3 — Consent for Consequential Actions
 
