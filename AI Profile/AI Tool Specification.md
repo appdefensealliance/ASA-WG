@@ -494,30 +494,36 @@ In the MCP architecture, the session token is the "keys to the kingdom." If a de
 
 Missing or insufficient human-in-the-loop consent checks can allow an MCP server to take risky actions not authorized by the user.
 
-### 2.1.1 Req TBD
+### 2.1.1 Server-Side Consent Backstop for Sensitive Actions
 
 #### Description
 
-TBD
+Primary responsibility for presenting, obtaining, and enforcing user consent for a Sensitive Action rests with the AI Agent (AI Agent Specification §2.2; Agent–Tool Interface Contract C3). As a fail-closed backstop that does not rely on the Agent having obtained consent, the AI Tool MUST, for any operation it classifies as a Sensitive Action:
+
+* **Classify sensitivity and reversibility.** Identify which exposed operations are Sensitive Actions — those that are irreversible, transfer value or money, mutate or share user data beyond the current task, or grant or expand access.
+* **Confirm via server-side elicitation, or fail closed.** Use elicitation (or an equivalent server-side confirmation) to request explicit user confirmation of the Sensitive Action, or enforce the use of clients configured so that unprivileged users cannot disable confirmation prompts. The confirmation message MUST clearly and unambiguously state the security implications of the action.
+* **Not defer to the Agent alone.** The Tool MUST NOT treat an Agent-supplied claim that "consent was obtained" as sufficient; it MUST fail closed when it cannot establish that the user confirmed the specific action.
+
+**ADA extensions (future revisions).** The Tool MAY emit a machine-readable `consent_required` signal for Sensitive Actions (an ADA construct; candidate alignment with MCP tool annotations). A consent assertion cryptographically bound to the verified user identity and operation parameters — enabling the Tool to verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format** (tracked with the identity-propagation work) and is not required in this revision.
 
 #### Rationale
 
-TBD
+An AI Tool is invoked by an Agent it cannot fully trust: a confused or compromised Agent may drive a Sensitive Action the user never approved — the confused-deputy case exercised by the ADA Malicious Reference Agent. Consent presentation and enforcement are therefore primarily an Agent/host duty, but the Tool retains a fail-closed backstop so a malicious Agent cannot cause an irreversible action without a user gate. Server-side elicitation is the consent mechanism endorsed for MCP servers (CoSAI MCP Security §3.2.9; OWASP "A Practical Guide for Secure MCP Server Development" §4). User-approval *fatigue* (habituation from excessive prompts) remains an Agent-side concern (see §9.2).
 
 #### Audit
 
-| Method  | Description |
-| :------ | :---------- |
-| Static  |             |
-| Dynamic |             |
+| Method | Description |
+| :---- | :---- |
+| Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications. |
+| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. |
 
 #### Comments
 
-| Scope  | Comment |
-| :----- | :------ |
-| Local  |         |
-| Mobile |         |
-| Remote |         |
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
 
 ## 2.2 Improper Multitenancy
 
@@ -1041,7 +1047,7 @@ Overly permissive tools may expose the user’s data, or result in actions which
 
 Flooding users with excessive consent or permission prompts, causing habituation and leading to blind approval of potentially dangerous or malicious actions.
 
-**Note: User approval and user approval fatigue is out of scope for the AI Tool specification and is addressed in the AI Agent specification.**
+**Note:** User approval *fatigue* (habituation from an excessive volume of prompts) is out of scope for the AI Tool specification and is addressed in the AI Agent specification. The AI Tool's fail-closed consent backstop for Sensitive Actions is specified in §2.1.1.
 
 
 # 10 Resource Management/Rate Limiting Absence
