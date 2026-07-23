@@ -177,6 +177,10 @@ AI Tools may be deployed in several different environments and provide connectiv
 
 ![][image2]
 
+## Integration with Conventional Security
+
+Every web-accessible or HTTP-based AI Tool API must comply with this specification **in addition to** the CASA (Cloud App Security Assessment) specification. This ensures that conventional application security controls—such as anti-CSRF protections for authenticated functionality—are enforced alongside AI-specific controls.
+
 # Relationship To CoSAI Model Context Protocol (MCP) Security
 
 The following security specification and testing guide is based upon the Model Context Protocol (MCP) Security paper published by CoSAI. Each threat category includes one or more MCP or conventional security (CS) threats. All threats follow the same numbering convention as the MCP security paper, thus MCP-1 references either the MCP specific or MCP contextualized threat \#1. CS-16 refers to the Conventional Security threat 16\. For each threat, the App Defense Alliance created a set of requirements and audit test cases. For some conventional security threats, the existing Mobile Application Security profile or the Web Application Security Profile may be referenced.
@@ -873,18 +877,18 @@ Exploiting insecure network transport (lack of TLS, improper certificate validat
 
 #### Description
 
-To mitigate Man-in-the-Middle (MitM) and message integrity risks, the system must enforce a unified secure transport layer and message-level protection. For remote connections, communication must be encrypted using TLS 1.3+ with strict X.509 certificate and trust chain validation (rejecting plaintext, expired, or untrusted endpoints). For local connections, the system must bypass the network stack in favor of secure Inter-Process Communication (IPC)—such as Unix domain sockets or Windows Named Pipes—protected by strict OS-level permissions. 
+To mitigate Man-in-the-Middle (MitM) and message integrity risks, the system must enforce a unified secure transport layer and message-level protection. For remote connections, communication must be encrypted using TLS 1.3+ with strict X.509 certificate and trust chain validation (rejecting plaintext, expired, or untrusted endpoints). For local connections, the system SHOULD prefer secure Inter-Process Communication (IPC)—such as Unix domain sockets or Windows Named Pipes—protected by strict OS-level permissions. Where a local HTTP/Streamable HTTP transport is used instead, the server MUST bind exclusively to the loopback interface (`localhost` / `127.0.0.1`) and MUST NOT bind to all network interfaces (`0.0.0.0`). 
 
 #### Rationale
 
-This requirement establishes a multi-layered defense. High-grade encryption and secure IPC prevent unauthorized eavesdropping on the wire or within the host. Strict certificate validation ensures the client is communicating with the legitimate server, rather than an attacker's proxy. Lastly, message-level signing guarantees that even if a transport-level vulnerability exists, the underlying tool calls and responses remain immutable and can only be executed once.
+This requirement establishes a multi-layered defense. High-grade encryption, secure IPC, and loopback-only binding for local HTTP transports prevent unauthorized eavesdropping on the wire, within the host, or from other hosts on the network. Strict certificate validation ensures the client is communicating with the legitimate server, rather than an attacker's proxy. Lastly, message-level signing guarantees that even if a transport-level vulnerability exists, the underlying tool calls and responses remain immutable and can only be executed once.
 
 #### Audit
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Protocol Check:** Inspect configuration files (e.g., `server_config.json`) to ensure the minimum TLS version is pinned to `1.3` and that legacy ciphers are disabled. **Validation Check:** Verify that the client implementation does not include flags that bypass certificate validation (e.g., `NODE_TLS_REJECT_UNAUTHORIZED=0` or `verify=False`). **IPC Check:** Review the transport initialization code to ensure local deployments use socket paths or named pipes rather than `localhost` or `127.0.0.1`.  |
-| Dynamic | **Downgrade Attack Test:** Attempt to initiate a connection using TLS 1.2 or lower; the server must refuse the handshake. **Trust Chain Test:** Point the MCP client to a server with a self-signed or expired certificate; the client must terminate the connection immediately. **Replay Attack Test:** Intercept a valid tool call and attempt to resend it to the server; the server must reject the message as a duplicate based on the nonce/timestamp. **Local Isolation Test:** Attempt to read from the IPC socket or pipe using a secondary, non-privileged system user; the operating system should deny access based on the file permissions.  |
+| Static | **Protocol Check:** Inspect configuration files (e.g., `server_config.json`) to ensure the minimum TLS version is pinned to `1.3` and that legacy ciphers are disabled. **Validation Check:** Verify that the client implementation does not include flags that bypass certificate validation (e.g., `NODE_TLS_REJECT_UNAUTHORIZED=0` or `verify=False`). **IPC Check:** Review the transport initialization code to ensure local deployments use socket paths, named pipes, or bind exclusively to `localhost` / `127.0.0.1` rather than all network interfaces (`0.0.0.0`).  |
+| Dynamic | **Downgrade Attack Test:** Attempt to initiate a connection using TLS 1.2 or lower; the server must refuse the handshake. **Trust Chain Test:** Point the MCP client to a server with a self-signed or expired certificate; the client must terminate the connection immediately. **Replay Attack Test:** Intercept a valid tool call and attempt to resend it to the server; the server must reject the message as a duplicate based on the nonce/timestamp. **Local Isolation Test:** For IPC transports, attempt to read from the IPC socket or pipe using a secondary, non-privileged system user; the operating system should deny access based on the file permissions. For local HTTP transports, confirm the server is bound only to the loopback interface by attempting to reach it from another host on the network (e.g., via the machine's LAN IP or `0.0.0.0`); the connection must be refused.  |
 
 #### Comments
 
@@ -922,13 +926,27 @@ Improper management of transport descriptors (e.g., stdio) allows attackers to h
 
 Lack of Cross-Site Request Forgery (CSRF) controls on Streamable HTTP transport enables attackers to forge or replay unauthorized requests.
 
-**Note: Out of scope for all HTTP APIs.**
+**Note: This risk is mitigated through the CASA certification (see CASA 3.1.5 and 3.2.2).**
 
 ### 7.7 CORS/Origin Policy Bypass
-
 Missing or weak cross-origin policies allow unauthorized data leaks via cross-origin resource sharing (CORS) in browser-based or web transports.
 
-**Note: Out of scope for all HTTP APIs.**
+#### 7.7.1 Validate Origin Header on HTTP Transports
+##### Description
+The AI Tool must validate the `Origin` header on all incoming HTTP connections to prevent DNS rebinding attacks and unauthorized cross-origin access.
+##### Rationale
+DNS rebinding allows an attacker's webpage to interact with local or internal MCP servers. Validating the `Origin` header is a mandatory requirement of the MCP transport specification to prevent these attacks.
+##### Audit
+| Method | Description |
+| :---- | :---- |
+| Static | **Origin Check:** Verify that the HTTP server configuration explicitly validates the `Origin` header against an approved allowlist and rejects mismatched requests. |
+| Dynamic | **Rebinding Test:** Attempt to connect to the server using an unexpected or forged `Origin` header; the server must reject the connection. |
+##### Comments
+| Scope | Comment |
+| :---- | :---- |
+| Local | In Scope |
+| Mobile | In Scope |
+| Remote | In Scope |
 
 ## 7.8 Replay Attacks/Session Hijacking (Duplicate)
 
@@ -1017,7 +1035,7 @@ Attackers compromise MCP dependencies or update channels (e.g., “rug pull” a
 
 #### Description
 
-The AI Tool must implement strict version pinning for all third-party plugins and dependencies using strict equality (e.g., "1.4.0" rather than ">=1.4.0"). All model weights and tool packages must have valid digital signatures and be verified against known cryptographic hashes.
+The AI Tool must implement strict dependency pinning with hash-based verification for all third-party plugins and dependencies, rather than relying solely on version ranges or strict equality. All model weights and tool packages must have valid digital signatures and be verified against known cryptographic hashes.
 
 #### Rationale
 
@@ -1028,7 +1046,7 @@ Resource pinning ensures that updates are a deliberate developer decision, preve
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Check Dependency Files:** Verify that package.json or requirements.txt use strict version pinning. Review the Software Bill of Materials (SBOM) for unmitigated vulnerabilities. |
+| Static | **Check Dependency Files:** Verify that dependency manifests (e.g., package-lock.json, requirements.txt with hashes) use hash-based pinning. Review the Software Bill of Materials (SBOM) for unmitigated vulnerabilities. |
 | Dynamic | **Update Verification:** Attempt to point the tool to a mocked update repository with a mismatched signature to confirm the update is rejected. |
 
 #### Comments
@@ -1183,7 +1201,7 @@ In agentic and MCP-based architectures, the complexity of interactions between u
 
 | Method  | Description |
 | :------ | :--------------------------------------------------------------------- |
-| Static  | **Verify Structured Format:** Identify all logging statements (e.g., `console.log`, `logger.info`, `winston`) and confirm they utilize a structured format like JSON objects or key-value pairs rather than simple string concatenation. <br><br>**Identify External Tool Execution Paths:** Review the code for AI tool integration and MCP server implementations to identify all functions that execute external tools or access data resources. <br><br>**Check Telemetry Coverage:** Verify that each execution path includes a logging call capturing the identity of the calling agent, the specific tool requested, the input parameters, and the success/failure status. <br><br>**Inspect Metadata and Correlation:** Confirm that critical events (tool execution, API requests, and authentication logic) are logged with relevant metadata, including timestamps and correlation IDs. <br><br>**Audit for Reasoning Traces:** Verify if the "Intent" of the agent is logged to provide an auditable "Reasoning Trace" explaining why an agent took a specific action. <br><br>**Flag Silent Failures:** Identify and flag any instances where a tool is invoked without telemetry or where error states are handled "silently" without an audit entry. <br><br>**Flag Unstructured Calls:** Identify and flag any instances of "print" statements or unstructured logger calls used for operational data. |
+| Static  | **Verify Structured Format:** Identify all logging statements (e.g., `console.log`, `logger.info`, `winston`) and confirm they utilize a structured format like JSON objects or key-value pairs rather than simple string concatenation. <br><br>**Identify External Tool Execution Paths:** Review the code for AI tool integration and MCP server implementations to identify all functions that execute external tools or access data resources. <br><br>**Check Telemetry Coverage:** Verify that each execution path includes a logging call capturing the identity of the calling agent, the specific tool requested, the input parameters, and the success/failure status. <br><br>**Inspect Metadata and Correlation:** Confirm that critical events (tool execution, API requests, and authentication logic) are logged with relevant metadata, including timestamps and correlation IDs.  <br><br>**Flag Silent Failures:** Identify and flag any instances where a tool is invoked without telemetry or where error states are handled "silently" without an audit entry. <br><br>**Flag Unstructured Calls:** Identify and flag any instances of "print" statements or unstructured logger calls used for operational data. |
 | Dynamic | **Generate Agent Activity:** Interact with the system through the AI agent to trigger various tool calls, API requests, and authentication events. <br><br>**Validate Log Capture:** Inspect the generated logs to confirm that the interaction was captured in its entirety. <br><br>**Confirm Machine-Readability:** Verify that the output logs are valid structured data (e.g., valid JSON) that can be parsed by automated security tools.  |
 |         |   |
 
