@@ -217,8 +217,8 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 | Term             | Definition |
 | :--------------- | :--------- |
-| sensitive action |            |
-| AI model         |            |
+| sensitive action | An operation that is irreversible, transfers value or money, mutates or shares user data beyond the scope of the current task, or grants or expands access. Aligned with "Sensitive Action" in the AI Agent–Tool Interface Contract. |
+| AI model | A statistical model — such as a large language model (LLM) — trained on data to perform inference (e.g., generating text, classifying inputs, or producing embeddings), that an AI Agent invokes or an AI Tool may use internally. |
 
 # 1 Improper Authentication and Identity Management
 ## 1.1 Identity Spoofing
@@ -229,7 +229,7 @@ Weak or misconfigured authentication in MCP deployments could allow attackers to
 
 #### Description
 
-The MCP server must verify the identity of the MCP host (client) before executing any tools or providing resources. For remote connections (SSE), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
+The MCP server must verify the identity of the MCP host (client) before executing any tools or providing resources. For remote connections (Streamable HTTP), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
 
 #### Rationale
 
@@ -239,7 +239,7 @@ Without identity verification, an attacker could impersonate a legitimate AI age
 
 | Method | Description |
 | :---- | :---- |
-| Static |  **Identify Transport Setup:** Search the MCP server initialization and transport setup code to determine the communication method (e.g., SSE, Stdio). <br><br>**Verify Identity Validation:** Identify where the server validates the 'Authorization' header or client certificates during the handshake or request phase. <br><br>**Check Cryptographic Binding:** Verify that there is a cryptographic binding between the validated identity and the established session to prevent hijacking. <br><br>**Flag Authentication Gaps:** Flag any server implementation that executes tool calls or provides resources without an explicit, successful authentication check.  |
+| Static |  **Identify Transport Setup:** Search the MCP server initialization and transport setup code to determine the communication method (e.g., Streamable HTTP, Stdio). <br><br>**Verify Identity Validation:** Identify where the server validates the 'Authorization' header or client certificates during the handshake or request phase. <br><br>**Check Cryptographic Binding:** Verify that there is a cryptographic binding between the validated identity and the established session to prevent hijacking. <br><br>**Flag Authentication Gaps:** Flag any server implementation that executes tool calls or provides resources without an explicit, successful authentication check.  |
 | Dynamic | **Attempt Unauthenticated Access:** Try to connect to the MCP server or trigger a tool call without providing any authentication credentials to ensure the request is rejected. <br><br>**Test Invalid Credentials:** Provide expired, malformed, or incorrect tokens/keys to verify that the server correctly denies access. <br><br>**Verify Session Persistence:** Ensure that once a session is authenticated, the identity remains consistent and cannot be swapped mid-session.  |
 
 #### Comments
@@ -358,7 +358,7 @@ Attackers intercept, reuse, or hijack authentication tokens or session identifie
 
 #### Description
 
-For persistent or stateful transports (e.g., SSE, WebSockets), the MCP server must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
+For persistent or stateful transports (e.g., Streamable HTTP), the MCP server must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
 
 #### Rationale
 
@@ -368,7 +368,7 @@ If an attacker captures a valid MCP tool-call request, they could "replay" it la
 
 | Method | Description |
 | :---- | :---- |
-| Static |  **Examine Session Management:** Review the session management logic within the MCP transport layer (e.g., SSE, WebSockets). <br><br>**Identify Expiration Timers:** Verify the implementation of an expiration timer (TTL) for active sessions to ensure they are terminated after a defined period of inactivity. <br><br>**Check Freshness Validation:** Confirm the server validates 'timestamp' or 'nonce' fields within incoming JSON-RPC objects to prevent processing stale or duplicate requests.  |
+| Static |  **Examine Session Management:** Review the session management logic within the MCP transport layer (e.g., Streamable HTTP). <br><br>**Identify Expiration Timers:** Verify the implementation of an expiration timer (TTL) for active sessions to ensure they are terminated after a defined period of inactivity. <br><br>**Check Freshness Validation:** Confirm the server validates 'timestamp' or 'nonce' fields within incoming JSON-RPC objects to prevent processing stale or duplicate requests.  |
 | Dynamic | **Verify Inactivity Timeouts:** Establish a session and remain inactive to verify the server automatically terminates the connection after the defined timeout period. <br><br>**Test Replay Resistance:** Attempt to capture and resend a previously successful JSON-RPC tool-call request to ensure the server rejects the duplicate based on an expired timestamp or used nonce. <br><br>**Validate Session Termination:** Ensure that once a session is terminated or timed out, any subsequent requests using that session identifier are strictly rejected.  |
 
 #### Comments
@@ -498,30 +498,36 @@ In the MCP architecture, the session token is the "keys to the kingdom." If a de
 
 Missing or insufficient human-in-the-loop consent checks can allow an MCP server to take risky actions not authorized by the user.
 
-### 2.1.1 Req TBD
+### 2.1.1 Server-Side Consent Backstop for Sensitive Actions
 
 #### Description
 
-TBD
+Primary responsibility for presenting, obtaining, and enforcing user consent for a Sensitive Action rests with the AI Agent (AI Agent Specification §2.2; Agent–Tool Interface Contract C3). As a fail-closed backstop that does not rely on the Agent having obtained consent, the AI Tool MUST, for any operation it classifies as a Sensitive Action:
+
+* **Classify sensitivity and reversibility.** Identify which exposed operations are Sensitive Actions — those that are irreversible, transfer value or money, mutate or share user data beyond the current task, or grant or expand access.
+* **Confirm via server-side elicitation, or fail closed.** Use elicitation (or an equivalent server-side confirmation) to request explicit user confirmation of the Sensitive Action, or enforce the use of clients configured so that unprivileged users cannot disable confirmation prompts. The confirmation message MUST clearly and unambiguously state the security implications of the action.
+* **Not defer to the Agent alone.** The Tool MUST NOT treat an Agent-supplied claim that "consent was obtained" as sufficient; it MUST fail closed when it cannot establish that the user confirmed the specific action.
+
+**ADA extensions (future revisions).** The Tool MAY emit a machine-readable `consent_required` signal for Sensitive Actions (an ADA construct; candidate alignment with MCP tool annotations). A consent assertion cryptographically bound to the verified user identity and operation parameters — enabling the Tool to verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format** (tracked with the identity-propagation work) and is not required in this revision.
 
 #### Rationale
 
-TBD
+An AI Tool is invoked by an Agent it cannot fully trust: a confused or compromised Agent may drive a Sensitive Action the user never approved — the confused-deputy case exercised by the ADA Malicious Reference Agent. Consent presentation and enforcement are therefore primarily an Agent/host duty, but the Tool retains a fail-closed backstop so a malicious Agent cannot cause an irreversible action without a user gate. Server-side elicitation is the consent mechanism endorsed for MCP servers (CoSAI MCP Security §3.2.9; OWASP "A Practical Guide for Secure MCP Server Development" §4). User-approval *fatigue* (habituation from excessive prompts) remains an Agent-side concern (see §9.2).
 
 #### Audit
 
-| Method  | Description |
-| :------ | :---------- |
-| Static  |             |
-| Dynamic |             |
+| Method | Description |
+| :---- | :---- |
+| Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications. |
+| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. |
 
 #### Comments
 
-| Scope  | Comment |
-| :----- | :------ |
-| Local  |         |
-| Mobile |         |
-| Remote |         |
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
 
 ## 2.2 Improper Multitenancy
 
@@ -785,7 +791,32 @@ Improper validation of file paths or tool arguments enables access to or exfiltr
 
 Attackers embed hidden malicious instructions within data sources (databases, documents, API responses) that MCP servers retrieve and provide to LLMs, causing the poisoned content to execute as commands when processed, effectively achieving persistent prompt injection through trusted data channels rather than direct user input. Unlike Prompt Injection (MCP-12): Malicious instructions are embedded in backend data sources, not user-provided prompts. Unlike Tool Poisoning (MCP-2): Poisons the actual data/content retrieved by tools, not the tool definitions themselves. This attack surface may be expanded with transitive or composed MCP server calls.
 
-**Note: Mitigations for this risk are out of scope for the AI Tool specification. This threat will be addressed in the AI Agent specification.**
+**Note:** *Mitigation of the resource-content-poisoning attack* — treating retrieved/external content as untrusted so it cannot act as an instruction — is a **consumer-side** control performed by the AI Agent (AI Agent Specification §3.1.2; Agent–Tool Interface Contract C2 Agent obligation), not by the AI Tool. Indirect prompt injection cannot be prevented by the producer marking its output: a benign Tool cannot reliably distinguish embedded instructions from data, and a malicious Tool will not tag honestly (CoSAI MCP Security §6.2, MCP-T4). The AI Tool carries only the narrow, verifiable honest-behaviour duty in §6.1.1 below.
+
+### 6.1.1 No Embedded Model-Directed Control Directives
+
+#### Description
+
+The AI Tool MUST NOT embed model-directed control directives or instructions within the content it returns to the Agent — including operation results, retrieved/resource content, and its own tool/function descriptions and schemas. The AI Tool MUST NOT rely on the model or Agent to enforce the Tool's own security constraints; it MUST validate its own inputs and enforce its own authorization independently of the model. The AI Tool MAY provide provenance or "data vs. control" tags as defense-in-depth, but these MUST NOT be relied upon as a security boundary.
+
+#### Rationale
+
+Indirect prompt injection is not preventable by the producer marking its output (a benign Tool cannot reliably separate instructions from data in arbitrary content, and a malicious Tool will not tag honestly), so the load-bearing defence is the Agent treating all Tool Output as untrusted (Agent–Tool Interface Contract C2 Agent obligation; AI Agent Specification §3.1.2). The Tool's residual, testable duty is simply not to be an injection vector itself and not to delegate its own security to the model — consistent with CoSAI MCP Security §3.2.8: "Tool implementations should not rely on the LLM to perform security-critical operations, validate inputs, or enforce constraints."
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | Review tool/function descriptions, schemas, and output-construction code to confirm no imperative instructions directed at the model are embedded (e.g., "ignore previous instructions", role/turn markers, tool-chaining commands). Confirm input validation and authorization are enforced in Tool code and do not depend on model cooperation. |
+| Dynamic | Exercise the Tool and inspect returned content, descriptions, and schemas for embedded model-directed instructions or control tokens. Confirm the Tool rejects invalid or unauthorized requests regardless of any accompanying natural-language content. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
 
 ## 6.2 Typosquatting/Confusion Attacks 
 
@@ -892,7 +923,9 @@ Improper management of transport descriptors (e.g., stdio) allows attackers to h
 **Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
 
 ## 7.6 CSRF Protection Missing
-Lack of Cross-Site Request Forgery (CSRF) controls on HTTP/SSE transports enables attackers to forge or replay unauthorized requests.
+
+Lack of Cross-Site Request Forgery (CSRF) controls on Streamable HTTP transport enables attackers to forge or replay unauthorized requests.
+
 **Note: This risk is mitigated through the CASA certification (see CASA 3.1.5 and 3.2.2).**
 
 ### 7.7 CORS/Origin Policy Bypass
@@ -1057,7 +1090,7 @@ Overly permissive tools may expose the user’s data, or result in actions which
 
 Flooding users with excessive consent or permission prompts, causing habituation and leading to blind approval of potentially dangerous or malicious actions.
 
-**Note: User approval and user approval fatigue is out of scope for the AI Tool specification and is addressed in the AI Agent specification.**
+**Note:** User approval *fatigue* (habituation from an excessive volume of prompts) is out of scope for the AI Tool specification and is addressed in the AI Agent specification. The AI Tool's fail-closed consent backstop for Sensitive Actions is specified in §2.1.1.
 
 
 # 10 Resource Management/Rate Limiting Absence

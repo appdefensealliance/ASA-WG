@@ -226,7 +226,7 @@ Assurance level 0 (self assessment) and Assurance level 1 (Verified Self Assessm
 
 ### Description
 
-The AI Tool must verify the identity of the client before executing any tools or providing resources. For remote connections (SSE), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
+The AI Tool must verify the identity of the client before executing any tools or providing resources. For remote connections (Streamable HTTP), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
 
 **This requirement only applies to remote servers. Local and mobile servers are out of scope.**
 
@@ -244,7 +244,7 @@ Without identity verification, an attacker could impersonate a legitimate AI age
 **Test Procedure**  
 **AL0, AL1:**
 
-1. **Identify Transport Setup:** Search the AI Tool initialization and transport setup code to determine the communication method (e.g., SSE, Stdio).  
+1. **Identify Transport Setup:** Search the AI Tool initialization and transport setup code to determine the communication method (e.g., Streamable HTTP, Stdio).  
 2. **Verify Identity Validation:** Identify where the server validates the 'Authorization' header or client certificates during the handshake or request phase.  
 3. **Check Cryptographic Binding:** Verify that there is a cryptographic binding between the validated identity and the established session to prevent hijacking.  
 4. **Flag Authentication Gaps:** Flag any server implementation that executes tool calls or provides resources without an explicit, successful authentication check.
@@ -272,7 +272,7 @@ Without identity verification, an attacker could impersonate a legitimate AI age
 
 ### Description
 
-For persistent or stateful transports (e.g., SSE, WebSockets), the AI Tool must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
+For persistent or stateful transports (e.g., Streamable HTTP), the AI Tool must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
 
 ### Rationale
 
@@ -290,7 +290,7 @@ If an attacker captures a valid AI Tool tool-call request, they could "replay" i
 
 **AL0, AL1:**
 
-1. **Examine Session Management:** Review the session management logic within the AI Tool transport layer (e.g., SSE, WebSockets).  
+1. **Examine Session Management:** Review the session management logic within the AI Tool transport layer (e.g., Streamable HTTP).  
 2. **Identify Expiration Timers:** Verify the implementation of an expiration timer (TTL) for active sessions to ensure they are terminated after a defined period of inactivity.  
 3. **Check Freshness Validation:** Confirm the server validates 'timestamp' or 'nonce' fields within incoming JSON-RPC objects to prevent processing stale or duplicate requests.
 

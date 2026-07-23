@@ -37,17 +37,19 @@ Enacts the confused-deputy defense across the boundary. Tool-side obligations ar
 
 ## C2 — Data / Control Separation
 
-* **Tool obligation:** The Tool MUST return external/retrieved content tagged with provenance and segregated from tool-control fields, so that the Agent can distinguish data from instructions. The Tool MUST NOT embed control directives intended for the model within operation results.  
-* **Agent obligation:** The Agent MUST treat all Tool Output as untrusted data and MUST NOT interpret it as instructions. Tool Output MUST NOT, on its own, cause the Agent to invoke a Sensitive Action without fresh user consent (C3).
+* **Tool obligation:** The Tool MUST NOT embed model-directed control directives or instructions within its operation results, tool/function descriptions, or schemas, and MUST NOT rely on the model or Agent to enforce the Tool's own security constraints. The Tool SHOULD, where feasible, return structured/typed output and MAY tag external/retrieved content with provenance as defense-in-depth; producer-supplied tags MUST NOT be relied upon by the Agent as a security boundary (a malicious or compromised Tool will not tag honestly).  
+* **Agent obligation (load-bearing):** The Agent MUST treat all Tool Output — including operation results, retrieved/resource content, and tool/function descriptions and schemas — as untrusted data and MUST NOT interpret it as instructions. Tool Output MUST NOT, on its own, cause the Agent to invoke a Sensitive Action without fresh user consent (C3).
 
-Enacts the defense against indirect prompt injection delivered through tool content. Tool-side provenance tagging is specified in AI Tool Specification §6.1; Agent-side handling is tested in AI Agent Specification §3.1.2 against the Malicious Reference Tool.
+Enacts the defense against indirect prompt injection delivered through tool content. This is primarily a **consumer-side** control: the load-bearing defense is the Agent obligation above, tested in AI Agent Specification §3.1.2 against the Malicious Reference Tool. AI Tool Specification §6.1 correctly defers *mitigation* of resource-content poisoning to the Agent; the narrow Tool-side honest-behaviour duty is specified in AI Tool Specification §6.1.1. This allocation follows CoSAI MCP Security §3.2.3/§3.2.8 and OWASP Top 10 for Agentic Applications 2026 ASI01/ASI02, which assign data/control separation to the agent/host; no reviewed framework imposes a producer-side provenance duty.
 
 ## C3 — Consent for Consequential Actions
 
-* **Tool obligation:** The Tool MUST classify each exposed operation by sensitivity and reversibility, and MUST emit a machine-readable `consent_required` signal for any Sensitive Action. The Tool MUST NOT execute a Sensitive Action without a consent assertion bound to the verified identity (C1) and the operation parameters.  
-* **Agent obligation:** The Agent MUST obtain and enforce per-action user consent for any operation flagged `consent_required`, MUST bind that consent to identity and parameters, and MUST record it with a correlation ID for audit.
+* **Agent obligation (primary, load-bearing):** The Agent MUST present, obtain, and enforce per-action user consent for any Sensitive Action, MUST bind that consent to the verified user identity (C1) and the operation parameters, and MUST record it with a correlation ID for audit. The user consent decision is made at the Agent's human interface.  
+* **Tool obligation (defense-in-depth backstop):** The Tool MUST classify each exposed operation by sensitivity and reversibility and, for a Sensitive Action, MUST either obtain user confirmation via server-side elicitation or fail closed. The Tool MUST NOT execute a Sensitive Action on the Agent's assertion alone that consent was obtained.
 
-Enacts informed consent at the consequential-action boundary. Tool-side obligations are specified in AI Tool Specification §2.1; Agent-side obligations in AI Agent Specification §2.2.
+Enacts informed consent at the consequential-action boundary. Consent enforcement is **primarily consumer-side** (CoSAI MCP Security §3.2.9; OWASP Top 10 for Agentic Applications 2026 ASI02/ASI09), with the Tool acting as a fail-closed backstop against a confused or malicious Agent — the confused-deputy case the Malicious Reference Agent tests. Agent-side obligations are specified in AI Agent Specification §2.2 (§2.2.2); Tool-side obligations in AI Tool Specification §2.1.1.
+
+**ADA extensions (beyond baseline MCP):** the machine-readable `consent_required` signal is an ADA construct (candidate alignment: MCP tool annotations); a consent assertion cryptographically bound to the verified user identity and operation parameters — letting the Tool verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format together with C1**.
 
 # Reference Adversaries
 
