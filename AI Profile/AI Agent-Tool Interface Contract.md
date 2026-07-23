@@ -44,10 +44,12 @@ Enacts the defense against indirect prompt injection delivered through tool cont
 
 ## C3 — Consent for Consequential Actions
 
-* **Tool obligation:** The Tool MUST classify each exposed operation by sensitivity and reversibility, and MUST emit a machine-readable `consent_required` signal for any Sensitive Action. The Tool MUST NOT execute a Sensitive Action without a consent assertion bound to the verified identity (C1) and the operation parameters.  
-* **Agent obligation:** The Agent MUST obtain and enforce per-action user consent for any operation flagged `consent_required`, MUST bind that consent to identity and parameters, and MUST record it with a correlation ID for audit.
+* **Agent obligation (primary, load-bearing):** The Agent MUST present, obtain, and enforce per-action user consent for any Sensitive Action, MUST bind that consent to the verified user identity (C1) and the operation parameters, and MUST record it with a correlation ID for audit. The user consent decision is made at the Agent's human interface.  
+* **Tool obligation (defense-in-depth backstop):** The Tool MUST classify each exposed operation by sensitivity and reversibility and, for a Sensitive Action, MUST either obtain user confirmation via server-side elicitation or fail closed. The Tool MUST NOT execute a Sensitive Action on the Agent's assertion alone that consent was obtained.
 
-Enacts informed consent at the consequential-action boundary. Tool-side obligations are specified in AI Tool Specification §2.1; Agent-side obligations in AI Agent Specification §2.2.
+Enacts informed consent at the consequential-action boundary. Consent enforcement is **primarily consumer-side** (CoSAI MCP Security §3.2.9; OWASP Top 10 for Agentic Applications 2026 ASI02/ASI09), with the Tool acting as a fail-closed backstop against a confused or malicious Agent — the confused-deputy case the Malicious Reference Agent tests. Agent-side obligations are specified in AI Agent Specification §2.2 (§2.2.2); Tool-side obligations in AI Tool Specification §2.1.1.
+
+**ADA extensions (beyond baseline MCP):** the machine-readable `consent_required` signal is an ADA construct (candidate alignment: MCP tool annotations); a consent assertion cryptographically bound to the verified user identity and operation parameters — letting the Tool verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format together with C1**.
 
 # Reference Adversaries
 
