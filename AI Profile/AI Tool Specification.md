@@ -213,8 +213,8 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 | Term             | Definition |
 | :--------------- | :--------- |
-| sensitive action |            |
-| AI model         |            |
+| sensitive action | An operation that is irreversible, transfers value or money, mutates or shares user data beyond the scope of the current task, or grants or expands access. Aligned with "Sensitive Action" in the AI Agent–Tool Interface Contract. |
+| AI model | A statistical model — such as a large language model (LLM) — trained on data to perform inference (e.g., generating text, classifying inputs, or producing embeddings), that an AI Agent invokes or an AI Tool may use internally. |
 
 # 1 Improper Authentication and Identity Management
 ## 1.1 Identity Spoofing
