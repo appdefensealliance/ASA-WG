@@ -1,0 +1,39 @@
+name: Spec ↔ Test Guide consistency
+
+# Fails a PR when a Specification and its Test Guide drift apart: a requirement
+# with no test, or a test with no requirement. See scripts/spec-guide-lint.md.
+
+on:
+  pull_request:
+    paths:
+      - 'AI Profile/AI Tool Specification.md'
+      - 'AI Profile/AI Tool Testing Guide.md'
+      - 'MASA/MASA Specification.md'
+      - 'MASA/MASA Test Guide.md'
+      - 'CASA/CASA Specification.md'
+      - 'CASA/CASA Test Guide.md'
+      - 'scripts/spec_guide_lint.py'
+      - 'scripts/spec_guide_lint_baseline.json'
+      - '.github/workflows/spec-guide-consistency.yml'
+  push:
+    branches: [develop]
+    paths:
+      - 'AI Profile/AI Tool Specification.md'
+      - 'AI Profile/AI Tool Testing Guide.md'
+      - 'MASA/MASA Specification.md'
+      - 'MASA/MASA Test Guide.md'
+      - 'CASA/CASA Specification.md'
+      - 'CASA/CASA Test Guide.md'
+      - 'scripts/spec_guide_lint.py'
+      - 'scripts/spec_guide_lint_baseline.json'
+
+jobs:
+  spec-guide-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Lint Spec ↔ Test Guide pairs
+        run: python3 scripts/spec_guide_lint.py
