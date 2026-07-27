@@ -1,0 +1,76 @@
+{
+  "AI Tool": {
+    "untested": [
+      {
+        "id": "server side consent backstop for sensitive actions",
+        "label": "Server-Side Consent Backstop for Sensitive Actions",
+        "spec_line": 501
+      },
+      {
+        "id": "exfiltration defense",
+        "label": "Exfiltration Defense",
+        "spec_line": 752
+      },
+      {
+        "id": "no embedded model directed control directives",
+        "label": "No Embedded Model-Directed Control Directives",
+        "spec_line": 796
+      }
+    ],
+    "orphans": [
+      {
+        "id": "explicit consent",
+        "label": "Mandatory Explicit Consent",
+        "guide_line": 659
+      },
+      {
+        "id": "tool function allow listing and parameter validation",
+        "label": "Tool Function Allow-listing and Parameter Validation",
+        "guide_line": 745
+      },
+      {
+        "id": "sensitive output defense in depth",
+        "label": "Sensitive Output Defense in Depth",
+        "guide_line": 933
+      },
+      {
+        "id": "pii detection",
+        "label": "PII Detection",
+        "guide_line": 985
+      },
+      {
+        "id": "output sanitization",
+        "label": "Output Sanitization",
+        "guide_line": 1112
+      },
+      {
+        "id": "maximum response size",
+        "label": "Maximum Response Size",
+        "guide_line": 1241
+      },
+      {
+        "id": "tenant isolation",
+        "label": "Mandatory Tenant Isolation",
+        "guide_line": 1383
+      },
+      {
+        "id": "per user endpoint rate limiting",
+        "label": "Per User Endpoint Rate Limiting",
+        "guide_line": 1615
+      },
+      {
+        "id": "invocation audit trail",
+        "label": "Invocation Audit Trail",
+        "guide_line": 1753
+      }
+    ]
+  },
+  "MASA": {
+    "untested": [],
+    "orphans": []
+  },
+  "CASA": {
+    "untested": [],
+    "orphans": []
+  }
+}
