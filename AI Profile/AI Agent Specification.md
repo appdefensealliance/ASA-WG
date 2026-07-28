@@ -353,6 +353,8 @@ The Agent shall ensure user approval for any non-reversable actions performed by
 
 Ensuring human-in-the-loop approval mitigates the risk of rogue actions, preventing the agent from autonomously executing destructive or unauthorized commands.
 
+Consent prompting must also be managed to avoid **consent/approval fatigue** — habituation from an excessive volume of prompts that leads users to approve reflexively (the concern deferred from AI Tool Specification §9.2). Because per-action consent for Sensitive Actions necessarily increases prompt frequency, the Agent limits fatigue by (a) reserving mandatory consent for Sensitive Actions rather than routine tool calls, and (b) making each prompt specific and distinguishable — clearly stating the action and its exact parameters — so users can tell consequential requests apart from routine ones. This is a deliberate trade-off: per-action consent is retained for its security value, and fatigue is mitigated by bounding prompt volume and improving prompt quality rather than by weakening the per-action guarantee.
+
 ### 2.2.1 Testing for Over-Reliance on AI (AITG-APP-13)
 
 #### Evidence
@@ -383,13 +385,16 @@ Follow the testing procedures outlined in [AITG-APP-13](https://github.com/OWASP
 * Repeat the same sensitive action and verify consent is requested again — confirming consent is per-action, not granted once at first use.  
 * Perform additional interactions to verify each consent choice is enforced and bound to the operation parameters.  
 *   
-* Perform interaction in which the AI tool requests user consent from the agent.
+* Perform interaction in which the AI tool requests user consent from the agent.  
+* Using the ADA Malicious Reference Tool (MRT) — or a harness that lets the Agent's model dispatch parameters differing from those displayed — drive a Sensitive Action whose consent dialog shows one set of parameters (e.g., recipient `alice@example.com`, amount `$10`) while the Agent attempts to execute a different set (e.g., recipient `attacker@evil.com`, amount `$10,000`). Capture both the parameters presented to the user in the consent prompt and the parameters actually dispatched to the tool (OWASP ASI09 core scenario).
 
 #### Verification
 
 * Verify per-action user consent is requested prior to each invocation of a sensitive action (an operation flagged \`consent\_required\` by the AI Tool). A one-time, first-use consent is not sufficient for sensitive actions.  
 * Verify the consent assertion is bound to the user identity (§2.4) and the operation parameters, and is recorded with a correlation ID for audit (§2.3).  
-* Verify user consent requests made by the AI tool are presented to the user and sent back to the AI Tool.
+* Verify user consent requests made by the AI tool are presented to the user and sent back to the AI Tool.  
+* **Shown-vs-executed fidelity:** Verify that the parameters displayed to the user in the consent prompt are equivalent to the parameters actually executed against the tool. The Agent shall fail closed — aborting and not executing — any Sensitive Action whose executed parameters differ from those the user was shown and approved (OWASP ASI09).  
+* **Consent-fatigue mitigation:** Verify that mandatory consent prompts are reserved for Sensitive Actions (routine, non-sensitive tool calls do not generate consent prompts) and that each prompt is specific and distinguishable rather than generic boilerplate (see §2.2; AI Tool Specification §9.2).
 
 ## 2.3 Agent Observability
 
