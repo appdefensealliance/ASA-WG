@@ -59,6 +59,16 @@ For agents that utilize a complex orchestration of multiple models, compliance i
 
 The requirements in this specification will explicitly indicate which test cases apply generally to the **agent** and which test cases must be repeated for each supported **model**. This ensures that an agent remains secure regardless of which model the orchestrator selects to execute a specific task.
 
+## Out of scope for v1: Agent-to-Agent (A2A) / Multi-Agent Composition
+
+Agent-to-agent (A2A) protocols and multi-agent orchestration — where an Agent delegates tasks to, or composes with, one or more *separate, independent* Agents across a delegation chain — are **out of scope for v1** of this specification. This is distinct from the **Multi-Model Compliance Requirements** above, which govern a single Agent that internally selects among multiple LLMs; that case remains **in scope**. What is deferred here is the composition of an Agent with other Agents.
+
+Concretely, v1 does not assess the security of inter-agent delegation chains, cross-agent identity and consent propagation, or the discovery and trust of peer/third-party Agents. The single defensive expectation that still applies in v1 is that an Agent must **isolate any multi-agent channels and shared memories** it exposes (see §2.1.1); beyond that isolation requirement, v1 does not certify any claim about safe multi-agent composition.
+
+Certification, and any resulting certificate, therefore makes **no assertion** about the security of A2A or multi-agent composition. Buyers should not infer that delegation-chain risks have been assessed. The corresponding CoSAI delegation-chain threats are listed explicitly under *Out of Scope CoSAI Threats*.
+
+**Roadmap:** Explicit A2A / multi-agent composition requirements — including delegation-chain identity and consent propagation, peer-agent discovery and trust, and the delegation-chain threats currently listed as out of scope — are targeted for a future revision.
+
 ## Integration with Conventional Security
 
 This specification focuses exclusively on the unique threats introduced by AI models and agentic controls. It does not replace traditional security requirements.
@@ -173,7 +183,7 @@ The following threat model is significantly based on the CoSAI Agent threat mode
 
 ## Out of Scope CoSAI Threats
 
-Model training, protection of model weights and internal hosting infrastructure is out of scope for the ADA Agent certification. The following CoSAI threats are not addressed in the ADA Agent Specification.
+Model training, protection of model weights and internal hosting infrastructure is out of scope for the ADA Agent certification, as is agent-to-agent (A2A) / multi-agent composition (see *Out of scope for v1: Agent-to-Agent (A2A) / Multi-Agent Composition*). The following CoSAI threats are not addressed in the ADA Agent Specification.
 
 | CoSAI Threat | Description |
 | ----- | ----- |
@@ -191,6 +201,9 @@ Model training, protection of model weights and internal hosting infrastructure 
 | Model Exfiltration | Unauthorized appropriation or theft of an AI model, its weights, or intellectual property. |
 | Orchestrator/Route Hijack | Manipulating orchestration systems or configuration to redirect requests to unauthorized models. |
 | Unauthorized Training Data | Training or fine-tuning a model using data that violates policies, contracts, or regulations. |
+| Agent Delegation-Chain Opacity | Loss of traceability and accountability across a chain of delegating agents, such that an action cannot be attributed to the originating user or agent. Deferred: A2A composition is out of scope for v1 (see Scoping). |
+| Agentic Delegation Confused Deputy | A downstream agent is induced to act using a delegating agent's privileges without re-verifying the original user's identity/consent, escalating authority across the chain. Deferred: cross-agent identity/consent propagation is out of scope for v1. |
+| Shadow / Unknown Agents | Unregistered or unauthorized agents joining an orchestration and participating in delegation without vetting or trust establishment. Deferred: peer-agent discovery and trust is out of scope for v1. |
 
 # Controls and Audit Summary
 
