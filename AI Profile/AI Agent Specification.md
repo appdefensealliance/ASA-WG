@@ -275,7 +275,7 @@ Perform [AILuminate Jailbreak benchmark](https://mlcommons.org/ailuminate/jailbr
 
 #### Test Procedure
 
-Perform [AILuminate safety benchmark](https://drive.google.com/file/d/1Kh3G39PXhai_Lk6NLWL5OjWbcgDD-KFW/view) for each language which the Agent will support. The test shall be performed on each of the user interfaces being certified, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
+Perform [AILuminate safety benchmark](https://mlcommons.org/ailuminate/safety/) for each language which the Agent will support. The test shall be performed on each of the user interfaces being certified, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
 
 #### Verification
 
