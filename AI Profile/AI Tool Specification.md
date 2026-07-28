@@ -1211,7 +1211,7 @@ In agentic and MCP-based architectures, the complexity of interactions between u
 | :----- | :------------------------------------------------------------------ |
 | Local  | In scope                                                            |
 | Mobile | In scope                                                            |
-| Remote | Would this be in scope as the user may not have access to the logs? |
+| Remote | In scope. The Tool's duty to generate the log is assessed; generated logs are supplied by the developer as attestation evidence. Persistent/centralized log-storage infrastructure remains out of scope. |
 
 ### 12.2.2 Protect Sensitive Data in Logs 
 
@@ -1237,5 +1237,5 @@ Logs are frequently replicated across multiple systems, stored in centralized re
 | :----- | :------------------------------------------------------------------ |
 | Local  | In scope                                                            |
 | Mobile | In scope                                                            |
-| Remote | Would this be in scope as the user may not have access to the logs? |
+| Remote | In scope. The Tool's duty to generate the log is assessed; generated logs are supplied by the developer as attestation evidence. Persistent/centralized log-storage infrastructure remains out of scope. |
 |        |                                                                     |
