@@ -173,7 +173,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | **Typosquatting / Confusion Attacks** | Attacks where malicious actors create tools or AI Tools with names and descriptions similar to legitimate ones, tricking clients or agents into invoking harmful tools. |
 | **Shadow AI Tools** | Unauthorized, unmonitored, or hidden AI Tool instances that create blind spots and increase the risk of covert data exfiltration. |
 | **Denial of Wallet (DoW) Attack** | An attack that triggers an excessive number of API or tool calls, leading to unexpected financial costs that impact the viability of a business. |
-| **Rug Pull Attack** | A supply chain attack where a dependency is automatically updated to a compromised version, which is mitigated by strict version pinning. |
+| **Rug Pull Attack** | A supply chain attack where a dependency is automatically updated to a compromised version, which is mitigated by hash-based dependency pinning. |
 | **Proof Key for Code Exchange (PKCE)** | A challenge-response mechanism providing a dynamic, cryptographically bound secret that ensures only the entity that initiated an OAuth authorization request can successfully exchange the resulting code for a token. |
 
 # Static Application Security Testing (SAST) Guidance
@@ -656,11 +656,11 @@ If a developer's tool simply trusts a `user_id` passed by the Agent, a compromis
 2. **Payload Tampering:** The server must reject requests and fail cryptographic checks for tokens with tampered payloads.  
 3. **Token Exchange:** Downstream traffic must explicitly show the server passing a scoped user-specific token instead of a service-level key.
 
-## 2.3 Mandatory Explicit Consent
+## 2.3 Server-Side Consent Backstop for Sensitive Actions
 
 ### Description
 
-The AI tool implementation must utilize elicitation or confirmation message on the server side to request user confirmation of actions, or enforce the use of clients with configurations that unprivileged users cannot change to keep confirmation prompts enabled. Security-relevant messages and elicitations must be clear, indicating the implications of the request, and unambiguous about what is being requested.
+The AI tool implementation must utilize elicitation or confirmation message on the server side to request user confirmation of actions, or enforce the use of clients with configurations that unprivileged users cannot change to keep confirmation prompts enabled. Security-relevant messages and elicitations must be clear, indicating the implications of the request, and unambiguous about what is being requested. The AI Tool must not treat an Agent-supplied claim that consent was obtained as sufficient; it must fail closed when it cannot establish that the user confirmed the specific action.
 
 ### Rationale
 
@@ -685,7 +685,8 @@ Missing or insufficient human-in-the-loop consent checks can allow an AI Tool to
 **AL2:**
 
 1. **Attempt Unauthorized Execution:** Try to trigger a high-risk tool via the AI Tool using an automated script or prompt injection payload without providing out-of-band consent. Verify that the action halts and requests explicit authorization.  
-2. **Test Configuration Bypass:** Log in as an unprivileged user and attempt to modify the application settings to disable the confirmation prompt configuration; verify the system rejects this change.
+2. **Test Configuration Bypass:** Log in as an unprivileged user and attempt to modify the application settings to disable the confirmation prompt configuration; verify the system rejects this change.  
+3. **Reject Agent-Asserted Consent:** Using the ADA Malicious Reference Agent (or equivalent), invoke a Sensitive Action accompanied by an Agent-supplied claim that consent was already obtained, with no server-side confirmation. Verify the Tool does not execute the action on that claim alone, and instead requests confirmation via elicitation or fails closed.
 
 **Verification**
 
@@ -698,7 +699,8 @@ Missing or insufficient human-in-the-loop consent checks can allow an AI Tool to
 **AL2:**
 
 1. **Unauthorized Execution:** The server must automatically halt execution and request explicit authorization when high-risk tools are triggered without out-of-band consent.  
-2. **Configuration Bypass:** The system must explicitly reject unprivileged user attempts to disable confirmation prompt settings.
+2. **Configuration Bypass:** The system must explicitly reject unprivileged user attempts to disable confirmation prompt settings.  
+3. **No Agent-Asserted Consent:** The Tool must not execute a Sensitive Action on an Agent-supplied "consent obtained" claim alone; it must request server-side confirmation or fail closed when it cannot establish that the user confirmed the specific action.
 
 ## 2.4 Principle of Least Privilege and Scoped Permissions
 
@@ -930,7 +932,7 @@ In the AI Tool architecture, the session token is the "keys to the kingdom." If 
 2. **Log Inspection:** Verbose session logs must not contain plain-text session token strings.  
 3. **Environment Check:** Tokens must not be exposed in temporary directories, world-readable files, or improperly permitted .env files.
 
-## 3.4 Sensitive Output Defense in Depth
+## 3.4 Exfiltration Defense
 
 ### Description
 
@@ -1524,7 +1526,7 @@ In the context of AI Agents (like those using the Model Context Protocol), the a
 
 ### Description
 
-The AI Tool must implement strict version pinning for all third-party plugins and dependencies using strict equality (e.g., "1.4.0" rather than "\>=1.4.0"). All model weights and tool packages must have valid digital signatures and be verified against known cryptographic hashes.
+The AI Tool must implement strict dependency pinning with hash-based verification for all third-party plugins and dependencies, rather than relying solely on version ranges or strict equality. All model weights and tool packages must have valid digital signatures and be verified against known cryptographic hashes.
 
 ### Rationale
 
@@ -1542,7 +1544,7 @@ Resource pinning ensures that updates are a deliberate developer decision, preve
 
 **AL0, AL1:**
 
-1. **Check Dependency Files:** Verify that package files (e.g., package.json or requirements.txt) use strict version pinning.  
+1. **Check Dependency Files:** Verify that dependency manifests (e.g., package-lock.json, or requirements.txt with hashes) use hash-based pinning.  
 2. **Review SBOM:** Review the Software Bill of Materials (SBOM) for unmitigated vulnerabilities.
 
 **AL2:**
@@ -1553,12 +1555,56 @@ Resource pinning ensures that updates are a deliberate developer decision, preve
 
 **AL0, AL1:**
 
-1. **Check Dependency Files:** Dependency files must be verified to use strict version pinning (e.g., "1.4.0" rather than "\>=1.4.0").  
-2. **Review SBOM:** The SBOM must be completely free of unmitigated vulnerabilities.
+1. **Check Dependency Files:** Dependency manifests must be verified to use hash-based pinning (e.g., package-lock.json, or requirements.txt with hashes).  
+2. **Review SBOM:** The SBOM must contain no known-exploited or critical/high-severity vulnerabilities lacking a documented mitigation.
 
 **AL2:**
 
 1. **Update Verification:** The tool must successfully reject the update when provided with a mocked update repository presenting a mismatched digital signature.
+
+## 6.4 No Embedded Model-Directed Control Directives
+
+### Description
+
+The AI Tool must not embed model-directed control directives or instructions within the content it returns to the Agent — including operation results, retrieved/resource content, and its own tool/function descriptions and schemas. The AI Tool must not rely on the model or Agent to enforce the Tool's own security constraints; it must validate its own inputs and enforce its own authorization independently of the model. Provenance or "data vs. control" tags may be provided as defense-in-depth but must not be relied upon as a security boundary.
+
+### Rationale
+
+Indirect prompt injection cannot be prevented by the producer marking its output, so the load-bearing defense is the Agent treating all Tool Output as untrusted (Agent–Tool Interface Contract C2; mitigation is tested consumer-side in AI Agent Specification §3.1.2). The Tool's residual, testable duty is narrow: not to be an injection vector itself, and not to delegate its own security to the model (CoSAI MCP Security §3.2.8: "Tool implementations should not rely on the LLM to perform security-critical operations, validate inputs, or enforce constraints").
+
+### Audit
+
+**Evidence**
+
+**AL0, AL1:** Supporting evidence from static code inspection of tool/function descriptions, schemas, and output-construction code.
+
+**AL2:** Functional AI Tool with the ability to exercise its operations and capture returned content, descriptions, and schemas.
+
+**Test Procedure**
+
+**AL0, AL1:**
+
+1. **Descriptions & Schemas Review:** Review the tool/function descriptions and input/output schemas to confirm no imperative instructions directed at the model are embedded (e.g., "ignore previous instructions", role/turn markers such as system/assistant delimiters, or tool-chaining commands).  
+2. **Output-Construction Review:** Inspect the code that builds operation results and resource content to confirm it does not inject model-directed instructions or control tokens into returned data.  
+3. **Independent Enforcement Check:** Confirm input validation and authorization are enforced in Tool code and do not depend on model cooperation, and that any provenance/"data vs. control" tags are treated as defense-in-depth rather than the security boundary.
+
+**AL2:**
+
+1. **Content Inspection:** Exercise the Tool across representative operations and inspect returned content, descriptions, and schemas for embedded model-directed instructions or raw control tokens.  
+2. **Authorization Independence:** Submit invalid or unauthorized requests accompanied by natural-language content instructing the model to permit them; verify the Tool rejects the requests regardless of the accompanying content.
+
+**Verification**
+
+**AL0, AL1:**
+
+1. **Descriptions & Schemas:** Descriptions and schemas contain no model-directed imperative instructions, role/turn markers, or tool-chaining commands.  
+2. **Output Construction:** Returned operation results and resource content do not embed model-directed instructions or control tokens.  
+3. **Independent Enforcement:** Input validation and authorization are enforced in Tool code independently of the model; provenance tags, if present, are not relied upon as a security boundary.
+
+**AL2:**
+
+1. **Content Inspection:** No embedded model-directed instructions or control tokens are present in returned content, descriptions, or schemas.  
+2. **Authorization Independence:** The Tool rejects invalid or unauthorized requests regardless of any accompanying natural-language content.
 
 # 7. Resource Constraints & Denial of Service (DoS) Prevention
 
