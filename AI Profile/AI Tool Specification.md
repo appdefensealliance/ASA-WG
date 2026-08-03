@@ -512,7 +512,7 @@ Primary responsibility for presenting, obtaining, and enforcing user consent for
 
 #### Rationale
 
-An AI Tool is invoked by an Agent it cannot fully trust: a confused or benign-but-buggy Agent may omit its own consent step or drive a Sensitive Action the user never approved. Consent presentation and enforcement are therefore primarily an Agent/host duty, but the Tool retains a fail-closed backstop so that an Agent which faithfully relays the Tool's confirmation prompt cannot cause an irreversible action without a user gate. Note the limit of this backstop: server-side elicitation transits the Agent, so a *malicious* Agent can fabricate an affirmative elicitation response without ever presenting it to the user. Elicitation therefore backstops the confused/benign-but-buggy case; it cannot, on its own, defeat a malicious Agent. Defeating a malicious Agent for the highest-risk actions requires confirmation over a channel independent of the Agent (out-of-band confirmation), which is under consideration for a future revision. Server-side elicitation is the consent mechanism endorsed for MCP servers (CoSAI MCP Security §3.2.9; OWASP "A Practical Guide for Secure MCP Server Development" §4). User-approval *fatigue* (habituation from excessive prompts) remains an Agent-side concern (see §9.2 and AI Agent Specification §2.2).
+An AI Tool is invoked by an Agent it cannot fully trust: a confused or benign-but-buggy Agent may omit its own consent step or drive a Sensitive Action the user never approved. Consent presentation and enforcement are therefore primarily an Agent/host duty, but the Tool retains a fail-closed backstop so that an Agent which faithfully relays the Tool's confirmation prompt cannot cause an irreversible action without a user gate. Note the limit of this backstop: server-side elicitation transits the Agent, so a *malicious* Agent can fabricate an affirmative elicitation response without ever presenting it to the user. Elicitation therefore backstops the confused/benign-but-buggy case; it cannot, on its own, defeat a malicious Agent. Defeating a malicious Agent for the highest-risk actions requires confirmation over a channel independent of the Agent (out-of-band confirmation), which is under consideration for a future revision. Server-side elicitation is defined by the Model Context Protocol specification ([MCP — Client / Elicitation](https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation)) and is the consent mechanism endorsed for MCP servers by secure-design guidance (CoSAI MCP Security; OWASP "A Practical Guide for Secure MCP Server Development"). User-approval *fatigue* (habituation from excessive prompts) remains an Agent-side concern (see §9.2 and AI Agent Specification §2.2).
 
 #### Audit
 
@@ -520,6 +520,31 @@ An AI Tool is invoked by an Agent it cannot fully trust: a confused or benign-bu
 | :---- | :---- |
 | Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications. |
 | Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
+### 2.1.2 Out-of-Band Confirmation for High-Risk Actions
+
+#### Description
+
+Because server-side elicitation transits the Agent (§2.1.1), it cannot, on its own, defeat a *malicious* Agent that fabricates an affirmative response. For the **highest-risk** operations — irreversible actions, transfers of value or money, or the granting/expansion of access — the AI Tool SHOULD require confirmation over a channel that is **independent of the Agent** (out-of-band), such that user approval cannot be forged by the Agent in the request path. For **remote** and other high-value deployments this out-of-band confirmation is REQUIRED. Examples include a confirmation link or one-time code delivered to a pre-registered user channel (email, SMS, authenticator/push), or a provider-hosted approval page authenticated directly to the user. Where out-of-band confirmation is not feasible for a given action, the Tool MUST fall back to the §2.1.1 server-side elicitation backstop and MUST NOT silently downgrade to Agent-relayed consent.
+
+#### Rationale
+
+The §2.1.1 backstop closes the confused / benign-but-buggy Agent case; it does not close the malicious-Agent case, because both the confirmation prompt and its response pass through the Agent. An independent channel breaks that assumption: the user confirms the specific action directly with the resource owner or Tool, so a malicious Agent cannot manufacture consent for an irreversible or high-value action. Gating this at the highest risk tier keeps the added friction proportionate and bounds consent-prompt volume (see AI Agent Specification §2.2 on approval fatigue).
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | Identify the highest-risk operations (irreversible, value transfer, access grant/expansion). Verify the Tool defines an out-of-band confirmation path independent of the Agent request channel for them (REQUIRED for remote/high-value deployments), and that when out-of-band confirmation is unavailable it fails closed to the §2.1.1 elicitation backstop rather than to Agent-relayed consent. |
+| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to approve a highest-risk action entirely through the Agent channel, including forging an elicitation response. Verify the action does not execute without confirmation delivered and returned over the independent channel. |
 
 #### Comments
 

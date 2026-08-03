@@ -53,6 +53,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
    * [2.5 Tool Function Allow-listing and Parameter Validation](#2.5-tool-function-allow-listing-and-parameter-validation)
 
+   * [2.7 Out-of-Band Confirmation for High-Risk Actions](#2.7-out-of-band-confirmation-for-high-risk-actions)
+
 * [3\. Secret Management & Data Protection](#3.-secret-management-&-data-protection)
 
    * [3.1 Externalized Secret Management](#3.1-externalized-secret-management)
@@ -196,6 +198,7 @@ Assurance level 0 (self assessment) and Assurance level 1 (Verified Self Assessm
 |  | 2.3 Mandatory Explicit Consent |
 |  | 2.4 Principle of Least Privilege and Scoped Permissions |
 |  | 2.5 Tool Function Allow-listing and Parameter Validation |
+|  | 2.7 Out-of-Band Confirmation for High-Risk Actions |
 | 3\. Secret Management & Data Protection | 3.1 Externalized Secret Management |
 |  | 3.2 Automated PII and Credential Masking in Logs |
 |  | 3.3 Secure Session Tokens |
@@ -785,6 +788,48 @@ Because AI agents are inherently probabilistic and vulnerable to prompt injectio
 
 1. **Undeclared Functions:** The server must explicitly reject any invocation of an undeclared function.  
 2. **Parameter Rejection:** The server must successfully reject tool calls containing incorrect parameter types, out-of-range values, or extra parameters.
+
+## 2.7 Out-of-Band Confirmation for High-Risk Actions
+
+### Description
+
+For the highest-risk operations — irreversible actions, transfers of value or money, or the granting/expansion of access — the AI Tool SHOULD require user confirmation over a channel independent of the AI Agent (out-of-band), so that approval cannot be forged by the Agent in the request path. Out-of-band confirmation is REQUIRED for remote and other high-value deployments. Where it is not feasible for a given action, the Tool MUST fall back to the server-side elicitation backstop (§2.3) and MUST NOT downgrade to Agent-relayed consent.
+
+### Rationale
+
+Server-side elicitation transits the Agent, so a malicious Agent can fabricate an affirmative response without ever showing the user. An independent confirmation channel — for example a link or one-time code delivered to a pre-registered email/SMS/authenticator, or a provider-hosted approval page authenticated directly to the user — lets the user approve the specific action directly, closing the malicious-Agent gap for the actions where a forged approval is most costly.
+
+### Audit
+
+**Evidence**
+
+**AL0, AL1:** Supporting evidence from static code inspection identifying the highest-risk operations and the out-of-band confirmation path defined for them.
+
+**AL2:** Functional AI Tool exposing at least one highest-risk action, plus the ADA Malicious Reference Agent (or equivalent) able to forge Agent-channel responses.
+
+**Test Procedure**
+
+**AL0, AL1:**
+
+1. **Classify High-Risk Operations:** Review the tool's operations and confirm that irreversible, value-transferring, and access-granting actions are identified as highest-risk.  
+2. **Review Confirmation Channel:** Verify the code routes confirmation for those actions to a channel independent of the Agent request path (REQUIRED for remote/high-value deployments), and that it fails closed to §2.3 elicitation rather than to Agent-relayed consent when out-of-band confirmation is unavailable.
+
+**AL2:**
+
+1. **Forge Agent-Channel Approval:** Using the Malicious Reference Agent, attempt to approve a highest-risk action entirely through the Agent channel, including fabricating an elicitation response.  
+2. **Verify Independent Confirmation:** Confirm the action does not execute until confirmation is delivered and returned over the independent channel.
+
+**Verification**
+
+**AL0, AL1:**
+
+1. **High-Risk Classification:** The highest-risk operations must be explicitly identified.  
+2. **Independent Channel:** Confirmation for those operations must be routed over a channel independent of the Agent (REQUIRED for remote/high-value deployments), with a fail-closed fallback to §2.3 rather than Agent-relayed consent.
+
+**AL2:**
+
+1. **Forged Approval Rejected:** The tool must not execute a highest-risk action approved only through the Agent channel.  
+2. **Independent Confirmation Enforced:** The action must execute only after confirmation over the independent channel.
 
 # 3. Secret Management & Data Protection
 
