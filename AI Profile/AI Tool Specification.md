@@ -915,7 +915,7 @@ Unauthorized, unmonitored, or hidden MCP server instances create blind spots, in
 
 Malicious or compromised MCP servers, dependencies, or packages are introduced into the environment, enabling attackers to execute arbitrary code, exfiltrate data, or persist within the infrastructure.
 
-**Note: This risk is mitigated through the MASA and CASA certification.**
+**Note:** The conventional-security baseline for this threat — ensuring components carry no known exploitable vulnerabilities (CASA 6.1.1) and that the underlying host/platform is hardened — is covered by the MASA and CASA certifications. The AI-specific supply-chain controls that CASA/MASA do **not** provide — strict dependency pinning with hash-based verification, and digital-signature verification of tool packages and model weights — are **in scope for this specification** and are required by §8.5.1 (Resource Pinning and Signature Verification).
 
 # 7 Session and Transport Security Failures
 
@@ -1223,7 +1223,7 @@ Unauthorized, unmonitored, or hidden MCP server instances create blind spots, in
 
 Malicious or compromised MCP servers, dependencies, or packages are introduced into the environment, enabling attackers to execute arbitrary code, exfiltrate data, or persist within the infrastructure.
 
-**Note: This risk is mitigated through the MASA and CASA certification.**
+**Note:** As with §6.4, the conventional-security baseline for this threat (no known exploitable vulnerabilities per CASA 6.1.1, plus host/platform hardening) is covered by the MASA and CASA certifications, while the AI-specific supply-chain controls those certifications do **not** provide — strict dependency pinning with hash-based verification, and digital-signature verification of tool packages and model weights — are in scope and required by §8.5.1 (Resource Pinning and Signature Verification).
 
 # 12 Insufficient Logging, Monitoring, and Auditability
 
