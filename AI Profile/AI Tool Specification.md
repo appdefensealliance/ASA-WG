@@ -512,7 +512,7 @@ Primary responsibility for presenting, obtaining, and enforcing user consent for
 
 #### Rationale
 
-An AI Tool is invoked by an Agent it cannot fully trust: a confused or compromised Agent may drive a Sensitive Action the user never approved — the confused-deputy case exercised by the ADA Malicious Reference Agent. Consent presentation and enforcement are therefore primarily an Agent/host duty, but the Tool retains a fail-closed backstop so a malicious Agent cannot cause an irreversible action without a user gate. Server-side elicitation is the consent mechanism endorsed for MCP servers (CoSAI MCP Security §3.2.9; OWASP "A Practical Guide for Secure MCP Server Development" §4). User-approval *fatigue* (habituation from excessive prompts) remains an Agent-side concern (see §9.2).
+An AI Tool is invoked by an Agent it cannot fully trust: a confused or benign-but-buggy Agent may omit its own consent step or drive a Sensitive Action the user never approved. Consent presentation and enforcement are therefore primarily an Agent/host duty, but the Tool retains a fail-closed backstop so that an Agent which faithfully relays the Tool's confirmation prompt cannot cause an irreversible action without a user gate. Note the limit of this backstop: server-side elicitation transits the Agent, so a *malicious* Agent can fabricate an affirmative elicitation response without ever presenting it to the user. Elicitation therefore backstops the confused/benign-but-buggy case; it cannot, on its own, defeat a malicious Agent. Defeating a malicious Agent for the highest-risk actions requires confirmation over a channel independent of the Agent (out-of-band confirmation), which is under consideration for a future revision. Server-side elicitation is the consent mechanism endorsed for MCP servers (CoSAI MCP Security §3.2.9; OWASP "A Practical Guide for Secure MCP Server Development" §4). User-approval *fatigue* (habituation from excessive prompts) remains an Agent-side concern (see §9.2 and AI Agent Specification §2.2).
 
 #### Audit
 
@@ -1090,7 +1090,7 @@ Overly permissive tools may expose the user’s data, or result in actions which
 
 Flooding users with excessive consent or permission prompts, causing habituation and leading to blind approval of potentially dangerous or malicious actions.
 
-**Note:** User approval *fatigue* (habituation from an excessive volume of prompts) is out of scope for the AI Tool specification and is addressed in the AI Agent specification. The AI Tool's fail-closed consent backstop for Sensitive Actions is specified in §2.1.1.
+**Note:** User approval *fatigue* (habituation from an excessive volume of prompts) is out of scope for the AI Tool specification because the AI Tool does not own the user-facing consent experience. Because the per-action consent model for Sensitive Actions increases prompt frequency, management of fatigue is an Agent obligation, specified in **AI Agent Specification §2.2 (Agent User Control)**. The AI Tool's fail-closed consent backstop for Sensitive Actions is specified in §2.1.1.
 
 
 # 10 Resource Management/Rate Limiting Absence
