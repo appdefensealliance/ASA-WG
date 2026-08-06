@@ -1183,7 +1183,7 @@ Developers incorrectly assume that user input processed through an LLM is inhere
 
 **AL2:**
 
-1. **Fuzz Tool Parameters:** Submit crafted command injection payloads (e.g., ; rm \-rf /, $(whoami), or & ping https://www.google.com/url?sa=E\&source=gmail\&q=attacker.com) via the LLM prompt or directly into the AI Tool arguments.  
+1. **Fuzz Tool Parameters:** Submit crafted command injection payloads (e.g., ; rm \-rf /, $(whoami), or & ping attacker.example.com) via the LLM prompt or directly into the AI Tool arguments.  
 2. **Verify Safe Rejection:** Confirm that the AI Tool neutralizes the payload, treats it as a literal string parameter, or explicitly rejects the request with an error, preventing the underlying command from executing.
 
 **Verification**
@@ -1298,7 +1298,7 @@ To prevent "Session Bleed" (where data from a previous request persists in memor
 
 ### Rationale
 
-Mandatory Statelessness is the primary technical control against Cross-Tenant Data Leakage (CTDL), ensuring that a third-party AI Tool maintains a strict isolation boundary between independent user sessions. By requiring a "Process, Respond, Purge" lifecycle, we eliminate "session bleed"—where data from one user lingers in memory or global variables and is inadvertently accessed by a subsequent request from a different tenant. This architecture shifts the security boundary away from potentially flawed application logic and onto Google’s hardened infrastructure, removing the possibility of state-based side-channel attacks and ensuring that every transaction is a self-contained, auditable event with no memory of prior sensitive contexts.
+Mandatory Statelessness is the primary technical control against Cross-Tenant Data Leakage (CTDL), ensuring that a third-party AI Tool maintains a strict isolation boundary between independent user sessions. By requiring a "Process, Respond, Purge" lifecycle, we eliminate "session bleed"—where data from one user lingers in memory or global variables and is inadvertently accessed by a subsequent request from a different tenant. This architecture shifts the security boundary away from potentially flawed application logic and onto a deterministic, stateless execution model, removing the possibility of state-based side-channel attacks and ensuring that every transaction is a self-contained, auditable event with no memory of prior sensitive contexts.
 
 ### Audit
 
