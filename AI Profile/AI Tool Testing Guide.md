@@ -53,6 +53,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
    * [2.5 Tool Function Allow-listing and Parameter Validation](#2.5-tool-function-allow-listing-and-parameter-validation)
 
+   * [2.6 No Token Passthrough / Downstream Token Exchange](#2.6-no-token-passthrough-/-downstream-token-exchange)
+
    * [2.7 Out-of-Band Confirmation for High-Risk Actions](#2.7-out-of-band-confirmation-for-high-risk-actions)
 
 * [3\. Secret Management & Data Protection](#3.-secret-management-&-data-protection)
@@ -198,6 +200,7 @@ Assurance level 0 (self assessment) and Assurance level 1 (Verified Self Assessm
 |  | 2.3 Mandatory Explicit Consent |
 |  | 2.4 Principle of Least Privilege and Scoped Permissions |
 |  | 2.5 Tool Function Allow-listing and Parameter Validation |
+|  | 2.6 No Token Passthrough / Downstream Token Exchange |
 |  | 2.7 Out-of-Band Confirmation for High-Risk Actions |
 | 3\. Secret Management & Data Protection | 3.1 Externalized Secret Management |
 |  | 3.2 Automated PII and Credential Masking in Logs |
@@ -789,6 +792,50 @@ Because AI agents are inherently probabilistic and vulnerable to prompt injectio
 1. **Undeclared Functions:** The server must explicitly reject any invocation of an undeclared function.  
 2. **Parameter Rejection:** The server must successfully reject tool calls containing incorrect parameter types, out-of-range values, or extra parameters.
 
+## 2.6 No Token Passthrough / Downstream Token Exchange
+
+### Description
+
+When the AI Tool calls a downstream/upstream API on the user's behalf, it must not forward the client-supplied token; it must obtain a separate, audience-scoped token via OAuth 2.0 Token Exchange (RFC 8693) or an equivalent on-behalf-of flow, and should sender-constrain downstream tokens (DPoP, RFC 9449) — required for remote/high-value deployments.
+
+### Rationale
+
+Forwarding the inbound token downstream is the classic confused-deputy / audience-confusion vector. Token exchange preserves the user's identity and least-privilege scope while binding each hop's credential to its audience; proof-of-possession stops a stolen bearer token from being replayed.
+
+### Audit
+
+**Evidence**
+
+**AL0, AL1:** Supporting evidence from static inspection of the Tool's downstream/upstream call construction and token-handling code.
+
+**AL2:** Functional AI Tool that performs a downstream call, plus a network interception proxy.
+
+**Test Procedure**
+
+**AL0, AL1:**
+
+1. **No Passthrough:** Review downstream call construction and confirm the client-supplied token is never forwarded to another audience.  
+2. **Token Exchange:** Confirm a token-exchange (RFC 8693) or equivalent on-behalf-of step mints a downstream-scoped, audience-bound (RFC 8707) token.  
+3. **Short-lived / PoP:** Confirm downstream tokens are short-lived and, for remote/high-value deployments, sender-constrained (DPoP).
+
+**AL2:**
+
+1. **Downstream Traffic Inspection:** Trigger a tool call and intercept the Tool's downstream traffic; confirm the token sent downstream is a freshly-exchanged, audience-scoped token — not the client's inbound token and not an over-privileged service key.  
+2. **Replay Across Audience:** Attempt to replay a captured downstream token against a different audience; confirm it is rejected.
+
+**Verification**
+
+**AL0, AL1:**
+
+1. **No Passthrough:** The client-supplied token is never forwarded to a downstream audience.  
+2. **Token Exchange:** Downstream calls use an RFC 8693 (or equivalent OBO) audience-bound token.  
+3. **Short-lived / PoP:** Downstream tokens are short-lived and sender-constrained for remote/high-value deployments.
+
+**AL2:**
+
+1. **Downstream Traffic:** The token observed downstream is a freshly-exchanged, audience-scoped token, not the inbound client token.  
+2. **Replay Across Audience:** A downstream token replayed against a different audience is rejected.
+
 ## 2.7 Out-of-Band Confirmation for High-Risk Actions
 
 ### Description
@@ -830,6 +877,7 @@ Server-side elicitation transits the Agent, so a malicious Agent can fabricate a
 
 1. **Forged Approval Rejected:** The tool must not execute a highest-risk action approved only through the Agent channel.  
 2. **Independent Confirmation Enforced:** The action must execute only after confirmation over the independent channel.
+
 
 # 3. Secret Management & Data Protection
 

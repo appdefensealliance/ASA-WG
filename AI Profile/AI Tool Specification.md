@@ -296,6 +296,31 @@ If a developer's tool simply trusts a `user_id` passed by the Agent, a compromis
 | Mobile | In Scope |
 | Remote | In Scope |
 
+### 1.2.3 No Token Passthrough / Downstream Token Exchange
+
+#### Description
+
+When an AI Tool calls a downstream or upstream API on the user's behalf, it MUST NOT forward (pass through) the access token it received from the calling client/Agent. Instead, the Tool MUST obtain a separate token scoped to the downstream resource via OAuth 2.0 Token Exchange (RFC 8693) or an equivalent on-behalf-of flow, with the token's audience bound to that resource (RFC 8707 resource indicators). Downstream tokens SHOULD be short-lived and SHOULD be sender-constrained via proof-of-possession (DPoP, RFC 9449); proof-of-possession is REQUIRED for remote, high-value deployments.
+
+#### Rationale
+
+Forwarding the client-supplied token to downstream services is the classic MCP confused-deputy vector: the downstream service cannot tell whether the Tool or the original client is acting, and a token minted for one audience can be replayed against another (audience confusion). Token exchange preserves the user's identity and least-privilege scope while giving each hop an audience-bound credential; proof-of-possession prevents a stolen bearer token from being replayed. This is the most established MCP authorization rule (CoSAI MCP Security §3.2.2).
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | Review downstream/upstream call construction. Confirm the client-supplied token is never forwarded to another audience, and that a token-exchange (RFC 8693) or equivalent on-behalf-of step mints a downstream-scoped, audience-bound (RFC 8707) token. Confirm downstream tokens are short-lived and, for remote/high-value deployments, sender-constrained (DPoP). |
+| Dynamic | Intercept the Tool's downstream traffic during a tool call. Confirm the token sent downstream is a freshly-exchanged, audience-scoped token — not the client's inbound token and not an over-privileged service-level key. Attempt to replay a captured downstream token against a different audience and confirm it is rejected. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
 ## 1.3 Credential Theft/Token Theft
 
 Attackers exploit insecure storage, handling, or transmission of secrets (OAuth tokens, API keys, credentials), enabling impersonation, unauthorized access, or privilege escalation.
