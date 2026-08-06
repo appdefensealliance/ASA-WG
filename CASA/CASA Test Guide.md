@@ -720,7 +720,7 @@ N/A (to be collected by labs)
 
 ---
 ### 2.2.3 Non-revocable stateless authentication tokens must expire within 24 hours of being issued
-External Reference: ASVS Version 4.0.3 Requirement: 3.3.4
+External Reference: ASVS Version 4.0.3 Requirement: 3.3.2
 
 
 **Evidence**
@@ -1321,7 +1321,7 @@ Strong TLS and cipher suites ensure confidentiality and integrity of data in tra
 
 ---
 ### 4.1.1 Application shall enforce the use of TLS for all connections and default to TLS 1.2+. In cases where support for legacy clients is necessary, TLS 1.0 and 1.1 may be supported if mitigations are implemented to minimize the risk of downgrade attacks and known TLS exploits. Regardless of the TLS version in use, the application shall default to secure cipher suites and reject those with known vulnerabilities.
-External Reference: ASVS Version 4.0.3 Requirement: 9.1.2
+External Reference: ASVS Version 4.0.3 Requirement: 9.1.1, 9.1.2, 9.1.3
 
 
 **Evidence**
@@ -1404,7 +1404,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 9.2.1
 
 ---
 ### 4.1.3 No instances of weak cryptography which meaningfully impact the confidentiality or integrity of data.
-External Reference: ASVS Version 4.0.3 Requirement:
+External Reference: ASVS Version 4.0.3 Requirement: 6.2.5
 
 
 **Evidence**
@@ -1972,7 +1972,7 @@ Attackers can perform automated scans to identify vulnerable applications based 
 
 ---
 ### 6.1.1 The application only uses software components without known exploitable vulnerabilities.
-External Reference: ASVS Version 4.0.3 Requirement:
+External Reference: ASVS Version 4.0.3 Requirement: 14.2.1
 
 
 **Evidence**
