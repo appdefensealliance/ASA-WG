@@ -129,6 +129,8 @@ This specification integrates core methodologies from the **OWASP AI Testing Gui
 | AI Infrastructure Testing | Out of scope |
 | AI Data Testing | Out of scope |
 
+**Test selection rule.** ADA adopts individual OWASP tests wherever they map to an in-scope CoSAI control, even when the parent OWASP test *family* is otherwise out of scope. Accordingly, specific AI Data tests (e.g., AITG-DAT-02, AITG-DAT-05) and AI Infrastructure tests (e.g., AITG-INF-02, AITG-INF-03, AITG-INF-04) are adopted where they validate an in-scope agent behaviour or interface, while the remainder of those families — source-code, training-pipeline, and hosting-infrastructure tests — remain out of scope. The scope entries above therefore describe the *default* disposition of each family, not a prohibition on adopting a specific mapped test.
+
 # Relationship To MLCommons
 
 To address the critical risks of prompt injection, jailbreaking, and model safety, this specification adopts the **MLCommons** framework. Compliance is verified using the official MLCommons test harness and datasets. To achieve ADA certification, the agent and its integrated models must meet or exceed the minimum performance and safety thresholds defined within the ADA acceptance criteria.
@@ -172,7 +174,6 @@ The following threat model is significantly based on the CoSAI Agent threat mode
 | CoSAI Threat | Description | Audit |
 | ----- | ----- | ----- |
 | Denial of ML Service | Reducing ML availability via resource-heavy queries or energy-latency "sponge examples". | 4.1.1 Testing for Resource Exhaustion |
-| Data Poisoning | Altering training/retraining data to degrade performance or create hidden backdoors. | 5.2.1 Testing for Data Minimization & Consent |
 | Excessive Data Handling During Inference | Excessively collecting/retaining user inputs and session data during runtime. | 5.2.1 Testing for Data Minimization & Consent |
 | Economic Denial of Wallet | Causing excessive financial or computational costs by exploiting billing or token consumption. | 2.1.1 Testing for Agentic Behavior Limits  |
 |  |  | 4.1.1 Testing for Resource Exhaustion |
@@ -205,25 +206,25 @@ The following threat model is significantly based on the CoSAI Agent threat mode
 
 Model training, protection of model weights and internal hosting infrastructure is out of scope for the ADA Agent certification, as is agent-to-agent (A2A) / multi-agent composition (see *Out of scope for v1: Agent-to-Agent (A2A) / Multi-Agent Composition*). The following CoSAI threats are not addressed in the ADA Agent Specification.
 
-| CoSAI Threat | Description |
-| ----- | ----- |
-| Adapter/PEFT Injection | Malicious injection of compromised adapters or PEFT components containing backdoors/trojans. |
-| Accelerator and System Side-channels | Shared hardware vulnerabilities (e.g., timing, cache, Spectre) used to infer sensitive assets. |
-| Covert Channels in Model Outputs | Exploitation of model behavior patterns to establish hidden communication/exfiltration channels. |
-| Denial of ML Service | Reducing ML availability via resource-heavy queries or energy-latency "sponge examples". |
-| Evaluation/Benchmark Manipulation | Compromising evaluation datasets, benchmarks, or infrastructure to generate false quality signals. |
-| Excessive Data Handling | Collection, retention, or processing of training data that violates policies, copyright, or PII rules. |
-| Federated/Distributed Training Privacy | Privacy breaches where participants extract sensitive info from gradient updates or parameters. |
-| Model Deployment Tampering | Unauthorized modification of deployment components or model serving infrastructure. |
-| Malicious Loader/Deserialization | Exploiting unsafe deserialization (e.g., pickle) to execute remote code during model loading. |
-| Model Reverse Engineering | Cloning or recreating a model by analyzing its inputs, outputs, and behaviors. |
-| Model Source Tampering | Tampering with source code, dependencies, weights, or embedding network backdoors. |
-| Model Exfiltration | Unauthorized appropriation or theft of an AI model, its weights, or intellectual property. |
-| Orchestrator/Route Hijack | Manipulating orchestration systems or configuration to redirect requests to unauthorized models. |
-| Unauthorized Training Data | Training or fine-tuning a model using data that violates policies, contracts, or regulations. |
-| Agent Delegation-Chain Opacity | Loss of traceability and accountability across a chain of delegating agents, such that an action cannot be attributed to the originating user or agent. Deferred: A2A composition is out of scope for v1 (see Scoping). |
-| Agentic Delegation Confused Deputy | A downstream agent is induced to act using a delegating agent's privileges without re-verifying the original user's identity/consent, escalating authority across the chain. Deferred: cross-agent identity/consent propagation is out of scope for v1. |
-| Shadow / Unknown Agents | Unregistered or unauthorized agents joining an orchestration and participating in delegation without vetting or trust establishment. Deferred: peer-agent discovery and trust is out of scope for v1. |
+| CoSAI Threat | Description | Rationale for Exclusion |
+| ----- | ----- | ----- |
+| Adapter/PEFT Injection | Malicious injection of compromised adapters or PEFT components containing backdoors/trojans. | Concerns the model fine-tuning/adaptation pipeline; model training and customization are out of ADA scope. |
+| Accelerator and System Side-channels | Shared hardware vulnerabilities (e.g., timing, cache, Spectre) used to infer sensitive assets. | Hosting-infrastructure and hardware concern; AI Infrastructure Testing is out of scope. |
+| Covert Channels in Model Outputs | Exploitation of model behavior patterns to establish hidden communication/exfiltration channels. | Mitigation requires model-training and serving-layer controls outside ADA's external-interface scope. |
+| Data Poisoning | Altering training/retraining data to degrade performance or create hidden backdoors. | Training-time data manipulation is out of ADA's runtime scope (model training is excluded). The runtime analogue — Retrieval/Vector Store Poisoning — remains in scope (see §3.1.2). |
+| Evaluation/Benchmark Manipulation | Compromising evaluation datasets, benchmarks, or infrastructure to generate false quality signals. | Part of the model development and evaluation lifecycle, which is out of scope. |
+| Excessive Data Handling | Collection, retention, or processing of training data that violates policies, copyright, or PII rules. | Training-data governance concern; AI Data Testing is out of scope. Excessive data handling *during inference* is covered in scope (§5.2.1). |
+| Federated/Distributed Training Privacy | Privacy breaches where participants extract sensitive info from gradient updates or parameters. | Training-time (federated learning) concern; model training is out of scope. |
+| Model Deployment Tampering | Unauthorized modification of deployment components or model serving infrastructure. | Model-serving infrastructure concern; model hosting is out of scope. |
+| Malicious Loader/Deserialization | Exploiting unsafe deserialization (e.g., pickle) to execute remote code during model loading. | Model-loading/hosting infrastructure concern; out of scope. |
+| Model Reverse Engineering | Cloning or recreating a model by analyzing its inputs, outputs, and behaviors. | Attack on model intellectual property; a Model Provider concern, out of ADA scope. |
+| Model Source Tampering | Tampering with source code, dependencies, weights, or embedding network backdoors. | Model development and supply-chain concern; out of scope. |
+| Model Exfiltration | Unauthorized appropriation or theft of an AI model, its weights, or intellectual property. | Model-weight/IP protection is a Model Provider and hosting concern; out of scope. |
+| Orchestrator/Route Hijack | Manipulating orchestration systems or configuration to redirect requests to unauthorized models. | Full route-hijack mitigation depends on model-serving and deployment infrastructure that is out of scope; ADA tests the in-scope subset — plugin-boundary isolation — via §3.3.1. |
+| Unauthorized Training Data | Training or fine-tuning a model using data that violates policies, contracts, or regulations. | Training-data provenance/governance concern; model training is out of scope. |
+| Agent Delegation-Chain Opacity | Loss of traceability and accountability across a chain of delegating agents, such that an action cannot be attributed to the originating user or agent. | Agent-to-agent (A2A) / multi-agent composition is out of scope for v1 (see Scoping). |
+| Agentic Delegation Confused Deputy | A downstream agent is induced to act using a delegating agent's privileges without re-verifying the original user's identity/consent, escalating authority across the chain. | Cross-agent identity/consent propagation (A2A) is out of scope for v1. |
+| Shadow / Unknown Agents | Unregistered or unauthorized agents joining an orchestration and participating in delegation without vetting or trust establishment. | Peer-agent discovery and trust establishment (A2A) is out of scope for v1. |
 
 # Controls and Audit Summary
 
@@ -718,11 +719,11 @@ Follow the testing procedures outlined in [AITG-APP-07](https://github.com/OWASP
 
 ### Description
 
-Implement signed route manifests, configuration integrity verification, and response provenance tracking to prevent routing manipulation and ensure request routing to authorized models.
+Enforce plugin-boundary isolation within the orchestration layer so that each tool or plugin invocation is handled as an independent, isolated transaction and the output of one plugin can never be interpreted as a command that drives another. This is the in-scope subset of route integrity, verified by §3.3.1. Stronger orchestration controls — cryptographically signed route manifests, configuration-integrity verification, and response-provenance tracking — are recognized as valuable but are deferred to a future revision; full mitigation of orchestrator/route hijack additionally depends on model-serving and deployment infrastructure that is out of ADA scope (see *Out of Scope CoSAI Threats*).
 
 ### Rationale
 
-Attackers may attempt to manipulate routing logic to redirect traffic to malicious or compromised models; route integrity ensures all requests are handled by trusted endpoints.
+Attackers may attempt to manipulate orchestration and routing logic to redirect traffic to malicious or compromised models or to chain plugins into unintended actions. Treating every plugin call as an isolated, permission-checked transaction contains this blast radius at the layer the Agent Developer controls, even where deeper route-signing and provenance guarantees are not yet in scope.
 
 ### 3.3.1 Testing for Plugin Boundary Violations (AITG-INF-03)
 
