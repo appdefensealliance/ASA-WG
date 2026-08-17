@@ -100,7 +100,7 @@ Tool emitting the optional `consent_required` signal — see *C3* below.
 
 ## Carrier: `_meta` canonical, `Authorization` header conformant on HTTP
 
-***Resolves Open Decision #1.*** The profile is **multi-modal**: one canonical placement that works
+***Resolves Open Decision 1.*** The profile is **multi-modal**: one canonical placement that works
 everywhere, plus a header path that is conformant on the transport where headers exist.
 
 - **`params._meta` is canonical.** The assertions travel in the `tools/call` request's **`params._meta`**
@@ -154,7 +154,7 @@ An ADA-defined, **tool-audience-bound** compact JWS/JWT.
 
 ### Per-action binding (Sensitive Actions)
 
-***Resolves Open Decision #2 — both forms permitted, RAR canonical.***
+***Resolves Open Decision 2 — both forms permitted, RAR canonical.***
 
 - **RFC 9396 `authorization_details` (canonical).** Structured (`type`/`actions`/`locations`/`identifier` +
   fields pinning the actual arguments, e.g. amount, destination); auditable; the Tool re-verifies each field.
@@ -169,7 +169,7 @@ MUST be rejected as ambiguous.
 
 ### Proof-of-possession
 
-***Resolves Open Decision #3 — `SHOULD`, at both tiers.***
+***Resolves Open Decision 3 — `SHOULD`, at both tiers.***
 
 `cnf`-based PoP (DPoP, RFC 9449, or mTLS, RFC 8705) is **RECOMMENDED (SHOULD)** and is **not** elevated to MUST
 for Sensitive Actions. Rationale: Agent Spec §6.1.3's freshness criteria are satisfied by the combination of a
@@ -270,7 +270,7 @@ primitive (deferring to RFC 9396). Hence **C1 is ADA-defined and tool-audience-b
   OAuth 2.1 Resource Server — advertising its audience via RFC 9728 protected-resource metadata, requiring
   RFC 8707 resource-indicator audience binding, and optionally validating DPoP. (PKCE/S256 applies to the
   Agent↔authorization-server code flow, not to the Resource Server.)
-- **stdio (local):** *(pending Open Decision #4)* if applied, C1/C3 travel **only** in `params._meta` (OAuth
+- **stdio (local):** *(pending Open Decision 4)* if applied, C1/C3 travel **only** in `params._meta` (OAuth
   does not apply — MCP: stdio servers SHOULD obtain credentials from the environment). Anti-replay = `jti`
   de-dup, for which the Tool MUST retain a replay cache for at least the maximum token `exp` and across process
   recycling (note the tension with the statelessness guidance in Tool Spec §2.2.1); any server nonce is bound at
@@ -282,9 +282,9 @@ per-action binding.
 ## Open WG decisions
 
 **Resolved in this revision** (proposed by the Chair following the industry-bar review; WG ratification still
-required): **#1 carrier** — multi-modal, `_meta` canonical + `Authorization` conformant on HTTP · **#2
-per-action binding** — RFC 9396 canonical, `aph` optional · **#3 proof-of-possession** — `SHOULD`, not MUST ·
-**#5 delegation chains & headless agents** — multi-hop `act` chains **deferred to a future revision**,
+required): **OD-1 carrier** — multi-modal, `_meta` canonical + `Authorization` conformant on HTTP · **OD-2
+per-action binding** — RFC 9396 canonical, `aph` optional · **OD-3 proof-of-possession** — `SHOULD`, not MUST ·
+**OD-5 delegation chains & headless agents** — multi-hop `act` chains **deferred to a future revision**,
 consistent with the agent-to-agent (A2A) / multi-agent composition deferral already recorded in the Agent
 Specification's scoping section · **trust anchor** — pinned allowlist bootstrapped from existing OAuth metadata.
 
