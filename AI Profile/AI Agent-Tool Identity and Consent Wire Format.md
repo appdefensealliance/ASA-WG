@@ -8,12 +8,20 @@
 > today; it gives the **ADA Malicious Reference Tool/Agent (MRT/MRA)** a concrete artifact to exercise; and
 > it is the candidate text for elevation to mandatory in a future revision **once ecosystem support exists**.
 >
-> **Why optional.** ADA's mandatory bar is deliberately set at what the most responsible, widely adopted
-> implementations can meet today — enough to keep irresponsible implementations out, not so far ahead that
-> conformance is unattainable. Agent-minted, per-request signed identity assertions verified at the Tool are
-> **not shipped by any tier-1 MCP provider** as of this revision, so requiring them would set an
-> unattainable bar. The mandatory requirements live in the AI Agent Specification (§2.4.1, §6.1.x); this
-> profile is the optional tier above them — see *Relationship to the mandatory baseline*.
+> **Why optional — the calibration test.** The market contains a wide diversity of agent↔tool approaches,
+> some of them manifestly insecure. ADA has **no obligation to accommodate those**, and this profile is
+> deliberately ahead of them. The bar is instead calibrated against a narrower reference class: **the
+> leading implementations from providers that are taking due care with security *and* that facilitate
+> consequential actions through their supported MCP tools.** Measured against *that* group, it would be a
+> failure of the standard if essentially **no one** clears the mandatory bar — a requirement nothing on the
+> market satisfies does not raise the security floor; it makes certification unattainable and invites the
+> requirement to be waived.
+>
+> Agent-minted, per-request signed identity assertions verified at the Tool — and especially per-action
+> cryptographic parameter binding — are not shipped **even within that reference class** as of this
+> revision. Mandating them would fail the test above, so they are specified here as an optional tier. The
+> mandatory requirements live in the AI Agent Specification (§2.4.1, §6.1.x); this profile sits above them —
+> see *Relationship to the mandatory baseline*.
 >
 > Open Decisions **1, 2, 3 and 5** and the **trust-anchor** question are **resolved** in this revision;
 > **Open Decisions 4 (stdio) and 6 (claim namespacing)** remain open. The **Pre-Normative Verification**
@@ -36,15 +44,16 @@ isolation can verify identity/consent from any conformant Agent.
 
 ## Relationship to the mandatory baseline
 
-ADA's **mandatory** agent↔tool security bar is set in the AI Agent Specification and is calibrated to what
-responsible, widely adopted implementations can meet today:
+ADA's **mandatory** agent↔tool security bar is set in the AI Agent Specification and is calibrated against
+the reference class described above — the leading implementations from providers taking due care with
+security that facilitate consequential actions through their supported MCP tools:
 
 | Layer | Where it lives | Status |
 |-------|----------------|--------|
 | Transport authentication (OAuth 2.1 / mTLS / rotated keys), PKCE, redirect-URI + state validation | Agent Spec §6.1.1, §6.1.4, §6.1.5 | **Mandatory** — universally implemented |
 | A user-scoped, audience-bound credential per tool call; no bare plain-text identifiers; no cross-user reuse; no token passthrough | Agent Spec §6.1.2, §2.4.1; Tool Spec §1.2.3 | **Mandatory** — achievable with standard OAuth 2.1 today |
 | Human-in-the-loop consent gate for Sensitive Actions, with shown-vs-executed fidelity | Agent Spec §2.2.2 | **Mandatory** — behavioural, no cryptographic artifact required |
-| **Agent-minted, per-request signed identity assertion verified by the Tool; per-action cryptographic binding; signed consent receipt** | **This profile (D1)** | **OPTIONAL** — not shipped by tier-1 providers; reference upgrade path |
+| **Agent-minted, per-request signed identity assertion verified by the Tool; per-action cryptographic binding; signed consent receipt** | **This profile (D1)** | **OPTIONAL** — not shipped even within the reference class; upgrade path |
 
 The dividing line is deliberate: the mandatory tier requires *behaviours and properties* that keep
 irresponsible implementations out — ambient or shared credentials, plain-text user IDs, forwarded tokens,
@@ -166,9 +175,9 @@ MUST be rejected as ambiguous.
 for Sensitive Actions. Rationale: Agent Spec §6.1.3's freshness criteria are satisfied by the combination of a
 short-lived assertion, a Tool-enforced `jti` replay cache, and TLS — so within the lab-testable scope of this
 profile PoP adds defense in depth rather than a distinct testable property. PoP also has effectively no
-production adoption across tier-1 MCP providers today, and a MUST would make the profile unimplementable rather
-than merely demanding. Deployments handling irreversible or high-value actions are strongly encouraged to
-enable it, and a future revision may elevate it once ecosystem support exists.
+production adoption even within the reference class today, and a MUST would make the profile unimplementable
+rather than merely demanding. Deployments handling irreversible or high-value actions are strongly encouraged
+to enable it, and a future revision may elevate it once ecosystem support exists.
 
 ## C3 — Consent Assertion (Sensitive Actions; fills Tool Spec §2.1.1)
 
