@@ -625,7 +625,7 @@ An AI Tool that scrupulously verifies user identity provides no protection if th
 * **No Bare Identifiers:** The Agent shall not convey user identity as a bare, unsigned identifier (e.g., a plain \`user\_id\` or email address) as the mechanism for establishing user context.  
 * **Per-User Isolation:** Distinct users and concurrent sessions shall present distinct credentials. The Agent shall not cache or cross-contaminate credentials between users or sessions.  
 * **Fail Closed:** The Agent shall fail closed — refusing to escalate to a sensitive action — when it cannot produce the identity the Tool requires.  
-* **Verifiable Per-Request Assertion (upgrade path):** The Agent *should* forward a cryptographically verifiable, per-request identity assertion that the Tool can validate independently, bound per action for sensitive actions. The optional [Agent–Tool Identity & Consent Wire Format](AI%20Agent-Tool%20Identity%20and%20Consent%20Wire%20Format.md) profile defines a conformant format. This is a documented upgrade path and is **not** required for certification in this revision.
+* **Verifiable Per-Request Assertion (upgrade path):** The Agent *should* forward a cryptographically verifiable, per-request identity assertion that the Tool can validate independently, bound per action for sensitive actions. The optional ADA *Agent–Tool Identity & Consent Wire Format* profile defines a conformant format. This is a documented upgrade path and is **not** required for certification in this revision.
 
 
 # 3. Input/Output Security
