@@ -602,7 +602,7 @@ Follow the testing procedures outlined in [AITG-INF-04](https://github.com/OWASP
 
 ### Description
 
-The Agent shall satisfy its obligations under the [Agent–Tool Interface Contract](AI%20Agent-Tool%20Interface%20Contract.md), forwarding a verifiable per-user (and, for sensitive actions, per-action) identity assertion to every AI Tool it invokes. This closes the confused-deputy boundary between the Agent and the Tool: the Tool's identity-verification controls (AI Tool Specification §1.2, §2.2.2) can only function if the Agent issues the identity they verify.
+The Agent shall satisfy its obligations under the [Agent–Tool Interface Contract](AI%20Agent-Tool%20Interface%20Contract.md), presenting a user-scoped, audience-bound credential to every AI Tool it invokes. This closes the confused-deputy boundary between the Agent and the Tool: the Tool's identity-verification controls (AI Tool Specification §1.2, §2.2.2) can only function if the Agent supplies a credential that is genuinely tied to the end user and to that Tool.
 
 ### Rationale
 
@@ -617,14 +617,18 @@ An AI Tool that scrupulously verifies user identity provides no protection if th
 
 #### Test Procedure
 
-* Invoke AI Tools through the Agent and inspect the Agent→Tool channel for the forwarded identity assertion.  
+* Invoke AI Tools through the Agent and inspect the Agent→Tool channel for the credential presented with the request, noting whether it is bound to the authenticated end user and scoped to the target Tool.  
+* Repeat the same tool call as a second, distinct user and compare the two captures to confirm the credentials differ.  
 * Using the MRT, present forged, missing, and mismatched identity challenges and attempt to drive the Agent toward a sensitive action.
 
 #### Verification
 
-* The Agent shall forward a cryptographically verifiable identity assertion with every tool request, scoped per request and bound per action for sensitive actions.  
-* The Agent shall not forward a bare, unsigned identifier (e.g., a plain \`user\_id\`) in place of a verifiable assertion.  
-* The Agent shall fail closed — refusing to escalate to a sensitive action — when it cannot produce the identity the Tool requires.
+* **User-Scoped Credential:** The Agent shall present, with every tool request, a credential bound to the authenticated end user (e.g., an OAuth 2.1 access token obtained for that user). The Agent shall not invoke a Tool using an ambient, shared, or application-level service credential in place of a user-scoped one.  
+* **Audience Binding and No Passthrough:** The credential shall be audience-bound to the target Tool. The Agent shall not forward a token it received from its own client, nor one issued for a different audience (cf. AI Tool Specification §1.2.3).  
+* **No Bare Identifiers:** The Agent shall not convey user identity as a bare, unsigned identifier (e.g., a plain \`user\_id\` or email address) as the mechanism for establishing user context.  
+* **Per-User Isolation:** Distinct users and concurrent sessions shall present distinct credentials. The Agent shall not cache or cross-contaminate credentials between users or sessions.  
+* **Fail Closed:** The Agent shall fail closed — refusing to escalate to a sensitive action — when it cannot produce the identity the Tool requires.  
+* **Verifiable Per-Request Assertion (upgrade path):** The Agent *should* forward a cryptographically verifiable, per-request identity assertion that the Tool can validate independently, bound per action for sensitive actions. The optional ADA *Agent–Tool Identity & Consent Wire Format* profile defines a conformant format. This is a documented upgrade path and is **not** required for certification in this revision.
 
 
 # 3. Input/Output Security
@@ -998,7 +1002,7 @@ Because AI Agents frequently act autonomously on behalf of users—interacting w
 
 #### Verification
 
-* **Cryptographic Token Propagation:** The agent shall consistently attach a valid, cryptographically signed identity token representing the active user to the metadata or headers of every downstream tool invocation.  
+* **Cryptographic Token Propagation:** The agent shall consistently attach a valid, cryptographically signed identity token representing the active user to the metadata or headers of every downstream tool invocation. A standard **OAuth 2.1 JWT access token** whose subject is the authenticated end user and whose audience is the target Tool satisfies this criterion; no ADA-specific or agent-minted assertion format is required. Where a deployment uses **opaque** (non-JWT) access tokens, the agent shall instead attach a signed identity token alongside the opaque credential, or the Tool shall validate the credential by token introspection — an opaque bearer token alone does not satisfy this criterion.  
 * **No Plaintext Identifiers:** The agent shall not rely on passing unverified, plain-text user identifiers to the AI Tool as the mechanism for establishing user context.  
 * **Context Accuracy and Isolation:** The agent shall strictly bind the dynamically propagated identity token to the specific user session initiating the prompt. The agent must never cache or cross-contaminate identity tokens between different users or concurrent sessions.  
 * **Graceful Rejection Handling:** If the tool rejects the context due to a missing or invalid cryptographic signature, the agent shall handle the error gracefully without crashing or exposing internal stack traces to the end-user.
