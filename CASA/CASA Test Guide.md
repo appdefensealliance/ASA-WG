@@ -320,7 +320,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 *AL1*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, initial password or activation codes documentation shall include the following controls:
-   * 2.1. The initial password or codes shall be at least 6 characters long.
+   * 2.1. The initial password or codes shall be at least 8 characters long when using MFA or 15 characters long when not using MFA.
    * 2.2. The initial password or codes shall contain letters and numbers.
    * 2.3. The initial password or codes shall expire after a short period of time. (24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
    * 2.4. The initial password or codes shall not be permitted to become long term passwords.
@@ -328,7 +328,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 2.3.1
 *AL2*
 1. An ADA-approved external user authentication service may be used.
 2. If a non-ADA approved service is used, initial password or activation codes shall be validated to include the following controls:
-   * 2.1. The initial password or codes shall be at least 6 characters long.
+   * 2.1. The initial password or codes shall be at least 8 characters long when using MFA or 15 characters long when not using MFA.
    * 2.2. The initial password or codes shall contain letters and numbers.
    * 2.3. The initial password or codes shall expire after a short period of time.(24 hours is the recommended period. However, 48 hours is the maximum period allowed.)
    * 2.4. The initial password or codes shall not be permitted to become long term passwords.
