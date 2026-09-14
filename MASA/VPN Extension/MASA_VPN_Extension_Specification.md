@@ -73,16 +73,3 @@ To preserve deterministic laboratory execution and prevent unconstrained cost in
 * **Summary:** To prevent mobile VPN applications from serving as predatory tracking vectors by exfiltrating persistent device identifiers.
 * **Proposed Control:** The application must not exfiltrate persistent, non-revocable hardware identifiers (such as `Build.SERIAL`, `MAC` address, or `IMEI`) or formatted advertising identifiers (Google Advertising ID / AdID or iOS IDFA) over unencrypted physical channels or inside the tunnel for user tracking, profiling, or third-party marketing exfiltration.
 ---
-
-### 3.6 Strong Client Authentication
-* **Requirement Identifier:** `PC105-VPN` *(Integration: MASA 1.2.2.x)*
-* **Summary:** To prevent global credential compromise arising from hardcoded shared client secrets.
-* **Proposed Control:** Client authentication handshakes must utilize dynamic, session-bound credentials (such as OAuth 2.0 with PKCE, ephemeral X.509 client certificates, or short-lived token exchanges). The application must not rely on static, globally shared pre-shared keys (PSKs) embedded within the application binary.
----
-
-### 3.7 Version Consistency & Application Creep Mitigation
-* **Requirement Identifier:** `ADA-026-GOV` *(Integration: Certification Scheme Overview)*
-* **Summary:** To bind certification strictly to verified binary states, preventing post-audit security regressions.
-* **Proposed Control:** Certification is bound strictly to the evaluated application's SHA-256 binary hash. Modifying native C/C++ compiled libraries (`.so` / `.dylib`), adding sensitive permission scopes (`READ_LOGS`, `LOCATION_ALWAYS`), or altering network security configurations invalidates current compliance, requiring an automated Delta Audit under ADA-026 governance.
-
----
