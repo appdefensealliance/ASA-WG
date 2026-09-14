@@ -1,23 +1,52 @@
-# MASA VPN Extension Test Guide
+# App Defense Alliance MASA Testing Guide
 
-**Document Version:** 1.0  
-**Status:** Working Group Review Draft  
-**Target Authority:** App Defense Alliance (ADA) Technical Working Group  
+Version 0.0.1 - 2026-09-14
 
----
+> **Version history** is maintained via [GitHub Releases](https://github.com/appdefensealliance/ASA-WG/releases) and [`CHANGELOG.md`](../CHANGELOG.md).
 
-## 1. Laboratory Environment & Prerequisites Setup
+## Contributors
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification:
 
-### 1.1 Physical Dual-Stack Test Bed
+* 
+## About This Guide
+
+This guide provides the testing procedures for the subclass of VPN mobile applications under the App Defense Alliance (ADA) certification scheme. It represents the continuation of the testing guidance originally established under the Mobile Application Security Assessment (MASA) program as MASA v2, now developed and maintained by the ADA through the Application Security Assessment Working Group (ASA WG). Organizations previously certified under MASA or familiar with the MASA program should refer to this guide as the current version of that testing guidance.
+
+
+## Introduction
+
+In today’s digitally-driven world, mobile applications are the backbone of countless businesses and organizations. Unfortunately, they are also prime targets for cyberattacks that threaten data confidentiality, service availability, and overall business integrity. To mitigate risks and build a secure mobile environment, a robust mobile application security standard and certification program is essential.
+
+### Our Approach: OWASP MASVS as the Foundation
+
+This program leverages the internationally recognized OWASP Mobile Application Security Verification Standard (MASVS) as its core. The OWASP MASVS offers a comprehensive set of security assessment requirements and guidelines covering the entire mobile application development lifecycle. Building upon this base, the App Defense Alliance (ADA) focused on testable requirements with clear acceptance criteria. Further, the ADA approach emphasizes the use of automation where possible.
+
+### Applicability
+
+This document is intended for system and application administrators, security specialists, auditors, help desk, platform deployment, and/or DevOps personnel who plan to develop, deploy, assess, or secure mobile applications.
+
+### References
+
+1. [OWASP Mobile Application Security Verification Standard](https://github.com/OWASP/owasp-masvs/)
+
+### Licensing
+
+This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License.](https://creativecommons.org/licenses/by-sa/4.0/)
+
+### Assumptions
+See the [ADA MASA Specification Assumptions section](https://github.com/appdefensealliance/ASA-WG/blob/main/MASA/MASA%20Specification.md#assumptions).
+## Laboratory Environment & Prerequisites Setup
+
+### Physical Dual-Stack Test Bed
 Testing laboratories must provision a physical, isolated network environment featuring:
 *   Native, routable public **IPv4** network access.
 *   Native, routable public **IPv6** network access.
 *   Physical wireless access points (`wlan0` for Android / `en0` for iOS) connected to an intercepting network tap or mirror port for unencapsulated packet capture.
 
-### 1.2 Hard Testing Dependency
+### Hard Testing Dependency
 *   The VPN tunnel under test must be actively connected, authenticated, and passing user traffic during all dynamic dynamic capture routines.
 
-### 1.3 Virtual Adapter Interface Discovery Prerequisite
+### Virtual Adapter Interface Discovery Prerequisite
 Because Android and iOS instantiate different virtual interface naming conventions depending on the underlying framework, testing laboratories must dynamically enumerate active device interfaces prior to running dynamic packet captures (`adb shell ip addr` on Android / `ifconfig` on iOS):
 
 *   **Custom Packet Engines (Model A - `VpnService` / `NETunnelProviderManager`):** Enumerate and capture on **`tunX`** (e.g., `tun0`, `tun1` on Android) or **`utunX`** (e.g., `utun0`, `utun1` on iOS).
@@ -25,11 +54,11 @@ Because Android and iOS instantiate different virtual interface naming conventio
 
 ---
 
-## 2. Statement of Evidence Requirements
+## Statement of Evidence Requirements
 
 Prior to testing, developers must submit an evidence package based on their application architecture:
 
-### 2.1 Model A (Custom Packet Engines)
+### Model A (Custom Packet Engines)
 *   **Android:**
     _AL1_ Source code / build configuration files (`build.gradle.kts`) showing custom tunnel integration (`VpnService.Builder` assigning wildcard catch-all routes `0.0.0.0/0` and `::/0`), dependency declarations, and native C/C++ source code/libraries.
     *   **AL2:** Release production APK, test credentials, and active server endpoints.
@@ -37,7 +66,7 @@ Prior to testing, developers must submit an evidence package based on their appl
     _AL1_ Source code / dependency logs (`Podfile.lock`, `Package.resolved`), Network Extension target configuration (`NEPacketTunnelNetworkSettings`), `NEIPv4Settings`, `NEIPv6Settings` wildcard routes, and custom C/C++ framework wrappers.
     *   **AL2:** Release production IPA, test credentials, and active server endpoints.
 
-### 2.2 Model B (Platform VPN Profiles)
+### Model B (Platform VPN Profiles)
 *   **Android:**
     _AL1_ Source code showing `PlatformVpnProfile` / `VpnManager` initialization, inclusive routing definitions, and explicit protocol configuration.
     *   **AL2:** Release production APK and active test server credentials.
@@ -47,9 +76,16 @@ Prior to testing, developers must submit an evidence package based on their appl
 
 ---
 
-## 3. Step-by-Step Testing Procedures: Specialized VPN Controls
 
-### 3.1 Verified Only Acceptable Protocols Are Used (PC104-VPN)
+# Table of Contents
+To be updated
+---
+
+
+
+## 1. Step-by-Step Testing Procedures: Specialized VPN Controls
+
+### 1.1 Verified Only Acceptable Protocols Are Used (PC104-VPN)
 
 _AL1_ (Build & Source Audit)
 1.  **Android:** Audit `build.gradle.kts` and dependency resolution logs to verify that only approved tunnel wrappers (e.g., `wireguard-android`, official OpenVPN 3 libraries) or platform `VpnManager` profiles are imported.
@@ -84,7 +120,7 @@ System-Managed Platform VPNs (NEVPNManager / VpnManager): The platform protocol 
 
 ---
 
-### 3.2 Complete Traffic Encapsulation & Leak Prevention (SI114-VPN)
+### 1.2 Complete Traffic Encapsulation & Leak Prevention (SI114-VPN)
 
 _AL1_ (Routing Configuration Audit)
 *   **Android:** Inspect `VpnService.Builder` to confirm catch-all wildcard routes (`addRoute("0.0.0.0", 0)` and `addRoute("::", 0)`) and DNS capture declarations, OR inspect `PlatformVpnProfile` inclusive routing rules.
@@ -130,7 +166,7 @@ Procedure: With split-tunneling / app bypass disabled, generate active dual-stac
 
 ---
 
-### 3.3 Connection Resiliency and Fail-Secure Controls (SI115-VPN)
+### 1.3 Connection Resiliency and Fail-Secure Controls (SI115-VPN)
 
 _AL1_ (Source Callback Review)
 *   **Android:** Verify registration of `ConnectivityManager.NetworkCallback` or `onLost()` overrides (custom `VpnService`) or profile exception handlers (platform `VpnManager`) to catch interface drops and trigger immediate socket blocking.
@@ -162,7 +198,7 @@ _AL2_
 
 ---
 
-### 3.4 OpenVPN Profile Hardening & Control Channel Audit (SI116-VPN)
+### 1.4 OpenVPN Profile Hardening & Control Channel Audit (SI116-VPN)
 
 _AL1_ & _AL2_ Static Profile Analysis
 1.  Extract all bundled `.ovpn` configuration profiles, assets, and dynamic config templates from the APK/IPA package.
@@ -189,7 +225,7 @@ Configure the device to route traffic through an intercepting proxy (such as Bur
 
 ---
 
-### 3.5 Telemetry and AdID Isolation Audit (SI114-VPN-EXT)
+### 1.5 Telemetry and AdID Isolation Audit (SI114-VPN-EXT)
 
 _AL1_ & _AL2_ Dynamic Exfiltration Pass
 1.  Execute dynamic traffic capture across physical (`wlan0` / `en0`) and virtual (`tunX` / `ipsecX` / `utunX`) interfaces during app startup, connection establishment, and active routing.
