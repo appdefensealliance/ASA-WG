@@ -242,6 +242,8 @@ Without identity verification, an attacker could impersonate a legitimate AI age
 
 ### Audit
 
+### 1.1.1 Mandatory Client-Server Transport Authentication
+
 **Evidence**  
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
 
@@ -285,6 +287,8 @@ For persistent or stateful transports (e.g., Streamable HTTP), the AI Tool must 
 If an attacker captures a valid AI Tool tool-call request, they could "replay" it later to trigger the tool again (e.g., a "pay_invoice" tool) even if the original session has ended.
 
 ### Audit
+
+### 1.2.1 Message Freshness and Session Binding
 
 **Evidence**
 
@@ -333,6 +337,8 @@ AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in t
 **This requirement is out of scope for mobile AI Tools, or remote servers in which the AI Tool is integrated into a WebApp.**
 
 ### Audit
+
+### 1.3.1 Strict Redirect URI and State Validation
 
 **Evidence**
 
@@ -385,6 +391,8 @@ Authorization codes are vulnerable to interception via custom URI scheme hijacki
 **Mobile AI Tools are out of scope for this requirement.**
 
 ### Audit
+
+### 1.4.1 Mandatory Proof Key for Code Exchange (PKCE)
 
 **Evidence**
 
@@ -439,6 +447,8 @@ Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring
 
 ### Audit
 
+### 1.5.1 User Identity Propagation
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -487,6 +497,8 @@ Credential theft often occurs during transit or through the reuse of intercepted
 
 ### Audit
 
+### 1.6.1 Secure Downstream Transport
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -529,6 +541,8 @@ To mitigate Man-in-the-Middle (MitM) and message integrity risks, the system mus
 This requirement establishes a multi-layered defense. High-grade encryption and secure IPC prevent unauthorized eavesdropping on the wire or within the host. Strict certificate validation ensures the client is communicating with the legitimate server, rather than an attacker's proxy. Lastly, message-level signing guarantees that even if a transport-level vulnerability exists, the underlying tool calls and responses remain immutable and can only be executed once.
 
 ### Audit
+
+### 1.7.1 Integrated Transport Security and Message Integrity
 
 **Evidence**
 
@@ -580,6 +594,8 @@ An AI Tool acts as a deputy. If it uses a global admin key to fulfill a request 
 
 ### Audit
 
+### 2.1.1 Scoped Authorization and User Context Propagation
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -628,6 +644,8 @@ If a developer's tool simply trusts a `user_id` passed by the Agent, a compromis
 
 ### Audit
 
+### 2.2.1 Mandatory Cryptographic Validation of User Context
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -673,6 +691,8 @@ The AI tool implementation must utilize elicitation or confirmation message on t
 Missing or insufficient human-in-the-loop consent checks can allow an AI Tool to take risky actions not authorized by the user. A large language model, whether legitimate or poisoned, may decide to execute a tool in a dangerous way, making user confirmation crucial for mitigating this risk.
 
 ### Audit
+
+### 2.3.1 Server-Side Consent Backstop for Sensitive Actions
 
 **Evidence**
 
@@ -720,6 +740,8 @@ AI agents, AI Tools, or tools granted more privileges than necessary drastically
 
 ### Audit
 
+### 2.4.1 Principle of Least Privilege and Scoped Permissions
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection and IAM/RBAC configuration reviews to show compliance.
@@ -762,6 +784,8 @@ Because AI agents are inherently probabilistic and vulnerable to prompt injectio
 
 ### Audit
 
+### 2.5.1 Tool Function Allow-listing and Parameter Validation
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection and manifest review to show compliance.
@@ -803,6 +827,8 @@ When the AI Tool calls a downstream/upstream API on the user's behalf, it must n
 Forwarding the inbound token downstream is the classic confused-deputy / audience-confusion vector. Token exchange preserves the user's identity and least-privilege scope while binding each hop's credential to its audience; proof-of-possession stops a stolen bearer token from being replayed.
 
 ### Audit
+
+### 2.6.1 No Token Passthrough / Downstream Token Exchange
 
 **Evidence**
 
@@ -848,6 +874,8 @@ Server-side elicitation transits the Agent, so a malicious Agent can fabricate a
 
 ### Audit
 
+### 2.7.1 Out-of-Band Confirmation for High-Risk Actions
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection identifying the highest-risk operations and the out-of-band confirmation path defined for them.
@@ -892,6 +920,8 @@ AI Tools must never contain hardcoded credentials, API keys, or private keys wit
 AI Tools are often lightweight and distributed; hardcoded secrets are easily leaked through version control or container image inspection, leading to full compromise of the connected tools.
 
 ### Audit
+
+### 3.1.1 Externalized Secret Management
 
 **Evidence**
 
@@ -940,6 +970,8 @@ The AI Tool must implement an interception layer for all logging (stdout/stderr/
 Developers often log full JSON-RPC requests for debugging. If these logs are sent to a centralized logging system, any user with log access can steal active session tokens or sensitive tool inputs.
 
 ### Audit
+
+### 3.2.1 Automated PII and Credential Masking in Logs
 
 **Evidence**
 
@@ -991,6 +1023,8 @@ In the AI Tool architecture, the session token is the "keys to the kingdom." If 
 
 ### Audit
 
+### 3.3.1 Secure Session Tokens
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1038,6 +1072,8 @@ The AI tool (e.g., AI Tool) MUST implement strict access controls, memory isolat
 AI tools often require highly privileged credentials (e.g., database passwords, OAuth tokens) to function. If an Agent is subverted via Indirect Prompt Injection (IPI), it may attempt to instruct the tool to read its own internal configuration or "leak" supplementary data retrieved from a backend. By isolating internal secrets and enforcing strict output schemas, the "blast radius" of a compromised agent is contained; the request simply becomes technically impossible to fulfill.
 
 ### Audit
+
+### 3.4.1 Exfiltration Defense
 
 **Evidence**
 
@@ -1089,6 +1125,8 @@ PII Detection is fundamentally used to prevent PII leakage. It serves as a criti
 
 ### Audit
 
+### 3.5.1 PII Detection
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1129,6 +1167,8 @@ Overly permissive tools may expose the user’s data, or result in actions which
 
 ### Audit
 
+### 3.6.1 Data Minimization
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection and schema reviews to show compliance.
@@ -1166,6 +1206,8 @@ All logging mechanisms must include automated redaction or masking for sensitive
 Logs are frequently replicated across multiple systems, stored in centralized repositories, and accessed by various personnel, making them a high-value target for attackers. According to OWASP and COSAI standards, failure to scrub sensitive data from telemetry can lead to accidental data breaches and compliance violations. Because LLMs and agents may process sensitive data as part of their prompt context, it is vital to ensure that this data does not leak into the persistent logging layer during the monitoring process.
 
 ### Audit
+
+### 3.7.1 Protect Sensitive Data in Logs
 
 **Evidence**
 
@@ -1216,6 +1258,8 @@ Output Sanitization helps to prevent output vulnerabilities by ensuring that mal
 
 ### Audit
 
+### 4.1.1 Output Sanitization
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1259,6 +1303,8 @@ The AI Tool must enforce strict input validation, sanitization, and parameteriza
 Developers incorrectly assume that user input processed through an LLM is inherently safe, bypassing established secure coding practices. In reality, the LLM transforms but does not sanitize malicious payloads. Without strict parameterized boundaries, an attacker can manipulate tool arguments to execute arbitrary shell commands, leading to total system compromise and sandbox escapes.
 
 ### Audit
+
+### 4.2.1 Parameterized Arguments and Unsafe Sink Blocking
 
 **Evidence**
 
@@ -1305,6 +1351,8 @@ Proactively identifying insecure coding patterns during development mitigates th
 
 ### Audit
 
+### 4.3.1 Detect and Block Unsafe Sinks
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1346,6 +1394,8 @@ Enforcing a strict ceiling on outbound payloads serves as a vital safeguard to l
 By mandating a tight default maximum response limit of 1 MB and requiring oversized payloads to be truncated, paginated, or explicitly rejected , the tool enforces strict data minimization at the output boundary. Furthermore, this restriction protects the calling AI host from client-side parsing latency, memory consumption spikes, or systemic Denial-of-Service (DoS) vulnerabilities that arise when trying to process unconstrained natural language or deeply nested JSON structures.
 
 ### Audit
+
+### 4.4.1 Maximum Response Size
 
 **Evidence**  
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1395,6 +1445,8 @@ Mandatory Statelessness is the primary technical control against Cross-Tenant Da
 
 ### Audit
 
+### 5.1.1 Stateless Request Level Isolation
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement. 
@@ -1440,6 +1492,8 @@ Identify and block code patterns that facilitate sandbox escapes or multi-tenant
 Enforcing these programmatic constraints aligns the AI Tool architecture with the principle of "Least Privilege," ensuring inherent compatibility with hardened runtimes. Proactively identifying and remediating insecure coding patterns during the development phase mitigates the risk of Directory Traversal and Command Injection vulnerabilities, which serve as primary vectors for bypassing execution sandboxes. Such a stance is critical in multi-tenant environments to ensure that even a compromised or manipulated model cannot programmatically execute unauthorized actions on the host system or access data belonging to other users.
 
 ### Audit
+
+### 5.2.1 Ensure Sandbox Protections
 
 **Evidence**
 
@@ -1487,6 +1541,8 @@ Prevent Cross-Tenant Data Leakage
 
 ### Audit
 
+### 5.3.1 Mandatory Tenant Isolation
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement. 
@@ -1528,6 +1584,8 @@ AI Tool implementations must require and enforce cryptographic integrity checks 
 Without integrity verification, malicious actors or compromised intermediaries can intercept and modify tool definitions, forge messages, or inject poisoned data into resource responses. Because the AI model implicitly trusts the context and data returned by connected tools, tampered payloads can seamlessly trigger prompt injections or execute unauthorized behavior .
 
 ### Audit
+
+### 6.1.1 Cryptographic Message Integrity Validation
 
 **Evidence**
 
@@ -1580,6 +1638,8 @@ In the context of AI Agents (like those using the Model Context Protocol), the a
 
 ### Audit
 
+### 6.2.1 Semantic Integrity and Descriptive Accuracy
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1627,6 +1687,8 @@ Resource pinning ensures that updates are a deliberate developer decision, preve
 
 ### Audit
 
+### 6.3.1 Resource Pinning and Signature Verification
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection and dependency manifest review to show compliance to the requirement.
@@ -1667,6 +1729,8 @@ Indirect prompt injection cannot be prevented by the producer marking its output
 
 ### Audit
 
+### 6.4.1 No Embedded Model-Directed Control Directives
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection of tool/function descriptions, schemas, and output-construction code.
@@ -1701,7 +1765,7 @@ Indirect prompt injection cannot be prevented by the producer marking its output
 
 # 7. Resource Constraints & Denial of Service (DoS) Prevention
 
-## 7.1  Financial Resource & Cost Governance
+## 7.1 Financial Resource & Cost Governance
 
 ### Description
 
@@ -1717,6 +1781,8 @@ The AI Tool must be inherently **cost-aware**. It must identify whether a specif
 AI Tools are "force multipliers" for LLMs. Because these tools often bridge the gap to paid APIs (e.g., GPT-4o, Claude 3.5 Sonnet, or search engines), they represent a direct financial vulnerability. A logic loop or a malicious actor could trigger thousands of dollars in costs in seconds. Unlike traditional DoS, which impacts availability, a DoW attack impacts the viability of the business.
 
 ### Audit
+
+### 7.1.1 Financial Resource & Cost Governance
 
 **Evidence**
 
@@ -1751,7 +1817,7 @@ AI Tools are "force multipliers" for LLMs. Because these tools often bridge the 
 2. **Stress Testing:** The tool must successfully trigger a rate limit or explicit confirmation prompt exactly when the cumulative session cost reaches the defined $100 limit (or justified limit) during high-volume simulation.  
    
 
-## 7.2  Per User Endpoint Rate Limiting
+## 7.2 Per User Endpoint Rate Limiting
 
 ### Description
 
@@ -1762,6 +1828,8 @@ For remote deployments, the AI Tool SHALL enforce per-user or per-session rate l
 TBD
 
 ### Audit
+
+### 7.2.1 Per User Endpoint Rate Limiting
 
 **Evidence**
 
@@ -1806,6 +1874,8 @@ Unbounded inputs allow attackers to trigger Denial-of-Service (DoS). Large paylo
 
 ### Audit
 
+### 7.3.1 Maximum Payload and Recursion Depth Constraints
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1849,6 +1919,8 @@ The system must capture all significant security and operational events—includ
 In agentic and MCP-based architectures, the complexity of interactions between users, hosts, and servers makes traditional grep-based log analysis insufficient. Structured logging allows automated security orchestration, automation, and response (SOAR) tools and SIEMs to parse and correlate events in real-time. This visibility is critical for detecting anomalous patterns, such as indirect prompt injection, which are often only visible when analyzing the metadata of model interactions and tool execution.
 
 ### Audit
+
+### 8.1.1 Implement comprehensive logging using structured logging formats
 
 **Evidence**
 
@@ -1897,6 +1969,12 @@ The AI Tool SHALL generate a structured log entry for every function invocation 
 
 ### Rationale
 
+Detailed audit trails allow security teams to reconstruct anomalous agent sessions, verify non-repudiation, and detect subtle privilege escalation attempts or unauthorized actions executed via tools.
+
+### Audit
+
+### 8.2.1 Invocation Audit Trail
+
 **Evidence**
 
 **AL0, AL1:** Supporting evidence from static code inspection to show compliance to the requirement.
@@ -1934,6 +2012,9 @@ The AI Tool must validate the `Origin` header on all incoming HTTP connections t
 ### Rationale
 DNS rebinding allows an attacker's webpage to interact with local or internal MCP servers. Validating the `Origin` header is a mandatory requirement of the MCP transport specification to prevent these attacks.
 ### Audit
+
+### 7.7.1 Validate Origin Header on HTTP Transports
+
 **Evidence**
 **AL0, AL1:** Supporting evidence from static code inspection of the HTTP server configuration.
 **AL2:** Functional AI Tool tested with forged Origin headers.
