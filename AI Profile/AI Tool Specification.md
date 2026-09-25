@@ -431,6 +431,33 @@ Transport replay controls reject a captured duplicate message, but they do not p
 | Mobile | In scope |
 | Remote | In scope |
 
+### 1.4.3 Connector Lifecycle Revocation
+
+#### Description
+
+The AI Tool MUST define and enforce lifecycle termination for connector disconnection, user-consent revocation, account deactivation, credential revocation, and session termination. After revocation becomes effective, the Tool MUST reject new actions and MUST NOT begin uncommitted queued work using the revoked authority. Revoked credentials, cached capabilities, Tool-controlled approval artifacts, callbacks, and automatic retries MUST NOT authorize subsequent activity. The implementation MUST document the maximum time required for each supported revocation event to take effect.
+
+If an irreversible action was already committed before revocation, the Tool MUST report its status accurately and MUST NOT represent it as cancelled or rolled back unless that result is confirmed by the authoritative downstream system.
+
+#### Rationale
+
+Ending a user session does not necessarily revoke downstream credentials, queued work, callbacks, or cached authorization artifacts. Without explicit lifecycle handling, a disconnected or deauthorized connector may continue to access data or cause actions after the user's authority has ended.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Map Revocation Events:** Identify the handling of connector disconnection, consent revocation, account deactivation, credential revocation, and session termination. <br><br>**Trace Pending Work:** Confirm each event reaches stored credentials, cached capabilities, approval artifacts, queued work, callbacks, and retry handlers. <br><br>**Review Effective Time:** Confirm the maximum revocation-enforcement time is documented. |
+| Dynamic | **Pending-Work Test:** Queue an action, revoke the applicable authority before execution, and verify it does not begin. <br><br>**Callback and Retry Test:** Revoke authority before a callback or automatic retry and verify rejection. <br><br>**Active-Session Test:** Disconnect the connector, deactivate the account, or terminate the session and verify future requests fail. <br><br>**Committed-Action Test:** Revoke authority after an irreversible action commits and verify the Tool reports the authoritative result accurately without claiming an unconfirmed rollback. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
 ## 1.5 OAuth/Legacy Auth Weaknesses
 
 Use of outdated, weak, or pass-through authentication and authorization (e.g., basic auth, static API keys) exposes systems to impersonation, privilege misuse, and poor accountability.

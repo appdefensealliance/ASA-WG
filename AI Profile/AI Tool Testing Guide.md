@@ -43,6 +43,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
    * [1.8 Sensitive Action Idempotency and Ambiguous Outcomes](#1.8-sensitive-action-idempotency-and-ambiguous-outcomes)
 
+   * [1.9 Connector Lifecycle Revocation](#1.9-connector-lifecycle-revocation)
+
 * [2\. Authorization, Consent, & Access Control](#2.-authorization,-consent,-&-access-control)
 
    * [2.1 Scoped Authorization and User Context Propagation](#2.1-scoped-authorization-and-user-context-propagation)
@@ -198,6 +200,7 @@ Assurance level 0 (self assessment) and Assurance level 1 (Verified Self Assessm
 |  | 1.6 Secure Downstream Transport |
 |  | 1.7 Integrated Transport Security and Message Integrity |
 |  | 1.8 Sensitive Action Idempotency and Ambiguous Outcomes |
+|  | 1.9 Connector Lifecycle Revocation |
 | 2\. Authorization, Consent, & Access Control | 2.1 Scoped Authorization and User Context Propagation |
 |  | 2.2 Mandatory Cryptographic Validation of User Context |
 |  | 2.3 Mandatory Explicit Consent |
@@ -614,6 +617,53 @@ Transport replay controls reject a captured duplicate message, but they do not p
 
 1. **No Duplicate Consequence:** Concurrent requests and retries do not create an unintended duplicate external side effect.
 2. **Accurate Outcome:** The Tool reports an authoritative status where available and otherwise reports an explicit indeterminate outcome.
+
+## 1.9 Connector Lifecycle Revocation
+
+### Description
+
+The AI Tool MUST define and enforce lifecycle termination for connector disconnection, user-consent revocation, account deactivation, credential revocation, and session termination. After revocation becomes effective, the Tool MUST reject new actions and MUST NOT begin uncommitted queued work using the revoked authority. Revoked credentials, cached capabilities, Tool-controlled approval artifacts, callbacks, and automatic retries MUST NOT authorize subsequent activity. The implementation MUST document the maximum time required for each supported revocation event to take effect.
+
+If an irreversible action was already committed before revocation, the Tool MUST report its status accurately and MUST NOT represent it as cancelled or rolled back unless that result is confirmed by the authoritative downstream system.
+
+### Rationale
+
+Ending a user session does not necessarily revoke downstream credentials, queued work, callbacks, or cached authorization artifacts. Explicit lifecycle handling prevents activity from continuing after the user's authority has ended and distinguishes uncommitted work from irreversible work already performed.
+
+### Audit
+
+**Evidence**
+
+**AL0, AL1:** Supporting evidence from static code inspection and documented lifecycle and revocation procedures.
+
+**AL2:** Functional AI Tool with test accounts, pending work, and the ability to disconnect the Tool and revoke consent, accounts, sessions, and credentials.
+
+**Test Procedure**
+
+**AL0, AL1:**
+
+1. **Map Revocation Events:** Identify handling of connector disconnection, consent revocation, account deactivation, credential revocation, and session termination.
+2. **Trace Pending Work:** Confirm each event reaches stored credentials, cached capabilities, approval artifacts, queued work, callbacks, and retry handlers.
+3. **Review Effective Time:** Confirm the maximum time for each supported revocation event to take effect is documented.
+
+**AL2:**
+
+1. **Pending Work:** Queue an action, revoke the applicable authority before execution, and verify the work does not begin.
+2. **Callbacks and Retries:** Revoke authority before a callback or automatic retry and verify rejection.
+3. **Active Session:** Disconnect the connector, deactivate the account, or terminate the session and verify subsequent requests fail.
+4. **Committed Action:** Revoke authority after an irreversible action commits and verify the Tool reports the authoritative result accurately without claiming an unconfirmed rollback.
+
+**Verification**
+
+**AL0, AL1:**
+
+1. **Complete Lifecycle Handling:** Each supported revocation event reaches credentials, capabilities, approvals, queued work, callbacks, and retries.
+2. **Defined Enforcement Time:** The maximum revocation-enforcement time is documented.
+
+**AL2:**
+
+1. **Post-Revocation Denial:** New actions, uncommitted queued work, callbacks, and retries are rejected after revocation becomes effective.
+2. **Accurate Committed Status:** Work committed before revocation is reported according to authoritative downstream state.
 
 # 2. Authorization, Consent, & Access Control
 
