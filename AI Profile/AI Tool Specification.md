@@ -61,6 +61,10 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 [1.4 Replay Attacks/Session Hijacking	15](#1.4-replay-attacks/session-hijacking)
 
+[1.4.2 Sensitive Action Idempotency and Ambiguous Outcomes](#142-sensitive-action-idempotency-and-ambiguous-outcomes)
+
+[1.4.3 Connector Lifecycle Revocation](#143-connector-lifecycle-revocation)
+
 [1.5 OAuth/Legacy Auth Weaknesses	17](#1.5-oauth/legacy-auth-weaknesses)
 
 [1.6 Session Token Leakage	19](#1.6-session-token-leakage)
@@ -408,7 +412,7 @@ If an attacker captures a valid MCP tool-call request, they could "replay" it la
 
 #### Description
 
-A Sensitive Action that can create an external side effect MUST use a durable idempotency or equivalent duplicate-suppression mechanism scoped to the authenticated user and operation. Concurrent or repeated requests representing the same intended action MUST NOT produce multiple external side effects.
+A Sensitive Action that can create an external side effect MUST require a stable intent or idempotency identifier on the request that can create the side effect. The Tool MAY accept an Agent-provided identifier or implement an explicit two-phase flow that mints and returns the identifier before any external side effect occurs and requires a subsequent request carrying it to execute. The identifier MUST uniquely represent the user-approved action and be bound to the authenticated user, Tool or connector account, operation, and all material parameters. Two separately approved but otherwise identical actions MUST use distinct identifiers. Concurrent or repeated requests representing the same intended action MUST reuse its identifier and MUST NOT produce multiple external side effects. Duplicate-suppression state MUST survive process restarts and remain available for a documented retry and outcome-uncertainty period.
 
 When the downstream outcome is unknown, including after a timeout, lost response, malformed response, or partial failure, the AI Tool MUST NOT report success or blindly retry the action. It MUST reconcile the authoritative downstream status or preserve the original idempotency context before retry. If the outcome cannot be established safely, the Tool MUST return an explicit unknown or indeterminate status without initiating another action.
 
@@ -420,8 +424,8 @@ Transport replay controls reject a captured duplicate message, but they do not p
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Review Idempotency Design:** Identify every Sensitive Action that can create an external side effect and confirm it uses a durable idempotency key or equivalent duplicate-suppression mechanism scoped to the authenticated user and operation. <br><br>**Review Failure Handling:** Confirm timeout, malformed-response, partial-failure, and unknown-outcome paths reconcile authoritative status or preserve the original idempotency context rather than blindly issuing a new action. |
-| Dynamic | **Duplicate and Concurrency Tests:** Submit concurrent identical requests and retry the same intended action using both the same transport message and a newly constructed message with a fresh nonce. <br><br>**Ambiguous-Outcome Tests:** Simulate a timeout after downstream commit, a lost or malformed response, and partial completion. Confirm that no unintended duplicate occurs and that the Tool reports the authoritative or explicitly indeterminate status accurately. |
+| Static | **Review Idempotency Design:** Identify every Sensitive Action that can create an external side effect and confirm the execution request requires a stable intent or idempotency identifier bound to the authenticated user, Tool or connector account, operation, and all material parameters. If the Tool mints the identifier, confirm that it does so in an explicit preparation step that cannot create an external side effect and requires a subsequent request carrying the identifier to execute. Confirm that separately approved identical actions receive distinct identifiers. <br><br>**Review Persistence:** Confirm duplicate-suppression state survives process restarts for a documented retry and outcome-uncertainty period. <br><br>**Review Failure Handling:** Confirm timeout, malformed-response, partial-failure, and unknown-outcome paths reconcile authoritative status or reuse the original identifier rather than blindly issuing a new action. |
+| Dynamic | **Duplicate and Concurrency Tests:** Submit concurrent requests with the same intent identifier, then retry the same intended action in a newly constructed message with a fresh transport nonce and the original identifier. Confirm that no duplicate external effect occurs. Submit the identifier with changed user, account, operation, or material parameters and confirm rejection. Verify that separately approved identical actions with distinct identifiers can execute independently. <br><br>**Restart Test:** Restart the Tool during the documented retry window and retry the original identifier; confirm duplicate suppression survives. <br><br>**Ambiguous-Outcome Tests:** Simulate a timeout after downstream commit, a lost or malformed response, and partial completion. Confirm that no unintended duplicate occurs and that the Tool reports the authoritative or explicitly indeterminate status accurately. |
 
 #### Comments
 
@@ -435,7 +439,9 @@ Transport replay controls reject a captured duplicate message, but they do not p
 
 #### Description
 
-The AI Tool MUST define and enforce lifecycle termination for connector disconnection, user-consent revocation, account deactivation, credential revocation, and session termination. After revocation becomes effective, the Tool MUST reject new actions and MUST NOT begin uncommitted queued work using the revoked authority. Revoked credentials, cached capabilities, Tool-controlled approval artifacts, callbacks, and automatic retries MUST NOT authorize subsequent activity. The implementation MUST document the maximum time required for each supported revocation event to take effect.
+The AI Tool MUST define and enforce lifecycle termination for user- or administrator-initiated connector unlinking or removal, withdrawal of persistent connector or account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Refusal or cancellation of a single action prompt is not withdrawal of persistent connector or account authorization. Ending an Agent login session invalidates authority scoped to that session; it does not automatically invalidate a separately established persistent connector grant unless the documented connector lifecycle specifies that result.
+
+After a revocation becomes effective, the Tool MUST reject new actions and MUST NOT begin uncommitted queued work using the revoked authority. Revoked credentials, cached capabilities, Tool-controlled approval artifacts, and automatic retries MUST NOT authorize subsequent activity. A callback MAY reconcile the status of an action committed before revocation but MUST NOT authorize a new external side effect. The implementation MUST document the maximum time required for each supported revocation event to take effect.
 
 If an irreversible action was already committed before revocation, the Tool MUST report its status accurately and MUST NOT represent it as cancelled or rolled back unless that result is confirmed by the authoritative downstream system.
 
@@ -447,8 +453,8 @@ Ending a user session does not necessarily revoke downstream credentials, queued
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Map Revocation Events:** Identify the handling of connector disconnection, consent revocation, account deactivation, credential revocation, and session termination. <br><br>**Trace Pending Work:** Confirm each event reaches stored credentials, cached capabilities, approval artifacts, queued work, callbacks, and retry handlers. <br><br>**Review Effective Time:** Confirm the maximum revocation-enforcement time is documented. |
-| Dynamic | **Pending-Work Test:** Queue an action, revoke the applicable authority before execution, and verify it does not begin. <br><br>**Callback and Retry Test:** Revoke authority before a callback or automatic retry and verify rejection. <br><br>**Active-Session Test:** Disconnect the connector, deactivate the account, or terminate the session and verify future requests fail. <br><br>**Committed-Action Test:** Revoke authority after an irreversible action commits and verify the Tool reports the authoritative result accurately without claiming an unconfirmed rollback. |
+| Static | **Map Revocation Events:** Identify the handling of user/admin unlinking, withdrawal of persistent connector or account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Distinguish persistent grants from session-scoped authority and from refusal of one action prompt. <br><br>**Trace Pending Work:** Confirm each event reaches stored credentials, cached capabilities, approval artifacts, queued work, callbacks, and retry handlers. <br><br>**Review Effective Time:** Confirm the maximum revocation-enforcement time is documented. |
+| Dynamic | **Pending-Work Test:** Queue an action, revoke the applicable authority before execution, and verify it does not begin. <br><br>**Callback and Retry Test:** Revoke authority before a callback or automatic retry. Confirm the callback may reconcile an already-committed action but cannot authorize a new side effect, and confirm the retry is rejected. <br><br>**Active-Session Test:** Unlink the connector, deactivate the account, revoke credentials, or terminate session-scoped authority and verify future requests under that authority fail. <br><br>**Committed-Action Test:** Revoke authority after an irreversible action commits and verify the Tool reports the authoritative result accurately without claiming an unconfirmed rollback. |
 
 #### Comments
 
