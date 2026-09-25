@@ -1164,7 +1164,7 @@ Because autonomous agents dynamically compose and invoke external tools to fulfi
 
 ### Verification
 
-* **Control Token Neutralization:** The agent must strip, sanitize, or safely escape all raw LLM control tokens returned from the tool invocation before passing the content to the model.  
+* **Control Token Neutralization:** The Agent shall treat Tool descriptions, schemas, exposed configuration metadata, and Tool outputs as untrusted content. Embedded control tokens or model-directed instructions shall not alter the Agent’s governing instructions, Tool-selection policy, authorization decisions, or permitted actions.  
 * **No Context Hijacking:** The presence of control tokens in the tool output must not prematurely terminate the model's text generation, force a system context switch, or spoof user/system identities.  
 * **Prevent Unauthorized Execution:** The agent must treat the tool response strictly as passive data and must not execute any hidden commands appended after the injected control tokens.
 
