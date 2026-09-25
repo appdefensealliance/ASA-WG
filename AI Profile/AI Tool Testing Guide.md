@@ -25,6 +25,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 # Table of Contents
 
+* [Cross-Cutting Negative-Testing Methodology](#cross-cutting-negative-testing-methodology)
+
 * [1\. Authentication, Identity, & Session Management](#1.-authentication,-identity,-&-session-management)
 
    * [1.1 Mandatory Client-Server Transport Authentication](#1.1-mandatory-client-server-transport-authentication)
@@ -151,6 +153,28 @@ Both static code inspection and dynamic application test cases are defined. Samp
 # Applicability
 
 This document is intended for AI tool developers, end-users, network administrators responsible for enterprise deployments, and security assessors who plan to build, operate, host, or evaluate AI tools.
+
+# Cross-Cutting Negative-Testing Methodology
+
+Negative testing deliberately attempts behavior that a requirement says must be denied. Where a test concerns data access or an external side effect, the assessor MUST verify the result at the authoritative enforcement point or downstream system. A model refusal, user-interface message, or intercepted client request alone is insufficient evidence that protected data was not returned or an external action did not occur.
+
+The scope inventory MUST identify every reachable implementation path that provides the in-scope operation, including current, deprecated, fallback, compatibility, and versioned routes. Test execution MAY sample paths within an equivalence class only when a shared enforcement mechanism is demonstrated and the sampling rationale is recorded.
+
+Testing SHOULD use reviewer-controlled identities, accounts, and synthetic resources and MUST avoid real customer data, real funds, or uncontrolled external consequences.
+
+For each negative test, the test record MUST identify:
+
+1. the product, Tool or connector, and version, as applicable;
+2. the tested route or implementation path;
+3. the test identities, tenant context, and resource ownership;
+4. the attempted action and expected denial;
+5. the actual result and policy or authorization decision;
+6. the authoritative downstream data or side-effect result;
+7. relevant correlation identifiers;
+8. the assessor and test date; and
+9. remediation and successful retest, where applicable.
+
+The scope and evidence rules in this section apply to every AL2 negative test in this Guide unless a requirement expressly defines a narrower method.
 
 # References
 
@@ -773,24 +797,28 @@ Because AI agents are inherently probabilistic and vulnerable to prompt injectio
 **AL0, AL1:**
 
 1. **Manifest and Export Review:** Compare the tool's published manifest against actual exported function handlers. Flag any function executable but not declared.  
-2. **Parameter Validation Check:** Inspect parameter handling for type and constraint validation before execution.
+2. **Parameter Validation Check:** Inspect parameter handling for type and constraint validation before execution.  
+3. **Route Coverage:** Identify every current, deprecated, fallback, compatibility, and versioned route through which each declared function can be reached. Confirm that each route reaches the same validation and authorization enforcement, or document distinct enforcement paths for separate testing.
 
 **AL2:**
 
 1. **Test Undeclared Functions:** Attempt to invoke a function that is not declared in the tool's published manifest.  
-2. **Test Parameter Constraints:** Submit calls with wrong parameter types, out-of-range values, and extra parameters. Verify each is rejected.
+2. **Test Parameter Constraints:** Submit calls with wrong parameter types, out-of-range values, and extra parameters. Verify each is rejected.  
+3. **Test Route Parity:** Repeat the applicable negative tests across every reachable implementation path. Risk-based sampling is permitted only when a shared enforcement mechanism has been demonstrated and the rationale is recorded.
 
 **Verification**
 
 **AL0, AL1:**
 
 1. **Manifest and Export Match:** All executable functions must be explicitly and correctly declared in the published manifest.  
-2. **Parameter Handling:** The code must implement strict type and constraint validation for all declared function parameters.
+2. **Parameter Handling:** The code must implement strict type and constraint validation for all declared function parameters.  
+3. **Route Coverage:** Every reachable route to a declared function must be identified and mapped to its validation and authorization enforcement.
 
 **AL2:**
 
 1. **Undeclared Functions:** The server must explicitly reject any invocation of an undeclared function.  
-2. **Parameter Rejection:** The server must successfully reject tool calls containing incorrect parameter types, out-of-range values, or extra parameters.
+2. **Parameter Rejection:** The server must successfully reject tool calls containing incorrect parameter types, out-of-range values, or extra parameters.  
+3. **Route Parity:** Every tested route must enforce the same applicable security outcome; any sampling must be supported by a demonstrated shared enforcement mechanism and recorded rationale.
 
 ## 2.6 No Token Passthrough / Downstream Token Exchange
 
