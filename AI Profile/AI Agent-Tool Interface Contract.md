@@ -57,7 +57,7 @@ To keep assessment linear and counterparty-independent, the ADA SHALL publish an
 
 | Fixture | Used to assess | Behavior |
 | :---- | :---- | :---- |
-| **ADA Malicious Reference Tool (MRT)** | AI Agents | Emits poisoned resource content, deceptive tool/function descriptions, schema poisoning, forged or withheld identity challenges, and replays. Used to verify C2 (data/control separation) and the Agent half of C1. |
+| **ADA Malicious Reference Tool (MRT)** | AI Agents | Emits poisoned resource content, deceptive tool/function descriptions, schema poisoning, forged or withheld identity challenges, and replays. It can distribute attack components across multiple records, responses, or Tool identities to exercise compositional source-to-sink attacks. Used to verify C2 (data/control separation) and the Agent half of C1. |
 | **ADA Malicious Reference Agent (MRA)** | AI Tools | Forwards forged, mismatched, or missing identity; replays tokens and consent assertions; smuggles injection into tool arguments. Used to verify the Tool half of C1 and C3. |
 
 The dynamic test procedures already present in the AI Tool Specification (e.g., §1.2.2, §2.2.2, §2.4.1) are instances of MRA behavior and SHALL be consolidated into the MRA fixture.
