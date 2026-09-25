@@ -404,6 +404,33 @@ If an attacker captures a valid MCP tool-call request, they could "replay" it la
 | Mobile | In scope |
 | Remote | In scope |
 
+### 1.4.2 Sensitive Action Idempotency and Ambiguous Outcomes
+
+#### Description
+
+A Sensitive Action that can create an external side effect MUST use a durable idempotency or equivalent duplicate-suppression mechanism scoped to the authenticated user and operation. Concurrent or repeated requests representing the same intended action MUST NOT produce multiple external side effects.
+
+When the downstream outcome is unknown, including after a timeout, lost response, malformed response, or partial failure, the AI Tool MUST NOT report success or blindly retry the action. It MUST reconcile the authoritative downstream status or preserve the original idempotency context before retry. If the outcome cannot be established safely, the Tool MUST return an explicit unknown or indeterminate status without initiating another action.
+
+#### Rationale
+
+Transport replay controls reject a captured duplicate message, but they do not prevent a client from constructing a new request with a new nonce after the original request committed and its response was lost. For purchases, transfers, messages, reservations, cancellations, access grants, and other consequential operations, that distinction can produce duplicate external effects.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Review Idempotency Design:** Identify every Sensitive Action that can create an external side effect and confirm it uses a durable idempotency key or equivalent duplicate-suppression mechanism scoped to the authenticated user and operation. <br><br>**Review Failure Handling:** Confirm timeout, malformed-response, partial-failure, and unknown-outcome paths reconcile authoritative status or preserve the original idempotency context rather than blindly issuing a new action. |
+| Dynamic | **Duplicate and Concurrency Tests:** Submit concurrent identical requests and retry the same intended action using both the same transport message and a newly constructed message with a fresh nonce. <br><br>**Ambiguous-Outcome Tests:** Simulate a timeout after downstream commit, a lost or malformed response, and partial completion. Confirm that no unintended duplicate occurs and that the Tool reports the authoritative or explicitly indeterminate status accurately. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
 ## 1.5 OAuth/Legacy Auth Weaknesses
 
 Use of outdated, weak, or pass-through authentication and authorization (e.g., basic auth, static API keys) exposes systems to impersonation, privilege misuse, and poor accountability.

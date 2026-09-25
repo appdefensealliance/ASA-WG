@@ -41,6 +41,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
    * [1.7 Integrated Transport Security and Message Integrity](#1.7-integrated-transport-security-and-message-integrity)
 
+   * [1.8 Sensitive Action Idempotency and Ambiguous Outcomes](#1.8-sensitive-action-idempotency-and-ambiguous-outcomes)
+
 * [2\. Authorization, Consent, & Access Control](#2.-authorization,-consent,-&-access-control)
 
    * [2.1 Scoped Authorization and User Context Propagation](#2.1-scoped-authorization-and-user-context-propagation)
@@ -195,6 +197,7 @@ Assurance level 0 (self assessment) and Assurance level 1 (Verified Self Assessm
 |  | 1.5 User Identity Propagation |
 |  | 1.6 Secure Downstream Transport |
 |  | 1.7 Integrated Transport Security and Message Integrity |
+|  | 1.8 Sensitive Action Idempotency and Ambiguous Outcomes |
 | 2\. Authorization, Consent, & Access Control | 2.1 Scoped Authorization and User Context Propagation |
 |  | 2.2 Mandatory Cryptographic Validation of User Context |
 |  | 2.3 Mandatory Explicit Consent |
@@ -565,6 +568,52 @@ This requirement establishes a multi-layered defense. High-grade encryption and 
 2. **Trust Chain Validation:** Connections to servers with self-signed or expired certificates are immediately terminated by the client.  
 3. **Replay Attack Resistance:** Duplicate messages are successfully rejected by the server based on an expired timestamp or used nonce.  
 4. **Local Isolation:** Secondary, non-privileged system users are successfully denied access to the IPC socket or pipe based on OS-level permissions.
+
+## 1.8 Sensitive Action Idempotency and Ambiguous Outcomes
+
+### Description
+
+A Sensitive Action that can create an external side effect MUST use a durable idempotency or equivalent duplicate-suppression mechanism scoped to the authenticated user and operation. Concurrent or repeated requests representing the same intended action MUST NOT produce multiple external side effects.
+
+When the downstream outcome is unknown, including after a timeout, lost response, malformed response, or partial failure, the AI Tool MUST NOT report success or blindly retry the action. It MUST reconcile the authoritative downstream status or preserve the original idempotency context before retry. If the outcome cannot be established safely, the Tool MUST return an explicit unknown or indeterminate status without initiating another action.
+
+### Rationale
+
+Transport replay controls reject a captured duplicate message, but they do not prevent a client from constructing a new request with a new nonce after the original request committed and its response was lost. Sensitive state-changing operations require business-operation idempotency in addition to transport replay protection.
+
+### Audit
+
+**Evidence**
+
+**AL0, AL1:** Supporting evidence from static code inspection and the documented downstream transaction design.
+
+**AL2:** Functional AI Tool connected to a test downstream system whose commit and response behavior can be controlled and observed.
+
+**Test Procedure**
+
+**AL0, AL1:**
+
+1. **Review Idempotency Design:** Identify every Sensitive Action that can create an external side effect and confirm it uses a durable idempotency key or equivalent duplicate-suppression mechanism scoped to the authenticated user and operation.
+2. **Review Failure Handling:** Confirm timeout, malformed-response, partial-failure, and unknown-outcome paths reconcile authoritative status or preserve the original idempotency context rather than blindly issuing a new action.
+
+**AL2:**
+
+1. **Concurrent Duplicate:** Submit two concurrent requests representing the same intended Sensitive Action and verify no duplicate external effect occurs.
+2. **Fresh-Nonce Retry:** After the first request commits, submit a newly constructed retry with a fresh transport nonce but the same idempotency context and verify no duplicate occurs.
+3. **Timeout After Commit:** Suppress the successful response after downstream commit and verify the Tool reconciles status or reports it as indeterminate without creating another action.
+4. **Malformed or Partial Response:** Return a malformed, truncated, or partial-completion response and verify the same safe behavior.
+
+**Verification**
+
+**AL0, AL1:**
+
+1. **Durable Duplicate Suppression:** Every Sensitive Action capable of an external side effect uses durable idempotency or equivalent duplicate suppression.
+2. **Safe Failure Paths:** Ambiguous outcomes cannot cause blind retry or fabricated success.
+
+**AL2:**
+
+1. **No Duplicate Consequence:** Concurrent requests and retries do not create an unintended duplicate external side effect.
+2. **Accurate Outcome:** The Tool reports an authoritative status where available and otherwise reports an explicit indeterminate outcome.
 
 # 2. Authorization, Consent, & Access Control
 
