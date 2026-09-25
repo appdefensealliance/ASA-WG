@@ -666,7 +666,9 @@ If a developer's tool simply trusts a `user_id` passed by the Agent, a compromis
 
 ### Description
 
-The AI tool implementation must utilize elicitation or confirmation message on the server side to request user confirmation of actions, or enforce the use of clients with configurations that unprivileged users cannot change to keep confirmation prompts enabled. Security-relevant messages and elicitations must be clear, indicating the implications of the request, and unambiguous about what is being requested. The AI Tool must not treat an Agent-supplied claim that consent was obtained as sufficient; it must fail closed when it cannot establish that the user confirmed the specific action.
+The AI tool implementation must utilize elicitation or confirmation message on the server side to request user confirmation of actions, or enforce the use of clients with configurations that unprivileged users cannot change to keep confirmation prompts enabled. Security-relevant messages and elicitations must be clear, indicating the implications of the request, and unambiguous about what is being requested. The AI Tool must not treat an Agent-supplied claim that consent was obtained as sufficient; it must fail closed when it cannot establish that the user confirmed the specific action. Any confirmation challenge, approval token, or receipt created or validated by the Tool must be bound to the authenticated user, connector account, operation, target or recipient, all material parameters, a bounded validity period, and one execution. It must be rejected when expired, consumed, mismatched, or replayed. A bounded batch may be treated as one action only when every action and target in the batch and all material parameters are explicitly enumerated in the confirmation.
+
+Binding an Agent-relayed elicitation response to its request prevents request substitution but does not prove that a malicious Agent presented the request to the user. User-verifiable Tool-side approval against a malicious Agent requires out-of-band confirmation (§2.7) or a supported cryptographic consent mechanism such as the optional Agent–Tool Identity and Consent Wire Format.
 
 ### Rationale
 
@@ -687,12 +689,14 @@ Missing or insufficient human-in-the-loop consent checks can allow an AI Tool to
 1. **Review Elicitation Logic:** Identify tool execution logic handling sensitive or state-changing actions. Verify that the code mandates an elicitation or confirmation flow prior to execution.  
 2. **Check Configuration Enforcement:** Inspect client and server configuration files to ensure confirmation prompts are locked and cannot be disabled by unprivileged users.  
 3. **Assess Prompt Clarity:** Review the UI/UX strings or schema definitions associated with the prompts to ensure they clearly articulate the security implications of the requested action.
+4. **Verify Confirmation Binding:** Confirm that each Tool-controlled confirmation challenge or artifact is bound to the authenticated user and complete action, expires within a documented period, and is consumed after one execution. If a bounded batch is supported, verify that every action and target and all material parameters are explicitly enumerated.
 
 **AL2:**
 
 1. **Attempt Unauthorized Execution:** Try to trigger a high-risk tool via the AI Tool using an automated script or prompt injection payload without providing out-of-band consent. Verify that the action halts and requests explicit authorization.  
 2. **Test Configuration Bypass:** Log in as an unprivileged user and attempt to modify the application settings to disable the confirmation prompt configuration; verify the system rejects this change.  
 3. **Reject Agent-Asserted Consent:** Using the ADA Malicious Reference Agent (or equivalent), invoke a Sensitive Action accompanied by an Agent-supplied claim that consent was already obtained, with no server-side confirmation. Verify the Tool does not execute the action on that claim alone, and instead requests confirmation via elicitation or fails closed.
+4. **Test Confirmation Substitution and Replay:** Capture a valid Tool-controlled confirmation and attempt to reuse it for another user, unrelated authorization transaction, connector account, operation, target or recipient, materially different parameter set, after expiration, and for an additional execution not explicitly authorized. Verify each attempt is rejected before execution.
 
 **Verification**
 
@@ -701,12 +705,14 @@ Missing or insufficient human-in-the-loop consent checks can allow an AI Tool to
 1. **Elicitation Logic:** The code must consistently enforce an elicitation or confirmation flow prior to executing sensitive or state-changing actions.  
 2. **Configuration Enforcement:** Configuration logic must lock confirmation prompts, preventing unprivileged users from disabling them.  
 3. **Prompt Clarity:** UI/UX strings and schema definitions must clearly and accurately articulate the security implications of the intended action.
+4. **Confirmation Binding:** Each Tool-controlled confirmation challenge or artifact is bound to the authenticated user and complete action and cannot be used outside its validity period or for more than one execution. A bounded batch qualifies as one action only when it is completely enumerated.
 
 **AL2:**
 
 1. **Unauthorized Execution:** The server must automatically halt execution and request explicit authorization when high-risk tools are triggered without out-of-band consent.  
 2. **Configuration Bypass:** The system must explicitly reject unprivileged user attempts to disable confirmation prompt settings.  
 3. **No Agent-Asserted Consent:** The Tool must not execute a Sensitive Action on an Agent-supplied "consent obtained" claim alone; it must request server-side confirmation or fail closed when it cannot establish that the user confirmed the specific action.
+4. **No Confirmation Substitution or Replay:** The Tool must reject expired, consumed, mismatched, and replayed confirmations before the Sensitive Action occurs.
 
 ## 2.4 Principle of Least Privilege and Scoped Permissions
 
@@ -860,11 +866,13 @@ Server-side elicitation transits the Agent, so a malicious Agent can fabricate a
 
 1. **Classify High-Risk Operations:** Review the tool's operations and confirm that irreversible, value-transferring, and access-granting actions are identified as highest-risk.  
 2. **Review Confirmation Channel:** Verify the code routes confirmation for those actions to a channel independent of the Agent request path (REQUIRED for remote/high-value deployments), and that it fails closed to §2.3 elicitation rather than to Agent-relayed consent when out-of-band confirmation is unavailable.
+3. **Verify Confirmation Binding:** Confirm that out-of-band confirmation is bound to the authenticated user and complete action and expires or is consumed as specified.
 
 **AL2:**
 
 1. **Forge Agent-Channel Approval:** Using the Malicious Reference Agent, attempt to approve a highest-risk action entirely through the Agent channel, including fabricating an elicitation response.  
 2. **Verify Independent Confirmation:** Confirm the action does not execute until confirmation is delivered and returned over the independent channel.
+3. **Test Confirmation Substitution and Replay:** Capture a valid out-of-band confirmation and attempt cross-user, unrelated-transaction, cross-account, operation, parameter, expiration, and execution-count substitutions. Verify each is rejected before execution.
 
 **Verification**
 
@@ -872,11 +880,13 @@ Server-side elicitation transits the Agent, so a malicious Agent can fabricate a
 
 1. **High-Risk Classification:** The highest-risk operations must be explicitly identified.  
 2. **Independent Channel:** Confirmation for those operations must be routed over a channel independent of the Agent (REQUIRED for remote/high-value deployments), with a fail-closed fallback to §2.3 rather than Agent-relayed consent.
+3. **Confirmation Binding:** Out-of-band confirmation must be bound to the authenticated user and complete action and must expire or be consumed as specified.
 
 **AL2:**
 
 1. **Forged Approval Rejected:** The tool must not execute a highest-risk action approved only through the Agent channel.  
 2. **Independent Confirmation Enforced:** The action must execute only after confirmation over the independent channel.
+3. **No Confirmation Substitution or Replay:** Expired, consumed, mismatched, or replayed out-of-band confirmations must be rejected before execution.
 
 
 # 3. Secret Management & Data Protection
