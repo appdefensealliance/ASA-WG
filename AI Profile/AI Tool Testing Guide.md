@@ -41,6 +41,10 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
    * [1.7 Integrated Transport Security and Message Integrity](#1.7-integrated-transport-security-and-message-integrity)
 
+   * [1.8 Sensitive Action Idempotency and Ambiguous Outcomes](#18-sensitive-action-idempotency-and-ambiguous-outcomes)
+
+   * [1.9 Connector Lifecycle Revocation](#19-connector-lifecycle-revocation)
+
 * [2\. Authorization, Consent, & Access Control](#2.-authorization,-consent,-&-access-control)
 
    * [2.1 Scoped Authorization and User Context Propagation](#2.1-scoped-authorization-and-user-context-propagation)
@@ -195,6 +199,8 @@ Assurance level 0 (self assessment) and Assurance level 1 (Verified Self Assessm
 |  | 1.5 User Identity Propagation |
 |  | 1.6 Secure Downstream Transport |
 |  | 1.7 Integrated Transport Security and Message Integrity |
+|  | 1.8 Sensitive Action Idempotency and Ambiguous Outcomes |
+|  | 1.9 Connector Lifecycle Revocation |
 | 2\. Authorization, Consent, & Access Control | 2.1 Scoped Authorization and User Context Propagation |
 |  | 2.2 Mandatory Cryptographic Validation of User Context |
 |  | 2.3 Mandatory Explicit Consent |
@@ -565,6 +571,104 @@ This requirement establishes a multi-layered defense. High-grade encryption and 
 2. **Trust Chain Validation:** Connections to servers with self-signed or expired certificates are immediately terminated by the client.  
 3. **Replay Attack Resistance:** Duplicate messages are successfully rejected by the server based on an expired timestamp or used nonce.  
 4. **Local Isolation:** Secondary, non-privileged system users are successfully denied access to the IPC socket or pipe based on OS-level permissions.
+
+## 1.8 Sensitive Action Idempotency and Ambiguous Outcomes
+
+### Description
+
+A Sensitive Action that can create an external side effect MUST require a stable intent or idempotency identifier on the request that can create the side effect. The Tool MAY accept an Agent-provided identifier or implement an explicit two-phase flow that mints and returns the identifier before any external side effect occurs and requires a subsequent request carrying it to execute. The identifier MUST uniquely represent the user-approved action and be bound to the authenticated user, Tool or connector account, operation, and all material parameters. Two separately approved but otherwise identical actions MUST use distinct identifiers. Concurrent or repeated requests representing the same intended action MUST reuse its identifier and MUST NOT produce multiple external side effects. Duplicate-suppression state MUST survive process restarts and remain available for a documented retry and outcome-uncertainty period.
+
+When the downstream outcome is unknown, including after a timeout, lost response, malformed response, or partial failure, the AI Tool MUST NOT report success or blindly retry the action. It MUST reconcile the authoritative downstream status or preserve the original idempotency context before retry. If the outcome cannot be established safely, the Tool MUST return an explicit unknown or indeterminate status without initiating another action.
+
+### Rationale
+
+Transport replay controls reject a captured duplicate message, but they do not prevent a client from constructing a new request with a new nonce after the original request committed and its response was lost. Sensitive state-changing operations require business-operation idempotency in addition to transport replay protection.
+
+### Audit
+
+**Evidence**
+
+**AL0, AL1:** Supporting evidence from static code inspection and the documented downstream transaction design.
+
+**AL2:** Functional AI Tool connected to a test downstream system whose commit and response behavior can be controlled and observed.
+
+**Test Procedure**
+
+**AL0, AL1:**
+
+1. **Review Idempotency Design:** Identify every Sensitive Action that can create an external side effect and confirm its execution request requires a stable intent or idempotency identifier bound to the authenticated user, Tool or connector account, operation, and all material parameters. If the Tool mints the identifier, confirm it does so in an explicit preparation step that cannot create an external side effect and requires a subsequent request carrying the identifier to execute. Confirm that separately approved identical actions receive distinct identifiers.
+2. **Review Persistence:** Confirm duplicate-suppression state survives process restarts for a documented retry and outcome-uncertainty period.
+3. **Review Failure Handling:** Confirm timeout, malformed-response, partial-failure, and unknown-outcome paths reconcile authoritative status or reuse the original identifier rather than blindly issuing a new action.
+
+**AL2:**
+
+1. **Concurrent Duplicate:** Submit two concurrent requests with the same intent identifier and verify no duplicate external effect occurs.
+2. **Fresh-Nonce Retry:** After the first request commits, submit a newly constructed retry with a fresh transport nonce and the original intent identifier; verify no duplicate occurs.
+3. **Binding Mismatch:** Reuse the identifier with a changed user, account, operation, or material parameter and verify rejection. Separately approve two otherwise identical actions with distinct identifiers and verify they can execute independently.
+4. **Restart Persistence:** Restart the Tool during the documented retry window and retry the original identifier; verify duplicate suppression survives.
+5. **Timeout After Commit:** Suppress the successful response after downstream commit and verify the Tool reconciles status or reports it as indeterminate without creating another action.
+6. **Malformed or Partial Response:** Return a malformed, truncated, or partial-completion response and verify the same safe behavior.
+
+**Verification**
+
+**AL0, AL1:**
+
+1. **Durable Duplicate Suppression:** Every execution request for a Sensitive Action capable of an external side effect requires a stable identifier bound to the complete user-approved action, and duplicate-suppression state survives process restarts for the documented retry and outcome-uncertainty period. If the Tool mints the identifier, its preparation step cannot create the external side effect.
+2. **Safe Failure Paths:** Ambiguous outcomes cannot cause blind retry or fabricated success.
+
+**AL2:**
+
+1. **No Duplicate Consequence:** Concurrent requests and retries do not create an unintended duplicate external side effect.
+2. **Accurate Outcome:** The Tool reports an authoritative status where available and otherwise reports an explicit indeterminate outcome.
+
+## 1.9 Connector Lifecycle Revocation
+
+### Description
+
+The AI Tool MUST define and enforce lifecycle termination for user- or administrator-initiated connector unlinking or removal, withdrawal of persistent connector or account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Refusal or cancellation of a single action prompt is not withdrawal of persistent connector or account authorization. Ending an Agent login session invalidates authority scoped to that session; it does not automatically invalidate a separately established persistent connector grant unless the documented connector lifecycle specifies that result.
+
+After a revocation becomes effective, the Tool MUST reject new actions and MUST NOT begin uncommitted queued work using the revoked authority. Revoked credentials, cached capabilities, Tool-controlled approval artifacts, and automatic retries MUST NOT authorize subsequent activity. A callback MAY reconcile the status of an action committed before revocation but MUST NOT authorize a new external side effect. The implementation MUST document the maximum time required for each supported revocation event to take effect.
+
+If an irreversible action was already committed before revocation, the Tool MUST report its status accurately and MUST NOT represent it as cancelled or rolled back unless that result is confirmed by the authoritative downstream system.
+
+### Rationale
+
+Ending a user session does not necessarily revoke downstream credentials, queued work, callbacks, or cached authorization artifacts. Explicit lifecycle handling prevents activity from continuing after the user's authority has ended and distinguishes uncommitted work from irreversible work already performed.
+
+### Audit
+
+**Evidence**
+
+**AL0, AL1:** Supporting evidence from static code inspection and documented lifecycle and revocation procedures.
+
+**AL2:** Functional AI Tool with test accounts, pending work, and the ability to unlink the Tool, withdraw persistent connector/account authorization, deactivate accounts, terminate session-scoped authority, and revoke credentials.
+
+**Test Procedure**
+
+**AL0, AL1:**
+
+1. **Map Revocation Events:** Identify handling of user/admin unlinking, withdrawal of persistent connector/account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Distinguish persistent grants from session-scoped authority and from refusal of one action prompt.
+2. **Trace Pending Work:** Confirm each event reaches stored credentials, cached capabilities, approval artifacts, queued work, callbacks, and retry handlers.
+3. **Review Effective Time:** Confirm the maximum time for each supported revocation event to take effect is documented.
+
+**AL2:**
+
+1. **Pending Work:** Queue an action, revoke the applicable authority before execution, and verify the work does not begin.
+2. **Callbacks and Retries:** Revoke authority before a callback or automatic retry. Confirm the callback may reconcile an already-committed action but cannot authorize a new side effect, and confirm the retry is rejected.
+3. **Active Session:** Unlink the connector, deactivate the account, revoke credentials, or terminate session-scoped authority and verify subsequent requests under that authority fail.
+4. **Committed Action:** Revoke authority after an irreversible action commits and verify the Tool reports the authoritative result accurately without claiming an unconfirmed rollback.
+
+**Verification**
+
+**AL0, AL1:**
+
+1. **Complete Lifecycle Handling:** Each supported revocation event reaches credentials, capabilities, approvals, queued work, callbacks, and retries, with persistent grants distinguished from session-scoped authority.
+2. **Defined Enforcement Time:** The maximum revocation-enforcement time is documented.
+
+**AL2:**
+
+1. **Post-Revocation Denial:** New actions, uncommitted queued work, and retries are rejected after revocation becomes effective. Callbacks may reconcile committed work but cannot authorize a new side effect.
+2. **Accurate Committed Status:** Work committed before revocation is reported according to authoritative downstream state.
 
 # 2. Authorization, Consent, & Access Control
 
