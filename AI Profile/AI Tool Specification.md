@@ -532,6 +532,9 @@ Primary responsibility for presenting, obtaining, and enforcing user consent for
 * **Classify sensitivity and reversibility.** Identify which exposed operations are Sensitive Actions — those that are irreversible, transfer value or money, mutate or share user data beyond the current task, or grant or expand access.
 * **Confirm via server-side elicitation, or fail closed.** Use elicitation (or an equivalent server-side confirmation) to request explicit user confirmation of the Sensitive Action, or enforce the use of clients configured so that unprivileged users cannot disable confirmation prompts. The confirmation message MUST clearly and unambiguously state the security implications of the action.
 * **Not defer to the Agent alone.** The Tool MUST NOT treat an Agent-supplied claim that "consent was obtained" as sufficient; it MUST fail closed when it cannot establish that the user confirmed the specific action.
+* **Bind Tool-controlled confirmation.** Any confirmation challenge, approval token, or receipt created or validated by the Tool MUST be bound to the authenticated user, connector account, operation, target or recipient, all material parameters, a bounded validity period, and one execution. It MUST be rejected when expired, consumed, mismatched, or replayed. A bounded batch MAY be treated as one action only when every action and target in the batch and all material parameters are explicitly enumerated in the confirmation.
+
+Binding an Agent-relayed elicitation response to its request prevents request substitution but does not prove that a malicious Agent presented the request to the user. User-verifiable Tool-side approval against a malicious Agent requires out-of-band confirmation (§2.1.2) or a supported cryptographic consent mechanism such as the optional Agent–Tool Identity and Consent Wire Format.
 
 **ADA extensions (future revisions).** The Tool MAY emit a machine-readable `consent_required` signal for Sensitive Actions (an ADA construct; candidate alignment with MCP tool annotations). A consent assertion cryptographically bound to the verified user identity and operation parameters — enabling the Tool to verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format** (tracked with the identity-propagation work) and is not required in this revision.
 
@@ -543,8 +546,8 @@ An AI Tool is invoked by an Agent it cannot fully trust: a confused or benign-bu
 
 | Method | Description |
 | :---- | :---- |
-| Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications. |
-| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. |
+| Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications and that Tool-controlled confirmation is bound to the authenticated user and complete action. |
+| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. Capture a valid Tool-controlled confirmation and attempt to reuse it for another user, unrelated authorization transaction, connector account, operation, target or recipient, materially different parameter set, after expiration, and for an additional execution not explicitly authorized. Verify every mismatch or replay is rejected before the action occurs. |
 
 #### Comments
 
@@ -568,8 +571,8 @@ The §2.1.1 backstop closes the confused / benign-but-buggy Agent case; it does 
 
 | Method | Description |
 | :---- | :---- |
-| Static | Identify the highest-risk operations (irreversible, value transfer, access grant/expansion). Verify the Tool defines an out-of-band confirmation path independent of the Agent request channel for them (REQUIRED for remote/high-value deployments), and that when out-of-band confirmation is unavailable it fails closed to the §2.1.1 elicitation backstop rather than to Agent-relayed consent. |
-| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to approve a highest-risk action entirely through the Agent channel, including forging an elicitation response. Verify the action does not execute without confirmation delivered and returned over the independent channel. |
+| Static | Identify the highest-risk operations (irreversible, value transfer, access grant/expansion). Verify the Tool defines an out-of-band confirmation path independent of the Agent request channel for them (REQUIRED for remote/high-value deployments), and that when out-of-band confirmation is unavailable it fails closed to the §2.1.1 elicitation backstop rather than to Agent-relayed consent. Verify that the out-of-band confirmation is bound to the authenticated user and complete action and is expired or consumed as specified. |
+| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to approve a highest-risk action entirely through the Agent channel, including forging an elicitation response. Verify the action does not execute without confirmation delivered and returned over the independent channel. Capture a valid out-of-band confirmation and attempt cross-user, unrelated-transaction, cross-account, operation, parameter, expiration, and execution-count substitutions; verify each is rejected before execution. |
 
 #### Comments
 
