@@ -324,7 +324,7 @@ If an attacker captures a valid AI Tool tool-call request, they could "replay" i
 
 ### Description
 
-If the AI Tool facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
+If the AI Tool facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Each authorization transaction must be bound to the authenticated user, initiating browser or application session, downstream authorization server or issuer, client identifier, redirect URI, and corresponding PKCE transaction. The state value must expire within a documented period and be accepted no more than once. A deliberately supported cross-device flow may use an authenticated handoff mechanism that preserves equivalent binding. Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
 
 ### Rationale
 
@@ -346,7 +346,7 @@ AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in t
 
 1. **Locate OAuth Logic:** Identify the OAuth callback or authorization URL construction logic within the server codebase.  
 2. **Verify State Generation:** Ensure that the state parameter is generated using a cryptographically secure random generator.  
-3. **Verify State Validation:** Confirm that the state parameter is strictly validated upon return to prevent Cross-Site Request Forgery (CSRF).  
+3. **Verify Transaction Binding:** Confirm that authorization transaction state is securely retained or integrity-protected, expires, is single-use, and is bound to the authenticated user, initiating session, downstream authorization server or issuer, client identifier, redirect URI, and PKCE transaction.  
 4. **Check Redirect URI Construction:** Verify that the redirect\_uri is not dynamically constructed from user-controlled input.  
 5. **Confirm Allowlist Enforcement:** Ensure the redirect\_uri is checked against a hardcoded or configuration-based allowlist.  
 6. **Flag Legacy Methods:** Identify and flag any use of legacy authentication methods, such as Basic Auth over HTTP, which are strictly prohibited.
@@ -354,7 +354,10 @@ AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in t
 **AL2:**
 
 1. **Verify Redirect URI Validation:** Attempt to use a redirect\_uri that is not on the pre-defined allowlist to confirm the authorization request fails.  
-2. **Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected.
+2. **Test User and Session Binding:** Start linking as User A and attempt to complete the callback as User B or in another browser/application session without an approved handoff. Confirm rejection and that no credential or account association is stored.  
+3. **Test Concurrent Flows:** Start two authorization flows and swap their callbacks or state values. Confirm both mismatches are rejected.  
+4. **Test Callback Replay:** Replay a completed callback and reuse a consumed state value. Confirm rejection with no credential or account association stored.  
+5. **Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected.
 
 **Verification**
 
@@ -362,7 +365,7 @@ AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in t
 
 1. **OAuth Logic:** OAuth callback and authorization URL construction logic is present and properly implemented.  
 2. **State Generation:** A cryptographically secure random generator is verified to be in use for generating the state parameter.  
-3. **State Validation:** The server enforces strict validation of the state parameter upon return to prevent CSRF.  
+3. **Transaction Binding:** The server securely retains or integrity-protects transaction state and binds each authorization transaction to the authenticated user, initiating session, downstream authorization server or issuer, client identifier, redirect URI, and PKCE transaction; state expires and is accepted no more than once.  
 4. **Redirect URI Construction:** The redirect\_uri is structurally secure and isolated from dynamic, user-controlled input.  
 5. **Allowlist Enforcement:** The redirect\_uri successfully validates against a hardcoded or configuration-based allowlist.  
 6. **Legacy Methods:** There is no presence or permitted use of legacy authentication methods (e.g., Basic Auth over HTTP).
@@ -370,7 +373,9 @@ AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in t
 **AL2:**
 
 1. **Redirect URI Validation:** The authorization request successfully fails when attempting to use a redirect\_uri not on the pre-defined allowlist.  
-2. **Secure Transport:** Authentication flows are confirmed to be strictly bound to secure channels (HTTPS), and any requests via legacy unencrypted methods are rejected.
+2. **User and Session Binding:** Cross-user, cross-session, and swapped concurrent-flow callbacks are rejected without retaining credentials or creating an account association.  
+3. **Callback Replay:** Completed callbacks and consumed state values cannot be reused.  
+4. **Secure Transport:** Authentication flows are confirmed to be strictly bound to secure channels (HTTPS), and any requests via legacy unencrypted methods are rejected.
 
 ## 1.4 Mandatory Proof Key for Code Exchange (PKCE)
 
@@ -477,7 +482,7 @@ Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring
 
 ### Description
 
-The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. For example, tokens shall not be sent in HTTP headers.
+The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. Tokens shall not be sent in URL query parameters or over unencrypted channels. Credentials and sensitive data must not be forwarded automatically when an approved endpoint redirects to another origin; each redirect destination must be independently authorized before credentials or sensitive data are attached.
 
 ### Rationale
 
@@ -500,10 +505,12 @@ Credential theft often occurs during transit or through the reuse of intercepted
 1. **Identify Downstream Clients:** Search the codebase for all outgoing network clients (e.g., axios, fetch, requests, pg-client).  
 2. **Verify TLS Enforcement:** Confirm that connection strings and URL constructions strictly use https:// or equivalent secure protocols (e.g., sslmode=require for databases).  
 3. **Protect Data in Transit:** Audit the codebase for any transmission of sensitive information (e.g., auth tokens) and confirm robust encryption is enforced.
+4. **Check Redirect Credential Handling:** Confirm that clients do not automatically forward credentials or sensitive data across an origin-changing redirect and independently authorize every destination before attaching them.
 
 **AL2:**
 
 1. **Monitor Outbound Traffic:** Use a network interception tool (e.g., Wireshark or a service mesh proxy) to verify that secrets (Authorization headers, API keys) are never sent over unencrypted (HTTP) connections.
+2. **Test Redirect Destination Substitution:** Cause an approved downstream endpoint to redirect to an unapproved origin and confirm that credentials and sensitive data do not follow.
 
 **Verification**
 
@@ -512,10 +519,12 @@ Credential theft often occurs during transit or through the reuse of intercepted
 1. **Downstream Clients Identification:** All outgoing network clients are successfully identified in the codebase.  
 2. **TLS Enforcement:** All connection strings and URL constructions strictly enforce secure protocols (https:// or equivalent).  
 3. **Data in Transit Protection:** Robust encryption is enforced for the transmission of all sensitive information.
+4. **Redirect Credential Handling:** Credentials and sensitive data are not forwarded across an origin-changing redirect unless the destination is independently authorized.
 
 **AL2:**
 
 1. **Secure Outbound Traffic:** Network interception confirms that no secrets or sensitive authentication data are transmitted over unencrypted connections.  
+2. **Redirect Destination Substitution:** Credentials and sensitive data do not follow a redirect to an unapproved origin.
    
 
 ## 1.7 Integrated Transport Security and Message Integrity
