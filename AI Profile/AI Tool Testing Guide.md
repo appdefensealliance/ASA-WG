@@ -455,7 +455,7 @@ Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring
 
 **AL2:**
 
-1. **Verify Permission Enforcement:** Attempt to call a tool (e.g., read\_file) targeting a resource that "User A" owns but "User B" does not. Authenticate as "User B" and verify that the tool returns a 403 Forbidden or 401 Unauthorized error from the downstream resource.  
+1. **Verify Permission Enforcement:** For every exposed resource type, identify the supported operation classes and authenticate as User B while attempting each applicable list, search, read, create, update, delete, share, send, cancel, purchase, or other state-changing operation against resources owned by User A. Use known, guessed, sequential, and nonexistent identifiers where applicable. Verify denial before protected data, existence-sensitive metadata, or an external side effect is produced. An operation may be omitted only when the Tool does not expose it, with the omission documented.  
 2. **Inspect Downstream Logs:** Execute a tool call and then inspect the audit logs of the downstream service (e.g., AWS CloudTrail or GitHub Audit Logs). Confirm that the action was recorded under the end-user's identity and not the AI Tool’s service account name.  
 3. **Token Scoping Test:** Provide the AI Tool with a scoped or "limited" token for a user. Attempt to execute a tool that requires permissions outside of that scope. Verify that the tool execution fails at the resource level, proving that the server is respecting the specific token's limitations.
 
@@ -469,7 +469,7 @@ Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring
 
 **AL2:**
 
-1. **Permission Enforcement:** The server must reject cross-user resource access attempts with a 403 Forbidden or 401 Unauthorized error.  
+1. **Permission Enforcement:** The server must deny every tested operation against resources belonging to a different user before returning protected data, existence-sensitive metadata, or causing an external side effect.  
 2. **Downstream Logs:** Downstream audit logs must correctly record the action under the end-user's identity, not a service account.  
 3. **Token Scoping:** The server must respect scoped token limitations and fail execution at the resource level when permissions are exceeded.
 
@@ -1502,7 +1502,7 @@ Prevent Cross-Tenant Data Leakage
 
 **AL2:**
 
-1. **Cross-Tenant Access Attempt:** Authenticate as Tenant A. Attempt to retrieve Tenant B's data by manipulating request parameters.
+1. **Cross-Tenant Access Attempt:** Authenticate as Tenant A. For every exposed resource type, attempt each applicable list, search, read, create, update, delete, share, send, cancel, purchase, or other state-changing operation against Tenant B's resources by manipulating request parameters. Include known, guessed, sequential, and nonexistent identifiers where applicable.
 
 **Verification**
 
@@ -1513,7 +1513,7 @@ Prevent Cross-Tenant Data Leakage
 
 **AL2:**
 
-1. **Cross-Tenant Access:** Verify only Tenant A's data is returned. The server must successfully reject attempts to retrieve Tenant B's data by manipulating request parameters.
+1. **Cross-Tenant Access:** Verify only Tenant A's data is returned. The server must reject every tested operation against Tenant B's resources before returning protected data, existence-sensitive metadata, or causing an external side effect.
 
 # 6. System Integrity & Supply Chain
 
@@ -1755,11 +1755,11 @@ AI Tools are "force multipliers" for LLMs. Because these tools often bridge the 
 
 ### Description
 
-For remote deployments, the AI Tool SHALL enforce per-user or per-session rate limits. The tool SHALL implement at least one of: (1) max requests per time window per authenticated user, (2) progressive throttling, (3) temporary blocking after threshold. Limits SHALL be configurable. Rate limiting for one user SHALL NOT affect other users.
+For remote deployments, the AI Tool SHALL enforce configurable limits aggregated at least across all concurrent sessions belonging to the same authenticated user. The tool SHALL implement at least one of: (1) max requests per time window per authenticated user, (2) progressive throttling, (3) temporary blocking after threshold. Where enumeration or consequential-action abuse is reasonably possible, the Tool SHALL also apply action-, resource-, target-, or aggregate-level limits. The developer SHALL document each threshold and its rationale. Rate limiting for one user SHALL NOT affect other users. Rate limiting is supplemental and SHALL NOT substitute for authorization checks or permit unauthorized resource-existence disclosure below the threshold.
 
 ### Rationale
 
-TBD
+A per-session limit can be bypassed by opening parallel sessions. Enumeration and high-consequence abuse may also remain practical below a generic endpoint limit unless the Tool detects high-fan-out access to resources or targets and repeated consequential operations.
 
 ### Audit
 
@@ -1773,25 +1773,30 @@ TBD
 
 **AL0, AL1:**
 
-1. **Inspect Request Handling:** Review the request handling logic in the codebase to identify the implementation of per-user or per-session rate limits (e.g., max requests per time window, progressive throttling, or temporary blocking).  
-2. **Verify Configurability:** Confirm that the implemented rate limiting thresholds and parameters are configurable.
+1. **Inspect Request Handling:** Review the request handling logic to confirm limits aggregate requests across the authenticated user's concurrent sessions rather than relying only on a session identifier.  
+2. **Verify Abuse Dimensions:** For functions that enumerate resources or cause consequential actions, confirm that action-, resource-, target-, or aggregate-level limits are configured and that each threshold and its rationale are documented.  
+3. **Confirm Authorization Independence:** Verify that authorization checks and existence-confidentiality behavior do not depend on whether a rate threshold has been reached.  
+4. **Verify Configurability:** Confirm that the implemented rate limiting thresholds and parameters are configurable.
 
 **AL2:**
 
-1. **Exceed Rate Limit:** Authenticate as "User A" and generate a volume of requests that exceeds the configured rate limit.  
-2. **Verify Enforcement:** Confirm that the system actively enforces the limit on "User A" (e.g., by throttling or temporarily blocking).  
-3. **Verify User Isolation:** Authenticate as "User B" and verify that "User B" is completely unaffected by the rate limiting applied to "User A".
+1. **Exceed Rate Limit:** Authenticate as User A through multiple concurrent sessions and distribute requests across them until the declared aggregate threshold is exceeded.  
+2. **Test Enumeration:** Exercise pagination, predictable identifiers, high-fan-out searches, and repeated target variation. Confirm each applicable declared threshold is enforced. Verify separately that unauthorized requests do not disclose resource existence at any request rate.  
+3. **Verify Enforcement:** Confirm that the system actively enforces the limit on User A (e.g., by throttling or temporarily blocking).  
+4. **Verify User Isolation:** Authenticate as User B and verify that User B is completely unaffected by the rate limiting applied to User A.
 
 **Verification**
 
 **AL0, AL1:**
 
-1. **Request Handling:** The codebase must contain functional logic that enforces per-user or per-session rate limits.  
-2. **Configurability:** The rate limiting constraints must be explicitly configurable by the administrator or system.
+1. **Request Handling:** The codebase must contain functional logic that aggregates limits across all concurrent sessions belonging to the same authenticated user.  
+2. **Abuse Dimensions:** Functions susceptible to enumeration or consequential-action abuse must enforce documented action-, resource-, target-, or aggregate-level thresholds with a stated rationale.  
+3. **Authorization Independence:** Authorization denial and existence-confidentiality behavior must not depend on reaching a rate limit.  
+4. **Configurability:** The rate limiting constraints must be explicitly configurable by the administrator or system.
 
 **AL2:**
 
-1. **Enforcement:** The system must successfully throttle, block, or limit actions when an individual user's request volume exceeds the threshold.  
+1. **Enforcement:** The system must successfully throttle, block, or limit actions when an individual user's aggregate request volume or applicable enumeration threshold is exceeded.  
 2. **Isolation:** The enforcement of rate limits on one user shall not impact the availability or performance of the system for other users.
 
 ## 7.3 Maximum Payload and Recursion Depth Constraints
