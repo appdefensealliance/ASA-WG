@@ -1086,12 +1086,17 @@ Because AI Agents frequently act autonomously on behalf of users—interacting w
 * Inspect the intercepted request to verify the redirect\_uri requested by the Agent utilizes a secure protocol (e.g., HTTPS).  
 * Intercept the subsequent OAuth callback (redirect) returning to the Agent. Tamper with the payload by modifying, mismatching, or completely removing the state parameter before forwarding it to the Agent.  
 * Observe the Agent's behavior to verify that it explicitly rejects the tampered callback, halts the authorization flow, and does not attempt to exchange the code or execute the tool.
+* Start an authorization flow while authenticated as User A, then attempt to complete the callback in a different authenticated user or browser/application session. Repeat with two concurrent authorization flows whose callbacks or `state` values are swapped.
+* Replay a callback from a completed authorization transaction and attempt to reuse its consumed `state` value.
 
 #### Verification
 
 * **State Generation:** The agent shall dynamically generate and append a secure state parameter to every outbound authorization request.  
 * **Secure Redirect URIs:** The agent shall strictly utilize and request secure redirect URIs (e.g., HTTPS) for receiving authorization codes.  
 * **Rejection of Invalid State:** The agent shall explicitly reject and drop any OAuth callbacks where the state parameter is missing, mismatched, or malformed, effectively preventing Cross-Site Request Forgery (CSRF) attacks.  
+* **Transaction Binding:** Each authorization transaction shall be bound to the authenticated user, initiating browser or application session, intended Tool, redirect URI, and corresponding PKCE transaction. A deliberately supported cross-device flow may use an authenticated handoff mechanism that preserves equivalent binding.
+* **Single Use:** The state value shall expire within a documented period and shall be accepted no more than once. Callbacks associated with another user, session, or concurrent authorization transaction, and callbacks for an expired or consumed transaction, shall be rejected.
+* **No Partial Link:** A rejected callback shall not cause the Agent to retain credentials, create or modify an account association, or invoke the Tool.
 * **Legacy Authentication Prohibition:** The agent shall not initiate, support, or fall back to legacy, unencrypted authentication methods (such as Basic Auth over HTTP).
 
 ### 6.1.5 Mandatory Proof Key for Code Exchange (PKCE)
@@ -1167,4 +1172,3 @@ Because autonomous agents dynamically compose and invoke external tools to fulfi
 * **Control Token Neutralization:** The agent must strip, sanitize, or safely escape all raw LLM control tokens returned from the tool invocation before passing the content to the model.  
 * **No Context Hijacking:** The presence of control tokens in the tool output must not prematurely terminate the model's text generation, force a system context switch, or spoof user/system identities.  
 * **Prevent Unauthorized Execution:** The agent must treat the tool response strictly as passive data and must not execute any hidden commands appended after the injected control tokens.
-
