@@ -830,7 +830,7 @@ External Reference: ASVS Version 4.0.3 Requirement: 3.4.2
 
 *AL1*
 1. Burp Suite scan shall not identify the following vulnerability:
-   - 500600 Cookie without HttpOnly flag set
+   - 5244416 Cookie without HttpOnly flag set
 
 *AL2*
 1. Test shall confirm that application session cookies utilize the "HttpOnly" attribute.
