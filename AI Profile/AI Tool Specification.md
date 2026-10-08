@@ -354,7 +354,7 @@ MCP servers are often lightweight and distributed; hardcoded secrets are easily 
 
 #### Description
 
-The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. For example, tokens shall not be sent in HTTP headers.
+The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. Tokens shall not be sent in URL query parameters or over unencrypted channels. Credentials and sensitive data must not be forwarded automatically when an approved endpoint redirects to another origin; each redirect destination must be independently authorized before credentials or sensitive data are attached.
 
 #### Rationale
 
@@ -364,8 +364,8 @@ Credential theft often occurs during transit or through the reuse of intercepted
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Identify Downstream Clients:** Search the codebase for all outgoing network clients (e.g., axios, fetch, requests, pg-client). <br><br>**Verify TLS Enforcement:** Confirm that connection strings and URL constructions strictly use https:// or equivalent secure protocols (e.g., sslmode=require for databases). <br><br>**Protect Data in Transit:** Audit the codebase for any transmission of sensitive information (e.g., auth tokens) and confirm robust encryption is enforced. |
-| Dynamic | **Monitor Outbound Traffic:** Use a network interception tool (e.g., Wireshark or a service mesh proxy) to verify that secrets (Authorization headers, API keys) are never sent over unencrypted (HTTP) connections. |
+| Static | **Identify Downstream Clients:** Search the codebase for all outgoing network clients (e.g., axios, fetch, requests, pg-client). <br><br>**Verify TLS Enforcement:** Confirm that connection strings and URL constructions strictly use https:// or equivalent secure protocols (e.g., sslmode=require for databases). <br><br>**Protect Data in Transit:** Audit the codebase for any transmission of sensitive information (e.g., auth tokens) and confirm robust encryption is enforced. <br><br>**Check Redirect Credential Handling:** Confirm that clients do not automatically forward credentials or sensitive data across an origin-changing redirect and independently authorize every destination before attaching them. |
+| Dynamic | **Monitor Outbound Traffic:** Use a network interception tool (e.g., Wireshark or a service mesh proxy) to verify that secrets (Authorization headers, API keys) are never sent over unencrypted (HTTP) connections. <br><br>**Test Redirect Destination Substitution:** Cause an approved downstream endpoint to redirect to an unapproved origin and confirm that credentials and sensitive data do not follow. |
 
 #### Comments
 
@@ -412,7 +412,7 @@ Use of outdated, weak, or pass-through authentication and authorization (e.g., b
 
 #### Description
 
-If the MCP server facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
+If the MCP server facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Each authorization transaction must be bound to the authenticated user, initiating browser or application session, downstream authorization server or issuer, client identifier, redirect URI, and corresponding PKCE transaction. The state value must expire within a documented period and be accepted no more than once. A deliberately supported cross-device flow may use an authenticated handoff mechanism that preserves equivalent binding. Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
 
 #### Rationale
 
@@ -422,8 +422,8 @@ AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in t
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Locate OAuth Logic:** Identify the OAuth callback or authorization URL construction logic within the server codebase. <br><br>**Verify State Generation:** Ensure that the state parameter is generated using a cryptographically secure random generator. <br><br>**Verify State Validation:** Confirm that the state parameter is strictly validated upon return to prevent Cross-Site Request Forgery (CSRF). <br><br>**Check Redirect URI Construction:** Verify that the redirect\_uri is not dynamically constructed from user-controlled input. **Confirm Allowlist Enforcement:** Ensure the redirect\_uri is checked against a hardcoded or configuration-based allowlist. **Flag Legacy Methods:** Identify and flag any use of legacy authentication methods, such as Basic Auth over HTTP, which are strictly prohibited. |
-| Dynamic | **Verify Redirect URI Validation:** Attempt to use a `redirect_uri` that is not on the pre-defined allowlist to confirm the authorization request fails.  <br><br>**Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected.  |
+| Static | **Locate OAuth Logic:** Identify the OAuth callback or authorization URL construction logic within the server codebase. <br><br>**Verify State Generation:** Ensure that the state parameter is generated using a cryptographically secure random generator. <br><br>**Verify Transaction Binding:** Confirm that authorization transaction state is securely retained or integrity-protected, expires, is single-use, and is bound to the authenticated user, initiating session, downstream authorization server or issuer, client identifier, redirect URI, and PKCE transaction. <br><br>**Check Redirect URI Construction:** Verify that the redirect\_uri is not dynamically constructed from user-controlled input. **Confirm Allowlist Enforcement:** Ensure the redirect\_uri is checked against a hardcoded or configuration-based allowlist. <br><br>**Flag Legacy Methods:** Identify and flag any use of legacy authentication methods, such as Basic Auth over HTTP, which are strictly prohibited. |
+| Dynamic | **Verify Redirect URI Validation:** Attempt to use a `redirect_uri` that is not on the pre-defined allowlist to confirm the authorization request fails. <br><br>**Test User and Session Binding:** Start linking as User A and attempt to complete the callback as User B or in another browser/application session without an approved handoff. Confirm rejection and that no credential or account association is stored. <br><br>**Test Concurrent Flows:** Start two authorization flows and swap their callbacks or state values. Confirm both mismatches are rejected. <br><br>**Test Callback Replay:** Replay a completed callback and reuse a consumed state value. Confirm rejection with no credential or account association stored. <br><br>**Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected. |
 
 #### Comments
 
