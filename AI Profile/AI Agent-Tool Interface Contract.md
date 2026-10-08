@@ -51,6 +51,13 @@ Enacts informed consent at the consequential-action boundary. Consent enforcemen
 
 **ADA extensions (beyond baseline MCP):** the machine-readable `consent_required` signal is an ADA construct (candidate alignment: MCP tool annotations); a consent assertion cryptographically bound to the verified user identity and operation parameters — letting the Tool verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format together with C1**.
 
+## C4 — Sensitive-Action Idempotency and Outcome Reconciliation
+
+* **Agent obligation:** The Agent MUST provide a stable intent or idempotency identifier with the initial execution request for a Sensitive Action, unless the Tool implements an explicit two-phase flow that returns the identifier before any external side effect and requires a subsequent request carrying it to execute. When retrying the same intended action, the Agent MUST preserve and reuse that identifier. It MUST NOT create a new identifier and retry while the original outcome remains unknown. If the Tool cannot establish an authoritative outcome safely, the Agent MUST report the outcome as indeterminate and MUST NOT represent the action as successful.
+* **Tool obligation:** For every Sensitive Action capable of an external side effect, the Tool MUST require an intent or idempotency identifier on the request that can create the side effect. It MAY accept an Agent-provided identifier or implement an explicit two-phase flow that mints and returns the identifier before any external side effect occurs. The identifier MUST uniquely represent the user-approved action and be bound to the verified user, Tool or connector account, operation, and all material parameters. Reuse with matching values MUST return the original or current authoritative outcome without creating another side effect; reuse with mismatched values MUST be rejected. Duplicate-suppression state MUST survive process restarts and remain available for a documented retry and outcome-uncertainty period.
+
+Enacts end-to-end duplicate suppression across the Agent–Tool boundary. Transport nonces prevent replay of the same message but do not identify a retried business operation carried in a newly constructed request. C4 does not prescribe a particular carrier or wire format; the Agent and Tool may use a protocol-native or application-level mechanism that satisfies these behaviors.
+
 # Reference Adversaries
 
 To keep assessment linear and counterparty-independent, the ADA SHALL publish and version two reference fixtures. Each certified component is assessed against the fixture representing its counterparty.
@@ -58,7 +65,7 @@ To keep assessment linear and counterparty-independent, the ADA SHALL publish an
 | Fixture | Used to assess | Behavior |
 | :---- | :---- | :---- |
 | **ADA Malicious Reference Tool (MRT)** | AI Agents | Emits poisoned resource content, deceptive tool/function descriptions, schema poisoning, forged or withheld identity challenges, and replays. Used to verify C2 (data/control separation) and the Agent half of C1. |
-| **ADA Malicious Reference Agent (MRA)** | AI Tools | Forwards forged, mismatched, or missing identity; replays tokens and consent assertions; smuggles injection into tool arguments. Used to verify the Tool half of C1 and C3. |
+| **ADA Malicious Reference Agent (MRA)** | AI Tools | Forwards forged, mismatched, or missing identity; replays tokens and consent assertions; retries a Sensitive Action with the same intent identifier and with a new transport nonce; and smuggles injection into tool arguments. Used to verify the Tool half of C1, C3, and C4. |
 
 The dynamic test procedures already present in the AI Tool Specification (e.g., §1.2.2, §2.2.2, §2.4.1) are instances of MRA behavior and SHALL be consolidated into the MRA fixture.
 
