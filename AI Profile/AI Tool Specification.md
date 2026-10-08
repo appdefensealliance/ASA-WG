@@ -149,6 +149,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 [10.2 Payload Limit/DoS	55](#10.2-payload-limit/dos)
 
+[10.3 Per-User and Enumeration-Resistant Rate Limiting](#103-per-user-and-enumeration-resistant-rate-limiting)
+
 [11 Supply Chain and Lifecycle Security Failures	56](#11-supply-chain-and-lifecycle-security-failures)
 
 [11.1 Shadow MCP Servers (Duplicate)	56](#11.1-shadow-mcp-servers-\(duplicate\))
@@ -269,7 +271,7 @@ An MCP server acts as a deputy. If it uses a global admin key to fulfill a reque
 | Method | Description |
 | :---- | :---- |
 | Static |  **Analyze Tool Handlers:** Identify and examine all `callTool` handler functions within the codebase. <br><br>**Verify Token Usage:** Check if the tool logic relies on a hardcoded "Global Admin" or service-level token to access external APIs. <br><br>**Verify Context Extraction:** Confirm the code extracts a user-specific identifier or session token from the metadata or parameters of the MCP request. <br><br>**Check Authorization Logic:** Verify that the extracted user context is used to authorize access to specific downstream resources.  |
-| Dynamic | **Test Privilege Separation:** Attempt to access a resource belonging to User A while authenticated as User B to ensure the request is denied. <br><br>**Verify Scoped Execution:** Trigger a tool call and inspect the downstream API request to confirm it uses a scoped user token rather than a global administrative key. <br><br>**Validate Metadata Propagation:** Ensure that user-in-the-loop context passed through MCP request metadata is correctly honored by the server before executing sensitive actions. |
+| Dynamic | **Test Privilege Separation:** For every exposed resource type, identify the supported operation classes and attempt each applicable list, search, read, create, update, delete, share, send, cancel, purchase, or other state-changing operation against a resource belonging to User A while authenticated as User B. Use known, guessed, sequential, and nonexistent resource identifiers where applicable. Verify denial before protected data, existence-sensitive metadata, or an external side effect is produced. An operation may be omitted only when the Tool does not expose it, with the omission documented. <br><br>**Verify Scoped Execution:** Trigger a tool call and inspect the downstream API request to confirm it uses a scoped user token rather than a global administrative key. <br><br>**Validate Metadata Propagation:** Ensure that user-in-the-loop context passed through MCP request metadata is correctly honored by the server before executing sensitive actions. |
 
 ### 1.2.2: Mandatory Cryptographic Validation of User Context
 
@@ -629,7 +631,7 @@ Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring
 | Method  | Description |
 | :------ | :---------- |
 | Static | **Identify Token Handling:** Search the codebase for the point where incoming requests are received. Verify that the user’s identity (e.g., JWT, OAuth token, or User ID) is extracted and explicitly passed into the tool execution context.<br><br> **Verify Downstream Authentication:** Inspect the client initialization for downstream services (e.g., a Database client or GitHub API client). Ensure that these clients are instantiated using the propagated user token rather than a hardcoded administrative or "app-level" API key.<br><br>**Check Middleware Injection:** If using a framework, verify that the identity propagation is enforced via middleware and cannot be bypassed by individual tool implementations.|
-| Dynamic | Perform the following runtime testing: <br><br>**Verify Permission Enforcement:** Attempt to call a tool (e.g., read_file) targeting a resource that "User A" owns but "User B" does not. Authenticate as "User B" and verify that the tool returns a 403 Forbidden or 401 Unauthorized error from the downstream resource.<br><br>**Inspect Downstream Logs:** Execute a tool call and then inspect the audit logs of the downstream service (e.g., AWS CloudTrail or GitHub Audit Logs). Confirm that the action was recorded under the end-user's identity and not the MCP server’s service account name.<br><br>**Token Scoping Test:** Provide the MCP server with a scoped or "limited" token for a user. Attempt to execute a tool that requires permissions outside of that scope. Verify that the tool execution fails at the resource level, proving that the server is respecting the specific token's limitations. |
+| Dynamic | Perform the following runtime testing: <br><br>**Verify Permission Enforcement:** For each exposed resource and operation class, authenticate as User B and attempt to list, search, read, create, update, delete, share, send, cancel, purchase, or otherwise act on resources belonging to User A. Use known, guessed, sequential, and nonexistent identifiers where applicable. Verify rejection before protected data, existence-sensitive metadata, or an external side effect is produced.<br><br>**Inspect Downstream Logs:** Execute a tool call and then inspect the audit logs of the downstream service (e.g., AWS CloudTrail or GitHub Audit Logs). Confirm that the action was recorded under the end-user's identity and not the MCP server’s service account name.<br><br>**Token Scoping Test:** Provide the MCP server with a scoped or "limited" token for a user. Attempt to execute a tool that requires permissions outside of that scope. Verify that the tool execution fails at the resource level, proving that the server is respecting the specific token's limitations. |
 
 
 
@@ -1210,6 +1212,33 @@ Unbounded inputs allow attackers to trigger Denial-of-Service (DoS). Large paylo
 | Local | In Scope |
 | Mobile | In Scope |
 | Remote | In Scope |
+
+## 10.3 Per-User and Enumeration-Resistant Rate Limiting
+
+### 10.3.1 Per User Endpoint Rate Limiting
+
+#### Description
+
+For remote deployments, the AI Tool MUST enforce configurable limits aggregated at least across all concurrent sessions belonging to the same authenticated user. Where enumeration or consequential-action abuse is reasonably possible, the Tool MUST also apply action-, resource-, target-, or aggregate-level limits. The developer MUST document each threshold and its rationale. Limits applied to one user MUST NOT impair unrelated users. Rate limiting is supplemental and MUST NOT substitute for authorization checks or permit unauthorized resource-existence disclosure below the threshold.
+
+#### Rationale
+
+A per-session limit can be bypassed by opening parallel sessions. Enumeration and high-consequence abuse may also remain practical below a generic endpoint limit unless the Tool detects high-fan-out access to resources or targets and repeated consequential operations.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Inspect Rate-Limit Keys:** Confirm limits aggregate requests across the authenticated user's concurrent sessions rather than relying only on a session identifier. <br><br>**Review Abuse Dimensions:** For functions that enumerate resources or cause consequential actions, confirm that action-, resource-, target-, or aggregate-level limits are configured and that each threshold and its rationale are documented. <br><br>**Confirm Authorization Independence:** Verify that authorization checks and existence-confidentiality behavior do not depend on whether a rate threshold has been reached. |
+| Dynamic | **Parallel-Session Test:** Authenticate as one user through multiple sessions and distribute requests across them; confirm the declared aggregate user threshold is enforced. <br><br>**Enumeration Test:** Exercise pagination, predictable identifiers, high-fan-out searches, and repeated target variation; confirm each applicable declared threshold is enforced. Verify separately that unauthorized requests do not disclose resource existence at any request rate. <br><br>**User Isolation:** Confirm enforcement against User A does not impair User B. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | Out of scope |
+| Mobile | Out of scope |
+| Remote | In scope |
 
 # 11 Supply Chain and Lifecycle Security Failures
 
