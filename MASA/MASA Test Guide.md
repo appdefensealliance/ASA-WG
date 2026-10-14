@@ -163,6 +163,18 @@ _AL2_
 1. Output of the analysis shows that the app does not write and store unencrypted and sensitive data in external storage.
 2. Or, if sensitive data is being written to external storage, verify that the crypto implementation meets the [baseline crypto requirements](#22-crypto).
 
+_Additional Context_
+
+The following are out of scope:
+
+* Files containing sensitive data that are created through a user-initiated export, backup, or data-portability flow, provided all of the following conditions are met:
+    * The export is triggered by an explicit user action for each export (e.g. an "Export", "Download", or "Back up" control). Exports performed automatically, by default, on a recurring schedule, or as a side effect of normal app operation do not qualify — a one-time opt-in to a scheduled or recurring backup does not constitute an explicit user action for each export.
+    * The user selects or confirms the destination through a platform-provided mechanism (e.g. the Storage Access Framework document picker or the system share sheet).
+    * The export serves a user-directed portability, backup, or interoperability purpose, typically in a standard or commonly used interchange format (e.g. CSV, HTML, GPX/FIT, ICS, vCard, OFX, FHIR/CDA), where mandatory app-controlled encryption would defeat that purpose.
+    * The app clearly informs the user, before or at the time of export, that the export will produce an unprotected file containing sensitive data.
+
+Sensitive data written to external storage in the course of normal app operation (e.g. caches, logs, autosaved copies, temporary files created for sharing) remains in scope regardless of any export functionality the app offers. Apps should additionally require re-authentication (e.g. device credential or biometric) before exporting highly sensitive data such as credentials.
+
 ---
 
 ### 1.1.2 [The app prevents leakage of sensitive data](https://mas.owasp.org/MASVS/controls/MASVS-STORAGE-2/)
@@ -1400,6 +1412,18 @@ _AL2_
 
 1. Output of the analysis shows that the app does not write and store unencrypted and sensitive data in external storage.
 2. If sensitive data is being written to external storage, verify that the crypto implementation meets the [baseline crypto requirements](#heading=h.qck736ryyi5).
+
+_Additional Context_
+
+The following are out of scope:
+
+* Files containing sensitive data that are created through a user-initiated export, backup, or data-portability flow, provided all of the following conditions are met:
+    * The export is triggered by an explicit user action for each export (e.g. an "Export", "Download", or "Back up" control). Exports performed automatically, by default, on a recurring schedule, or as a side effect of normal app operation do not qualify — a one-time opt-in to a scheduled or recurring backup does not constitute an explicit user action for each export.
+    * The user selects or confirms the destination through a platform-provided mechanism (e.g. the system document picker (`UIDocumentPickerViewController`) or share sheet).
+    * The export serves a user-directed portability, backup, or interoperability purpose, typically in a standard or commonly used interchange format (e.g. CSV, HTML, GPX/FIT, ICS, vCard, OFX, FHIR/CDA), where mandatory app-controlled encryption would defeat that purpose.
+    * The app clearly informs the user, before or at the time of export, that the export will produce an unprotected file containing sensitive data.
+
+Use of `UIDocumentPickerViewController` solely to implement a qualifying export flow is not, by itself, considered insecure storage of sensitive data in external storage under this requirement. Sensitive data written to external storage in the course of normal app operation (e.g. caches, logs, autosaved copies, temporary files created for sharing) remains in scope regardless of any export functionality the app offers. Apps should additionally require re-authentication (e.g. device credential or biometric) before exporting highly sensitive data such as credentials.
 
 ---
 
