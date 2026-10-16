@@ -1,5 +1,5 @@
 # App Defense Alliance CASA Testing Guide — Assurance Level 2
-Version 3.0 - 2026-10-13
+Version 3.0 - 2026-10-16
 
 > **Version history** is maintained via GitHub Releases and `CHANGELOG.md`.
 
