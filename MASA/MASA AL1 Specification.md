@@ -9,7 +9,7 @@ The Mobile Application Security Assessment (MASA) Assurance Level 1 specificatio
 
 # Applicability
 
-This document applies to every `Mobile` surface declared for a CASA AL1 or AL2 assessment, and — for the requirements marked `Native` — to declared `Native` surfaces. It is incorporated by reference as Domain 8 of the CASA AL1 Specification v3.0; the CASA AL1 assurance-level definitions, scoping guidance, verdicts and certification rules apply unchanged and are not repeated here.
+This document applies to every `Mobile` surface declared for a CASA AL1 or AL2 assessment, and — for the requirements marked `Native` — to declared `Native` surfaces. It is incorporated by reference through the scoping guidance of the CASA AL1 Specification v3.0; the CASA AL1 assurance-level definitions, scoping guidance, verdicts and certification rules apply unchanged and are not repeated here.
 
 # References
 
