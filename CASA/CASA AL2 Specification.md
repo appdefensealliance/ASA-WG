@@ -5,7 +5,7 @@ Version 3.0 - 2026-10-13
 
 # About This Specification
 
-Assurance Level 2 (AL2) is **AL1 plus 15 additional requirements**. Everything in the AL1 Specification v3.0 — assurance-level definitions, scoping guidance, the 70 AL1 requirements, verdicts and certification rules — applies unchanged at AL2 and is not repeated here. This document lists only what AL2 adds.
+Assurance Level 2 (AL2) is **AL1 plus 14 additional requirements**. Everything in the AL1 Specification v3.0 — assurance-level definitions, scoping guidance, the 61 AL1 requirements, verdicts and certification rules — applies unchanged at AL2 and is not repeated here. This document lists only what AL2 adds.
 
 # When AL2 Applies
 
@@ -13,7 +13,7 @@ AL2 is required where the platform provider calls for it — typically for appli
 
 # Relationship to CASA 2.1.1
 
-AL2 remains AL1 plus lab-adjudicated requirements. Of its 15 additional requirements, 9 absorb the 14 CASA 2.1.1 test cases that need human context — object-level and function-level authorization, brute-force throttling, verifier and session lifecycles, SSRF, template/XML injection, file upload and webhook replay — and the remainder are new.
+AL2 remains AL1 plus lab-adjudicated requirements. Of its 14 additional requirements, 9 absorb the 14 CASA 2.1.1 test cases that need human context — object-level and function-level authorization, brute-force throttling, verifier and session lifecycles, SSRF, template/XML injection, file upload and webhook replay — and the remainder are new.
 
 | **CASA 2.1.1 test cases** | **Count** | **Where they are in v3.0** |
 | --- | --- | --- |
@@ -27,7 +27,7 @@ AL2 remains AL1 plus lab-adjudicated requirements. Of its 15 additional requirem
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 
-# Additional Requirements (15)
+# Additional Requirements (14)
 
 ## 2. Static Code Analysis & Secrets (+1)
 
@@ -62,13 +62,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | **OAU-10** | The application handles identity-provider-issued refresh tokens correctly: superseded tokens are discarded on rotation, tokens are never duplicated across storage locations, and refresh failures do not trigger silent re-authorization without user context | RFC 9700 §4.14.2 | `All` |
 | **OAU-11** | Tokens are revoked on user logout, on user-initiated revocation, and on account deletion | RFC 7009; ASVS V3.5.1 (L2) | `All` |
 
-## 8. Mobile Supplement (+1)
-
-| **ID** | **Requirement** | **Reference** | **Profile** |
-| --- | --- | --- | --- |
-| **MOB-10** | All link-borne input arriving through deep links and universal links is validated before use | MASA 1.5.1.2 / 2.5.1.6; CWE-939 | `Mobile` |
-
-## 9. Webhook Security (+1)
+## 8. Webhook Security (+1)
 
 | **ID** | **Requirement** | **Reference** | **Profile** |
 | --- | --- | --- | --- |

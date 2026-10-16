@@ -25,7 +25,7 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 # Relationship to CASA 2.1.1
 
-CASA v3.0 is a maturation of CASA 2.1.1, not a rewrite. The two assurance levels, the OWASP ASVS foundation, the ADA-approved lab network and the 12-month certification cycle are unchanged. Of the 55 test cases in the 2.1.1 Testing Guide, 34 are carried into AL1 with the same objective and are now lab-executed; 1 is split between AL1 and AL2; 14 are elevated to AL2 because they need lab adjudication; 6 are retired because no deterministic test exists for them. 30 deterministic requirements are new to AL1, of which 9 form the MASA AL1 Specification, incorporated by reference.
+CASA v3.0 is a maturation of CASA 2.1.1, not a rewrite. The AL1 and AL2 assurance levels, the OWASP ASVS foundation, the ADA-approved lab network and the 12-month certification cycle are unchanged. Of the 55 test cases in the 2.1.1 Testing Guide, 34 are carried into AL1 with the same objective and are now lab-executed; 1 is split between AL1 and AL2; 14 are elevated to AL2 because they need lab adjudication; 6 are retired because no deterministic test exists for them. 30 deterministic requirements are new to AL1, of which 9 form the MASA AL1 Specification, incorporated by reference.
 
 | **CASA 2.1.1 test cases** | **Count** | **Where they are in v3.0** |
 | --- | --- | --- |
@@ -48,10 +48,11 @@ CASA v3.0 is a maturation of CASA 2.1.1, not a rewrite. The two assurance levels
 
 | **Level** | **Who executes the tests** | **What it establishes** |
 | --- | --- | --- |
+| **(AL0) ADA Assurance Level 0 — Developer Self-Assessment** | The developer runs the full AL1 test set against the application, following the AL1 Test Guide and its evidence formats, and submits the result and evidence bundle to the certification body. No lab is involved. | Self-assessed baseline: the same requirements, pass signals and fail signals as AL1, decided from developer-produced evidence that has not been lab-verified. |
 | **(AL1) ADA Assurance Level 1 — Lab-Executed Automated Assessment** | The ADA-approved lab runs every test against the application, its build artifacts or its source, using automated tooling. The developer provides access and artifacts, not evidence. | Deterministic baseline: every control has a defined pass signal and fail signal, and the lab's tool output is the evidence. |
 | **(AL2) ADA Assurance Level 2 — Lab Assessment** | The ADA-approved lab runs every AL1 test **plus** the additional AL2 tests, which require lab adjudication or interactive access. | AL1 baseline plus authorization, business-logic and lifecycle properties that need human judgement. |
 
-Developer-supplied scan output, developer-run scanners and developer attestations are not accepted at either level. Security properties are never accepted on assertion.
+At AL1 and AL2, developer-supplied scan output, developer-run scanners and developer attestations are not accepted; security properties are never accepted on assertion. At AL0 the developer's own tool output is the submission and carries no lab verification.
 
 # Specification Scoping Guidance
 
@@ -61,8 +62,8 @@ Developer-supplied scan output, developer-run scanners and developer attestation
 
 | **Profile** | **Applies to** | **Domains** |
 | --- | --- | --- |
-| `Web_Application` | The browser-facing web application and every HTTP API behind it, including APIs that serve mobile and native clients | 1–7, 9 |
-| `Mobile` | Android and iOS clients | 1, 2, 7 + the MASA AL1 Specification (Domain 8) + backend via `Web_Application` |
+| `Web_Application` | The browser-facing web application and every HTTP API behind it, including APIs that serve mobile and native clients | 1–8 |
+| `Mobile` | Android and iOS clients | 1, 2, 7 + the MASA AL1 Specification + backend via `Web_Application` |
 | `Native` | Desktop, console, IoT/device clients and browser extensions | 1, 2, 7 + the MASA AL1 requirements marked `Native` |
 | `All` | Every assessed surface | — |
 
@@ -72,9 +73,11 @@ Certification is **per surface**: the record states each assessed surface with i
 
 **Third-party infrastructure.** Third-party infrastructure used by the target application is out of scope for this specification.
 
+**Mobile clients.** Applications that declare a `Mobile` surface must additionally satisfy the **MASA AL1 Specification v3.0** (9 requirements, MOB-01 to MOB-09), published separately. Every MASA AL1 requirement is verified statically from the submitted release binary — no device farm, no instrumented runtime, no separate engagement. MASA AL1 verdicts are recorded on the same certification record, against the `Mobile` surface; the requirements marked `Native` also apply to declared `Native` surfaces. For a declared `Mobile` surface the binary is the application itself: if the developer withholds it, every MASA AL1 requirement is `FAIL`, not `Not_Covered`.
+
 # Requirements
 
-AL1 comprises **61 requirements in 8 domains**, plus the **9 requirements of the MASA AL1 Specification** for applications that declare a `Mobile` surface (Domain 8). Each row names the requirement, the standard it derives from and the profile it applies to. The Test Guide defines, for every requirement, the evidence the lab must produce and the pass and fail criteria.
+AL1 comprises **61 requirements in 8 domains**. Each row names the requirement, the standard it derives from and the profile it applies to. The Test Guide defines, for every requirement, the evidence the lab must produce and the pass and fail criteria.
 
 ## 1. Software Composition & Supply Chain (5)
 
@@ -183,11 +186,7 @@ AL1 comprises **61 requirements in 8 domains**, plus the **9 requirements of the
 | **OAU-08** | Access tokens are transmitted only in the `Authorization` header; never in query strings or URL fragments | RFC 6750 §2.3; ASVS V3.1.1 (L1) | `All` |
 | **OAU-09** | Where the application's own backend accepts identity-provider ID tokens or access tokens as proof of identity, it validates signature, `iss`, `aud`, `exp` and `scope` against the identity provider's published keys; `alg:none` and algorithm confusion are rejected | RFC 9700 §4.9; RFC 8725; CWE-347 | `Web_Application` |
 
-## 8. Mobile Application Security (MASA AL1) (9, by reference)
-
-Applications that declare a `Mobile` surface must additionally satisfy the **MASA AL1 Specification v3.0** (9 requirements, MOB-01 to MOB-09), published separately. Every MASA AL1 requirement is verified statically from the submitted release binary — no device farm, no instrumented runtime, no separate engagement. MASA AL1 verdicts are recorded on the same certification record, against the `Mobile` surface; the requirements marked `Native` also apply to declared `Native` surfaces. For a declared `Mobile` surface the binary is the application itself: if the developer withholds it, every MASA AL1 requirement is `FAIL`, not `Not_Covered`.
-
-## 9. Webhook Security (3)
+## 8. Webhook Security (3)
 
 **Objective:** where the developer declares a webhook receiver or an outbound callback facility, confirm that webhook traffic is HTTPS-only, that payloads are authenticated with HMAC-SHA256 or stronger and verified in constant time, and that user-supplied callback URLs cannot reach internal addresses. WHK-01 and WHK-02 apply to declared receivers and WHK-03 to declared callback facilities; where the relevant declaration is absent, those controls are recorded `Not_Covered`, and the assessor does not search for webhooks.
 

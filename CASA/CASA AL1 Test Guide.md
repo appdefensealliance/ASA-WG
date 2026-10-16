@@ -14,7 +14,6 @@ Version 3.0 - 2026-10-13
 | SAST / DAST / harness findings | SARIF 2.1.0 | OASIS SARIF |
 | Dependency inventory | CycloneDX 1.5+ or SPDX 2.3+ | NTIA minimum elements |
 | TLS assessment | Machine-readable (JSON) TLS scanner output | — |
-| Mobile binary analysis (MASA AL1) | SARIF 2.1.0 + manifest extract | OWASP MASTG |
 | OAuth / HTTP flow capture | Redacted HAR 1.2 | W3C HAR |
 
 **Reference tooling.** Tools named in a test procedure are reference implementations. A lab may substitute any tool whose output is expressible in the required format and that exercises the same pass and fail signals. A satisfied fail signal from a scripted harness is recorded as a SARIF `error` finding.
@@ -1278,11 +1277,7 @@ External Reference: RFC 9700 §4.9; RFC 8725; CWE-347 · Applicable profile: `We
 
 ---
 
-## 8. Mobile Application Security (MASA AL1)
-
-The test cases for MOB-01 to MOB-09 are defined in the **MASA AL1 Testing Guide v3.0**, which applies to every declared `Mobile` surface (and, for the requirements marked `Native`, to declared `Native` surfaces). The evidence formats, verdict rules and compensating-control rules of this guide apply unchanged.
-
-## 9. Webhook Security
+## 8. Webhook Security
 
 **Lab execution.** Delivery attempts to each declared receiver over cleartext HTTP and legacy TLS, plus `testssl.sh` against the receiver host; a signed-payload harness sending absent, truncated, modified and foreign-key signatures, with a `semgrep` check of the comparison API and MAC algorithm where source code or a build artifact is available; callback-URL registration probes against private, loopback, link-local and cloud-metadata addresses, including redirect chains and DNS rebinding; and the SAST-01 secret detectors over signing-secret material.
 

@@ -5,11 +5,11 @@ Version 3.0 - 2026-10-13
 
 # About This Guide
 
-This guide defines the evidence, test procedure and verification criteria for the **15 requirements that AL2 adds to AL1**. The AL1 Testing Guide v3.0 applies in full at AL2 and is not repeated. Each AL2 test is lab-adjudicated: a tool or scripted harness produces candidates and the lab decides, within the stated adjudication budget (254 minutes in total across the 15 tests). Evidence formats, verdict rules and compensating-control rules are those of the AL1 Testing Guide.
+This guide defines the evidence, test procedure and verification criteria for the **14 requirements that AL2 adds to AL1**. The AL1 Testing Guide v3.0 applies in full at AL2 and is not repeated. Each AL2 test is lab-adjudicated: a tool or scripted harness produces candidates and the lab decides, within the stated adjudication budget (239 minutes in total across the 14 tests). Evidence formats, verdict rules and compensating-control rules are those of the AL1 Testing Guide.
 
 # Access Required at AL2
 
-In addition to AL1 access: at least two provisioned tenants or organisations with at least two roles each (AZI-08, AZI-09, AZI-10); accounts the lab may lock, reset and re-authenticate (AUT-09, AUT-10, AUT-11); an instrumented device or emulator session for a declared `Mobile` surface (MOB-10); source code for SAST-14 and a reproducible build where the control requires it.
+In addition to AL1 access: at least two provisioned tenants or organisations with at least two roles each (AZI-08, AZI-09, AZI-10); accounts the lab may lock, reset and re-authenticate (AUT-09, AUT-10, AUT-11); source code for SAST-14 and a reproducible build where the control requires it.
 
 # Licensing
 
@@ -311,31 +311,7 @@ External Reference: RFC 7009; ASVS V3.5.1 (L2) · Applicable profile: `All`
 
 ---
 
-## 8. Mobile Supplement
-
-### MOB-10 All link-borne input arriving through deep links and universal links is validated before use
-
-External Reference: MASA 1.5.1.2 / 2.5.1.6; CWE-939 · Applicable profile: `Mobile`
-
-**Evidence**
-
-1. SARIF 2.1.0 plus the manifest / `Info.plist` extract from the submitted release binary.
-2. Produced by the ADA-approved lab. Developer-supplied scan output or attestations are not accepted.
-
-**Test Procedure**
-
-1. On an instrumented device, deliver crafted deep links and universal links — traversal, injection, redirect and authentication-bypass payloads — into every registered link route.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Frida, adb, MobSF.
-3. Lab adjudication of tool output: budget 15 minutes per application.
-
-**Verification**
-
-* **PASS** — Every link-borne parameter is validated before use: no payload reaches a file-system, WebView, SQL or authentication sink, and the assessor confirms each handler's validation.
-* **FAIL** — ≥ 1 crafted link payload reaches a sensitive sink or alters authentication state.
-
----
-
-## 9. Webhook Security
+## 8. Webhook Security
 
 ### WHK-04 Replay protection via signed timestamps with a bounded acceptance window, plus idempotency handling
 
