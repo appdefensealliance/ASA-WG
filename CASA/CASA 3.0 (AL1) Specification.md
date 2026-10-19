@@ -1,4 +1,4 @@
-# App Defense Alliance CASA Specification — Assurance Level 1
+# App Defense Alliance CASA 3.0 (AL1) Specification
 Version 3.0 - 2026-10-16
 
 > **Version history** is maintained via GitHub Releases and `CHANGELOG.md`.
