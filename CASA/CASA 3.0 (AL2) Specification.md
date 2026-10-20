@@ -5,7 +5,7 @@ Version 3.0 - 2026-10-16
 
 # About This Specification
 
-Assurance Level 2 (AL2) is **AL1 plus 14 additional requirements**. Everything in the AL1 Specification v3.0 — assurance-level definitions, scoping guidance, the 61 AL1 requirements, verdicts and certification rules — applies unchanged at AL2 and is not repeated here. This document lists only what AL2 adds.
+Assurance Level 2 (AL2) is **AL1 plus 15 additional requirements**. Everything in the AL1 Specification v3.0 — assurance-level definitions, scoping guidance, the 61 AL1 requirements, verdicts and certification rules — applies unchanged at AL2 and is not repeated here. This document lists only what AL2 adds.
 
 # When AL2 Applies
 
@@ -13,21 +13,21 @@ AL2 is required where the platform provider calls for it — typically for appli
 
 # Relationship to CASA 2.1.1
 
-AL2 remains AL1 plus lab-adjudicated requirements. Of its 14 additional requirements, 9 absorb the 14 CASA 2.1.1 test cases that need human context — object-level and function-level authorization, brute-force throttling, verifier and session lifecycles, SSRF, template/XML injection, file upload and webhook replay — and the remainder are new.
+AL2 remains AL1 plus lab-adjudicated requirements. Of its 15 additional requirements, 10 absorb the 15 CASA 2.1.1 test cases that need human context — object-level and function-level authorization, administrative MFA, brute-force throttling, verifier and session lifecycles, SSRF, template/XML injection, file upload and webhook replay — and the remainder are new.
 
 | **CASA 2.1.1 test cases** | **Count** | **Where they are in v3.0** |
 | --- | --- | --- |
 | Carried forward | 34 | AL1, same objective, lab-executed |
 | Split | 1 | Randomness in AL1 (SAST-06); verifier lifecycle in AL2 (AUT-11) |
-| Elevated to AL2 | 14 | AL2 |
-| Retired | 6 | No deterministic test; the adjacent testable property is retained where one exists |
+| Elevated to AL2 | 15 | AL2 |
+| Retired | 5 | No deterministic test; the adjacent testable property is retained where one exists |
 | **Total** | **55** | |
 
 # Licensing
 
 This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 
-# Additional Requirements (14)
+# Additional Requirements (15)
 
 ## 2. Static Code Analysis & Secrets (+1)
 
@@ -35,13 +35,14 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 | --- | --- | --- | --- |
 | **SAST-14** | No back doors, undocumented accounts, time bombs or malicious logic | ASVS V10.2.3, V10.2.4, V10.2.5 (L3); CWE-506, CWE-511 | `All` |
 
-## 5. Authentication & Session Management (+3)
+## 5. Authentication & Session Management (+4)
 
 | **ID** | **Requirement** | **Reference** | **Profile** |
 | --- | --- | --- | --- |
 | **AUT-09** | Anti-automation on authentication endpoints — **no more than 100 failed attempts per account per hour**, or enforced CAPTCHA / MFA / soft lockout | ASVS V2.2.1 (L1); NIST SP 800-63B §5.2.2; OWASP WSTG-ATHN-03 | `Web_Application` |
 | **AUT-10** | Idle session timeout enforced; re-authentication required after the idle period | ASVS V3.3.2 (L1) | `Web_Application` |
 | **AUT-11** | Password change or reset terminates other active sessions; **out-of-band authentication codes are single-use and expire ≤ 10 minutes**; password-reset links are single-use and expire ≤ 60 minutes; both are CSPRNG-generated with ≥ 20 bits of entropy | ASVS V2.7.2 (L1), V2.7.3 (L1); V3.3.3 (L2), V2.7.6 (L2); reset-link lifetime *ADA-defined* (ASVS 4.0.3 sets none); NIST SP 800-63B §5.1.3 | `Web_Application` |
+| **AUT-12** | Administrative interfaces enforce multi-factor authentication: a correct password alone does not grant access to any administrative function or data | ASVS V4.3.1 (L1); CASA v2.1.1 §3.3.1; NIST SP 800-63B §4.2 | `Web_Application` |
 
 ## 6. Authorization & Injection (+7)
 

@@ -25,14 +25,14 @@ This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 Inter
 
 # Relationship to CASA 2.1.1
 
-CASA v3.0 is a maturation of CASA 2.1.1, not a rewrite. The AL1 and AL2 assurance levels, the OWASP ASVS foundation, the ADA-approved lab network and the 12-month certification cycle are unchanged. Of the 55 test cases in the 2.1.1 Testing Guide, 34 are carried into AL1 with the same objective and are now lab-executed; 1 is split between AL1 and AL2; 14 are elevated to AL2 because they need lab adjudication; 6 are retired because no deterministic test exists for them. 30 deterministic requirements are new to AL1, of which 9 form the MASA AL1 Specification, incorporated by reference.
+CASA v3.0 is a maturation of CASA 2.1.1, not a rewrite. The AL1 and AL2 assurance levels, the OWASP ASVS foundation, the ADA-approved lab network and the 12-month certification cycle are unchanged. Of the 55 test cases in the 2.1.1 Testing Guide, 34 are carried into AL1 with the same objective and are now lab-executed; 1 is split between AL1 and AL2; 15 are elevated to AL2 because they need lab adjudication; 5 are retired because no deterministic test exists for them. 30 deterministic requirements are new to AL1, of which 9 form the MASA AL1 Specification, incorporated by reference.
 
 | **CASA 2.1.1 test cases** | **Count** | **Where they are in v3.0** |
 | --- | --- | --- |
 | Carried forward | 34 | AL1, same objective, lab-executed |
 | Split | 1 | Randomness in AL1 (SAST-06); verifier lifecycle in AL2 (AUT-11) |
-| Elevated to AL2 | 14 | AL2 |
-| Retired | 6 | No deterministic test; the adjacent testable property is retained where one exists |
+| Elevated to AL2 | 15 | AL2 |
+| Retired | 5 | No deterministic test; the adjacent testable property is retained where one exists |
 | **Total** | **55** | |
 
 | **New deterministic requirements in AL1** | **Count** | **Examples** |

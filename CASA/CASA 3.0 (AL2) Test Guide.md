@@ -5,11 +5,11 @@ Version 3.0 - 2026-10-16
 
 # About This Guide
 
-This guide defines the evidence, test procedure and verification criteria for the **14 requirements that AL2 adds to AL1**. The AL1 Testing Guide v3.0 applies in full at AL2 and is not repeated. Each AL2 test is lab-adjudicated: a tool or scripted harness produces candidates and the lab decides, within the stated adjudication budget (239 minutes in total across the 14 tests). Evidence formats, verdict rules and compensating-control rules are those of the AL1 Testing Guide.
+This guide defines the evidence, test procedure and verification criteria for the **15 requirements that AL2 adds to AL1**. The AL1 Testing Guide v3.0 applies in full at AL2 and is not repeated. Each AL2 test is lab-adjudicated: a tool or scripted harness produces candidates and the lab decides, within the stated adjudication budget (249 minutes in total across the 15 tests). Evidence formats, verdict rules and compensating-control rules are those of the AL1 Testing Guide.
 
 # Access Required at AL2
 
-In addition to AL1 access: at least two provisioned tenants or organisations with at least two roles each (AZI-08, AZI-09, AZI-10); accounts the lab may lock, reset and re-authenticate (AUT-09, AUT-10, AUT-11); source code for SAST-14 and a reproducible build where the control requires it.
+In addition to AL1 access: at least two provisioned tenants or organisations with at least two roles each (AZI-08, AZI-09, AZI-10); accounts the lab may lock, reset and re-authenticate (AUT-09, AUT-10, AUT-11); an administrative account for each declared administrative interface (AUT-12); source code for SAST-14 and a reproducible build where the control requires it.
 
 # Licensing
 
@@ -106,6 +106,28 @@ External Reference: ASVS V2.7.2 (L1), V2.7.3 (L1); V3.3.3 (L2), V2.7.6 (L2); res
 
 * **PASS** — Session B is invalidated by the password change; the out-of-band code is rejected on second use and after 10 minutes; the reset link is rejected on second use and after 60 minutes; both values pass a 200-sample min-entropy estimate ≥ 20 bits.
 * **FAIL** — Session B survives, either verifier is accepted twice, either is accepted past its threshold, or entropy is below 20 bits.
+
+---
+
+### AUT-12 Administrative interfaces enforce multi-factor authentication: a correct password alone does not grant access to any administrative function or data
+
+External Reference: ASVS V4.3.1 (L1); CASA v2.1.1 §3.3.1; NIST SP 800-63B §4.2 · Applicable profile: `Web_Application`
+
+**Evidence**
+
+1. Harness and DAST findings in SARIF 2.1.0 and a redacted HAR 1.2 capture of the replayed requests.
+2. Produced by the ADA-approved lab. Developer-supplied scan output or attestations are not accepted.
+
+**Test Procedure**
+
+1. Sign in to each declared administrative interface with the developer-provisioned administrative account. After the correct password is accepted and before the second factor is completed, replay requests to administrative routes and functions through the intercepting proxy and record every response. Complete the second factor and confirm the same routes now succeed.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted harness, mitmproxy, Playwright.
+3. Lab adjudication of tool output: budget 10 minutes per application.
+
+**Verification**
+
+* **PASS** — For every declared administrative interface, after the correct password is accepted and before the second factor is completed, every replayed request to an administrative route returns 401, 403 or a redirect to the second-factor step; the same routes succeed once the second factor is completed.
+* **FAIL** — ≥ 1 administrative route returns administrative data or performs an administrative function after the password alone, or the second-factor step can be bypassed by direct request.
 
 ---
 
