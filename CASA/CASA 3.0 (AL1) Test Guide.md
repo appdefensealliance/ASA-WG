@@ -18,6 +18,10 @@ Version 3.0 - 2026-10-16
 
 **Reference tooling.** Tools named in a test procedure are reference implementations. A lab may substitute any tool whose output is expressible in the required format and that exercises the same pass and fail signals. A satisfied fail signal from a scripted harness is recorded as a SARIF `error` finding.
 
+**Finding severity.** Static-analysis rule sets named in this guide are configured so that the targeted defect is reported at SARIF `error` level. PASS and FAIL are decided on `error`-level findings that survive the triage step of the procedure; findings at `warning` or `note` level are recorded as informational and do not affect the verdict.
+
+**Denied and accepted.** A request is **denied** when the response returns no protected content, performs no state change and grants no session or token — typically a 401, 403 or a redirect to authentication, but the status code is not itself the criterion. A request that is not denied is **accepted**. Where a criterion names a status code it is an example of a denial, not the only acceptable one.
+
 **Verdicts.** Each test case states its `PASS` and `FAIL` criteria. `NOT_APPLICABLE` applies only where the control's precondition is absent on the declared surfaces; `Not_Covered` where a required source or build artifact was not provided or the control depends on an undeclared surface. Withheld access to a declared surface — including the release binary of a declared `Mobile` surface — is always `FAIL`. Critical and High findings (CVSS v3.1 ≥ 7.0; any CISA KEV entry) block certification until fixed and re-verified by the lab; no remediation deadline is set.
 
 **Compensating controls.** Accepted only where the lab independently verifies the mitigation by active test and records its own evidence; never for a Critical or High finding. Developer-asserted mitigations are not accepted.
@@ -69,8 +73,8 @@ External Reference: ASVS V14.2.4 (L2); OpenSSF Scorecard `Maintained` · Applica
 
 **Verification**
 
-* **PASS** — Every direct dependency has Scorecard `Maintained` of 5 or more, is not past its published EOL date, and resolves to the canonical public registry or a developer-controlled mirror pinned by digest.
-* **FAIL** — Any direct dependency with `Maintained` below 5, past EOL, or resolved from an unpinned third-party registry.
+* **PASS** — Every direct dependency is not past its published EOL date, resolves to the canonical public registry or a developer-controlled mirror pinned by digest, and — where a Scorecard result exists — has `Maintained` of 5 or more.
+* **FAIL** — Any direct dependency past EOL, resolved from any other source, or with a Scorecard `Maintained` below 5.
 
 ---
 
@@ -91,7 +95,7 @@ External Reference: CIS Docker Benchmark §4; *ADA-defined* · Applicable profil
 **Verification**
 
 * **PASS** — Zero OS-package or base-layer findings at HIGH or CRITICAL that the distribution has not marked `will_not_fix` with a documented mitigation.
-* **FAIL** — ≥ 1 unmitigated HIGH or CRITICAL finding in the base image or OS package set.
+* **FAIL** — ≥ 1 HIGH or CRITICAL finding in the base image or OS package set that the distribution has not marked `will_not_fix` with a documented mitigation.
 
 ---
 
@@ -112,7 +116,7 @@ External Reference: ASVS V14.2.5 (L2); NTIA Minimum Elements; CycloneDX 1.5 · A
 **Verification**
 
 * **PASS** — Published SBOM parses as CycloneDX 1.5+ or SPDX 2.3+, every component carries all NTIA minimum elements, and the set difference (assessor SBOM − published SBOM) is empty.
-* **FAIL** — SBOM absent or unparseable, any component missing an NTIA minimum element, or ≥ 1 component present in the assessor-generated SBOM and absent from the published one.
+* **FAIL** — SBOM absent, unparseable, or not CycloneDX 1.5+ / SPDX 2.3+; any component missing an NTIA minimum element; or ≥ 1 component present in the assessor-generated SBOM and absent from the published one.
 
 ---
 
@@ -157,8 +161,8 @@ External Reference: CWE-798; ASVS V2.10.4 (L2) · Applicable profile: `All`
 
 **Verification**
 
-* **PASS** — Zero findings at SARIF `error` level from either detector across source, resources, build config and shipped artifacts.
-* **FAIL** — ≥ 1 `error`-level secret finding, or ≥ 1 `trufflehog` finding with `verified: true`.
+* **PASS** — Zero `error`-level secret findings, after triage, across source, resources, build config and shipped artifacts; a finding the detector verifies as live (`verified: true`) is always `error`-level.
+* **FAIL** — ≥ 1 `error`-level secret finding after triage.
 
 ---
 
@@ -199,7 +203,7 @@ External Reference: CWE-327; NIST SP 800-131A Rev.2; ASVS V6.2.5 (L2) · Applica
 
 **Verification**
 
-* **PASS** — Zero uses of DES, 3DES, RC4 or Blowfish, and zero cipher instantiations with `ECB` mode.
+* **PASS** — Zero `error`-level findings from the banned-algorithm rule set (DES, 3DES, RC4, Blowfish, or any cipher instantiated in `ECB` mode).
 * **FAIL** — ≥ 1 `error`-level finding from the banned-algorithm rule set.
 
 ---
@@ -220,7 +224,7 @@ External Reference: CWE-328; NIST SP 800-131A Rev.2 · Applicable profile: `All`
 
 **Verification**
 
-* **PASS** — Zero MD5 or SHA-1 calls reaching a security-relevant sink; non-security uses (cache key, ETag) are reported informational.
+* **PASS** — Zero `error`-level taint paths from an MD5 or SHA-1 call to a security-relevant sink; non-security uses (cache key, ETag) are reported informational.
 * **FAIL** — ≥ 1 `error`-level taint path from a weak hash to a security-relevant sink.
 
 ---
@@ -241,8 +245,8 @@ External Reference: ASVS V2.4.1 (L2); NIST SP 800-63B §5.1.1.2 (Argon2id, scryp
 
 **Verification**
 
-* **PASS** — Every password-persistence sink uses Argon2id, scrypt, bcrypt or PBKDF2-HMAC-SHA256 **and** meets the NIST SP 800-63B floor — Argon2id `m` ≥ 19456 KiB with `t` ≥ 2, scrypt `N` ≥ 32768, bcrypt cost ≥ 10, PBKDF2 ≥ 600000 iterations — **and** passes a per-record CSPRNG salt argument.
-* **FAIL** — Any sink using an algorithm outside that set, any cost parameter below the floor, or a salt argument that is a literal constant, empty, or shared across records.
+* **PASS** — Every password-persistence sink uses Argon2id, scrypt, bcrypt or PBKDF2-HMAC-SHA256 **and** meets the NIST SP 800-63B floor — Argon2id `m` ≥ 19456 KiB with `t` ≥ 2, scrypt `N` ≥ 32768, bcrypt cost ≥ 10, PBKDF2 ≥ 600000 iterations — **and** uses a per-record CSPRNG salt (generated internally by the library, or passed as an argument from a CSPRNG).
+* **FAIL** — Any sink using an algorithm outside that set; any cost parameter or salt whose value or provenance is not determinable statically; any cost parameter below the floor; or a salt that is not a per-record CSPRNG value.
 
 ---
 
@@ -262,7 +266,7 @@ External Reference: CWE-338; ASVS V6.3.1, V6.3.2 (L2) · Applicable profile: `Al
 
 **Verification**
 
-* **PASS** — Zero non-CSPRNG sources reach a security-relevant sink; every such sink is fed by `SecureRandom`, `crypto.randomBytes`, `os.urandom` or an equivalent.
+* **PASS** — Zero `error`-level taint paths from a non-CSPRNG source to a security-relevant sink.
 * **FAIL** — ≥ 1 `error`-level taint path from a non-CSPRNG source to a security-relevant sink.
 
 ---
@@ -278,13 +282,13 @@ External Reference: ASVS V5.1.2 (L1); CWE-915; OWASP API6:2023 · Applicable pro
 
 **Test Procedure**
 
-1. Run static mass-assignment rules over the model-binding layer. Then, from an authenticated session, inject privileged fields (role, administrator flag, owner identifier, object identifier) into every JSON and form body and re-read the object to see whether the value was bound.
+1. Run framework-binding rules over the source to find binders that accept arbitrary fields. Then, with the lab account, send update requests carrying injected privileged fields and read the record back through an endpoint that exposes those fields.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): semgrep, ZAP, Burp Suite.
 
 **Verification**
 
-* **PASS** — No binder accepts fields outside an explicit allowlist, **and** no probe-injected privileged field is reflected as changed on re-read.
-* **FAIL** — ≥ 1 unrestricted binder at `error` level, or ≥ 1 probe request that mutates a privileged field.
+* **PASS** — Zero `error`-level unrestricted-binder findings, **and** no injected privileged field reads back as changed.
+* **FAIL** — ≥ 1 `error`-level unrestricted-binder finding, or ≥ 1 injected privileged field that reads back as changed.
 
 ---
 
@@ -304,7 +308,7 @@ External Reference: ASVS V5.3.4 (L1); CWE-89 · Applicable profile: `Web_Applica
 
 **Verification**
 
-* **PASS** — Zero `error`-level findings of query construction by concatenation or interpolation on a tainted value; every query path resolves to a parameterized API or an ORM binding.
+* **PASS** — Zero `error`-level findings of query construction by concatenation or interpolation on a tainted value.
 * **FAIL** — ≥ 1 `error`-level SQL/NoSQL construction finding on tainted input.
 
 ---
@@ -325,8 +329,8 @@ External Reference: ASVS V5.5.3 (L1); CWE-502 · Applicable profile: `All`
 
 **Verification**
 
-* **PASS** — Zero untrusted-input deserialization sinks without a type allowlist, `ObjectInputFilter`, or a verified integrity check on the serialized blob.
-* **FAIL** — ≥ 1 `error`-level untrusted deserialization sink.
+* **PASS** — Zero `error`-level findings of an untrusted-input deserialization sink without a type allowlist, `ObjectInputFilter`, or a verified integrity check on the serialized blob.
+* **FAIL** — ≥ 1 `error`-level finding of an untrusted-input deserialization sink that lacks a type allowlist, `ObjectInputFilter`, or a verified integrity check.
 
 ---
 
@@ -346,7 +350,7 @@ External Reference: ASVS V5.2.4 (L1); CWE-95 · Applicable profile: `All`
 
 **Verification**
 
-* **PASS** — Zero dynamic-execution sinks reachable from an untrusted source.
+* **PASS** — Zero `error`-level taint paths from an untrusted source into a dynamic-execution sink.
 * **FAIL** — ≥ 1 `error`-level taint path into a dynamic-execution sink.
 
 ---
@@ -367,8 +371,8 @@ External Reference: ASVS V12.3.1 (L1); CWE-22 · Applicable profile: `Web_Applic
 
 **Verification**
 
-* **PASS** — Every file-system path built from user-supplied metadata is canonicalised and checked against a base-directory allowlist before use.
-* **FAIL** — ≥ 1 `error`-level path constructed from unvalidated user-supplied metadata.
+* **PASS** — Zero `error`-level findings of a file-system path built from user-supplied metadata without validation before use.
+* **FAIL** — ≥ 1 `error`-level path-traversal finding on user-supplied metadata.
 
 ---
 
@@ -383,14 +387,14 @@ External Reference: ASVS V6.4.1 (L2); CWE-522 · Applicable profile: `Web_Applic
 
 **Test Procedure**
 
-1. Run configuration and infrastructure-as-code rules over the repository, dump the environment layers of every container image, and inventory the secrets-manager SDK call sites, to establish where each server-side secret is held.
+1. Run secret detectors and configuration and infrastructure-as-code rules over the repository, dump the environment layers of every container image, and confirm each candidate live by presenting it to its issuing service or by the detector's verification flag. For each live secret, establish where it is held and inventory the secrets-manager SDK call sites.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): semgrep, trivy, docker.
-3. Lab adjudication of tool output: budget 8 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — Every secret-shaped literal the assessor confirms to be a live secret resolves through a secrets-manager SDK call or an injected runtime mount; none is present in config files, IaC, or image environment layers.
-* **FAIL** — ≥ 1 literal the assessor confirms to be a live secret held outside the managed store.
+* **PASS** — Every literal matching the detectors' secret patterns that the assessor confirms live (accepted by the issuing service, or `verified: true`) resolves through a secrets-manager SDK call or an injected runtime mount; none is present in config files, IaC, or image environment layers.
+* **FAIL** — ≥ 1 confirmed-live secret that does not resolve through a secrets-manager SDK call or an injected runtime mount.
 
 ---
 
@@ -410,7 +414,7 @@ External Reference: ASVS V7.1.1 (L1); CWE-532 · Applicable profile: `Web_Applic
 
 **Verification**
 
-* **PASS** — No canary value appears literally in any log record, **and** no taint path from a credential, token or payment source reaches a logging sink without an intervening masking or hashing function.
+* **PASS** — No canary value appears literally in any log record, **and** zero `error`-level taint paths from a credential, token or payment source to a logging sink without an intervening masking or hashing function.
 * **FAIL** — ≥ 1 canary value present literally in the log sink, or ≥ 1 `error`-level unmasked taint path to a logging sink.
 
 ---
@@ -435,8 +439,8 @@ External Reference: ASVS V9.1.1 (L1) · Applicable profile: `Web_Application`
 
 **Verification**
 
-* **PASS** — Every host completes a TLS handshake on 443, and every port-80 request returns 301 or 308 to the same host over `https`.
-* **FAIL** — Any endpoint serves application content over cleartext, or any port-80 request returns 200.
+* **PASS** — Every declared host completes a TLS handshake on 443, and on port 80 either the connection is refused or times out, or every request returns a 3xx `Location` to the same host over `https`.
+* **FAIL** — A declared host does not complete a TLS handshake on 443; ≥ 1 port-80 request is answered other than by a 3xx `Location` to the same host over `https`; or application content is served over cleartext.
 
 ---
 
@@ -456,8 +460,8 @@ External Reference: ASVS V9.1.3 (L1); NIST SP 800-52 Rev.2 · Applicable profile
 
 **Verification**
 
-* **PASS** — `.protocols` reports TLS 1.2 or TLS 1.3 `offered`, and SSLv2, SSLv3, TLS 1.0 and TLS 1.1 all `not offered`.
-* **FAIL** — Any of SSLv2, SSLv3, TLS 1.0 or TLS 1.1 reported `offered`.
+* **PASS** — `.protocols` reports TLS 1.2 or TLS 1.3 `offered` on every declared host, and SSLv2, SSLv3, TLS 1.0 and TLS 1.1 all `not offered`.
+* **FAIL** — Any of SSLv2, SSLv3, TLS 1.0 or TLS 1.1 reported `offered`, or a declared host does not complete a TLS 1.2 or 1.3 handshake.
 
 ---
 
@@ -477,8 +481,8 @@ External Reference: ASVS V9.1.2 (L1); NIST SP 800-52 Rev.2 · Applicable profile
 
 **Verification**
 
-* **PASS** — No NULL, EXPORT, anonymous, RC4, 3DES or CBC-SHA1 suite is offered, and forward secrecy is offered on every TLS 1.2 suite negotiated.
-* **FAIL** — ≥ 1 suite from the banned list is offered.
+* **PASS** — No NULL, EXPORT, anonymous, RC4, 3DES or CBC-SHA1 suite is offered, and every TLS 1.2 suite offered provides forward secrecy.
+* **FAIL** — ≥ 1 suite from the banned list (NULL, EXPORT, anonymous, RC4, 3DES, CBC-SHA1) is offered, or ≥ 1 TLS 1.2 suite without forward secrecy is offered.
 
 ---
 
@@ -498,7 +502,7 @@ External Reference: ASVS V9.2.1 (L2); CA/Browser Forum Baseline Requirements · 
 
 **Verification**
 
-* **PASS** — Chain validates to a public root, `cert_expiration` remaining `> 0` days, and CN/SAN matches every host tested; remaining lifetime under 30 days is reported informational.
+* **PASS** — Chain validates to a public root, the certificate is not expired at scan time, and CN/SAN matches every host tested; remaining lifetime under 30 days is reported informational.
 * **FAIL** — Any chain validation error, expired certificate, or hostname mismatch.
 
 ---
@@ -540,7 +544,7 @@ External Reference: *ADA-defined*; OWASP WSTG-CRYP-01 · Applicable profile: `We
 
 **Verification**
 
-* **PASS** — Every entry in the vulnerability section reports `OK`, including `heartbleed`, `ROBOT`, `secure_renego`, `secure_client_renego`, `CRIME_TLS` and `ticketbleed`.
+* **PASS** — No entry in the vulnerability section is reported at severity HIGH or CRITICAL (`heartbleed`, `ROBOT`, `secure_renego`, `secure_client_renego`, `CRIME_TLS`, `ticketbleed` included); entries at lower severity are reported informational.
 * **FAIL** — ≥ 1 vulnerability entry at severity HIGH or CRITICAL.
 
 ---
@@ -565,8 +569,8 @@ External Reference: ASVS V4.3.2 (L1) · Applicable profile: `Web_Application`
 
 **Verification**
 
-* **PASS** — No response body contains a directory-index signature (`Index of /`, autoindex markup, S3 `ListBucketResult`) and no path returns an enumerable listing.
-* **FAIL** — ≥ 1 path returns a directory listing.
+* **PASS** — No response body parses as a directory index (autoindex markup or S3 `ListBucketResult`).
+* **FAIL** — ≥ 1 response body parses as a directory index.
 
 ---
 
@@ -586,8 +590,8 @@ External Reference: ASVS V14.3.2 (L1) · Applicable profile: `Web_Application`
 
 **Verification**
 
-* **PASS** — No debug console, profiler or actuator endpoint returns 2xx unauthenticated, and no response carries a framework debug marker.
-* **FAIL** — ≥ 1 debug endpoint returns 2xx, or ≥ 1 response carries a debug marker.
+* **PASS** — No debug console, profiler or actuator endpoint returns 2xx unauthenticated, and no response carries a framework debug marker (a framework debug or traceback page signature — for example Werkzeug or Django `DEBUG` pages, Rails exception pages, ASP.NET detailed error pages).
+* **FAIL** — ≥ 1 debug console, profiler or actuator endpoint returns 2xx unauthenticated, or ≥ 1 response carries a framework debug marker.
 
 ---
 
@@ -649,8 +653,8 @@ External Reference: ASVS V14.4.7 (L1) · Applicable profile: `Web_Application`
 
 **Verification**
 
-* **PASS** — Every HTML response carries `frame-ancestors` restricted to an explicit origin list, or `X-Frame-Options: DENY` or `SAMEORIGIN`.
-* **FAIL** — Neither directive present on any HTML response, or `frame-ancestors *`.
+* **PASS** — Every HTML response carries `frame-ancestors` with `'none'`, `'self'` or an explicit origin list, or `X-Frame-Options: DENY` or `SAMEORIGIN`.
+* **FAIL** — ≥ 1 HTML response that does not carry one of those directives in one of those forms.
 
 ---
 
@@ -686,7 +690,7 @@ External Reference: ASVS V8.2.1 (L1) · Applicable profile: `Web_Application`
 
 **Test Procedure**
 
-1. Inspect the response headers of every authenticated and sensitive response in the crawl for cache-control directives.
+1. Inspect the response headers of every authenticated response in the crawl for cache-control directives.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite.
 
 **Verification**
@@ -733,8 +737,8 @@ External Reference: ASVS V7.4.1 (L1); CWE-209 · Applicable profile: `Web_Applic
 
 **Verification**
 
-* **PASS** — Every 4xx and 5xx body matches the generic error template and contains no stack frame, file-system path, SQL fragment, or internal route name.
-* **FAIL** — ≥ 1 error response containing any of those elements.
+* **PASS** — No 4xx or 5xx body contains a stack frame, file-system path, SQL fragment, or internal route name.
+* **FAIL** — ≥ 1 4xx or 5xx body containing any of those elements.
 
 ---
 
@@ -749,13 +753,13 @@ External Reference: CWE-306; *ADA-defined* · Applicable profile: `Web_Applicati
 
 **Test Procedure**
 
-1. Replay the authenticated route set with credentials removed, and request common administrative paths unauthenticated, on every declared host.
+1. Replay the authenticated route set with credentials removed on every declared host. Request a wordlist of common administrative paths both with and without credentials, and compare the two response bodies for each path.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, SecLists.
 
 **Verification**
 
-* **PASS** — Every route in the authenticated set returns 401, 403 or a redirect to authentication when requested without credentials, **and** no wordlist path returns 2xx whose body similarity to its authenticated response is ≥ 0.90.
-* **FAIL** — ≥ 1 route or wordlist path returns 2xx unauthenticated with body similarity ≥ 0.90 to the authenticated response.
+* **PASS** — Every route in the authenticated set is denied when requested without credentials, **and** no wordlist path returns 2xx unauthenticated with body similarity ≥ 0.90 to its authenticated response (similarity = longest-common-subsequence ratio over lines after whitespace normalisation).
+* **FAIL** — ≥ 1 route in the authenticated set accepted without credentials, or ≥ 1 wordlist path returning 2xx unauthenticated with body similarity ≥ 0.90 to its authenticated response.
 
 ---
 
@@ -775,8 +779,8 @@ External Reference: ASVS V10.3.3 (L1); CWE-350 · Applicable profile: `Web_Appli
 
 **Verification**
 
-* **PASS** — Zero CNAME, ALIAS or NS records on a declared host or in its CNAME chain resolve to an unclaimed provider fingerprint.
-* **FAIL** — ≥ 1 record on a declared host or in its CNAME chain matches a takeover fingerprint.
+* **PASS** — Zero DNS records of any type on a declared host or in its CNAME chain match an unclaimed-provider takeover fingerprint.
+* **FAIL** — ≥ 1 record on a declared host or in its CNAME chain matches an unclaimed-provider takeover fingerprint.
 
 ---
 
@@ -884,7 +888,7 @@ External Reference: ASVS V3.3.1 (L1) · Applicable profile: `Web_Application`
 
 **Verification**
 
-* **PASS** — Both the replayed session cookie and the replayed refresh token return 401 or 403 after logout.
+* **PASS** — Both the replayed session cookie and the replayed refresh token are denied after logout.
 * **FAIL** — Either is accepted after logout.
 
 ---
@@ -900,13 +904,13 @@ External Reference: ASVS V3.4.1, V3.4.2, V3.4.3 (L1) · Applicable profile: `Web
 
 **Test Procedure**
 
-1. Inspect every Set-Cookie header observed in the authenticated crawl for the Secure, HttpOnly and SameSite attributes.
+1. From the authenticated crawl, identify the session cookies — those whose removal ends the authenticated session — and inspect every Set-Cookie header that sets one of them for the Secure, HttpOnly and SameSite attributes.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite.
 
 **Verification**
 
-* **PASS** — Every session cookie carries `Secure`, `HttpOnly`, and `SameSite=Lax` or `SameSite=Strict`.
-* **FAIL** — ≥ 1 session cookie missing any of the three attributes.
+* **PASS** — Every Set-Cookie header that sets a session cookie carries `Secure`, `HttpOnly`, and `SameSite=Lax` or `SameSite=Strict`.
+* **FAIL** — ≥ 1 Set-Cookie header setting a session cookie that is missing `Secure` or `HttpOnly`, or whose `SameSite` attribute is absent or is neither `Lax` nor `Strict`.
 
 ---
 
@@ -921,13 +925,13 @@ External Reference: ASVS V3.5.3 (L2); RFC 8725 (JWT BCP); CWE-347 · Applicable 
 
 **Test Procedure**
 
-1. Submit crafted tokens to protected routes: unsigned, algorithm-confused, foreign key identifier, injected key URL, and modified payload with the original signature. Read the signing algorithm and lifetime from a genuine token.
+1. Submit crafted tokens to protected routes: unsigned, algorithm-confused, foreign key identifier, injected key URL, and modified payload with the original signature. Read the signing algorithm, iat and exp from a genuine token. Where source code or a build artifact is available, read the HMAC key length.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): jwt_tool.
 
 **Verification**
 
-* **PASS** — Every crafted token is rejected with 401 or 403, the signing algorithm is in {RS256, RS384, RS512, ES256, ES384, PS256, EdDSA, HS256 with a ≥ 256-bit key}, and for tokens with no server-side revocation check `exp − iat ≤ 86400`.
-* **FAIL** — Any crafted token accepted, an algorithm outside the allowlist, or `exp − iat > 86400` on a token that survives the AUT-05 logout replay.
+* **PASS** — Every crafted token is denied; the signing algorithm is in {RS256, RS384, RS512, ES256, ES384, PS256, EdDSA, HS256} (for HS256 the key is ≥ 256 bits where source or artifact is available, otherwise key length is recorded `Not_Covered`); and every token that is accepted after the AUT-05 logout replay carries `exp` with a lifetime ≤ 86400 seconds, measured from `iat` or, where `iat` is absent, from the time of issuance observed in the capture.
+* **FAIL** — Any crafted token accepted; an algorithm outside the allowlist; an HS256 key below 256 bits where measured; or a token that is accepted after the AUT-05 logout replay with no `exp` or with a lifetime above 86400 seconds.
 
 ---
 
@@ -947,8 +951,8 @@ External Reference: ASVS V8.2.3 (L1) · Applicable profile: `Web_Application`
 
 **Verification**
 
-* **PASS** — No stored value equals an observed session, access or refresh token, matches a JWT or Luhn-valid PAN pattern, equals a seeded canary value, or equals any identity-provider profile field value observed in the authorization-flow capture; and no authentication-material entry survives logout.
-* **FAIL** — ≥ 1 stored value matches any of those, or ≥ 1 authentication-material entry persists after logout.
+* **PASS** — No stored value equals an observed session, access or refresh token, matches a JWT or Luhn-valid PAN pattern, equals a seeded canary value, or equals any identity-provider profile field value observed in the authorization-flow capture; and no authentication material (session identifier, access, refresh or ID token, password, or any value from the authorization-flow capture) survives logout.
+* **FAIL** — ≥ 1 stored value matches any of those, or ≥ 1 item of authentication material persists after logout.
 
 ---
 
@@ -972,8 +976,8 @@ External Reference: ASVS V4.2.2 (L1); CWE-352 · Applicable profile: `Web_Applic
 
 **Verification**
 
-* **PASS** — Every such request is rejected with 4xx and no state change is observable on re-read; the session cookie is not `SameSite=None`.
-* **FAIL** — ≥ 1 state-changing request succeeds without a valid, session-bound anti-CSRF token.
+* **PASS** — Every such request is denied with no state change observable on re-read, and the session cookie is not `SameSite=None`.
+* **FAIL** — ≥ 1 state-changing request accepted without a valid, session-bound anti-CSRF token, or the session cookie is `SameSite=None`.
 
 ---
 
@@ -990,11 +994,11 @@ External Reference: ASVS V5.3.3 (L1); CWE-79 · Applicable profile: `Web_Applica
 
 1. Run an authenticated active cross-site-scripting scan and a DOM-based scan across the crawl, with an out-of-band callback that confirms script execution.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, DOM Invader.
-3. Lab adjudication of tool output: budget 10 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — Zero findings confirmed by execution callback, **and** every unconfirmed candidate is reproduced by the assessor and recorded as non-exploitable.
+* **PASS** — Zero findings confirmed by execution callback, **and** no unconfirmed candidate that the assessor attempts reproduces as exploitable (candidates that cannot be reproduced either way are recorded as inconclusive).
 * **FAIL** — ≥ 1 callback-confirmed execution, or ≥ 1 unconfirmed candidate the assessor reproduces as exploitable.
 
 ---
@@ -1103,8 +1107,8 @@ External Reference: RFC 9700 §2.1.2, §2.4 (OAuth 2.0 Security BCP); RFC 6749 �
 
 **Verification**
 
-* **PASS** — Captured authorization request carries `response_type=code`; no token request uses `grant_type=password`.
-* **FAIL** — Any other `response_type`, or any ROPC token request.
+* **PASS** — Captured authorization request carries `response_type` exactly equal to `code`; no token request uses `grant_type=password`.
+* **FAIL** — `response_type` is anything other than exactly `code` (including hybrid values), or any ROPC token request.
 
 ---
 
@@ -1125,7 +1129,7 @@ External Reference: RFC 7636; RFC 9700 §2.1.1; MASA 1.3.1.1 / 2.3.1.1 · Applic
 **Verification**
 
 * **PASS** — Every captured authorization request carries `code_challenge_method=S256` and a `code_challenge` of ≥ 43 characters, and the token exchange carries a matching `code_verifier`.
-* **FAIL** — `code_challenge` absent, `code_challenge_method=plain`, or a token exchange without `code_verifier`.
+* **FAIL** — `code_challenge` absent, `code_challenge_method` anything other than `S256`, a `code_challenge` shorter than 43 characters, or a token exchange that succeeds without a `code_verifier` matching the challenge.
 
 ---
 
@@ -1145,8 +1149,8 @@ External Reference: RFC 9700 §2.1; CWE-601 · Applicable profile: `All`
 
 **Verification**
 
-* **PASS** — No observed redirect URI contains a wildcard or uses `http:` other than `http://127.0.0.1` loopback for a native client, and no callback fuzz produces a 3xx `Location`, meta-refresh or script redirect to a host outside the registered set.
-* **FAIL** — ≥ 1 wildcard or non-loopback cleartext redirect URI, or ≥ 1 callback redirect to an off-set host.
+* **PASS** — No observed redirect URI contains a wildcard or uses `http:` other than a loopback address (`127.0.0.1`, `[::1]`, `localhost`) on a `Mobile` or `Native` surface, and no callback fuzz produces a 3xx `Location`, meta-refresh or script redirect to a host outside the hosts of the observed redirect URIs.
+* **FAIL** — ≥ 1 wildcard redirect URI, ≥ 1 `http:` redirect URI that is not a loopback address on a `Mobile` or `Native` surface, or ≥ 1 callback redirect to a host outside the hosts of the observed redirect URIs.
 
 ---
 
@@ -1161,13 +1165,13 @@ External Reference: RFC 9700 §4.7; OIDC Core §3.1.2.1; CWE-352 · Applicable p
 
 **Test Procedure**
 
-1. Capture 200 scripted authorization requests, compute a min-entropy estimate over the state values, and replay a callback with a state that belongs to a different session.
+1. Capture 200 scripted authorization requests and compute a min-entropy estimate over the state values. Replay the callback with the state omitted, replayed, modified, and taken from a different user-agent session. Where an ID token is requested, repeat the callback with the nonce omitted and with a nonce from a different request.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): mitmproxy, Burp Suite, SP 800-90B entropy estimator.
 
 **Verification**
 
-* **PASS** — All 200 `state` values distinct with min-entropy ≥ 128 bits; the callback issues no session when `state` is omitted, replayed, modified, or presented from a different user-agent session; where an ID token is requested, `nonce` is echoed and validated.
-* **FAIL** — Entropy below 128 bits, any repeat, or any of the four callback manipulations yields an authenticated session.
+* **PASS** — All 200 `state` values distinct, with min-entropy ≥ 128 bits estimated as per-character min-entropy over the 200 samples multiplied by value length; the callback issues no session when `state` is omitted, replayed, modified, or presented from a different user-agent session; where an ID token is requested, no ID token is accepted with an omitted or foreign `nonce`.
+* **FAIL** — Entropy below 128 bits, any repeat, any of the four callback manipulations yields an authenticated session, or an ID token is accepted with an omitted or foreign `nonce`.
 
 ---
 
@@ -1187,8 +1191,8 @@ External Reference: RFC 8252 §8.12 · Applicable profile: `Mobile`, `Native`
 
 **Verification**
 
-* **PASS** — The authorization URL is presented by Custom Tabs, `ASWebAuthenticationSession` or the system browser, and no embedded web view class loads the authorization endpoint.
-* **FAIL** — The authorization endpoint is loaded in an embedded web view.
+* **PASS** — The authorization URL is presented by Custom Tabs, `ASWebAuthenticationSession` or the external system browser, and no in-app web view class loads the authorization endpoint.
+* **FAIL** — The authorization endpoint is loaded in any in-app web view (`WebView`, `WKWebView`, `SFSafariViewController` or equivalent).
 
 ---
 
@@ -1203,13 +1207,13 @@ External Reference: RFC 8252 §8.5; CWE-798 · Applicable profile: `Mobile`, `Na
 
 **Test Procedure**
 
-1. Extract strings, resources and constant pools from the shipped binary, bundle or extension package and match them against the OAuth client-secret format and client-secret assignments.
+1. Extract strings, resources and constant pools from the shipped binary, bundle or extension package and collect every candidate client secret (known issuer formats, any value assigned to a client-secret key, and high-entropy strings adjacent to the client identifier). Present each candidate to the identity provider's token endpoint with the application's client identifier.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): MobSF, apktool, strings.
 
 **Verification**
 
-* **PASS** — No value matching `GOCSPX-[A-Za-z0-9_-]{28,}` and no `client_secret` assignment with a literal value is present in any public-client artifact.
-* **FAIL** — ≥ 1 client secret recovered from a public-client artifact.
+* **PASS** — No candidate extracted from a public-client artifact is accepted by the identity provider's token endpoint as the client secret.
+* **FAIL** — ≥ 1 candidate extracted from a public-client artifact is accepted by the token endpoint as the client secret.
 
 ---
 
@@ -1230,7 +1234,7 @@ External Reference: MASA 1.1.1.1 / 2.1.1.1; CWE-922; ASVS V6.4.1 (L2) *(server-s
 **Verification**
 
 * **PASS** — No observed access or refresh token value appears in `localStorage`, `sessionStorage`, IndexedDB, `SharedPreferences`, `NSUserDefaults`, a plist or an on-disk cache; web tokens are carried in `HttpOnly; Secure` cookies or held only in memory; mobile token writes resolve to Keystore or Keychain APIs.
-* **FAIL** — ≥ 1 token value recovered from an insecure store, or a token-bearing cookie lacking `HttpOnly` or `Secure`.
+* **FAIL** — ≥ 1 observed token value stored anywhere other than Keystore- or Keychain-backed storage or an `HttpOnly; Secure` cookie, or a token-bearing cookie lacking `HttpOnly` or `Secure`.
 
 ---
 
@@ -1250,8 +1254,8 @@ External Reference: RFC 6750 §2.3; ASVS V3.1.1 (L1) · Applicable profile: `All
 
 **Verification**
 
-* **PASS** — Every token-bearing request carries the token in an `Authorization: Bearer` header; no token value appears in a URL path, query string, fragment or form body.
-* **FAIL** — ≥ 1 token value outside the `Authorization` header.
+* **PASS** — Every access token presented to a resource endpoint (any endpoint other than the identity provider's token, revocation and introspection endpoints) is carried in the `Authorization` header (`Bearer` or `DPoP` scheme).
+* **FAIL** — ≥ 1 access token presented to a resource endpoint anywhere other than the `Authorization` header with the `Bearer` or `DPoP` scheme.
 
 ---
 
@@ -1268,12 +1272,12 @@ External Reference: RFC 9700 §4.9; RFC 8725; CWE-347 · Applicable profile: `We
 
 1. Replay crafted tokens against every endpoint observed to accept an identity-provider token: unsigned, foreign signing key, expired, wrong audience, wrong issuer and insufficient scope. Confirm each rejection is a validation failure.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): jwt_tool, scripted harness.
-3. Lab adjudication of tool output: budget 6 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — Every endpoint that accepts an identity-provider token rejects all six crafted tokens with 401 or 403 while accepting a valid one, and the assessor confirms each rejection is a validation failure rather than an unrelated error.
-* **FAIL** — ≥ 1 crafted token accepted at any endpoint.
+* **PASS** — Every endpoint that accepts a valid identity-provider token denies all six crafted tokens.
+* **FAIL** — ≥ 1 crafted token accepted at any endpoint that accepts a valid identity-provider token.
 
 ---
 
@@ -1297,7 +1301,7 @@ External Reference: CASA v2.1.1 §7.1.1; Standard Webhooks · Applicable profile
 
 **Verification**
 
-* **PASS** — The receiver returns no 2xx for any cleartext delivery and negotiates only TLS 1.2 or 1.3.
+* **PASS** — Every cleartext delivery is denied (a 3xx to the HTTPS receiver counts as denied) and the receiver negotiates only TLS 1.2 or 1.3.
 * **FAIL** — ≥ 1 cleartext delivery accepted, or a legacy TLS version negotiated.
 
 ---
@@ -1318,8 +1322,8 @@ External Reference: CASA v2.1.1 §7.2.1, §7.2.2; CWE-208 · Applicable profile:
 
 **Verification**
 
-* **PASS** — Every payload with an absent, truncated, modified or foreign-key signature is rejected with 4xx and produces no side effect; the MAC is HMAC-SHA256 or stronger; and the comparison uses a constant-time API (`hmac.compare_digest`, `MessageDigest.isEqual`, `crypto.timingSafeEqual`). Without source code or a build artifact the constant-time clause is recorded `Not_Covered`.
-* **FAIL** — Any invalid-signature payload accepted, a MAC weaker than HMAC-SHA256, or a MAC compared with `==`, `equals` or `strcmp`.
+* **PASS** — Every payload with an absent, truncated, modified or foreign-key signature is denied and produces no side effect; the MAC, as declared by the signature header or read from source, is HMAC-SHA256 or stronger; and the signature comparison is constant-time (for example `hmac.compare_digest`, `MessageDigest.isEqual`, `crypto.timingSafeEqual`). A clause that cannot be established without source code or a build artifact is recorded `Not_Covered` and the remaining clauses decide the verdict.
+* **FAIL** — Any invalid-signature payload accepted or producing a side effect, a MAC weaker than HMAC-SHA256, or a signature comparison that is not constant-time.
 
 ---
 
@@ -1339,7 +1343,7 @@ External Reference: CASA v2.1.1 §7.3.1, §7.3.2; CWE-918 · Applicable profile:
 
 **Verification**
 
-* **PASS** — Every callback URL resolving to `127.0.0.0/8`, `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `169.254.0.0/16` or `::1` is rejected at registration and after redirect re-resolution; no signing secret appears in source or artifacts.
-* **FAIL** — ≥ 1 private or metadata address accepted, or ≥ 1 signing secret found in source or artifacts.
+* **PASS** — No fetch is issued to an internal or metadata address (`127.0.0.0/8`, `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `169.254.0.0/16`, `100.64.0.0/10`, `::1`, `fc00::/7`, `fe80::/10` and the cloud metadata addresses `169.254.169.254` / `fd00:ec2::254`) for any callback URL, whether the address is reached directly, after redirect, or by DNS re-resolution at fetch time; no signing secret appears in source or artifacts.
+* **FAIL** — ≥ 1 fetch issued to an address in that list, or ≥ 1 signing secret found in source or artifacts.
 
 ---

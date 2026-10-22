@@ -5,7 +5,7 @@ Version 3.0 - 2026-10-16
 
 # About This Guide
 
-This guide defines the evidence, test procedure and verification criteria for the **15 requirements that AL2 adds to AL1**. The AL1 Testing Guide v3.0 applies in full at AL2 and is not repeated. Each AL2 test is lab-adjudicated: a tool or scripted harness produces candidates and the lab decides, within the stated adjudication budget (249 minutes in total across the 15 tests). Evidence formats, verdict rules and compensating-control rules are those of the AL1 Testing Guide.
+This guide defines the evidence, test procedure and verification criteria for the **15 requirements that AL2 adds to AL1**. The AL1 Testing Guide v3.0 applies in full at AL2 and is not repeated. Each AL2 test is lab-adjudicated: a tool or scripted harness produces candidates and the lab decides. Evidence formats, verdict rules and compensating-control rules are those of the AL1 Testing Guide.
 
 # Access Required at AL2
 
@@ -32,7 +32,7 @@ External Reference: ASVS V10.2.3, V10.2.4, V10.2.5 (L3); CWE-506, CWE-511 · App
 
 1. Run back-door and logic-bomb rules over the source: hardcoded account comparisons and date- or time-triggered branches in security paths. Build the application from source and compare the resulting artifact digest with the shipped artifact.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): semgrep, CodeQL, reproducible-build toolchain.
-3. Lab adjudication of tool output: budget 20 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
@@ -56,12 +56,12 @@ External Reference: ASVS V2.2.1 (L1); NIST SP 800-63B §5.2.2; OWASP WSTG-ATHN-0
 
 1. Issue 120 failed authentications against a lab-owned account within 60 minutes and record every response.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted harness.
-3. Lab adjudication of tool output: budget 15 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — By attempt 101 the endpoint returns HTTP 429, a CAPTCHA challenge, an MFA step-up, or a lockout response, and the assessor confirms the response is an enforcement rather than a generic error.
-* **FAIL** — Attempt 101 and beyond receive an ordinary authentication-failure response with no throttle, challenge or lockout.
+* **PASS** — Attempt 101 is denied by an enforcement response — HTTP 429, a CAPTCHA challenge, an MFA step-up, or a lockout.
+* **FAIL** — Attempt 101 is not denied by an enforcement response — it is accepted, or receives an ordinary authentication-failure response, or any other response that is not a throttle, challenge or lockout.
 
 ---
 
@@ -76,14 +76,14 @@ External Reference: ASVS V3.3.2 (L1) · Applicable profile: `Web_Application`
 
 **Test Procedure**
 
-1. Hold an authenticated session idle for 15 minutes, 1 hour, 4 hours and 8 hours, replaying a protected request at the HTTP layer at each step.
+1. Obtain the application's stated idle-session window. Hold an authenticated session idle until the window has elapsed, then until twice the window has elapsed (or 15 minutes, 1 hour, 4 hours and 8 hours where no window is stated), replaying a protected request at the HTTP layer at each step and observing whether the server, not client-side script, enforces expiry.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted harness.
-3. Lab adjudication of tool output: budget 12 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — A protected request is rejected with 401 or 403 at or before the application's stated idle window, and re-authentication is required, with the assessor confirming the rejection is expiry rather than an unrelated error.
-* **FAIL** — The session remains valid past the idle window, or expiry is enforced only by client-side script.
+* **PASS** — The protected request is denied at the first replay after the stated idle window (or at the 8-hour replay where none is stated).
+* **FAIL** — The protected request is accepted at the first replay after the stated idle window (or at the 8-hour replay where none is stated), or expiry is enforced only by client-side script.
 
 ---
 
@@ -98,9 +98,9 @@ External Reference: ASVS V2.7.2 (L1), V2.7.3 (L1); V3.3.3 (L2), V2.7.6 (L2); res
 
 **Test Procedure**
 
-1. In session A change the password and replay session B. Request an out-of-band code and a reset link; use each twice, and use each after its stated lifetime.
+1. In session A change the password and replay session B. Request an out-of-band code and a reset link; use each twice; use the code after 10 minutes and the link after 60 minutes. Collect 200 of each verifier and compute a min-entropy estimate.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted harness.
-3. Lab adjudication of tool output: budget 20 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
@@ -122,12 +122,12 @@ External Reference: ASVS V4.3.1 (L1); CASA v2.1.1 §3.3.1; NIST SP 800-63B §4.2
 
 1. Sign in to each declared administrative interface with the developer-provisioned administrative account. After the correct password is accepted and before the second factor is completed, replay requests to administrative routes and functions through the intercepting proxy and record every response. Complete the second factor and confirm the same routes now succeed.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted harness, mitmproxy, Playwright.
-3. Lab adjudication of tool output: budget 10 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — For every declared administrative interface, after the correct password is accepted and before the second factor is completed, every replayed request to an administrative route returns 401, 403 or a redirect to the second-factor step; the same routes succeed once the second factor is completed.
-* **FAIL** — ≥ 1 administrative route returns administrative data or performs an administrative function after the password alone, or the second-factor step can be bypassed by direct request.
+* **PASS** — For every declared administrative interface, after the correct password is accepted and before the second factor is completed, every replayed request to an administrative route is denied.
+* **FAIL** — ≥ 1 administrative route accepted — administrative data returned or an administrative function performed — after the password alone.
 
 ---
 
@@ -146,12 +146,12 @@ External Reference: ASVS V4.1.1 (L1) · Applicable profile: `Web_Application`
 
 1. From the authenticated crawl, inventory every client-side control and compare, endpoint by endpoint, the server's behaviour when that control is bypassed. Where source is available, scan client code for authorization decisions.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, semgrep.
-3. Lab adjudication of tool output: budget 15 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — Every affordance hidden or disabled in the client is also refused by the server when invoked directly, and no authorization decision is taken solely in client code.
-* **FAIL** — ≥ 1 endpoint whose only enforcement is the client affordance.
+* **PASS** — Every affordance whose visibility differs between the two provisioned roles is also refused by the server when the lower role invokes it directly, and no authorization decision found in client code lacks a server-side counterpart.
+* **FAIL** — ≥ 1 such affordance whose direct invocation by the lower role is accepted, or ≥ 1 authorization decision found in client code with no server-side counterpart.
 
 ---
 
@@ -166,14 +166,14 @@ External Reference: ASVS V4.2.1 (L1); OWASP API1:2023; CWE-639 · Applicable pro
 
 **Test Procedure**
 
-1. Using two provisioned tenants, replay every object identifier observed in tenant A from a tenant B session, and across roles within one tenant.
+1. Using two provisioned tenants, create objects with each account during the crawl and record their identifiers. Replay every identifier of an object created by an account in tenant A from a tenant B session, from a second account of the same role in tenant A, and from a lower-role account in tenant A.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, Autorize.
-3. Lab adjudication of tool output: budget 25 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — Every cross-tenant and cross-user object request returns 403 or 404 with no object content, for every object class exercised.
-* **FAIL** — ≥ 1 object readable or writable across a tenant or user boundary.
+* **PASS** — Every request for an object created by another account is denied with no object content returned, for every object class exercised.
+* **FAIL** — ≥ 1 object created by another account is readable or writable.
 
 ---
 
@@ -190,7 +190,7 @@ External Reference: ASVS V4.1.3 (L1); OWASP API5:2023; CWE-269 · Applicable pro
 
 1. Build a role matrix from the provisioned roles and accounts, exercise every function from every role, and invoke administrator-only routes directly from a low-privilege session.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, Autorize.
-3. Lab adjudication of tool output: budget 25 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
@@ -212,12 +212,12 @@ External Reference: ASVS V4.1.2, V4.1.5 (L1) · Applicable profile: `Web_Applica
 
 1. On every endpoint, tamper with access-control attributes (role, tenant identifier, scope, token claims) and inject faults that force the authorization layer to raise an exception.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, jwt_tool.
-3. Lab adjudication of tool output: budget 15 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — No tampered attribute changes the authorization outcome, and every induced exception results in denial.
-* **FAIL** — ≥ 1 tampered attribute grants access, or an induced exception results in allow.
+* **PASS** — No tampered attribute grants access that the untampered request would not, and every induced exception results in denial.
+* **FAIL** — ≥ 1 tampered attribute grants access that the untampered request would not, or an induced exception results in allow.
 
 ---
 
@@ -234,12 +234,12 @@ External Reference: ASVS V5.2.6 (L1); OWASP API7:2023; CWE-918 · Applicable pro
 
 1. Exercise every URL-accepting parameter against an out-of-band interaction server, cloud-metadata addresses, redirect chains and DNS-rebinding payloads.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, interactsh.
-3. Lab adjudication of tool output: budget 15 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — No out-of-band interaction is recorded from the application for any payload, and no metadata endpoint content is returned.
-* **FAIL** — ≥ 1 out-of-band interaction attributable to the application, or metadata content reflected.
+* **PASS** — No payload causes the application to fetch an internal or metadata address (the WHK-03 list), as evidenced by an interaction-server callback reached through a redirect or DNS-rebinding payload, or by metadata content in the response.
+* **FAIL** — ≥ 1 payload produces such a callback or reflects metadata content.
 
 ---
 
@@ -256,7 +256,7 @@ External Reference: ASVS V5.2.5, V5.3.10, V5.5.2 (L1); CWE-1336, CWE-611 · Appl
 
 1. Craft template-injection, XPath and XML payloads, including external-entity sets, for every parameter that reaches a template or XML parser.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): tplmap, Burp Suite.
-3. Lab adjudication of tool output: budget 15 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
@@ -276,14 +276,14 @@ External Reference: ASVS V12.4.1, V12.5.1 (L1); V12.2.1 (L2); CWE-434 · Applica
 
 **Test Procedure**
 
-1. Upload a crafted file matrix — polyglot files, double extensions, MIME mismatches, oversize files and archive bombs — then attempt to retrieve and execute each from its stored path.
+1. Obtain the developer-declared upload type allowlist. Upload a crafted file matrix — polyglot files, double extensions, MIME mismatches, oversize files and archive bombs — then attempt to retrieve each accepted file and observe how it is served.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, scripted upload harness.
-3. Lab adjudication of tool output: budget 15 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — Every upload outside the declared type allowlist is rejected; every accepted upload is retrieved with a non-executable content type from a path outside the document root.
-* **FAIL** — ≥ 1 disallowed type accepted, or ≥ 1 uploaded file retrievable as executable or from inside the document root.
+* **PASS** — Every upload outside the declared allowlist is rejected; every accepted upload that is retrievable is served with `Content-Disposition: attachment`, or with a `Content-Type` other than `text/html`, `application/javascript`, `image/svg+xml` and `X-Content-Type-Options: nosniff` present.
+* **FAIL** — ≥ 1 disallowed type accepted, or ≥ 1 retrievable upload served inline as `text/html`, `application/javascript` or `image/svg+xml`, or without `nosniff` and without `Content-Disposition: attachment`.
 
 ---
 
@@ -302,12 +302,12 @@ External Reference: RFC 9700 §4.14.2 · Applicable profile: `All`
 
 1. Refresh the token repeatedly, induce a refresh failure, revoke the token server-side, and enumerate every storage location after each cycle.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted harness, Playwright, MobSF.
-3. Lab adjudication of tool output: budget 20 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — After each rotation exactly one refresh token exists across all storage locations and the superseded value is rejected; a refresh failure surfaces a user-visible re-authorization rather than a silent background grant.
-* **FAIL** — A superseded refresh token remains stored or usable, a token is duplicated across locations, or a refresh failure triggers silent re-authorization.
+* **PASS** — After each rotation at most one refresh token exists across all storage locations and the superseded value is rejected; a token revoked server-side is rejected on its next use; a refresh failure does not trigger a silent background re-authorization.
+* **FAIL** — A superseded or server-side-revoked refresh token remains usable, a superseded token remains stored, a token is duplicated across locations, or a refresh failure triggers silent re-authorization.
 
 ---
 
@@ -324,11 +324,11 @@ External Reference: RFC 7009; ASVS V3.5.1 (L2) · Applicable profile: `All`
 
 1. Perform logout, in-application revocation and account deletion, and after each replay the access and refresh tokens against an identity-provider API and against the application backend.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted harness.
-3. Lab adjudication of tool output: budget 15 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — After each of the three events the access token and the refresh token are both rejected by the identity provider (`invalid_token`) and by the application backend.
+* **PASS** — After each of the three events the access token and the refresh token are both rejected by the identity provider and denied by the application backend.
 * **FAIL** — ≥ 1 token still accepted after logout, revocation or account deletion.
 
 ---
@@ -346,13 +346,13 @@ External Reference: CASA v2.1.1 §7.2.3; CWE-294 · Applicable profile: `Web_App
 
 **Test Procedure**
 
-1. Re-deliver a captured, validly signed payload immediately, at the acceptance-window boundary and beyond it, and deliver payloads with duplicate idempotency keys.
+1. Obtain the acceptance window from the developer's webhook documentation. Re-deliver a captured, validly signed payload immediately, at the window boundary and beyond it, and deliver payloads with duplicate idempotency keys.
 2. Reference tooling (for reference only; any tool producing the evidence format above may be used): scripted delivery harness.
-3. Lab adjudication of tool output: budget 12 minutes per application.
+3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
 
-* **PASS** — A validly signed payload replayed outside the stated acceptance window is rejected, and a duplicate delivery inside the window produces exactly one state change, with the assessor confirming the deduplication is idempotency handling rather than coincidence.
-* **FAIL** — A payload is accepted outside the window, or a duplicate delivery produces a second state change.
+* **PASS** — A validly signed payload replayed after the documented acceptance window is rejected (a replay exactly at the boundary counts as inside the window), and a duplicate delivery inside the window produces exactly one state change.
+* **FAIL** — A payload is accepted after the window, or a duplicate delivery produces a second state change.
 
 ---
