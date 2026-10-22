@@ -53,7 +53,7 @@ TBD
 
 The rapid evolution of Artificial Intelligence has marked a transition from static, conversational Large Language Models (LLMs) to highly autonomous AI Agents. While traditional LLMs excel at text prediction and generation, an AI Agent possesses the orchestrational logic to reason, plan, and critically, invoke and manage external AI tools to interact with real-world data and third-party systems. This advanced autonomy unlocks massive business potential but simultaneously introduces unique, high-impact security vulnerabilities—such as prompt injection, runtime data poisoning, and excessive agency—that conventional cybersecurity frameworks are poorly equipped to defend.
 
-The App Defense Alliance (ADA) AI Agent Specification establishes a definitive, standardized testing matrix to validate the security, integrity, and trustworthiness of these autonomous systems. Derived from the Consortium for Secure AI (CoSAI) risk taxonomy and integrated with the tactical methodologies of the OWASP AI Testing Guide and MLCommons, this specification bridges the gap between conventional security practices and offensive AI engineering.
+The App Defense Alliance (ADA) AI Agent Specification establishes a definitive, standardized testing matrix to validate the security, integrity, and trustworthiness of these autonomous systems. Derived from the Consortium for Secure AI (CoSAI) risk taxonomy and integrated with the tactical methodologies of the OWASP AI Testing Guide, this specification bridges the gap between conventional security practices and offensive AI engineering.
 
 # Scoping and Compliance
 
@@ -143,7 +143,7 @@ The AI Agent specification is derived from the **Consortium for Secure AI (CoSAI
 
 # Relationship To OWASP
 
-This specification integrates core methodologies from the **OWASP AI Testing Guide**, mapping individual OWASP tests directly to CoSAI security controls. To maintain focus on external validation, tests regarding source code, internal organizational processes, and model training have been omitted. The ADA AI Agent specification builds upon the OWASP framework by establishing definitive, measurable acceptance criteria that must be satisfied for compliance. Additionally, traditional OWASP approaches to prompt injection, model safety, and jailbreak testing have been superseded by the MLCommons testing standard.
+This specification integrates core methodologies from the **OWASP AI Testing Guide**, mapping individual OWASP tests directly to CoSAI security controls. To maintain focus on external validation, tests regarding source code, internal organizational processes, and model training have been omitted. The ADA AI Agent specification builds upon the OWASP framework by establishing definitive, measurable acceptance criteria that must be satisfied for compliance.
 
 | OWASP AI Testing Guide Framework | ADA Scope |
 | :---- | :---- |
@@ -155,8 +155,7 @@ This specification integrates core methodologies from the **OWASP AI Testing Gui
 **Test selection rule.** ADA adopts individual OWASP tests wherever they map to an in-scope CoSAI control, even when the parent OWASP test *family* is otherwise out of scope. Accordingly, specific AI Data tests (e.g., AITG-DAT-02, AITG-DAT-05) and AI Infrastructure tests (e.g., AITG-INF-02, AITG-INF-03, AITG-INF-04) are adopted where they validate an in-scope agent behaviour or interface, while the remainder of those families — source-code, training-pipeline, and hosting-infrastructure tests — remain out of scope. The scope entries above therefore describe the *default* disposition of each family, not a prohibition on adopting a specific mapped test.
 
 # Relationship To MLCommons
-
-To address the critical risks of prompt injection, jailbreaking, and model safety, this specification adopts the **MLCommons** framework. Compliance is verified using the official MLCommons test harness and datasets. To achieve ADA certification, the agent and its integrated models must meet or exceed the minimum performance and safety thresholds defined within the ADA acceptance criteria.
+Standardized benchmark testing conducted by independent consortia like MLCommons plays a vital role in measuring and advancing the state of the art in AI model robustness, safety, and jailbreak resilience. As the AI agent landscape evolves at breakneck speed, empirical benchmarks establish transparent, repeatable baselines that help developers proactively detect vulnerabilities and validate model behavior across diverse modalities and languages. Within the App Defense Alliance (ADA) AI Agent specification, this benchmark testing is officially designated as optional—giving developers operational flexibility to align testing with their deployment velocity while community scoring thresholds mature—though conducting these evaluations remains strongly encouraged to uphold the highest tier of security, privacy, and ecosystem trust.
 
 # References
 
@@ -330,10 +329,12 @@ Follow the testing procedures outlined in [AITG-MOD-01](https://github.com/OWASP
 * **Agent:** Agent application and applicable model component certifications. Access to both the user interface and tool interface.
 
 #### Test Procedure
-Perform [AILuminate Jailbreak benchmark](https://mlcommons.org/ailuminate/jailbreak/) for each language which the Agent will support. The test shall be performed on each of the user interfaces being certified, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
+The developer SHOULD perform [AILuminate Jailbreak benchmark](https://mlcommons.org/ailuminate/jailbreak/) for each model the Agent supports. The test SHOULD be performed on each of the user interfaces, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
+
+See section 3.1 for mandatory Input Validation and Sanitization requriements.
 
 #### Verification
-* AILuminate Jailbreak score must be TBD or above.
+* This requirement is optional and thus does not have any mandatory verification conditions.
 
 ### 1.1.3 Minimize hazardous responses
 
@@ -344,11 +345,13 @@ Perform [AILuminate Jailbreak benchmark](https://mlcommons.org/ailuminate/jailbr
 
 #### Test Procedure
 
-Perform [AILuminate safety benchmark](https://mlcommons.org/ailuminate/safety/) for each language which the Agent will support. The test shall be performed on each of the user interfaces being certified, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
+The developer SHOULD perform [AILuminate safety benchmark](https://mlcommons.org/ailuminate/safety/) for each model the Agent will support. The test SHOULD be performed on each of the user interfaces, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
+
+See section 3.1 for mandatory Input Validation and Sanitization and section 3.2 for madatory Output Validation and Sanitization requirements.
 
 #### Verification
 
-* AILuminate safety score must be **TBD** or above.
+* This requirement is optional and thus does not have any mandatory verification conditions.
 
 
 ## 1.2 Model and Data Access Controls
