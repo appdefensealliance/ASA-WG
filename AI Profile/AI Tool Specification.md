@@ -61,6 +61,10 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 [1.4 Replay Attacks/Session Hijacking	15](#1.4-replay-attacks/session-hijacking)
 
+[1.4.2 Sensitive Action Idempotency and Ambiguous Outcomes](#142-sensitive-action-idempotency-and-ambiguous-outcomes)
+
+[1.4.3 Connector Lifecycle Revocation](#143-connector-lifecycle-revocation)
+
 [1.5 OAuth/Legacy Auth Weaknesses	17](#1.5-oauth/legacy-auth-weaknesses)
 
 [1.6 Session Token Leakage	19](#1.6-session-token-leakage)
@@ -148,6 +152,8 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 [10.1 Resource exhaustion and denial of wallet	54](#10.1-resource-exhaustion-and-denial-of-wallet)
 
 [10.2 Payload Limit/DoS	55](#10.2-payload-limit/dos)
+
+[10.3 Per-User and Enumeration-Resistant Rate Limiting](#103-per-user-and-enumeration-resistant-rate-limiting)
 
 [11 Supply Chain and Lifecycle Security Failures	56](#11-supply-chain-and-lifecycle-security-failures)
 
@@ -269,7 +275,7 @@ An MCP server acts as a deputy. If it uses a global admin key to fulfill a reque
 | Method | Description |
 | :---- | :---- |
 | Static |  **Analyze Tool Handlers:** Identify and examine all `callTool` handler functions within the codebase. <br><br>**Verify Token Usage:** Check if the tool logic relies on a hardcoded "Global Admin" or service-level token to access external APIs. <br><br>**Verify Context Extraction:** Confirm the code extracts a user-specific identifier or session token from the metadata or parameters of the MCP request. <br><br>**Check Authorization Logic:** Verify that the extracted user context is used to authorize access to specific downstream resources.  |
-| Dynamic | **Test Privilege Separation:** Attempt to access a resource belonging to User A while authenticated as User B to ensure the request is denied. <br><br>**Verify Scoped Execution:** Trigger a tool call and inspect the downstream API request to confirm it uses a scoped user token rather than a global administrative key. <br><br>**Validate Metadata Propagation:** Ensure that user-in-the-loop context passed through MCP request metadata is correctly honored by the server before executing sensitive actions. |
+| Dynamic | **Test Privilege Separation:** For every exposed resource type, identify the supported operation classes and attempt each applicable list, search, read, create, update, delete, share, send, cancel, purchase, or other state-changing operation against a resource belonging to User A while authenticated as User B. Use known, guessed, sequential, and nonexistent resource identifiers where applicable. Verify denial before protected data, existence-sensitive metadata, or an external side effect is produced. An operation may be omitted only when the Tool does not expose it, with the omission documented. <br><br>**Verify Scoped Execution:** Trigger a tool call and inspect the downstream API request to confirm it uses a scoped user token rather than a global administrative key. <br><br>**Validate Metadata Propagation:** Ensure that user-in-the-loop context passed through MCP request metadata is correctly honored by the server before executing sensitive actions. |
 
 ### 1.2.2: Mandatory Cryptographic Validation of User Context
 
@@ -354,7 +360,7 @@ MCP servers are often lightweight and distributed; hardcoded secrets are easily 
 
 #### Description
 
-The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. For example, tokens shall not be sent in HTTP headers.
+The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. Tokens shall not be sent in URL query parameters or over unencrypted channels. Credentials and sensitive data must not be forwarded automatically when an approved endpoint redirects to another origin; each redirect destination must be independently authorized before credentials or sensitive data are attached.
 
 #### Rationale
 
@@ -364,8 +370,8 @@ Credential theft often occurs during transit or through the reuse of intercepted
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Identify Downstream Clients:** Search the codebase for all outgoing network clients (e.g., axios, fetch, requests, pg-client). <br><br>**Verify TLS Enforcement:** Confirm that connection strings and URL constructions strictly use https:// or equivalent secure protocols (e.g., sslmode=require for databases). <br><br>**Protect Data in Transit:** Audit the codebase for any transmission of sensitive information (e.g., auth tokens) and confirm robust encryption is enforced. |
-| Dynamic | **Monitor Outbound Traffic:** Use a network interception tool (e.g., Wireshark or a service mesh proxy) to verify that secrets (Authorization headers, API keys) are never sent over unencrypted (HTTP) connections. |
+| Static | **Identify Downstream Clients:** Search the codebase for all outgoing network clients (e.g., axios, fetch, requests, pg-client). <br><br>**Verify TLS Enforcement:** Confirm that connection strings and URL constructions strictly use https:// or equivalent secure protocols (e.g., sslmode=require for databases). <br><br>**Protect Data in Transit:** Audit the codebase for any transmission of sensitive information (e.g., auth tokens) and confirm robust encryption is enforced. <br><br>**Check Redirect Credential Handling:** Confirm that clients do not automatically forward credentials or sensitive data across an origin-changing redirect and independently authorize every destination before attaching them. |
+| Dynamic | **Monitor Outbound Traffic:** Use a network interception tool (e.g., Wireshark or a service mesh proxy) to verify that secrets (Authorization headers, API keys) are never sent over unencrypted (HTTP) connections. <br><br>**Test Redirect Destination Substitution:** Cause an approved downstream endpoint to redirect to an unapproved origin and confirm that credentials and sensitive data do not follow. |
 
 #### Comments
 
@@ -404,6 +410,62 @@ If an attacker captures a valid MCP tool-call request, they could "replay" it la
 | Mobile | In scope |
 | Remote | In scope |
 
+### 1.4.2 Sensitive Action Idempotency and Ambiguous Outcomes
+
+#### Description
+
+A Sensitive Action that can create an external side effect MUST require a stable intent or idempotency identifier on the request that can create the side effect. The Tool MAY accept an Agent-provided identifier or implement an explicit two-phase flow that mints and returns the identifier before any external side effect occurs and requires a subsequent request carrying it to execute. The identifier MUST uniquely represent the user-approved action and be bound to the authenticated user, Tool or connector account, operation, and all material parameters. Two separately approved but otherwise identical actions MUST use distinct identifiers. Concurrent or repeated requests representing the same intended action MUST reuse its identifier and MUST NOT produce multiple external side effects. Duplicate-suppression state MUST survive process restarts and remain available for a documented retry and outcome-uncertainty period.
+
+When the downstream outcome is unknown, including after a timeout, lost response, malformed response, or partial failure, the AI Tool MUST NOT report success or blindly retry the action. It MUST reconcile the authoritative downstream status or preserve the original idempotency context before retry. If the outcome cannot be established safely, the Tool MUST return an explicit unknown or indeterminate status without initiating another action.
+
+#### Rationale
+
+Transport replay controls reject a captured duplicate message, but they do not prevent a client from constructing a new request with a new nonce after the original request committed and its response was lost. For purchases, transfers, messages, reservations, cancellations, access grants, and other consequential operations, that distinction can produce duplicate external effects.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Review Idempotency Design:** Identify every Sensitive Action that can create an external side effect and confirm the execution request requires a stable intent or idempotency identifier bound to the authenticated user, Tool or connector account, operation, and all material parameters. If the Tool mints the identifier, confirm that it does so in an explicit preparation step that cannot create an external side effect and requires a subsequent request carrying the identifier to execute. Confirm that separately approved identical actions receive distinct identifiers. <br><br>**Review Persistence:** Confirm duplicate-suppression state survives process restarts for a documented retry and outcome-uncertainty period. <br><br>**Review Failure Handling:** Confirm timeout, malformed-response, partial-failure, and unknown-outcome paths reconcile authoritative status or reuse the original identifier rather than blindly issuing a new action. |
+| Dynamic | **Duplicate and Concurrency Tests:** Submit concurrent requests with the same intent identifier, then retry the same intended action in a newly constructed message with a fresh transport nonce and the original identifier. Confirm that no duplicate external effect occurs. Submit the identifier with changed user, account, operation, or material parameters and confirm rejection. Verify that separately approved identical actions with distinct identifiers can execute independently. <br><br>**Restart Test:** Restart the Tool during the documented retry window and retry the original identifier; confirm duplicate suppression survives. <br><br>**Ambiguous-Outcome Tests:** Simulate a timeout after downstream commit, a lost or malformed response, and partial completion. Confirm that no unintended duplicate occurs and that the Tool reports the authoritative or explicitly indeterminate status accurately. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
+### 1.4.3 Connector Lifecycle Revocation
+
+#### Description
+
+The AI Tool MUST define and enforce lifecycle termination for user- or administrator-initiated connector unlinking or removal, withdrawal of persistent connector or account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Refusal or cancellation of a single action prompt is not withdrawal of persistent connector or account authorization. Ending an Agent login session invalidates authority scoped to that session; it does not automatically invalidate a separately established persistent connector grant unless the documented connector lifecycle specifies that result.
+
+After a revocation becomes effective, the Tool MUST reject new actions and MUST NOT begin uncommitted queued work using the revoked authority. Revoked credentials, cached capabilities, Tool-controlled approval artifacts, and automatic retries MUST NOT authorize subsequent activity. A callback MAY reconcile the status of an action committed before revocation but MUST NOT authorize a new external side effect. The implementation MUST document the maximum time required for each supported revocation event to take effect.
+
+If an irreversible action was already committed before revocation, the Tool MUST report its status accurately and MUST NOT represent it as cancelled or rolled back unless that result is confirmed by the authoritative downstream system.
+
+#### Rationale
+
+Ending a user session does not necessarily revoke downstream credentials, queued work, callbacks, or cached authorization artifacts. Without explicit lifecycle handling, a disconnected or deauthorized connector may continue to access data or cause actions after the user's authority has ended.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Map Revocation Events:** Identify the handling of user/admin unlinking, withdrawal of persistent connector or account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Distinguish persistent grants from session-scoped authority and from refusal of one action prompt. <br><br>**Trace Pending Work:** Confirm each event reaches stored credentials, cached capabilities, approval artifacts, queued work, callbacks, and retry handlers. <br><br>**Review Effective Time:** Confirm the maximum revocation-enforcement time is documented. |
+| Dynamic | **Pending-Work Test:** Queue an action, revoke the applicable authority before execution, and verify it does not begin. <br><br>**Callback and Retry Test:** Revoke authority before a callback or automatic retry. Confirm the callback may reconcile an already-committed action but cannot authorize a new side effect, and confirm the retry is rejected. <br><br>**Active-Session Test:** Unlink the connector, deactivate the account, revoke credentials, or terminate session-scoped authority and verify future requests under that authority fail. <br><br>**Committed-Action Test:** Revoke authority after an irreversible action commits and verify the Tool reports the authoritative result accurately without claiming an unconfirmed rollback. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | In scope |
+| Mobile | In scope |
+| Remote | In scope |
+
 ## 1.5 OAuth/Legacy Auth Weaknesses
 
 Use of outdated, weak, or pass-through authentication and authorization (e.g., basic auth, static API keys) exposes systems to impersonation, privilege misuse, and poor accountability.
@@ -412,7 +474,7 @@ Use of outdated, weak, or pass-through authentication and authorization (e.g., b
 
 #### Description
 
-If the MCP server facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
+If the MCP server facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Each authorization transaction must be bound to the authenticated user, initiating browser or application session, downstream authorization server or issuer, client identifier, redirect URI, and corresponding PKCE transaction. The state value must expire within a documented period and be accepted no more than once. A deliberately supported cross-device flow may use an authenticated handoff mechanism that preserves equivalent binding. Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
 
 #### Rationale
 
@@ -422,8 +484,8 @@ AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in t
 
 | Method | Description |
 | :---- | :---- |
-| Static | **Locate OAuth Logic:** Identify the OAuth callback or authorization URL construction logic within the server codebase. <br><br>**Verify State Generation:** Ensure that the state parameter is generated using a cryptographically secure random generator. <br><br>**Verify State Validation:** Confirm that the state parameter is strictly validated upon return to prevent Cross-Site Request Forgery (CSRF). <br><br>**Check Redirect URI Construction:** Verify that the redirect\_uri is not dynamically constructed from user-controlled input. **Confirm Allowlist Enforcement:** Ensure the redirect\_uri is checked against a hardcoded or configuration-based allowlist. **Flag Legacy Methods:** Identify and flag any use of legacy authentication methods, such as Basic Auth over HTTP, which are strictly prohibited. |
-| Dynamic | **Verify Redirect URI Validation:** Attempt to use a `redirect_uri` that is not on the pre-defined allowlist to confirm the authorization request fails.  <br><br>**Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected.  |
+| Static | **Locate OAuth Logic:** Identify the OAuth callback or authorization URL construction logic within the server codebase. <br><br>**Verify State Generation:** Ensure that the state parameter is generated using a cryptographically secure random generator. <br><br>**Verify Transaction Binding:** Confirm that authorization transaction state is securely retained or integrity-protected, expires, is single-use, and is bound to the authenticated user, initiating session, downstream authorization server or issuer, client identifier, redirect URI, and PKCE transaction. <br><br>**Check Redirect URI Construction:** Verify that the redirect\_uri is not dynamically constructed from user-controlled input. **Confirm Allowlist Enforcement:** Ensure the redirect\_uri is checked against a hardcoded or configuration-based allowlist. <br><br>**Flag Legacy Methods:** Identify and flag any use of legacy authentication methods, such as Basic Auth over HTTP, which are strictly prohibited. |
+| Dynamic | **Verify Redirect URI Validation:** Attempt to use a `redirect_uri` that is not on the pre-defined allowlist to confirm the authorization request fails. <br><br>**Test User and Session Binding:** Start linking as User A and attempt to complete the callback as User B or in another browser/application session without an approved handoff. Confirm rejection and that no credential or account association is stored. <br><br>**Test Concurrent Flows:** Start two authorization flows and swap their callbacks or state values. Confirm both mismatches are rejected. <br><br>**Test Callback Replay:** Replay a completed callback and reuse a consumed state value. Confirm rejection with no credential or account association stored. <br><br>**Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected. |
 
 #### Comments
 
@@ -532,6 +594,9 @@ Primary responsibility for presenting, obtaining, and enforcing user consent for
 * **Classify sensitivity and reversibility.** Identify which exposed operations are Sensitive Actions — those that are irreversible, transfer value or money, mutate or share user data beyond the current task, or grant or expand access.
 * **Confirm via server-side elicitation, or fail closed.** Use elicitation (or an equivalent server-side confirmation) to request explicit user confirmation of the Sensitive Action, or enforce the use of clients configured so that unprivileged users cannot disable confirmation prompts. The confirmation message MUST clearly and unambiguously state the security implications of the action.
 * **Not defer to the Agent alone.** The Tool MUST NOT treat an Agent-supplied claim that "consent was obtained" as sufficient; it MUST fail closed when it cannot establish that the user confirmed the specific action.
+* **Bind Tool-controlled confirmation.** Any confirmation challenge, approval token, or receipt created or validated by the Tool MUST be bound to the authenticated user, connector account, operation, target or recipient, all material parameters, a bounded validity period, and one execution. It MUST be rejected when expired, consumed, mismatched, or replayed. A bounded batch MAY be treated as one action only when every action and target in the batch and all material parameters are explicitly enumerated in the confirmation.
+
+Binding an Agent-relayed elicitation response to its request prevents request substitution but does not prove that a malicious Agent presented the request to the user. User-verifiable Tool-side approval against a malicious Agent requires out-of-band confirmation (§2.1.2) or a supported cryptographic consent mechanism such as the optional Agent–Tool Identity and Consent Wire Format.
 
 **ADA extensions (future revisions).** The Tool MAY emit a machine-readable `consent_required` signal for Sensitive Actions (an ADA construct; candidate alignment with MCP tool annotations). A consent assertion cryptographically bound to the verified user identity and operation parameters — enabling the Tool to verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format** (tracked with the identity-propagation work) and is not required in this revision.
 
@@ -543,8 +608,8 @@ An AI Tool is invoked by an Agent it cannot fully trust: a confused or benign-bu
 
 | Method | Description |
 | :---- | :---- |
-| Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications. |
-| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. |
+| Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications and that Tool-controlled confirmation is bound to the authenticated user and complete action. |
+| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. Capture a valid Tool-controlled confirmation and attempt to reuse it for another user, unrelated authorization transaction, connector account, operation, target or recipient, materially different parameter set, after expiration, and for an additional execution not explicitly authorized. Verify every mismatch or replay is rejected before the action occurs. |
 
 #### Comments
 
@@ -568,8 +633,8 @@ The §2.1.1 backstop closes the confused / benign-but-buggy Agent case; it does 
 
 | Method | Description |
 | :---- | :---- |
-| Static | Identify the highest-risk operations (irreversible, value transfer, access grant/expansion). Verify the Tool defines an out-of-band confirmation path independent of the Agent request channel for them (REQUIRED for remote/high-value deployments), and that when out-of-band confirmation is unavailable it fails closed to the §2.1.1 elicitation backstop rather than to Agent-relayed consent. |
-| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to approve a highest-risk action entirely through the Agent channel, including forging an elicitation response. Verify the action does not execute without confirmation delivered and returned over the independent channel. |
+| Static | Identify the highest-risk operations (irreversible, value transfer, access grant/expansion). Verify the Tool defines an out-of-band confirmation path independent of the Agent request channel for them (REQUIRED for remote/high-value deployments), and that when out-of-band confirmation is unavailable it fails closed to the §2.1.1 elicitation backstop rather than to Agent-relayed consent. Verify that the out-of-band confirmation is bound to the authenticated user and complete action and is expired or consumed as specified. |
+| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to approve a highest-risk action entirely through the Agent channel, including forging an elicitation response. Verify the action does not execute without confirmation delivered and returned over the independent channel. Capture a valid out-of-band confirmation and attempt cross-user, unrelated-transaction, cross-account, operation, parameter, expiration, and execution-count substitutions; verify each is rejected before execution. |
 
 #### Comments
 
@@ -629,7 +694,7 @@ Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring
 | Method  | Description |
 | :------ | :---------- |
 | Static | **Identify Token Handling:** Search the codebase for the point where incoming requests are received. Verify that the user’s identity (e.g., JWT, OAuth token, or User ID) is extracted and explicitly passed into the tool execution context.<br><br> **Verify Downstream Authentication:** Inspect the client initialization for downstream services (e.g., a Database client or GitHub API client). Ensure that these clients are instantiated using the propagated user token rather than a hardcoded administrative or "app-level" API key.<br><br>**Check Middleware Injection:** If using a framework, verify that the identity propagation is enforced via middleware and cannot be bypassed by individual tool implementations.|
-| Dynamic | Perform the following runtime testing: <br><br>**Verify Permission Enforcement:** Attempt to call a tool (e.g., read_file) targeting a resource that "User A" owns but "User B" does not. Authenticate as "User B" and verify that the tool returns a 403 Forbidden or 401 Unauthorized error from the downstream resource.<br><br>**Inspect Downstream Logs:** Execute a tool call and then inspect the audit logs of the downstream service (e.g., AWS CloudTrail or GitHub Audit Logs). Confirm that the action was recorded under the end-user's identity and not the MCP server’s service account name.<br><br>**Token Scoping Test:** Provide the MCP server with a scoped or "limited" token for a user. Attempt to execute a tool that requires permissions outside of that scope. Verify that the tool execution fails at the resource level, proving that the server is respecting the specific token's limitations. |
+| Dynamic | Perform the following runtime testing: <br><br>**Verify Permission Enforcement:** For each exposed resource and operation class, authenticate as User B and attempt to list, search, read, create, update, delete, share, send, cancel, purchase, or otherwise act on resources belonging to User A. Use known, guessed, sequential, and nonexistent identifiers where applicable. Verify rejection before protected data, existence-sensitive metadata, or an external side effect is produced.<br><br>**Inspect Downstream Logs:** Execute a tool call and then inspect the audit logs of the downstream service (e.g., AWS CloudTrail or GitHub Audit Logs). Confirm that the action was recorded under the end-user's identity and not the MCP server’s service account name.<br><br>**Token Scoping Test:** Provide the MCP server with a scoped or "limited" token for a user. Attempt to execute a tool that requires permissions outside of that scope. Verify that the tool execution fails at the resource level, proving that the server is respecting the specific token's limitations. |
 
 
 
@@ -1210,6 +1275,33 @@ Unbounded inputs allow attackers to trigger Denial-of-Service (DoS). Large paylo
 | Local | In Scope |
 | Mobile | In Scope |
 | Remote | In Scope |
+
+## 10.3 Per-User and Enumeration-Resistant Rate Limiting
+
+### 10.3.1 Per User Endpoint Rate Limiting
+
+#### Description
+
+For remote deployments, the AI Tool MUST enforce configurable limits aggregated at least across all concurrent sessions belonging to the same authenticated user. Where enumeration or consequential-action abuse is reasonably possible, the Tool MUST also apply action-, resource-, target-, or aggregate-level limits. The developer MUST document each threshold and its rationale. Limits applied to one user MUST NOT impair unrelated users. Rate limiting is supplemental and MUST NOT substitute for authorization checks or permit unauthorized resource-existence disclosure below the threshold.
+
+#### Rationale
+
+A per-session limit can be bypassed by opening parallel sessions. Enumeration and high-consequence abuse may also remain practical below a generic endpoint limit unless the Tool detects high-fan-out access to resources or targets and repeated consequential operations.
+
+#### Audit
+
+| Method | Description |
+| :---- | :---- |
+| Static | **Inspect Rate-Limit Keys:** Confirm limits aggregate requests across the authenticated user's concurrent sessions rather than relying only on a session identifier. <br><br>**Review Abuse Dimensions:** For functions that enumerate resources or cause consequential actions, confirm that action-, resource-, target-, or aggregate-level limits are configured and that each threshold and its rationale are documented. <br><br>**Confirm Authorization Independence:** Verify that authorization checks and existence-confidentiality behavior do not depend on whether a rate threshold has been reached. |
+| Dynamic | **Parallel-Session Test:** Authenticate as one user through multiple sessions and distribute requests across them; confirm the declared aggregate user threshold is enforced. <br><br>**Enumeration Test:** Exercise pagination, predictable identifiers, high-fan-out searches, and repeated target variation; confirm each applicable declared threshold is enforced. Verify separately that unauthorized requests do not disclose resource existence at any request rate. <br><br>**User Isolation:** Confirm enforcement against User A does not impair User B. |
+
+#### Comments
+
+| Scope | Comment |
+| :---- | :---- |
+| Local | Out of scope |
+| Mobile | Out of scope |
+| Remote | In scope |
 
 # 11 Supply Chain and Lifecycle Security Failures
 
