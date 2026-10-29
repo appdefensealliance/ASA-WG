@@ -6,25 +6,29 @@ name: Spec ↔ Test Guide consistency
 on:
   pull_request:
     paths:
-      - 'AI Profile/AI Tool Specification.md'
-      - 'AI Profile/AI Tool Testing Guide.md'
+      - 'AI Profile/**'
       - 'MASA/MASA Specification.md'
       - 'MASA/MASA Test Guide.md'
       - 'CASA/CASA Specification.md'
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
+      - 'scripts/ai_assessment_lint.py'
+      - 'scripts/tests/test_spec_guide_lint.py'
+      - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
       - '.github/workflows/spec-guide-consistency.yml'
   push:
     branches: [develop]
     paths:
-      - 'AI Profile/AI Tool Specification.md'
-      - 'AI Profile/AI Tool Testing Guide.md'
+      - 'AI Profile/**'
       - 'MASA/MASA Specification.md'
       - 'MASA/MASA Test Guide.md'
       - 'CASA/CASA Specification.md'
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
+      - 'scripts/ai_assessment_lint.py'
+      - 'scripts/tests/test_spec_guide_lint.py'
+      - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
 
 jobs:
@@ -37,3 +41,5 @@ jobs:
           python-version: '3.x'
       - name: Lint Spec ↔ Test Guide pairs
         run: python3 scripts/spec_guide_lint.py
+      - name: Exercise parser and assessment regressions
+        run: python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py

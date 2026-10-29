@@ -27,23 +27,28 @@ Exit codes: `0` clean (modulo baseline) · `1` new divergence · `2` usage/IO er
 | --- | --- | --- | --- |
 | MASA | `MASA/MASA Specification.md` | `MASA/MASA Test Guide.md` | **id** — shared `X.Y.Z.W` audit IDs |
 | CASA | `CASA/CASA Specification.md` | `CASA/CASA Test Guide.md` | **id** — shared `N.M.K` audit IDs |
-| AI Tool | `AI Profile/AI Tool Specification.md` | `AI Profile/AI Tool Testing Guide.md` | **title** (bootstrap) |
+| AI Tool | `AI Profile/AI Tool Specification.md` | `AI Profile/AI Tool Testing Guide.md` | **explicit assessment tags** |
+| AI Agent | `AI Profile/AI Agent Specification.md` | `AI Profile/AI Agent Test Guide.md` | **explicit assessment tags** |
 
-MASA and CASA already share stable numeric IDs between Spec and Guide, so their join is
-exact. The AI Tool pair numbers the two documents independently, so it is matched on
-**normalized requirement title** as a bootstrap — this is fuzzy and should be upgraded
-(see "Upgrading the AI Tool pair" below).
+MASA and CASA share stable numeric IDs. The AI pairs use explicit namespaced tags,
+preserving their independently numbered tests and multiple mappings. Duplicate
+titles do not collapse distinct controls.
 
-## How join strategies work
+## Stable AI assessment tags
 
-Each pair is a small adapter in `PAIRS` inside `spec_guide_lint.py` — only three things
-vary: the two file paths, a regex that captures the requirement ID (or title) from each
-document, and the strategy (`id` or `title`). Adding a new pair is ~6 lines.
+Every numbered AI requirement and test heading requires exactly one corresponding
+tag. Requirement and test IDs must be unique and must match their heading and actor.
 
-- **`id`** — the capture group is a stable ID present in *both* documents. Robust.
-- **`title`** — the capture group is a human title, normalized (lowercased, punctuation
-  and filler words like "mandatory"/"shall" removed) into a fuzzy key. Fragile to
-  rewording; use only until a shared ID/tag exists.
+```html
+<!-- ada:requirement Tool:2.2.1 -->
+<!-- ada:test Tool:5.1 covers=Tool:2.2.1,Tool:8.2.1 -->
+<!-- ada:requirement Agent:2.4.2 -->
+<!-- ada:test Agent:2.4.2 covers=Agent:2.4.2 -->
+```
+
+These examples illustrate the syntax. They are not requirements in this lint guide.
+`scripts/ai_assessment_lint.py` checks AI tags and metadata. The original lint retains
+numeric adapters for MASA and CASA. Empty parses and duplicate IDs fail for all pairs.
 
 ## The baseline (a ratchet, not a snooze)
 
@@ -58,11 +63,34 @@ as reconciliation lands (issue #400):
 
 Run `--strict` any time to see the full current debt regardless of the baseline.
 
-## Upgrading the AI Tool pair to `id`
+## Assessment metadata
 
-To make the AI Tool pair as robust as MASA/CASA, give each Guide test an explicit,
-machine-readable reference to the Spec requirement it covers — e.g. a line
-`Spec: §6.1.1` (or an HTML comment `<!-- covers: 6.1.1 -->`) under each `## X.Y` test.
-Then change its adapter `strategy` to `id` and point `guide_re` at that tag. This removes
-all fuzzy title-matching. Standardizing that `covers:` convention across every profile
-would let all pairs share one robust code path.
+The AI Tool case ledger retains 40 source tests and 210 source cases. The register
+retains 48 published CASA IDs and 21 conditional supplemental properties. These counts
+are different inventories: the Tool pair has 62 requirement mappings (35 original,
+six reconciled Guide-only outcomes/enhancements and 21 supplemental properties) and
+61 tests (40 original plus 21 coverage entries).
+
+The lint rejects:
+
+- Unresolved requirement, CASA or research references.
+- Differences between Guide and ledger mappings, gate labels or proposed case text.
+- Mixed cases without separate mandatory/advisory adjudication.
+- Changes to retained local Android or other local/mobile test strength.
+- Changes to the pinned published CASA criteria/scope/alternatives snapshot.
+- Missing Agent evidence types or unnamed Attestation/Document Review artifacts.
+
+Structural and assessment errors cannot be added to the accepted-debt baseline.
+The lint verifies documentary consistency and the preserved CASA snapshot; it does
+not prove implementation security or determine semantic applicability for a product.
+Assessors still record the correct actor, deployment, protocol and applicable outcome.
+
+## Focused regressions
+
+```bash
+python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py
+```
+
+The regressions cover empty parses, duplicate headings, same-title controls,
+wrong-actor mappings, retained CASA criteria, missing/duplicate source cases,
+mixed gates, local Android demotion, evidence artifacts and baseline bypass.
