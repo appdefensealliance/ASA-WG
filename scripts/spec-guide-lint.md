@@ -76,6 +76,11 @@ The lint rejects:
 - Unresolved requirement, CASA or research references.
 - Differences between Guide and ledger mappings, gate labels or proposed case text.
 - Mixed cases without separate mandatory/advisory adjudication.
+- Missing structured assertions, concrete exercises/outcomes, actor/fixture contexts,
+  or source requirement references for individual cases.
+- Guide/ledger drift in assertion exercises, contexts or grading rules, even when
+  the case label and short summary still match.
+- Changes to retained original case text, assurance tiers or source pin.
 - Changes to retained local Android or other local/mobile test strength.
 - Changes to the pinned published CASA criteria/scope/alternatives snapshot.
 - Missing Agent evidence types or unnamed Attestation/Document Review artifacts.
@@ -94,3 +99,29 @@ python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py
 The regressions cover empty parses, duplicate headings, same-title controls,
 wrong-actor mappings, retained CASA criteria, missing/duplicate source cases,
 mixed gates, local Android demotion, evidence artifacts and baseline bypass.
+
+## Editing Tool verification cases
+
+`AI Profile/AI Tool Assessment Cases.json` schema version 2 maintains the remote
+case assertions. Each case references its test's actor, applicability, setup,
+positive/negative controls and observation context. Mandatory and advisory assertion
+arrays identify their exercise, expected outcome and source requirements separately.
+The Guide renders those records and the shared grading rules. The retained original
+case text and tier remain evidence of the preceding source; they are not the remote
+case's current verdict rubric.
+
+After editing assertions or contexts, synchronize their rendered Guide blocks:
+
+```bash
+python3 scripts/tool_case_render.py --write
+python3 scripts/tool_case_render.py
+python3 scripts/spec_guide_lint.py --strict
+python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py
+```
+
+The renderer's default mode checks synchronization. It requires no optional Tool
+mechanism to be implemented; an unused enhancement is recorded as absent/advisory.
+The overlay targets remote HTTP Tools. Local Android and other retained variants
+continue to use their original text, tier, applicability and declared dispositions.
+CI validates documentary structure and preservation; semantic correctness of the
+assertions and product applicability remains subject to review and assessment.

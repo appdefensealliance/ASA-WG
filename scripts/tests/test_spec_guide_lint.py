@@ -84,6 +84,63 @@ class AssessmentLintTests(unittest.TestCase):
         register['research_sources'] = []
         self.assertTrue(any('research reference' in e for e in self.metadata_errors(register=register)))
 
+    def mixed_case(self, ledger):
+        return next(c for t in ledger['tests'] for c in t['cases']
+                    if c['proposed_disposition'] == 'MIXED_BASELINE_AND_ADVISORY')
+
+    def test_split_flag_without_mandatory_assertions_rejected(self):
+        ledger = copy.deepcopy(self.ledger)
+        self.mixed_case(ledger)['assessment']['mandatory_assertions'] = []
+        self.assertTrue(any('actual separate' in e for e in self.metadata_errors(ledger=ledger)))
+
+    def test_split_flag_without_advisory_assertions_rejected(self):
+        ledger = copy.deepcopy(self.ledger)
+        self.mixed_case(ledger)['assessment']['advisory_assertions'] = []
+        self.assertTrue(any('actual separate' in e for e in self.metadata_errors(ledger=ledger)))
+
+    def test_case_requires_concrete_exercise_outcome_and_references(self):
+        mutations = [('exercise', ''), ('expected', 'The mandatory outcome in Binding MUST meet the above baseline scope.'),
+                     ('requirement_ids', ['Tool:6.2.1']), ('id', 'another-case/M01')]
+        for field, value in mutations:
+            with self.subTest(field=field):
+                ledger = copy.deepcopy(self.ledger)
+                self.mixed_case(ledger)['assessment']['mandatory_assertions'][0][field] = value
+                self.assertTrue(self.metadata_errors(ledger=ledger))
+
+    def test_guide_exercise_drift_rejected_when_gate_and_summary_match(self):
+        guide = copy.deepcopy(self.guide)
+        case = self.mixed_case(self.ledger)
+        exercise = case['assessment']['mandatory_assertions'][0]['exercise']
+        guide['Tool:1.1']['body'] = guide['Tool:1.1']['body'].replace(exercise, 'Skip the user/account substitution probe.')
+        errors = ai.tool_metadata(self.spec, guide, self.register, self.ledger)
+        self.assertTrue(any('assertion exercises/references differ' in e for e in errors))
+
+    def test_guide_actor_context_drift_rejected(self):
+        guide = copy.deepcopy(self.guide)
+        guide['Tool:1.1']['body'] = guide['Tool:1.1']['body'].replace('Tool resource server', 'External Agent UI')
+        self.assertTrue(any('assessment context differ' in e
+                            for e in ai.tool_metadata(self.spec, guide, self.register, self.ledger)))
+
+    def test_original_case_text_and_tier_retained(self):
+        for field, value in [('current_text', 'Different original verification.'), ('original_assurance_tier', 'AL2')]:
+            with self.subTest(field=field):
+                ledger = copy.deepcopy(self.ledger)
+                ledger['tests'][0]['cases'][0][field] = value
+                self.assertTrue(any('source case IDs/text/tiers' in e for e in self.metadata_errors(ledger=ledger)))
+
+    def test_local_only_case_cannot_acquire_remote_assertions(self):
+        ledger = copy.deepcopy(self.ledger)
+        held = next(c for t in ledger['tests'] for c in t['cases']
+                    if c['proposed_disposition'] == 'CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT')
+        held['assessment']['mandatory_assertions'] = [copy.deepcopy(self.mixed_case(ledger)['assessment']['mandatory_assertions'][0])]
+        self.assertTrue(any('actual separate' in e for e in self.metadata_errors(ledger=ledger)))
+
+    def test_advisory_cases_do_not_require_mandatory_assertions(self):
+        self.assertEqual(self.metadata_errors(), [])
+        advisory = [c for t in self.ledger['tests'] for c in t['cases'] if c['proposed_disposition'] == 'ADVISORY']
+        self.assertTrue(advisory)
+        self.assertTrue(all(not c['assessment']['mandatory_assertions'] for c in advisory))
+
     def test_log_evidence_requires_named_attestation(self):
         agent = copy.deepcopy(self.agent)
         agent['Agent:5.2.1']['body'] = agent['Agent:5.2.1']['body'].replace('Evidence type: Attestation','Evidence type: Functional Observation')
