@@ -664,23 +664,23 @@ An AI Tool that scrupulously verifies user identity provides no protection if th
 
 #### Evidence
 
-* **Agent:** Agent application, including its tool allowlist/registry configuration. Access to the user interface and the tool interface.  
-* **ADA Malicious Reference Tool (MRT):** Used to present a shadow/unregistered server, a revoked tool identity, an unreachable revocation endpoint, a mid-session tool-catalog change, and mid-session tool revocation, over both transports.
+* **Agent:** Agent application, including its tool allowlist/registry configuration and tool-admission manager. Access to the user interface and the tool interface.  
+* **ADA Malicious Reference Tool (MRT):** Used to present a shadow/unregistered server, a revoked tool identity, an unreachable revocation authority, a mid-session tool-catalog change, and mid-session tool revocation, over both transports.
 
 #### Test Procedure
 
 * Review the Agent's tool allowlist/registry and confirm it enumerates approved tools with pinned identities (AL0/AL1 static evidence).  
 * Using the MRT as a **shadow / unregistered server**, attempt to have the Agent discover and invoke it; repeat with a **revoked** tool identity.  
 * With an allowlisted tool pinned, use the MRT to **tamper with the tool catalog mid-session** — altering a tool definition or schema after pinning — and attempt to drive a sensitive action. Repeat over both transports, scoring known-good (registered, unchanged) against known-bad (shadow, revoked, tampered).  
-* **Mid-Session Revocation:** With an allowlisted tool pinned and an active session established, revoke the tool's identity, authorization token, or registry entry on the mock authority. Attempt to invoke the tool for a subsequent action within the existing session; verify the Agent detects the revocation and refuses invocation.  
-* **Revocation Status Unreachability:** With an allowlisted tool pinned, simulate an unreachable revocation authority, network timeout, or invalid revocation response when attempting to drive a sensitive action; verify the Agent fails closed and refuses invocation.
+* **Mid-Session Revocation:** With an allowlisted tool pinned and an active session established, have the tool complete one permitted invocation. Next, revoke the tool's identity, authorization token, or admission entry on the mock authority or product tool manager. Record the effective revocation time and the applicable enforcement deadline (including any documented, short validity TTL allowance). Attempt a subsequent invocation within the existing session after the TTL expires. Observe directly at the tool whether the invocation was received; verify the Agent detects the revocation, blocks dispatch, and refuses invocation. A denial reported after tool execution has already occurred fails this case. Repeat over both applicable transports.  
+* **Revocation Status Unreachability:** With an allowlisted tool pinned, simulate an unreachable revocation authority, network timeout, or unavailable admission status under the product's applicable trust mechanism when attempting to drive a sensitive action; verify the Agent fails closed and refuses invocation. (This verifies the Agent's sensitive-action fail-closed duty under its supported trust mechanism without creating a universal requirement that every tool provide an online revocation endpoint.)
 
 #### Verification
 
 * **Allowlist / Registry Enforcement:** The Agent shall invoke only tools present on an explicit allowlist/registry with pinned identities, and shall refuse unknown or revoked tools.  
-* **Session & In-Flight Verification:** The Agent shall verify server identity and tool-catalog integrity at session establishment, and shall detect and reject tool definition/schema changes or tool revocation that occur after session establishment or pinning.  
+* **Session & In-Flight Verification:** The Agent shall verify server identity and tool-catalog integrity at session establishment, and shall check tool-admission state before dispatching tool calls. The Agent shall detect and reject tool definition/schema changes, disabled/removed status, or tool revocation that occur after session establishment or pinning (enforcing revocation before next dispatch or upon expiration of any documented, short validity TTL for sensitive actions). Existing sessions shall not override revoked or disabled admission state.  
 * **Provenance Surfaced:** The Agent shall surface the provenance (identity/source) of an invoked tool to the user.  
-* **Fail Closed:** On an unknown, revoked, or post-pinning-altered tool, or when tool revocation status cannot be established, the Agent shall fail closed — not invoking it for a sensitive action.
+* **Fail Closed:** On an unknown, revoked, or post-pinning-altered tool, or when tool admission/revocation status cannot be established under the applicable trust mechanism, the Agent shall fail closed — not invoking it for a sensitive action.
 
 
 # 3. Input/Output Security
