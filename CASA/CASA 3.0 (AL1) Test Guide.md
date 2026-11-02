@@ -16,6 +16,8 @@ Version 3.0 - 2026-10-16
 | TLS assessment | Machine-readable (JSON) TLS scanner output | — |
 | OAuth / HTTP flow capture | Redacted HAR 1.2 | W3C HAR |
 
+**Test set.** Every "all", "every" or "any" in a test case ranges over the recorded test set of the surface — the operations in the supplied interface contracts, the authenticated crawl inventory and the requests observed from the declared clients — as defined in the Specification's scoping guidance. The test set is part of the evidence bundle.
+
 **Reference tooling.** Tools named in a test procedure are reference implementations. A lab may substitute any tool whose output is expressible in the required format and that exercises the same pass and fail signals. A satisfied fail signal from a scripted harness is recorded as a SARIF `error` finding.
 
 **Finding severity.** Static-analysis rule sets named in this guide are configured so that the targeted defect is reported at SARIF `error` level. PASS and FAIL are decided on `error`-level findings that survive the triage step of the procedure; findings at `warning` or `note` level are recorded as informational and do not affect the verdict.
@@ -551,7 +553,7 @@ External Reference: *ADA-defined*; OWASP WSTG-CRYP-01 · Applicable profile: `We
 
 ## 4. Server Configuration & Response Headers
 
-**Lab execution.** DAST crawl (e.g. ZAP), unauthenticated and authenticated, with header and body inspection on every response; targeted `curl` probes for debug endpoints, CORS origin reflection and forced error responses; `csp-evaluator` over the policy of every HTML response; a differential crawl that replays authenticated routes without credentials, plus admin-panel wordlists; and `dnsx` and `nuclei` takeover checks over every declared host and its CNAME chain.
+**Lab execution.** DAST over the recorded test set — the authenticated crawl plus every operation in the supplied interface contracts (OpenAPI, GraphQL, AsyncAPI, gRPC) — unauthenticated and authenticated, with header and body inspection on every response; targeted `curl` probes for debug endpoints, CORS origin reflection and forced error responses; `csp-evaluator` over the policy of every HTML response; a differential replay of authenticated routes without credentials, plus admin-panel wordlists; and `dnsx` and `nuclei` takeover checks over every declared host and its CNAME chain.
 
 ### CFG-01 Directory browsing disabled; file and directory enumeration not possible
 
@@ -712,7 +714,7 @@ External Reference: ASVS V14.5.3 (L1); CWE-942 · Applicable profile: `Web_Appli
 **Test Procedure**
 
 1. Send requests to every endpoint with a foreign origin, a null origin and an origin that only shares a suffix with the application's domain, and inspect the CORS response headers.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, Schemathesis.
 
 **Verification**
 
@@ -733,7 +735,7 @@ External Reference: ASVS V7.4.1 (L1); CWE-209 · Applicable profile: `Web_Applic
 **Test Procedure**
 
 1. Send malformed types, oversize bodies and inputs that force server errors across the crawl, and inspect the error responses returned.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, Schemathesis.
 
 **Verification**
 
@@ -958,7 +960,7 @@ External Reference: ASVS V8.2.3 (L1) · Applicable profile: `Web_Application`
 
 ## 6. Authorization & Injection
 
-**Lab execution.** Authenticated DAST — a ZAP or Burp active scan plus a DOM XSS scanner, with an out-of-band script-execution callback; `sqlmap` and a NoSQL operator-injection payload set; a command-injection payload set with out-of-band DNS and HTTP callbacks; traversal and inclusion payload sets; open-redirect payloads and duplicated-parameter probes; and scripted replay of every state-changing request with its anti-CSRF token removed, replaced or taken from another session. The assessor reproduces any cross-site scripting candidate the scanner cannot confirm.
+**Lab execution.** Authenticated DAST over the recorded test set, with payloads generated from the supplied interface contracts so that each probe satisfies the declared type and format constraints before the injection vector is applied (a validation-layer rejection is not a pass signal) — a ZAP or Burp active scan plus a contract-aware fuzzer such as Schemathesis, a DOM XSS scanner with an out-of-band script-execution callback, `sqlmap` and a NoSQL operator-injection payload set, a command-injection payload set with out-of-band DNS and HTTP callbacks, traversal and inclusion payload sets, open-redirect payloads and duplicated-parameter probes, and scripted replay of every state-changing request with its anti-CSRF token removed, replaced or taken from another session. GraphQL, WebSocket and gRPC operations are exercised with protocol-appropriate tooling (for example GraphQL introspection and query fuzzers, the proxy's WebSocket history, `grpcurl` with proto-driven payloads); where no dynamic tooling exists for a protocol, the control is decided from source code or a build artifact where the control permits it, otherwise recorded `Not_Covered`. The assessor reproduces any cross-site scripting candidate the scanner cannot confirm.
 
 ### AZI-01 Strong anti-CSRF mechanism on all state-changing authenticated functionality
 
@@ -993,7 +995,7 @@ External Reference: ASVS V5.3.3 (L1); CWE-79 · Applicable profile: `Web_Applica
 **Test Procedure**
 
 1. Run an authenticated active cross-site-scripting scan and a DOM-based scan across the crawl, with an out-of-band callback that confirms script execution.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, DOM Invader.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, DOM Invader, Schemathesis.
 3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
@@ -1015,7 +1017,7 @@ External Reference: ASVS V5.3.4 (L1); CWE-89, CWE-943 · Applicable profile: `We
 **Test Procedure**
 
 1. Run an authenticated SQL-injection scan over the crawl, and a NoSQL operator-injection payload set over every parameter.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): sqlmap, ZAP, Burp Suite.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): sqlmap, ZAP, Burp Suite, Schemathesis.
 
 **Verification**
 
@@ -1036,7 +1038,7 @@ External Reference: ASVS V5.3.8 (L1); CWE-78 · Applicable profile: `Web_Applica
 **Test Procedure**
 
 1. Send a command-injection payload set with out-of-band DNS and HTTP callbacks to every parameter.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, interactsh.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, interactsh, Schemathesis.
 
 **Verification**
 
@@ -1057,7 +1059,7 @@ External Reference: ASVS V5.3.9, V12.3.2, V12.3.3 (L1); CWE-22, CWE-98 · Applic
 **Test Procedure**
 
 1. Send a traversal and file-inclusion payload set (encoded, double-encoded, null-byte, absolute and UNC forms) to every parameter that influences a path.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): ZAP, Burp Suite, Schemathesis.
 
 **Verification**
 

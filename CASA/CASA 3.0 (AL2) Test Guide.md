@@ -9,7 +9,7 @@ This guide defines the evidence, test procedure and verification criteria for th
 
 # Access Required at AL2
 
-In addition to AL1 access: at least two provisioned tenants or organisations with at least two roles each (AZI-08, AZI-09, AZI-10); accounts the lab may lock, reset and re-authenticate (AUT-09, AUT-10, AUT-11); an administrative account for each declared administrative interface (AUT-12); source code for SAST-14 and a reproducible build where the control requires it.
+In addition to AL1 access: at least two provisioned tenants or organisations with at least two roles each (AZI-08, AZI-09, AZI-10); accounts the lab may lock, reset and re-authenticate (AUT-09, AUT-10, AUT-11); an administrative account for each declared administrative interface (AUT-12); the interface contracts and seed-data manifest described in the Specification's scoping guidance; source code for SAST-14 and a reproducible build where the control requires it.
 
 # Licensing
 
@@ -167,7 +167,7 @@ External Reference: ASVS V4.2.1 (L1); OWASP API1:2023; CWE-639 · Applicable pro
 **Test Procedure**
 
 1. Using two provisioned tenants, create objects with each account during the crawl and record their identifiers. Replay every identifier of an object created by an account in tenant A from a tenant B session, from a second account of the same role in tenant A, and from a lower-role account in tenant A.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, Autorize.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, Autorize, Schemathesis.
 3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
@@ -189,7 +189,7 @@ External Reference: ASVS V4.1.3 (L1); OWASP API5:2023; CWE-269 · Applicable pro
 **Test Procedure**
 
 1. Build a role matrix from the provisioned roles and accounts, exercise every function from every role, and invoke administrator-only routes directly from a low-privilege session.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, Autorize.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): Burp Suite, Autorize, Schemathesis.
 3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**
@@ -255,7 +255,7 @@ External Reference: ASVS V5.2.5, V5.3.10, V5.5.2 (L1); CWE-1336, CWE-611 · Appl
 **Test Procedure**
 
 1. Craft template-injection, XPath and XML payloads, including external-entity sets, for every parameter that reaches a template or XML parser.
-2. Reference tooling (for reference only; any tool producing the evidence format above may be used): tplmap, Burp Suite.
+2. Reference tooling (for reference only; any tool producing the evidence format above may be used): tplmap, Burp Suite, Schemathesis, graphql-cop.
 3. Lab adjudication of the tool output decides the verdict.
 
 **Verification**

@@ -64,12 +64,14 @@ At AL1 and AL2, developer-supplied scan output, developer-run scanners and devel
 | --- | --- | --- |
 | `Web_Application` | The browser-facing web application and every HTTP API behind it, including APIs that serve mobile and native clients | 1–8 |
 | `Mobile` | Android and iOS clients | 1, 2, 7 + the MASA AL1 Specification + backend via `Web_Application` |
-| `Native` | Desktop, console, IoT/device clients and browser extensions | 1, 2, 7 + the MASA AL1 requirements marked `Native` |
+| `Native` | Desktop, console, IoT/device clients and browser extensions | 1, 2, 7 + the MASA AL1 requirements marked `Native` + backend via `Web_Application` |
 | `All` | Every assessed surface | — |
 
-Certification is **per surface**: the record states each assessed surface with its verdict (for example `Web_Application: PASS · Mobile (Android): PASS · Mobile (iOS): Not_Covered`) rather than implying whole-product coverage.
+A `Mobile` or `Native` surface with a backend is assessed as two surfaces: the client under its own profile and every HTTP API it calls under `Web_Application`. Certification is **per surface**: the record states each assessed surface with its verdict (for example `Web_Application: PASS · Mobile (Android): PASS · Mobile (iOS): Not_Covered`) rather than implying whole-product coverage.
 
 **Authenticated testing** is mandatory for applications requesting sensitive or restricted data; Domains 5 and 6 cannot be assessed unauthenticated. Accepted access mechanisms, in preference order: (1) lab self-provisioned account through public signup; (2) developer-provisioned sandbox accounts, at least two roles and two accounts per role; (3) scoped, time-boxed tokens (≤ 14 days); (4) lab-recorded login macro for SSO/MFA-gated flows. Bot protections may be relaxed for lab source IPs only — never globally.
+
+**Interface contracts and test set.** A declared `Web_Application` surface is declared together with the machine-readable contracts of every API it exposes that a crawler cannot enumerate — OpenAPI 3.x for REST and tRPC, the GraphQL schema with sample operations, AsyncAPI for WebSocket channels, `.proto` files for gRPC — and a seed-data manifest (JSON) of identifiers that exist in the test tenant, so that tooling can resolve path and body parameters. A server-rendered application whose surface a crawler can enumerate needs no contract. The **test set** of a surface is the union of the operations in its contracts, the authenticated crawl inventory and the requests observed from the declared clients through the lab proxy; it is recorded in the evidence bundle, and every "all" or "every" in a requirement or test case ranges over it. An API the lab observes in client traffic that is absent from the supplied contracts is a withheld artifact: the affected controls are recorded `FAIL` until the contract is supplied and the tests re-run.
 
 **Third-party infrastructure.** Third-party infrastructure used by the target application is out of scope for this specification.
 
