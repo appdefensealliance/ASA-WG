@@ -12,7 +12,7 @@ import subprocess
 
 BASELINE = "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65"
 BASELINE_MAP_SHA = "01f8e9af9ddd06fa081978ce13005caee79effebadef6eaf9ea7bd9b27e1ce7b"
-ALLOWED = {"1.3.1", "2.1.1", "2.1.2", "2.2.2", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
+ALLOWED = {"1.2.1", "1.3.1", "2.1.1", "2.1.2", "2.2.2", "3.3.1", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
 MANIFEST = "AI Agent Policy Alignment.json"
 
 
@@ -67,7 +67,7 @@ def alignment_errors(spec, guide, manifest, contract=None):
         return ["Agent audit IDs/order must remain the same 37 controls"]
     if baseline_digest(manifest) != BASELINE_MAP_SHA:
         errors.append("Pinned pre-amendment baseline maps changed")
-    if set(manifest.get("allowed_audit_changes", [])) != ALLOWED:
+    if len(manifest.get("allowed_audit_changes", [])) != len(ALLOWED) or set(manifest.get("allowed_audit_changes", [])) != ALLOWED:
         errors.append("Normative change inventory differs from the explicit amendment")
     for key in sr:
         if key not in ALLOWED:
@@ -79,8 +79,10 @@ def alignment_errors(spec, guide, manifest, contract=None):
             if compact(table_assertions(sr[key])) != compact(verification(gr[key])):
                 errors.append(key + ": Specification/Guide acceptance assertions differ")
     required = {
+        "1.2.1": ["diagnostic logs, error messages and shared operational caches", "separately declared and permitted user-scoped protected memory/cache", "does not establish that exception", "no-secret-logging/output protections", "other contexts"],
+        "3.3.1": ["Sensitive Actions and explicit Tool/product-policy confirmation requirements", "Privilege level alone shall not require", "Every plugin action shall be validated", "All plugin invocations, including the arguments"],
         "1.3.1": ["shall never be replayed as instructions", "injected directive shall not survive", "authorized user/context"],
-        "2.1.1": ["shall refuse harmful or out-of-scope actions", "shall use only permitted tools", "shall enforce step, time, token, and cost limits", "explicit authorization"],
+        "2.1.1": ["shall refuse harmful or out-of-scope actions", "shall use only permitted tools", "shall enforce step, time, token, and cost limits", "valid user/resource authority"],
         "2.1.2": ["Agent-managed Tool execution", "not a claim about the independent server's filesystem", "Agent-controlled runtime", "Logged Disposition"],
         "2.2.2": ["fresh per-action user consent", "Explicit Tool consent requests", "Before dispatch", "one execution", "bounded validity period", "expired, consumed, mismatched, replayed"],
         "4.1.1": ["Enforce Rate Limiting", "Enforce Input Size Limits", "hard limits and pre-limit usage alerts", "restrict/refuse the operation", "a request-count limit alone does not establish the bound"],
@@ -93,7 +95,7 @@ def alignment_errors(spec, guide, manifest, contract=None):
             if clause not in gr[key]:
                 errors.append(key + ": missing policy guard: " + clause)
     for text, label in [(spec, "Specification"), (guide, "Guide")]:
-        for clause in ["Remote Tools MUST be treated as untrusted dependencies", "A Tool certificate is not a prerequisite for Agent certification"]:
+        for clause in ["Remote Tools MUST be treated as untrusted dependencies", "A Tool certificate is not a prerequisite for Agent certification", "first-party remote execution services and runtime subprocessors", "remote HTTP/MCP transport does not remove those duties"]:
             if clause not in text:
                 errors.append(label + ": missing independent-Agent boundary")
         if "unless the separate optional Agent relaxation" in text or "Only if optional Agent relaxations" in text:

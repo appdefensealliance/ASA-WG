@@ -71,7 +71,7 @@ follow the conditional Agent rule in C4; they are not an unconditional prerequis
 
 ## Residual assurance and retained Agent obligations
 
-Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. No Agent file is edited here.
+Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. The paired candidate records the specific Agent source amendments and their retained controls in the policy-alignment manifest.
 
 ## Canonical action and assessment boundaries
 
@@ -80,6 +80,10 @@ Baseline conformance demonstrates concrete required properties, not universal sa
 Sensitivity and authorization are separate decisions. Classifying an out-of-task operation as sensitive does not authorize it: establish the new authorized scope before execution and apply the required per-action confirmation. Routine, reversible actions within an already authorized task do not require fresh confirmation solely because a Tool has powerful capabilities. Explicit Tool confirmation requests and applicable product-policy requirements remain binding. Agent confirmation remains bound to the user, connector account, operation, target/recipient, material parameters, validity and one execution; bounded batches must enumerate every action and its material details.
 
 Agents are assessed and certified independently of Tools. Remote Tools are untrusted dependencies; a Tool certificate is not a prerequisite for Agent certification and does not make Tool content authoritative. Agent assessment establishes its own admission, authority, disclosure, consent, managed-execution containment and failure-handling controls against hostile or malfunctioning Tools. It does not certify an independent provider's runtime or honest downstream execution. Applicable containment remains mandatory where the Agent or orchestrator controls Tool execution, locally or hosted. Stronger applicable local Android and underlying-profile requirements remain unchanged.
+
+**Managed execution runtime:** Tool code executed under the Agent Developer's or orchestrator's deployment/permission control, including a first-party remote execution service or execution delegated to a runtime subprocessor for the Agent. Hosting the runtime behind MCP/HTTP does not make it independent; record who can deploy the code and enforce its filesystem, process, privilege and network permissions.
+
+**Independent remote Tool:** A separate service outside that Agent execution-management authority. It remains an untrusted integration dependency; ownership, DNS, transport or a `managed=false` label alone cannot establish the boundary. A business API is not an Agent-managed runtime merely because the Agent calls it, while an Agent's own outsourced code runner cannot be excluded by calling it a remote Tool.
 
 ## C1 Verifiable Identity Propagation
 

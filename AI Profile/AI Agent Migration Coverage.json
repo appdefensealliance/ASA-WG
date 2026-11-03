@@ -66,7 +66,7 @@
         "Document Review",
         "Attestation"
       ],
-      "verification": "* **Restrict Inference Outputs:** The model and agent shall prevent exposure of sensitive, personally identifiable, or proprietary information from other contexts.\n* **Mask Sensitive Data in Logs:** The model and agent shall automatically mask, anonymize, or omit sensitive data from logs, caches, and error messages.\n* **Secure All Runtime APIs:** The model and agent shall ensure APIs return generic error messages and do not leak internal system state or data from other users."
+      "verification": "* **Restrict Inference Outputs:** The model and agent shall prevent exposure of sensitive, personally identifiable, or proprietary information from other contexts.\n* **Mask Sensitive Data in Logs:** The Agent and model shall mask, anonymize or omit ordinary private task data in diagnostic logs, error messages and shared operational caches. A separately declared and permitted user-scoped protected memory/cache may retain necessary task data only under the authorization, purpose, recipient, isolation, retention and deletion controls in §§1.3.1, 5.1.2 and 5.2.1; naming a diagnostic log or shared cache 'memory' does not establish that exception. Operational credentials and internal security secrets retain their strict handling and no-secret-logging/output protections; dedicated authorized credential stores remain subject to the applicable secure secret-storage controls, not an ordinary-private-data retention exception.\n* **Secure All Runtime APIs:** The model and agent shall ensure APIs return generic error messages and do not leak internal system state or data from other users."
     },
     {
       "id": "1.3.1",
@@ -94,7 +94,7 @@
         "Document Review",
         "Attestation"
       ],
-      "verification": "* The agent shall refuse harmful or out-of-scope actions.\n* The agent shall obey termination commands instantly.\n* The agent shall use only permitted tools relevant to the user query.\n* The agent shall avoid deception or unauthorized goal generation.\n* The agent shall not act beyond user scope or input.\n* The agent shall enforce step, time, token, and cost limits.\n* The Agent shall contain Agent-managed High Risk Tool execution in an appropriately restricted runtime, locally or hosted; independently operated remote Tools are untrusted dependencies assessed at the Agent integration boundary.\n* The agent shall require explicit authorization for sensitive operations.\n* The agent shall isolate multi-agent channels and shared memories."
+      "verification": "* The agent shall refuse harmful or out-of-scope actions.\n* The agent shall obey termination commands instantly.\n* The agent shall use only permitted tools relevant to the user query.\n* The agent shall avoid deception or unauthorized goal generation.\n* The agent shall not act beyond user scope or input.\n* The agent shall enforce step, time, token, and cost limits.\n* The Agent shall contain Agent-managed High Risk Tool execution in an appropriately restricted runtime, locally or hosted; independently operated remote Tools are untrusted dependencies assessed at the Agent integration boundary.\n* The Agent shall require valid user/resource authority for every protected operation and the required fresh confirmation for Sensitive Actions or explicit Tool/product-policy requirements.\n* The agent shall isolate multi-agent channels and shared memories."
     },
     {
       "id": "2.1.2",
@@ -235,7 +235,7 @@
         "Document Review",
         "Attestation"
       ],
-      "verification": "* **Enforce Strict Separation:** The agent or orchestrator shall treat each plugin call as an independent, isolated transaction. The output of one plugin shall never be interpreted as a command to execute another.\n* **Validate and Restrict Plugin Actions:** Every plugin action shall be validated against the user's explicit permissions. High-privilege actions shall require a separate, explicit confirmation step (e.g., a \"Do you want to delete this user?\" prompt).\n* **Prevent Cross-Plugin Interactions:** The system shall not allow one plugin to call another directly. All interactions shall be mediated by the central AI agent, which is responsible for enforcing security policies.\n* **Provide Clear Audit Logs:** All plugin invocations, including the arguments and the user who initiated the request, must be logged for security auditing."
+      "verification": "* **Enforce Strict Separation:** The agent or orchestrator shall treat each plugin call as an independent, isolated transaction. The output of one plugin shall never be interpreted as a command to execute another.\n* **Validate and Restrict Plugin Actions:** Every plugin action shall be validated against the user's explicit permissions. Sensitive Actions and explicit Tool/product-policy confirmation requirements shall require a separate, explicit confirmation step. Privilege level alone shall not require another prompt for a routine, reversible action within an already authorized task.\n* **Prevent Cross-Plugin Interactions:** The system shall not allow one plugin to call another directly. All interactions shall be mediated by the central AI agent, which is responsible for enforcing security policies.\n* **Provide Clear Audit Logs:** All plugin invocations, including the arguments and the user who initiated the request, must be logged for security auditing."
     },
     {
       "id": "4.1.1",
@@ -434,10 +434,12 @@
       544
     ],
     "allowed_audit_changes": [
+      "1.2.1",
       "1.3.1",
       "2.1.1",
       "2.1.2",
       "2.2.2",
+      "3.3.1",
       "4.1.1",
       "5.1.1",
       "5.1.2",
