@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural checks for draft #410/#541 companions; never run an Agent.
+"""Structural checks for AI Agent alpha assessment companions; never run an Agent.
 
 Stdlib only. Implements the subset used by the supplied record schema, then
 checks inventory, declared applicability, populations and #543 dispositions.
@@ -65,6 +65,73 @@ ENFORCEMENT = {"admission", "authentication_authorization", "consent", "untruste
 QUALIFYING_ACTIVITIES = {"adaptive_attack_development", "adaptive_execution_investigation"}
 PROFILE_FOR_DEPLOYMENT = {"mobile": "MASA", "desktop": "DASA", "web": "CASA"}
 SOURCE_PIN = "4d5e4c14e9d1aecb964363424687e684e53024c5"
+PROFILE_VERSION = "0.1.0-alpha.1"
+CURRENT_STATUS_LANGUAGE = re.compile(
+    r"\bdraft\b(?=\s*(?:\d|AI\b|ASA\b|assessment\b|standard\b|profile\b|"
+    r"requirement\b|specification\b|schema\b|protocol\b|guide\b|matrix\b|policy\b|document\b|#|$))|"
+    r"\bowner[- ]aligned\b|\bnot WG adoption\b|"
+    r"\bproposed\s+(?:#\d+|§\d+|WG|SC|source|standard|profile|requirement|assessment|"
+    r"plan|record|specification|verification|clause|control|criterion|case)\b|"
+    r"\bWG(?:/SC)?(?: review)?(?: and target-release assignment)?(?: remain[s]?)? "
+    r"(?:pending|outstanding|required)\b|\bunassigned-pending-WG-review\b",
+    re.IGNORECASE,
+)
+
+
+def current_status_match(text):
+    # Names/URIs of the external schema dialect are references, not ASA status.
+    without_schema_reference = re.sub(
+        r"https://json-schema\.org/draft/2020-12/schema|(?:JSON[- ]Schema\s+)?Draft[ /-]+2020[-/]12",
+        "", text, flags=re.IGNORECASE,
+    )
+    return CURRENT_STATUS_LANGUAGE.search(without_schema_reference)
+
+
+def publication_state_errors(matrix, schema=None, examples=None, documents=None):
+    """Current operative labels only; never decide or claim governance adoption.
+
+    The parent's generated preview wrapper is intentionally left for its uniform
+    x_profile_release/banner conversion. Historical source references and the
+    external JSON-Schema draft URI are not current ASA standard labels. Action
+    'proposed parameters' is not a publication state.
+    """
+    errors = []
+    if matrix.get("status") != "operative alpha assessment applicability" or matrix.get("target_release") != PROFILE_VERSION:
+        errors.append("operative alpha publication status/version required")
+
+    def visit(value, path, key=None):
+        if key in {"x_alpha_preview", "$schema", "source_revision", "source_baseline", "reference", "original_reference", "procedure_reference"}:
+            return
+        if isinstance(value, dict):
+            for child_key, child in value.items():
+                visit(child, path + "." + child_key, child_key)
+        elif isinstance(value, list):
+            for i, child in enumerate(value):
+                visit(child, path + "[" + str(i) + "]")
+        elif isinstance(value, str) and (current_status_match(value) or value.strip().lower() == "proposed"):
+            errors.append(path + ": current draft/proposed standard status is not operative alpha text")
+
+    for name, data in (("matrix", matrix), ("schema", schema), ("examples", examples)):
+        if data is not None:
+            visit(data, name)
+            for metadata_key in ("x_alpha_preview", "x_profile_release"):
+                metadata = data.get(metadata_key)
+                if isinstance(metadata, dict) and metadata.get("certification_authority") is not False:
+                    errors.append(name + ": alpha certification authority must remain false")
+    for name, text in (documents or {}).items():
+        # Strip only the exact parent-owned generated preview block, not body text.
+        body = re.sub(
+            r"(?m)^<!-- ai-alpha-preview: [^\n]+ -->\n\*\*AI profiles[^\n]+\*\*\n\n"
+            r"This candidate's prospective requirements[^\n]+\n\n", "", text,
+        )
+        for line in body.splitlines():
+            if line.startswith("Historical source:"):
+                continue
+            if current_status_match(line):
+                errors.append(name + ": current draft/proposed standard status in companion body")
+    return errors
+
+
 ADDITIONAL_CASE_OWNERS = {
     "EV-IMAGE-01": {"Agent:1.1.1:generative_outcome"},
     "EV-AUDIO-01": {"Agent:1.1.1:generative_outcome"},
@@ -247,7 +314,7 @@ def inventory(matrix):
 
 
 def matrix_errors(matrix, guide=None, spec=None):
-    errors = []
+    errors = publication_state_errors(matrix)
     if matrix.get("matrix_version") != "0.2":
         errors.append("matrix version must be 0.2")
     catalog = matrix.get("procedure_catalog", {})
@@ -401,7 +468,7 @@ def expand_example(matrix, examples, example):
     fixture_id = example["id"] + "-fixture"
     fixture = {"id": fixture_id, "revision": "illustrative-fixture-0.1", "context_ids": [c["id"] for c in contexts],
                "source_acceptance": sorted(EXPECTED_VERIFICATIONS), "unchanged_controls": examples["unchanged_controls"],
-               "approval": {"status": "proposed", "assessor": "unassigned-qualified-lab-assessor",
+               "approval": {"status": "pending", "assessor": "unassigned-qualified-lab-assessor",
                             "rationale": "Collect and review listed production-equivalence originals before approval"}, **example["fixture"]}
     records = []
     index = inventory(matrix)
@@ -460,7 +527,7 @@ def expand_example(matrix, examples, example):
         chains.append(chain)
     return {"schema_version": "0.2", "matrix_version": matrix["matrix_version"], "status": "illustrative_plan", "plan_id": example["id"],
             "product": {"name": example["name"], "build": "synthetic-illustrative-build-v1", "configuration": example["configuration"], "responsible_actor": "Agent Developer"},
-            "ai_reference": matrix["source_baseline"] + " plus draft #410/#541 and reviewed control amendments", "target_release": matrix["target_release"],
+            "ai_reference": matrix["source_baseline"] + " plus the AI Agent alpha assessment bundle " + matrix["target_release"], "target_release": matrix["target_release"],
             "contexts": contexts, "underlying_profiles": profiles, "fixtures": [fixture], "records": records, "findings": [], "prior_findings": [],
             "campaign": {"review_kind": "initial", "status": "pending", "planned_actual_minutes": 480, "effort": [],
                          "designated_quarterly_cases": examples["designated_quarterly_cases"],
@@ -473,6 +540,8 @@ def plan_errors(plan, matrix, schema):
     if errors:
         return errors
     index = inventory(matrix)
+    if plan["target_release"] != matrix["target_release"]:
+        errors.append("assessment record must bind the operative alpha profile version")
     contexts = {c["id"]: c for c in plan["contexts"]}
     fixtures = {f["id"]: f for f in plan["fixtures"]}
     finding_errors, findings = typed_finding_errors(plan, index, contexts)
@@ -663,6 +732,8 @@ def plan_errors(plan, matrix, schema):
             if not set(contexts) <= {cid for e in counted for cid in e["context_ids"]}:
                 errors.append("adaptive model/security context allocation incomplete")
     if plan["status"] == "certification_ready":
+        if plan["target_release"] == PROFILE_VERSION:
+            errors.append("alpha assessment conformance does not authorize ADA certificate issuance")
         if campaign["status"] != "completed" or any(p["disposition"] != "satisfied" for p in plan["underlying_profiles"]):
             errors.append("combined AL2/campaign gate unresolved")
         if any(r["strength"] == "MUST" and r["applicability"] != "justified_non_applicability" and r["result"] != "satisfied" for r in plan["records"]):
@@ -684,7 +755,10 @@ def main(argv=None):
         matrix = read_json(AI / "AI Agent Assessment Applicability.json")
         schema = read_json(AI / "AI Agent Assessment Plan.schema.json")
         examples = read_json(AI / "AI Agent Assessment Examples.json")
-        errors = matrix_errors(matrix, (AI / "AI Agent Test Guide.md").read_text(), (AI / "AI Agent Specification.md").read_text())
+        documents = {name: (AI / name).read_text() for name in (
+            "AI Agent Assessment Protocol.md", "AI Agent Assessment Applicability.md", "AI Agent Assessment Plans.md")}
+        errors = publication_state_errors(matrix, schema, examples, documents)
+        errors += matrix_errors(matrix, (AI / "AI Agent Test Guide.md").read_text(), (AI / "AI Agent Specification.md").read_text())
         if errors:
             raise ValueError("\n".join(errors))
         if examples["matrix_version"] != matrix["matrix_version"] or set(examples["planned_artifacts"]) != set(matrix["evidence_routes"]):

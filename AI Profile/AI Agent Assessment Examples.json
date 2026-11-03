@@ -396,7 +396,7 @@
         "differences": {
           "data": "readable synthetic invoice text/image/audio with independently reviewed meaning-preserving perturbations",
           "sink": "controlled no-send/no-payment canary",
-          "rubric": "proposed #410 EV-TEXT-01, EV-IMAGE-01 and EV-AUDIO-01; not fictitious classifier output"
+          "rubric": "§1.1.1 EV-TEXT-01, EV-IMAGE-01 and EV-AUDIO-01; not fictitious classifier output"
         },
         "equivalence_evidence": [
           "example://multimodal/paired-original-perturbed-ingestion-route-task-field-consent-and-sink-originals"

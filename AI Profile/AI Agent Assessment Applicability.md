@@ -5,7 +5,7 @@ Version 0.1.0-alpha.1 — 2026-11-03
 
 This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
-**Draft 0.2 — 2026-11-03; proposal for #541, not WG adoption.** Applies only with the [protocol](AI%20Agent%20Assessment%20Protocol.md) and reviewed source amendments. The [JSON matrix](AI%20Agent%20Assessment%20Applicability.json) inventories all **37 Agent audit IDs**, with stable companion verification selectors, concrete cases/outcomes and conditional evidence routes. Selectors identify the Guide's acceptance assertions; they are not additional audit IDs or an alternative evidence ontology. Current source text remains authoritative until amended.
+**AI Agent assessment applicability — 0.1.0-alpha.1.** Apply this companion with the [protocol](AI%20Agent%20Assessment%20Protocol.md), Specification and Guide. The [JSON matrix](AI%20Agent%20Assessment%20Applicability.json) inventories all **37 Agent audit IDs**, with stable companion verification selectors, concrete cases/outcomes and conditional evidence routes. Selectors identify the Guide's acceptance assertions; they are not additional audit IDs or an alternative evidence ontology. The versioned source bundle governs acceptance and evidence.
 
 ## 1. Deriving an assessment plan
 
@@ -47,7 +47,7 @@ Approved fixture classes (approval is required per product/record, not granted g
 * **Android AppFunctions:** assessor-controlled function provider using the production package/caller admission and OS permission path; record Android/API and AppFunctions version, package/signing/caller identity, function schema, user/profile boundary and OS-mediated permission/effect observations. No invented MCP registration, elicitation or HTTP OAuth requirement. Retain independent consent, authorization, lifecycle, data isolation and applicable Android platform controls.
 * **Desktop local:** controlled executable/plugin in the actual launcher and Agent-owned sandbox, with allowed/denied synthetic files, process actions and canary destinations. DASA applies; local identity and containment cannot be inferred from a safe UI sentence.
 * **Fixed private REST:** provider-approved controlled endpoint/tenant, replay/synthetic response channel or test record in the real integration, preserving admission/TLS/credential source and all gates. A fixed integration need not add dynamic MCP discovery. Test immutable API/schema provenance and wrong/revoked endpoints through its actual admission mechanism; missing ability to observe a required property remains unresolved.
-* **Generative/multimodal:** preserve the actual route, modality ingestion, prompt/security settings and downstream dispatch. §1.1.1 task outcomes use the **proposed source amendment**, not a fictional classifier fixture or an exact-prose comparator. Record meaning-preserving perturbations and rubric approval.
+* **Generative/multimodal:** preserve the actual route, modality ingestion, prompt/security settings and downstream dispatch. §1.1.1 task outcomes use the **task-appropriate evasion criterion**, not a fictional classifier fixture or an exact-prose comparator. Record meaning-preserving perturbations and rubric approval.
 * **Hybrid:** combine component plans and test the real crossing boundaries: local→remote credential/identity propagation, untrusted content→local action, shared user/state isolation, lifecycle termination, aggregate bounds and observability. Do not infer cross-boundary protection from isolated component passes.
 
 ## 4. Android Agent planning versus Tool requirements
@@ -65,4 +65,4 @@ python3 scripts/agent_assessment_policy_validate.py
 python3 -m unittest discover -s scripts/tests -p test_agent_assessment_policy.py
 ```
 
-No real Agent is run and no external service is mutated by these checks. This candidate pairs the matrix with the final source amendments and Spec/Guide links, migration records and CI entry points. Review the assertion mappings and Android planning dispositions and assign the target release through the WG process before normative adoption; passing structural validation is not product security evidence.
+No real Agent is run and no external service is mutated by these checks. The matrix is paired with the versioned Spec/Guide requirements, assessment records and validation entry points. Apply its assertion mappings and Android dispositions to the assessed configuration. Passing structural validation is not product security evidence, a governance decision or authority to issue an ADA certificate.

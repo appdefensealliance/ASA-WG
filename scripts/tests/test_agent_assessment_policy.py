@@ -213,7 +213,7 @@ class AssessmentPolicyTests(unittest.TestCase):
         p["fixtures"][0]["unchanged_controls"].remove("authentication_authorization")
         self.assertError(self.errors(p), "unchanged production enforcement")
         p, _ = self.observed()
-        p["fixtures"][0]["approval"]["status"] = "proposed"
+        p["fixtures"][0]["approval"]["status"] = "pending"
         self.assertError(self.errors(p), "equivalent fixture not approved")
 
     def test_fixture_cannot_change_assertion_or_strength(self):
@@ -545,6 +545,102 @@ class AssessmentPolicyTests(unittest.TestCase):
         rejected=cli("--plan","-",stdin=json.dumps(p))
         self.assertEqual(1,rejected.returncode)
         self.assertIn("target classification drift",rejected.stderr)
+
+    def test_current_alpha_publication_labels_reject_draft_and_proposed_status(self):
+        docs={name:(AI/name).read_text() for name in (
+            "AI Agent Assessment Protocol.md","AI Agent Assessment Applicability.md","AI Agent Assessment Plans.md")}
+        self.assertEqual([],policy.publication_state_errors(self.matrix,self.schema,self.examples,docs))
+        self.assertEqual("0.1.0-alpha.1",self.matrix["target_release"])
+        for status in ("owner-aligned draft; not WG adoption","proposed WG alpha","WG/SC released"):
+            changed=copy.deepcopy(self.matrix)
+            changed["status"]=status
+            self.assertError(policy.publication_state_errors(changed),"operative alpha publication status/version")
+        changed=copy.deepcopy(self.matrix)
+        changed["audits"][0]["verifications"][0]["source"]="Proposed #410 source amendment"
+        self.assertError(policy.publication_state_errors(changed),"current draft/proposed standard status")
+        for name in docs:
+            changed=dict(docs)
+            changed[name]+="\n**Draft 0.1 — proposed assessment standard**\n"
+            self.assertError(policy.publication_state_errors(self.matrix,documents=changed),"companion body")
+        changed=copy.deepcopy(self.schema)
+        changed["title"]="Draft AI Agent assessment schema"
+        self.assertError(policy.publication_state_errors(self.matrix,changed),"current draft/proposed standard status")
+
+    def test_schema_dialect_history_and_proposed_action_parameters_are_preserved(self):
+        self.assertEqual("https://json-schema.org/draft/2020-12/schema",self.schema["$schema"])
+        legitimate={"references":"Historical source: earlier draft requirements\n"
+                    "JSON-Schema Draft 2020-12: https://json-schema.org/draft/2020-12/schema\n"
+                    "Observe proposed parameters/consent before action dispatch.\n"
+                    "Draft an email within the authorized task; this is an action, not a standard status.\n"}
+        self.assertEqual([],policy.publication_state_errors(self.matrix,self.schema,self.examples,legitimate))
+        protocol=(AI/"AI Agent Assessment Protocol.md").read_text()
+        self.assertIn("proposed parameters/consent",protocol)
+        changed=copy.deepcopy(self.matrix)
+        changed["procedure_catalog"]["reference"]="Historical draft source at an immutable revision"
+        self.assertEqual([],policy.publication_state_errors(changed))
+
+    def test_pending_fixture_is_never_an_approved_or_passing_fixture(self):
+        for p in self.plans.values():
+            self.assertTrue(all(f["approval"]["status"]=="pending" for f in p["fixtures"]))
+        p,r=self.observed()
+        p["fixtures"][0]["approval"]["status"]="pending"
+        self.assertError(self.errors(p),"equivalent fixture not approved")
+        p["fixtures"][0]["approval"]["status"]="proposed"
+        self.assertError(self.errors(p),"invalid enum value")
+        p["fixtures"][0]["approval"]["status"]="approved"
+        self.assertEqual([],self.errors(p),"synthetic structural case only; no real approval/security claim")
+
+    def test_alpha_certification_authority_remains_false(self):
+        for data in (self.matrix,self.schema,self.examples):
+            metadata=data.get("x_profile_release",data.get("x_alpha_preview"))
+            self.assertIs(False,metadata["certification_authority"])
+        changed=copy.deepcopy(self.matrix)
+        metadata_key="x_profile_release" if "x_profile_release" in changed else "x_alpha_preview"
+        changed[metadata_key]["certification_authority"]=True
+        self.assertError(policy.publication_state_errors(changed),"certification authority must remain false")
+        p=copy.deepcopy(self.plans["desktop-local"])
+        p["status"]="certification_ready"
+        self.assertError(self.errors(p),"alpha assessment conformance does not authorize")
+        p["target_release"]="invented-release"
+        self.assertError(self.errors(p),"bind the operative alpha profile version")
+
+    def test_publication_cleanup_preserves_policy_source_pin_and_parent_preview(self):
+        base="d961a5d004fe3b8894b792a0f80e7723efc50ef2"
+        def at_base(name):
+            try:
+                return json.loads(subprocess.check_output(["git","show",base+":AI Profile/"+name],cwd=ROOT,text=True,stderr=subprocess.DEVNULL))
+            except subprocess.CalledProcessError:
+                self.skipTest("publication base unavailable in this checkout")
+        old=at_base("AI Agent Assessment Applicability.json")
+        self.assertEqual(policy.SOURCE_PIN,self.matrix["source_baseline"],"pin stays bound to the parent's reviewed freeze")
+        old_catalog=copy.deepcopy(old["procedure_catalog"])
+        # A later parent-owned source freeze may replace only these references.
+        old_catalog["source_revision"]=self.matrix["procedure_catalog"]["source_revision"]
+        old_catalog["reference"]=self.matrix["procedure_catalog"]["reference"]
+        self.assertEqual(old_catalog,self.matrix["procedure_catalog"])
+        self.assertEqual(old["evidence_routes"],self.matrix["evidence_routes"])
+        if "x_alpha_preview" in self.matrix:
+            self.assertEqual(old["x_alpha_preview"],self.matrix["x_alpha_preview"],"parent converts preview metadata")
+        else:
+            self.assertIs(False,self.matrix["x_profile_release"]["certification_authority"])
+        for before,after in zip(old["audits"],self.matrix["audits"]):
+            for a,b in zip(before["verifications"],after["verifications"]):
+                self.assertEqual({k:v for k,v in a.items() if k!="source"},{k:v for k,v in b.items() if k!="source"},"case/assertion/strength/applicability/evidence unchanged")
+        old_schema=at_base("AI Agent Assessment Plan.schema.json")
+        old_schema["title"]=self.schema["title"]
+        old_schema["$defs"]["fixture"]["properties"]["approval"]["properties"]["status"]["enum"]=["pending","approved","rejected"]
+        if "x_profile_release" in self.schema:
+            old_schema.pop("x_alpha_preview",None)
+            old_schema["x_profile_release"]=self.schema["x_profile_release"]
+        self.assertEqual(old_schema,self.schema,"schema changes limited to publication metadata/title and pending fixture label")
+        old_examples=at_base("AI Agent Assessment Examples.json")
+        if "x_profile_release" in self.examples:
+            old_examples.pop("x_alpha_preview",None)
+            old_examples["x_profile_release"]=self.examples["x_profile_release"]
+        for before,after in zip(old_examples["examples"],self.examples["examples"]):
+            if "rubric" in before["fixture"]["differences"]:
+                before["fixture"]["differences"]["rubric"]=after["fixture"]["differences"]["rubric"]
+        self.assertEqual(old_examples,self.examples,"synthetic limitations, action proposals and fixture paths unchanged")
 
     def test_specific_cases_and_named_artifact_conditions_not_generic(self):
         for _, v in policy.inventory(self.matrix).values():
