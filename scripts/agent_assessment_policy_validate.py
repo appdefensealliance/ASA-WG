@@ -64,7 +64,7 @@ ENFORCEMENT = {"admission", "authentication_authorization", "consent", "untruste
                "isolation", "lifecycle", "logging", "outcome_reconciliation"}
 QUALIFYING_ACTIVITIES = {"adaptive_attack_development", "adaptive_execution_investigation"}
 PROFILE_FOR_DEPLOYMENT = {"mobile": "MASA", "desktop": "DASA", "web": "CASA"}
-SOURCE_PIN = "6f9c9f83eaab2a573db1b9c5b5dee05458f56720"
+SOURCE_PIN = "4d5e4c14e9d1aecb964363424687e684e53024c5"
 ADDITIONAL_CASE_OWNERS = {
     "EV-IMAGE-01": {"Agent:1.1.1:generative_outcome"},
     "EV-AUDIO-01": {"Agent:1.1.1:generative_outcome"},
