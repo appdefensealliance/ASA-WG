@@ -1,8 +1,9 @@
-"""Check evidence amendments without changing the existing Agent acceptance bar.
+"""Check scoped normative amendments and retained evidence invariants.
 
-These document regressions do not assess a product. Acceptance snapshots start
-from PR #537 and include the explicitly recorded pending PR #528 migration;
-changing them requires an explicit normative amendment, not an evidence-only update.
+The explicit per-control baseline manifest pins the pre-amendment PR #537/#543
+text. Only the named owner-aligned amendments may change it; every other
+acceptance block and the applicable evidence/authority gates remain protected.
+These are document regressions, not product assessment results.
 Run: python3 -m unittest discover -s scripts/tests -p 'test_agent_*.py'
 """
 
@@ -16,8 +17,11 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 AI = ROOT / "AI Profile"
-GUIDE_ACCEPTANCE_SHA256 = "bbe877fe75e5dfdc3ac8ead9f489defe21a691ba4c3f0f6b6e2752205fc9201b"
-SPEC_CONTROLS_SHA256 = "3a70e2c16df10e24f98d52c63bce2bc854fa87b44e5c9983cefe5efd5befdf87"
+import sys
+sys.path.insert(0, str(ROOT / "scripts"))
+from agent_policy_alignment import alignment_errors
+# The per-control policy manifest pins the pre-amendment baseline and explicitly
+# includes the separately recorded pending revocation migration.
 CONDITIONAL_CONTROLS = {
     "1.2.1", "1.3.1", "1.3.2", "2.1.1", "2.1.2", "2.1.3", "2.2.2",
     "2.3.2", "3.1.2", "3.3.1", "5.1.2", "5.2.1", "6.1.1",
@@ -80,14 +84,16 @@ class AgentEvidenceTests(unittest.TestCase):
         cls.spec = (AI / "AI Agent Specification.md").read_text()
         cls.guide = (AI / "AI Agent Test Guide.md").read_text()
         cls.coverage = json.loads((AI / "AI Agent Migration Coverage.json").read_text())
+        cls.manifest = json.loads((AI / "AI Agent Policy Alignment.json").read_text())
+        cls.contract = (AI / "AI Agent-Tool Interface Contract.md").read_text()
         cls.rows = sections(cls.guide, "test")
 
-    def test_all_acceptance_assertions_and_specification_controls_preserved(self):
+    def test_scoped_amendments_keep_other_controls_and_shared_assertions(self):
         self.assertEqual(37, len(self.rows))
-        self.assertEqual(GUIDE_ACCEPTANCE_SHA256, digest(acceptance(self.guide)))
-        spec_rows = [(cid, normalize(block)) for cid, block in sections(self.spec, "requirement").items()]
-        self.assertEqual(SPEC_CONTROLS_SHA256, digest(spec_rows))
+        self.assertEqual([], alignment_errors(self.spec, self.guide, self.manifest, self.contract))
         self.assertEqual(list(self.rows), [control["id"] for control in self.coverage["controls"]])
+        self.assertEqual("A", self.coverage["baseline_scenario"])
+        self.assertEqual("SHOULD", self.coverage["owner_decision_amendment"]["general_supported_ID_strength"])
 
     def test_migration_verification_and_evidence_types_match(self):
         recorded = [(control["id"], normalize(control["verification"])) for control in self.coverage["controls"]]
@@ -108,13 +114,15 @@ class AgentEvidenceTests(unittest.TestCase):
 
     def test_evidence_amendment_cannot_silently_relax_acceptance(self):
         for before, after in [
-            ("shall not retain sensitive information provided as input", "may retain sensitive information provided as input"),
-            ("shall provide a stable intent or idempotency identifier", "may provide a stable intent or idempotency identifier"),
+            ("shall not retain private input outside declared, separately permitted persistence", "may retain private input without separate permission"),
+            ("MUST satisfy a selected interface's required identifier or two-phase mechanism", "MAY ignore interface-required identifiers"),
             ("All plugin invocations, including the arguments", "Some plugin invocations, including the arguments"),
         ]:
             with self.subTest(before=before):
                 self.assertTrue(before in self.guide, "Missing mutation target: " + before)
-                self.assertNotEqual(GUIDE_ACCEPTANCE_SHA256, digest(acceptance(self.guide.replace(before, after))))
+                mutated = self.guide.replace(before, after)
+                self.assertNotEqual(digest(acceptance(self.guide)), digest(acceptance(mutated)))
+                self.assertTrue(alignment_errors(self.spec, mutated, self.manifest, self.contract))
 
     def test_upstream_choices_match_specification_and_transparency_is_separate(self):
         start, end = "## Agent-Level Compliance\n", "## Multi-Model Compliance Requirements\n"
@@ -168,7 +176,88 @@ class AgentEvidenceTests(unittest.TestCase):
         self.assertIn("review pending", amendment["status"])
         for flag in ("acceptance_assertions_changed", "standing_backend_or_source_access_added", "numeric_trial_minimum_added", "private_data_policy_issue_542_implemented"):
             self.assertIs(False, amendment[flag])
-        self.assertFalse(self.coverage["stable_ID_relaxations_included"])
+        self.assertTrue(self.coverage["stable_ID_relaxations_included"])
+        owner = self.coverage["owner_decision_amendment"]
+        self.assertIn("WG review pending", owner["status"])
+        self.assertEqual("SHOULD", owner["general_supported_ID_strength"])
+        self.assertEqual("MUST", owner["safe_outcome_strength"])
+        self.assertFalse(owner["tool_certificate_prerequisite"])
+
+
+    def test_each_changed_control_keeps_its_security_guard(self):
+        guards = (
+            "fresh per-action user consent",
+            "A user request alone does not establish access rights",
+            "not a blanket secret-disclosure exception",
+            "Task authorization does not by itself authorize",
+            "MUST satisfy a selected interface",
+            "MUST preserve and correctly reuse",
+            "MUST NOT replace or remint",
+            "indeterminate outcome without initiating another action",
+            "invalidate every stateful session/refresh token",
+            "MUST NOT reuse revoked",
+            "a request-count limit alone does not establish the bound",
+        )
+        for guard in guards:
+            with self.subTest(guard=guard):
+                self.assertIn(guard, self.guide)
+                # Mutate both documents so pair equality alone cannot catch it.
+                spec = self.spec.replace(guard, "REMOVED_SECURITY_GUARD")
+                guide = self.guide.replace(guard, "REMOVED_SECURITY_GUARD")
+                self.assertTrue(alignment_errors(spec, guide, self.manifest, self.contract))
+
+    def test_unrelated_control_cannot_be_weakened_in_both_documents(self):
+        before = "The ingestion path shall apply provenance tracking, deduplication, and anomaly detection"
+        self.assertIn(before, self.spec)
+        errors = alignment_errors(
+            self.spec.replace(before, "Ingestion integrity may be omitted"),
+            self.guide.replace(before, "Ingestion integrity may be omitted"),
+            self.manifest, self.contract,
+        )
+        self.assertTrue(any("unrelated" in error for error in errors))
+
+    def test_pinned_baseline_and_change_inventory_cannot_be_redefined(self):
+        changed = copy.deepcopy(self.manifest)
+        changed["baseline_spec_blocks"]["3.3.1"] = "0" * 64
+        self.assertIn("Pinned pre-amendment baseline maps changed",
+                      alignment_errors(self.spec, self.guide, changed, self.contract))
+        changed = copy.deepcopy(self.manifest)
+        changed["allowed_audit_changes"].append("3.2.2")
+        self.assertIn("Normative change inventory differs from the explicit amendment",
+                      alignment_errors(self.spec, self.guide, changed, self.contract))
+
+    def test_canonical_definition_and_unpublished_selectors_are_checked(self):
+        altered = self.contract.replace("**Sensitive Action:**", "**Undefined action:**")
+        self.assertTrue(alignment_errors(self.spec, self.guide, self.manifest, altered))
+        altered = self.guide + "\nOnly if optional Agent relaxations AG-O01/AG-O02 are selected.\n"
+        self.assertTrue(any("selector" in error for error in
+                            alignment_errors(self.spec, altered, self.manifest, self.contract)))
+
+    def test_review_conflicts_cannot_be_reintroduced(self):
+        self.assertNotIn("High-privilege actions shall require", self.spec)
+        self.assertNotIn("High-privilege actions shall require", self.guide)
+        for clause in (
+            "Privilege level alone shall not require",
+            "diagnostic logs, error messages and shared operational caches",
+            "does not establish that exception",
+            "remote HTTP/MCP transport does not remove those duties",
+        ):
+            with self.subTest(clause=clause):
+                self.assertIn(clause, self.guide)
+                self.assertTrue(alignment_errors(self.spec.replace(clause, "REMOVED"),
+                                                self.guide.replace(clause, "REMOVED"),
+                                                self.manifest, self.contract))
+        self.assertIn("dedicated authorized credential stores", self.rows["1.2.1"])
+        self.assertIn("diagnostic/shared-cache relabeling", self.rows["1.2.1"])
+
+    def test_independent_agent_boundary_is_not_a_tool_certificate_gate(self):
+        for text in (self.spec, self.guide):
+            self.assertIn("A Tool certificate is not a prerequisite for Agent certification", text)
+            self.assertIn("Remote Tools MUST be treated as untrusted dependencies", text)
+        self.assertIn("not a claim about the independent server's filesystem", self.rows["2.1.2"])
+        self.assertIn("absence alone does not prohibit an initially authorized action", self.rows["6.1.3"])
+        self.assertIn("pending, declined and canceled approval states", self.rows["2.2.2"])
+        self.assertIn("permitted positive controls", self.rows["5.1.2"])
 
 
 if __name__ == "__main__":
