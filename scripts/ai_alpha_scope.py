@@ -16,7 +16,7 @@ FILES = (
     "AI Agent Specification.md", "AI Agent Test Guide.md",
     "AI Agent-Tool Interface Contract.md", "AI Agent-Tool Identity and Consent Wire Format.md",
     "AI Tool Specification.md", "AI Tool Testing Guide.md", "AI Tool Local Android Requirements.md",
-    "AI Tool Minimum Security Register.md", "AI Agent Assessment Protocol.md",
+    "AI Tool Minimum Security Register.md", "AI Tool Local Android Applicability.md", "AI Agent Assessment Protocol.md",
     "AI Agent Assessment Applicability.md", "AI Agent Assessment Plans.md", "AI Alpha Publication Scope.md", "AI Alpha Pilot Worksheet.md",
     "AI Agent Migration Coverage.json", "AI Agent Policy Alignment.json",
     "AI Tool Minimum Security Register.json", "AI Tool Assessment Cases.json",

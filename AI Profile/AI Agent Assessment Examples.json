@@ -29,6 +29,7 @@
     "A-program": "example://{plan}/{context}/{verification}/dated-periodic-program-scope-config-remediation-attestation",
     "A-plugin": "example://{plan}/{context}/{verification}/product-user-argument-transaction-permission-audit-originals",
     "A-input": "example://{plan}/{context}/{verification}/product-store-inventory-storage-retention-disposal-originals",
+    "D-provider": "example://{plan}/{context}/{verification}/dated-provider-terms-selected-retention-settings-and-agent-disclosure-originals",
     "A-data": "example://{plan}/{context}/{verification}/product-consent-history-processing-expiry-job-before-after-originals",
     "D-card": "example://{plan}/{context}/{verification}/public-actual-version-model-card-disclosures",
     "A-secret": "example://{plan}/{context}/{verification}/product-runtime-secret-reference-loading-configuration-no-values",

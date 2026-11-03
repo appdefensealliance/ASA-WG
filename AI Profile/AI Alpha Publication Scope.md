@@ -33,6 +33,10 @@ The requirements describe the proposed future assessment bar; their MUSTs do not
 
 Publication/adoption requires the WG and SC process in [CONTRIBUTING](../CONTRIBUTING.md): review and recorded consensus, with a formal vote where required by that process; a release branch, changelog/version stamps and approved release artifacts. No actual PR merge, tag, alpha publication or certificate issuance is performed by this proposal.
 
+## Outstanding pilot limitation
+
+The pending #528 source uses “short validity TTL” without a numerical ceiling. Existing admission rules still prohibit dispatch under **known** revoked/disabled authority; the Guide tests that before cached status expires. The policy for cache freshness when status is not yet known needs explicit WG disposition before certification use. This candidate does not select a TTL, treat a developer's arbitrary duration as adopted policy, or modify the upstream #528 branch.
+
 The [pilot lab/developer worksheet](AI%20Alpha%20Pilot%20Worksheet.md) records proposed assessor readiness, actual evidence, optional benchmarks and maintenance/change responsibilities. It is not a certificate template or a new lab-authorization grant.
 
 The [machine-readable publication scope](AI%20Alpha%20Publication%20Scope.json) is checked with the candidate. A complete pilot bundle must pin every relevant document, procedure/corpus revision, model/configuration and original evidence; an old feature-branch provenance record is not a claim that the whole future release was approved.

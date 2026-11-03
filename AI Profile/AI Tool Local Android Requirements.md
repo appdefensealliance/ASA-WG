@@ -13,8 +13,7 @@ All original definitions, actor/feature scope, explicit exclusions and optional-
 conditions continue to govern. Transport descriptions do not create new local duties.
 The remote minimum does not demote this annex. Ordinary downstream HTTP does not
 reclassify a local Tool; an independently exposed remote Tool is a separate boundary.
-Other local/mobile/desktop variants retain the same pinned source pending their own
-decisions. Published CASA and MASA applicability remain independently unchanged.
+Other standalone local/mobile/desktop Tool routes are outside this alpha's assessed Tool scope; the historical snapshot is context, not a certification route by commit reference. Published CASA/MASA applicability and independent Agent desktop/mobile runtime duties remain unchanged. The [Tool-side Android planning map](AI%20Tool%20Local%20Android%20Applicability.md) records the retained corresponding IDs and source exclusions without altering their strength.
 
 For the Contract, only Tool-side duties are reproduced; Agent obligations are
 governed by the Agent Specification. The Wire Format remains an optional profile

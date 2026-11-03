@@ -56,6 +56,22 @@ class AgentAlphaScopeTests(unittest.TestCase):
         guide = (AI / "AI Agent Test Guide.md").read_text()
         self.assertIn("not demand unavailable provider-internal deletion records", guide)
         self.assertIn("Document Review (conditional provider dependency)", guide)
+    def test_matrix_mirrors_reviewed_store_provider_and_bounds_rules(self):
+        matrix = json.loads((AI / "AI Agent Assessment Applicability.json").read_text())
+        records = {a["id"] + ":" + v["key"]: v for a in matrix["audits"] for v in a["verifications"]}
+        masking = records["Agent:1.2.1:store_masking"]["assertion"]
+        self.assertIn("protected user-scoped stores", masking)
+        self.assertIn("relabeling a diagnostic/shared store is no exception", masking)
+        self.assertIn("Dedicated credential-store protections remain", masking)
+        retention = records["Agent:5.1.2:retention_scope"]
+        self.assertIn("D-provider", retention["evidence"])
+        self.assertIn("not hidden provider deletion logs", retention["assertion"])
+        self.assertEqual("Document Review", matrix["evidence_routes"]["D-provider"]["type"])
+        self.assertIn("missing protection, not N/A", records["Agent:2.1.3:automatic_bounds"]["assertion"])
+        self.assertIn("commissioned/delegated runtime execution", matrix["conditions"]["managed"]["basis"])
+        guide = (AI / "AI Agent Test Guide.md").read_text()
+        self.assertIn("Known revocation inside a cached-status TTL", guide)
+        self.assertIn("not a grace period for admission already known to be revoked", guide)
 
 
 if __name__ == "__main__":

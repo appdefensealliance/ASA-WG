@@ -295,7 +295,7 @@ class AssessmentPolicyTests(unittest.TestCase):
         self.assertEqual("applicable", self.record(p, "Agent:2.1.2:remote_boundary", "remote-route")["applicability"])
         self.assertEqual("justified_non_applicability", self.record(p, "Agent:2.1.2:process_escape", "remote-route")["applicability"])
         self.assertEqual("SHOULD", self.record(p, "Agent:2.2.2:signed_consent_upgrade", "local-route")["strength"])
-        self.assertIn("0ed09d3", self.matrix["source_control_amendment"])
+        self.assertIn("AI Agent Policy Alignment.json", self.matrix["source_control_amendment"])
 
     def test_distributed_content_not_exempt_with_only_one_tool(self):
         p = copy.deepcopy(self.plans["fixed-rest"])
@@ -311,7 +311,10 @@ class AssessmentPolicyTests(unittest.TestCase):
 
     def test_android_scope_mapping_uses_corresponding_tool_requirements(self):
         annex = (AI / "AI Tool Local Android Requirements.md").read_text()
-        applicability_doc = (AI / "AI Agent Assessment Applicability.md").read_text()
+        applicability_doc = (AI / "AI Tool Local Android Applicability.md").read_text()
+        agent_doc = (AI / "AI Agent Assessment Applicability.md").read_text()
+        self.assertIn("AI%20Tool%20Local%20Android%20Applicability.md", agent_doc)
+        self.assertIn("AI%20Tool%20Local%20Android%20Applicability.md", annex)
         user_context = annex.split("### LOCAL_ANDROID 1.2.2 —", 1)[1].split("### LOCAL_ANDROID 1.2.3 —", 1)[0]
         propagation = annex.split("### LOCAL_ANDROID 2.2.2 —", 1)[1].split("### LOCAL_ANDROID 2.2.3 —", 1)[0]
         self.assertIn("| Mobile | In Scope |", user_context)
