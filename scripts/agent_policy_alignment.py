@@ -10,8 +10,8 @@ from pathlib import Path
 import re
 import subprocess
 
-BASELINE = "420f3ac3074a62423267d49c6448ea7c511c8391"
-BASELINE_MAP_SHA = "dd9d0b33d3291f7917cd9c16d9021240ceccf0c24f5a402a0d2853be9647ad65"
+BASELINE = "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65"
+BASELINE_MAP_SHA = "01f8e9af9ddd06fa081978ce13005caee79effebadef6eaf9ea7bd9b27e1ce7b"
 ALLOWED = {"1.3.1", "2.1.1", "2.1.2", "2.2.2", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
 MANIFEST = "AI Agent Policy Alignment.json"
 
@@ -123,6 +123,9 @@ def refresh_coverage(ai, guide, manifest):
     coverage["scenario"] = "owner-aligned normative control amendments; WG review pending"
     coverage["stable_ID_relaxations_included"] = True
     coverage["source_pin_role"] = manifest["source_pin_role"]
+    if "upstream_revocation_candidate" in manifest:
+        coverage["upstream_revocation_candidate"] = manifest["upstream_revocation_candidate"]
+        coverage["evidence_sufficiency_amendment"]["Agent_PR_537_base"] = manifest["baseline_agent_head"]
     coverage["owner_decision_amendment"] = {
         "status": "proposed; owner aligned, WG review pending",
         "issues": manifest["issues"],
@@ -141,19 +144,26 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--bootstrap", action="store_true", help="Create the pinned baseline manifest once")
+    parser.add_argument("--rebase-baseline", action="store_true", help="Apply only the explicitly pinned upstream PR 528 baseline migration")
     parser.add_argument("--refresh", action="store_true", help="Regenerate derived verification/migration records")
     args = parser.parse_args()
     ai = args.root / "AI Profile"
     path = ai / MANIFEST
-    if args.bootstrap:
-        if path.exists():
+    prior = None
+    if args.bootstrap or args.rebase_baseline:
+        if path.exists() and not args.rebase_baseline:
             parser.error("Manifest already exists; refusing to replace the baseline")
+        if args.rebase_baseline:
+            prior = json.loads(path.read_text())
+            if baseline_digest(prior) != "dd9d0b33d3291f7917cd9c16d9021240ceccf0c24f5a402a0d2853be9647ad65":
+                parser.error("Refusing an unrecognized prior baseline")
         originals = {}
         for name in ("AI Agent Specification.md", "AI Agent Test Guide.md"):
             originals[name] = subprocess.check_output(["git", "show", BASELINE + ":AI Profile/" + name], cwd=args.root, text=True)
+        original_coverage = json.loads(subprocess.check_output(["git", "show", BASELINE + ":AI Profile/AI Agent Migration Coverage.json"], cwd=args.root, text=True))
         manifest = {
             "status": "owner-aligned proposal; WG review pending",
-            "baseline_agent_head": "409b8cb0d39566de8a3e0ef66ade6ea75374e358",
+            "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
             "baseline_evidence_head": BASELINE,
             "issues": [539, 540, 542, 544],
             "allowed_audit_changes": sorted(ALLOWED, key=lambda key: tuple(map(int, key.split(".")))),
@@ -168,6 +178,12 @@ def main():
         }
         if baseline_digest(manifest) != BASELINE_MAP_SHA:
             raise ValueError("The pinned baseline does not reproduce the reviewed hashes")
+        manifest["upstream_revocation_candidate"] = original_coverage["upstream_revocation_candidate"]
+        if prior is not None:
+            for field in ("baseline_spec_blocks", "baseline_guide_verification"):
+                changed = {key for key in manifest[field] if manifest[field][key] != prior[field].get(key)}
+                if changed != {"2.4.2"}:
+                    raise ValueError("Baseline migration must change only the pinned revocation control")
         path.write_text(json.dumps(manifest, indent=2) + "\n")
     manifest = json.loads(path.read_text())
     spec = (ai / "AI Agent Specification.md").read_text()

@@ -20,8 +20,8 @@ AI = ROOT / "AI Profile"
 import sys
 sys.path.insert(0, str(ROOT / "scripts"))
 from agent_policy_alignment import alignment_errors
-GUIDE_ACCEPTANCE_SHA256 = "c2f71772d36c4da97729349b74b721ed00767b12e8de3a420358a3eaeeb6856a"
-SPEC_CONTROLS_SHA256 = "223d5f6e25caed89b86c66e3f464748d73388a789c68698d216a563f1a4f0dd7"
+# The per-control policy manifest pins the pre-amendment baseline and explicitly
+# includes the separately recorded pending revocation migration.
 CONDITIONAL_CONTROLS = {
     "1.2.1", "1.3.1", "1.3.2", "2.1.1", "2.1.2", "2.1.3", "2.2.2",
     "2.3.2", "3.1.2", "3.3.1", "5.1.2", "5.2.1", "6.1.1",

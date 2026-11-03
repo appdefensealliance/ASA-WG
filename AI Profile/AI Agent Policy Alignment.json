@@ -1,7 +1,7 @@
 {
   "status": "owner-aligned proposal; WG review pending",
-  "baseline_agent_head": "409b8cb0d39566de8a3e0ef66ade6ea75374e358",
-  "baseline_evidence_head": "420f3ac3074a62423267d49c6448ea7c511c8391",
+  "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
+  "baseline_evidence_head": "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65",
   "issues": [
     539,
     540,
@@ -35,7 +35,7 @@
     "2.3.1": "2e9aeed488fd3eeb04394359119558f65f8ba23baab4edea8cb593b9b875392e",
     "2.3.2": "b805547fe863c507c026a0f40d3038afecb5bef170ca1b36cdeee4a2253dd357",
     "2.4.1": "4bf64a85ee3208fb0ba30e694da49a4a4596eed00d824c2a94330720ec4bbd74",
-    "2.4.2": "d10385b7e60dbb81bb9540320042e4b213902bdd043c7efe5dea45f48843c951",
+    "2.4.2": "971f142c970336489c72189cb425cde4524ff0a7b14f912ffac4d498ca4e809f",
     "3.1.1": "726eb0e63eb42ff47f10acb91de4a2b37528983ce29f0a7ebfb5b9af2adcfce4",
     "3.1.2": "b2a721454bc6e341898ef8bf60a6c3e5d627a3869f5ff75958585499e150db26",
     "3.1.3": "100079042a72ff1ec0b7c199f5246d6a909e1272a0a5ed8e3b5f495f992ece77",
@@ -74,7 +74,7 @@
     "2.3.1": "b5e9947086bbc8a910f12de081adc5703cff10e8c169522764fc6775445d8450",
     "2.3.2": "01a4200875ed7cb5de45541377bc1ae26c4451dae0dda63c7eeab6a006990041",
     "2.4.1": "92f30b8a629e45d1b0103438340db7c0ce022fe85dc05e8a9e4f143f88bf3043",
-    "2.4.2": "81d6e66f38e68e4e787a35e08c7e9e8d47c10dfc4e9137f37d084488436f31a3",
+    "2.4.2": "aaaad911e5c43d65755fffe47e61f891a72b9651c2b423426ba3be1da200c893",
     "3.1.1": "6ca71d063e98cdde08043d133f08c7ac6a45d7141d17c5a668099bcf44b03266",
     "3.1.2": "5ff141aa3eab7bcd77aca2ff6c53c6286c5ca7972d9abb14967d2883ec94050c",
     "3.1.3": "83e1bc336e32ed40f1a9ef5becb9feb46e9dacb6ac790a879fc8c4a5c34d6eca",
@@ -103,5 +103,12 @@
     "540": "Agent-owned managed-runtime and independent remote-integration boundaries; no Tool-cert prerequisite or provider-honesty guarantee.",
     "542": "Authorized private tasks and separately permitted persistence; strict secrets, isolation, retention/deletion preserved.",
     "544": "General supported-ID use SHOULD; required-interface/correct-use and uncertainty safeguards MUST."
+  },
+  "upstream_revocation_candidate": {
+    "pr": 528,
+    "head": "63dff812fc2a38a6906844f9b2facd3528782041",
+    "control": "2.4.2",
+    "status": "candidate migration into paired documents; upstream PR and WG review remain pending",
+    "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
   }
 }

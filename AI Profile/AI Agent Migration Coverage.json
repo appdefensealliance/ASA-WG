@@ -172,7 +172,7 @@
         "Functional Observation",
         "Attestation"
       ],
-      "verification": "* **Allowlist / Registry Enforcement:** The Agent shall invoke only tools present on an explicit allowlist/registry with pinned identities, and shall refuse unknown or revoked tools.\n* **Session-Establishment Verification:** The Agent shall verify server identity and tool-catalog integrity at session establishment, and shall detect and reject tool definition/schema changes that occur after pinning.\n* **Provenance Surfaced:** The Agent shall surface the provenance (identity/source) of an invoked tool to the user.\n* **Fail Closed:** On an unknown, revoked, or post-pinning-altered tool, the Agent shall fail closed — not invoking it for a sensitive action."
+      "verification": "* **Allowlist / Registry Enforcement:** The Agent shall invoke only tools present on an explicit allowlist/registry with pinned identities, and shall refuse unknown or revoked tools.\n* **Session & In-Flight Verification:** The Agent shall verify server identity and tool-catalog integrity at session establishment, and shall check tool-admission state before dispatching tool calls. The Agent shall detect and reject tool definition/schema changes, disabled/removed status, or tool revocation that occur after session establishment or pinning (enforcing revocation before next dispatch or upon expiration of any documented, short validity TTL for sensitive actions). Existing sessions shall not override revoked or disabled admission state.\n* **Provenance Surfaced:** The Agent shall surface the provenance (identity/source) of an invoked tool to the user.\n* **Fail Closed:** On an unknown, revoked, or post-pinning-altered tool, or when tool admission/revocation status cannot be established under the applicable trust mechanism, the Agent shall fail closed — not invoking it for a sensitive action."
     },
     {
       "id": "3.1.1",
@@ -391,7 +391,7 @@
   ],
   "evidence_sufficiency_amendment": {
     "status": "proposed; WG review pending",
-    "Agent_PR_537_base": "409b8cb0d39566de8a3e0ef66ade6ea75374e358",
+    "Agent_PR_537_base": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
     "harness_research_pin": "c62c25068db5fbd0c8e4ea1fb502243ed148b274",
     "conditional_artifact_controls": [
       "1.2.1",
@@ -444,11 +444,18 @@
       "5.2.1",
       "6.1.3"
     ],
-    "baseline_evidence_head": "420f3ac3074a62423267d49c6448ea7c511c8391",
+    "baseline_evidence_head": "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65",
     "general_supported_ID_strength": "SHOULD",
     "required_interface_and_correct_ID_use_strength": "MUST",
     "safe_outcome_strength": "MUST",
     "tool_certificate_prerequisite": false,
     "new_numbered_audits": 0
+  },
+  "upstream_revocation_candidate": {
+    "pr": 528,
+    "head": "63dff812fc2a38a6906844f9b2facd3528782041",
+    "control": "2.4.2",
+    "status": "candidate migration into paired documents; upstream PR and WG review remain pending",
+    "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
   }
 }
