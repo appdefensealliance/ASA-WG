@@ -11,9 +11,9 @@ lint fails when they diverge, i.e. when:
 
 MASA and CASA join on their stable numeric audit IDs. AI Tool and AI Agent
 use explicit namespaced requirement/test tags, with multiple coverage targets
-where necessary. Empty parses, duplicate IDs, malformed tags and wrong-actor
-references fail independently of the drift baseline. The following stacked
-assessment PR enables the register/case/evidence gates when their inputs land.
+where necessary. AI assessment metadata is checked by ai_assessment_lint.py.
+Empty parses, duplicate IDs, invalid variant gates, changed published CASA
+criteria and missing evidence types fail independently of the drift baseline.
 
 Known, already-accepted divergences are recorded in
 `scripts/spec_guide_lint_baseline.json` so CI blocks *new* drift without being
@@ -121,18 +121,7 @@ def extract(rel_path: str, regex: str, strategy: str) -> dict:
 
 def lint_pair(name: str, cfg: dict) -> dict:
     if cfg["strategy"] == "tags":
-        # The Tool/Agent document split needs stable mappings before the full
-        # register/case/evidence gate is integrated in the next stacked PR.
-        spec, e1 = ai_assessment_lint.extract(
-            _read(cfg["spec"]), cfg["namespace"], False, cfg["spec"])
-        guide, e2 = ai_assessment_lint.extract(
-            _read(cfg["guide"]), cfg["namespace"], True, cfg["guide"])
-        covered = set().union(*(row["covers"] for row in guide.values())) if guide else set()
-        return {
-            "spec_count": len(spec), "guide_count": len(guide), "errors": e1 + e2,
-            "untested": {key: spec[key] for key in set(spec) - covered},
-            "orphans": {key: row for key, row in guide.items() if row["covers"] - set(spec)},
-        }
+        return ai_assessment_lint.lint_pair(ROOT, name, cfg)
     spec = extract(cfg["spec"], cfg["spec_re"], cfg["strategy"])
     guide = extract(cfg["guide"], cfg["guide_re"], cfg["strategy"])
     untested = {k: spec[k] for k in (set(spec) - set(guide))}   # requirement w/ no test
