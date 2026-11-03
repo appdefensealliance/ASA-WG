@@ -1,5 +1,10 @@
 # AI Agent Assessment Plans and Records
 
+<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
+**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+
+This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
+
 **Draft 0.1 — 2026-11-03, #541/#410. Not WG adoption.** These are proposed plan/record conventions implementing the Guide's **#543 assertion-record semantics**, not another evidence taxonomy. All examples are **illustrative synthetic plans**, not real product tests, approved fixtures, calibration results or issued certifications.
 
 Files: [protocol](AI%20Agent%20Assessment%20Protocol.md), [applicability rules](AI%20Agent%20Assessment%20Applicability.md), [37-audit verification matrix](AI%20Agent%20Assessment%20Applicability.json), [expanded-record JSON Schema](AI%20Agent%20Assessment%20Plan.schema.json), [compact worked plans](AI%20Agent%20Assessment%20Examples.json).

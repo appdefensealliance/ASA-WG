@@ -57,6 +57,7 @@ jobs:
         run: |
           python3 scripts/agent_policy_alignment.py
           python3 scripts/agent_assessment_policy_validate.py
+          python3 scripts/ai_alpha_scope.py
           python3 scripts/spec_guide_lint.py --strict
       - name: Exercise parser and assessment regressions
         run: python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py

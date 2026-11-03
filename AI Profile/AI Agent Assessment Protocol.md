@@ -1,5 +1,10 @@
 # AI Agent Assessment Protocol
 
+<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
+**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+
+This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
+
 **Draft 0.1 — 2026-11-03. Owner-aligned proposal for [#410](https://github.com/appdefensealliance/ASA-WG/issues/410) and [#541](https://github.com/appdefensealliance/ASA-WG/issues/541); not WG adoption or a released certification procedure.**
 
 This draft companion is paired with the proposed [Specification](AI%20Agent%20Specification.md) and [Guide](AI%20Agent%20Test%20Guide.md) amendments to §1.1.1/§3.1.3 and the #539/#540/#542/#544 control decisions. It defines the proposed assessment procedure; integration is not WG adoption or authority to issue certificates against an unreleased profile. Target release remains subject to WG review. No 62-trial, three/five-repeat, universal resistance, or general attack-probability claim is adopted.

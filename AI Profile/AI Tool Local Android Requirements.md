@@ -1,5 +1,10 @@
 # AI Tool Local Android Requirements
 
+<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
+**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+
+This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
+
 **Draft retention annex.**
 
 This annex retains current applicable local Android requirement and test strength

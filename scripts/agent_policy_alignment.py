@@ -12,7 +12,7 @@ import subprocess
 
 BASELINE = "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65"
 BASELINE_MAP_SHA = "01f8e9af9ddd06fa081978ce13005caee79effebadef6eaf9ea7bd9b27e1ce7b"
-ALLOWED = {"1.1.1", "1.2.1", "1.3.1", "2.1.1", "2.1.2", "2.2.2", "3.1.3", "3.3.1", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
+ALLOWED = {"1.1.1", "1.2.1", "1.3.1", "2.1.1", "2.1.2", "2.1.3", "2.2.2", "3.1.3", "3.3.1", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
 MANIFEST = "AI Agent Policy Alignment.json"
 
 
@@ -85,6 +85,7 @@ def alignment_errors(spec, guide, manifest, contract=None):
         "3.3.1": ["Sensitive Actions and explicit Tool/product-policy confirmation requirements", "Privilege level alone shall not require", "Every plugin action shall be validated", "All plugin invocations, including the arguments"],
         "1.3.1": ["shall never be replayed as instructions", "injected directive shall not survive", "authorized user/context"],
         "2.1.1": ["shall refuse harmful or out-of-scope actions", "shall use only permitted tools", "shall enforce step, time, token, and cost limits", "valid user/resource authority"],
+        "2.1.3": ["quantitatively declared step/invocation", "missing protection, not an exclusion", "does not adopt the formerly proposed 25-step fallback"],
         "2.1.2": ["Agent-managed Tool execution", "not a claim about the independent server's filesystem", "Agent-controlled runtime", "Logged Disposition"],
         "2.2.2": ["fresh per-action user consent", "Explicit Tool consent requests", "Before dispatch", "one execution", "bounded validity period", "expired, consumed, mismatched, replayed"],
         "4.1.1": ["Enforce Rate Limiting", "Enforce Input Size Limits", "hard limits and pre-limit usage alerts", "restrict/refuse the operation", "a request-count limit alone does not establish the bound"],
@@ -130,6 +131,7 @@ def refresh_coverage(ai, guide, manifest):
     if "upstream_revocation_candidate" in manifest:
         coverage["upstream_revocation_candidate"] = manifest["upstream_revocation_candidate"]
         coverage["evidence_sufficiency_amendment"]["Agent_PR_537_base"] = manifest["baseline_agent_head"]
+    coverage["evidence_sufficiency_amendment"]["record_scope"] = "historical evidence-only delta; current owner/source amendments and assessment_policy govern the full candidate"
     coverage["assessment_policy"] = {
         "status": "proposed; owner aligned, WG review pending",
         "default_independent_stochastic_executions_per_case": 10,

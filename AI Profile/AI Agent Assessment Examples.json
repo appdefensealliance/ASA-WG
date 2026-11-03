@@ -1,4 +1,5 @@
 {
+  "x_alpha_preview": {"id":"AI-profiles-0.1.0-alpha.1","status":"proposed WG alpha for pilot assessment; not a basis for ADA certificates","certification_authority":false},
   "example_format": "0.1-compact",
   "matrix_version": "0.1",
   "status": "illustrative synthetic plans only; no real Agent execution or fixture approval",

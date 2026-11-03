@@ -1,0 +1,18 @@
+{
+  "x_alpha_preview": {"id":"AI-profiles-0.1.0-alpha.1","status":"proposed WG alpha for pilot assessment; not a basis for ADA certificates","certification_authority":false},
+  "preview_id": "AI-profiles-0.1.0-alpha.1",
+  "status": "proposed WG alpha for pilot assessment; not a basis for ADA certificates",
+  "certification_authority": false,
+  "scope": "AI Agent and AI Tool profile documents, protocol, applicability records and validation examples only",
+  "underlying_profiles_are_references_not_released_by_this_alpha": true,
+  "released_main_reference": "63be51be0977512225c0bedf69c5dd69b98eab90",
+  "underlying_versions": {"mobile_MASA": "2.1.1", "web_CASA": "2.1.1", "desktop_DASA": "2.2.0"},
+  "tool_CASA_floor": {"version": "2.1.1", "audit_ids": 48, "document_pin": "7ad3cce0cbb8d6ece5a096afe4a669c1604af583"},
+  "not_in_alpha_publication": ["pending CASA 2.x changes", "pending MASA changes", "draft CASA 3.0 AL1/AL2 documents", "release tags or certificates"],
+  "standalone_tool_alpha_boundaries": ["remote HTTP", "local Android under retained requirements"],
+  "other_local_tool_alpha_route": "deferred; not assessed by an old commit reference",
+  "agent_local_runtime_scope": "desktop/mobile Agent runtime protections remain applicable with DASA/MASA plus AI; deferred standalone Tool variants do not waive Agent duties",
+  "source_bundle": "Every pilot/report pins the actual complete candidate/procedure/corpus/configuration; moving branch names are not sufficient",
+  "release_process": "WG review/consensus and SC review/consensus under CONTRIBUTING; formal vote where the governance process calls for one",
+  "templates": "Assessment plan schema, worked examples and assertion record are pilot worksheets, not issued-certificate templates"
+}

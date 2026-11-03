@@ -1,4 +1,5 @@
 {
+  "x_alpha_preview": {"id":"AI-profiles-0.1.0-alpha.1","status":"proposed WG alpha for pilot assessment; not a basis for ADA certificates","certification_authority":false},
   "status": "owner-aligned proposal; WG review pending",
   "review_remediation": {
     "scenario": "c357d704d98af341fdb4cc1a6e53d735c994b35b",
@@ -23,6 +24,7 @@
     "1.3.1",
     "2.1.1",
     "2.1.2",
+    "2.1.3",
     "2.2.2",
     "3.1.3",
     "3.3.1",

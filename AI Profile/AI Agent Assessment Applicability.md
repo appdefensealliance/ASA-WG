@@ -1,5 +1,10 @@
 # AI Agent Assessment Applicability
 
+<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
+**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+
+This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
+
 **Draft 0.1 — 2026-11-03; proposal for #541, not WG adoption.** Applies only with the [protocol](AI%20Agent%20Assessment%20Protocol.md) and reviewed source amendments. The [JSON matrix](AI%20Agent%20Assessment%20Applicability.json) inventories all **37 Agent audit IDs**, with stable companion verification selectors, concrete cases/outcomes and conditional evidence routes. Selectors identify the Guide's acceptance assertions; they are not additional audit IDs or an alternative evidence ontology. Current source text remains authoritative until amended.
 
 ## 1. Deriving an assessment plan

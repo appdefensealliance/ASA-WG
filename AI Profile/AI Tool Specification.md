@@ -1,5 +1,10 @@
 # AI Tool Security Specification
 
+<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
+**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+
+This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
+
 **Draft proposal for Working Group review — 29 October 2026.**
 
 The AI Tool minimum combines the secure web application baseline established by
@@ -32,7 +37,7 @@ public-application exemption from published CASA.
 | Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
 | Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
 | Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
-| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
+| Other local, desktop and mobile standalone Tool variants | Outside this alpha's standalone Tool route; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
 
 Device-local HTTP and incidental outbound HTTP do not themselves determine the
 deployment category. Literal MCP fields and discovery rules apply to the selected

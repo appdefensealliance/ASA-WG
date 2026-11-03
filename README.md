@@ -24,6 +24,8 @@ The App Defense Alliance’s initial set of profiles are specific to the archite
 * CASA - application security requirements and associated test guide applicable to developers of web apps and web-accessible APIs (previously referred to as the Web App Profile)
 * MASA - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices (previously referred to as the Mobile App Profile)
 * Cloud - security configuration requirements relevant to the use of IaaS and PaaS services offered by Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure
+* DASA - released desktop application security requirements and Test Guide for Windows, macOS and Linux.
+* AI Agent and AI Tool - [proposed AI-only alpha pilot profiles and assessment records](AI%20Profile/AI%20Alpha%20Publication%20Scope.md). These prospective requirements are not a basis for ADA certificates until the appropriate WG/SC adoption and release process. The AI alpha references exact released underlying profiles; it does not release pending CASA/MASA or CASA 3.0 changes.
 
 In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
 
