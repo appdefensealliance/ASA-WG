@@ -8,6 +8,9 @@ import importlib.util
 import json
 from pathlib import Path
 import unittest
+import subprocess
+import types
+import sys
 
 ROOT = Path(__file__).resolve().parents[2]
 MODULE = ROOT / "scripts" / "agent_assessment_policy_validate.py"
@@ -49,6 +52,7 @@ class AssessmentPolicyTests(unittest.TestCase):
                     "filtering_redaction": "none; synthetic markers only", "visibility_limits": "only specified synthetic assertion",
                     "correlation": ["synthetic-case-markers"], "controls": ["synthetic-benign-exposure-control"], "supports_assertion": True}
         r["original_artifacts"] = [original]
+        r["population"]["classification_evidence"] = [original["reference"]]
         r["executions"] = [{"id": "target-" + str(i), "reset_context": "independent-reset-" + str(i), "independent": True,
                             "model_version": context["model_version"], "security_configuration": context["security_configuration"],
                             "exposed": True, "outcome": "satisfied", "original_references": [original["reference"]]} for i in range(10)]
@@ -135,10 +139,19 @@ class AssessmentPolicyTests(unittest.TestCase):
         r["population"]["count"] = 3
         r["executions"] = r["executions"][:3]
         self.assertError(self.errors(p), "default TEN")
-        r["population"]["exception"] = {"explicit_population": 3, "source_revision": "synthetic-approved-procedure-v1-explicit-three", "approval": "synthetic-lab-approval", "rationale": "Specific applicable approved population, not high-impact escalation"}
-        self.assertEqual([], self.errors(p))
-        r["population"]["exception"]["explicit_population"] = 5
-        self.assertError(self.errors(p), "explicit approved population differs")
+        r["population"]["exception"] = {"explicit_population": 3, "procedure_id": r["verification_id"], "case_id": r["case_id"], "source_revision": policy.SOURCE_PIN, "approval": "synthetic-lab-approval", "rationale": "Lab budget plan, not source guidance"}
+        self.assertError(self.errors(p), "specifically applicable known source/case guidance")
+        # A positive fixture simulates reviewed, pinned, case-specific guidance;
+        # it is not an added production policy/catalog population.
+        from unittest.mock import patch
+        g = {"procedure_id": r["verification_id"], "case_id": r["case_id"],
+             "source_revision": policy.SOURCE_PIN, "explicit_population": 3}
+        m = copy.deepcopy(self.matrix)
+        m["procedure_catalog"]["specific_source_populations"] = [g]
+        with patch.object(policy, "SPECIFIC_SOURCE_GUIDANCE", [g]):
+            self.assertEqual([], policy.plan_errors(p, m, self.schema))
+        r["population"]["exception"]["case_id"] = "unrelated-case"
+        self.assertError(self.errors(p), "specifically applicable known source/case guidance")
 
     def test_one_mandatory_breach_cannot_be_averaged_or_hidden(self):
         p, r = self.observed()
@@ -152,7 +165,7 @@ class AssessmentPolicyTests(unittest.TestCase):
     def test_prior_pilot_breach_retained_until_new_configuration(self):
         p, r = self.observed()
         c = p["contexts"][0]
-        p["prior_findings"] = [{"verification_id":r["verification_id"], "configuration":c["security_configuration"], "result":"observed_breach", "original_reference":"synthetic-test://retained-adverse-pilot-original"}]
+        p["prior_findings"] = [{"id":"pilot-1", "verification_id":r["verification_id"], "context_id":c["id"], "model_version":c["model_version"], "case_id":r["case_id"], "origin":"pilot", "configuration":c["security_configuration"], "result":"observed_breach", "original_reference":"synthetic-test://retained-adverse-pilot-original"}]
         self.assertError(self.errors(p), "known mandatory breach")
         p["prior_findings"][0]["configuration"] = "retained-old-remediated-configuration"
         self.assertEqual([], self.errors(p))
@@ -221,10 +234,13 @@ class AssessmentPolicyTests(unittest.TestCase):
         p = copy.deepcopy(self.plans["mcp-http"])
         campaign = p["campaign"]
         campaign["status"] = "completed"
-        segment = {"assessor":"synthetic-assessor", "qualification_reference":"synthetic-test://qualification", "activity":"setup", "actual_minutes":480, "context_ids":["http-route"], "surfaces":["direct","indirect","compositional","cross_tool"], "response_observation":"synthetic response observed", "adaptation":"synthetic payload adapted after response", "original_reference":"synthetic-test://effort-original"}
+        segment = {"assessor":"synthetic-assessor", "qualification_reference":"synthetic-test://qualification", "activity":"setup", "actual_minutes":480, "context_ids":["http-route"], "surfaces":["direct","indirect","compositional","cross_tool"], "response_observation":"synthetic response observed", "adaptation":"synthetic payload adapted after response", "original_reference":"synthetic-test://effort-original", "finding_ids":[]}
         campaign["effort"] = [segment]
         self.assertError(self.errors(p), "setup/report/unattended runtime excluded")
         segment["activity"] = "adaptive_execution_investigation"
+        c = p["contexts"][0]
+        p["findings"] = [{"id":"adaptive-1", "verification_id":"Agent:3.1.2:untrusted_consequence", "context_id":c["id"], "configuration":c["security_configuration"], "model_version":c["model_version"], "case_id":"adaptive-probe-1", "origin":"adaptive", "result":"satisfied", "original_reference":"synthetic-test://observed-adaptive-outcome"}]
+        segment["finding_ids"] = ["adaptive-1"]
         self.assertEqual([], self.errors(p))
         segment["surfaces"].remove("cross_tool")
         self.assertError(self.errors(p), "cross-Tool coverage missing")
@@ -306,6 +322,219 @@ class AssessmentPolicyTests(unittest.TestCase):
         self.assertIn("Tool §1.2.2 / Guide §2.2", applicability_doc)
         self.assertIn("Tool §2.2.2 / Guide §1.5", applicability_doc)
         self.assertNotIn("Tool §1.2.2 marks Mobile in scope while Guide identity propagation §1.5", applicability_doc)
+
+    def baseline_observed(self, vid="Agent:3.1.2:untrusted_consequence", example="mcp-http"):
+        """Read the exact pushed base in memory; no extra files or checkout writes."""
+        def at_base(path):
+            try:
+                return subprocess.check_output(["git","show",policy.SOURCE_PIN+":"+path], cwd=ROOT, text=True, stderr=subprocess.DEVNULL)
+            except subprocess.CalledProcessError:
+                self.skipTest("pushed review-base commit unavailable in this checkout")
+        base = types.ModuleType("review_base_policy")
+        base.__file__ = str(MODULE)
+        exec(compile(at_base("scripts/agent_assessment_policy_validate.py"),str(MODULE),"exec"),base.__dict__)
+        m = json.loads(at_base("AI Profile/AI Agent Assessment Applicability.json"))
+        s = json.loads(at_base("AI Profile/AI Agent Assessment Plan.schema.json"))
+        e = json.loads(at_base("AI Profile/AI Agent Assessment Examples.json"))
+        p = base.expand_example(m,e,next(x for x in e["examples"] if x["id"]==example))
+        r = self.record(p,vid)
+        c = next(x for x in p["contexts"] if x["id"]==r["context_id"])
+        r["result"] = "satisfied"
+        p["fixtures"][0]["approval"]["status"] = "approved"
+        a = {"reference":"synthetic-test://base-original","route":"F","producer":"synthetic product observation","export_time":"2026-11-03T21:00:00Z","covered_interval":"synthetic trials","configuration":c["security_configuration"],"filtering_redaction":"none","visibility_limits":"synthetic case only","correlation":["test"],"controls":["benign exposed control"],"supports_assertion":True}
+        r["original_artifacts"]=[a]
+        r["executions"]=[{"id":str(i),"reset_context":"reset-"+str(i),"independent":True,"model_version":c["model_version"],"security_configuration":c["security_configuration"],"exposed":True,"outcome":"satisfied","original_references":[a["reference"]]} for i in range(10)]
+        return base,m,s,p,r
+
+    def finding(self, p, vid, result="observed_breach", origin="adaptive", case_id="adaptive-case-1", context=None):
+        r = self.record(p,vid,context)
+        c = next(c for c in p["contexts"] if c["id"]==r["context_id"])
+        return {"id":"finding-"+c["id"],"verification_id":vid,"context_id":c["id"],"configuration":c["security_configuration"],"model_version":c["model_version"],"case_id":case_id,"origin":origin,"result":result,"original_reference":"synthetic-test://typed-observed-outcome"}
+
+    def test_base_global_false_flag_loophole_is_closed(self):
+        base,m,s,p,r = self.baseline_observed()
+        p["contexts"][0]["stochastic_target"] = False
+        for row in p["records"]:
+            if base.inventory(m)[row["verification_id"]][1]["target"]=="behavior":
+                row["population"].update(target_kind="deterministic",count=1)
+        r["executions"] = r["executions"][:1]
+        self.assertEqual([],base.plan_errors(p,m,s),"confirmed baseline accepted one-run generative case")
+        fixed,r = self.observed()
+        fixed["contexts"][0]["stochastic_target"] = False
+        r["population"].update(target_kind="deterministic",count=1)
+        r["executions"] = r["executions"][:1]
+        self.assertError(self.errors(fixed),"target classification drift")
+        for example in self.examples["examples"]:
+            changed = copy.deepcopy(example)
+            for c in changed["contexts"]: c["stochastic_target"] = False
+            expanded = policy.expand_example(self.matrix,self.examples,changed)
+            for row in expanded["records"]:
+                if policy.inventory(self.matrix)[row["verification_id"]][1]["target"]=="llm_mediated":
+                    self.assertEqual(("stochastic",10),(row["population"]["target_kind"],row["population"]["count"]))
+
+    def test_base_arbitrary_budget_exception_is_closed(self):
+        base,m,s,p,r = self.baseline_observed()
+        r["population"].update(count=1,exception={"explicit_population":1,"source_revision":"lab plan","approval":"lab lead","rationale":"budget"})
+        r["executions"] = r["executions"][:1]
+        self.assertEqual([],base.plan_errors(p,m,s),"confirmed baseline accepted budget as source guidance")
+        fixed,r = self.observed()
+        r["population"].update(count=1,exception={"explicit_population":1,"procedure_id":r["verification_id"],"case_id":r["case_id"],"source_revision":policy.SOURCE_PIN,"approval":"lab lead","rationale":"budget"})
+        r["executions"] = r["executions"][:1]
+        self.assertError(self.errors(fixed),"specifically applicable known source/case guidance")
+        r["population"]["source_revision"]="lab plan"
+        self.assertError(self.errors(fixed),"governing known procedure/case")
+
+    def test_base_dynamic_feature_na_flags_are_closed(self):
+        base,m,s,p,r = self.baseline_observed("Agent:3.2.3:grounded_references")
+        for feature in policy.FEATURE_PROBES: p["contexts"][0]["features"][feature]=False
+        for row in p["records"]:
+            _,v = base.inventory(m)[row["verification_id"]]
+            disposition,basis = base.applicability(m,v,p["contexts"][0])
+            row["applicability"],row["basis"] = disposition,basis
+            if disposition=="justified_non_applicability": row["result"]=disposition
+        self.assertEqual([],base.plan_errors(p,m,s),"confirmed baseline accepted unprobed generative output exclusions")
+        fixed = copy.deepcopy(self.plans["mcp-http"])
+        for feature,vid in policy.FEATURE_PROBES.items():
+            fixed["contexts"][0]["features"][feature]=False
+            row=self.record(fixed,vid)
+            row["applicability"]=row["result"]="justified_non_applicability"
+        self.assertError(self.errors(fixed),"applicability contradicts")
+
+    def test_source_bound_protocol_checks_not_forced_to_ten(self):
+        p,r = self.observed("Agent:6.1.5:s256_exchange")
+        self.assertEqual("deterministic",r["population"]["target_kind"])
+        self.assertEqual(1,r["population"]["count"])
+        r["executions"] = r["executions"][:1]
+        self.assertEqual([],self.errors(p))
+        r["population"]["classification_evidence"]= ["synthetic-test://missing-path-proof"]
+        self.assertError(self.errors(p),"original evidence for its prescribed target-path classification")
+
+    def test_actual_feature_probe_not_empty_record_justifies_absence(self):
+        p = copy.deepcopy(self.plans["mcp-http"])
+        c=p["contexts"][0]
+        c["features"]["actionable_references"]=False
+        vid=policy.FEATURE_PROBES["actionable_references"]
+        probe={"feature":"actionable_references","status":"verified_absent","procedure_id":vid,"case_id":"REFERENCE-01","source_revision":policy.SOURCE_PIN,"boundary_reference":"synthetic-test://actual-production-reference-output-boundary","observations":[],"original_artifacts":[]}
+        c["feature_exclusions"].append(probe)
+        self.assertError(self.errors(p),"absence lacks exposed")
+        good,r=self.observed()
+        a=copy.deepcopy(r["original_artifacts"][0])
+        probe["original_artifacts"]=[a]
+        probe["observations"]=[{"id":k,"kind":k,"exposed":True,"result":"safe_refusal","model_version":c["model_version"],"configuration":c["security_configuration"],"original_reference":a["reference"]} for k in ["direct_request","supported_boundary_refusal"]]
+        for row in p["records"]:
+            _,v=policy.inventory(self.matrix)[row["verification_id"]]
+            row["applicability"],row["basis"]=policy.applicability(self.matrix,v,c)
+            if row["applicability"]=="justified_non_applicability": row["result"]=row["applicability"]
+        self.assertEqual([],self.errors(p),"synthetic evidence links only, not authentication or universal absence proof")
+        probe["observations"][0]["result"]="feature_present"
+        self.assertError(self.errors(p),"missing protection is not absence")
+
+    def adaptive_effort(self, p, context_id, finding_id, minutes=480):
+        return {"assessor":"synthetic-assessor","qualification_reference":"synthetic-test://qualification","activity":"adaptive_execution_investigation","actual_minutes":minutes,"context_ids":[context_id],"surfaces":["direct","indirect","compositional","cross_tool"],"response_observation":"synthetic observed downstream outcome","adaptation":"response-informed synthetic revision","original_reference":"synthetic-test://effort-original","finding_ids":[finding_id]}
+
+    def test_base_adaptive_breach_cannot_vanish_in_clean_regression(self):
+        vid="Agent:2.2.2:independent_gate"
+        base,m,s,p,r=self.baseline_observed(vid)
+        e=self.adaptive_effort(p,r["context_id"],"unused")
+        e.pop("finding_ids")
+        e["response_observation"]="Confirmed fresh-consent bypass in adaptive attack, then regression 0/10"
+        p["campaign"].update(status="completed",effort=[e])
+        self.assertEqual([],base.plan_errors(p,m,s),"confirmed baseline lost a narrative adaptive breach")
+        fixed,r=self.observed(vid)
+        f=self.finding(fixed,vid)
+        fixed["findings"]=[f]
+        fixed["campaign"].update(status="completed",effort=[self.adaptive_effort(fixed,r["context_id"],f["id"])])
+        self.assertError(self.errors(fixed),"known mandatory breach")
+        r["result"]="insufficient_evidence"
+        self.assertError(self.errors(fixed),"known mandatory breach")
+        r["result"]="observed_breach"
+        self.assertEqual([],self.errors(fixed))
+        fixed["campaign"]["effort"][0]["finding_ids"]=[]
+        self.assertError(self.errors(fixed),"typed finding links")
+
+    def test_base_cross_boundary_breach_has_sticky_owning_verification(self):
+        vid="Agent:2.2.2:binding_fidelity"
+        base,m,s,p,r=self.baseline_observed(vid,"hybrid")
+        p["campaign"]["cross_boundary_cases"][0]["observations"].append("Confirmed recipient substitution during chain; later regression clean")
+        self.assertEqual([],base.plan_errors(p,m,s),"confirmed baseline did not link observed crossing failure")
+        fixed=copy.deepcopy(self.plans["hybrid"])
+        f=self.finding(fixed,vid,origin="cross_boundary",case_id="HYBRID-CHAIN-01",context="local-route")
+        fixed["findings"]=[f]
+        chain=fixed["campaign"]["cross_boundary_cases"][0]
+        chain.update(result="observed_breach",finding_ids=[f["id"]])
+        self.assertError(self.errors(fixed),"known mandatory breach")
+        self.record(fixed,vid,"local-route")["result"]="observed_breach"
+        self.assertEqual([],self.errors(fixed))
+        chain["result"]="satisfied"
+        self.assertError(self.errors(fixed),"cross-boundary breach is sticky")
+        chain["result"]="observed_breach"
+        fixed["findings"]=[]
+        self.assertError(self.errors(fixed),"finding/context link")
+
+    def test_fresh_configuration_retains_old_finding_without_laundering_current(self):
+        p,r=self.observed()
+        old=self.finding(p,r["verification_id"])
+        p["prior_findings"]=[old]
+        self.assertError(self.errors(p),"known mandatory breach")
+        c=p["contexts"][0]
+        c["security_configuration"]="separately-assessed-remediated-v2"
+        for row in p["records"]:
+            for a in row["original_artifacts"]: a["configuration"]=c["security_configuration"]
+            for run in row["executions"]: run["security_configuration"]=c["security_configuration"]
+        self.assertEqual([],self.errors(p),"old adverse configuration is retained, not erased")
+        p["campaign"]["effort"]=[self.adaptive_effort(p,c["id"],old["id"])]
+        self.assertError(self.errors(p),"different/remediated configuration")
+
+    def test_eight_total_hours_allocated_across_models_not_per_model(self):
+        p=copy.deepcopy(self.plans["hybrid"])
+        p["campaign"].update(status="completed",planned_actual_minutes=480)
+        p["findings"]=[]
+        p["campaign"]["effort"]=[]
+        for c in p["contexts"]:
+            f=self.finding(p,"Agent:3.1.2:untrusted_consequence",result="satisfied",context=c["id"])
+            p["findings"].append(f)
+            p["campaign"]["effort"].append(self.adaptive_effort(p,c["id"],f["id"],240))
+        self.assertEqual([],self.errors(p),"240+240=480 actual minutes, not 480 per context")
+        p["campaign"]["effort"][0]["context_ids"].append("remote-route")
+        self.assertError(self.errors(p),"finding links for every claimed model/config context")
+
+    def test_matrix_restores_exact_source_duties_and_keeps_528_case(self):
+        base,m,s,p,r=self.baseline_observed()
+        current=policy.inventory(self.matrix)
+        previous=base.inventory(m)
+        v=current["Agent:2.4.1:user_audience"][1]
+        self.assertIn("MUST NOT forward a token received from the Agent's own client for another audience",v["assertion"])
+        self.assertIn("reuse MUST cease",v["assertion"])
+        self.assertIn("revocation",v["case"])
+        self.assertNotIn("MUST NOT forward",previous["Agent:2.4.1:user_audience"][1]["assertion"])
+        v=current["Agent:3.2.3:grounded_references"][1]
+        self.assertIn("MUST NOT recommend or emit a nonexistent package",v["assertion"])
+        self.assertIn("even when flagged unverified",v["assertion"])
+        self.assertNotIn("even when flagged unverified",previous["Agent:3.2.3:grounded_references"][1]["assertion"])
+        self.assertIn("instantly",current["Agent:2.1.1:termination"][1]["assertion"])
+        for field in ("assertion","case","source"):
+            self.assertEqual(previous["Agent:2.4.2:admission_integrity"][1][field],current["Agent:2.4.2:admission_integrity"][1][field],"preserve invocation-time/TTL/status #528 case")
+
+    def test_cli_default_examples_roundtrip_and_rejections(self):
+        def cli(*args, stdin=None):
+            return subprocess.run([sys.executable,str(MODULE),*args],cwd=ROOT,text=True,input=stdin,capture_output=True,timeout=30)
+        self.assertEqual(0,cli().returncode)
+        for name in self.plans:
+            result=cli("--example",name,"--expand")
+            self.assertEqual(0,result.returncode,result.stderr)
+            expanded=json.loads(result.stdout)
+            self.assertEqual("0.2",expanded["schema_version"])
+            self.assertEqual(0,cli("--plan","-",stdin=result.stdout).returncode)
+        for args in [("--example","missing"),("--expand",),("--plan","-","--example","hybrid")]:
+            self.assertNotEqual(0,cli(*args).returncode)
+        self.assertNotEqual(0,cli("--plan","-",stdin='{"bad":').returncode)
+        p,r=self.observed()
+        p["contexts"][0]["stochastic_target"]=False
+        r["population"].update(target_kind="deterministic",count=1)
+        r["executions"]=r["executions"][:1]
+        rejected=cli("--plan","-",stdin=json.dumps(p))
+        self.assertEqual(1,rejected.returncode)
+        self.assertIn("target classification drift",rejected.stderr)
 
     def test_specific_cases_and_named_artifact_conditions_not_generic(self):
         for _, v in policy.inventory(self.matrix).values():
