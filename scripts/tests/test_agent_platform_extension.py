@@ -39,6 +39,34 @@ def missing_clauses(block):
     return [clause for clause in REQUIRED_CLAUSES if clause not in block]
 
 
+def revocation_gap_errors(spec, guide, coverage):
+    errors = []
+    match = re.search(r"<!-- ada:test Agent:2\.4\.2 covers=Agent:2\.4\.2 -->(.*?)(?=\n#{1,3} |\Z)", guide, re.S)
+    if not match:
+        return ["Revocation Guide control missing"]
+    block = match[1]
+    assertions = block.split("#### Verification\n", 1)[1].strip()
+    for clause in ("check tool-admission state before dispatching tool calls", "Existing sessions shall not override", "status cannot be established under the applicable trust mechanism"):
+        if clause not in assertions:
+            errors.append("Missing revocation guard: " + clause)
+    for clause in ("**Mid-Session Revocation:**", "denial reported after tool execution has already occurred fails", "**Revocation Status Unreachability:**", "without requiring every Tool to provide an online revocation endpoint"):
+        if clause not in block:
+            errors.append("Missing revocation procedure: " + clause)
+    row = next((line for line in spec.splitlines() if line.startswith("| 2.4.2 |")), "")
+    table = row.split("|", 2)[-1].rsplit("|", 1)[0].replace("<br>", " ")
+    if re.sub(r"\s+", " ", table).strip() != re.sub(r"\s+", " ", assertions).strip():
+        errors.append("Revocation Specification/Guide mismatch")
+    recorded = next(control for control in coverage["controls"] if control["id"] == "2.4.2")["verification"]
+    if re.sub(r"\s+", " ", recorded).strip() != re.sub(r"\s+", " ", assertions).strip():
+        errors.append("Revocation migration record mismatch")
+    candidate = coverage["upstream_revocation_candidate"]
+    if candidate["head"] != "63dff812fc2a38a6906844f9b2facd3528782041" or "pending" not in candidate["status"]:
+        errors.append("Revocation candidate provenance/status changed")
+    if "AL0/AL1 static evidence" in block:
+        errors.append("Stale evidence tier reintroduced")
+    return errors
+
+
 class AgentPlatformExtensionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -124,6 +152,23 @@ class AgentPlatformExtensionTests(unittest.TestCase):
             with self.subTest(clause=clause):
                 weakened = self.block.replace(clause, "REMOVED_PREREQUISITE", 1)
                 self.assertIn(clause, missing_clauses(weakened))
+
+
+    def test_revocation_candidate_has_shared_guards_and_records(self):
+        self.assertEqual([], revocation_gap_errors(self.spec, self.guide, self.coverage))
+
+    def test_revocation_guards_cannot_be_removed_from_both_documents(self):
+        for clause in ("check tool-admission state before dispatching tool calls", "Existing sessions shall not override", "status cannot be established under the applicable trust mechanism"):
+            with self.subTest(clause=clause):
+                errors = revocation_gap_errors(self.spec.replace(clause, "REMOVED"), self.guide.replace(clause, "REMOVED"), self.coverage)
+                self.assertTrue(any("guard" in error for error in errors))
+
+    def test_revocation_procedure_and_candidate_provenance_are_required(self):
+        guide = self.guide.replace("**Mid-Session Revocation:**", "**Missing exercise:**")
+        self.assertTrue(revocation_gap_errors(self.spec, guide, self.coverage))
+        changed = json.loads(json.dumps(self.coverage))
+        changed["upstream_revocation_candidate"]["head"] = "unverified"
+        self.assertTrue(revocation_gap_errors(self.spec, self.guide, changed))
 
 
 if __name__ == "__main__":
