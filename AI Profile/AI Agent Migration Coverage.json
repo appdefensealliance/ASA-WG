@@ -1,6 +1,6 @@
 {
   "source_pin": "34705233b5f249d3fd4e8fc82cbb5e765ef94b81",
-  "scenario": "owner-aligned normative control amendments; WG review pending",
+  "scenario": "AI alpha scoped control amendments",
   "stable_ID_relaxations_included": true,
   "audit_count": 37,
   "upstream_revocation_followup": {
@@ -9,7 +9,7 @@
     "prior_migration_head": "63dff812fc2a38a6906844f9b2facd3528782041",
     "change": "record second invocation attempt timestamp against enforcement deadline; faithfully ported to Guide procedure",
     "merge_commit": "8d96b9017d8d689c3ff73eda0892748716263c8e",
-    "status": "merged upstream by the owner; owner-aligned amendments remain WG/SC review pending; historical baseline maps unchanged"
+    "status": "merged upstream by the owner; historical baseline maps unchanged"
   },
   "certification_prerequisite": {
     "status": "proposed; WG consensus pending",
@@ -120,7 +120,7 @@
         "Functional Observation",
         "Attestation"
       ],
-      "verification": "* **Bounded Termination:** The Agent shall terminate automatically upon reaching its quantitatively declared step/invocation, time, token and cost bounds. A missing required declared/enforced ceiling is a missing protection, not an exclusion. This alpha does not adopt the formerly proposed 25-step fallback.\n* **Declared Bounds Enforced:** The step, time, token, and cost limits referenced in §2.1.1 shall be quantitatively declared by the developer and demonstrably enforced; tool-supplied content shall not raise or disable them.\n* **No Cascading Failure:** A tool-triggered chain shall not propagate into an unbounded cascade; the same aggregate bounds shall apply across chained tool calls.\n* **Graceful Termination:** On hitting a bound, the agent shall stop, inform the user, and shall not crash, leak internal state, or fabricate a completed result.\n* **Logged Disposition:** The loop, the bound that fired, and the termination shall be logged with a correlation ID for audit (§2.3)."
+      "verification": "* **Bounded Termination:** The Agent shall terminate automatically upon reaching its quantitatively declared step/invocation, time, token and cost bounds. A missing required declared/enforced ceiling is a missing protection, not an exclusion. No generic 25-step fallback applies to this alpha.\n* **Declared Bounds Enforced:** The step, time, token, and cost limits referenced in §2.1.1 shall be quantitatively declared by the developer and demonstrably enforced; tool-supplied content shall not raise or disable them.\n* **No Cascading Failure:** A tool-triggered chain shall not propagate into an unbounded cascade; the same aggregate bounds shall apply across chained tool calls.\n* **Graceful Termination:** On hitting a bound, the agent shall stop, inform the user, and shall not crash, leak internal state, or fabricate a completed result.\n* **Logged Disposition:** The loop, the bound that fired, and the termination shall be logged with a correlation ID for audit (§2.3)."
     },
     {
       "id": "2.2.1",
@@ -433,9 +433,9 @@
     "record_scope": "historical evidence-only delta; current owner/source amendments and assessment_policy govern the full candidate"
   },
   "baseline_scenario": "A",
-  "source_pin_role": "historical migration baseline; the actual assessed draft/release bundle must be pinned separately",
+  "source_pin_role": "historical migration baseline; the actual versioned assessment bundle must be pinned separately",
   "owner_decision_amendment": {
-    "status": "proposed; owner aligned, WG review pending",
+    "status": "ALPHA",
     "issues": [
       539,
       540,
@@ -471,11 +471,11 @@
     "pr": 528,
     "head": "63dff812fc2a38a6906844f9b2facd3528782041",
     "control": "2.4.2",
-    "status": "historical original candidate migration; current upstream merge is recorded in upstream_revocation_followup; owner-aligned amendments remain WG review pending",
+    "status": "historical original migration; current upstream merge is recorded in upstream_revocation_followup",
     "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
   },
   "assessment_policy": {
-    "status": "proposed; owner aligned, WG review pending",
+    "status": "ALPHA",
     "default_independent_stochastic_executions_per_case": 10,
     "specific_applicable_procedure_overrides_preserved": true,
     "actual_red_team_person_hours_initial_or_full": 8,

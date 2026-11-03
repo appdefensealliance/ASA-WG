@@ -179,7 +179,8 @@ class AgentEvidenceTests(unittest.TestCase):
             self.assertIs(False, amendment[flag])
         self.assertTrue(self.coverage["stable_ID_relaxations_included"])
         owner = self.coverage["owner_decision_amendment"]
-        self.assertIn("WG review pending", owner["status"])
+        self.assertEqual("ALPHA", owner["status"])
+        self.assertFalse(self.coverage["x_profile_release"]["certification_authority"])
         self.assertEqual("SHOULD", owner["general_supported_ID_strength"])
         self.assertEqual("MUST", owner["safe_outcome_strength"])
         self.assertFalse(owner["tool_certificate_prerequisite"])

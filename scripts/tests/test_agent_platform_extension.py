@@ -19,7 +19,7 @@ REQUIRED_CLAUSES = (
     "together at Assurance Level 2 (AL2 Lab Assessment)",
     "single combined product certification",
     "released underlying Specification and Test Guide from `main`",
-    "not draft underlying-profile requirements from `develop`",
+    "not unreleased underlying-profile requirements from `develop`",
     "every applicable mandatory requirement of both the underlying profile and this AI Agent profile at AL2",
     "A prior underlying-profile certificate, an AL0/AL1 assessment, or an AI-only assessment MUST NOT substitute",
     "No separately issued underlying-profile certificate is required",

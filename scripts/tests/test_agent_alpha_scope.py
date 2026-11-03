@@ -23,15 +23,37 @@ class AgentAlphaScopeTests(unittest.TestCase):
         self.assertTrue(scope["underlying_profiles_are_references_not_released_by_this_alpha"])
         self.assertEqual(48, scope["tool_CASA_floor"]["audit_ids"])
         self.assertEqual("2.1.1", scope["underlying_versions"]["web_CASA"])
-        self.assertIn("draft CASA 3.0 AL1/AL2 documents", scope["not_in_alpha_publication"])
+        self.assertIn("CASA 3.0 AL1/AL2 documents", scope["not_in_alpha_publication"])
         for name in FILES:
             if name.endswith(".md"):
                 text = (AI / name).read_text()
                 self.assertEqual(1, text.count(MARKER))
                 self.assertIn(BANNER, text)
             else:
-                preview = json.loads((AI / name).read_text())["x_alpha_preview"]
-                self.assertFalse(preview["certification_authority"])
+                publication = json.loads((AI / name).read_text())["x_profile_release"]
+                self.assertEqual("alpha", publication["document_state"])
+                self.assertFalse(publication["certification_authority"])
+
+    def test_versioned_publication_fields_are_canonical_without_authority_escalation(self):
+        for name in FILES:
+            if not name.endswith('.json'):
+                continue
+            data = json.loads((AI / name).read_text())
+            self.assertNotIn('x_alpha_preview', data)
+            self.assertEqual('alpha', data['x_profile_release']['document_state'])
+            self.assertFalse(data['x_profile_release']['certification_authority'])
+        ledger = json.loads((AI / 'AI Tool Assessment Cases.json').read_text())
+        for test in ledger['tests']:
+            self.assertIn('gate_class', test)
+            self.assertIn('mandatory_outcome', test)
+            self.assertIn('advisory_outcome', test)
+            self.assertFalse(any(k.startswith('proposed_') for k in test))
+            for case in test['cases']:
+                self.assertIn('disposition', case)
+                self.assertIn('requirement_text', case)
+                self.assertFalse(any(k.startswith('proposed_') for k in case))
+        self.assertEqual(210, sum(len(t['cases']) for t in ledger['tests']))
+        self.assertEqual('0.1.0-alpha.1', json.loads((AI / 'AI Alpha Publication Scope.json').read_text())['version'])
 
     def test_mlc_benchmarks_remain_strictly_optional(self):
         spec = (AI / "AI Agent Specification.md").read_text()
