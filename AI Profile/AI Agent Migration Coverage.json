@@ -398,7 +398,7 @@
   ],
   "evidence_sufficiency_amendment": {
     "status": "proposed; WG review pending",
-    "Agent_PR_537_base": "409b8cb0d39566de8a3e0ef66ade6ea75374e358",
+    "Agent_PR_537_base": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
     "harness_research_pin": "c62c25068db5fbd0c8e4ea1fb502243ed148b274",
     "conditional_artifact_controls": [
       "1.2.1",

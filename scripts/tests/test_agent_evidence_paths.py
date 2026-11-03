@@ -1,8 +1,8 @@
 """Check evidence amendments without changing the existing Agent acceptance bar.
 
-These document regressions do not assess a product. Acceptance snapshots are
-from PR #537 at 409b8cb0d39566de8a3e0ef66ade6ea75374e358; changing them requires
-an explicit normative amendment, rather than an evidence-only update.
+These document regressions do not assess a product. Acceptance snapshots start
+from PR #537 and include the explicitly recorded pending PR #528 migration;
+changing them requires an explicit normative amendment, not an evidence-only update.
 Run: python3 -m unittest discover -s scripts/tests -p 'test_agent_*.py'
 """
 
@@ -16,8 +16,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
 AI = ROOT / "AI Profile"
-GUIDE_ACCEPTANCE_SHA256 = "c2f71772d36c4da97729349b74b721ed00767b12e8de3a420358a3eaeeb6856a"
-SPEC_CONTROLS_SHA256 = "223d5f6e25caed89b86c66e3f464748d73388a789c68698d216a563f1a4f0dd7"
+GUIDE_ACCEPTANCE_SHA256 = "bbe877fe75e5dfdc3ac8ead9f489defe21a691ba4c3f0f6b6e2752205fc9201b"
+SPEC_CONTROLS_SHA256 = "3a70e2c16df10e24f98d52c63bce2bc854fa87b44e5c9983cefe5efd5befdf87"
 CONDITIONAL_CONTROLS = {
     "1.2.1", "1.3.1", "1.3.2", "2.1.1", "2.1.2", "2.1.3", "2.2.2",
     "2.3.2", "3.1.2", "3.3.1", "5.1.2", "5.2.1", "6.1.1",
