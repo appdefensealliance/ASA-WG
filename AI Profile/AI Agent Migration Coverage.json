@@ -3,6 +3,13 @@
   "scenario": "A",
   "stable_ID_relaxations_included": false,
   "audit_count": 37,
+  "upstream_revocation_candidate": {
+    "pr": 528,
+    "head": "63dff812fc2a38a6906844f9b2facd3528782041",
+    "control": "2.4.2",
+    "status": "candidate migration into paired documents; upstream PR and WG review remain pending",
+    "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
+  },
   "certification_prerequisite": {
     "status": "proposed; WG consensus pending",
     "profile_role": "extension, not standalone product certification",
@@ -172,7 +179,7 @@
         "Functional Observation",
         "Attestation"
       ],
-      "verification": "* **Allowlist / Registry Enforcement:** The Agent shall invoke only tools present on an explicit allowlist/registry with pinned identities, and shall refuse unknown or revoked tools.  \n* **Session-Establishment Verification:** The Agent shall verify server identity and tool-catalog integrity at session establishment, and shall detect and reject tool definition/schema changes that occur after pinning.  \n* **Provenance Surfaced:** The Agent shall surface the provenance (identity/source) of an invoked tool to the user.  \n* **Fail Closed:** On an unknown, revoked, or post-pinning-altered tool, the Agent shall fail closed — not invoking it for a sensitive action."
+      "verification": "* **Allowlist / Registry Enforcement:** The Agent shall invoke only tools present on an explicit allowlist/registry with pinned identities, and shall refuse unknown or revoked tools.\n* **Session & In-Flight Verification:** The Agent shall verify server identity and tool-catalog integrity at session establishment, and shall check tool-admission state before dispatching tool calls. The Agent shall detect and reject tool definition/schema changes, disabled/removed status, or tool revocation that occur after session establishment or pinning (enforcing revocation before next dispatch or upon expiration of any documented, short validity TTL for sensitive actions). Existing sessions shall not override revoked or disabled admission state.\n* **Provenance Surfaced:** The Agent shall surface the provenance (identity/source) of an invoked tool to the user.\n* **Fail Closed:** On an unknown, revoked, or post-pinning-altered tool, or when tool admission/revocation status cannot be established under the applicable trust mechanism, the Agent shall fail closed — not invoking it for a sensitive action."
     },
     {
       "id": "3.1.1",
