@@ -1,46 +1,44 @@
-# AI Alpha Pilot Assessment Worksheet
+# AI Alpha Assessment Worksheet
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
-**AI profiles 0.1.0-alpha.1 — proposed pilot worksheet, not a certificate or lab-authorization decision.**
-
-Use the existing scheme's applicable lab/assessor authorization process; this worksheet does not independently expand a lab's authorized scope. It makes the proposed AI assessment skills and pilot evidence explicit for WG review.
+This worksheet records assessment readiness, configuration, actual observations and maintenance for AI profiles **0.1.0-alpha.1**. It is not a certificate or an independent grant of lab authorization. Use the applicable scheme's assessor-authorization process.
 
 ## Assessor readiness
 
-Record scoped references demonstrating:
-- Relevant application-security and authorization/isolation testing competence for the actual platform/interfaces.
-- Ability to develop and adapt direct/indirect injection and cross-boundary scenarios and observe actual dispatch/data effects.
-- Understanding of stochastic target versus deterministic checker, reset/exposure controls and source-bound procedure populations.
-- Ability to adjudicate qualitative outcomes, retain adverse evidence, identify uncertainty and avoid interpreting synthetic fixtures as product compliance.
-- Familiarity with operational-secret protection, purpose/recipient boundaries, managed-runtime containment and uncertain-action outcome handling.
+Record scoped evidence of:
+- Application-security and authorization/isolation testing competence for the actual platform and interfaces.
+- Ability to develop and adapt direct/indirect injection and cross-boundary scenarios and observe real dispatch/data effects.
+- Understanding of stochastic targets versus deterministic checkers, reset/exposure controls and source-bound populations.
+- Ability to adjudicate qualitative outcomes, retain adverse evidence and uncertainty, and distinguish fixtures from production controls.
+- Familiarity with secret handling, purpose/recipient boundaries, managed-runtime containment and uncertain-action reconciliation.
 
-Qualification references and review are recorded by the lab; a declaration or this checklist alone does not prove competence. Formal AI scope/qualification adoption remains with the alliance's governance process.
+An assertion or this checklist alone does not prove competence or expand authorized lab scope.
 
-## Product and plan record
+## Product and assessment record
 
-- Exact product/build, architecture/components, models/routes/modalities and security configuration.
-- Immutable AI candidate, protocol, corpus/rubric and exact released underlying-profile references.
-- Complete applicability matrix/expanded [assessment plan](AI%20Agent%20Assessment%20Plans.md), exclusions and original configuration evidence.
-- Approved production-equivalent fixture changes; unchanged admission/authorization/consent/data/isolating/lifecycle/logging controls.
-- Per-case target classification and prescribed execution population; any different population must come from an applicable pinned source/case procedure, not a budget waiver.
-- Eight actual qualified assessor red-team hours for an initial/full pilot; record counted/excluded activity and coverage, not unattended runtime.
-- Per-assertion original observations/artifacts, limitations, confirmed breach/unresolved/satisfied disposition and retained remediation history.
-- MLCommons safety/jailbreak benchmarks: optional SHOULD. Record performed/not performed separately; nonperformance is not a mandatory failure or evidence gate.
+- Exact product/build, components, models/routes/modalities and security configuration.
+- Immutable AI/protocol/corpus/rubric and exact released underlying-profile references.
+- Complete applicability matrix and expanded [assessment plan](AI%20Agent%20Assessment%20Plans.md), with justified exclusions and original configuration evidence.
+- Approved production-equivalent fixture changes, preserving admission/authorization/consent/data/isolation/lifecycle/logging controls.
+- Per-case target classification and source-prescribed population. A different population requires applicable pinned guidance, not a lab-budget waiver.
+- Eight actual qualified assessor red-team hours total for initial/full review; counted/excluded activities and coverage, not unattended runtime.
+- Per-assertion original observations/artifacts, limitations and satisfied/breach/unresolved verdict, retaining remediation history.
+- MLCommons safety/jailbreak benchmarks: strictly optional SHOULD. Nonperformance imposes no mandatory failure, evidence or repetition gate.
 
 ## Maintenance and change record
 
-For the proposed future scheme, the authorized assessment lab controls or verifies the quarterly designated automated runs and adjudicates the source-bound results; the developer provides current access/configuration and remediation evidence. Record completion and unresolved/failed cases rather than infer conformity from a schedule.
+The authorized assessment lab controls or verifies quarterly designated automated runs and adjudicates source-bound results; the developer supplies current access/configuration and remediation evidence. Record actual completion and failed/unresolved cases, not inferred conformity from a schedule.
 
-A proposed certificate's continuing assurance would depend on the required maintenance record and applicable scheme status review; an overdue or unresolved run cannot be presented as current assurance. This alpha itself grants no certificate authority or automatic suspension/issuance power.
+Continuing certificate assurance, where the scheme authorizes certification, depends on its maintenance and status-review rules. An overdue/unresolved run cannot be presented as current assurance; this worksheet grants no automatic issuance or suspension power.
 
-Classify major changes by actual model family/generation or material changes to Agent product, safety/authorization/data/runtime boundaries; a new Agent product or substantively major model change receives full review. A same-family minor update without material boundary/control changes receives impact review and affected regressions rather than automatically a full review. Version labels alone are not the decision rule. Record the lab's rationale and affected scope under the Protocol.
+Major model family/generation or material product/safety/authority/data/runtime changes and new Agent products receive full review. Same-family minor updates without material control/boundary changes receive impact review and affected regressions rather than automatically full review. Version labels alone are not the rule. Record the assessor's rationale and affected scope under the Protocol.
 
 ## Report statement
 
-State: “This is a pilot assessment of the named configuration against the pinned AI alpha candidate and applicable released baseline. It is not an ADA certificate, general robustness probability, or guarantee of honest independent provider execution.”
+Identify the exact alpha version and configuration, actual admissible evidence and limitations. State whether the report is an experimental assessment or a scheme-authorized certification assessment. Do not claim a certificate, generalized robustness probability or honest independent provider execution from the worksheet or synthetic examples.
 
-Use the [AI-only alpha publication scope](AI%20Alpha%20Publication%20Scope.md), [Protocol](AI%20Agent%20Assessment%20Protocol.md) and [plan schema](AI%20Agent%20Assessment%20Plan.schema.json). Formal release templates and certificate semantics require WG/SC adoption; no .docx certificate is generated here.
+Use [publication scope](AI%20Alpha%20Publication%20Scope.md), [Protocol](AI%20Agent%20Assessment%20Protocol.md) and [plan schema](AI%20Agent%20Assessment%20Plan.schema.json). Formal certificate/report artifacts follow the authorized scheme; no certificate is generated here.

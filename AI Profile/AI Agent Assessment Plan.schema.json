@@ -1,112 +1,1038 @@
 {
-  "x_alpha_preview": {"id":"AI-profiles-0.1.0-alpha.1","status":"proposed WG alpha for pilot assessment; not a basis for ADA certificates","certification_authority":false},
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:ada:ai-agent:assessment-plan:0.2",
   "title": "Draft AI Agent assessment plan/record using Guide #543 assertion semantics",
   "description": "Structure and declared source/evidence links only; never authenticity, completeness, production equivalence, security, calibration or actual human work.",
-  "type": "object", "additionalProperties": false,
-  "required": ["schema_version", "matrix_version", "status", "plan_id", "product", "ai_reference", "target_release", "contexts", "underlying_profiles", "fixtures", "records", "campaign", "findings", "prior_findings"],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "matrix_version",
+    "status",
+    "plan_id",
+    "product",
+    "ai_reference",
+    "target_release",
+    "contexts",
+    "underlying_profiles",
+    "fixtures",
+    "records",
+    "campaign",
+    "findings",
+    "prior_findings"
+  ],
   "properties": {
-    "schema_version": {"const":"0.2"}, "matrix_version": {"const":"0.2"},
-    "status": {"enum":["illustrative_plan","assessment_plan","assessment_record","certification_ready"]},
-    "plan_id": {"$ref":"#/$defs/text"},
-    "product": {"type":"object", "additionalProperties":false, "required":["name","build","configuration","responsible_actor"], "properties":{"name":{"$ref":"#/$defs/text"},"build":{"$ref":"#/$defs/text"},"configuration":{"$ref":"#/$defs/text"},"responsible_actor":{"$ref":"#/$defs/text"}}},
-    "ai_reference":{"$ref":"#/$defs/text"}, "target_release":{"$ref":"#/$defs/text"},
-    "contexts":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/context"}},
-    "underlying_profiles":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/underlying"}},
-    "fixtures":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/fixture"}},
-    "records":{"type":"array","minItems":1,"items":{"$ref":"#/$defs/record"}},
-    "campaign":{"$ref":"#/$defs/campaign"},
-    "findings":{"type":"array","items":{"$ref":"#/$defs/finding"}},
-    "prior_findings":{"type":"array","items":{"$ref":"#/$defs/finding"}}
+    "schema_version": {
+      "const": "0.2"
+    },
+    "matrix_version": {
+      "const": "0.2"
+    },
+    "status": {
+      "enum": [
+        "illustrative_plan",
+        "assessment_plan",
+        "assessment_record",
+        "certification_ready"
+      ]
+    },
+    "plan_id": {
+      "$ref": "#/$defs/text"
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "build",
+        "configuration",
+        "responsible_actor"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/text"
+        },
+        "build": {
+          "$ref": "#/$defs/text"
+        },
+        "configuration": {
+          "$ref": "#/$defs/text"
+        },
+        "responsible_actor": {
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "ai_reference": {
+      "$ref": "#/$defs/text"
+    },
+    "target_release": {
+      "$ref": "#/$defs/text"
+    },
+    "contexts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/context"
+      }
+    },
+    "underlying_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/underlying"
+      }
+    },
+    "fixtures": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/fixture"
+      }
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/record"
+      }
+    },
+    "campaign": {
+      "$ref": "#/$defs/campaign"
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    },
+    "prior_findings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/finding"
+      }
+    }
   },
   "$defs": {
-    "text":{"type":"string","minLength":1},
-    "texts":{"type":"array","minItems":1,"uniqueItems":true,"items":{"$ref":"#/$defs/text"}},
-    "ids":{"type":"array","uniqueItems":true,"items":{"$ref":"#/$defs/text"}},
-    "verification_id":{"type":"string","pattern":"^Agent:[0-9]+\\.[0-9]+\\.[0-9]+:[a-z][a-z0-9_]*$"},
+    "text": {
+      "type": "string",
+      "minLength": 1
+    },
+    "texts": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/text"
+      }
+    },
+    "verification_id": {
+      "type": "string",
+      "pattern": "^Agent:[0-9]+\\.[0-9]+\\.[0-9]+:[a-z][a-z0-9_]*$"
+    },
     "context": {
-      "type":"object","additionalProperties":false,
-      "required":["id","component","deployment","interface","protocol_version","role","model","model_version","task","modalities","security_configuration","features","configuration_status","configuration_evidence","feature_exclusions"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "component",
+        "deployment",
+        "interface",
+        "protocol_version",
+        "role",
+        "model",
+        "model_version",
+        "task",
+        "modalities",
+        "security_configuration",
+        "features",
+        "configuration_status",
+        "configuration_evidence",
+        "feature_exclusions"
+      ],
       "properties": {
-        "id":{"$ref":"#/$defs/text"},"component":{"$ref":"#/$defs/text"},
-        "deployment":{"enum":["mobile","desktop","web","unsupported"]},
-        "interface":{"enum":["mcp_http_public","mcp_http_private","mcp_stdio","appfunctions","desktop_local","private_rest","unsupported"]},
-        "protocol_version":{"$ref":"#/$defs/text"},"role":{"$ref":"#/$defs/text"},
-        "model":{"$ref":"#/$defs/text"},"model_version":{"$ref":"#/$defs/text"},"task":{"$ref":"#/$defs/text"},
-        "modalities":{"$ref":"#/$defs/texts"},"security_configuration":{"$ref":"#/$defs/text"},
-        "stochastic_target":{"type":"boolean","description":"Legacy descriptive flag only. Never determines any case classification or population."},
-        "features":{"type":"object","minProperties":1,"additionalProperties":{"type":"boolean"}},
-        "configuration_status":{"enum":["declared","verified","illustrative"]},"configuration_evidence":{"$ref":"#/$defs/texts"},
-        "feature_exclusions":{"type":"array","items":{"$ref":"#/$defs/feature_exclusion"}}
+        "id": {
+          "$ref": "#/$defs/text"
+        },
+        "component": {
+          "$ref": "#/$defs/text"
+        },
+        "deployment": {
+          "enum": [
+            "mobile",
+            "desktop",
+            "web",
+            "unsupported"
+          ]
+        },
+        "interface": {
+          "enum": [
+            "mcp_http_public",
+            "mcp_http_private",
+            "mcp_stdio",
+            "appfunctions",
+            "desktop_local",
+            "private_rest",
+            "unsupported"
+          ]
+        },
+        "protocol_version": {
+          "$ref": "#/$defs/text"
+        },
+        "role": {
+          "$ref": "#/$defs/text"
+        },
+        "model": {
+          "$ref": "#/$defs/text"
+        },
+        "model_version": {
+          "$ref": "#/$defs/text"
+        },
+        "task": {
+          "$ref": "#/$defs/text"
+        },
+        "modalities": {
+          "$ref": "#/$defs/texts"
+        },
+        "security_configuration": {
+          "$ref": "#/$defs/text"
+        },
+        "stochastic_target": {
+          "type": "boolean",
+          "description": "Legacy descriptive flag only. Never determines any case classification or population."
+        },
+        "features": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "configuration_status": {
+          "enum": [
+            "declared",
+            "verified",
+            "illustrative"
+          ]
+        },
+        "configuration_evidence": {
+          "$ref": "#/$defs/texts"
+        },
+        "feature_exclusions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/feature_exclusion"
+          }
+        }
       }
     },
     "feature_exclusion": {
-      "type":"object","additionalProperties":false,
-      "required":["feature","status","procedure_id","case_id","source_revision","boundary_reference","observations","original_artifacts"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "feature",
+        "status",
+        "procedure_id",
+        "case_id",
+        "source_revision",
+        "boundary_reference",
+        "observations",
+        "original_artifacts"
+      ],
       "properties": {
-        "feature":{"enum":["high_stakes_tasks","actionable_references","code_output"]},
-        "status":{"enum":["pending","verified_absent","observed_present","insufficient_evidence"]},
-        "procedure_id":{"$ref":"#/$defs/verification_id"},"case_id":{"$ref":"#/$defs/text"},"source_revision":{"$ref":"#/$defs/text"},"boundary_reference":{"$ref":"#/$defs/text"},
-        "observations":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["id","kind","exposed","result","model_version","configuration","original_reference"],"properties":{"id":{"$ref":"#/$defs/text"},"kind":{"enum":["direct_request","supported_boundary_refusal"]},"exposed":{"type":"boolean"},"result":{"enum":["safe_refusal","feature_present","not_exposed","ambiguous"]},"model_version":{"$ref":"#/$defs/text"},"configuration":{"$ref":"#/$defs/text"},"original_reference":{"$ref":"#/$defs/text"}}}},
-        "original_artifacts":{"type":"array","items":{"$ref":"#/$defs/original"}}
+        "feature": {
+          "enum": [
+            "high_stakes_tasks",
+            "actionable_references",
+            "code_output"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "verified_absent",
+            "observed_present",
+            "insufficient_evidence"
+          ]
+        },
+        "procedure_id": {
+          "$ref": "#/$defs/verification_id"
+        },
+        "case_id": {
+          "$ref": "#/$defs/text"
+        },
+        "source_revision": {
+          "$ref": "#/$defs/text"
+        },
+        "boundary_reference": {
+          "$ref": "#/$defs/text"
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "kind",
+              "exposed",
+              "result",
+              "model_version",
+              "configuration",
+              "original_reference"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/text"
+              },
+              "kind": {
+                "enum": [
+                  "direct_request",
+                  "supported_boundary_refusal"
+                ]
+              },
+              "exposed": {
+                "type": "boolean"
+              },
+              "result": {
+                "enum": [
+                  "safe_refusal",
+                  "feature_present",
+                  "not_exposed",
+                  "ambiguous"
+                ]
+              },
+              "model_version": {
+                "$ref": "#/$defs/text"
+              },
+              "configuration": {
+                "$ref": "#/$defs/text"
+              },
+              "original_reference": {
+                "$ref": "#/$defs/text"
+              }
+            }
+          }
+        },
+        "original_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/original"
+          }
+        }
       }
     },
     "underlying": {
-      "type":"object","additionalProperties":false,"required":["profile","component","assurance_level","release_reference","disposition"],
-      "properties":{"profile":{"enum":["MASA","DASA","CASA"]},"component":{"$ref":"#/$defs/text"},"assurance_level":{"const":2},"release_reference":{"$ref":"#/$defs/text"},"disposition":{"enum":["pending","satisfied","observed_breach","insufficient_evidence"]}}
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "component",
+        "assurance_level",
+        "release_reference",
+        "disposition"
+      ],
+      "properties": {
+        "profile": {
+          "enum": [
+            "MASA",
+            "DASA",
+            "CASA"
+          ]
+        },
+        "component": {
+          "$ref": "#/$defs/text"
+        },
+        "assurance_level": {
+          "const": 2
+        },
+        "release_reference": {
+          "$ref": "#/$defs/text"
+        },
+        "disposition": {
+          "enum": [
+            "pending",
+            "satisfied",
+            "observed_breach",
+            "insufficient_evidence"
+          ]
+        }
+      }
     },
     "fixture": {
-      "type":"object","additionalProperties":false,"required":["id","class","revision","context_ids","source_acceptance","differences","unchanged_controls","equivalence_evidence","approval"],
-      "properties":{"id":{"$ref":"#/$defs/text"},"class":{"$ref":"#/$defs/text"},"revision":{"$ref":"#/$defs/text"},"context_ids":{"$ref":"#/$defs/texts"},"source_acceptance":{"$ref":"#/$defs/texts"},"differences":{"type":"object","minProperties":1,"additionalProperties":{"type":"string"}},"unchanged_controls":{"$ref":"#/$defs/texts"},"equivalence_evidence":{"$ref":"#/$defs/texts"},"approval":{"type":"object","additionalProperties":false,"required":["status","assessor","rationale"],"properties":{"status":{"enum":["proposed","approved","rejected"]},"assessor":{"$ref":"#/$defs/text"},"rationale":{"$ref":"#/$defs/text"}}}}
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "class",
+        "revision",
+        "context_ids",
+        "source_acceptance",
+        "differences",
+        "unchanged_controls",
+        "equivalence_evidence",
+        "approval"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/text"
+        },
+        "class": {
+          "$ref": "#/$defs/text"
+        },
+        "revision": {
+          "$ref": "#/$defs/text"
+        },
+        "context_ids": {
+          "$ref": "#/$defs/texts"
+        },
+        "source_acceptance": {
+          "$ref": "#/$defs/texts"
+        },
+        "differences": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "unchanged_controls": {
+          "$ref": "#/$defs/texts"
+        },
+        "equivalence_evidence": {
+          "$ref": "#/$defs/texts"
+        },
+        "approval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "status",
+            "assessor",
+            "rationale"
+          ],
+          "properties": {
+            "status": {
+              "enum": [
+                "proposed",
+                "approved",
+                "rejected"
+              ]
+            },
+            "assessor": {
+              "$ref": "#/$defs/text"
+            },
+            "rationale": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        }
+      }
     },
     "record": {
-      "type":"object","additionalProperties":false,
-      "required":["verification_id","context_id","component","strength","assertion","source_assertion","case","applicability","basis","configuration_evidence","fixture_id","evidence_routes","planned_artifacts","case_id","corpus_reference","rubric_reference","population","result","executions","additional_cases","original_artifacts","limitations"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verification_id",
+        "context_id",
+        "component",
+        "strength",
+        "assertion",
+        "source_assertion",
+        "case",
+        "applicability",
+        "basis",
+        "configuration_evidence",
+        "fixture_id",
+        "evidence_routes",
+        "planned_artifacts",
+        "case_id",
+        "corpus_reference",
+        "rubric_reference",
+        "population",
+        "result",
+        "executions",
+        "additional_cases",
+        "original_artifacts",
+        "limitations"
+      ],
       "properties": {
-        "verification_id":{"$ref":"#/$defs/verification_id"},"context_id":{"$ref":"#/$defs/text"},"component":{"$ref":"#/$defs/text"},
-        "strength":{"enum":["MUST","SHOULD","OPTIONAL"]},"assertion":{"$ref":"#/$defs/text"},"source_assertion":{"$ref":"#/$defs/text"},"case":{"$ref":"#/$defs/text"},
-        "applicability":{"enum":["applicable","justified_non_applicability","unsupported_architecture"]},"basis":{"$ref":"#/$defs/text"},"configuration_evidence":{"$ref":"#/$defs/texts"},"fixture_id":{"$ref":"#/$defs/text"},
-        "evidence_routes":{"$ref":"#/$defs/texts"},"planned_artifacts":{"$ref":"#/$defs/texts"},"case_id":{"$ref":"#/$defs/text"},"corpus_reference":{"$ref":"#/$defs/text"},"rubric_reference":{"$ref":"#/$defs/text"},
-        "population":{"$ref":"#/$defs/population"},"result":{"enum":["pending","satisfied","observed_breach","insufficient_evidence","justified_non_applicability","advisory_not_performed"]},
-        "executions":{"type":"array","items":{"$ref":"#/$defs/execution"}},"additional_cases":{"type":"array","items":{"$ref":"#/$defs/additional_case"}},
-        "original_artifacts":{"type":"array","items":{"$ref":"#/$defs/original"}},"limitations":{"type":"array","items":{"$ref":"#/$defs/text"}}
+        "verification_id": {
+          "$ref": "#/$defs/verification_id"
+        },
+        "context_id": {
+          "$ref": "#/$defs/text"
+        },
+        "component": {
+          "$ref": "#/$defs/text"
+        },
+        "strength": {
+          "enum": [
+            "MUST",
+            "SHOULD",
+            "OPTIONAL"
+          ]
+        },
+        "assertion": {
+          "$ref": "#/$defs/text"
+        },
+        "source_assertion": {
+          "$ref": "#/$defs/text"
+        },
+        "case": {
+          "$ref": "#/$defs/text"
+        },
+        "applicability": {
+          "enum": [
+            "applicable",
+            "justified_non_applicability",
+            "unsupported_architecture"
+          ]
+        },
+        "basis": {
+          "$ref": "#/$defs/text"
+        },
+        "configuration_evidence": {
+          "$ref": "#/$defs/texts"
+        },
+        "fixture_id": {
+          "$ref": "#/$defs/text"
+        },
+        "evidence_routes": {
+          "$ref": "#/$defs/texts"
+        },
+        "planned_artifacts": {
+          "$ref": "#/$defs/texts"
+        },
+        "case_id": {
+          "$ref": "#/$defs/text"
+        },
+        "corpus_reference": {
+          "$ref": "#/$defs/text"
+        },
+        "rubric_reference": {
+          "$ref": "#/$defs/text"
+        },
+        "population": {
+          "$ref": "#/$defs/population"
+        },
+        "result": {
+          "enum": [
+            "pending",
+            "satisfied",
+            "observed_breach",
+            "insufficient_evidence",
+            "justified_non_applicability",
+            "advisory_not_performed"
+          ]
+        },
+        "executions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/execution"
+          }
+        },
+        "additional_cases": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/additional_case"
+          }
+        },
+        "original_artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/original"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/text"
+          }
+        }
       }
     },
     "additional_case": {
-      "type":"object","additionalProperties":false,"required":["case_id","case","corpus_reference","rubric_reference","population","result","executions"],
-      "properties":{"case_id":{"$ref":"#/$defs/text"},"case":{"$ref":"#/$defs/text"},"corpus_reference":{"$ref":"#/$defs/text"},"rubric_reference":{"$ref":"#/$defs/text"},"population":{"$ref":"#/$defs/population"},"result":{"enum":["pending","satisfied","observed_breach","insufficient_evidence"]},"executions":{"type":"array","items":{"$ref":"#/$defs/execution"}}}
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_id",
+        "case",
+        "corpus_reference",
+        "rubric_reference",
+        "population",
+        "result",
+        "executions"
+      ],
+      "properties": {
+        "case_id": {
+          "$ref": "#/$defs/text"
+        },
+        "case": {
+          "$ref": "#/$defs/text"
+        },
+        "corpus_reference": {
+          "$ref": "#/$defs/text"
+        },
+        "rubric_reference": {
+          "$ref": "#/$defs/text"
+        },
+        "population": {
+          "$ref": "#/$defs/population"
+        },
+        "result": {
+          "enum": [
+            "pending",
+            "satisfied",
+            "observed_breach",
+            "insufficient_evidence"
+          ]
+        },
+        "executions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/execution"
+          }
+        }
+      }
     },
     "population": {
-      "type":"object","additionalProperties":false,"required":["target_kind","count","procedure_id","procedure_reference","source_revision","classification_basis","classification_evidence","exception"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_kind",
+        "count",
+        "procedure_id",
+        "procedure_reference",
+        "source_revision",
+        "classification_basis",
+        "classification_evidence",
+        "exception"
+      ],
       "properties": {
-        "target_kind":{"enum":["stochastic","deterministic","adaptive","benchmark","upstream"]},"count":{"type":"integer","minimum":0},
-        "procedure_id":{"$ref":"#/$defs/text"},"procedure_reference":{"$ref":"#/$defs/text"},"source_revision":{"$ref":"#/$defs/text"},
-        "classification_basis":{"$ref":"#/$defs/text"},"classification_evidence":{"$ref":"#/$defs/texts"},
-        "exception":{"oneOf":[{"type":"null"},{"type":"object","additionalProperties":false,"required":["explicit_population","procedure_id","case_id","source_revision","approval","rationale"],"properties":{"explicit_population":{"type":"integer","minimum":1},"procedure_id":{"$ref":"#/$defs/text"},"case_id":{"$ref":"#/$defs/text"},"source_revision":{"$ref":"#/$defs/text"},"approval":{"$ref":"#/$defs/text"},"rationale":{"$ref":"#/$defs/text"}}}]}
+        "target_kind": {
+          "enum": [
+            "stochastic",
+            "deterministic",
+            "adaptive",
+            "benchmark",
+            "upstream"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "procedure_id": {
+          "$ref": "#/$defs/text"
+        },
+        "procedure_reference": {
+          "$ref": "#/$defs/text"
+        },
+        "source_revision": {
+          "$ref": "#/$defs/text"
+        },
+        "classification_basis": {
+          "$ref": "#/$defs/text"
+        },
+        "classification_evidence": {
+          "$ref": "#/$defs/texts"
+        },
+        "exception": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "explicit_population",
+                "procedure_id",
+                "case_id",
+                "source_revision",
+                "approval",
+                "rationale"
+              ],
+              "properties": {
+                "explicit_population": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "procedure_id": {
+                  "$ref": "#/$defs/text"
+                },
+                "case_id": {
+                  "$ref": "#/$defs/text"
+                },
+                "source_revision": {
+                  "$ref": "#/$defs/text"
+                },
+                "approval": {
+                  "$ref": "#/$defs/text"
+                },
+                "rationale": {
+                  "$ref": "#/$defs/text"
+                }
+              }
+            }
+          ]
+        }
       }
     },
     "execution": {
-      "type":"object","additionalProperties":false,"required":["id","reset_context","independent","model_version","security_configuration","exposed","outcome","original_references"],
-      "properties":{"id":{"$ref":"#/$defs/text"},"reset_context":{"$ref":"#/$defs/text"},"independent":{"type":"boolean"},"model_version":{"$ref":"#/$defs/text"},"security_configuration":{"$ref":"#/$defs/text"},"exposed":{"type":"boolean"},"outcome":{"enum":["satisfied","observed_breach","insufficient_evidence"]},"original_references":{"$ref":"#/$defs/texts"},"finding_ids":{"$ref":"#/$defs/ids"}}
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "reset_context",
+        "independent",
+        "model_version",
+        "security_configuration",
+        "exposed",
+        "outcome",
+        "original_references"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/text"
+        },
+        "reset_context": {
+          "$ref": "#/$defs/text"
+        },
+        "independent": {
+          "type": "boolean"
+        },
+        "model_version": {
+          "$ref": "#/$defs/text"
+        },
+        "security_configuration": {
+          "$ref": "#/$defs/text"
+        },
+        "exposed": {
+          "type": "boolean"
+        },
+        "outcome": {
+          "enum": [
+            "satisfied",
+            "observed_breach",
+            "insufficient_evidence"
+          ]
+        },
+        "original_references": {
+          "$ref": "#/$defs/texts"
+        },
+        "finding_ids": {
+          "$ref": "#/$defs/ids"
+        }
+      }
     },
     "original": {
-      "type":"object","additionalProperties":false,"required":["reference","route","producer","export_time","covered_interval","configuration","filtering_redaction","visibility_limits","correlation","controls","supports_assertion"],
-      "properties":{"reference":{"$ref":"#/$defs/text"},"route":{"$ref":"#/$defs/text"},"producer":{"$ref":"#/$defs/text"},"export_time":{"type":"string","format":"date-time"},"covered_interval":{"$ref":"#/$defs/text"},"configuration":{"$ref":"#/$defs/text"},"filtering_redaction":{"$ref":"#/$defs/text"},"visibility_limits":{"$ref":"#/$defs/text"},"correlation":{"$ref":"#/$defs/texts"},"controls":{"$ref":"#/$defs/texts"},"supports_assertion":{"type":"boolean"},"upstream_scope":{"type":"object","additionalProperties":false,"required":["official_provenance","model_version","configuration","procedure","results","limitations"],"properties":{"official_provenance":{"$ref":"#/$defs/text"},"model_version":{"$ref":"#/$defs/text"},"configuration":{"$ref":"#/$defs/text"},"procedure":{"$ref":"#/$defs/text"},"results":{"$ref":"#/$defs/text"},"limitations":{"$ref":"#/$defs/text"}}}}
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference",
+        "route",
+        "producer",
+        "export_time",
+        "covered_interval",
+        "configuration",
+        "filtering_redaction",
+        "visibility_limits",
+        "correlation",
+        "controls",
+        "supports_assertion"
+      ],
+      "properties": {
+        "reference": {
+          "$ref": "#/$defs/text"
+        },
+        "route": {
+          "$ref": "#/$defs/text"
+        },
+        "producer": {
+          "$ref": "#/$defs/text"
+        },
+        "export_time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "covered_interval": {
+          "$ref": "#/$defs/text"
+        },
+        "configuration": {
+          "$ref": "#/$defs/text"
+        },
+        "filtering_redaction": {
+          "$ref": "#/$defs/text"
+        },
+        "visibility_limits": {
+          "$ref": "#/$defs/text"
+        },
+        "correlation": {
+          "$ref": "#/$defs/texts"
+        },
+        "controls": {
+          "$ref": "#/$defs/texts"
+        },
+        "supports_assertion": {
+          "type": "boolean"
+        },
+        "upstream_scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "official_provenance",
+            "model_version",
+            "configuration",
+            "procedure",
+            "results",
+            "limitations"
+          ],
+          "properties": {
+            "official_provenance": {
+              "$ref": "#/$defs/text"
+            },
+            "model_version": {
+              "$ref": "#/$defs/text"
+            },
+            "configuration": {
+              "$ref": "#/$defs/text"
+            },
+            "procedure": {
+              "$ref": "#/$defs/text"
+            },
+            "results": {
+              "$ref": "#/$defs/text"
+            },
+            "limitations": {
+              "$ref": "#/$defs/text"
+            }
+          }
+        }
+      }
     },
     "finding": {
-      "type":"object","additionalProperties":false,
-      "required":["id","verification_id","context_id","configuration","model_version","case_id","origin","result","original_reference"],
-      "properties":{"id":{"$ref":"#/$defs/text"},"verification_id":{"$ref":"#/$defs/verification_id"},"context_id":{"$ref":"#/$defs/text"},"configuration":{"$ref":"#/$defs/text"},"model_version":{"$ref":"#/$defs/text"},"case_id":{"$ref":"#/$defs/text"},"origin":{"enum":["adaptive","cross_boundary","prescribed_case","pilot"]},"result":{"enum":["satisfied","observed_breach","insufficient_evidence"]},"original_reference":{"$ref":"#/$defs/text"}}
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "verification_id",
+        "context_id",
+        "configuration",
+        "model_version",
+        "case_id",
+        "origin",
+        "result",
+        "original_reference"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/text"
+        },
+        "verification_id": {
+          "$ref": "#/$defs/verification_id"
+        },
+        "context_id": {
+          "$ref": "#/$defs/text"
+        },
+        "configuration": {
+          "$ref": "#/$defs/text"
+        },
+        "model_version": {
+          "$ref": "#/$defs/text"
+        },
+        "case_id": {
+          "$ref": "#/$defs/text"
+        },
+        "origin": {
+          "enum": [
+            "adaptive",
+            "cross_boundary",
+            "prescribed_case",
+            "pilot"
+          ]
+        },
+        "result": {
+          "enum": [
+            "satisfied",
+            "observed_breach",
+            "insufficient_evidence"
+          ]
+        },
+        "original_reference": {
+          "$ref": "#/$defs/text"
+        }
+      }
     },
     "campaign": {
-      "type":"object","additionalProperties":false,"required":["review_kind","status","planned_actual_minutes","effort","designated_quarterly_cases","change_review","cross_boundary_cases"],
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "review_kind",
+        "status",
+        "planned_actual_minutes",
+        "effort",
+        "designated_quarterly_cases",
+        "change_review",
+        "cross_boundary_cases"
+      ],
       "properties": {
-        "review_kind":{"enum":["initial","full","quarterly","minor_update","material_change"]},"status":{"enum":["pending","completed"]},"planned_actual_minutes":{"type":"integer","minimum":0},
-        "effort":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["assessor","qualification_reference","activity","actual_minutes","context_ids","surfaces","response_observation","adaptation","original_reference","finding_ids"],"properties":{"assessor":{"$ref":"#/$defs/text"},"qualification_reference":{"$ref":"#/$defs/text"},"activity":{"enum":["adaptive_attack_development","adaptive_execution_investigation","setup","report_writing","unattended_runtime"]},"actual_minutes":{"type":"integer","minimum":0},"context_ids":{"$ref":"#/$defs/texts"},"surfaces":{"$ref":"#/$defs/texts"},"response_observation":{"$ref":"#/$defs/text"},"adaptation":{"$ref":"#/$defs/text"},"original_reference":{"$ref":"#/$defs/text"},"finding_ids":{"$ref":"#/$defs/ids"}}}},
-        "designated_quarterly_cases":{"$ref":"#/$defs/texts"},"change_review":{"$ref":"#/$defs/text"},
-        "cross_boundary_cases":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["id","context_ids","verification_ids","exercise","expected_outcome","observations","population","result","executions","finding_ids"],"properties":{"id":{"$ref":"#/$defs/text"},"context_ids":{"$ref":"#/$defs/texts"},"verification_ids":{"$ref":"#/$defs/texts"},"exercise":{"$ref":"#/$defs/text"},"expected_outcome":{"$ref":"#/$defs/text"},"observations":{"$ref":"#/$defs/texts"},"population":{"$ref":"#/$defs/population"},"result":{"enum":["pending","satisfied","observed_breach","insufficient_evidence"]},"executions":{"type":"array","items":{"$ref":"#/$defs/execution"}},"finding_ids":{"$ref":"#/$defs/ids"}}}}
+        "review_kind": {
+          "enum": [
+            "initial",
+            "full",
+            "quarterly",
+            "minor_update",
+            "material_change"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "completed"
+          ]
+        },
+        "planned_actual_minutes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "effort": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "assessor",
+              "qualification_reference",
+              "activity",
+              "actual_minutes",
+              "context_ids",
+              "surfaces",
+              "response_observation",
+              "adaptation",
+              "original_reference",
+              "finding_ids"
+            ],
+            "properties": {
+              "assessor": {
+                "$ref": "#/$defs/text"
+              },
+              "qualification_reference": {
+                "$ref": "#/$defs/text"
+              },
+              "activity": {
+                "enum": [
+                  "adaptive_attack_development",
+                  "adaptive_execution_investigation",
+                  "setup",
+                  "report_writing",
+                  "unattended_runtime"
+                ]
+              },
+              "actual_minutes": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "context_ids": {
+                "$ref": "#/$defs/texts"
+              },
+              "surfaces": {
+                "$ref": "#/$defs/texts"
+              },
+              "response_observation": {
+                "$ref": "#/$defs/text"
+              },
+              "adaptation": {
+                "$ref": "#/$defs/text"
+              },
+              "original_reference": {
+                "$ref": "#/$defs/text"
+              },
+              "finding_ids": {
+                "$ref": "#/$defs/ids"
+              }
+            }
+          }
+        },
+        "designated_quarterly_cases": {
+          "$ref": "#/$defs/texts"
+        },
+        "change_review": {
+          "$ref": "#/$defs/text"
+        },
+        "cross_boundary_cases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "context_ids",
+              "verification_ids",
+              "exercise",
+              "expected_outcome",
+              "observations",
+              "population",
+              "result",
+              "executions",
+              "finding_ids"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/text"
+              },
+              "context_ids": {
+                "$ref": "#/$defs/texts"
+              },
+              "verification_ids": {
+                "$ref": "#/$defs/texts"
+              },
+              "exercise": {
+                "$ref": "#/$defs/text"
+              },
+              "expected_outcome": {
+                "$ref": "#/$defs/text"
+              },
+              "observations": {
+                "$ref": "#/$defs/texts"
+              },
+              "population": {
+                "$ref": "#/$defs/population"
+              },
+              "result": {
+                "enum": [
+                  "pending",
+                  "satisfied",
+                  "observed_breach",
+                  "insufficient_evidence"
+                ]
+              },
+              "executions": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/execution"
+                }
+              },
+              "finding_ids": {
+                "$ref": "#/$defs/ids"
+              }
+            }
+          }
+        }
       }
     }
+  },
+  "x_profile_release": {
+    "id": "AI-profiles-0.1.0-alpha.1",
+    "version": "0.1.0-alpha.1",
+    "document_state": "alpha",
+    "certification_authority": false
   }
 }

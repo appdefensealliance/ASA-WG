@@ -1,11 +1,9 @@
 # AI Tool Testing Guide
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
-
-**Draft proposal for Working Group review — 31 October 2026.**
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
@@ -25,7 +23,7 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
@@ -92,13 +90,13 @@ artifacts/attestations or document review as appropriate. A Resource Server cann
 be credited with independently controlled Agent UI or OAuth client/AS behavior.
 
 The [case ledger](AI%20Tool%20Assessment%20Cases.json) preserves all 210 source cases,
-their original tier and their individually proposed gate and variant disposition.
+their original tier and their individual gate and variant disposition.
 For mixed cases, assess the baseline outcome and enhancement independently.
 
 <!-- assessment-rules -->
 ## Individual case grading
 
-- **Source precedence:** Assertions implement the referenced proposed Tool requirements. All applicable published CASA criteria, alternatives and exceptions remain independently mandatory; related CASA IDs are not a replacement for the full floor.
+- **Source precedence:** Assertions implement the versioned Tool requirements. All applicable published CASA criteria, alternatives and exceptions remain independently mandatory; related CASA IDs are not a replacement for the full floor.
 - **Tiers:** Keep each original_assurance_tier. AL0/AL1 review uses relevant declared artifacts and interface evidence; AL2 exercises the corresponding running implementation. External actor duties are dependency records, not Tool-owned passes.
 - **Minimum result:** PASS only when every applicable mandatory assertion has sufficient passing evidence; FAIL for any demonstrated mandatory breach; INSUFFICIENT_EVIDENCE when a required observation is unavailable; NOT_APPLICABLE only with a documented scope/actor/feature basis. An advisory-only case has no minimum assertion and is NOT_SCORED for the minimum; it does not establish a certification pass. Independently discovered mandatory breaches are still recorded against the breached requirement.
 - **Enhancement result:** Record each enhancement as IMPLEMENTED, ABSENT, WEAK, NOT_APPLICABLE or INSUFFICIENT_EVIDENCE. Absent/weak enhancements are advisory. Do not require an unused enhancement, its fixture, or its evidence to pass the minimum.

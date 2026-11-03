@@ -85,7 +85,7 @@ def alignment_errors(spec, guide, manifest, contract=None):
         "3.3.1": ["Sensitive Actions and explicit Tool/product-policy confirmation requirements", "Privilege level alone shall not require", "Every plugin action shall be validated", "All plugin invocations, including the arguments"],
         "1.3.1": ["shall never be replayed as instructions", "injected directive shall not survive", "authorized user/context"],
         "2.1.1": ["shall refuse harmful or out-of-scope actions", "shall use only permitted tools", "shall enforce step, time, token, and cost limits", "valid user/resource authority"],
-        "2.1.3": ["quantitatively declared step/invocation", "missing protection, not an exclusion", "does not adopt the formerly proposed 25-step fallback"],
+        "2.1.3": ["quantitatively declared step/invocation", "missing protection, not an exclusion", "No generic 25-step fallback applies to this alpha"],
         "2.1.2": ["Agent-managed Tool execution", "not a claim about the independent server's filesystem", "Agent-controlled runtime", "Logged Disposition"],
         "2.2.2": ["fresh per-action user consent", "Explicit Tool consent requests", "Before dispatch", "one execution", "bounded validity period", "expired, consumed, mismatched, replayed"],
         "4.1.1": ["Enforce Rate Limiting", "Enforce Input Size Limits", "hard limits and pre-limit usage alerts", "restrict/refuse the operation", "a request-count limit alone does not establish the bound"],
@@ -125,7 +125,7 @@ def refresh_coverage(ai, guide, manifest):
     for control in coverage["controls"]:
         control["verification"] = verification(rows[control["id"]])
     coverage["baseline_scenario"] = "A"
-    coverage["scenario"] = "owner-aligned normative control amendments; WG review pending"
+    coverage["scenario"] = "AI alpha scoped control amendments"
     coverage["stable_ID_relaxations_included"] = True
     coverage["source_pin_role"] = manifest["source_pin_role"]
     if "upstream_revocation_candidate" in manifest:
@@ -135,7 +135,7 @@ def refresh_coverage(ai, guide, manifest):
         coverage["upstream_revocation_followup"] = manifest["upstream_revocation_followup"]
     coverage["evidence_sufficiency_amendment"]["record_scope"] = "historical evidence-only delta; current owner/source amendments and assessment_policy govern the full candidate"
     coverage["assessment_policy"] = {
-        "status": "proposed; owner aligned, WG review pending",
+        "status": "ALPHA",
         "default_independent_stochastic_executions_per_case": 10,
         "specific_applicable_procedure_overrides_preserved": True,
         "actual_red_team_person_hours_initial_or_full": 8,
@@ -147,7 +147,7 @@ def refresh_coverage(ai, guide, manifest):
         "applicability_matrix": "AI Agent Assessment Applicability.json"
     }
     coverage["owner_decision_amendment"] = {
-        "status": "proposed; owner aligned, WG review pending",
+        "status": "ALPHA",
         "issues": manifest["issues"],
         "allowed_audit_changes": manifest["allowed_audit_changes"],
         "baseline_evidence_head": BASELINE,
@@ -182,13 +182,13 @@ def main():
             originals[name] = subprocess.check_output(["git", "show", BASELINE + ":AI Profile/" + name], cwd=args.root, text=True)
         original_coverage = json.loads(subprocess.check_output(["git", "show", BASELINE + ":AI Profile/AI Agent Migration Coverage.json"], cwd=args.root, text=True))
         manifest = {
-            "status": "owner-aligned proposal; WG review pending",
+            "status": "ALPHA",
             "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
             "baseline_evidence_head": BASELINE,
             "issues": [539, 540, 541, 410, 542, 544],
             "allowed_audit_changes": sorted(ALLOWED, key=lambda key: tuple(map(int, key.split(".")))),
             **baseline_maps(originals["AI Agent Specification.md"], originals["AI Agent Test Guide.md"]),
-            "source_pin_role": "historical migration baseline; the actual assessed draft/release bundle must be pinned separately",
+            "source_pin_role": "historical migration baseline; the actual versioned assessment bundle must be pinned separately",
             "normative_changes": {
                 "539": "Operation-based fresh confirmation; explicit Tool/product requirements remain binding.",
                 "540": "Agent-owned managed-runtime and independent remote-integration boundaries; no Tool-cert prerequisite or provider-honesty guarantee.",

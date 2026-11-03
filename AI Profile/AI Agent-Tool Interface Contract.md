@@ -1,11 +1,9 @@
 # AI Agent–Tool Interface Contract
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
-
-**Draft proposal for Working Group review — 29 October 2026.**
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
@@ -25,7 +23,7 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability

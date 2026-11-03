@@ -1,11 +1,9 @@
 # AI Agent–Tool Identity and Consent Wire Format
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
-
-**Draft proposal for Working Group review — 29 October 2026.**
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
@@ -25,7 +23,7 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
@@ -79,7 +77,7 @@ unconditional prerequisite.
 
 ### Required outcome / retained baseline
 
-The proposed minimum is all applicable published CASA plus clearly applicable leading security practices. The baseline can be satisfied by the implementation's SUPPORTED validated OAuth JWT OR trusted opaque-token introspection; either is admissible assessment evidence, not a requirement that every Tool support both formats. Unsupported or unverifiable credentials MUST NOT grant protected access. Safe public/discovery unauthenticated access MAY exist.
+The Tool minimum is all applicable published CASA plus clearly applicable leading security practices. The baseline can be satisfied by the implementation's SUPPORTED validated OAuth JWT OR trusted opaque-token introspection; either is admissible assessment evidence, not a requirement that every Tool support both formats. Unsupported or unverifiable credentials MUST NOT grant protected access. Safe public/discovery unauthenticated access MAY exist.
 
 ### Recommended enhancement
 
@@ -143,7 +141,7 @@ D1specific typ/kid/act/client_id/jti/short-minute lifetime, asymmetric-only pref
 
 D1 SHOULD use the following signed envelope as an enhanced interoperability option, not as the only admissible baseline credential:
 
-| Field | Proposed interpretation |
+| Field | Interpretation |
 |---|---|
 | `typ` | SHOULD be `application/ada-identity+jwt` to distinguish credential use. |
 | `alg` | SHOULD use an asymmetric allowlist such as ES256/EdDSA for D1. Any baseline signed credential MUST use a valid trusted permitted algorithm and signature; unsigned `none` is not valid signed authentication. Standards-valid symmetric OAuth JWTs are not universally rejected merely by this D1 preference. |
@@ -231,7 +229,7 @@ First decide whether an operation is protected. On protected operations, validat
 
 The original D1algorithm SHOULD validate format, optional jti replaycache, dual carriers, RAR/APH parameters and C3receipt. Report enhancement failures as advisory/optional-profile findings unless they also violate a mandatory auth/data rule.
 
-### Proposed two-stage verification
+### Two-stage verification
 
 1. Classify the operation as protected/user-specific or demonstrably safe public/discovery.
 2. On protected operations, validate the selected baseline signed token or opaque introspection, trusted issuer/key and permitted assertion role/type, user, intended resource/audience, applicable expiry/not-before and scopes. Required authority failures MUST deny protected output or side effects.

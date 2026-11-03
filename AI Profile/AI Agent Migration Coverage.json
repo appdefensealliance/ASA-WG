@@ -1,9 +1,4 @@
 {
-  "x_alpha_preview": {
-    "id": "AI-profiles-0.1.0-alpha.1",
-    "status": "proposed WG alpha for pilot assessment; not a basis for ADA certificates",
-    "certification_authority": false
-  },
   "source_pin": "34705233b5f249d3fd4e8fc82cbb5e765ef94b81",
   "scenario": "owner-aligned normative control amendments; WG review pending",
   "stable_ID_relaxations_included": true,
@@ -494,5 +489,11 @@
     "minor_update": "impact review and affected regressions; not automatically full review",
     "protocol": "AI Agent Assessment Protocol.md",
     "applicability_matrix": "AI Agent Assessment Applicability.json"
+  },
+  "x_profile_release": {
+    "id": "AI-profiles-0.1.0-alpha.1",
+    "version": "0.1.0-alpha.1",
+    "document_state": "alpha",
+    "certification_authority": false
   }
 }

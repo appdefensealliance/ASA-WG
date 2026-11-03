@@ -1,7 +1,6 @@
 {
-  "x_alpha_preview": {"id":"AI-profiles-0.1.0-alpha.1","status":"proposed WG alpha for pilot assessment; not a basis for ADA certificates","certification_authority":false},
   "schema_version": 1,
-  "status": "WG_DRAFT_PROPOSAL",
+  "status": "ALPHA",
   "policy": "Secure web application baseline established by published CASA, supplemented by leading security practices informed by market research.",
   "source_pins": {
     "AI": "34705233b5f249d3fd4e8fc82cbb5e765ef94b81",
@@ -2201,7 +2200,7 @@
     {
       "topic": "13.2 Geographic governance",
       "disposition": "DEFERRED_POLICY_SCOPE",
-      "text": "A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this proposal does not certify jurisdictional compliance."
+      "text": "A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this profile does not certify jurisdictional compliance."
     },
     {
       "topic": "13.3 Compliance transparency",
@@ -2223,5 +2222,11 @@
       "disposition": "COVERED_SECURITY_OUTCOMES_AND_ADVISORY_MECHANISM",
       "text": "Untrusted arguments must not bypass declared constraints or mandatory authorization/security outcomes (Tool 3.1.1 and TG-2.5, MIN-S15/S17). A prescribed model-parameter allowlist or fixed temperature/filter policy is recommended where relevant, not a universal Tool gate."
     }
-  ]
+  ],
+  "x_profile_release": {
+    "id": "AI-profiles-0.1.0-alpha.1",
+    "version": "0.1.0-alpha.1",
+    "document_state": "alpha",
+    "certification_authority": false
+  }
 }

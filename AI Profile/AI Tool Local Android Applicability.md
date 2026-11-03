@@ -1,11 +1,9 @@
 # AI Tool Local Android Applicability
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
-
-**Proposed alpha planning map — not a change to the retained Tool requirement strength.**
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
 This Tool-side companion resolves the retained annex's planning labels. `Local` is an invocation/execution boundary; `Mobile` is deployment. Android stdio and AppFunctions are **mobile + local**. Ordinary downstream HTTPS does not reclassify them as public remote Tools; separately exposed remote boundaries are assessed separately.
 

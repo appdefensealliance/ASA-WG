@@ -1,11 +1,9 @@
 # AI Tool Minimum Security Register
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
-
-**Draft proposal for Working Group review — 29 October 2026.**
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
@@ -25,7 +23,7 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
@@ -90,7 +88,7 @@ without its required identifier, freshness or admission capability.
 The following 48 IDs retain their published scope, alternatives and AL1/AL2
 verification unchanged. Complete saved criteria are in the
 [machine-readable register](AI%20Tool%20Minimum%20Security%20Register.json).
-The pinned published source governs; current draft CASA changes are not imported.
+The pinned published source governs; unreleased CASA changes are not imported.
 
 | CASA ID | Published audit title | Source |
 | --- | --- | --- |
@@ -441,14 +439,14 @@ Apply each property only to its recorded interface, operation and actor. Optiona
 
 **Related CASA criteria:** No exact published counterpart recorded. Related criteria are not a claim of equivalence or implementation compliance.
 
-## Disposition of earlier retention/governance proposal
+## Historical retention/governance scope dispositions
 
 PR #324 supplied six outline topics. The dispositions below preserve the unresolved policy work without adopting its TBD sections as certification gates.
 
-| Topic | Proposed disposition | Treatment |
+| Topic | Disposition | Treatment |
 | --- | --- | --- |
 | 13.1 Temporal over-retention | ADVISORY_AND_EXISTING_BOUNDARIES | Data minimization and authorized task boundaries remain mandatory (Tool 9.1.1, MIN-S18/S19). A documented retention/deletion schedule is recommended; no new universal duration is adopted. |
-| 13.2 Geographic governance | DEFERRED_POLICY_SCOPE | A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this proposal does not certify jurisdictional compliance. |
+| 13.2 Geographic governance | DEFERRED_POLICY_SCOPE | A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this profile does not certify jurisdictional compliance. |
 | 13.3 Compliance transparency | ASSESSMENT_RECORD_AND_DEFERRED_POLICY_SCOPE | Record components, applicability, dependencies and implemented enhancements. Broad regulatory compliance attestations and legal-recordkeeping gates are deferred to separate policy work. |
 | 13.4 Model allowlisting | EXISTING_AGENT_CONTROL_AND_TOOL_ADVISORY | Retain Agent per-model assessment and model/configuration boundaries. Tool-side approved-model policy is recommended where a Tool uses a model; no universal model list or sanctions-validation gate is created. |
 | 13.5 External data-source governance | COVERED_SECURITY_OUTCOMES | Trusted-layer authorization, least privilege, input validation, task minimization and legitimate API provenance apply (Tool 1.2.1/2.4.1/3.1.1/9.1.1, MIN-S05/S06/S16/S17/S18/S21). Broad organizational governance evidence remains advisory. |
@@ -456,7 +454,7 @@ PR #324 supplied six outline topics. The dispositions below preserve the unresol
 
 ## Market-research sources and currency
 
-Research was captured on 26 October 2026. These sources inform the proposed technical properties; directory publication rules are not evidence of identical requirements for all private APIs, SDKs or tunnels. Source recommendations and host behavior are distinguished from adopted normative outcomes in the JSON evidence trace.
+Research was captured on 26 October 2026. These sources inform the technical properties; directory publication rules are not evidence of identical requirements for all private APIs, SDKs or tunnels. Source recommendations and host behavior are distinguished from adopted normative outcomes in the JSON evidence trace.
 
 <a id="mr01"></a>
 

@@ -70,7 +70,7 @@ class AssessmentLintTests(unittest.TestCase):
 
     def test_mixed_case_requires_atom_split(self):
         ledger = copy.deepcopy(self.ledger)
-        case = next(c for t in ledger['tests'] for c in t['cases'] if c['proposed_disposition']=='MIXED_BASELINE_AND_ADVISORY')
+        case = next(c for t in ledger['tests'] for c in t['cases'] if c['disposition']=='MIXED_BASELINE_AND_ADVISORY')
         case['requires_atom_split'] = False
         self.assertTrue(any('split' in e for e in self.metadata_errors(ledger=ledger)))
 
@@ -86,7 +86,7 @@ class AssessmentLintTests(unittest.TestCase):
 
     def mixed_case(self, ledger):
         return next(c for t in ledger['tests'] for c in t['cases']
-                    if c['proposed_disposition'] == 'MIXED_BASELINE_AND_ADVISORY')
+                    if c['disposition'] == 'MIXED_BASELINE_AND_ADVISORY')
 
     def test_split_flag_without_mandatory_assertions_rejected(self):
         ledger = copy.deepcopy(self.ledger)
@@ -131,13 +131,13 @@ class AssessmentLintTests(unittest.TestCase):
     def test_local_only_case_cannot_acquire_remote_assertions(self):
         ledger = copy.deepcopy(self.ledger)
         held = next(c for t in ledger['tests'] for c in t['cases']
-                    if c['proposed_disposition'] == 'CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT')
+                    if c['disposition'] == 'CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT')
         held['assessment']['mandatory_assertions'] = [copy.deepcopy(self.mixed_case(ledger)['assessment']['mandatory_assertions'][0])]
         self.assertTrue(any('actual separate' in e for e in self.metadata_errors(ledger=ledger)))
 
     def test_advisory_cases_do_not_require_mandatory_assertions(self):
         self.assertEqual(self.metadata_errors(), [])
-        advisory = [c for t in self.ledger['tests'] for c in t['cases'] if c['proposed_disposition'] == 'ADVISORY']
+        advisory = [c for t in self.ledger['tests'] for c in t['cases'] if c['disposition'] == 'ADVISORY']
         self.assertTrue(advisory)
         self.assertTrue(all(not c['assessment']['mandatory_assertions'] for c in advisory))
 

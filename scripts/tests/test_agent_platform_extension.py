@@ -60,7 +60,7 @@ def revocation_gap_errors(spec, guide, coverage):
     if re.sub(r"\s+", " ", recorded).strip() != re.sub(r"\s+", " ", assertions).strip():
         errors.append("Revocation migration record mismatch")
     candidate = coverage["upstream_revocation_candidate"]
-    if candidate["head"] != "63dff812fc2a38a6906844f9b2facd3528782041" or "pending" not in candidate["status"]:
+    if candidate["head"] != "63dff812fc2a38a6906844f9b2facd3528782041" or "historical" not in candidate["status"]:
         errors.append("Revocation candidate provenance/status changed")
     if "AL0/AL1 static evidence" in block:
         errors.append("Stale evidence tier reintroduced")

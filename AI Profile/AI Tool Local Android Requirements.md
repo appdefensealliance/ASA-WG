@@ -1,11 +1,9 @@
 # AI Tool Local Android Requirements
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
-
-**Draft retention annex.**
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
 This annex retains current applicable local Android requirement and test strength
 from the [AI source snapshot](https://github.com/appdefensealliance/ASA-WG/tree/34705233b5f249d3fd4e8fc82cbb5e765ef94b81/AI%20Profile).
@@ -23,7 +21,7 @@ with its original unresolved local-transport scope; it is not universally requir
 
 ### LOCAL_ANDROID 1.1.1 — Mandatory Client-Server Transport Authentication
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -78,7 +76,7 @@ mid-session.  |
 
 ### LOCAL_ANDROID 1.2.1 — Scoped Authorization and User Context Propagation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -120,7 +118,7 @@ the server before executing sensitive actions. |
 
 ### LOCAL_ANDROID 1.2.2 — Mandatory Cryptographic Validation of User Context
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -176,7 +174,7 @@ Verify the cryptographic check fails and the request is rejected. <br><br>**Veri
 
 ### LOCAL_ANDROID 1.2.3 — No Token Passthrough / Downstream Token Exchange
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -231,7 +229,7 @@ it is rejected. |
 
 ### LOCAL_ANDROID 1.3.1 — Externalized Secret Management
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -285,7 +283,7 @@ Secret Management Service at runtime. <br><br>**Validate Secret Isolation:** Ens
 
 ### LOCAL_ANDROID 1.3.2 — Secure Downstream Transport
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -340,7 +338,7 @@ headers, API keys) are never sent over unencrypted (HTTP) connections. <br><br>*
 
 ### LOCAL_ANDROID 1.4.1 — Message Freshness and Session Binding
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -393,7 +391,7 @@ timed out, any subsequent requests using that session identifier are strictly re
 
 ### LOCAL_ANDROID 1.4.2 — Sensitive Action Idempotency and Ambiguous Outcomes
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -461,7 +459,7 @@ Confirm that no unintended duplicate occurs and that the Tool reports the author
 
 ### LOCAL_ANDROID 1.4.3 — Connector Lifecycle Revocation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -528,7 +526,7 @@ commits and verify the Tool reports the authoritative result accurately without 
 
 ### LOCAL_ANDROID 1.5.1 — Strict Redirect URI and State Validation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -589,7 +587,7 @@ callback and reuse a consumed state value. Confirm rejection with no credential 
 
 ### LOCAL_ANDROID 1.5.2 — Mandatory Proof Key for Code Exchange (PKCE)
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -643,7 +641,7 @@ code\_verifier is retrieved from secure session storage and included in the POST
 
 ### LOCAL_ANDROID 1.6.1 — Automated PII and Credential Masking in Logs
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -695,7 +693,7 @@ or redacted before being written to the log sink.  |
 
 ### LOCAL_ANDROID 1.6.2 — Secure Session Tokens
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -759,7 +757,7 @@ permissions.  |
 
 ### LOCAL_ANDROID 2.1.1 — Server-Side Consent Backstop for Sensitive Actions
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -847,7 +845,7 @@ requests confirmation via elicitation or fails closed, and does not execute the 
 
 ### LOCAL_ANDROID 2.1.2 — Out-of-Band Confirmation for High-Risk Actions
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -906,7 +904,7 @@ verify each is rejected before execution. |
 
 ### LOCAL_ANDROID 2.2.1 — Stateless Request Level Isolation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 #### Description
@@ -974,7 +972,7 @@ or process lifecycle to verify that the server either restarts or explicitly pur
 
 ### LOCAL_ANDROID 2.2.2 — User Identity Propagation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 #### Description
@@ -1044,7 +1042,7 @@ that the tool execution fails at the resource level, proving that the server is 
 
 ### LOCAL_ANDROID 2.2.3 — Ensure Sandbox Protections
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 #### Description
@@ -1099,7 +1097,7 @@ where the destination URL is dynamically generated from LLM-provided tool argume
 
 ### LOCAL_ANDROID 2.4.1 — Principle of Least Privilege and Scoped Permissions
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1151,7 +1149,7 @@ unauthorized/forbidden error, proving the server respects the specific token's l
 
 ### LOCAL_ANDROID 3.1.1 — Parameterized Arguments and Unsafe Sink Blocking
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1203,7 +1201,7 @@ parameter, or explicitly rejects the request with an error, preventing the under
 
 ### LOCAL_ANDROID 3.3.1 — Cryptographic Message Integrity Validation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1256,7 +1254,7 @@ tampered message to the client or server. Verify that the receiving component de
 
 ### LOCAL_ANDROID 5.1.1 — Exfiltration Defense
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 The system SHALL implement a defense-in-depth architecture to prevent sensitive data leakage. It should also prevent the transmission of any data in transit, at
@@ -1322,7 +1320,7 @@ configuration must remain uncorrupted and operational for subsequent benign requ
 
 ### LOCAL_ANDROID 6.1.1 — No Embedded Model-Directed Control Directives
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1377,7 +1375,7 @@ Tool rejects invalid or unauthorized requests regardless of any accompanying nat
 
 ### LOCAL_ANDROID 6.2.1 — Semantic Integrity and Descriptive Accuracy
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1447,7 +1445,7 @@ what the tool does based on its metadata. Compare the agent's understanding agai
 
 ### LOCAL_ANDROID 7.1.1 — Integrated Transport Security and Message Integrity
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1507,7 +1505,7 @@ another host on the network (e.g., via the machine's LAN IP or `0.0.0.0`); the c
 
 ### LOCAL_ANDROID 7.7.1 — Validate Origin Header on HTTP Transports
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 ##### Description
@@ -1546,7 +1544,7 @@ mismatched requests. |
 
 ### LOCAL_ANDROID 8.2.1 — Mandatory Stateless Request-Level Isolation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1594,7 +1592,7 @@ traces used by the tool to fulfill a request linger in memory for a subsequent r
 
 ### LOCAL_ANDROID 8.4.1 — Detect and Block Unsafe Sinks
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1643,7 +1641,7 @@ Verify the runtime blocks the execution. |
 
 ### LOCAL_ANDROID 8.5.1 — Resource Pinning and Signature Verification
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1692,7 +1690,7 @@ the Software Bill of Materials (SBOM) for unmitigated vulnerabilities. |
 
 ### LOCAL_ANDROID 9.1.1 — Data Minimization
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1738,7 +1736,7 @@ and function’s stated need. |
 
 ### LOCAL_ANDROID 10.1.1 — Financial Resource & Cost Governance
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1804,7 +1802,7 @@ exactly when the $100 (or justified) limit is hit.|
 
 ### LOCAL_ANDROID 10.2.1 — Maximum Payload and Recursion Depth Constraints
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1856,7 +1854,7 @@ tool calls or nested JSON structures. |
 
 ### LOCAL_ANDROID 10.3.1 — Per User Endpoint Rate Limiting
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1911,7 +1909,7 @@ confirm each applicable declared threshold is enforced. Verify separately that u
 
 ### LOCAL_ANDROID 12.2.1 — Implement comprehensive logging using structured logging formats
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -1973,7 +1971,7 @@ Persistent/centralized log-storage infrastructure remains out of scope. |
 
 ### LOCAL_ANDROID 12.2.2 — Protect Sensitive Data in Logs
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2041,7 +2039,7 @@ Persistent/centralized log-storage infrastructure remains out of scope. |
 
 ### LOCAL_ANDROID 1.1 — Mandatory Client-Server Transport Authentication
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2129,7 +2127,7 @@ authentication check.
 
 ### LOCAL_ANDROID 1.2 — Message Freshness and Session Binding
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2215,7 +2213,7 @@ requests.
 
 ### LOCAL_ANDROID 1.3 — Strict Redirect URI and State Validation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2324,7 +2322,7 @@ account association.
 
 ### LOCAL_ANDROID 1.4 — Mandatory Proof Key for Code Exchange (PKCE)
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2409,7 +2407,7 @@ POST body to the token endpoint.
 
 ### LOCAL_ANDROID 1.5 — User Identity Propagation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2517,7 +2515,7 @@ existence-sensitive metadata, or causing an external side effect.
 
 ### LOCAL_ANDROID 1.6 — Secure Downstream Transport
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2608,7 +2606,7 @@ sensitive data do not follow.
 
 ### LOCAL_ANDROID 1.7 — Integrated Transport Security and Message Integrity
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2700,7 +2698,7 @@ Named Pipes).
 
 ### LOCAL_ANDROID 1.8 — Sensitive Action Idempotency and Ambiguous Outcomes
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2800,7 +2798,7 @@ Tool mints the identifier, its preparation step cannot create the external side 
 
 ### LOCAL_ANDROID 1.9 — Connector Lifecycle Revocation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2898,7 +2896,7 @@ committed work but cannot authorize a new side effect.
 
 ### LOCAL_ANDROID 2.1 — Scoped Authorization and User Context Propagation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -2984,7 +2982,7 @@ executing sensitive actions.
 
 ### LOCAL_ANDROID 2.2 — Mandatory Cryptographic Validation of User Context
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3071,7 +3069,7 @@ than its own service-level key.
 
 ### LOCAL_ANDROID 2.3 — Server-Side Consent Backstop for Sensitive Actions
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3183,7 +3181,7 @@ occurs.
 
 ### LOCAL_ANDROID 2.4 — Principle of Least Privilege and Scoped Permissions
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3259,7 +3257,7 @@ server respects the specific token's limitations.
 
 ### LOCAL_ANDROID 2.5 — Tool Function Allow-listing and Parameter Validation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3344,7 +3342,7 @@ mechanism and recorded rationale.
 
 ### LOCAL_ANDROID 2.6 — No Token Passthrough / Downstream Token Exchange
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3421,7 +3419,7 @@ least-privilege scope while binding each hop's credential to its audience; proof
 
 ### LOCAL_ANDROID 2.7 — Out-of-Band Confirmation for High-Risk Actions
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3512,7 +3510,7 @@ deployments), with a fail-closed fallback to §2.3 rather than Agent-relayed con
 
 ### LOCAL_ANDROID 3.1 — Externalized Secret Management
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3598,7 +3596,7 @@ configuration provider.
 
 ### LOCAL_ANDROID 3.2 — Automated PII and Credential Masking in Logs
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3678,7 +3676,7 @@ parameters like password or api\_key.
 
 ### LOCAL_ANDROID 3.3 — Secure Session Tokens
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3771,7 +3769,7 @@ log files for the session token string.
 
 ### LOCAL_ANDROID 3.4 — Exfiltration Defense
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3871,7 +3869,7 @@ exhaustion attempts.
 
 ### LOCAL_ANDROID 3.5 — PII Detection
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -3946,7 +3944,7 @@ documented purpose.
 
 ### LOCAL_ANDROID 3.6 — Data Minimization
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4011,7 +4009,7 @@ during active execution.
 
 ### LOCAL_ANDROID 3.7 — Protect Sensitive Data in Logs
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4101,7 +4099,7 @@ inside the persistent log outputs.
 
 ### LOCAL_ANDROID 4.1 — Output Sanitization
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4181,7 +4179,7 @@ response encodes or strips these.
 
 ### LOCAL_ANDROID 4.2 — Parameterized Arguments and Unsafe Sink Blocking
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4261,7 +4259,7 @@ parameters, or explicitly reject the request with an error, preventing the under
 
 ### LOCAL_ANDROID 4.3 — Detect and Block Unsafe Sinks
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4331,7 +4329,7 @@ vectors for bypassing tool sandboxes.
 
 ### LOCAL_ANDROID 4.4 — Maximum Response Size
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4416,7 +4414,7 @@ validly truncated, paginated, or size-limit rejected error payload
 
 ### LOCAL_ANDROID 5.1 — Stateless Request Level Isolation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4517,7 +4515,7 @@ or explicitly purges tenant-specific heap data after the completion of a request
 
 ### LOCAL_ANDROID 5.2 — Ensure Sandbox Protections
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4611,7 +4609,7 @@ malicious configurations as literal string parameters and preventing any underly
 
 ### LOCAL_ANDROID 5.3 — Mandatory Tenant Isolation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4681,7 +4679,7 @@ guessed, sequential, and nonexistent identifiers where applicable.
 
 ### LOCAL_ANDROID 6.1 — Cryptographic Message Integrity Validation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4761,7 +4759,7 @@ drop the connection or reject the message.
 
 ### LOCAL_ANDROID 6.2 — Semantic Integrity and Descriptive Accuracy
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4865,7 +4863,7 @@ unrelated outbound requests or system calls.
 
 ### LOCAL_ANDROID 6.3 — Resource Pinning and Signature Verification
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -4933,7 +4931,7 @@ signature.
 
 ### LOCAL_ANDROID 6.4 — No Embedded Model-Directed Control Directives
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5018,7 +5016,7 @@ relied upon as a security boundary.
 
 ### LOCAL_ANDROID 7.1 — Financial Resource & Cost Governance
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5111,7 +5109,7 @@ defined $100 limit (or justified limit) during high-volume simulation.
 
 ### LOCAL_ANDROID 7.2 — Per User Endpoint Rate Limiting
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5205,7 +5203,7 @@ threshold is exceeded.
 
 ### LOCAL_ANDROID 7.3 — Maximum Payload and Recursion Depth Constraints
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5281,7 +5279,7 @@ limit.
 
 ### LOCAL_ANDROID 8.1 — Implement comprehensive logging using structured logging formats
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5380,7 +5378,7 @@ and success/failure status.
 
 ### LOCAL_ANDROID 8.2 — Invocation Audit Trail
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5447,7 +5445,7 @@ Tool host, (3) function name, (4) tool version, (5) hash or summary of input par
 
 ### LOCAL_ANDROID 7.7.1 — Validate Origin Header on HTTP Transports
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 ### Description
@@ -5493,7 +5491,7 @@ reject the connection.
 
 ### LOCAL_ANDROID C1 — Verifiable Identity Propagation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 * **Tool obligation:** The Tool MUST verify the presented credential — cryptographically for a signed token, or by introspection for an opaque token — establish
  the end user, and scope all downstream access to that identity (On-Behalf-Of). A request bearing a missing, unverifiable, or non-user-scoped credential MUST
@@ -5502,7 +5500,7 @@ hard-fail (`401`), and for any Sensitive Action verification is **mandatory**. W
 
 ### LOCAL_ANDROID C2 — Data / Control Separation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 * **Tool obligation:** The Tool MUST NOT embed model-directed control directives or instructions within its operation results, tool/function descriptions, or
 schemas, and MUST NOT rely on the model or Agent to enforce the Tool's own security constraints. The Tool SHOULD, where feasible, return structured/typed output
@@ -5511,7 +5509,7 @@ schemas, and MUST NOT rely on the model or Agent to enforce the Tool's own secur
 
 ### LOCAL_ANDROID C3 — Consent for Consequential Actions
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 * **Tool obligation (defense-in-depth backstop):** The Tool MUST classify each exposed operation by sensitivity and reversibility and, for a Sensitive Action,
 MUST either obtain user confirmation via server-side elicitation or fail closed. The Tool MUST NOT execute a Sensitive Action on the Agent's assertion alone
@@ -5520,7 +5518,7 @@ action and MUST be rejected when expired, consumed, mismatched, or replayed.
 
 ### LOCAL_ANDROID C4 — Sensitive-Action Idempotency and Outcome Reconciliation
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 * **Tool obligation:** For every Sensitive Action capable of an external side effect, the Tool MUST require an intent or idempotency identifier on the request
 that can create the side effect. It MAY accept an Agent-provided identifier or implement an explicit two-phase flow that mints and returns the identifier before
@@ -5533,7 +5531,7 @@ effect; reuse with mismatched values MUST be rejected. Duplicate-suppression sta
 
 ### LOCAL_ANDROID W03 — Conformance tiers *(within this optional profile)*
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5579,7 +5577,7 @@ Tool emitting the optional `consent_required` signal — see *C3* below.
 
 ### LOCAL_ANDROID W05 — Carrier: `_meta` canonical, `Authorization` header conformant on HTTP
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5650,7 +5648,7 @@ everywhere, plus a header path that is conformant on the transport where headers
 
 ### LOCAL_ANDROID W06 — C1 — Identity Assertion (Baseline tier, every Tool request)
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5738,7 +5736,7 @@ to enable it, and a future revision may elevate it once ecosystem support exists
 
 ### LOCAL_ANDROID W07 — C3 — Consent Assertion (Sensitive Actions; fills Tool Spec §2.1.1)
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5787,7 +5785,7 @@ to the elicitation protocol itself is tested separately by Agent Spec §2.2.3.)
 
 ### LOCAL_ANDROID W08 — Trust anchor / key distribution
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5824,7 +5822,7 @@ permissible deployment substrates for the allowlist, but neither is required by 
 
 ### LOCAL_ANDROID W09 — Tool-side verification algorithm
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 
@@ -5854,7 +5852,7 @@ permissible deployment substrates for the allowlist, but neither is required by 
 
 ### LOCAL_ANDROID W12 — Per-transport placement
 
-**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote proposed disposition.
+**Scope guard:** LOCAL_ANDROID_TOOL_ONLY; retain CURRENT applicable strength and original exclusions, not the remote-HTTP disposition.
 
 
 

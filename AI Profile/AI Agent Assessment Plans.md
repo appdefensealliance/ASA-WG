@@ -1,9 +1,9 @@
 # AI Agent Assessment Plans and Records
 
-<!-- ai-alpha-preview: AI-profiles-0.1.0-alpha.1 -->
-**AI profiles 0.1.0-alpha.1 — proposed WG alpha for pilot assessment; not a basis for ADA certificates.**
+<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
+Version 0.1.0-alpha.1 — 2026-11-03
 
-This candidate's prospective requirements do not authorize certificate issuance. [AI-only publication scope and exact released baseline references](AI%20Alpha%20Publication%20Scope.md) govern the pilot; WG/SC adoption and release preparation remain outstanding.
+This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
 
 **Draft 0.1 — 2026-11-03, #541/#410. Not WG adoption.** These are proposed plan/record conventions implementing the Guide's **#543 assertion-record semantics**, not another evidence taxonomy. All examples are **illustrative synthetic plans**, not real product tests, approved fixtures, calibration results or issued certifications.
 

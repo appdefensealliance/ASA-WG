@@ -42,7 +42,7 @@ def render_context(test):
 
 
 def render_case(case):
-    lines = [f'- **{case["case_id"]} — {case["proposed_disposition"]}:** {summary(case)}']
+    lines = [f'- **{case["case_id"]} — {case["disposition"]}:** {summary(case)}']
     assessment = case['assessment']
     for key in ('mandatory_assertions', 'advisory_assertions'):
         for item in assessment[key]:
@@ -93,7 +93,7 @@ def main():
     ledger = json.loads(original)
     for test in ledger['tests']:
         for case in test['cases']:
-            case['proposed_text'] = summary(case)
+            case['requirement_text'] = summary(case)
     rendered_ledger = json.dumps(ledger, indent=2, ensure_ascii=False) + '\n'
     text = guide_path.read_text()
     rendered_guide = render_guide(text, ledger)

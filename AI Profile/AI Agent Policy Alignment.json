@@ -1,17 +1,20 @@
 {
-  "x_alpha_preview": {"id":"AI-profiles-0.1.0-alpha.1","status":"proposed WG alpha for pilot assessment; not a basis for ADA certificates","certification_authority":false},
-  "status": "owner-aligned proposal; WG review pending",
+  "status": "ALPHA",
   "upstream_revocation_followup": {
     "pr": 528,
     "head": "a153c9090c83cde6c556e6f9b1e3fdb081637cf6",
     "prior_migration_head": "63dff812fc2a38a6906844f9b2facd3528782041",
     "change": "record second invocation attempt timestamp against enforcement deadline; faithfully ported to Guide procedure",
     "merge_commit": "8d96b9017d8d689c3ff73eda0892748716263c8e",
-    "status": "merged upstream by the owner; owner-aligned amendments remain WG/SC review pending; historical baseline maps unchanged"
+    "status": "merged upstream by the owner; historical baseline maps unchanged"
   },
   "review_remediation": {
     "scenario": "c357d704d98af341fdb4cc1a6e53d735c994b35b",
-    "findings": ["A1", "A2", "A4"],
+    "findings": [
+      "A1",
+      "A2",
+      "A4"
+    ],
     "consent": "§3.3.1 follows operation risk and explicit Tool/product requirements, not privilege level alone",
     "private_stores": "Diagnostic/shared/error masking remains; separately permitted protected user stores require actual scope/isolation/retention evidence, not relabeling",
     "managed_runtime": "First-party or delegated Agent execution control remains managed regardless of transport"
@@ -120,7 +123,7 @@
     "6.2.1": "1e210667fde5b525e13217c733e8eba9b30a12497b74cdefde283e75c4ae5e15",
     "6.2.2": "6af05af5dc3e472b2c19bdf6537609ee3c2ad28607ce8368910efef0efd4318f"
   },
-  "source_pin_role": "historical migration baseline; the actual assessed draft/release bundle must be pinned separately",
+  "source_pin_role": "historical migration baseline; the actual versioned assessment bundle must be pinned separately",
   "normative_changes": {
     "539": "Operation-based fresh confirmation; explicit Tool/product requirements remain binding.",
     "540": "Agent-owned managed-runtime and independent remote-integration boundaries; no Tool-cert prerequisite or provider-honesty guarantee.",
@@ -133,7 +136,13 @@
     "pr": 528,
     "head": "63dff812fc2a38a6906844f9b2facd3528782041",
     "control": "2.4.2",
-    "status": "historical original candidate migration; current upstream merge is recorded in upstream_revocation_followup; owner-aligned amendments remain WG review pending",
+    "status": "historical original migration; current upstream merge is recorded in upstream_revocation_followup",
     "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
+  },
+  "x_profile_release": {
+    "id": "AI-profiles-0.1.0-alpha.1",
+    "version": "0.1.0-alpha.1",
+    "document_state": "alpha",
+    "certification_authority": false
   }
 }
