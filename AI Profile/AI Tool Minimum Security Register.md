@@ -66,7 +66,9 @@ User, account, audience, resource, scope, expiry and revocation remain enforced.
 
 The Agent's independently stronger requirements remain in force, including
 untrusted-output defenses, per-action HITL and noncryptographic parameter binding,
-stable action identifiers, nonce/session controls and uncertain-outcome honesty.
+nonce/session controls and uncertain-outcome honesty. Stable business-action IDs
+follow the conditional Agent rule in Contract C4 and Agent §6.1.3; they are not an
+unconditional prerequisite.
 
 ## Assurance claims
 

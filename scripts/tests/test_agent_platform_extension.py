@@ -108,7 +108,8 @@ class AgentPlatformExtensionTests(unittest.TestCase):
         self.assertEqual(spec_ids, guide_ids)
         self.assertEqual(spec_ids, coverage_ids)
         self.assertEqual(37, self.coverage["audit_count"])
-        self.assertFalse(self.coverage["stable_ID_relaxations_included"])
+        self.assertTrue(self.coverage["stable_ID_relaxations_included"])
+        self.assertEqual("MUST", self.coverage["owner_decision_amendment"]["required_interface_and_correct_ID_use_strength"])
 
     def test_remote_model_does_not_waive_model_behaviour(self):
         self.assertIn(

@@ -66,11 +66,20 @@ User, account, audience, resource, scope, expiry and revocation remain enforced.
 
 The Agent's independently stronger requirements remain in force, including
 untrusted-output defenses, per-action HITL and noncryptographic parameter binding,
-stable action identifiers, nonce/session controls and uncertain-outcome honesty.
+nonce/session controls and uncertain-outcome honesty. Stable business-action IDs
+follow the conditional Agent rule in C4; they are not an unconditional prerequisite.
 
 ## Residual assurance and retained Agent obligations
 
 Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. No Agent file is edited here.
+
+## Canonical action and assessment boundaries
+
+**Sensitive Action:** An operation that is irreversible, transfers value or money, mutates or shares user data beyond the scope of the current task, or grants or expands access.
+
+Sensitivity and authorization are separate decisions. Classifying an out-of-task operation as sensitive does not authorize it: establish the new authorized scope before execution and apply the required per-action confirmation. Routine, reversible actions within an already authorized task do not require fresh confirmation solely because a Tool has powerful capabilities. Explicit Tool confirmation requests and applicable product-policy requirements remain binding. Agent confirmation remains bound to the user, connector account, operation, target/recipient, material parameters, validity and one execution; bounded batches must enumerate every action and its material details.
+
+Agents are assessed and certified independently of Tools. Remote Tools are untrusted dependencies; a Tool certificate is not a prerequisite for Agent certification and does not make Tool content authoritative. Agent assessment establishes its own admission, authority, disclosure, consent, managed-execution containment and failure-handling controls against hostile or malfunctioning Tools. It does not certify an independent provider's runtime or honest downstream execution. Applicable containment remains mandatory where the Agent or orchestrator controls Tool execution, locally or hosted. Stronger applicable local Android and underlying-profile requirements remain unchanged.
 
 ## C1 Verifiable Identity Propagation
 
@@ -96,7 +105,7 @@ Structured/typed output and provenance tagging SHOULD be useful defenses, not pr
 
 ### Required outcome / retained baseline
 
-The Agent MUST obtain and enforce informed human confirmation for consequential/irreversible actions and preserve shown-versus-executed fidelity; it MUST NOT allow Tool content or an honest hint alone to authorize action. The Tool MUST provide truthful applicable MCP readOnlyHint/destructiveHint fields (readOnlyHint:true for reads, destructiveHint:true for applicable irreversible/destructive operations), without inventing every-tool Boolean presence or uniform additive-write semantics, and MUST enforce authentication/authorization plus applicable sensitive-account/admin-MFA floor. The existing stronger Agent-side non-cryptographic user/account/operation/recipient/material-parameter/validity/one-execution binding, explicit bounded-batch enumeration and correlation record remain REQUIRED by the Agent Specification; lowering Tool backstop strength does not relax those Agent duties.
+The Agent MUST obtain and enforce informed human confirmation for each independently classified Sensitive Action and for explicit Tool or product-policy confirmation requirements, while preserving shown-versus-dispatched fidelity. Routine, reversible actions within an already authorized task do not require fresh confirmation solely because a Tool has powerful capabilities. Tool content or a hint alone MUST NOT establish authority or approval. The Tool MUST provide truthful applicable MCP readOnlyHint/destructiveHint fields (readOnlyHint:true for reads, destructiveHint:true for applicable irreversible/destructive operations), without inventing every-tool Boolean presence or uniform additive-write semantics, and MUST enforce authentication/authorization plus applicable sensitive-account/admin-MFA floor. The existing stronger Agent-side non-cryptographic user/account/operation/recipient/material-parameter/validity/one-execution binding, explicit bounded-batch enumeration and correlation record remain REQUIRED by the Agent Specification; lowering Tool backstop strength does not relax those Agent duties.
 
 ### Recommended enhancement
 
@@ -106,11 +115,13 @@ The following are TOOL-side enhancements: independent elicitation or fail-closed
 
 ### Required outcome / retained baseline
 
-Published applicable token/session expiry, revocation and stateless-session anti-replay/integrity remain mandatory; C4 is not their replacement. No new stable business-intent mechanism is a Tool baseline gate. Under the retained Agent requirements, the existing Agent stable-intent/idempotency identifiers and their reuse/binding rules remain MUST. Any relaxation requires a separate Agent policy decision. Independently, the independently stronger Agent MUST NOT blindly retry when the original outcome remains unknown and MUST report an indeterminate outcome rather than falsely represent success; its identity/session/state/PKCE, model/memory/sandbox and consumer protections are not demoted by this Tool proposal.
+Applicable published token/session expiry, revocation and stateless-session anti-replay/integrity remain mandatory and are not replaced by business-action IDs. General Agent use of supported stable action-intent/idempotency mechanisms is SHOULD, not a universal prerequisite for an initially authorized Sensitive Action. The Agent MUST satisfy a selected interface's required identifier mechanism or decline invocation. Where a supported identifier is used, the Agent MUST preserve and correctly reuse it for the same intended action and its declared user/account/parameter scope. It MUST NOT replace or remint the identifier to circumvent duplicate protection while the original outcome remains unknown; expiry of the deduplication window does not establish that the earlier action failed.
+
+The Agent MUST NOT assume failure from a timeout or lost/malformed response, fabricate success, or blindly retry as a new operation while the original outcome is unknown. It MAY use a safe, non-mutating status mechanism under valid authority. If authoritative status cannot be established safely, it MUST report an indeterminate outcome without initiating another action. An identifier, Tool hint or Tool response alone establishes neither authorization for another execution nor safe retry, durable duplicate suppression, honest remote execution or exactly-once effects. Consent, shown-versus-dispatched fidelity, authority lifecycle and independently mandatory platform/local requirements retain their strength.
 
 ### Recommended enhancement
 
-The Tool SHOULD use stable action-intent identifiers, parameter/user/account binding, two-phase preparation where useful, reuse on retries, mismatch rejection, durable duplicate-suppression state and richer outcome reconciliation. Agent stable-ID obligations remain MUST under this proposal. Tool-owned outcome reconciliation and avoidance of blind retry or unsupported success claims SHOULD be implemented. Independently, the Agent MUST retain its no-blind-retry and unknown-outcome honesty requirements under this proposal; this Tool-side recommendation does not demote them.
+The Tool SHOULD implement stable action-intent identifiers, user/account/parameter binding, two-phase preparation where useful, mismatch rejection, durable duplicate-suppression state and outcome reconciliation. Adoption of these Tool capabilities is not a universal Tool minimum gate. Agent certification assesses the Agent's conditional interface/identifier handling and mandatory safe-outcome behavior against untrusted dependencies; it does not certify that an independent Tool honors the mechanism. There is one stated Agent policy in this revision, not an unpublished option that a product or assessor may select.
 
 ## Licensing
 
