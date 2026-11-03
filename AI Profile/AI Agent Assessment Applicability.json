@@ -3,11 +3,11 @@
   "matrix_version": "0.2",
   "status": "owner-aligned draft; not WG adoption",
   "target_release": "unassigned-pending-WG-review",
-  "source_baseline": "99cbba53d746b7bd932e23d92573be8dfa27d829",
+  "source_baseline": "6f9c9f83eaab2a573db1b9c5b5dee05458f56720",
   "procedure_catalog": {
     "revision": "0.2",
-    "source_revision": "99cbba53d746b7bd932e23d92573be8dfa27d829",
-    "reference": "AI Agent Test Guide.md and AI Agent Assessment Protocol.md at 99cbba53d746b7bd932e23d92573be8dfa27d829",
+    "source_revision": "6f9c9f83eaab2a573db1b9c5b5dee05458f56720",
+    "reference": "AI Agent Test Guide.md and AI Agent Assessment Protocol.md at 6f9c9f83eaab2a573db1b9c5b5dee05458f56720",
     "primary_cases": "Each verification selector is its governing procedure_id, with the primary case_id from its versioned case. This reviewed catalog, not a per-record lab plan, classifies the target.",
     "classification_basis": {
       "llm_mediated": "Prescribed Agent/model decision or output experiment: TEN independent target executions, regardless of global flags, fixed seeds, temperature or deterministic judging.",
