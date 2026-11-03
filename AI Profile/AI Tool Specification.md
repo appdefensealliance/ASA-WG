@@ -1,1383 +1,711 @@
 # AI Tool Security Specification
 
-
-# Contributors
-
-The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
-
-### Application Security Assessment Working Group Leads
-
-* Alex Duff (Meta) \- ASA WG Chair  
-* Anna Bhirud (Google) \- ASA WG Vice Chair
-
-### AI Profile Leads
-
-* Brad Ree (Google)  
-* Alex Duff (Meta)
-
-### Contributors
-
-* Debdutta Guha(Google)  
-* Nic Watson (Google)  
-* Abhiraman Gcl (Google)  
-* Daniel Bond (Meta)  
-* Tony Balkan (Microsoft)  
-* Dario Freni (Google)
-* TBD
-
-# Table of Contents
-
-[**Revision History	1**](#revision-history)
-
-[**Contributors	1**](#contributors)
-
-[Application Security Assessment Working Group Leads	1](#application-security-assessment-working-group-leads)
-
-[AI Profile Leads	1](#ai-profile-leads)
-
-[Contributors	1](#contributors-1)
-
-[**Table of Contents	2**](#table-of-contents)
-
-[Introduction	5](#introduction)
-
-[Scope	5](#scope)
-
-[Relationship To CoSAI Model Context Protocol (MCP) Security	7](#relationship-to-cosai-model-context-protocol-\(mcp\)-security)
-
-[References	9](#references)
-
-[Licensing	9](#licensing)
-
-[Definitions	9](#definitions)
-
-[1 Improper Authentication and Identity Management	9](#1-improper-authentication-and-identity-management)
-
-[1.1 Identity Spoofing	9](#1.1-identity-spoofing)
-
-[1.2 Confused Deputy (OAuth Proxy)	11](#1.2-confused-deputy-\(oauth-proxy\))
-
-[1.3 Credential Theft/Token Theft	13](#1.3-credential-theft/token-theft)
-
-[1.4 Replay Attacks/Session Hijacking	15](#1.4-replay-attacks/session-hijacking)
-
-[1.4.2 Sensitive Action Idempotency and Ambiguous Outcomes](#142-sensitive-action-idempotency-and-ambiguous-outcomes)
-
-[1.4.3 Connector Lifecycle Revocation](#143-connector-lifecycle-revocation)
-
-[1.5 OAuth/Legacy Auth Weaknesses	17](#1.5-oauth/legacy-auth-weaknesses)
-
-[1.6 Session Token Leakage	19](#1.6-session-token-leakage)
-
-[2 Missing or Improper Access Control	21](#2-missing-or-improper-access-control)
-
-[2.1 Insecure Human-in-the-Loop	21](#2.1-insecure-human-in-the-loop)
-
-[2.2 Improper Multitenancy	22](#2.2-improper-multitenancy)
-
-[2.3 Confused Deputy (OAuth Proxy) (Duplicate)	27](#2.3-confused-deputy-\(oauth-proxy\)-\(duplicate\))
-
-[2.4 Excessive Permissions/Overexposure	27](#2.4-excessive-permissions/overexposure)
-
-[3 Input Validation/Sanitization Failures	28](#3-input-validation/sanitization-failures)
-
-[3.1 Command Injection	28](#3.1-command-injection)
-
-[3.2 File System Exposure/Path Traversal (Duplicate)	29](#3.2-file-system-exposure/path-traversal-\(duplicate\))
-
-[3.3 Insufficient Integrity Checks	30](#3.3-insufficient-integrity-checks)
-
-[4 Data/Control Boundary Distinction Failure	31](#4-data/control-boundary-distinction-failure)
-
-[4.1 Tool Definition Poisoning	31](#4.1-tool-definition-poisoning)
-
-[4.2 Full Schema Poisoning	34](#4.2-full-schema-poisoning)
-
-[4.3 Resource Content Poisoning	35](#4.3-resource-content-poisoning)
-
-[4.4 Prompt Injection	36](#4.4-prompt-injection)
-
-[5 Inadequate Data Protection and Confidentiality Controls	38](#5-inadequate-data-protection-and-confidentiality-controls)
-
-[5.1 Data Exfiltration & Corruption	38](#5.1-data-exfiltration-&-corruption)
-
-[5.2 File System Exposure/Path Traversal (Duplicate)	38](#5.2-file-system-exposure/path-traversal-\(duplicate\))
-
-[6 Missing Integrity/Verification Controls	39](#6-missing-integrity/verification-controls)
-
-[6.1 Resource Content Poisoning	39](#6.1-resource-content-poisoning)
-
-[6.2 Typosquatting/Confusion Attacks	40](#6.2-typosquatting/confusion-attacks)
-
-[6.3 Shadow MCP Servers	41](#6.3-shadow-mcp-servers)
-
-[6.4 Supply Chain Compromise and Privileged host-base Attacks	42](#6.4-supply-chain-compromise-and-privileged-host-base-attacks)
-
-[7 Session and Transport Security Failures	43](#7-session-and-transport-security-failures)
-
-[7.1 Man-in-the-Middle (MITM)	43](#7.1-man-in-the-middle-\(mitm\))
-
-[7.2 Insufficient Integrity Checks (Duplicate)	43](#7.2-insufficient-integrity-checks-\(duplicate\))
-
-[7.3 Unrestricted Network Access	44](#7.3-unrestricted-network-access)
-
-[7.4 Protocol Security Gaps	45](#7.4-protocol-security-gaps)
-
-[7.5 Insecure Descriptor Handling	46](#7.5-insecure-descriptor-handling)
-
-[7.6 CSRF Protection Missing	47](#7.6-csrf-protection-missing)
-
-[7.7 CORS/Origin Policy Bypass	47](#7.7-cors/origin-policy-bypass)
-
-[8 Network Binding/Isolation Failures	48](#8-network-binding/isolation-failures)
-
-[8.1 Shadow MCP Servers (Duplicate)	48](#8.1-shadow-mcp-servers-\(duplicate\))
-
-[8.2 Improper Multitenancy	49](#8.2-improper-multitenancy)
-
-[8.3 Unrestricted Network Access (Duplicate)	50](#8.3-unrestricted-network-access-\(duplicate\))
-
-[8.4 Malicious Command Execution	51](#8.4-malicious-command-execution)
-
-[8.5 Dependency/Update Attack	51](#8.5-dependency/update-attack)
-
-[9 Trust Boundary and Privilege Design Failures	52](#9-trust-boundary-and-privilege-design-failures)
-
-[9.1 Overreliance on the LLM	52](#9.1-overreliance-on-the-llm)
-
-[9.2 Consent/User Approval Fatigue	53](#9.2-consent/user-approval-fatigue)
-
-[10 Resource Management/Rate Limiting Absence	54](#10-resource-management/rate-limiting-absence)
-
-[10.1 Resource exhaustion and denial of wallet	54](#10.1-resource-exhaustion-and-denial-of-wallet)
-
-[10.2 Payload Limit/DoS	55](#10.2-payload-limit/dos)
-
-[10.3 Per-User and Enumeration-Resistant Rate Limiting](#103-per-user-and-enumeration-resistant-rate-limiting)
-
-[11 Supply Chain and Lifecycle Security Failures	56](#11-supply-chain-and-lifecycle-security-failures)
-
-[11.1 Shadow MCP Servers (Duplicate)	56](#11.1-shadow-mcp-servers-\(duplicate\))
-
-[11.2 Supply Chain Compromise (Duplicate)	58](#11.2-supply-chain-compromise-\(duplicate\))
-
-[12 Insufficient Logging, Monitoring, and Auditability	60](#12-insufficient-logging,-monitoring,-and-auditability)
-
-[12.1 Invisible Agent Activity	60](#12.1-invisible-agent-activity)
-
-[12.2 Lack of Observability	60](#12.2-lack-of-observability)
-
-# Introduction
-
-TBD
-
-# Scope
-
-This AI Tool security certification encompasses a diverse range of integration methods, focusing on the security posture of the interface layer between the AI Agent and AI Tool, along with the AI Tool and the Web/Mobile Application. The scope includes Model Context Protocol (MCP) Servers, which act as bridges to web-based applications, as well as local interfaces residing on host machines. Furthermore, Mobile AI Tools—specifically mobile applications that implement AI-driven interfaces similar to MCP architectures—are explicitly included. This multi-platform approach ensures that regardless of whether the tool is web-based, local, or mobile, the certification validates the security of the specific conduit through which AI interactions flow.
-
-To maintain a rigorous and fair evaluation, the certification boundaries are strictly confined to the components under the direct control of the AI Tool developer. Consequently, the underlying platform hosting the tool and the external AI Agent itself are considered out of scope. For instance, while a requirement might mandate that an AI Tool generates comprehensive logs of all agent interactions, the security of the persistent storage or the centralized logging infrastructure is excluded, as these are managed by the host platform. All testing and compliance criteria are directed solely at the tool’s logic, its communication protocols, and its internal handling of data, ensuring the assessment remains decoupled from the infrastructure it inhabits.
-
-![][image1]
-
-AI Tools may be deployed in several different environments and provide connectivity to local resources, remote resources, or any combination of these. Furthermore, an AI tool may be a stand alone application (Such as a MCP server running locally on a user’s machine), or embedded into a monolithic application (such as App Functions added to a mobile application). In all cases, this specification shall cover the AI Tool portion of the application. Other specifications, such as the Mobile Application Profile or the Web Application Profile shall apply to the remainder of the developer’s application.
-
-![][image2]
-
-## Integration with Conventional Security
-
-Every web-accessible or HTTP-based AI Tool API must comply with this specification **in addition to** the CASA (Cloud App Security Assessment) specification. This ensures that conventional application security controls—such as anti-CSRF protections for authenticated functionality—are enforced alongside AI-specific controls.
-
-# Relationship To CoSAI Model Context Protocol (MCP) Security
-
-The following security specification and testing guide is based upon the Model Context Protocol (MCP) Security paper published by CoSAI. Each threat category includes one or more MCP or conventional security (CS) threats. All threats follow the same numbering convention as the MCP security paper, thus MCP-1 references either the MCP specific or MCP contextualized threat \#1. CS-16 refers to the Conventional Security threat 16\. For each threat, the App Defense Alliance created a set of requirements and audit test cases. For some conventional security threats, the existing Mobile Application Security profile or the Web Application Security Profile may be referenced.
-
-Both static code inspection and dynamic application test cases are defined. Sample prompts are provided for each static test case, which could be used for automated testing. However, detailed testing requirements and acceptance criteria are defined in the AI Tool Testing Guide.
-
-| Threat Category                                                                                                          | AI Tool Specific Threat                                                                                                                                                                                                                    | Conventional Security Threat                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| :----------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [1](#1-improper-authentication-and-identity-management): Improper Authentication and Identity Management                 | [1.1](#1.1-identity-spoofing): Identity Spoofing <br>[1.2](#1.2-confused-deputy-\(oauth-proxy\)): Confused Deputy (OAuth Proxy)                                                                                                            | [1.3](#1.3-credential-theft/token-theft): Credential Theft/Token Theft <br>[1.4](#1.4-replay-attacks/session-hijacking): Replay Attacks/Session Hijacking<br>[1.5](#1.5-oauth/legacy-auth-weaknesses): OAuth/Legacy Auth Weaknesses <br>[1.6](#1.6-session-token-leakage): Session Token Leakage                                                                                                                                                |
-| [2](#2-missing-or-improper-access-control): Missing or Improper Access Control                                           | [2.1](#2.1-insecure-human-in-the-loop): Insecure Human-in-the-Loop  <br>[2.2](#2.2-improper-multitenancy): Improper Multitenancy                                                                                                           | CS-8: Privilege Escalation<br>[2.4](#2.4-excessive-permissions/overexposure): Excessive Permissions/Overexposure                                                                                                                                                                                                                                                                                                                                |
-| [3](#3-input-validation/sanitization-failures): Input Validation/Sanitization Failures                                   |                                                                                                                                                                                                                                            | [3.1](#3.1-command-injection): Command Injection <br>[3.2](#3.2-file-system-exposure/path-traversal-\(duplicate\)): File System Exposure/Path Traversal <br>[3.3](#3.3-insufficient-integrity-checks): Insufficient Integrity Checks                                                                                                                                                                                                            |
-| [4](#4-data/control-boundary-distinction-failure): Data/Control Boundary Distinction Failure                             | [4.1](#4.1-tool-definition-poisoning): Tool Poisoning <br>[4.2](#4.2-full-schema-poisoning): Full Schema Poisoning<br>[4.3](#4.3-resource-content-poisoning): Resource Content Poisoning<br>[4.4](#4.4-prompt-injection): Prompt Injection | [4.5](#heading=h.eqisat9des8o): Command Injection                                                                                                                                                                                                                                                                                                                                                                                               |
-| [5](#5-inadequate-data-protection-and-confidentiality-controls): Inadequate Data Protection and Confidentiality Controls |                                                                                                                                                                                                                                            | [5.1](#5.1-data-exfiltration-&-corruption): Data Exfiltration & Corruption <br>[5.2](#5.2-file-system-exposure/path-traversal-\(duplicate\)): File System Exposure/Path Traversal                                                                                                                                                                                                                                                               |
-| [6](#6-missing-integrity/verification-controls): Missing Integrity/Verification Controls                                 | [6.1](#6.1-resource-content-poisoning): Resource Content Poisoning <br>[6.2](#6.2-typosquatting/confusion-attacks): Typosquatting / Confusion Attacks <br>[6.3](#6.3-shadow-mcp-servers): Shadow MCP Servers                               | [6.4](#6.4-supply-chain-compromise-and-privileged-host-base-attacks): Supply Chain Compromise and Privileged host-base Attacks                                                                                                                                                                                                                                                                                                                  |
-| [7](#7-session-and-transport-security-failures): Session and Transport Security Failures                                 | [7.1](#7.1-man-in-the-middle-\(mitm\)): Man-in-the-Middle (MITM)                                                                                                                                                                           | [7.3](#7.3-unrestricted-network-access): Unrestricted Network Access <br>[7.4](#7.4-protocol-security-gaps): Protocol Security Gaps <br>[7.5](#7.5-insecure-descriptor-handling): Insecure Descriptor Handling <br>[7.2](#7.2-insufficient-integrity-checks-\(duplicate\)): Insufficient Integrity Checks <br>[7.6](#7.6-csrf-protection-missing): CSRF Protection Missing <br>[7.7](#7.7-cors/origin-policy-bypass): CORS/Origin Policy Bypass |
-| [8](#8-network-binding/isolation-failures): Network Binding/Isolation Failures                                           | [8.1](#8.1-shadow-mcp-servers-\(duplicate\)): Shadow MCP Servers <br>[8.2](#8.2-improper-multitenancy): Improper Multitenancy                                                                                                              | [8.4](#8.4-malicious-command-execution): Malicious Command Execution <br>[8.5](#8.5-dependency/update-attack): Dependency/Update Attack <br>[8.3](#8.3-unrestricted-network-access-\(duplicate\)): Unrestricted Network Access                                                                                                                                                                                                                  |
-| [9](#9-trust-boundary-and-privilege-design-failures): Trust Boundary and Privilege Design Failures                       | [9.1](#9.1-overreliance-on-the-llm): Overreliance on the LLM <br>[9.2](#9.2-consent/user-approval-fatigue): Consent/User Approval Fatigue                                                                                                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| [10](#10-resource-management/rate-limiting-absence): Resource Management/Rate Limiting Absence                           | [10.1](#10.1-resource-exhaustion-and-denial-of-wallet): Resource exhaustion and denial of wallet                                                                                                                                           | [10.2](#10.2-payload-limit/dos): Payload Limit/DoS                                                                                                                                                                                                                                                                                                                                                                                              |
-| [11](#11-supply-chain-and-lifecycle-security-failures): Supply Chain and Lifecycle Security Failures                     | [11.1](#11.1-shadow-mcp-servers-\(duplicate\)): Shadow MCP Servers                                                                                                                                                                         | [11.2](#11.2-supply-chain-compromise-\(duplicate\)): Supply Chain Compromise                                                                                                                                                                                                                                                                                                                                                                    |
-| [12](#12-insufficient-logging,-monitoring,-and-auditability): Insufficient Logging, Monitoring, and Auditability         | [12.1](#12.1-invisible-agent-activity): Invisible Agent Activity                                                                                                                                                                           | [21.2](#12.2-lack-of-observability): Lack of Observability                                                                                                                                                                                                                                                                                                                                                                                      |
-
-# References
-
-* [CSA Monitoring & Operational Security](https://modelcontextprotocol-security.io/ttps/monitoring-operational-security/)  
-* [OWASP MCP Top 10](https://github.com/OWASP/www-project-mcp-top-10/tree/main/2025)  
-* [CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/model-context-protocol-security.md)  
-* 
-
-# Licensing
-
-This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
-
-# Definitions
+**Draft proposal for Working Group review — 29 October 2026.**
+
+The AI Tool minimum combines the secure web application baseline established by
+published CASA with leading security practices informed by market research.
+The [Minimum Security Register](AI%20Tool%20Minimum%20Security%20Register.md)
+defines the baseline, applicability conditions, actor allocation and assurance limits.
+
+## Certification scope
+
+Standalone Tool certification scope and call-level authentication are separate.
+A Tool is in scope when its intended integration processes confidential data or
+enables sensitive operations. A public-only, read-only Tool may be excluded only
+when it receives no confidential inputs, credentials or private context, accesses
+no protected resources and performs no sensitive state-changing operation.
+Public output or lack of authentication alone does not establish exclusion.
+
+Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuine
+public calls may be unauthenticated. An excluded public-only Tool remains
+untrusted external input in Agent assessment, with applicable prompt-injection,
+authorization, HITL and safe-outcome controls retained. Exclusion is not a
+certification pass or proof of safety. This proposal does not introduce a blanket
+public-application exemption from published CASA.
+
+## Deployment and actor applicability
+
+| Boundary | Treatment |
+| --- | --- |
+| Remote HTTP Tool | Applicable CASA baseline and supplemental leading practices; additional Tool safeguards SHOULD be implemented. |
+| Local Android Tool, including stdio and AppFunctions | Retain current applicable strength and exclusions in the [Local Android Requirements](AI%20Tool%20Local%20Android%20Requirements.md). |
+| Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
+| Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
+| Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
+| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
+
+Device-local HTTP and incidental outbound HTTP do not themselves determine the
+deployment category. Literal MCP fields and discovery rules apply to the selected
+MCP interface; public Internet reachability applies when publishing to the relevant
+public directory. Protocol and platform publication rules bind their actual implementer.
+
+Tool assessment covers the Tool's authorization, metadata and implemented
+transport/OAuth roles. Independently controlled Agent UI/HITL, OAuth-client and
+authorization-server duties must be recorded as dependencies and assessed under
+the responsible profile. A Tool certificate does not prove those components.
+Published CASA integration and third-party-authentication applicability remain intact.
+
+## Normative strength and authority
+
+Every applicable published CASA v2.1.1 requirement, alternative, criterion and
+exception remains mandatory. The register preserves all 48 audit IDs and their
+published AL1/AL2 criteria. Supplemental properties are conditional; they are not
+21 unconditional new requirements.
+
+MUST/SHALL states a scoped mandatory outcome. SHOULD states a recommendation;
+its absence is advisory unless an independently mandatory property fails.
+Priority and normative strength are separate. No P0/P1/P2 classification is assigned.
+Optional credentials or proofs used to establish mandatory authority must still
+pass their required verification. Missing an unused enhancement is not a failure;
+invalid required authority must never grant protected access.
+
+For protected access, the implementation's supported, correctly verified OAuth
+JWT or authoritative opaque-token introspection can establish authority. This is
+an admissible-evidence choice, not a requirement to support or accept both formats.
+User, account, audience, resource, scope, expiry and revocation remain enforced.
+
+The Agent's independently stronger requirements remain in force, including
+untrusted-output defenses, per-action HITL and noncryptographic parameter binding,
+stable action identifiers, nonce/session controls and uncertain-outcome honesty.
+
+## Definitions
 
 | Term             | Definition |
 | :--------------- | :--------- |
 | sensitive action | An operation that is irreversible, transfers value or money, mutates or shares user data beyond the scope of the current task, or grants or expands access. Aligned with "Sensitive Action" in the AI Agent–Tool Interface Contract. |
 | AI model | A statistical model — such as a large language model (LLM) — trained on data to perform inference (e.g., generating text, classifying inputs, or producing embeddings), that an AI Agent invokes or an AI Tool may use internally. |
 
-# 1 Improper Authentication and Identity Management
-## 1.1 Identity Spoofing
+## Tool requirements
 
-Weak or misconfigured authentication in MCP deployments could allow attackers to impersonate legitimate clients or the agents acting on their behalf, corrupting audit trails or gaining unauthorized access to server resources.
+### 1.1.1 Client/Server Authentication for Protected Access
 
-### 1.1.1 Mandatory Client-Server Transport Authentication
+<!-- ada:requirement Tool:1.1.1 -->
 
-#### Description
-
-The MCP server must verify the identity of the MCP host (client) before executing any tools or providing resources. For remote connections (Streamable HTTP), this must involve strong authentication (e.g., OAuth2, dynamically rotated API Keys, or mTLS). For local connections (Stdio), the server must ensure it is only accepting input from the authorized parent process.
-
-#### Rationale
-
-Without identity verification, an attacker could impersonate a legitimate AI agent or host to trigger sensitive tools (e.g., "delete\_database") or extract proprietary data.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  **Identify Transport Setup:** Search the MCP server initialization and transport setup code to determine the communication method (e.g., Streamable HTTP, Stdio). <br><br>**Verify Identity Validation:** Identify where the server validates the 'Authorization' header or client certificates during the handshake or request phase. <br><br>**Check Cryptographic Binding:** Verify that there is a cryptographic binding between the validated identity and the established session to prevent hijacking. <br><br>**Flag Authentication Gaps:** Flag any server implementation that executes tool calls or provides resources without an explicit, successful authentication check.  |
-| Dynamic | **Attempt Unauthenticated Access:** Try to connect to the MCP server or trigger a tool call without providing any authentication credentials to ensure the request is rejected. <br><br>**Test Invalid Credentials:** Provide expired, malformed, or incorrect tokens/keys to verify that the server correctly denies access. <br><br>**Verify Session Persistence:** Ensure that once a session is authenticated, the identity remains consistent and cannot be swapped mid-session.  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | Out of scope |
-| Mobile | Out of scope |
-| Remote | In Scope |
-
-## 1.2 Confused Deputy (OAuth Proxy)
-
-Attackers exploit misconfigured roles, credentials, ACLs, trust relationships, or flawed delegation logic to gain elevated permissions and access unauthorized resources. In MCP deployments, this includes privilege escalation, as well as attacks that leverage the MCP server's intermediary role in multi-user token delegation. For example, confused deputy attacks can occur when an MCP server acting as an OAuth proxy fails to properly validate authorization context—allowing attackers to manipulate the server into using another user's credentials to perform privileged operations.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | For protected/user-specific remote calls, the Tool MUST validate the selected OAuth credential and user/resource/scope authority before execution; MUST reject missing/invalid credentials on protected operations. Public-safe and discovery operations MAY be unauthenticated only when they expose no protected data or unauthorized action. |
+| SHOULD | Dedicated MCP-host identity authentication beyond end-user authorization SHOULD be provided. mTLS client identification and rotated keys SHOULD be defense in depth, not public-directory substitutes for the supported user OAuth profile. |
 
 ### 1.2.1 Scoped Authorization and User Context Propagation
 
-#### Description
+<!-- ada:requirement Tool:1.2.1 -->
 
-The MCP server must not rely solely on its own service-level credentials to access downstream resources. It must require and validate "User-in-the-loop" context or scoped tokens passed through the MCP request metadata to ensure the end-user has the authority to perform the requested action.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | For protected/user-specific operations, the Tool MUST verify user authority and uniformly enforce resource/object/attribute permissions before returning data, existence-sensitive metadata or causing side effects. Its service credential MUST NOT substitute for user authorization. |
+| SHOULD | User context SHOULD be propagated centrally through handlers and downstream clients; a particular middleware architecture is not mandatory. |
 
-#### Rationale
+### 1.2.2 Validation of User Context
 
-An MCP server acts as a deputy. If it uses a global admin key to fulfill a request from a low-privilege user, it becomes a 'confused deputy,' allowing the user to escalate privileges via the AI tool.
+<!-- ada:requirement Tool:1.2.2 -->
 
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  **Analyze Tool Handlers:** Identify and examine all `callTool` handler functions within the codebase. <br><br>**Verify Token Usage:** Check if the tool logic relies on a hardcoded "Global Admin" or service-level token to access external APIs. <br><br>**Verify Context Extraction:** Confirm the code extracts a user-specific identifier or session token from the metadata or parameters of the MCP request. <br><br>**Check Authorization Logic:** Verify that the extracted user context is used to authorize access to specific downstream resources.  |
-| Dynamic | **Test Privilege Separation:** For every exposed resource type, identify the supported operation classes and attempt each applicable list, search, read, create, update, delete, share, send, cancel, purchase, or other state-changing operation against a resource belonging to User A while authenticated as User B. Use known, guessed, sequential, and nonexistent resource identifiers where applicable. Verify denial before protected data, existence-sensitive metadata, or an external side effect is produced. An operation may be omitted only when the Tool does not expose it, with the omission documented. <br><br>**Verify Scoped Execution:** Trigger a tool call and inspect the downstream API request to confirm it uses a scoped user token rather than a global administrative key. <br><br>**Validate Metadata Propagation:** Ensure that user-in-the-loop context passed through MCP request metadata is correctly honored by the server before executing sensitive actions. |
-
-### 1.2.2: Mandatory Cryptographic Validation of User Context
-
-#### Description 
-
-The MCP server must verify the cryptographic signature of identity tokens or user context metadata provided by the MCP host (Agent) (when possible). If the tool interacts with external third-party APIs (downstream resources), it must utilize an "On-Behalf-Of" flow or exchange the validated user token for a scoped access token. The server shall reject any request where the user context is provided as a simple, unverified string (e.g., a plain `user_id` field).
-
-#### Rationale 
-
-If a developer's tool simply trusts a `user_id` passed by the Agent, a compromised or "confused" Agent could provide "User A's" ID while executing "User B's" request. By requiring cryptographic validation (e.g., verifying a JWT signed by a trusted IdP), the Developer ensures that the user context is authentic and that the Agent cannot escalate privileges by misrepresenting the user.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Identify Token Validation Logic:** Search the codebase for JWT or identity token parsing logic. Verify that the implementation uses a library to check signatures (e.g., `jwt.verify()`) against a trusted public key or JWKS endpoint. <br><br>**Check Downstream Flow:** Inspect outbound API calls to ensure they utilize the validated user context to acquire "On-Behalf-Of" tokens rather than using the server's own administrative credentials. <br><br>**Flag Unverified Identifiers:** Identify and flag any tool handlers that accept user identifiers (like `email` or `uuid`) as plain parameters without verifying an accompanying cryptographic signature  |
-| Dynamic | **Submit Unsigned/Malformed Tokens:** Attempt to trigger a tool call using a token with the signature removed or a header set to `"alg": "none"`. Verify the server returns an authentication error. <br><br>**Payload Tampering:** Provide a validly signed token but modify the `user_id` within the payload. Verify the cryptographic check fails and the request is rejected. <br><br>**Verify Token Exchange:** Intercept downstream traffic to confirm that the MCP server is passing a scoped user-specific token to the final resource, rather than its own service-level key. |
-
-##### Comments {#comments}
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST authenticate protected user context by valid signed-token verification OR trusted opaque-token introspection, including applicable issuer, audience/resource, expiry and scope checks. Bare unsigned user_id is not authentication. Protected downstream access MUST remain user-authorized. |
+| SHOULD | An issuer-minted per-request signed user identity assertion forwarded by the Agent and cryptographic per-action parameter binding SHOULD be supported as stronger mechanisms, not mandatory formats. |
 
 ### 1.2.3 No Token Passthrough / Downstream Token Exchange
 
-#### Description
+<!-- ada:requirement Tool:1.2.3 -->
 
-When an AI Tool calls a downstream or upstream API on the user's behalf, it MUST NOT forward (pass through) the access token it received from the calling client/Agent. Instead, the Tool MUST obtain a separate token scoped to the downstream resource via OAuth 2.0 Token Exchange (RFC 8693) or an equivalent on-behalf-of flow, with the token's audience bound to that resource (RFC 8707 resource indicators). Downstream tokens SHOULD be short-lived and SHOULD be sender-constrained via proof-of-possession (DPoP, RFC 9449); proof-of-possession is REQUIRED for remote, high-value deployments.
-
-#### Rationale
-
-Forwarding the client-supplied token to downstream services is the classic MCP confused-deputy vector: the downstream service cannot tell whether the Tool or the original client is acting, and a token minted for one audience can be replayed against another (audience confusion). Token exchange preserves the user's identity and least-privilege scope while giving each hop an audience-bound credential; proof-of-possession prevents a stolen bearer token from being replayed. This is the most established MCP authorization rule (CoSAI MCP Security §3.2.2).
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | Review downstream/upstream call construction. Confirm the client-supplied token is never forwarded to another audience, and that a token-exchange (RFC 8693) or equivalent on-behalf-of step mints a downstream-scoped, audience-bound (RFC 8707) token. Confirm downstream tokens are short-lived and, for remote/high-value deployments, sender-constrained (DPoP). |
-| Dynamic | Intercept the Tool's downstream traffic during a tool call. Confirm the token sent downstream is a freshly-exchanged, audience-scoped token — not the client's inbound token and not an over-privileged service-level key. Attempt to replay a captured downstream token against a different audience and confirm it is rejected. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
-
-## 1.3 Credential Theft/Token Theft
-
-Attackers exploit insecure storage, handling, or transmission of secrets (OAuth tokens, API keys, credentials), enabling impersonation, unauthorized access, or privilege escalation.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | On user-behalf downstream access, the Tool MUST NOT pass the inbound MCP access token through to an upstream API for a different audience. It MUST use separately authorized resource-scoped credentials preserving the end-user authorization boundary. RFC8693 exchange or equivalent OBO is acceptable, not the only mandated wire procedure. |
+| SHOULD | Shorter downstream token lifetimes and sender constraints/DPoP SHOULD be applied, including remote/high-value deployments. Stronger delegation chains SHOULD be supported where practical. |
 
 ### 1.3.1 Externalized Secret Management
 
-#### Description
+<!-- ada:requirement Tool:1.3.1 -->
 
-MCP servers must never contain hardcoded credentials, API keys, or private keys within the source code or configuration files. All sensitive secrets must be retrieved at runtime from an environment variable or a dedicated Secret Management Service (e.g., AWS Secrets Manager, HashiCorp Vault). Developers shall have a policy and procedure in place to periodically rotate sensitive secrets and have revocation protocols in place if a breach is detected.
-
-#### Rationale
-
-MCP servers are often lightweight and distributed; hardcoded secrets are easily leaked through version control or container image inspection, leading to full compromise of the connected tools.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  **Scan for Hardcoded Secrets:** Scan the codebase for regex patterns matching high-entropy strings, API keys (e.g., `sk-`, `ghp_`), and hardcoded passwords. <br><br>**Verify Client Initialization:** Check that all external service clients (e.g., OpenAI, Database, Slack) are initialized using `process.env` or a specific configuration provider. <br><br>**Flag String Literals:** Identify and flag any string literals used directly as credentials within the source code or configuration files. <br><br>**Review Rotation Policies:** Verify the existence of documented policies and procedures for periodically rotating sensitive secrets. <br><br>**Confirm Revocation Protocols:** Ensure there are established protocols for immediate secret revocation if a breach is detected.  |
-| Dynamic | **Verify Runtime Retrieval:** Confirm that the MCP server successfully retrieves sensitive secrets from an environment variable or a dedicated Secret Management Service at runtime. <br><br>**Validate Secret Isolation:** Ensure that sensitive credentials are not exposed in the process environment beyond what is necessary for execution.  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Server-side tokens/API keys/secrets MUST use a documented appropriate access-control policy and cryptographically secure storage; access MUST be logged OR monitored without logging secret values. Secrets MUST remain confidential, including public packages/metadata. |
+| SHOULD | Externalized runtime secret retrieval, avoiding embedded secret literals, periodic rotation procedures and breach-revocation playbooks SHOULD be implemented. No specific environment-variable or product is mandatory. |
 
 ### 1.3.2 Secure Downstream Transport
 
-#### Description
+<!-- ada:requirement Tool:1.3.2 -->
 
-The AI Tool must ensure that all communications with downstream resources (e.g., internal APIs, databases, or third-party services) that involve the transmission of secrets are conducted over encrypted channels (TLS 1.3 or higher). All security sensitive data shall be protected when in flight. Tokens shall not be sent in URL query parameters or over unencrypted channels. Credentials and sensitive data must not be forwarded automatically when an approved endpoint redirects to another origin; each redirect destination must be independently authorized before credentials or sensitive data are attached.
-
-#### Rationale
-
-Credential theft often occurs during transit or through the reuse of intercepted long-lived keys. Ensuring encrypted transport mitigates interception risks during the "handling" phase.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Identify Downstream Clients:** Search the codebase for all outgoing network clients (e.g., axios, fetch, requests, pg-client). <br><br>**Verify TLS Enforcement:** Confirm that connection strings and URL constructions strictly use https:// or equivalent secure protocols (e.g., sslmode=require for databases). <br><br>**Protect Data in Transit:** Audit the codebase for any transmission of sensitive information (e.g., auth tokens) and confirm robust encryption is enforced. <br><br>**Check Redirect Credential Handling:** Confirm that clients do not automatically forward credentials or sensitive data across an origin-changing redirect and independently authorize every destination before attaching them. |
-| Dynamic | **Monitor Outbound Traffic:** Use a network interception tool (e.g., Wireshark or a service mesh proxy) to verify that secrets (Authorization headers, API keys) are never sent over unencrypted (HTTP) connections. <br><br>**Test Redirect Destination Substitution:** Cause an approved downstream endpoint to redirect to an unapproved origin and confirm that credentials and sensitive data do not follow. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | Out of scope |
-| Remote | In scope (When MCP server is not integrated with Web App) |
-
-## 1.4 Replay Attacks/Session Hijacking 
-
-Attackers intercept, reuse, or hijack authentication tokens or session identifiers, impersonating legitimate users or agents and executing unauthorized actions.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Applicable TLS protection/trust MUST satisfy the full published CASA4.1.1/4.1.2 clauses, including default1.2+, necessary legacy mitigations and Additional Context exceptions. Public MCP/auth exchanges MUST use HTTPS. Bearer credentials MUST NOT appear in URL query strings. Credentials MUST NOT be disclosed to unauthorized redirected destinations. |
+| SHOULD | TLS 1.3 SHOULD be preferred. Independently reauthorizing every cross-origin redirect SHOULD be the chosen hardening approach; equivalent enforcement of the mandatory authorized-destination/no-secret-disclosure outcome remains required. |
 
 ### 1.4.1 Message Freshness and Session Binding
 
-#### Description
+<!-- ada:requirement Tool:1.4.1 -->
 
-For persistent or stateful transports (e.g., Streamable HTTP), the MCP server must implement session timeouts and validate message timestamps or nonces if provided by the client. The server must terminate sessions that exceed a defined period of inactivity.
-
-#### Rationale
-
-If an attacker captures a valid MCP tool-call request, they could "replay" it later to trigger the tool again (e.g., a "pay\_invoice" tool) even if the original session has ended.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  **Examine Session Management:** Review the session management logic within the MCP transport layer (e.g., Streamable HTTP). <br><br>**Identify Expiration Timers:** Verify the implementation of an expiration timer (TTL) for active sessions to ensure they are terminated after a defined period of inactivity. <br><br>**Check Freshness Validation:** Confirm the server validates 'timestamp' or 'nonce' fields within incoming JSON-RPC objects to prevent processing stale or duplicate requests.  |
-| Dynamic | **Verify Inactivity Timeouts:** Establish a session and remain inactive to verify the server automatically terminates the connection after the defined timeout period. <br><br>**Test Replay Resistance:** Attempt to capture and resend a previously successful JSON-RPC tool-call request to ensure the server rejects the duplicate based on an expired timestamp or used nonce. <br><br>**Validate Session Termination:** Ensure that once a session is terminated or timed out, any subsequent requests using that session identifier are strictly rejected.  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Applicable stateful session/refresh logout/expiry invalidation and default-or-option password-change termination MUST be preserved. Only non-revocable STATELESS authentication tokens MUST expire within 24 hours. Stateless-session anti-tampering/replay controls MUST meet CASA 2.3.4. |
+| SHOULD | Message-level nonce/timestamp validation, inactivity timers and duplicate JSON-RPC replay caches SHOULD be implemented. Their absence alone is advisory unless it exposes an applicable mandatory authentication/session weakness. |
 
 ### 1.4.2 Sensitive Action Idempotency and Ambiguous Outcomes
 
-#### Description
+<!-- ada:requirement Tool:1.4.2 -->
 
-A Sensitive Action that can create an external side effect MUST require a stable intent or idempotency identifier on the request that can create the side effect. The Tool MAY accept an Agent-provided identifier or implement an explicit two-phase flow that mints and returns the identifier before any external side effect occurs and requires a subsequent request carrying it to execute. The identifier MUST uniquely represent the user-approved action and be bound to the authenticated user, Tool or connector account, operation, and all material parameters. Two separately approved but otherwise identical actions MUST use distinct identifiers. Concurrent or repeated requests representing the same intended action MUST reuse its identifier and MUST NOT produce multiple external side effects. Duplicate-suppression state MUST survive process restarts and remain available for a documented retry and outcome-uncertainty period.
-
-When the downstream outcome is unknown, including after a timeout, lost response, malformed response, or partial failure, the AI Tool MUST NOT report success or blindly retry the action. It MUST reconcile the authoritative downstream status or preserve the original idempotency context before retry. If the outcome cannot be established safely, the Tool MUST return an explicit unknown or indeterminate status without initiating another action.
-
-#### Rationale
-
-Transport replay controls reject a captured duplicate message, but they do not prevent a client from constructing a new request with a new nonce after the original request committed and its response was lost. For purchases, transfers, messages, reservations, cancellations, access grants, and other consequential operations, that distinction can produce duplicate external effects.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Review Idempotency Design:** Identify every Sensitive Action that can create an external side effect and confirm the execution request requires a stable intent or idempotency identifier bound to the authenticated user, Tool or connector account, operation, and all material parameters. If the Tool mints the identifier, confirm that it does so in an explicit preparation step that cannot create an external side effect and requires a subsequent request carrying the identifier to execute. Confirm that separately approved identical actions receive distinct identifiers. <br><br>**Review Persistence:** Confirm duplicate-suppression state survives process restarts for a documented retry and outcome-uncertainty period. <br><br>**Review Failure Handling:** Confirm timeout, malformed-response, partial-failure, and unknown-outcome paths reconcile authoritative status or reuse the original identifier rather than blindly issuing a new action. |
-| Dynamic | **Duplicate and Concurrency Tests:** Submit concurrent requests with the same intent identifier, then retry the same intended action in a newly constructed message with a fresh transport nonce and the original identifier. Confirm that no duplicate external effect occurs. Submit the identifier with changed user, account, operation, or material parameters and confirm rejection. Verify that separately approved identical actions with distinct identifiers can execute independently. <br><br>**Restart Test:** Restart the Tool during the documented retry window and retry the original identifier; confirm duplicate suppression survives. <br><br>**Ambiguous-Outcome Tests:** Simulate a timeout after downstream commit, a lost or malformed response, and partial completion. Confirm that no unintended duplicate occurs and that the Tool reports the authoritative or explicitly indeterminate status accurately. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | No new business-intent identifier baseline gate is introduced here; ordinary baseline authorization and session/token replay protections still apply. |
+| SHOULD | Sensitive side-effect actions SHOULD use stable user-approved intent/idempotency identifiers bound to user/account/operation/material parameters; distinct separately approved actions SHOULD have distinct identifiers. Durable duplicate suppression SHOULD survive restarts for the documented retry/uncertainty window. Ambiguous outcomes SHOULD be reconciled, never blindly retried or represented as authoritative success without evidence. |
 
 ### 1.4.3 Connector Lifecycle Revocation
 
-#### Description
+<!-- ada:requirement Tool:1.4.3 -->
 
-The AI Tool MUST define and enforce lifecycle termination for user- or administrator-initiated connector unlinking or removal, withdrawal of persistent connector or account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Refusal or cancellation of a single action prompt is not withdrawal of persistent connector or account authorization. Ending an Agent login session invalidates authority scoped to that session; it does not automatically invalidate a separately established persistent connector grant unless the documented connector lifecycle specifies that result.
-
-After a revocation becomes effective, the Tool MUST reject new actions and MUST NOT begin uncommitted queued work using the revoked authority. Revoked credentials, cached capabilities, Tool-controlled approval artifacts, and automatic retries MUST NOT authorize subsequent activity. A callback MAY reconcile the status of an action committed before revocation but MUST NOT authorize a new external side effect. The implementation MUST document the maximum time required for each supported revocation event to take effect.
-
-If an irreversible action was already committed before revocation, the Tool MUST report its status accurately and MUST NOT represent it as cancelled or rolled back unless that result is confirmed by the authoritative downstream system.
-
-#### Rationale
-
-Ending a user session does not necessarily revoke downstream credentials, queued work, callbacks, or cached authorization artifacts. Without explicit lifecycle handling, a disconnected or deauthorized connector may continue to access data or cause actions after the user's authority has ended.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Map Revocation Events:** Identify the handling of user/admin unlinking, withdrawal of persistent connector or account authorization, account deactivation, credential revocation, and termination of session-scoped authority. Distinguish persistent grants from session-scoped authority and from refusal of one action prompt. <br><br>**Trace Pending Work:** Confirm each event reaches stored credentials, cached capabilities, approval artifacts, queued work, callbacks, and retry handlers. <br><br>**Review Effective Time:** Confirm the maximum revocation-enforcement time is documented. |
-| Dynamic | **Pending-Work Test:** Queue an action, revoke the applicable authority before execution, and verify it does not begin. <br><br>**Callback and Retry Test:** Revoke authority before a callback or automatic retry. Confirm the callback may reconcile an already-committed action but cannot authorize a new side effect, and confirm the retry is rejected. <br><br>**Active-Session Test:** Unlink the connector, deactivate the account, revoke credentials, or terminate session-scoped authority and verify future requests under that authority fail. <br><br>**Committed-Action Test:** Revoke authority after an irreversible action commits and verify the Tool reports the authoritative result accurately without claiming an unconfirmed rollback. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
-
-## 1.5 OAuth/Legacy Auth Weaknesses
-
-Use of outdated, weak, or pass-through authentication and authorization (e.g., basic auth, static API keys) exposes systems to impersonation, privilege misuse, and poor accountability.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST deny protected activity after applicable authority is revoked/expired and MUST enforce the published stateful session/refresh invalidation events. An Agent logout MUST NOT be invented as revocation of a distinct persistent connector grant; enforce the actual grant lifecycle. |
+| SHOULD | Explicit unlink/removal/deactivation propagation, revocation convergence-time documentation, queued-work/callback/retry lifecycle handling and authoritative committed-work reconciliation SHOULD be implemented. No new fixed propagation SLA is mandatory. |
 
 ### 1.5.1 Strict Redirect URI and State Validation
 
-#### Description
+<!-- ada:requirement Tool:1.5.1 -->
 
-If the MCP server facilitates OAuth flows for tool access, it must strictly validate Redirect URIs against a pre-defined allowlist and enforce the use of the state parameter to prevent Cross-Site Request Forgery (CSRF). Each authorization transaction must be bound to the authenticated user, initiating browser or application session, downstream authorization server or issuer, client identifier, redirect URI, and corresponding PKCE transaction. The state value must expire within a documented period and be accepted no more than once. A deliberately supported cross-device flow may use an authenticated handoff mechanism that preserves equivalent binding. Legacy authentication methods (Basic Auth over HTTP) are strictly prohibited.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Where OAuth applies, the Tool MUST securely validate redirect_uri AND state to prevent open redirects and CSRF; the supported connector flow MUST validate exact registered vendor redirects, preserving applicable native-loopback port conditions. Secure recommended flows MUST exclude Implicit/ROPC. Actual auth/admin web components MUST retain applicable CASA controls regardless of old WebApp-integrated-Tool comments. |
+| SHOULD | An explicit user/session/issuer/client/redirect/PKCE transaction tuple, documented short state expiry, single-use state and authenticated cross-device handoff SHOULD be used. If an omission actually permits CSRF/session substitution, it is a mandatory-outcome failure, not excused by advisory mechanism strength. |
 
-#### Rationale
+### 1.5.2 S256 PKCE for the Selected Public OAuth Profile
 
-AI tools often need to connect to 3rd party SaaS (GitHub, Jira). Weaknesses in the OAuth flow can allow attackers to intercept authorization codes and hijack the tool's access to those services.
+<!-- ada:requirement Tool:1.5.2 -->
 
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Locate OAuth Logic:** Identify the OAuth callback or authorization URL construction logic within the server codebase. <br><br>**Verify State Generation:** Ensure that the state parameter is generated using a cryptographically secure random generator. <br><br>**Verify Transaction Binding:** Confirm that authorization transaction state is securely retained or integrity-protected, expires, is single-use, and is bound to the authenticated user, initiating session, downstream authorization server or issuer, client identifier, redirect URI, and PKCE transaction. <br><br>**Check Redirect URI Construction:** Verify that the redirect\_uri is not dynamically constructed from user-controlled input. **Confirm Allowlist Enforcement:** Ensure the redirect\_uri is checked against a hardcoded or configuration-based allowlist. <br><br>**Flag Legacy Methods:** Identify and flag any use of legacy authentication methods, such as Basic Auth over HTTP, which are strictly prohibited. |
-| Dynamic | **Verify Redirect URI Validation:** Attempt to use a `redirect_uri` that is not on the pre-defined allowlist to confirm the authorization request fails. <br><br>**Test User and Session Binding:** Start linking as User A and attempt to complete the callback as User B or in another browser/application session without an approved handoff. Confirm rejection and that no credential or account association is stored. <br><br>**Test Concurrent Flows:** Start two authorization flows and swap their callbacks or state values. Confirm both mismatches are rejected. <br><br>**Test Callback Replay:** Replay a completed callback and reuse a consumed state value. Confirm rejection with no credential or account association stored. <br><br>**Confirm Secure Transport:** Verify that all authentication flows occur over secure channels (HTTPS) and that legacy unencrypted methods are rejected. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | Out of scope |
-| Remote | In scope (When MCP server is not integrated with WebApp) |
-
-### 1.5.2 Mandatory Proof Key for Code Exchange (PKCE)
-
-#### Description
-
-When the MCP server initiates an OAuth 2.0 authorization code flow to obtain user credentials for a tool, it must implement and enforce Proof Key for Code Exchange (PKCE) as defined in RFC 7636. The server must generate a unique, high-entropy code\_verifier for every authorization request, send the code\_challenge (derived via the S256 method) to the authorization endpoint, and provide the original code\_verifier during the token exchange step. This requirement applies regardless of whether the client is classified as public or confidential.
-
-#### Rationale
-
-Authorization codes are vulnerable to interception via custom URI scheme hijacking (on mobile/local hosts) or log leakage. PKCE provides a dynamic, cryptographically bound secret that ensures only the entity that initiated the authorization request can successfully exchange the resulting code for a token. This effectively mitigates "Authorization Code Injection" and "Interception" attacks by rendering a stolen code useless to an attacker.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | Perform the following code inspection.<br>**Identify OAuth Initiation Logic:** Locate the code responsible for constructing the initial authorization URL. Verify that it generates a cryptographically secure code\_verifier and includes a code\_challenge and code\_challenge\_method=S256 in the request parameters. <br><br>**Verify Token Exchange:** Locate the function that exchanges the authorization code for an access token. Ensure that the original code\_verifier is retrieved from secure session storage and included in the POST body to the token endpoint. <br><br>**Flag Vulnerabilities:** Flag any OAuth 2.0 implementation that relies solely on a static client\_secret or state parameter without incorporating the PKCE challenge-response mechanism. |
-| Dynamic |  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | Out of scope |
-| Remote | In scope |
-
-## 1.6 Session Token Leakage
-
-Exposure or insecure handling of session tokens across MCP components leads to unauthorized access, impersonation, or session hijacking.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | For the selected public remote user OAuth authorization-code profile, S256 PKCE MUST be supported/advertised and the authorization code flow MUST generate/use the verifier and reject omitted/altered required verifier. Client-generation and authorization-server-verification duties MUST be allocated to the actor that implements them. |
+| SHOULD | PKCE SHOULD be used beyond this demonstrated common public-remote profile where appropriate. |
 
 ### 1.6.1 Automated PII and Credential Masking in Logs
 
-#### Description
+<!-- ada:requirement Tool:1.6.1 -->
 
-The MCP server must implement an interception layer for all logging (stdout/stderr/files) that automatically redacts sensitive information, specifically the Authorization headers, session tokens, and sensitive fields within the tool params (e.g., "password", "api\_key").
-
-#### Rationale
-
-Developers often log full JSON-RPC requests for debugging. If these logs are sent to a centralized logging system, any user with log access can steal active session tokens or sensitive tool inputs.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  **Review Logging Calls:** Identify all logging calls (e.g., console.log, logger.info, winston) throughout the codebase. <br><br>**Detect Full Object Logging:** Search for instances where the entire MCP request or headers object is logged directly. <br><br>**Verify Redaction Middleware:** Confirm that a redaction utility or middleware is applied to these objects before they are passed to the logging function. <br><br>**Check Sensitive Key Masking:** Ensure the redaction utility specifically masks sensitive keys such as token, authorization, secret, and sensitive tool parameters like password or api\_key. |
-| Dynamic | **Generate Sensitive Requests:** Trigger JSON-RPC requests containing sensitive information in the headers (e.g., Authorization tokens) or tool parameters (e.g., api\_key). <br><br>**Verify Output Redaction:** Inspect the resulting logs to ensure that all sensitive fields have been successfully masked or redacted before being written to the log sink.  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Credentials/payment details MUST NOT be logged; session tokens may appear only as irreversible hashes under the exact published CASA exception. Logging MUST NOT collect extraneous conversation content beyond the task/function. |
+| SHOULD | Central automatic interception/redaction across stdout/stderr/files, broad PII/secret detection and masking SHOULD be used. Any method is acceptable only if the mandatory no-secret logging outcome is met. |
 
 ### 1.6.2 Secure Session Tokens
 
-#### Description
+<!-- ada:requirement Tool:1.6.2 -->
 
-Developers must ensure that session identifiers and authentication tokens used within the MCP ecosystem (between Hosts, Servers, and any intermediate transport layers) are handled as highly sensitive secrets. This includes:
-
-* **Encrypted Transport:** Using secure channels for all token exchanges.  
-* **Secure Storage:** Avoiding the use of local, unencrypted persistent storage for session state.  
-* **Log Redaction:** Ensuring tokens are never written to standard output (stdout), standard error (stderr), or debug log files.  
-* **Minimal Exposure:** Passing tokens through standardized headers or environment variables rather than command-line arguments or URL query parameters.
-
-#### Rationale
-
-In the MCP architecture, the session token is the "keys to the kingdom." If a developer accidentally leaks a token—for instance, by logging the full JSON-RPC initialization message—an attacker with access to those logs can impersonate the Host and execute arbitrary tools on the Server. Because MCP servers often have access to sensitive local files or internal APIs, a leaked session token can lead to immediate and total system compromise.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |  **Hardocoded Tokens:** Scan the codebase for hardcoded strings that match common token formats (e.g., UUIDs, JWTs, or high-entropy strings).  <br><br>**Logging:** Review all logging statements (e.g., `console.log`, `logging.debug`, `fprintf`) that output the `Session` or `Context` objects.  <br><br>**Initialization:** Verify that the MCP Server implementation does not accept credentials via `argv` (command-line arguments), as these are visible to other users on the system via process listing (`ps aux`).  |
-| Dynamic | **Traffic Analysis:** Intercept the MCP transport layer (e.g., stdio streams or WebSockets) and verify that session tokens are not transmitted in "cleartext" over insecure channels (if remote) or exposed in side-channels.  <br><br>**Log Inspection:** Execute a full MCP session lifecycle (Connect \-\> Tool Call \-\> Disconnect) with "Verbose" logging enabled. Search the resulting log files for the session token string.   <br><br>**Environment Check:** Inspect the process environment and temporary directories during execution to ensure tokens are not written to world-readable files or `.env` files that lack proper permissions.  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
-
-# 2 Missing or Improper Access Control 
-
-## 2.1 Insecure Human-in-the-Loop
-
-Missing or insufficient human-in-the-loop consent checks can allow an MCP server to take risky actions not authorized by the user.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | All applicable published session/URL/cookie/browser-storage/secret-storage/TLS controls MUST remain, with every original exception and criterion. This includes Secure/HttpOnly when cookie sessions apply, legacy static-secret exception, scoped24h expiry, refresh invalidation, browser-store logout deletion and hashed-only session-token logs. |
+| SHOULD | Avoiding argv/temp-file exposure and preferential environment/header carriers SHOULD be adopted beyond the mandatory common MCP bearer-header/query rules. |
 
 ### 2.1.1 Server-Side Consent Backstop for Sensitive Actions
 
-#### Description
+<!-- ada:requirement Tool:2.1.1 -->
 
-Primary responsibility for presenting, obtaining, and enforcing user consent for a Sensitive Action rests with the AI Agent (AI Agent Specification §2.2; Agent–Tool Interface Contract C3). As a fail-closed backstop that does not rely on the Agent having obtained consent, the AI Tool MUST, for any operation it classifies as a Sensitive Action:
-
-* **Classify sensitivity and reversibility.** Identify which exposed operations are Sensitive Actions — those that are irreversible, transfer value or money, mutate or share user data beyond the current task, or grant or expand access.
-* **Confirm via server-side elicitation, or fail closed.** Use elicitation (or an equivalent server-side confirmation) to request explicit user confirmation of the Sensitive Action, or enforce the use of clients configured so that unprivileged users cannot disable confirmation prompts. The confirmation message MUST clearly and unambiguously state the security implications of the action.
-* **Not defer to the Agent alone.** The Tool MUST NOT treat an Agent-supplied claim that "consent was obtained" as sufficient; it MUST fail closed when it cannot establish that the user confirmed the specific action.
-* **Bind Tool-controlled confirmation.** Any confirmation challenge, approval token, or receipt created or validated by the Tool MUST be bound to the authenticated user, connector account, operation, target or recipient, all material parameters, a bounded validity period, and one execution. It MUST be rejected when expired, consumed, mismatched, or replayed. A bounded batch MAY be treated as one action only when every action and target in the batch and all material parameters are explicitly enumerated in the confirmation.
-
-Binding an Agent-relayed elicitation response to its request prevents request substitution but does not prove that a malicious Agent presented the request to the user. User-verifiable Tool-side approval against a malicious Agent requires out-of-band confirmation (§2.1.2) or a supported cryptographic consent mechanism such as the optional Agent–Tool Identity and Consent Wire Format.
-
-**ADA extensions (future revisions).** The Tool MAY emit a machine-readable `consent_required` signal for Sensitive Actions (an ADA construct; candidate alignment with MCP tool annotations). A consent assertion cryptographically bound to the verified user identity and operation parameters — enabling the Tool to verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format** (tracked with the identity-propagation work) and is not required in this revision.
-
-#### Rationale
-
-An AI Tool is invoked by an Agent it cannot fully trust: a confused or benign-but-buggy Agent may omit its own consent step or drive a Sensitive Action the user never approved. Consent presentation and enforcement are therefore primarily an Agent/host duty, but the Tool retains a fail-closed backstop so that an Agent which faithfully relays the Tool's confirmation prompt cannot cause an irreversible action without a user gate. Note the limit of this backstop: server-side elicitation transits the Agent, so a *malicious* Agent can fabricate an affirmative elicitation response without ever presenting it to the user. Elicitation therefore backstops the confused/benign-but-buggy case; it cannot, on its own, defeat a malicious Agent. Defeating a malicious Agent for the highest-risk actions requires confirmation over a channel independent of the Agent (out-of-band confirmation), which is under consideration for a future revision. Server-side elicitation is defined by the Model Context Protocol specification ([MCP — Client / Elicitation](https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation)) and is the consent mechanism endorsed for MCP servers by secure-design guidance (CoSAI MCP Security; OWASP "A Practical Guide for Secure MCP Server Development"). User-approval *fatigue* (habituation from excessive prompts) remains an Agent-side concern (see §9.2 and AI Agent Specification §2.2).
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | Identify operations that qualify as Sensitive Actions. Verify the Tool mandates a server-side elicitation/confirmation (or enforces non-disableable client confirmation) before executing them, and does not execute a Sensitive Action solely on an Agent-supplied "consent obtained" claim. Verify confirmation messages state the action's implications and that Tool-controlled confirmation is bound to the authenticated user and complete action. |
-| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to trigger a Sensitive Action with forged or absent consent. Verify the Tool requests confirmation via elicitation or fails closed, and does not execute the action. Capture a valid Tool-controlled confirmation and attempt to reuse it for another user, unrelated authorization transaction, connector account, operation, target or recipient, materially different parameter set, after expiration, and for an additional execution not explicitly authorized. Verify every mismatch or replay is rejected before the action occurs. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST provide truthful applicable MCP readOnlyHint/destructiveHint fields: readOnlyHint:true for read-only operations and destructiveHint:true for applicable irreversible/destructive operations. This does not invent every-tool Boolean presence or uniform additive-write semantics. It MUST NOT misrepresent writes as reads or bypass core Agent consequential-action human confirmation. Authentication/authorization and exposed-admin MFA MUST remain independent. Full valid login OR secondary verification remains the CASA 2.4.1 alternative. |
+| SHOULD | Independent Tool-owned server-side confirmation/elicitation or fail-closed consent backstop SHOULD be used. Tool challenges/receipts SHOULD bind user/account/operation/recipient/material parameters/validity/one execution and reject mismatches/replay; explicit bounded-batch enumeration SHOULD be provided. No independent Tool confirmation or cryptographic receipt is a new baseline certification gate. consent_required MAY be emitted. |
 
 ### 2.1.2 Out-of-Band Confirmation for High-Risk Actions
 
-#### Description
+<!-- ada:requirement Tool:2.1.2 -->
 
-Because server-side elicitation transits the Agent (§2.1.1), it cannot, on its own, defeat a *malicious* Agent that fabricates an affirmative response. For the **highest-risk** operations — irreversible actions, transfers of value or money, or the granting/expansion of access — the AI Tool SHOULD require confirmation over a channel that is **independent of the Agent** (out-of-band), such that user approval cannot be forged by the Agent in the request path. For **remote** and other high-value deployments this out-of-band confirmation is REQUIRED. Examples include a confirmation link or one-time code delivered to a pre-registered user channel (email, SMS, authenticator/push), or a provider-hosted approval page authenticated directly to the user. Where out-of-band confirmation is not feasible for a given action, the Tool MUST fall back to the §2.1.1 server-side elicitation backstop and MUST NOT silently downgrade to Agent-relayed consent.
-
-#### Rationale
-
-The §2.1.1 backstop closes the confused / benign-but-buggy Agent case; it does not close the malicious-Agent case, because both the confirmation prompt and its response pass through the Agent. An independent channel breaks that assumption: the user confirms the specific action directly with the resource owner or Tool, so a malicious Agent cannot manufacture consent for an irreversible or high-value action. Gating this at the highest risk tier keeps the added friction proportionate and bounds consent-prompt volume (see AI Agent Specification §2.2 on approval fatigue).
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | Identify the highest-risk operations (irreversible, value transfer, access grant/expansion). Verify the Tool defines an out-of-band confirmation path independent of the Agent request channel for them (REQUIRED for remote/high-value deployments), and that when out-of-band confirmation is unavailable it fails closed to the §2.1.1 elicitation backstop rather than to Agent-relayed consent. Verify that the out-of-band confirmation is bound to the authenticated user and complete action and is expired or consumed as specified. |
-| Dynamic | Using the ADA Malicious Reference Agent (or equivalent), attempt to approve a highest-risk action entirely through the Agent channel, including forging an elicitation response. Verify the action does not execute without confirmation delivered and returned over the independent channel. Capture a valid out-of-band confirmation and attempt cross-user, unrelated-transaction, cross-account, operation, parameter, expiration, and execution-count substitutions; verify each is rejected before execution. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
-
-## 2.2 Improper Multitenancy
-
-An attacker may exploit weak isolation between tenants or users, such as shared memory between processes, sessions, or secrets and credentials, to access or manipulate unauthorized data.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Baseline Agent HITL, Tool honest risk labels, authentication and CASAadmin-MFA/sensitive-account protections remain mandatory where applicable. |
+| SHOULD | Independent-channel OOB confirmation SHOULD be used for highest-risk actions, including remote/high-value deployments; a safe server-side fallback SHOULD be provided where infeasible. Pre-registered channel/authenticated provider page and matching/expiry/single-use checks SHOULD preserve the current security content. No absent OOB channel alone fails baseline. |
 
 ### 2.2.1 Stateless Request Level Isolation
-#### Description
-To prevent "Session Bleed" (where data from a previous request persists in memory and affects the next), the server must treat every request as an independent atomic unit.
 
-* **No Global State:** The server must not store user-specific data in global variables or static caches.
+<!-- ada:requirement Tool:2.2.1 -->
 
-* **Memory Clearing:** If the runtime environment (e.g., Python/Node.js) is reused across requests for different tenants, the server must perform a "Context Reset" or be forcibly restarted between different tenant contexts.
-
-* **Unique Request IDs:** Every incoming request from the Agent must be tagged with a unique Request ID. All logs and internal traces must use this ID to ensure auditability of data boundaries
-
-#### Rationale
-Mandatory Statelessness is the primary technical control against Cross-Tenant Data Leakage (CTDL), ensuring that a third-party MCP server maintains a strict isolation boundary between independent user sessions. By requiring a "Process, Respond, Purge" lifecycle, we eliminate "session bleed"—where data from one user lingers in memory or global variables and is inadvertently accessed by a subsequent request from a different tenant. This architecture shifts the security boundary away from potentially flawed application logic and onto a deterministic, stateless execution model, removing the possibility of state-based side-channel attacks and ensuring that every transaction is a self-contained, auditable event with no memory of prior sensitive contexts.
-
-#### Audit
-| Method | Description |
-| :---- | :---- |
-| Static |  **Global State Analysis:** Search the codebase for global variables, static caches, or singleton patterns used to store user-specific data or session metadata. Verify that all user-specific data is confined to the local scope of the request handler. <br><br> **Verify Context Reset:** If the server uses a persistent runtime (e.g., Node.js or Python) across different requests, identify the mechanism used to clear in-memory state between executions. Flag any implementation that lacks an explicit "Context Reset" or process recycling logic for different tenant contexts.<br><br> **Check Request ID Propagation:** Verify that the server initializes a unique Request ID for every incoming JSON-RPC object. Ensure this ID is passed to all internal sub-functions and included in every structured log entry generated during that request's lifecycle. |
-| Dynamic | Perform the following runtime testing:<br><br>**Test for Session Bleed:** Execute a sequence of tool calls using "User A" credentials containing unique, identifiable data (e.g., a "search_files" tool with a specific keyword). Immediately follow with a tool call from "User B." Inspect the response for User B and the server logs to ensure no fragments of User A's data or keywords appear in User B's execution context.<br><br>**Verify Log Correlation:** Trigger multiple concurrent tool calls. Inspect the generated logs to confirm that every log line is tagged with a unique Request ID and that logs for different requests do not intermingle data under the same identifier.<br><br>**Check Memory Isolation:** In a multi-tenant test environment, observe the memory footprint or process lifecycle to verify that the server either restarts or explicitly purges tenant-specific heap data after the completion of a request. |
-
-#### Comments
-
-| Scope  | Comment |
-| :----- | :------ |
-| Local  | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST prevent unauthorized cross-user/tenant data access or side effects across reused runtimes, caches and concurrent requests. |
+| SHOULD | Stateless request architecture, no user-specific globals, context purge/recycling and unique request-ID correlation SHOULD be used; equivalent safely scoped caches are not categorically forbidden. |
 
 ### 2.2.2 User Identity Propagation
-#### Description
-If more than one user is supported, the AI Tool must not "assume" which user it is acting for based on the connection alone.
 
-* **Token Validation:** Every request must include a short-lived Identity Token that identifies the specific user.
+<!-- ada:requirement Tool:2.2.2 -->
 
-* **Scoped Access:** The server’s internal logic must use this token to scope all database queries (e.g., SELECT * FROM docs WHERE owner_id = {JWT.sub}), or access to other user specific data or APIs.
-
-* **Hard Fail on Missing Identity:** If a request arrives without a valid, verifiable identity token, the server must return a 401 Unauthorized and terminate the execution thread immediately.
-
-#### Rationale
-Identity Propagation is the cornerstone of Multi-Tenant Data Isolation, ensuring that every action performed by an MCP server is explicitly tied to a verified user or organization through short-lived, cryptographically signed identity tokens. By mandating that the server validate these tokens for every incoming request, we eliminate "Implicit Authorization" and prevent Direct Object Reference (IDOR) attacks where one tenant might attempt to access another's data by guessing a resource ID. This requirement forces the third-party server to operate within a "Zero Trust" framework, where access to any underlying data or tool is strictly scoped to the identity contained within the request payload, providing a verifiable and auditable cryptographic link between the user's intent and the server's execution.
-
-#### Audit
-
-| Method  | Description |
-| :------ | :---------- |
-| Static | **Identify Token Handling:** Search the codebase for the point where incoming requests are received. Verify that the user’s identity (e.g., JWT, OAuth token, or User ID) is extracted and explicitly passed into the tool execution context.<br><br> **Verify Downstream Authentication:** Inspect the client initialization for downstream services (e.g., a Database client or GitHub API client). Ensure that these clients are instantiated using the propagated user token rather than a hardcoded administrative or "app-level" API key.<br><br>**Check Middleware Injection:** If using a framework, verify that the identity propagation is enforced via middleware and cannot be bypassed by individual tool implementations.|
-| Dynamic | Perform the following runtime testing: <br><br>**Verify Permission Enforcement:** For each exposed resource and operation class, authenticate as User B and attempt to list, search, read, create, update, delete, share, send, cancel, purchase, or otherwise act on resources belonging to User A. Use known, guessed, sequential, and nonexistent identifiers where applicable. Verify rejection before protected data, existence-sensitive metadata, or an external side effect is produced.<br><br>**Inspect Downstream Logs:** Execute a tool call and then inspect the audit logs of the downstream service (e.g., AWS CloudTrail or GitHub Audit Logs). Confirm that the action was recorded under the end-user's identity and not the MCP server’s service account name.<br><br>**Token Scoping Test:** Provide the MCP server with a scoped or "limited" token for a user. Attempt to execute a tool that requires permissions outside of that scope. Verify that the tool execution fails at the resource level, proving that the server is respecting the specific token's limitations. |
-
-
-
-#### Comments
-
-| Scope  | Comment |
-| :----- | :------ |
-| Local  | In Scope |
-| Mobile | Out of Scope |
-| Remote | In Scope |
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Protected multi-user requests MUST derive verified user/tenant authority from valid credentials or trusted introspection, never an assumed connection or attacker-selected identifier alone; MUST scope access and deny invalid/wrong-user/out-of-scope calls before protected output/side effects. |
+| SHOULD | Dedicated short-lived identity JWTs, per-query JWT.sub syntax, centralized propagation and identity-labelled downstream logs SHOULD be used where appropriate. Opaque token validation is equally acceptable. |
 
 ### 2.2.3 Ensure Sandbox Protections
-#### Description
-Identify and block code patterns that facilitate sandbox escapes or multi-tenant data leakage. Mandating the detection of "unsafe sinks"—such as direct shell execution, unvalidated file system operations, and unrestricted network sockets—ensures that the AI Tool remains isolated. Any code that passes user-supplied tool arguments to system-level calls must undergo rigorous path canonicalization and validation against a pre-defined allowlist to prevent build-breaking security violations.
 
-#### Rationale
-Enforcing these programmatic constraints aligns the AI Tool architecture with the principle of "Least Privilege," ensuring inherent compatibility with hardened runtimes. Proactively identifying and remediating insecure coding patterns during the development phase mitigates the risk of Directory Traversal and Command Injection vulnerabilities, which serve as primary vectors for bypassing execution sandboxes. Such a stance is critical in multi-tenant environments to ensure that even a compromised or manipulated model cannot programmatically execute unauthorized actions on the host system or access data belonging to other users.
+<!-- ada:requirement Tool:2.2.3 -->
 
-#### Audit
-| Method  | Description |
-| :------ | :---------- |
-| Static | Detect Unsafe Execution: <br> **Pattern:** Identify use of os.system(), subprocess.Popen(shell=True), or eval(). <br> **Flag:** High Risk. MCP tools must use parameterized arguments and avoid shell execution to prevent command injection leading to sandbox escapes.<br><br> Detect Missing Path Validation: <br> **Pattern:** Identify file I/O operations (e.g., open(), fs.readFile()) where the input path is concatenated with user-provided strings without a call to a normalization function (e.g., os.path.abspath() or path.resolve()).<br> **Flag:** Medium/High Risk. This prevents directory traversal attacks that bypass sandbox directory restrictions. <br><br> Detect Hardcoded Network Requests:<br> **Pattern:** Identify HTTP/Socket libraries (e.g., requests.get, http.request) where the destination URL is dynamically generated from LLM-provided tool arguments without being checked against a static Allowlist.<br> **Flag:** Medium Risk. Prevents SSRF (Server-Side Request Forgery) from the sandbox to the internal network. |
-| Dynamic | |
-
-
-#### Comments
-
-| Scope  | Comment |
-| :----- | :------ |
-| Local  | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-
-## 2.3 Confused Deputy (OAuth Proxy) (Duplicate)
-
-Attackers exploit misconfigured roles, credentials, ACLs, trust relationships, or flawed delegation logic to gain elevated permissions and access unauthorized resources. In MCP deployments, this includes privilege escalation, as well as attacks that leverage the MCP server's intermediary role in multi-user token delegation. For example, confused deputy attacks can occur when an MCP server acting as an OAuth proxy fails to properly validate authorization context—allowing attackers to manipulate the server into using another user's credentials to perform privileged operations.
-
-**Note: This threat is a duplicate of 1.2. See that section for the security requirements.**
-
-## 2.4 Excessive Permissions/Overexposure 
-
-AI agents, MCP servers, or tools are granted more privileges than necessary, increasing risk of abuse or compromise in case of attack or misconfiguration.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST prevent applicable code/OS/file injection, traversal and SSRF while respecting the published necessary-functionality, sanitization/sandboxing and allowlist conditions. It MUST NOT bypass platform or upstream security boundaries. |
+| SHOULD | Hardened runtime, unsafe-sink detectors, strict path-canonicalization patterns and sandbox-specific restriction policies SHOULD be applied. Legitimate code execution is not categorically forbidden when CASA exceptions are met. |
 
 ### 2.4.1 Principle of Least Privilege and Scoped Permissions
 
-#### Description
-MCP servers must operate with the minimum privileges necessary. Implementations must reduce scopes to least privilege, such as removing write scopes when only read access is required.
+<!-- ada:requirement Tool:2.4.1 -->
 
-#### Rationale
-
-AI agents, MCP servers, or tools granted more privileges than necessary drastically increase the blast radius in the event of an attack or misconfiguration. Without strict least privilege by design, a compromised agent can easily escalate privileges, move laterally, or corrupt sensitive data.
-
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Review IAM and RBAC:** Audit role-based access control (RBAC) configurations, Identity and Access Management (IAM) policies, and OAuth token exchanges to ensure requested scopes match the exact operational requirements of the tools.<br><br>**Analyze Scope Definitions:** Inspect tool definition files and server configurations to ensure they explicitly reduce scopes for least privilege, such as not requesting write scopes when only read access is required. Flag any tools requesting broad administrative rights or wildcard (*) access.  |
-| Dynamic | **Test Scope Boundaries:** Authenticate a session using a properly scoped "read-only" token. Attempt to invoke an MCP tool that performs a "write," "update," or "delete" operation.<br><br>**Verify Rejection:** Confirm that the server explicitly rejects the action at the resource level and returns an unauthorized/forbidden error, proving the server respects the specific token's limitations. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-# 3 Input Validation/Sanitization Failures 
-
-## 3.1 Command Injection
-
-Unvalidated or unsanitized user inputs, prompts, or tool arguments lead to execution of unauthorized system commands, resulting in data compromise or system takeover.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST enforce least-privilege permissions at a trusted service layer and deny unauthorized operations independent of model promises or annotations. |
+| SHOULD | Fine-grained scoped-permission design SHOULD be used; do not invent a fixed scope list. |
 
 ### 3.1.1 Parameterized Arguments and Unsafe Sink Blocking
 
-#### Description
-The MCP server must enforce strict input validation, sanitization, and parameterization across all execution contexts. It must actively identify and block the use of unsafe execution sinks (such as eval(), os.system(), or subprocess.Popen(shell=True)) and mandate the use of parameterized arguments for any underlying system calls or queries. All inputs must be validated using strict allowlists at every trust boundary.
+<!-- ada:requirement Tool:3.1.1 -->
 
-#### Rationale
-Developers incorrectly assume that user input processed through an LLM is inherently safe, bypassing established secure coding practices. In reality, the LLM transforms but does not sanitize malicious payloads. Without strict parameterized boundaries, an attacker can manipulate tool arguments to execute arbitrary shell commands, leading to total system compromise and sandbox escapes.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Identify Unsafe Execution Sinks:** Scan the server codebase for high-risk functions that evaluate strings as code or execute shell commands directly (e.g., os.system, eval()).<br><br>**Verify Parameterization:** Inspect database queries and system calls to ensure they utilize parameterized execution methods rather than dynamic string concatenation.<br><br>**Check Validation Logic:** Confirm that all tool parameters are strictly validated against predefined allowlists before being processed. |
-| Dynamic | **Fuzz Tool Parameters:** Submit crafted command injection payloads (e.g., ; rm -rf /, $(whoami), or & ping attacker.com) via the LLM prompt or directly into the MCP tool arguments. <br><br>**Verify Safe Rejection:** Confirm that the MCP server neutralizes the payload, treats it as a literal string parameter, or explicitly rejects the request with an error, preventing the underlying command from executing.|
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 3.2 File System Exposure/Path Traversal (Duplicate)
-
-Improper validation of file paths or tool arguments enables access to or exfiltration of files outside intended directories, exposing credentials and sensitive data
-
-**Note: This threat is a duplicate of 5.2. See that section for the security requirements.**
-
-## 3.3 Insufficient Integrity Checks
-
-Absence of signature or integrity validation on MCP messages and responses enables replay, spoofing, or delivery of poisoned results.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST validate untrusted arguments server-side and meet each applicable published injection/XSS/SSRF/file control; required rejection/neutralization MUST precede execution. Generic schema validation alone is not full coverage. |
+| SHOULD | Parameterized APIs, exhaustive static allowlists at every internal boundary and unsafe-sink blocking SHOULD be used. eval/shell presence alone is not a categorical failure where secure expected functionality satisfies CASA. |
 
 ### 3.3.1 Cryptographic Message Integrity Validation
 
-#### Description
-MCP implementations must require and enforce cryptographic integrity checks on all messages, tool definitions, and resource responses. Tool developers must include mechanisms such as message authentication codes (MACs) or digital signatures to ensure end-to-end integrity and prevent the undetected modification of critical system components or payloads during transit.
+<!-- ada:requirement Tool:3.3.1 -->
 
-#### Rationale
-Without integrity verification, malicious actors or compromised intermediaries can intercept and modify tool definitions, forge messages, or inject poisoned data into resource responses. Because the AI model implicitly trusts the context and data returned by connected tools, tampered payloads can seamlessly trigger prompt injections or execute unauthorized behavior.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Review Integrity Mechanisms:** Inspect the message handling and transport layer code to verify the implementation of cryptographic signatures or HMAC validation for incoming JSON-RPC payloads.<br><br>**Verify Key Management:** Ensure that the public keys or shared secrets used for signature validation are stored securely and retrieved safely at runtime.<br><br>**Check Enforcement Logic:** Confirm that the server explicitly drops or rejects messages that lack a signature or fail the integrity validation check.|
-| Dynamic | **Attempt Payload Tampering:** Intercept a legitimate, signed MCP tool invocation or resource response using a proxy. Modify the data payload (e.g., change a tool argument or alter a schema description) without recalculating the cryptographic signature.<br><br>**Verify Mismatch Rejection:** Submit the tampered message to the client or server. Verify that the receiving component detects the integrity mismatch and immediately drops the connection or rejects the payload .|
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-# 4 Data/Control Boundary Distinction Failure
-
-## 4.1 Tool Definition Poisoning
-
-Malicious modification of tool metadata, configuration, or descriptors injected into clients via the tools/list method. This can cause AI agents or MCP components to invoke, trust, or execute compromised tools, potentially leading to data leaks or system compromise. As the MCP specification notes, 'descriptions of tool behavior such as annotations should be considered untrusted, unless obtained from a trusted server' (Key Principles), making tool poisoning a recognized risk when clients connect to unvetted servers.
-
-**Note:** This threat is out of scope for the AI Tool specification.
-
-
-## 4.2 Full Schema Poisoning
-
-Attackers compromise entire tool schema definitions at the structural level, injecting hidden parameters, altered return types, or malicious default values that affect all subsequent tool invocations while maintaining apparent compatibility and evading detection by appearing legitimate to monitoring systems.
-
-Unlike Tool Poisoning: Goes beyond poisoning individual tool metadata to compromise the entire structural definition and type system of tools.
-
-**Note:** This threat is out of scope for the AI Tool specification.
-
-## 4.3 Resource Content Poisoning
-
-Attackers embed hidden malicious instructions within data sources (databases, documents, API responses) that MCP servers retrieve and provide to LLMs, causing the poisoned content to execute as commands when processed, effectively achieving persistent prompt injection through trusted data channels rather than direct user input. Unlike Prompt Injection: Malicious instructions are embedded in backend data sources, not user-provided prompts. 
-
-Unlike Tool Poisoning: Poisons the actual data/content retrieved by tools, not the tool definitions themselves. This attack surface may be expanded with transitive or composed MCP server calls.
-
-**Note:** This threat is out of scope for the AI tool specificaiton.
-
-
-## 4.4 Prompt Injection
-
-LLMs have insufficient boundaries between input data and instructions. Attackers craft malicious inputs to manipulate LLMs or MCP components to perform unintended or harmful actions such as data exfiltration, privilege escalation, or unauthorized command execution. These malicious instructions can be sent directly to the LLM (e.g., via Sampling or when the MCP tool uses its own LLM) or indirectly by embedding instructions in prompts, resources, or tool metadata. This threat exists whenever untrusted input can reach the LLM's context window.
-
-**Note:** This threat is out of scope for the AI tool specificaiton.
-
-# 5 Inadequate Data Protection and Confidentiality Controls 
-
-## 5.1 Data Exfiltration & Corruption
-
-Attackers leverage MCP components to steal or corrupt sensitive data, reroute messages, or manipulate outputs, often via compromised servers or poisoned tools.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST validate baseline credential/session signatures or trusted introspection and preserve applicable strong cryptography/key storage. It MUST NOT accept a tampered/invalid baseline credential. |
+| SHOULD | End-to-end signatures/MACs across all JSON-RPC messages, descriptors and resources SHOULD be implemented; unsigned ordinary messages alone MUST NOT be a baseline failure when required authentication/TLS/outcome controls pass. |
 
 ### 5.1.1 Exfiltration Defense
-The system SHALL implement a defense-in-depth architecture to prevent sensitive data leakage. It should also prevent the transmission of any data in transit, at rest, and during processing to the Agent that was not explicitly intended for the current task. MCP implementations must treat the AI Agent as an untrusted principal. 
 
+<!-- ada:requirement Tool:5.1.1 -->
 
-#### Description
-
-The AI tool (e.g., MCP Server) MUST implement strict access controls, memory isolation, and input validation to ensure that any confidential material held internally—including internal API keys, service credentials, local configuration files, and private caching states—cannot be exfiltrated, exposed, modified, or corrupted through the tool’s exposed execution pathways or APIs. The tool MUST enforce a rigid boundary between its internal operational secrets and the execution context handling agent requests.
-
-
-#### Rationale
-
-AI tools often require highly privileged credentials (e.g., database passwords, OAuth tokens) to function. If an Agent is subverted via Indirect Prompt Injection (IPI), it may attempt to instruct the tool to read its own internal configuration or "leak" supplementary data retrieved from a backend. By isolating internal secrets and enforcing strict output schemas, the "blast radius" of a compromised agent is contained; the request simply becomes technically impossible to fulfill.
-
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static |**Secret Lifecycle Mapping:** Identify all points where the tool loads (Get), refreshes (Update), or clears (Delete) internal credentials. <br><br> **Automated Secret Hunting:** Execute high-entropy scans (e.g., TruffleHog, Gitleaks) to find hardcoded "sk-", "ghp_", or mock credentials in source code and config snippets. <br><br> **Secrets management:** Verify secrets are retrieved into memory-safe buffers. <br><br> **Path & Reflection Verification:** Confirm zero code paths exist where agent input can dynamically dictate file paths targeting local secret files. <br><br> **Taint & Reflection Analysis:** Trace Agent-controlled inputs to ensure they cannot reach sinks that allow dynamic file system access or memory reflection (e.g., eval(), unsafe-load).  |
-| Dynamic |**Internal Exfiltration Probe:** Submit traversal payloads (e.g., /etc/secrets/, ../../../../etc/secrets) and commands to dump environment variables. <br>  **Pass:** The tool must block or drop all requests; internal mock keys (e.g., test_secret_key_123) must never appear in responses. <br><br> **Exfiltration Stress Test:** Command the AI Tool to output internally held secrets data. <br>   **Pass:** No internally held secret is in the response. <br><br> **Corruption & Integrity Test:** Submit payloads attempting to overwrite local configuration or exhaust memory. <br>   **Pass:** The tool's internal configuration must remain uncorrupted and operational for subsequent benign requests.  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 5.2 File System Exposure/Path Traversal (Duplicate)
-
-Improper validation of file paths or tool arguments enables access to or exfiltration of files outside intended directories, exposing credentials and sensitive data.
-
-**Note: This is a duplicate threat**
-
-
-# 6 Missing Integrity/Verification Controls 
-
-## 6.1 Resource Content Poisoning
-
-Attackers embed hidden malicious instructions within data sources (databases, documents, API responses) that MCP servers retrieve and provide to LLMs, causing the poisoned content to execute as commands when processed, effectively achieving persistent prompt injection through trusted data channels rather than direct user input. Unlike Prompt Injection (MCP-12): Malicious instructions are embedded in backend data sources, not user-provided prompts. Unlike Tool Poisoning (MCP-2): Poisons the actual data/content retrieved by tools, not the tool definitions themselves. This attack surface may be expanded with transitive or composed MCP server calls.
-
-**Note:** *Mitigation of the resource-content-poisoning attack* — treating retrieved/external content as untrusted so it cannot act as an instruction — is a **consumer-side** control performed by the AI Agent (AI Agent Specification §3.1.2; Agent–Tool Interface Contract C2 Agent obligation), not by the AI Tool. Indirect prompt injection cannot be prevented by the producer marking its output: a benign Tool cannot reliably distinguish embedded instructions from data, and a malicious Tool will not tag honestly (CoSAI MCP Security §6.2, MCP-T4). The AI Tool carries only the narrow, verifiable honest-behaviour duty in §6.1.1 below.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST prevent unauthorized secret/resource access and corruption through exposed APIs and MUST limit collected/returned task data to the shared necessary-purpose boundary. |
+| SHOULD | Defense-in-depth memory-safe secret buffers, runtime isolation, reflection/taint analysis and layered exfiltration protection SHOULD be retained. |
 
 ### 6.1.1 No Embedded Model-Directed Control Directives
 
-#### Description
+<!-- ada:requirement Tool:6.1.1 -->
 
-The AI Tool MUST NOT embed model-directed control directives or instructions within the content it returns to the Agent — including operation results, retrieved/resource content, and its own tool/function descriptions and schemas. The AI Tool MUST NOT rely on the model or Agent to enforce the Tool's own security constraints; it MUST validate its own inputs and enforce its own authorization independently of the model. The AI Tool MAY provide provenance or "data vs. control" tags as defense-in-depth, but these MUST NOT be relied upon as a security boundary.
-
-#### Rationale
-
-Indirect prompt injection is not preventable by the producer marking its output (a benign Tool cannot reliably separate instructions from data in arbitrary content, and a malicious Tool will not tag honestly), so the load-bearing defence is the Agent treating all Tool Output as untrusted (Agent–Tool Interface Contract C2 Agent obligation; AI Agent Specification §3.1.2). The Tool's residual, testable duty is simply not to be an injection vector itself and not to delegate its own security to the model — consistent with CoSAI MCP Security §3.2.8: "Tool implementations should not rely on the LLM to perform security-critical operations, validate inputs, or enforce constraints."
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | Review tool/function descriptions, schemas, and output-construction code to confirm no imperative instructions directed at the model are embedded (e.g., "ignore previous instructions", role/turn markers, tool-chaining commands). Confirm input validation and authorization are enforced in Tool code and do not depend on model cooperation. |
-| Dynamic | Exercise the Tool and inspect returned content, descriptions, and schemas for embedded model-directed instructions or control tokens. Confirm the Tool rejects invalid or unauthorized requests regardless of any accompanying natural-language content. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In scope |
-| Mobile | In scope |
-| Remote | In scope |
-
-## 6.2 Typosquatting/Confusion Attacks 
-
-Malicious actors create MCP servers or tools with names/descriptions similar to legitimate ones, tricking clients or AI agents into invoking harmful tools due to naming confusion or LLM hallucination. The MCP specification provides guidance on making tool origins and inputs visible to users and recommends human-in-the-loop approval for tool invocations (User Interaction Model), but consent fatigue—where users reflexively approve prompts without careful review—can significantly undermine these protections.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST NOT embed hidden/obfuscated model-directed behavioral steering or unauthorized tool-chain instructions in its metadata/results, and MUST enforce its own authorization/input validation independently of Agent/model. It MUST NOT rely on optional provenance tags as its security boundary. |
+| SHOULD | Provenance tags and structured/typed output SHOULD be provided where useful; tags do not establish consumer trust. |
 
 ### 6.2.1 Semantic Integrity and Descriptive Accuracy
 
-#### Description
+<!-- ada:requirement Tool:6.2.1 -->
 
-The tool's metadata—including its name, description, and the definitions of its functions/APIs—must accurately reflect its actual behavior and internal logic. Developers must ensure that:
-
-* The **natural language description** provided to the AI agent matches the functional capabilities of the code.  
-* **API parameters** are named and described according to their actual use (e.g., a parameter named `zip_code` should not be used to smuggle an `api_key`).  
-* The tool does not contain **undocumented "easter egg" functions** or side effects that deviate significantly from the stated purpose.
-
-#### Rationale
-
-In the context of AI Agents (like those using the Model Context Protocol), the agent relies almost entirely on the tool's description to decide *when* and *how* to call it.
-
-* **Deceptive Mapping:** If a tool is named `fetch_weather` but actually executes `delete_database`, the AI agent can be tricked into performing malicious actions under the guise of a benign request.  
-* **Prompt Injection via Metadata:** Misleading descriptions can be used as a "Trojan Horse" to influence the LLM’s reasoning, leading it to ignore system instructions or exfiltrate data to the tool's backend.  
-* **Trust Erosion:** Users must be able to audit a tool’s intent by reading its manifest without needing to reverse-engineer the entire codebase.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Manifest Review:** Compare the `description` fields in the tool’s configuration (e.g., `mcp.json` or similar) against the function names and variable types.  **Code-to-Metadata Mapping:** Verify that for every exported function, the docstring and metadata capture the primary purpose of the logic. Check for "Dead Code" or "Shadow Parameters" that are defined in the code but omitted or misrepresented in the tool’s public description. **Heuristic Analysis:** Flag tools that use generic or intentionally vague descriptions (e.g., "Run utility") for complex or high-privilege code blocks.  |
-| Dynamic | **Functional Verification:** Execute the tool with a series of standard inputs and verify that the output and side effects (file changes, network calls, etc.) align with the tool’s description. **I/O Monitoring:** Monitor network traffic during execution. If a "Calculator" tool initiates an outbound HTTPS request to an unknown domain, it fails the integrity check. Inspect system calls to ensure the tool is only accessing resources relevant to its description (e.g., a "Word Counter" should not be reading the user's SSH keys). **Agent-Simulated Testing:** Provide the tool to a "clean" AI Agent and ask it to describe what the tool does based on its metadata. Compare the agent's understanding against the developer’s actual code implementation to identify semantic gaps.  |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 6.3 Shadow MCP Servers
-
-Unauthorized, unmonitored, or hidden MCP server instances create blind spots, increasing risk of undetected compromise and covert data exfiltration. These servers pose governance and compliance risks and may be malicious or easily compromised.
-
-**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
-
-## 6.4 Supply Chain Compromise and Privileged host-base Attacks
-
-Malicious or compromised MCP servers, dependencies, or packages are introduced into the environment, enabling attackers to execute arbitrary code, exfiltrate data, or persist within the infrastructure.
-
-**Note:** The conventional-security baseline for this threat — ensuring components carry no known exploitable vulnerabilities (CASA 6.1.1) and that the underlying host/platform is hardened — is covered by the MASA and CASA certifications. The AI-specific supply-chain controls that CASA/MASA do **not** provide — strict dependency pinning with hash-based verification, and digital-signature verification of tool packages and model weights — are **in scope for this specification** and are required by §8.5.1 (Resource Pinning and Signature Verification).
-
-# 7 Session and Transport Security Failures
-
-## 7.1 Man-in-the-Middle (MITM)
-
-Exploiting insecure network transport (lack of TLS, improper certificate validation, or missing mutual authentication) to intercept, modify, or reroute data between MCP components, enabling data theft or manipulation.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Metadata MUST accurately describe purpose, inputs, behavior and material side effects. Truthful applicable MCP readOnlyHint and destructiveHint fields MUST be supplied, including readOnlyHint:true for reads and destructiveHint:true for applicable irreversible/destructive operations; neither every-tool Boolean presence nor one additive-write value is invented. Read/write surfaces MUST be separated, not hidden in mixed generic catch-alls. |
+| SHOULD | Human-readable titles, universal openWorldHint, a64-character name target, idempotent hints, every-operation granularity and expanded code/docstring audits SHOULD be used where security-useful; none is falsely claimed shared mandatory. Vendor-specific still-binding publication rules are separate. |
 
 ### 7.1.1 Integrated Transport Security and Message Integrity
 
-#### Description
+<!-- ada:requirement Tool:7.1.1 -->
 
-To mitigate Man-in-the-Middle (MitM) and message integrity risks, the system must enforce a unified secure transport layer and message-level protection. For remote connections, communication must be encrypted using TLS 1.3+ with strict X.509 certificate and trust chain validation (rejecting plaintext, expired, or untrusted endpoints). For local connections, the system SHOULD prefer secure Inter-Process Communication (IPC)—such as Unix domain sockets or Windows Named Pipes—protected by strict OS-level permissions. Where a local HTTP/Streamable HTTP transport is used instead, the server MUST bind exclusively to the loopback interface (`localhost` / `127.0.0.1`) and MUST NOT bind to all network interfaces (`0.0.0.0`). 
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, defaultTLS 1.2+ with exact legacy/internal-CA/Additional Context routes. |
+| SHOULD | TLS 1.3, all-message MAC/signatures, secureIPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment. |
 
-#### Rationale
+### 7.7.1 Validate Origin Header on HTTP Transports
 
-This requirement establishes a multi-layered defense. High-grade encryption, secure IPC, and loopback-only binding for local HTTP transports prevent unauthorized eavesdropping on the wire, within the host, or from other hosts on the network. Strict certificate validation ensures the client is communicating with the legitimate server, rather than an attacker's proxy. Lastly, message-level signing guarantees that even if a transport-level vulnerability exists, the underlying tool calls and responses remain immutable and can only be executed once.
+<!-- ada:requirement Tool:7.7.1 -->
 
-#### Audit
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Applicable anti-CSRF/anti-automation outcomes MUST be preserved. Origin MUST NOT act as an authentication credential or sole access-control basis. Where the implementation selects an MCP HTTP transport profile with normative Origin-validation requirements, the implementing actor MUST meet those applicable profile requirements; an unselected protocol or unspecified hardening rule is not imported. |
+| SHOULD | Origin allowlists/DNS-rebinding defenses beyond the selected protocol's normative requirements SHOULD be implemented as additional hardening. This does not demote the selected transport's required Origin validation. Current local/internal variants remain held. |
 
-| Method | Description |
-| :---- | :---- |
-| Static | **Protocol Check:** Inspect configuration files (e.g., `server_config.json`) to ensure the minimum TLS version is pinned to `1.3` and that legacy ciphers are disabled. **Validation Check:** Verify that the client implementation does not include flags that bypass certificate validation (e.g., `NODE_TLS_REJECT_UNAUTHORIZED=0` or `verify=False`). **IPC Check:** Review the transport initialization code to ensure local deployments use socket paths, named pipes, or bind exclusively to `localhost` / `127.0.0.1` rather than all network interfaces (`0.0.0.0`).  |
-| Dynamic | **Downgrade Attack Test:** Attempt to initiate a connection using TLS 1.2 or lower; the server must refuse the handshake. **Trust Chain Test:** Point the MCP client to a server with a self-signed or expired certificate; the client must terminate the connection immediately. **Replay Attack Test:** Intercept a valid tool call and attempt to resend it to the server; the server must reject the message as a duplicate based on the nonce/timestamp. **Local Isolation Test:** For IPC transports, attempt to read from the IPC socket or pipe using a secondary, non-privileged system user; the operating system should deny access based on the file permissions. For local HTTP transports, confirm the server is bound only to the loopback interface by attempting to reach it from another host on the network (e.g., via the machine's LAN IP or `0.0.0.0`); the connection must be refused.  |
+### 8.2.1 Request-Level Isolation and Recommended Stateless Architecture
 
-#### Comments
+<!-- ada:requirement Tool:8.2.1 -->
 
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 7.2 Insufficient Integrity Checks (Duplicate)
-
-Absence of signature or integrity validation on MCP messages and responses enables replay, spoofing, or delivery of poisoned results.
-
-**Note: Message integrity checks are addressed under “7.1.1 Integrated Transport Security and Message Integrity”**
-
-## 7.3 Unrestricted Network Access
-
-MCP servers or clients with open outbound or inbound network access can download malicious payloads, exfiltrate data, or connect to command-and-control infrastructure. Malicious or compromised MCP servers allow attackers to move laterally using stored credentials and exploiting poor network segmentation and isolation.
-
-**Note: User network security is out of scope for the AI Tool specification. Further, malicious behavior is addressed in 6.2.1 Semantic Integrity and Descriptive Accuracy.**
-
-## 7.4 Protocol Security Gaps
-
-Weaknesses in MCP protocol/transport layers (e.g., missing payload limits, no TLS, unauthenticated requests) enable DoS, spoofing, or unauthorized command execution.
-
-**Note: This threat is addressed by the other authentication, session and transport security controls contained in this document and the underlying CASA and MASA specifications.**
-
-## 7.5 Insecure Descriptor Handling
-
-Improper management of transport descriptors (e.g., stdio) allows attackers to hijack or interfere with data streams and process communications.
-
-**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
-
-## 7.6 CSRF Protection Missing
-
-Lack of Cross-Site Request Forgery (CSRF) controls on Streamable HTTP transport enables attackers to forge or replay unauthorized requests.
-
-**Note: This risk is mitigated through the CASA certification (see CASA 3.1.5 and 3.2.2).**
-
-### 7.7 CORS/Origin Policy Bypass
-Missing or weak cross-origin policies allow unauthorized data leaks via cross-origin resource sharing (CORS) in browser-based or web transports.
-
-#### 7.7.1 Validate Origin Header on HTTP Transports
-##### Description
-The AI Tool must validate the `Origin` header on all incoming HTTP connections to prevent DNS rebinding attacks and unauthorized cross-origin access.
-##### Rationale
-DNS rebinding allows an attacker's webpage to interact with local or internal MCP servers. Validating the `Origin` header is a mandatory requirement of the MCP transport specification to prevent these attacks.
-##### Audit
-| Method | Description |
-| :---- | :---- |
-| Static | **Origin Check:** Verify that the HTTP server configuration explicitly validates the `Origin` header against an approved allowlist and rejects mismatched requests. |
-| Dynamic | **Rebinding Test:** Attempt to connect to the server using an unexpected or forged `Origin` header; the server must reject the connection. |
-##### Comments
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 7.8 Replay Attacks/Session Hijacking (Duplicate)
-
-Attackers intercept, reuse, or hijack authentication tokens or session identifiers, impersonating legitimate users or agents and executing unauthorized actions.
-
-**Note: See section 1.4.1 for security requirements.**
-
-# 8 Network Binding/Isolation Failures
-This category addresses failures in restricting the communication and execution environment of MCP components. Attackers exploit open network access or weak isolation to exfiltrate data, download malicious payloads, or move laterally within an infrastructure. 
-
-## 8.1 Shadow MCP Servers (Duplicate)
-
-**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
-
-## 8.2 Improper Multitenancy
-
-An attacker may exploit weak isolation between tenants or users, such as shared memory between processes, sessions, or secrets and credentials, to access or manipulate unauthorized data. Weak isolation between different user sessions at the tool layer can lead to "Session Bleed," where User A's data persists in memory and is inadvertently accessed by User B
-
-### 8.2.1 Mandatory Stateless Request-Level Isolation
-
-#### Description
-The AI Tool must treat every request as an independent, atomic unit. The system must implement a “Process, Respond, Purge” lifecycle, performing a “Contest Reset: or forcibly restarting the tool process between different user contexts
-
-
-#### Rationale
-Mandatory statelessness is the primary technical control against Cross-Tenant Data Leakage (CTDL). It ensures that no user-specific data or internal reasoning traces used by the tool to fulfill a request linger in memory for a subsequent request.
-
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Identify Global State:** Search the tool codebase for global variables, static caches, or singleton patterns used to store user-specific data |
-| Dynamic | **Test for Session Bleed:** Execute a tool call for "User A" containing unique identifiable data. Immediately follow with a tool call from "User B." Inspect the response for User B for any fragments of User A’s data|
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 8.3 Unrestricted Network Access (Duplicate)
-
-MCP servers or clients with open outbound or inbound network access can download malicious payloads, exfiltrate data, or connect to command-and-control infrastructure. Malicious or compromised MCP servers allow attackers to move laterally using stored credentials and exploiting poor network segmentation and isolation.
-
-**Note: This is a duplicate of 7.3**
-
-## 8.4 Malicious Command Execution
-
-Compromised or rogue MCP servers execute arbitrary or malicious payloads (ransomware, data manipulation) triggered by crafted prompts or files.
-
-### 
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Preventing unauthorized cross-user/tenant access MUST be enforced regardless of runtime reuse. |
+| SHOULD | Process/Respond/Purge, context reset or restart SHOULD be implemented; source typo Contest Reset has no new normative meaning. Safely isolated persistent state remains possible. |
 
 ### 8.4.1 Detect and Block Unsafe Sinks
 
-#### Description
+<!-- ada:requirement Tool:8.4.1 -->
 
-The AI Tool must operate within a hardened runtime that identifies and blocks code patterns facilitating sandbox escapes, such as os.system(), subprocess.Popen(shell=True), or eval(). Any tool that passes arguments to system-level calls must utilize parameterized arguments and path canonicalization.
-
-#### Rationale
-
-Proactively identifying insecure coding patterns during development mitigates the risk of Command Injection and Directory Traversal, which serve as primary vectors for bypassing tool sandboxes.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Pattern Scan:** Identify use of unsafe functions like eval() or shell-enabled subprocess calls. Flag any dynamic URL generation not checked against an allowlist |
-| Dynamic | **Sandbox Escape Probing:** Attempt to use an Attacker LLM to generate tool-call JSON designed to execute a shell command (e.g., `ls ; rm -rf`). Verify the runtime blocks the execution. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | Out of Scope |
-| Remote | In Scope |
-
-## 8.5 Dependency/Update Attack
-
-Attackers compromise MCP dependencies or update channels (e.g., “rug pull” attacks), swapping benign code for malicious versions after trust is established. MCP servers may also introduce new capabilities (e.g., tools or prompts) that have not been vetted or approved for use.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Applicable code/command/path/SSRF vulnerabilities MUST be prevented under full CASA conditions. |
+| SHOULD | Hardened runtimes, unsafe-sink scanning, parameterized commands and path canonicalization SHOULD be used as engineering approaches. |
 
 ### 8.5.1 Resource Pinning and Signature Verification
 
-#### Description
+<!-- ada:requirement Tool:8.5.1 -->
 
-The AI Tool must implement strict dependency pinning with hash-based verification for all third-party plugins and dependencies, rather than relying solely on version ranges or strict equality. All model weights and tool packages must have valid digital signatures and be verified against known cryptographic hashes.
-
-#### Rationale
-
-Resource pinning ensures that updates are a deliberate developer decision, preventing "Rug Pull" attacks where a dependency is automatically updated to a compromised version. This forces a "temporal delay" that eliminates a major class of common ecosystem vulnerabilities.
-
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Check Dependency Files:** Verify that dependency manifests (e.g., package-lock.json, requirements.txt with hashes) use hash-based pinning. Review the Software Bill of Materials (SBOM) for unmitigated vulnerabilities. |
-| Dynamic | **Update Verification:** Attempt to point the tool to a mocked update repository with a mismatched signature to confirm the update is rejected. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope|
-| Mobile | In Scope |
-| Remote | In Scope |
-
-# 9 Trust Boundary and Privilege Design Failures
-
-## 9.1 Overreliance on the LLM
-
-MCP server developers may implement overly permissive tools, assuming the LLM will invoke them correctly and safely. However, model-level controls (trained refusals, safety classifiers, etc.) are not ironclad—even capable models can be manipulated through prompt injection, make errors in judgment, or be replaced with weaker models that lack equivalent safeguards.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | No-known-exploitable-component requirement MUST remain, including exact published guide CVSS>=7 and documented unused-vulnerable-code/no-update-with-regular-patching exceptions. |
+| SHOULD | Dependency/plugin hash pinning, tool/model-weight signatures, SBOMs and authenticated update testing SHOULD remain AI-specific supply-chain recommendations. |
 
 ### 9.1.1 Data Minimization
 
-#### Description
-The AI Tool shall minimize the data being exposed to align with the use case the tool supports. The tool’s output schema and database queries shall be limited to necessary fields to support the functions stated need.For example, a tool which provides the current travel rewards points balance should not return the user’s credit card number and social security number.
+<!-- ada:requirement Tool:9.1.1 -->
 
-#### Rationale
-Overly permissive tools may expose the user’s data, or result in actions which the user never intended an agent to be able to perform.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The Tool MUST collect/process/return only function/task-necessary content and MUST NOT covertly reconstruct full Agent history/hidden memory or persistent conversation profiles. |
+| SHOULD | Purpose-shaped output schemas/queries, supplemental PII detectors and heuristic redaction SHOULD implement the mandatory minimization outcome; no categorical legitimate-user-file ban is imported. |
 
-#### Audit
+### 10.1.1 Financial Resource & Cost Governance
 
-| Method | Description |
-| :---- | :---- |
-| Static |Verify the function inputs and outputs only include the necessary data to fulfill the tool’s description and function’s stated need.  |
-| Dynamic | Execute each of the tool’s functions and verify the function inputs and outputs only include the necessary data to fulfill the tool’s description and function’s stated need. |
+<!-- ada:requirement Tool:10.1.1 -->
 
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope|
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 9.2 Consent/User Approval Fatigue
-
-Flooding users with excessive consent or permission prompts, causing habituation and leading to blind approval of potentially dangerous or malicious actions.
-
-**Note:** User approval *fatigue* (habituation from an excessive volume of prompts) is out of scope for the AI Tool specification because the AI Tool does not own the user-facing consent experience. Because the per-action consent model for Sensitive Actions increases prompt frequency, management of fatigue is an Agent obligation, specified in **AI Agent Specification §2.2 (Agent User Control)**. The AI Tool's fail-closed consent backstop for Sensitive Actions is specified in §2.1.1.
-
-
-# 10 Resource Management/Rate Limiting Absence
-
-## 10.1 Resource exhaustion and denial of wallet
-
-Attackers trigger an excessive number of LLM, tool, or other API calls leading to unexpected costs or resource exhaustion and denial of service
-
-### 10.1.1. Financial Resource & Cost Governance
-
-#### Description
-
-The AI Tool must be inherently cost-aware. It must identify whether a specific resource (e.g. a premium search API or a paid data scraper) carries a direct financial cost to the user or organization. For these metered resources, the tool must implement the following:
-
-* **Session-Based Cost Tracking:** The tool must calculate and track the cumulative cost of all API calls made during an active session.
-* **The $100 Guardrail:** By default, if the cumulative session cost reaches $100, the tool must automatically intervene by either enforcing a strict rate limit or pausing execution to request explicit user confirmation.
-* **Justified Overrides:** Developers may set a higher dollar threshold only if they provide a documented business justification within the configuration metadata.
-* **Governance Layers:** Enforce mandatory authentication for all tool access and implement per-user/per-tool rate limiting to prevent unauthorized or runaway consumption.
-
-
-#### Rationale
-
-AI Tools are "force multipliers" for LLMs. Because these tools often bridge the gap to paid APIs (e.g., GPT-4o, Claude 3.5 Sonnet, or search engines), they represent a direct financial vulnerability. A logic loop or a malicious actor could trigger thousands of dollars in costs in seconds. Unlike traditional DoS, which impacts availability, a DoW attack impacts the viability of the business.
-
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Identify Paid Assets:** Verify that all APIs/resources carrying a financial cost are identified in the codebase. <br><br> **Threshold Verification:** Confirm the implementation of the $100 limit and review documentation for any higher justified limits. <br><br> **Auth Check:** Ensure all cost-incurring resources require a valid, authenticated user context.|
-| Dynamic | **Cost Tracking Validation:** Request the list of metered resources and the specific method used to track costs in real-time during a session. <br><br> **Stress Testing:** Using an automated test harness, simulate high-volume calls to verify that the tool triggers a rate limit or confirmation prompt exactly when the $100 (or justified) limit is hit.|
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 10.2 Payload Limit/DoS
-
-Unrestricted payload sizes or recursion depth in protocols enable denial-of-service via resource exhaustion.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Metered operations MUST still meet applicable authorization and core Agent consequential-action HITL; no blanket auth gate is added to demonstrably public-safe resources merely because metered. |
+| SHOULD | Cost awareness, cumulative tracking, a$100 advisory guardrail, configurable documented higher thresholds and per-user/per-tool budget limits SHOULD be retained. |
 
 ### 10.2.1 Maximum Payload and Recursion Depth Constraints
 
-#### Description
+<!-- ada:requirement Tool:10.2.1 -->
 
-The server must strictly enforce configurable limits on the maximum size of incoming request payloads (in bytes) and the maximum depth of nested structures (e.g., JSON objects, arrays, or recursive tool calls).
-
-#### Rationale
-
-Unbounded inputs allow attackers to trigger Denial-of-Service (DoS). Large payloads exhaust RAM/bandwidth, while deep recursion can lead to stack overflow errors or CPU spikes during parsing, rendering the server unavailable to legitimate users.
-
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Payload Size Limits:** Inspect the code to verify that payload size limits are implemented. The preferred method is explicit limits, but language provided limits are acceptable. <br><br> **Recursion Depth Limits:** Inspect the code to verify recursion limits are applied during the processing of nested tool calls or nested JSON structures. |
-| Dynamic | **Payload Size Limits:** Using a tool like curl or Postman, attempt to send a payload that exceeds the defined limit (e.g., a 100MB JSON string when the limit is 5MB). <br><br> **Recursion Depth Limits:** Send a JSON object with nesting depth significantly higher than the limit (e.g., 1,000 levels of nested arrays: [[[[...]]]]).|
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | In Scope |
-| Mobile | In Scope |
-| Remote | In Scope |
-
-## 10.3 Per-User and Enumeration-Resistant Rate Limiting
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | No universal payload/depth numeric baseline is established by the reviewed shared evidence; applicable injection/access controls still apply. |
+| SHOULD | Configurable incoming byte/depth/recursive-call limits SHOULD be enforced. Excess-limit safe error/truncation handling SHOULD be tested. |
 
 ### 10.3.1 Per User Endpoint Rate Limiting
 
-#### Description
+<!-- ada:requirement Tool:10.3.1 -->
 
-For remote deployments, the AI Tool MUST enforce configurable limits aggregated at least across all concurrent sessions belonging to the same authenticated user. Where enumeration or consequential-action abuse is reasonably possible, the Tool MUST also apply action-, resource-, target-, or aggregate-level limits. The developer MUST document each threshold and its rationale. Limits applied to one user MUST NOT impair unrelated users. Rate limiting is supplemental and MUST NOT substitute for authorization checks or permit unauthorized resource-existence disclosure below the threshold.
-
-#### Rationale
-
-A per-session limit can be bypassed by opening parallel sessions. Enumeration and high-consequence abuse may also remain practical below a generic endpoint limit unless the Tool detects high-fan-out access to resources or targets and repeated consequential operations.
-
-#### Audit
-
-| Method | Description |
-| :---- | :---- |
-| Static | **Inspect Rate-Limit Keys:** Confirm limits aggregate requests across the authenticated user's concurrent sessions rather than relying only on a session identifier. <br><br>**Review Abuse Dimensions:** For functions that enumerate resources or cause consequential actions, confirm that action-, resource-, target-, or aggregate-level limits are configured and that each threshold and its rationale are documented. <br><br>**Confirm Authorization Independence:** Verify that authorization checks and existence-confidentiality behavior do not depend on whether a rate threshold has been reached. |
-| Dynamic | **Parallel-Session Test:** Authenticate as one user through multiple sessions and distribute requests across them; confirm the declared aggregate user threshold is enforced. <br><br>**Enumeration Test:** Exercise pagination, predictable identifiers, high-fan-out searches, and repeated target variation; confirm each applicable declared threshold is enforced. Verify separately that unauthorized requests do not disclose resource existence at any request rate. <br><br>**User Isolation:** Confirm enforcement against User A does not impair User B. |
-
-#### Comments
-
-| Scope | Comment |
-| :---- | :---- |
-| Local | Out of scope |
-| Mobile | Out of scope |
-| Remote | In scope |
-
-# 11 Supply Chain and Lifecycle Security Failures
-
-## 11.1 Shadow MCP Servers (Duplicate) 
-
-Unauthorized, unmonitored, or hidden MCP server instances create blind spots, increasing risk of undetected compromise and covert data exfiltration. These servers pose governance and compliance risks and may be malicious or easily compromised.
-
-**Note: This threat is covered by infrastructure security and out of scope for the ADA AI Tool specification.**
-
-## 11.2 Supply Chain Compromise (Duplicate) 
-
-Malicious or compromised MCP servers, dependencies, or packages are introduced into the environment, enabling attackers to execute arbitrary code, exfiltrate data, or persist within the infrastructure.
-
-**Note:** As with §6.4, the conventional-security baseline for this threat (no known exploitable vulnerabilities per CASA 6.1.1, plus host/platform hardening) is covered by the MASA and CASA certifications, while the AI-specific supply-chain controls those certifications do **not** provide — strict dependency pinning with hash-based verification, and digital-signature verification of tool packages and model weights — are in scope and required by §8.5.1 (Resource Pinning and Signature Verification).
-
-# 12 Insufficient Logging, Monitoring, and Auditability
-
-## 12.1 Invisible Agent Activity
-
-Agents or servers operate covertly, mimicking valid workflows but executing malicious or unauthorized actions without detection.
-
-Note: The controls for this threat are combined with CS-24: Lack of Observability, MCP-T1: Improper Authentication and Identity Management and the ADA Agent Security Specification.
-
-## 12.2 Lack of Observability
-
-Insufficient logging, monitoring, or attribution across MCP actions hides malicious or unintended activity, hindering detection and response.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Authorization and protected-resource existence confidentiality MUST NOT depend on reaching a rate threshold. Published authentication anti-automation alternatives and low-entropy OOB rate-limiting condition MUST remain exactly scoped; not every app is forced to choose rate limiting from1.1.1 alternatives. |
+| SHOULD | Configurable per-user concurrent-session aggregation, target/action/resource aggregate limits, rationale and unrelated-user noninterference SHOULD be retained. |
 
 ### 12.2.1 Implement comprehensive logging using structured logging formats
 
-#### Description
+<!-- ada:requirement Tool:12.2.1 -->
 
-The system must capture all significant security and operational events—including authentication attempts, authorization decisions, tool/function calls, AI model inputs/outputs, and system state changes. These logs must be generated in a machine-readable, structured format (such as JSON) rather than unstructured plain text.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Secret access MUST be logged OR monitored per CASA 6.7.1, and all logging MUST obey credential/payment/hash and task-content restrictions. |
+| SHOULD | Machine-readable significant-event logging, invocation outcome metadata, timestamps/correlation IDs and summaries/hashes SHOULD be provided. Logging all model inputs/outputs is not a mandate or permission for transcript collection. |
 
-#### Rationale
+### 12.2.2 Protect Sensitive Data in Logs
 
-In agentic and MCP-based architectures, the complexity of interactions between users, hosts, and servers makes traditional grep-based log analysis insufficient. Structured logging allows automated security orchestration, automation, and response (SOAR) tools and SIEMs to parse and correlate events in real-time. This visibility is critical for detecting anomalous patterns, such as indirect prompt injection, which are often only visible when analyzing the metadata of model interactions and tool execution.
+<!-- ada:requirement Tool:12.2.2 -->
 
-#### Audit
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | No credentials/payment details in logs and hashed-only session-token representation MUST be enforced; extra conversation collection for logging MUST NOT occur. |
+| SHOULD | Automated broad PII/identity/proprietary-output masking, centralized filters and heuristic sensitive-variable tracking SHOULD be retained. |
 
-| Method  | Description |
-| :------ | :--------------------------------------------------------------------- |
-| Static  | **Verify Structured Format:** Identify all logging statements (e.g., `console.log`, `logger.info`, `winston`) and confirm they utilize a structured format like JSON objects or key-value pairs rather than simple string concatenation. <br><br>**Identify External Tool Execution Paths:** Review the code for AI tool integration and MCP server implementations to identify all functions that execute external tools or access data resources. <br><br>**Check Telemetry Coverage:** Verify that each execution path includes a logging call capturing the identity of the calling agent, the specific tool requested, the input parameters, and the success/failure status. <br><br>**Inspect Metadata and Correlation:** Confirm that critical events (tool execution, API requests, and authentication logic) are logged with relevant metadata, including timestamps and correlation IDs.  <br><br>**Flag Silent Failures:** Identify and flag any instances where a tool is invoked without telemetry or where error states are handled "silently" without an audit entry. <br><br>**Flag Unstructured Calls:** Identify and flag any instances of "print" statements or unstructured logger calls used for operational data. |
-| Dynamic | **Generate Agent Activity:** Interact with the system through the AI agent to trigger various tool calls, API requests, and authentication events. <br><br>**Validate Log Capture:** Inspect the generated logs to confirm that the interaction was captured in its entirety. <br><br>**Confirm Machine-Readability:** Verify that the output logs are valid structured data (e.g., valid JSON) that can be parsed by automated security tools.  |
-|         |   |
+## Supplemental outcomes and enhancements
 
-#### Comments
+These stable IDs reconcile tests that previously lacked Specification mappings. They preserve minimum outcomes independently from recommended mechanisms.
 
-| Scope  | Comment                                                             |
-| :----- | :------------------------------------------------------------------ |
-| Local  | In scope                                                            |
-| Mobile | In scope                                                            |
-| Remote | In scope. The Tool's duty to generate the log is assessed; generated logs are supplied by the developer as attestation evidence. Persistent/centralized log-storage infrastructure remains out of scope. |
+### TG-2.5 Tool Function Allow-listing and Parameter Validation
 
-### 12.2.2 Protect Sensitive Data in Logs 
+<!-- ada:requirement Tool:TG-2.5 -->
 
-#### Description
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | The exposed public remote surface MUST preserve truthful declared behavior and separated read/write controls; untrusted parameters MUST be validated and applicable authorization MUST precede every reachable protected execution path. Declared schema types and constraints MUST be enforced when claimed, including rejecting extra fields when additionalProperties:false is declared; no global extra-field ban applies when the schema permits them. Undeclared mixed read/write catch-alls or bypass routes violating this outcome fail baseline. |
+| SHOULD | Exhaustive route manifests, strict rejection of every extra schema field irrespective of declared additionalProperties rules, and codepath parity evidence SHOULD be used. Do not prohibit a legitimate fixed-purpose/freeform read query solely by wholesale executor bans. |
 
-All logging mechanisms must include automated redaction or masking for sensitive information. This includes, but is not limited to, Personally Identifiable Information (PII), authentication tokens, API keys, passwords, and sensitive model outputs that may contain proprietary or private data.
+### TG-3.5 PII Detection
 
-#### Rationale
+<!-- ada:requirement Tool:TG-3.5 -->
 
-Logs are frequently replicated across multiple systems, stored in centralized repositories, and accessed by various personnel, making them a high-value target for attackers. According to OWASP and COSAI standards, failure to scrub sensitive data from telemetry can lead to accidental data breaches and compliance violations. Because LLMs and agents may process sensitive data as part of their prompt context, it is vital to ensure that this data does not leak into the persistent logging layer during the monitoring process.
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Unauthorized or task-extraneous personal data output MUST be prevented; applicable credential/payment log protections remain. Legitimate purpose-required, authorized data is not categorically prohibited. |
+| SHOULD | Detecting all SSN/national ID/email/phone/Luhn-valid-card/high-entropy patterns and redacting via a universal PII detector SHOULD be adopted, not a baseline detector-product/category gate. |
 
-#### Audit
+### TG-4.1 Output Sanitization
 
-| Method  | Description                   |
-| :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Static  | **Identify Sensitive Variables:** Search the codebase for variables and keys that typically contain sensitive information, such as `password`, `token`, `apiKey`, `secret`, `email`, `ssn`, `authorization`, or `bearer`. <br><br>**Trace Logging Sinks:** Identify all locations where logging functions (e.g., `console.log`, `logger.info`, `winston`) are called. Verify if the sensitive variables identified above are passed directly into these functions. <br><br>**Verify Redaction Middleware:** Confirm the application utilizes a centralized redaction middleware or a dedicated sanitization helper function designed to scrub or mask inputs before they reach the logging layer. <br><br>**Check Raw Data Logging:** Inspect code to ensure that raw user prompts or raw API responses—which may contain PII or proprietary data—are not logged without an explicit filtering mechanism. <br><br>**Verify Identity Masking:** Confirm that specific User IDs or unique PII identifiers are not written to the logs in plain text. |
-| Dynamic | **Generate Sensitive Telemetry:** Interact with the AI Tool through the agent and perform actions designed to generate sensitive data (e.g., entering a mock password, providing an API key, or sharing PII). <br><br>**Inspect Log Output:** Access the generated logs and verify that any sensitive data entered during the interaction has been successfully redacted, masked, or filtered out.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-|         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+<!-- ada:requirement Tool:TG-4.1 -->
 
-#### Comments
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Where rendered output/XML parsing is applicable, mandatory contextual XSS/XML protections MUST pass. No optional-widget exclusion waives actual auth/admin rendering controls. |
+| SHOULD | Universal structured-output schemas and stripping every HTML/JavaScript/shell/SQL metacharacter in non-executable data SHOULD be considered, not imposed indiscriminately where it destroys legitimate content. |
 
-| Scope  | Comment                                                             |
-| :----- | :------------------------------------------------------------------ |
-| Local  | In scope                                                            |
-| Mobile | In scope                                                            |
-| Remote | In scope. The Tool's duty to generate the log is assessed; generated logs are supplied by the developer as attestation evidence. Persistent/centralized log-storage infrastructure remains out of scope. |
-|        |                                                                     |
+### TG-4.4 Maximum Response Size
+
+<!-- ada:requirement Tool:TG-4.4 -->
+
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | No universal 1 MB response gate is established. Mandatory data minimization still applies where relevant. |
+| SHOULD | Configurable response truncation/pagination/rejection and a 1 MB suggested default with purpose justification for larger responses SHOULD be retained. |
+
+### TG-5.3 Mandatory Tenant Isolation
+
+<!-- ada:requirement Tool:TG-5.3 -->
+
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Cross-tenant unauthorized data, existence-sensitive metadata and side effects MUST be denied using verified authority; attacker-selected tenant ID is not sufficient authorization. |
+| SHOULD | A tenant-ID filter in every individual database/vector-store query SHOULD be the implementation approach, not the only acceptable correctly enforced isolation design. |
+
+### TG-8.2 Invocation Audit Trail
+
+<!-- ada:requirement Tool:TG-8.2 -->
+
+| Strength | Requirement |
+| --- | --- |
+| MUST when applicable | Secret access MUST be logged OR monitored; log content MUST meet the unchanged credential/payment/session hash and task-content boundaries. |
+| SHOULD | A per-invocation JSON record with all six timestamp/Agent ID/function/version/input-hash-or-summary/outcome fields SHOULD be retained. Absence of one field is advisory unless an independent mandatory security property fails. |
+
+## Supplemental minimum properties
+
+### MIN-S01 Public HTTPS and transport confidentiality
+
+<!-- ada:requirement Tool:MIN-S01 -->
+
+Expose the directory MCP endpoint over public HTTPS; protect the authenticated exchange in transit.
+
+**Applicability:** Public-internet connector endpoint and applicable OAuth endpoints. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S02 OAuth authorization-code integration for protected user access
+
+<!-- ada:requirement Tool:MIN-S02 -->
+
+Use the supported standards-based OAuth authorization-code integration for protected user data/actions, with valid client registration for the selected flow.
+
+**Applicability:** Services requiring end-user/account authentication. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S03 S256 PKCE advertised and enforced
+
+<!-- ada:requirement Tool:MIN-S03 -->
+
+Support S256 PKCE and publish the corresponding discovery capability; do not accept a code-exchange flow that lacks required PKCE.
+
+**Applicability:** OAuth authorization-code connections. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S04 Protected-resource and authorization-server discovery
+
+<!-- ada:requirement Tool:MIN-S04 -->
+
+Serve correct HTTPS protected-resource metadata with canonical resource and authorization-server identity, and standards-compliant reachable OAuth/OIDC authorization-server metadata; use the required401 discovery challenge.
+
+**Applicability:** OAuth-enabled MCP endpoints. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S05 Resource audience binding and no token passthrough
+
+<!-- ada:requirement Tool:MIN-S05 -->
+
+Issue/accept credentials only for the intended MCP resource; reject wrong-audience tokens and do not pass a client token unchanged through to an upstream resource for another audience.
+
+**Applicability:** Protected tool calls and upstream API delegation. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S06 Verify user credentials and enforce access at the server
+
+<!-- ada:requirement Tool:MIN-S06 -->
+
+Validate credentials and authorization before executing protected operations or returning protected data; reject invalid/missing/expired credentials and enforce the user/resource/scope boundary at a trusted service layer.
+
+**Applicability:** Protected/user-specific tools and consequential actions. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S07 Exact redirect validation and OAuth state protection
+
+<!-- ada:requirement Tool:MIN-S07 -->
+
+Validate registered redirect destinations and securely validate OAuth state; do not allow untrusted redirect substitution.
+
+**Applicability:** OAuth redirects/callbacks. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S08 CIMD identity and redirect metadata validation
+
+<!-- ada:requirement Tool:MIN-S08 -->
+
+Validate the client metadata identity against itsHTTPSURL and registered redirect values and accept only supported token-endpoint client-authentication methods.
+
+**Applicability:** Only if the selected connection implements CIMD. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S09 Keep authentication material out of URLs
+
+<!-- ada:requirement Tool:MIN-S09 -->
+
+Do not expose authentication material in URL query strings or published URLs; use protected header/cookie transport as appropriate.
+
+**Applicability:** Secrets/access/session tokens in connector/API/OAuth requests. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S10 Secure token/secret handling and storage
+
+<!-- ada:requirement Tool:MIN-S10 -->
+
+Keep credentials/tokens confidential and securely stored, using appropriate protected authentication channels rather than exposing them publicly.
+
+**Applicability:** Credentials/tokens stored or handled by the connector. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S11 Refresh-token and replay protection
+
+<!-- ada:requirement Tool:MIN-S11 -->
+
+Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selectedOAuthprofile.
+
+**Applicability:** Public OAuth clients and token refresh. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S12 Truthful read-only and destructive operation classification
+
+<!-- ada:requirement Tool:MIN-S12 -->
+
+Provide truthful applicable risk annotations: distinguish read-only operations and identify destructive/irreversible operations so safeguards can act on actual behavior.
+
+**Applicability:** Every exposed operation; hints according to operation type. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S13 Accurate narrow tool descriptions and transparent side effects
+
+<!-- ada:requirement Tool:MIN-S13 -->
+
+Describe what each tool actually does, when it is invoked and relevant side effects/limits; descriptions must match schema and behavior and not hide functionality.
+
+**Applicability:** Exposed tool metadata. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S14 Separate read-only and state-changing tool surfaces
+
+<!-- ada:requirement Tool:MIN-S14 -->
+
+Separate read-only and state-changing operations; do not expose one catch-all tool that mixes safe and unsafe methods.
+
+**Applicability:** Tools exposing reads and writes. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S15 No hidden behavioral directives or unauthorized tool steering
+
+<!-- ada:requirement Tool:MIN-S15 -->
+
+Do not include hidden/obfuscated/encoded behavior instructions, seek secrets/protected context, cause unrequested external actions, or steer the model to bypass security/user intent.
+
+**Applicability:** Descriptions/schemas and other model-readable connector metadata. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S16 Do not circumvent platform or upstream security boundaries
+
+<!-- ada:requirement Tool:MIN-S16 -->
+
+Do not evade agent safety/system/sandbox controls or upstream API authorization/access restrictions; keep tool execution within authorized operation boundaries.
+
+**Applicability:** Tool behavior and downstream access. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S17 Server-side input validation and injection defenses
+
+<!-- ada:requirement Tool:MIN-S17 -->
+
+Validate arguments server-side and reject invalid/unauthorized inputs; do not trust model-generated data to enforce security.
+
+**Applicability:** Untrusted model/client-supplied arguments. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S18 Minimize inputs, outputs and collected conversation/log content
+
+<!-- ada:requirement Tool:MIN-S18 -->
+
+Collect/process/return only function- and task-necessary content, and do not collect extraneous conversation data even for logging.
+
+**Applicability:** Tool inputs/results and data/logcollection. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S19 No covert reconstruction of Agent memory/history or conversation profiles
+
+<!-- ada:requirement Tool:MIN-S19 -->
+
+Do not pull/reconstruct/infer full Agent conversation history or hidden memory, and do not expand taskscoped inputs into covert persistent conversation profiling.
+
+**Applicability:** Agent memory/chat/history and long-lived connector context. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S20 Informed consent for irreversible/consequential actions
+
+<!-- ada:requirement Tool:MIN-S20 -->
+
+Require informed human confirmation for consequential/irreversible operations and preserve correct sensitivity labels; annotations are not a substitute for authentication/authorization or consent safeguards.
+
+**Applicability:** Sensitive or irreversible actions, not every read or every write. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+### MIN-S21 Legitimate endpoint/domain/API provenance
+
+<!-- ada:requirement Tool:MIN-S21 -->
+
+Own/control declared endpoints/domains or legitimately proxy authorized APIs; do not impersonate another provider or bypass access restrictions.
+
+**Applicability:** Connector endpoint and downstream APIs. Applicable Tool behavior/data/authorization property; any literal MCP field syntax requires MCP-style interface. Public directory reachability applies only when publishing to that directory.
+
+**Actor:** Tool assessment gates only owned/implemented roles. Agent UI or external AS/client requirements are seam dependencies, not claims that Tool certification proves those components. Published CASA integration/third-party-auth scope still applies.
+
+## Assessment and assurance
+
+Detailed tests are in the [Testing Guide](AI%20Tool%20Testing%20Guide.md).
+Applicable published injection, file-traversal, SSRF, IDOR, CSRF, transport, secret
+and session outcomes remain mandatory even where a specific sandbox, signature,
+scanner or replay-cache mechanism is recommended. Recommendations do not permit
+credential logging or invalid certificate trust. Threat categories and rationale
+are context rather than additional undisclosed gates.
+
+Minimum conformance does not establish universal safe composition, independent
+Tool-side human approval, all-message integrity or durable exactly-once effects.
+Implemented enhanced capabilities must be declared and assessed separately.
+
+## References
+
+* [CSA Monitoring & Operational Security](https://modelcontextprotocol-security.io/ttps/monitoring-operational-security/)
+* [OWASP MCP Top 10](https://github.com/OWASP/www-project-mcp-top-10/tree/main/2025)
+* [CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/model-context-protocol-security.md)
+
+
+## Contributors
+
+The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
+
+### Application Security Assessment Working Group Leads
+
+* Alex Duff (Meta) \- ASA WG Chair
+* Anna Bhirud (Google) \- ASA WG Vice Chair
+
+### AI Profile Leads
+
+* Brad Ree (Google)
+* Alex Duff (Meta)
+
+### Contributors
+
+* Debdutta Guha(Google)
+* Nic Watson (Google)
+* Abhiraman Gcl (Google)
+* Daniel Bond (Meta)
+* Tony Balkan (Microsoft)
+* Dario Freni (Google)
+* TBD
+
+## Licensing
+
+This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
