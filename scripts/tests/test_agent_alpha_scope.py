@@ -71,6 +71,9 @@ class AgentAlphaScopeTests(unittest.TestCase):
         self.assertIn("commissioned/delegated runtime execution", matrix["conditions"]["managed"]["basis"])
         guide = (AI / "AI Agent Test Guide.md").read_text()
         self.assertIn("Known revocation inside a cached-status TTL", guide)
+        self.assertIn("recording the timestamp of this second invocation attempt", guide)
+        coverage = json.loads((AI / "AI Agent Migration Coverage.json").read_text())
+        self.assertEqual("a153c9090c83cde6c556e6f9b1e3fdb081637cf6", coverage["upstream_revocation_followup"]["head"])
         self.assertIn("not a grace period for admission already known to be revoked", guide)
 
 

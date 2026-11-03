@@ -131,6 +131,8 @@ def refresh_coverage(ai, guide, manifest):
     if "upstream_revocation_candidate" in manifest:
         coverage["upstream_revocation_candidate"] = manifest["upstream_revocation_candidate"]
         coverage["evidence_sufficiency_amendment"]["Agent_PR_537_base"] = manifest["baseline_agent_head"]
+    if "upstream_revocation_followup" in manifest:
+        coverage["upstream_revocation_followup"] = manifest["upstream_revocation_followup"]
     coverage["evidence_sufficiency_amendment"]["record_scope"] = "historical evidence-only delta; current owner/source amendments and assessment_policy govern the full candidate"
     coverage["assessment_policy"] = {
         "status": "proposed; owner aligned, WG review pending",

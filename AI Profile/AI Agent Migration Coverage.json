@@ -486,5 +486,12 @@
     "minor_update": "impact review and affected regressions; not automatically full review",
     "protocol": "AI Agent Assessment Protocol.md",
     "applicability_matrix": "AI Agent Assessment Applicability.json"
+  },
+  "upstream_revocation_followup": {
+    "pr": 528,
+    "head": "a153c9090c83cde6c556e6f9b1e3fdb081637cf6",
+    "prior_migration_head": "63dff812fc2a38a6906844f9b2facd3528782041",
+    "change": "record second invocation attempt timestamp against enforcement deadline; faithfully ported to Guide procedure",
+    "status": "pending upstream PR/WG review; does not alter historical baseline maps"
   }
 }
