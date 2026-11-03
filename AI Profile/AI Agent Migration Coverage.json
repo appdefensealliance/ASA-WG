@@ -3,6 +3,33 @@
   "scenario": "A",
   "stable_ID_relaxations_included": false,
   "audit_count": 37,
+  "certification_prerequisite": {
+    "status": "proposed; WG consensus pending",
+    "profile_role": "extension, not standalone product certification",
+    "assessment_mode": "joint underlying-profile and AI Agent evaluation",
+    "assurance_level_for_both": "AL2",
+    "certificate": "single combined product certification",
+    "underlying_profiles_by_architecture": {
+      "mobile": "MASA",
+      "desktop_PC_or_Mac": "DASA",
+      "web": "CASA"
+    },
+    "underlying_source": "released Specification and Test Guide from main; version or immutable reference recorded at assessment",
+    "required_record": [
+      "assessed production product/version/configuration",
+      "covered architecture(s) and component scope",
+      "underlying and AI profile versions or immutable references",
+      "AL2 results of both joint-assessment portions",
+      "applicable mandatory requirements and justified original exclusions"
+    ],
+    "prior_certificate_alone_sufficient": false,
+    "separate_underlying_certificate_required": false,
+    "remote_model_policy": "external remote inference is allowed; DASA + AI Agent for a PC/Mac product does not require a separate CASA evaluation of the external LLM backend",
+    "retained_model_obligations": "Agent model-behaviour/version evidence and secure integration/data handling remain; no exemption for the product's own in-scope components",
+    "underlying_AL2_evidence_preserved": true,
+    "AI_SHOULD_may_waive_underlying_MUST": false,
+    "numbered_AI_audits_added": 0
+  },
   "controls": [
     {
       "id": "1.1.1",
