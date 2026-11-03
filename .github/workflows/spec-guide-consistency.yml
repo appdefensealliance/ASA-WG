@@ -13,6 +13,8 @@ on:
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
       - 'scripts/ai_assessment_lint.py'
+      - 'scripts/agent_policy_alignment.py'
+      - 'scripts/agent_assessment_policy_validate.py'
       - 'scripts/tool_case_render.py'
       - 'scripts/tests/test_spec_guide_lint.py'
       - 'scripts/spec-guide-lint.md'
@@ -31,6 +33,8 @@ on:
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
       - 'scripts/ai_assessment_lint.py'
+      - 'scripts/agent_policy_alignment.py'
+      - 'scripts/agent_assessment_policy_validate.py'
       - 'scripts/tool_case_render.py'
       - 'scripts/tests/test_spec_guide_lint.py'
       - 'scripts/spec-guide-lint.md'
@@ -49,7 +53,10 @@ jobs:
           python-version: '3.x'
       - name: Exercise Agent evidence and platform regressions
         run: python3 -m unittest discover -s scripts/tests -p 'test_agent_*.py'
-      - name: Lint Spec ↔ Test Guide pairs
-        run: python3 scripts/spec_guide_lint.py
+      - name: Validate decision alignment, assessment records and Spec ↔ Guide pairs
+        run: |
+          python3 scripts/agent_policy_alignment.py
+          python3 scripts/agent_assessment_policy_validate.py
+          python3 scripts/spec_guide_lint.py --strict
       - name: Exercise parser and assessment regressions
         run: python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py

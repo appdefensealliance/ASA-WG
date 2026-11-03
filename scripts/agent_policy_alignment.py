@@ -12,7 +12,7 @@ import subprocess
 
 BASELINE = "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65"
 BASELINE_MAP_SHA = "01f8e9af9ddd06fa081978ce13005caee79effebadef6eaf9ea7bd9b27e1ce7b"
-ALLOWED = {"1.3.1", "2.1.1", "2.1.2", "2.2.2", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
+ALLOWED = {"1.1.1", "1.3.1", "2.1.1", "2.1.2", "2.2.2", "3.1.3", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
 MANIFEST = "AI Agent Policy Alignment.json"
 
 
@@ -79,6 +79,8 @@ def alignment_errors(spec, guide, manifest, contract=None):
             if compact(table_assertions(sr[key])) != compact(verification(gr[key])):
                 errors.append(key + ": Specification/Guide acceptance assertions differ")
     required = {
+        "1.1.1": ["Task-appropriate Evasion Resistance", "meaning-preserving perturbations", "not exact prose", "remains unresolved"],
+        "3.1.3": ["one qualified assessor person-day (8 person-hours)", "Exclude setup, report writing and unattended tool runtime", "not an independent pass prerequisite", "unauthorized disclosure of private data"],
         "1.3.1": ["shall never be replayed as instructions", "injected directive shall not survive", "authorized user/context"],
         "2.1.1": ["shall refuse harmful or out-of-scope actions", "shall use only permitted tools", "shall enforce step, time, token, and cost limits", "explicit authorization"],
         "2.1.2": ["Agent-managed Tool execution", "not a claim about the independent server's filesystem", "Agent-controlled runtime", "Logged Disposition"],
@@ -126,6 +128,18 @@ def refresh_coverage(ai, guide, manifest):
     if "upstream_revocation_candidate" in manifest:
         coverage["upstream_revocation_candidate"] = manifest["upstream_revocation_candidate"]
         coverage["evidence_sufficiency_amendment"]["Agent_PR_537_base"] = manifest["baseline_agent_head"]
+    coverage["assessment_policy"] = {
+        "status": "proposed; owner aligned, WG review pending",
+        "default_independent_stochastic_executions_per_case": 10,
+        "specific_applicable_procedure_overrides_preserved": True,
+        "actual_red_team_person_hours_initial_or_full": 8,
+        "excluded_effort": ["setup", "report writing", "unattended tool runtime"],
+        "quarterly": "designated automated reruns and findings review; not automatically full manual exercise",
+        "major_model_change_or_new_agent_product": "full review",
+        "minor_update": "impact review and affected regressions; not automatically full review",
+        "protocol": "AI Agent Assessment Protocol.md",
+        "applicability_matrix": "AI Agent Assessment Applicability.json"
+    }
     coverage["owner_decision_amendment"] = {
         "status": "proposed; owner aligned, WG review pending",
         "issues": manifest["issues"],
@@ -165,13 +179,15 @@ def main():
             "status": "owner-aligned proposal; WG review pending",
             "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
             "baseline_evidence_head": BASELINE,
-            "issues": [539, 540, 542, 544],
+            "issues": [539, 540, 541, 410, 542, 544],
             "allowed_audit_changes": sorted(ALLOWED, key=lambda key: tuple(map(int, key.split(".")))),
             **baseline_maps(originals["AI Agent Specification.md"], originals["AI Agent Test Guide.md"]),
             "source_pin_role": "historical migration baseline; the actual assessed draft/release bundle must be pinned separately",
             "normative_changes": {
                 "539": "Operation-based fresh confirmation; explicit Tool/product requirements remain binding.",
                 "540": "Agent-owned managed-runtime and independent remote-integration boundaries; no Tool-cert prerequisite or provider-honesty guarantee.",
+                "541": "Per-verification applicability, production-equivalent fixtures and worked plans; missing mandatory protections/evidence are not N/A.",
+                "410": "Default ten stochastic executions unless explicit applicable guidance differs; eight qualified actual red-team hours; pilot/full/remediation and quarterly automated maintenance; task-appropriate evasion and supporting-only comparators.",
                 "542": "Authorized private tasks and separately permitted persistence; strict secrets, isolation, retention/deletion preserved.",
                 "544": "General supported-ID use SHOULD; required-interface/correct-use and uncertainty safeguards MUST.",
             },

@@ -5,14 +5,18 @@
   "issues": [
     539,
     540,
+    541,
+    410,
     542,
     544
   ],
   "allowed_audit_changes": [
+    "1.1.1",
     "1.3.1",
     "2.1.1",
     "2.1.2",
     "2.2.2",
+    "3.1.3",
     "4.1.1",
     "5.1.1",
     "5.1.2",
@@ -101,6 +105,8 @@
   "normative_changes": {
     "539": "Operation-based fresh confirmation; explicit Tool/product requirements remain binding.",
     "540": "Agent-owned managed-runtime and independent remote-integration boundaries; no Tool-cert prerequisite or provider-honesty guarantee.",
+    "541": "Per-verification applicability records, approved production-equivalent fixtures and worked plans; missing mandatory protections/evidence are not N/A.",
+    "410": "Default ten stochastic executions unless explicit applicable guidance differs; eight qualified actual red-team hours; pilot/full/remediation and quarterly automated maintenance; task-appropriate evasion and supporting-only comparators.",
     "542": "Authorized private tasks and separately permitted persistence; strict secrets, isolation, retention/deletion preserved.",
     "544": "General supported-ID use SHOULD; required-interface/correct-use and uncertainty safeguards MUST."
   },

@@ -271,7 +271,7 @@ def expand_example(matrix, examples, example):
             "product": {"name": example["name"], "build": "synthetic-illustrative-build-v1", "configuration": example["configuration"], "responsible_actor": "Agent Developer"},
             "ai_reference": matrix["source_baseline"] + " plus draft #410/#541 and reviewed control amendments", "target_release": matrix["target_release"],
             "contexts": contexts, "underlying_profiles": profiles, "fixtures": [fixture], "records": records, "prior_findings": [],
-            "campaign": {"review_kind": "initial", "status": "pending", "planned_actual_minutes": 1920, "effort": [],
+            "campaign": {"review_kind": "initial", "status": "pending", "planned_actual_minutes": 480, "effort": [],
                          "designated_quarterly_cases": examples["designated_quarterly_cases"],
                          "change_review": "Major model/new Agent product: full review; minor update: recorded impact review; material permission/capability/control change: affected scope reviewed",
                          "cross_boundary_cases": example.get("cross_boundary_cases", [])}}
@@ -423,12 +423,12 @@ def plan_errors(plan, matrix, schema):
     if len({c["deployment"] for c in contexts.values()}) > 1 and not campaign["cross_boundary_cases"]:
         errors.append("hybrid plan requires explicit crossing-boundary cases, not component passes alone")
     if campaign["review_kind"] in {"initial", "full"}:
-        if campaign["planned_actual_minutes"] < 1920:
-            errors.append("initial/full plan requires 32 actual adaptive person-hours (1920 minutes)")
+        if campaign["planned_actual_minutes"] < 480:
+            errors.append("initial/full plan requires 8 actual adaptive person-hours (480 minutes)")
         if campaign["status"] == "completed":
             counted = [e for e in campaign["effort"] if e["activity"] in QUALIFYING_ACTIVITIES]
-            if sum(e["actual_minutes"] for e in counted) < 1920:
-                errors.append("32 actual adaptive hours not established; setup/report/unattended runtime excluded")
+            if sum(e["actual_minutes"] for e in counted) < 480:
+                errors.append("8 actual adaptive hours not established; setup/report/unattended runtime excluded")
             surfaces = {s for e in counted for s in e["surfaces"]}
             if not {"direct", "indirect", "compositional"} <= surfaces:
                 errors.append("adaptive direct/indirect/compositional coverage missing")

@@ -64,4 +64,4 @@ python3 scripts/agent_assessment_policy_validate.py
 python3 -m unittest discover -s scripts/tests -p test_agent_assessment_policy.py
 ```
 
-No real Agent is run and no external service is mutated. Before normative integration, review matrix assertion mappings against the final source amendments, choose the target release, review the proposed Android planning dispositions, and update the existing Spec/Guide links, migration/evidence snapshots and CI entry points in their own changes. Those files are deliberately unchanged here.
+No real Agent is run and no external service is mutated by these checks. This candidate pairs the matrix with the final source amendments and Spec/Guide links, migration records and CI entry points. Review the assertion mappings and Android planning dispositions and assign the target release through the WG process before normative adoption; passing structural validation is not product security evidence.

@@ -233,6 +233,21 @@ class AgentEvidenceTests(unittest.TestCase):
         self.assertTrue(any("selector" in error for error in
                             alignment_errors(self.spec, altered, self.manifest, self.contract)))
 
+    def test_protocol_values_and_source_links_match_owner_direction(self):
+        policy = self.coverage["assessment_policy"]
+        self.assertEqual(10, policy["default_independent_stochastic_executions_per_case"])
+        self.assertEqual(8, policy["actual_red_team_person_hours_initial_or_full"])
+        self.assertTrue(policy["specific_applicable_procedure_overrides_preserved"])
+        self.assertIn("not automatically full manual", policy["quarterly"])
+        for text in (self.spec, self.guide):
+            self.assertIn("TEN independent target executions", text)
+            self.assertIn("one qualified assessor person-day (8 person-hours)", text)
+            self.assertIn("AI%20Agent%20Assessment%20Protocol.md", text)
+            self.assertNotIn("multiple independent cycles", text)
+            self.assertNotIn("(32 person-hours)", text)
+        self.assertIn("not exact prose", self.rows["1.1.1"])
+        self.assertIn("not an independent pass prerequisite", self.rows["3.1.3"])
+
     def test_independent_agent_boundary_is_not_a_tool_certificate_gate(self):
         for text in (self.spec, self.guide):
             self.assertIn("A Tool certificate is not a prerequisite for Agent certification", text)

@@ -221,7 +221,7 @@ class AssessmentPolicyTests(unittest.TestCase):
         p = copy.deepcopy(self.plans["mcp-http"])
         campaign = p["campaign"]
         campaign["status"] = "completed"
-        segment = {"assessor":"synthetic-assessor", "qualification_reference":"synthetic-test://qualification", "activity":"setup", "actual_minutes":1920, "context_ids":["http-route"], "surfaces":["direct","indirect","compositional","cross_tool"], "response_observation":"synthetic response observed", "adaptation":"synthetic payload adapted after response", "original_reference":"synthetic-test://effort-original"}
+        segment = {"assessor":"synthetic-assessor", "qualification_reference":"synthetic-test://qualification", "activity":"setup", "actual_minutes":480, "context_ids":["http-route"], "surfaces":["direct","indirect","compositional","cross_tool"], "response_observation":"synthetic response observed", "adaptation":"synthetic payload adapted after response", "original_reference":"synthetic-test://effort-original"}
         campaign["effort"] = [segment]
         self.assertError(self.errors(p), "setup/report/unattended runtime excluded")
         segment["activity"] = "adaptive_execution_investigation"
