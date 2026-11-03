@@ -330,7 +330,9 @@ class AssessmentPolicyTests(unittest.TestCase):
         """Read the exact pushed base in memory; no extra files or checkout writes."""
         def at_base(path):
             try:
-                return subprocess.check_output(["git","show",policy.SOURCE_PIN+":"+path], cwd=ROOT, text=True, stderr=subprocess.DEVNULL)
+                # Keep exploit reproduction pinned to the unremediated pushed base,
+                # independently of the current governing assessment source pin.
+                return subprocess.check_output(["git","show","2b04647d0ee312f361e3b9fb6a390ffe6599a4d7"+":"+path], cwd=ROOT, text=True, stderr=subprocess.DEVNULL)
             except subprocess.CalledProcessError:
                 self.skipTest("pushed review-base commit unavailable in this checkout")
         base = types.ModuleType("review_base_policy")

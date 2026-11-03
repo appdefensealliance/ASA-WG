@@ -1,5 +1,9 @@
 {
-  "x_alpha_preview": {"id":"AI-profiles-0.1.0-alpha.1","status":"proposed WG alpha for pilot assessment; not a basis for ADA certificates","certification_authority":false},
+  "x_alpha_preview": {
+    "id": "AI-profiles-0.1.0-alpha.1",
+    "status": "proposed WG alpha for pilot assessment; not a basis for ADA certificates",
+    "certification_authority": false
+  },
   "schema_version": 2,
   "status": "WG_DRAFT_PROPOSAL",
   "source_pin": "34705233b5f249d3fd4e8fc82cbb5e765ef94b81",
