@@ -207,11 +207,11 @@ class AgentEvidenceTests(unittest.TestCase):
                 self.assertTrue(alignment_errors(spec, guide, self.manifest, self.contract))
 
     def test_unrelated_control_cannot_be_weakened_in_both_documents(self):
-        before = "All plugin invocations, including the arguments"
+        before = "The ingestion path shall apply provenance tracking, deduplication, and anomaly detection"
         self.assertIn(before, self.spec)
         errors = alignment_errors(
-            self.spec.replace(before, "Some plugin invocations"),
-            self.guide.replace(before, "Some plugin invocations"),
+            self.spec.replace(before, "Ingestion integrity may be omitted"),
+            self.guide.replace(before, "Ingestion integrity may be omitted"),
             self.manifest, self.contract,
         )
         self.assertTrue(any("unrelated" in error for error in errors))
@@ -222,7 +222,7 @@ class AgentEvidenceTests(unittest.TestCase):
         self.assertIn("Pinned pre-amendment baseline maps changed",
                       alignment_errors(self.spec, self.guide, changed, self.contract))
         changed = copy.deepcopy(self.manifest)
-        changed["allowed_audit_changes"].append("3.3.1")
+        changed["allowed_audit_changes"].append("3.2.2")
         self.assertIn("Normative change inventory differs from the explicit amendment",
                       alignment_errors(self.spec, self.guide, changed, self.contract))
 
@@ -247,6 +247,24 @@ class AgentEvidenceTests(unittest.TestCase):
             self.assertNotIn("(32 person-hours)", text)
         self.assertIn("not exact prose", self.rows["1.1.1"])
         self.assertIn("not an independent pass prerequisite", self.rows["3.1.3"])
+
+
+    def test_review_conflicts_cannot_be_reintroduced(self):
+        self.assertNotIn("High-privilege actions shall require", self.spec)
+        self.assertNotIn("High-privilege actions shall require", self.guide)
+        for clause in (
+            "Privilege level alone shall not require",
+            "diagnostic logs, error messages and shared operational caches",
+            "does not establish that exception",
+            "remote HTTP/MCP transport does not remove those duties",
+        ):
+            with self.subTest(clause=clause):
+                self.assertIn(clause, self.guide)
+                self.assertTrue(alignment_errors(self.spec.replace(clause, "REMOVED"),
+                                                self.guide.replace(clause, "REMOVED"),
+                                                self.manifest, self.contract))
+        self.assertIn("dedicated authorized credential stores", self.rows["1.2.1"])
+        self.assertIn("diagnostic/shared-cache relabeling", self.rows["1.2.1"])
 
     def test_independent_agent_boundary_is_not_a_tool_certificate_gate(self):
         for text in (self.spec, self.guide):
