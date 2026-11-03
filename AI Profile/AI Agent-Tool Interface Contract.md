@@ -1,74 +1,117 @@
 # AI Agent–Tool Interface Contract
 
-# Introduction
+**Draft proposal for Working Group review — 29 October 2026.**
 
-The Agent-Tool Contract defines the normative contract governing the boundary between an AI Agent (MCP host) and an AI Tool (MCP server / App Function). It is referenced by both the **AI Agent Specification** and the **AI Tool Specification**. Its purpose is to ensure that a component certified in isolation composes safely with any other conformant component, **without** requiring the certification of concrete Agent × Model × Tool combinations.
+The AI Tool minimum combines the secure web application baseline established by
+published CASA with leading security practices informed by market research.
+The [Minimum Security Register](AI%20Tool%20Minimum%20Security%20Register.md)
+defines the baseline, applicability conditions, actor allocation and assurance limits.
 
-# Purpose and Approach
+## Certification scope
 
-The most severe agentic risks — indirect prompt injection delivered through tool content, confused-deputy privilege escalation across the agent↔tool boundary, and execution of consequential actions without informed user consent — are **emergent from the interaction** between an Agent and a Tool, not from either component alone. Certifying each component in isolation therefore leaves these risks in the seam between the two specifications.
+Standalone Tool certification scope and call-level authentication are separate.
+A Tool is in scope when its intended integration processes confidential data or
+enables sensitive operations. A public-only, read-only Tool may be excluded only
+when it receives no confidential inputs, credentials or private context, accesses
+no protected resources and performs no sensitive state-changing operation.
+Public output or lack of authentication alone does not establish exclusion.
 
-This contract closes that seam using a **conformance** model rather than combinatorial integration testing:
+Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuine
+public calls may be unauthenticated. An excluded public-only Tool remains
+untrusted external input in Agent assessment, with applicable prompt-injection,
+authorization, HITL and safe-outcome controls retained. Exclusion is not a
+certification pass or proof of safety. This proposal does not introduce a blanket
+public-application exemption from published CASA.
 
-* Each component is assessed **once** against a standardized adversarial counterparty (see *Reference Adversaries* below), not against every real counterparty it may encounter.  
-* The safety invariants are expressed as **per-component obligations at the interface**. Two components that each conform to this contract compose safely **by construction** — the same principle that allows any TLS-conforming client to interoperate securely with any TLS-conforming server without testing the cross-product.  
-* Assessment cost is therefore **linear** in the number of certified Agents and Tools, not multiplicative across their model and tool combinations.
+## Deployment and actor applicability
 
-Conformance to this contract is a **mandatory condition** of any AI Agent or AI Tool certification claim. Where a requirement in either specification defers a threat to "the other specification," that deferral is satisfied only if the corresponding obligation in this contract is met by the counterparty.
+| Boundary | Treatment |
+| --- | --- |
+| Remote HTTP Tool | Applicable CASA baseline and supplemental leading practices; additional Tool safeguards SHOULD be implemented. |
+| Local Android Tool, including stdio and AppFunctions | Retain current applicable strength and exclusions in the [Local Android Requirements](AI%20Tool%20Local%20Android%20Requirements.md). |
+| Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
+| Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
+| Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
+| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
 
-# Definitions
+Device-local HTTP and incidental outbound HTTP do not themselves determine the
+deployment category. Literal MCP fields and discovery rules apply to the selected
+MCP interface; public Internet reachability applies when publishing to the relevant
+public directory. Protocol and platform publication rules bind their actual implementer.
 
-| Term | Definition |
-| :---- | :---- |
-| Agent (MCP Host) | The component that orchestrates one or more models and invokes AI Tools on behalf of a user. |
-| Tool (MCP Server / App Function) | The component that exposes operations (functions, resources) to an Agent and executes them against downstream resources. |
-| Identity Assertion | A user-scoped, audience-bound credential a Tool can verify to establish the end user on whose behalf a request is made — for example, an OAuth 2.1 access token issued for that user and audience-bound to the Tool (a signed JWT the Tool validates directly, or an opaque token it validates by introspection). A cryptographically verifiable, per-request assertion that *additionally* binds the specific operation parameters for Sensitive Actions is the stronger form defined by the optional *Agent–Tool Identity & Consent Wire Format* profile. |
-| Sensitive Action | An operation that is irreversible, transfers value or money, mutates or shares user data beyond the scope of the current task, or grants or expands access. |
-| Tool Output | Any data returned by a Tool to an Agent, including operation results, retrieved resource content, and tool/function descriptions and schemas. |
+Tool assessment covers the Tool's authorization, metadata and implemented
+transport/OAuth roles. Independently controlled Agent UI/HITL, OAuth-client and
+authorization-server duties must be recorded as dependencies and assessed under
+the responsible profile. A Tool certificate does not prove those components.
+Published CASA integration and third-party-authentication applicability remain intact.
 
-# Normative Invariants
+## Normative strength and authority
 
-## C1 — Verifiable Identity Propagation
+Every applicable published CASA v2.1.1 requirement, alternative, criterion and
+exception remains mandatory. The register preserves all 48 audit IDs and their
+published AL1/AL2 criteria. Supplemental properties are conditional; they are not
+21 unconditional new requirements.
 
-* **Agent obligation:** The Agent MUST present, with every Tool request, a user-scoped credential that is audience-bound to the target Tool and bound to the authenticated end user. The Agent MUST NOT invoke a Tool with an ambient, shared, or application-level service credential in place of a user-scoped one; MUST NOT forward a bare, unsigned identifier (e.g., a plain `user_id`), nor a token it received from its own client or one issued for a different audience (no passthrough); and MUST fail closed — not escalating to a Sensitive Action — when it cannot produce the credential the Tool requires. The Agent SHOULD additionally forward a cryptographically verifiable, per-request identity assertion bound per action for Sensitive Actions (the optional wire-format profile); this is a documented upgrade path and is **not** required for certification in this revision.  
-* **Tool obligation:** The Tool MUST verify the presented credential — cryptographically for a signed token, or by introspection for an opaque token — establish the end user, and scope all downstream access to that identity (On-Behalf-Of). A request bearing a missing, unverifiable, or non-user-scoped credential MUST hard-fail (`401`), and for any Sensitive Action verification is **mandatory**. Where the Agent supplies the optional per-action-bound assertion, the Tool SHOULD re-verify the operation-parameter binding and reject on mismatch.
+MUST/SHALL states a scoped mandatory outcome. SHOULD states a recommendation;
+its absence is advisory unless an independently mandatory property fails.
+Priority and normative strength are separate. No P0/P1/P2 classification is assigned.
+Optional credentials or proofs used to establish mandatory authority must still
+pass their required verification. Missing an unused enhancement is not a failure;
+invalid required authority must never grant protected access.
 
-Enacts the confused-deputy defense across the boundary. Tool-side obligations are specified in AI Tool Specification §1.2 and §2.2.2; the Agent-side obligation is specified in AI Agent Specification §2.4.1. The mandatory bar is the user-scoped, audience-bound, Tool-verifiable credential above (a standard signed OAuth 2.1 JWT qualifies); the agent-minted, per-request signed assertion with per-action parameter binding is the stronger, **optional** tier — consistent with AI Agent Specification §2.4.1 and the optional wire-format profile — so that certification is attainable by implementations taking due care today while a verifiable upgrade path is defined.
+For protected access, the implementation's supported, correctly verified OAuth
+JWT or authoritative opaque-token introspection can establish authority. This is
+an admissible-evidence choice, not a requirement to support or accept both formats.
+User, account, audience, resource, scope, expiry and revocation remain enforced.
 
-## C2 — Data / Control Separation
+The Agent's independently stronger requirements remain in force, including
+untrusted-output defenses, per-action HITL and noncryptographic parameter binding,
+stable action identifiers, nonce/session controls and uncertain-outcome honesty.
 
-* **Tool obligation:** The Tool MUST NOT embed model-directed control directives or instructions within its operation results, tool/function descriptions, or schemas, and MUST NOT rely on the model or Agent to enforce the Tool's own security constraints. The Tool SHOULD, where feasible, return structured/typed output and MAY tag external/retrieved content with provenance as defense-in-depth; producer-supplied tags MUST NOT be relied upon by the Agent as a security boundary (a malicious or compromised Tool will not tag honestly).  
-* **Agent obligation (load-bearing):** The Agent MUST treat all Tool Output — including operation results, retrieved/resource content, and tool/function descriptions and schemas — as untrusted data and MUST NOT interpret it as instructions. Tool Output MUST NOT, on its own, cause the Agent to invoke a Sensitive Action without fresh user consent (C3).
+## Residual assurance and retained Agent obligations
 
-Enacts the defense against indirect prompt injection delivered through tool content. This is primarily a **consumer-side** control: the load-bearing defense is the Agent obligation above, tested in AI Agent Specification §3.1.2 against the Malicious Reference Tool. AI Tool Specification §6.1 correctly defers *mitigation* of resource-content poisoning to the Agent; the narrow Tool-side honest-behaviour duty is specified in AI Tool Specification §6.1.1. This allocation follows CoSAI MCP Security §3.2.3/§3.2.8 and OWASP Top 10 for Agentic Applications 2026 ASI01/ASI02, which assign data/control separation to the agent/host; no reviewed framework imposes a producer-side provenance duty.
+Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. No Agent file is edited here.
 
-## C3 — Consent for Consequential Actions
+## C1 Verifiable Identity Propagation
 
-* **Agent obligation (primary, load-bearing):** The Agent MUST present, obtain, and enforce per-action user consent for any Sensitive Action, MUST bind that consent to the verified user identity (C1), connector account, operation, target or recipient, all material operation parameters, a bounded validity period, and one execution, and MUST record it with a correlation ID for audit. A bounded batch MAY be treated as one action only when the user-facing approval explicitly enumerates every action and target in the batch and all material parameters; an open-ended class of future executions is not per-action consent. The user consent decision is made at the Agent's human interface.  
-* **Tool obligation (defense-in-depth backstop):** The Tool MUST classify each exposed operation by sensitivity and reversibility and, for a Sensitive Action, MUST either obtain user confirmation via server-side elicitation or fail closed. The Tool MUST NOT execute a Sensitive Action on the Agent's assertion alone that consent was obtained. Any confirmation, approval token, or receipt created or validated by the Tool MUST be bound to the authenticated user and specific action and MUST be rejected when expired, consumed, mismatched, or replayed.
+### Required outcome / retained baseline
 
-Enacts informed consent at the consequential-action boundary. Consent enforcement is **primarily consumer-side** (CoSAI MCP Security §3.2.9; OWASP Top 10 for Agentic Applications 2026 ASI02/ASI09), with the Tool acting as a fail-closed backstop against a confused or malicious Agent — the confused-deputy case the Malicious Reference Agent tests. Agent-side obligations are specified in AI Agent Specification §2.2 (§2.2.2); Tool-side obligations in AI Tool Specification §2.1.1.
+For protected/user-specific calls, the Agent MUST present and the Tool MUST validate a user-authorized target-resource credential through the implementation's supported validated signed-OAuth-token OR trusted opaque-introspection mechanism; either is admissible baseline assessment evidence, not a dual-format implementation mandate. Unsupported/unverifiable credentials cannot grant protected access. Wrong-user/audience/expired/unverifiable credentials MUST NOT authorize protected data or actions. Bare identifiers/ambient service authority cannot substitute. Demonstrably safe public/discovery calls MAY be unauthenticated. Downstream access MUST preserve user authority and no cross-audience token passthrough.
 
-**ADA extensions (beyond baseline MCP):** the machine-readable `consent_required` signal is an ADA construct (candidate alignment: MCP tool annotations); a consent assertion cryptographically bound to the verified user identity and operation parameters — letting the Tool verify consent without an interactive round-trip — is **deferred to the ADA identity/consent wire format together with C1**.
+### Recommended enhancement
 
-## C4 — Sensitive-Action Idempotency and Outcome Reconciliation
+Issuer-minted user identity forwarded per request, per-action parameter binding, dedicated D1 claim shapes and additional Tool re-verification SHOULD remain enhanced recommendations.
 
-* **Agent obligation:** The Agent MUST provide a stable intent or idempotency identifier with the initial execution request for a Sensitive Action, unless the Tool implements an explicit two-phase flow that returns the identifier before any external side effect and requires a subsequent request carrying it to execute. When retrying the same intended action, the Agent MUST preserve and reuse that identifier. It MUST NOT create a new identifier and retry while the original outcome remains unknown. If the Tool cannot establish an authoritative outcome safely, the Agent MUST report the outcome as indeterminate and MUST NOT represent the action as successful.
-* **Tool obligation:** For every Sensitive Action capable of an external side effect, the Tool MUST require an intent or idempotency identifier on the request that can create the side effect. It MAY accept an Agent-provided identifier or implement an explicit two-phase flow that mints and returns the identifier before any external side effect occurs. The identifier MUST uniquely represent the user-approved action and be bound to the verified user, Tool or connector account, operation, and all material parameters. Reuse with matching values MUST return the original or current authoritative outcome without creating another side effect; reuse with mismatched values MUST be rejected. Duplicate-suppression state MUST survive process restarts and remain available for a documented retry and outcome-uncertainty period.
+## C2 Data / Control Separation
 
-Enacts end-to-end duplicate suppression across the Agent–Tool boundary. Transport nonces prevent replay of the same message but do not identify a retried business operation carried in a newly constructed request. C4 does not prescribe a particular carrier or wire format; the Agent and Tool may use a protocol-native or application-level mechanism that satisfies these behaviors.
+### Required outcome / retained baseline
 
-# Reference Adversaries
+The Tool MUST NOT embed hidden/obfuscated model-directed behavioral steering or unauthorized instructions in returned content/metadata and MUST independently enforce its inputs and authorization. The Agent MUST treat Tool Output as untrusted data, not instructions or authorization for consequential actions, and coreHITL remains mandatory. Producer tags MUST NOT establish trust.
 
-To keep assessment linear and counterparty-independent, the ADA SHALL publish and version two reference fixtures. Each certified component is assessed against the fixture representing its counterparty.
+### Recommended enhancement
 
-| Fixture | Used to assess | Behavior |
-| :---- | :---- | :---- |
-| **ADA Malicious Reference Tool (MRT)** | AI Agents | Emits poisoned resource content, deceptive tool/function descriptions, schema poisoning, forged or withheld identity challenges, and replays. It can distribute attack components across multiple records, responses, or Tool identities to exercise compositional source-to-sink attacks. Used to verify C2 (data/control separation) and the Agent half of C1. |
-| **ADA Malicious Reference Agent (MRA)** | AI Tools | Forwards forged, mismatched, or missing identity; replays tokens and consent assertions; retries a Sensitive Action with the same intent identifier and with a new transport nonce; and smuggles injection into tool arguments. Used to verify the Tool half of C1, C3, and C4. |
+Structured/typed output and provenance tagging SHOULD be useful defenses, not proof of security or required wire fields.
 
-The dynamic test procedures already present in the AI Tool Specification (e.g., §1.2.2, §2.2.2, §2.4.1) are instances of MRA behavior and SHALL be consolidated into the MRA fixture.
+## C3 Consent for Consequential Actions
 
-# Licensing
+### Required outcome / retained baseline
 
-This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).  
+The Agent MUST obtain and enforce informed human confirmation for consequential/irreversible actions and preserve shown-versus-executed fidelity; it MUST NOT allow Tool content or an honest hint alone to authorize action. The Tool MUST provide truthful applicable MCP readOnlyHint/destructiveHint fields (readOnlyHint:true for reads, destructiveHint:true for applicable irreversible/destructive operations), without inventing every-tool Boolean presence or uniform additive-write semantics, and MUST enforce authentication/authorization plus applicable sensitive-account/admin-MFA floor. The existing stronger Agent-side non-cryptographic user/account/operation/recipient/material-parameter/validity/one-execution binding, explicit bounded-batch enumeration and correlation record remain REQUIRED by the Agent Specification; lowering Tool backstop strength does not relax those Agent duties.
+
+### Recommended enhancement
+
+The following are TOOL-side enhancements: independent elicitation or fail-closed confirmation backstop, independent OOB, full Tool-controlled user/account/operation/recipient/parameter/validity/one-execution tuple, Tool-side bounded-batch enumeration and correlation evidence. These SHOULD remain recommended; cryptographic receipts SHOULD be an optional wire enhancement. This does NOT demote the existing Agent non-cryptographic tuple, bounded-batch and correlation obligations retained above. An optional consent_required signal MAY be used; core Agent HITL does not depend on its presence.
+
+## C4 Sensitive-Action Idempotency and Outcome Reconciliation
+
+### Required outcome / retained baseline
+
+Published applicable token/session expiry, revocation and stateless-session anti-replay/integrity remain mandatory; C4 is not their replacement. No new stable business-intent mechanism is a Tool baseline gate. Under the retained Agent requirements, the existing Agent stable-intent/idempotency identifiers and their reuse/binding rules remain MUST. Any relaxation requires a separate Agent policy decision. Independently, the independently stronger Agent MUST NOT blindly retry when the original outcome remains unknown and MUST report an indeterminate outcome rather than falsely represent success; its identity/session/state/PKCE, model/memory/sandbox and consumer protections are not demoted by this Tool proposal.
+
+### Recommended enhancement
+
+The Tool SHOULD use stable action-intent identifiers, parameter/user/account binding, two-phase preparation where useful, reuse on retries, mismatch rejection, durable duplicate-suppression state and richer outcome reconciliation. Agent stable-ID obligations remain MUST under this proposal. Tool-owned outcome reconciliation and avoidance of blind retry or unsupported success claims SHOULD be implemented. Independently, the Agent MUST retain its no-blind-retry and unknown-outcome honesty requirements under this proposal; this Tool-side recommendation does not demote them.
+
+## Licensing
+
+This work is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
