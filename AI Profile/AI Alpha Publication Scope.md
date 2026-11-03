@@ -35,7 +35,7 @@ Publication/adoption requires the WG and SC process in [CONTRIBUTING](../CONTRIB
 
 ## Outstanding pilot limitation
 
-The pending #528 source uses “short validity TTL” without a numerical ceiling. Existing admission rules still prohibit dispatch under **known** revoked/disabled authority; the Guide tests that before cached status expires. The policy for cache freshness when status is not yet known needs explicit WG disposition before certification use. This candidate does not select a TTL, treat a developer's arbitrary duration as adopted policy, or modify the upstream #528 branch.
+The merged #528 source uses “short validity TTL” without a numerical ceiling. Existing admission rules still prohibit dispatch under **known** revoked/disabled authority; the Guide tests that before cached status expires. The policy for cache freshness when status is not yet known needs explicit WG disposition before certification use. This candidate does not select a TTL, treat a developer's arbitrary duration as adopted policy, or modify the upstream #528 branch.
 
 The [pilot lab/developer worksheet](AI%20Alpha%20Pilot%20Worksheet.md) records proposed assessor readiness, actual evidence, optional benchmarks and maintenance/change responsibilities. It is not a certificate template or a new lab-authorization grant.
 

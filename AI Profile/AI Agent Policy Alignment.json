@@ -6,7 +6,8 @@
     "head": "a153c9090c83cde6c556e6f9b1e3fdb081637cf6",
     "prior_migration_head": "63dff812fc2a38a6906844f9b2facd3528782041",
     "change": "record second invocation attempt timestamp against enforcement deadline; faithfully ported to Guide procedure",
-    "status": "pending upstream PR/WG review; does not alter historical baseline maps"
+    "merge_commit": "8d96b9017d8d689c3ff73eda0892748716263c8e",
+    "status": "merged upstream by the owner; owner-aligned amendments remain WG/SC review pending; historical baseline maps unchanged"
   },
   "review_remediation": {
     "scenario": "c357d704d98af341fdb4cc1a6e53d735c994b35b",
@@ -132,7 +133,7 @@
     "pr": 528,
     "head": "63dff812fc2a38a6906844f9b2facd3528782041",
     "control": "2.4.2",
-    "status": "candidate migration into paired documents; upstream PR and WG review remain pending",
+    "status": "historical original candidate migration; current upstream merge is recorded in upstream_revocation_followup; owner-aligned amendments remain WG review pending",
     "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
   }
 }
