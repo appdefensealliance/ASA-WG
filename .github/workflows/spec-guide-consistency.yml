@@ -17,6 +17,9 @@ on:
       - 'scripts/tests/test_spec_guide_lint.py'
       - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
+      - 'AI Profile/AI Agent*.md'
+      - 'AI Profile/AI Agent Migration Coverage.json'
+      - 'scripts/tests/test_agent_*.py'
       - '.github/workflows/spec-guide-consistency.yml'
   push:
     branches: [develop]
@@ -32,6 +35,9 @@ on:
       - 'scripts/tests/test_spec_guide_lint.py'
       - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
+      - 'AI Profile/AI Agent*.md'
+      - 'AI Profile/AI Agent Migration Coverage.json'
+      - 'scripts/tests/test_agent_*.py'
 
 jobs:
   spec-guide-consistency:
@@ -41,6 +47,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+      - name: Exercise Agent evidence and platform regressions
+        run: python3 -m unittest discover -s scripts/tests -p 'test_agent_*.py'
       - name: Lint Spec ↔ Test Guide pairs
         run: python3 scripts/spec_guide_lint.py
       - name: Exercise parser and assessment regressions
