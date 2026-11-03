@@ -3,6 +3,12 @@
   "scenario": "A",
   "stable_ID_relaxations_included": false,
   "audit_count": 37,
+  "upstream_revocation_followup": {
+    "pr": 528,
+    "head": "a153c9090c83cde6c556e6f9b1e3fdb081637cf6",
+    "merge_commit": "8d96b9017d8d689c3ff73eda0892748716263c8e",
+    "status": "merged upstream; latest timestamp procedure faithfully retained in the split Guide"
+  },
   "upstream_revocation_candidate": {
     "pr": 528,
     "head": "63dff812fc2a38a6906844f9b2facd3528782041",
