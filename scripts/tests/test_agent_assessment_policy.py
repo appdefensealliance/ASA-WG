@@ -517,8 +517,13 @@ class AssessmentPolicyTests(unittest.TestCase):
         self.assertIn("even when flagged unverified",v["assertion"])
         self.assertNotIn("even when flagged unverified",previous["Agent:3.2.3:grounded_references"][1]["assertion"])
         self.assertIn("instantly",current["Agent:2.1.1:termination"][1]["assertion"])
-        for field in ("assertion","case","source"):
-            self.assertEqual(previous["Agent:2.4.2:admission_integrity"][1][field],current["Agent:2.4.2:admission_integrity"][1][field],"preserve invocation-time/TTL/status #528 case")
+        revocation = current["Agent:2.4.2:admission_integrity"][1]
+        self.assertEqual(previous["Agent:2.4.2:admission_integrity"][1]["source"], revocation["source"])
+        for clause in ("verify establishment and admission before dispatch", "reject post-pin tampering", "documented deadline", "admission/revocation status cannot be established", "A denial after execution fails", "universal online revocation endpoint"):
+            self.assertIn(clause, revocation["assertion"], "preserve original invocation-time/TTL/status #528 duty")
+        self.assertIn("TOOL-PIN-01:", revocation["case"])
+        self.assertIn("within an unexpired cached-status TTL", revocation["assertion"])
+        self.assertIn("known-revocation delivery times", revocation["assertion"])
 
     def test_cli_default_examples_roundtrip_and_rejections(self):
         def cli(*args, stdin=None):

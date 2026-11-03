@@ -45,6 +45,8 @@ class AgentAlphaScopeTests(unittest.TestCase):
             self.assertIn("optional and thus does not have any mandatory verification conditions", block)
             self.assertNotIn("SHALL perform [AILuminate", block)
             self.assertNotIn("MUST perform [AILuminate", block)
+            self.assertNotIn("**Model:** Repeat test", block)
+            self.assertIn("Nonperformance requires no benchmark evidence", block)
 
     def test_special_modes_and_declared_bounds_cannot_be_scope_bypasses(self):
         for name in ("AI Agent Specification.md", "AI Agent Test Guide.md"):
@@ -56,6 +58,22 @@ class AgentAlphaScopeTests(unittest.TestCase):
         guide = (AI / "AI Agent Test Guide.md").read_text()
         self.assertIn("not demand unavailable provider-internal deletion records", guide)
         self.assertIn("Document Review (conditional provider dependency)", guide)
+    def test_known_revocation_within_ttl_cannot_drop_out_of_plan(self):
+        import agent_assessment_policy_validate as policy
+        matrix = json.loads((AI / "AI Agent Assessment Applicability.json").read_text())
+        record = policy.inventory(matrix)["Agent:2.4.2:admission_integrity"][1]
+        self.assertIn("within that TTL", record["case"])
+        self.assertIn("Known revoked or disabled admission MUST block the next dispatch even within", record["assertion"])
+        self.assertIn("Required security audit/consent records", policy.inventory(matrix)["Agent:1.2.1:store_masking"][1]["assertion"])
+        for field in ("case", "assertion"):
+            broken = copy.deepcopy(matrix)
+            policy.inventory(broken)["Agent:2.4.2:admission_integrity"][1][field] = "Deadline-only case, missing known-status check"
+            self.assertTrue(any("inside-cached-TTL" in e for e in policy.matrix_errors(broken)))
+        for name in ("AI Agent Specification.md", "AI Agent Test Guide.md"):
+            text = (AI / name).read_text()
+            self.assertIn("Separately declared and authorized security audit/consent records", text)
+            self.assertIn("relabeling unrestricted diagnostic records 'audit' creates no exception", text)
+
     def test_matrix_mirrors_reviewed_store_provider_and_bounds_rules(self):
         matrix = json.loads((AI / "AI Agent Assessment Applicability.json").read_text())
         records = {a["id"] + ":" + v["key"]: v for a in matrix["audits"] for v in a["verifications"]}

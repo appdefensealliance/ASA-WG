@@ -281,6 +281,9 @@ def matrix_errors(matrix, guide=None, spec=None):
                 errors.append(vid + ": unknown condition")
             if any(r not in matrix.get("evidence_routes", {}) for r in v.get("evidence", [])):
                 errors.append(vid + ": unknown evidence route")
+    revocation = next((v for a in audits if a.get("id") == "Agent:2.4.2" for v in a.get("verifications", []) if v.get("key") == "admission_integrity"), {})
+    if "within that TTL" not in revocation.get("case", "") or "Known revoked or disabled admission MUST block the next dispatch even within" not in revocation.get("assertion", ""):
+        errors.append("revocation matrix omits required known-revocation inside-cached-TTL case/assertion")
     if len(set(seen)) != len(seen) or set(seen) != EXPECTED_VERIFICATIONS:
         errors.append("verification stable inventory mismatch or duplicate")
     for name, text, tag in (("Guide", guide, "test"), ("Spec", spec, "requirement")):

@@ -128,7 +128,8 @@ class AgentEvidenceTests(unittest.TestCase):
         start, end = "## Agent-Level Compliance\n", "## Multi-Model Compliance Requirements\n"
         self.assertEqual(self.spec.split(start, 1)[1].split(end, 1)[0], self.guide.split(start, 1)[1].split(end, 1)[0])
         upstream = "**Evidence type: Document Review (when upstream evidence is relied upon).**"
-        self.assertEqual(14, self.guide.count(upstream))
+        self.assertEqual(12, self.guide.count(upstream))
+        self.assertEqual(2, self.guide.count("**Evidence type: Document Review (optional upstream benchmark route).**"))
         for block in self.rows.values():
             if upstream in block:
                 for clause in ("including or linking to relevant evaluation results", "published safety/adversarial-robustness evaluation", "model component certificate with its scope/evaluation report", "Agent-owned and combined-control assertions retain their own evidence requirements"):
