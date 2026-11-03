@@ -9,16 +9,11 @@ lint fails when they diverge, i.e. when:
   * a Guide test maps to **no** Specification requirement (an orphan/undocumented
     requirement).
 
-It is generic across profiles via a small per-pair adapter. Only three things
-vary per pair, so each adapter is a few lines:
-
-  * the file paths of the Spec and the Guide,
-  * how a requirement ID is extracted from each document (a regex), and
-  * the *join strategy*:
-      - "id"    : Spec and Guide share a stable numeric ID (MASA, CASA).
-      - "title" : requirements are matched on normalized title (AI Tool) --
-                  a bootstrap until explicit `covers:` tags are added, at which
-                  point that pair can switch to the far more robust "id" strategy.
+MASA and CASA join on their stable numeric audit IDs. AI Tool and AI Agent
+use explicit namespaced requirement/test tags, with multiple coverage targets
+where necessary. AI assessment metadata is checked by ai_assessment_lint.py.
+Empty parses, duplicate IDs, invalid variant gates, changed published CASA
+criteria and missing evidence types fail independently of the drift baseline.
 
 Known, already-accepted divergences are recorded in
 `scripts/spec_guide_lint_baseline.json` so CI blocks *new* drift without being
@@ -41,6 +36,7 @@ import json
 import os
 import re
 import sys
+import ai_assessment_lint
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASELINE_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -53,11 +49,14 @@ PAIRS = {
     "AI Tool": {
         "spec": "AI Profile/AI Tool Specification.md",
         "guide": "AI Profile/AI Tool Testing Guide.md",
-        "strategy": "title",
-        # Spec requirements are `### X.Y.Z Title` (tolerate a trailing `.`/`:`, e.g. `### 1.2.2:` or `### 10.1.1.`)
-        "spec_re": r"^###\s+\d+\.\d+\.\d+[.:]?\s+(.*\S)\s*$",
-        # Guide tests are `## X.Y Title`
-        "guide_re": r"^##\s+\d+\.\d+[.:]?\s+(.*\S)\s*$",
+        "strategy": "tags",
+        "namespace": "Tool",
+    },
+    "AI Agent": {
+        "spec": "AI Profile/AI Agent Specification.md",
+        "guide": "AI Profile/AI Agent Test Guide.md",
+        "strategy": "tags",
+        "namespace": "Agent",
     },
     "MASA": {
         "spec": "MASA/MASA Specification.md",
@@ -112,11 +111,17 @@ def extract(rel_path: str, regex: str, strategy: str) -> dict:
         key = norm_title(raw) if strategy == "title" else raw
         if not key:
             continue
-        out.setdefault(key, {"label": raw, "line": lineno})
+        if key in out:
+            raise ValueError(f"{rel_path}:{lineno}: duplicate audit ID {key}")
+        out[key] = {"label": raw, "line": lineno}
+    if not out:
+        raise ValueError(f"{rel_path}: parsed zero audit IDs")
     return out
 
 
 def lint_pair(name: str, cfg: dict) -> dict:
+    if cfg["strategy"] == "tags":
+        return ai_assessment_lint.lint_pair(ROOT, name, cfg)
     spec = extract(cfg["spec"], cfg["spec_re"], cfg["strategy"])
     guide = extract(cfg["guide"], cfg["guide_re"], cfg["strategy"])
     untested = {k: spec[k] for k in (set(spec) - set(guide))}   # requirement w/ no test
@@ -150,11 +155,14 @@ def render(name: str, result: dict, baseline: dict, strict: bool) -> bool:
     new_orphans = {k: v for k, v in result["orphans"].items() if k not in base_orphans}
     n_base = len(result["untested"]) - len(new_untested) + len(result["orphans"]) - len(new_orphans)
 
-    status = "FAIL" if (new_untested or new_orphans) else "ok"
+    errors = result.get("errors", [])
+    status = "FAIL" if (new_untested or new_orphans or errors) else "ok"
     print(f"\n[{status}] {name}: {result['spec_count']} requirements / "
           f"{result['guide_count']} tests"
           + (f"  ({n_base} known-debt suppressed)" if n_base and not strict else ""))
 
+    for error in errors:
+        print(f"  ERROR: {error}")
     if new_untested:
         print(f"  Requirements with NO test ({len(new_untested)}):")
         for k, v in sorted(new_untested.items(), key=lambda kv: kv[1]["line"]):
@@ -164,13 +172,15 @@ def render(name: str, result: dict, baseline: dict, strict: bool) -> bool:
         for k, v in sorted(new_orphans.items(), key=lambda kv: kv[1]["line"]):
             print(f"    - {v['label']}   (guide:{v['line']})")
 
-    return bool(new_untested or new_orphans)
+    return bool(new_untested or new_orphans or errors)
 
 
 def build_baseline(names) -> dict:
     out = {}
     for name in names:
         r = lint_pair(name, PAIRS[name])
+        if r.get("errors"):
+            raise ValueError("Structural/assessment errors cannot be baselined: " + "; ".join(r["errors"]))
         out[name] = {
             "untested": [{"id": k, "label": v["label"], "spec_line": v["line"]}
                          for k, v in sorted(r["untested"].items(), key=lambda kv: kv[1]["line"])],
@@ -220,4 +230,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        print(f"ERROR: {exc}", file=sys.stderr)
+        sys.exit(2)
