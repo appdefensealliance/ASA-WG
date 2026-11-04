@@ -84,7 +84,7 @@ without its required identifier, freshness or admission capability.
 
 The following 48 IDs retain their published scope, alternatives and AL1/AL2
 verification unchanged. Complete saved criteria are in the
-[machine-readable register](AI%20Tool%20Minimum%20Security%20Register.json).
+[machine-readable register](../assessment/ai/AI%20Tool%20Minimum%20Security%20Register.json).
 The pinned published source governs; unreleased CASA changes are not imported.
 
 | CASA ID | Published audit title | Source |

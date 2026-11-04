@@ -84,7 +84,7 @@ evidence defaults. Label evidence as functional observations, named implementati
 artifacts/attestations or document review as appropriate. A Resource Server cannot
 be credited with independently controlled Agent UI or OAuth client/AS behavior.
 
-The [case ledger](AI%20Tool%20Assessment%20Cases.json) preserves all 210 source cases,
+The [case ledger](../assessment/ai/AI%20Tool%20Assessment%20Cases.json) preserves all 210 source cases,
 their original tier and their individual gate and variant disposition.
 For mixed cases, assess the baseline outcome and enhancement independently.
 

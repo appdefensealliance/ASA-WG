@@ -25,6 +25,20 @@ ASSETS = (
 )
 
 
+def anchors(path):
+    text = Path(path).read_text()
+    values = set(re.findall(r'<[^>]+(?:id|name)=["\']([^"\']+)', text))
+    counts = {}
+    for heading in re.findall(r'^#{1,6} (.+)$', text, re.M):
+        heading = re.sub(r'\[([^\]]+)\]\([^)]+\)', r'\1', heading)
+        heading = heading.replace('`', '').replace('*', '').strip().lower()
+        key = re.sub(r'[^\w\- ]', '', heading).replace(' ', '-')
+        duplicate = counts.get(key, 0)
+        counts[key] = duplicate + 1
+        values.add(key + ('-' + str(duplicate) if duplicate else ''))
+    return values
+
+
 def errors(root):
     root = Path(root)
     ai = root / 'AI Profile'
@@ -48,8 +62,11 @@ def errors(root):
             if parsed.scheme or parsed.netloc or target.startswith('/'):
                 continue
             filename = unquote(parsed.path)
-            if filename and not (p.parent / filename).exists():
+            target_path = p.parent / filename if filename else p
+            if not target_path.exists():
                 problems.append(name + ': missing local link target ' + filename)
+            elif parsed.fragment and target_path.suffix == '.md' and unquote(parsed.fragment) not in anchors(target_path):
+                problems.append(name + ': missing local link anchor ' + parsed.fragment)
     for rel in ASSETS:
         p = root / rel
         if not p.is_file():

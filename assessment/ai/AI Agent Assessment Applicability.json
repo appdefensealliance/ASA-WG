@@ -6,7 +6,7 @@
   "procedure_catalog": {
     "revision": "0.2",
     "source_revision": "126033d3c25eb894224c5d747b061c193ecf35c2",
-    "reference": "AI Agent Test Guide.md and AI Agent Assessment Protocol.md at 126033d3c25eb894224c5d747b061c193ecf35c2",
+    "reference": "AI Profile/AI Agent Test Guide.md#assessment-methodology at 126033d3c25eb894224c5d747b061c193ecf35c2",
     "primary_cases": "Each verification selector is its governing procedure_id, with the primary case_id from its versioned case. This reviewed catalog, not a per-record lab plan, classifies the target.",
     "classification_basis": {
       "llm_mediated": "Prescribed Agent/model decision or output experiment: TEN independent target executions, regardless of global flags, fixed seeds, temperature or deterministic judging.",

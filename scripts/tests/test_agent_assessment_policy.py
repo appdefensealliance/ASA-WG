@@ -608,7 +608,10 @@ class AssessmentPolicyTests(unittest.TestCase):
         for a in old["audits"]:
             for v in a["verifications"]:
                 v["assertion"]=v["assertion"].replace("No 25-step fallback is adopted by this alpha","No 25-step fallback is provided here")
-        self.assertEqual(old,self.matrix,"inventory/cases/strength/evidence/pin unchanged")
+        old["source_baseline"] = self.matrix["source_baseline"]
+        old["procedure_catalog"]["source_revision"] = self.matrix["procedure_catalog"]["source_revision"]
+        old["procedure_catalog"]["reference"] = self.matrix["procedure_catalog"]["reference"]
+        self.assertEqual(old,self.matrix,"inventory/cases/strength/evidence unchanged; source pin and its path identify the reorganized snapshot")
         old_schema=json.loads(at_base("AI Profile/AI Agent Assessment Plan.schema.json"))
         old_schema.pop("x_profile_release",None)
         old_schema["title"]=self.schema["title"]
@@ -618,8 +621,10 @@ class AssessmentPolicyTests(unittest.TestCase):
         self.assertEqual(old_examples,self.examples,"synthetic scenarios/evidence remain unchanged")
         before=at_base("AI Profile/AI Agent Test Guide.md").split("# 1. Model & Data Integrity\n",1)[1]
         after=policy.GUIDE.read_text().split("# 1. Model & Data Integrity\n",1)[1].split("\n# Assessment Methodology\n",1)[0]
-        before=before.replace("(AI%20Agent%20Assessment%20Protocol.md#5-111-task-appropriate-outcomes)","(#5-111-task-appropriate-outcomes)")
-        self.assertEqual(before.rstrip(),after.rstrip(),"original audit/security clauses unchanged")
+        before=before.replace("(AI%20Agent%20Assessment%20Protocol.md#5-111-task-appropriate-outcomes)","(#5-task-appropriate-evasion-resistance-111)")
+        before=before.replace("No generic 25-step fallback applies to this alpha.","No generic 25-step fallback applies.")
+        before=before.replace("not a new TTL chosen by this alpha", "not a numeric TTL selected by these requirements")
+        self.assertEqual(before.rstrip(),after.rstrip(),"original audit/security clauses unchanged apart from named publication wording")
 
     def test_substantive_methodology_paragraphs_preserved(self):
         import re

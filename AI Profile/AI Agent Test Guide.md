@@ -389,7 +389,7 @@ Models must be resilient against prompt injection and jailbreaks to prevent the 
 
 #### Test Procedure
 
-Use the applicable techniques from [AITG-MOD-01](https://github.com/OWASP/www-project-ai-testing-guide/blob/main/Document/content/tests/AITG-MOD-01_Testing_for_Evasion_Attacks.md) with the task-appropriate case/rubric procedure in [Assessment Protocol §5](#5-111-task-appropriate-outcomes).
+Use the applicable techniques from [AITG-MOD-01](https://github.com/OWASP/www-project-ai-testing-guide/blob/main/Document/content/tests/AITG-MOD-01_Testing_for_Evasion_Attacks.md) with the task-appropriate case/rubric procedure in [Assessment Protocol §5](#5-task-appropriate-evasion-resistance-111).
 
 * Identify each assessed model/task/modality and the actual required decision/output boundary. Classifier cases compare class/decision; generative or multimodal cases use the explicit required task/security outcome rather than exact prose.
 * Freeze the case/corpus and original/perturbed input pairs, meaning-preservation rationale, permitted uncertainty conditions, expected/prohibited outcomes and owning assertions before execution. Establish normal task performance, ingestion/exposure and reset controls.

@@ -243,7 +243,7 @@ class AgentEvidenceTests(unittest.TestCase):
         for text in (self.spec, self.guide):
             self.assertIn("TEN independent target executions", text)
             self.assertIn("one qualified assessor person-day (8 person-hours)", text)
-            self.assertIn("AI%20Agent%20Assessment%20Protocol.md", text)
+            self.assertIn("#assessment-protocol", text)
             self.assertNotIn("multiple independent cycles", text)
             self.assertNotIn("(32 person-hours)", text)
         self.assertIn("not exact prose", self.rows["1.1.1"])
