@@ -23,6 +23,8 @@ public-application exemption from published CASA.
 
 ## Deployment and actor applicability
 
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
+
 | Boundary | Treatment |
 | --- | --- |
 | Remote HTTP Tool | Applicable CASA baseline and supplemental leading practices; additional Tool safeguards SHOULD be implemented. |
@@ -67,6 +69,12 @@ untrusted-output defenses, per-action HITL and noncryptographic parameter bindin
 nonce/session controls and uncertain-outcome honesty. Stable business-action IDs
 follow the conditional Agent rule in Contract C4 and Agent §6.1.3; they are not an
 unconditional prerequisite.
+
+## Optional wire-profile scope
+
+D1 remains optional. This revision supplies enhanced identity and consent guidance for remote HTTP integrations; it does not define a D1 conformance route for local stdio or Android AppFunctions. An implementation may use local extensions, but cannot claim that this profile assesses their local-wire interoperability or conformance. The historical local-wire design is not a substitute assessment route.
+
+This boundary applies only to the optional wire profile. All applicable local Android authentication, user-context validation, consent, isolation, secret handling, idempotency and lifecycle requirements remain governed by the Local Android Requirements. Agent-side protections remain independently applicable. Any credential or proof used to establish protected authority MUST satisfy its applicable validation requirements, including when an optional or locally extended wire mechanism carries it.
 
 ## Purpose
 
@@ -260,29 +268,19 @@ Public remote protected OAuth integrations MUST retain the shared discovery/reso
 
 ### Recommended enhancement
 
-Transport-specific D1carrier, JCS canonicalization and local process-surviving jti cache SHOULD remain enhanced recommendations within the targeted public-remote model.
+D1 carrier, canonicalization and replay-handling interoperability guidance here applies to remote HTTP integrations. A local process-surviving cache or carrier implementation does not establish local D1 conformance under this revision.
 
-## Open WG decisions
-
-### Required outcome / retained baseline
-
-No baseline security outcome may be bypassed by unresolved wire design decisions.
-
-### Recommended enhancement
-
-Carrier/RAR/PoP/claim namespacing/trust-anchor/A2A deferral decisions SHOULD remain design guidance; no automatic ratification/publication occurs.
-
-## Pre-normative verification tasks
+## Optional-profile boundaries and interoperability checks
 
 ### Required outcome / retained baseline
 
-Mandatory baseline tests MUST still be satisfiable using supported valid standardOAuth/opaque authorization mechanisms.
+No baseline security outcome may be bypassed by optional wire-design choices. Mandatory baseline tests MUST still be satisfiable using supported valid standard OAuth or opaque-token authorization mechanisms. Optional D1 adoption is not a prerequisite for baseline conformance.
 
 ### Recommended enhancement
 
-Pre-normative ext-auth/carrier/key-name/ID-JAG/header compatibility checks SHOULD precede optional wire adoption or any later mandatory elevation.
+For an implemented remote HTTP enhancement, interoperability checks SHOULD exercise the selected identity/consent carrier and its preservation, issuer/key roles, claim namespacing, RAR or APH parameter binding, and any claimed proof-of-possession mechanism. ID-JAG remains an optional upstream mechanism, not a required Tool-facing credential. Assess only declared enhanced capabilities and their limitations; local-wire and A2A conformance are outside this profile's defined scope. Such checks do not turn an unused enhancement into a mandatory baseline gate.
 
-## Non-normative examples (straw-man)
+## Non-normative examples
 
 ### Required outcome / retained baseline
 
@@ -316,7 +314,7 @@ Decoded C1 payload (illustrative): `{ "iss":"https://idp.example", "sub":"user_1
 
 "exp":..., "jti":"..." }` — no per-action binding at this tier.
 
-**Sensitive Action tier** — C1 with per-action binding + C3 consent receipt, `_meta` carrier (stdio):
+**Enhanced Action tier** — C1 with per-action binding + C3 consent receipt, `_meta` carrier over HTTP:
 
 ```json
 

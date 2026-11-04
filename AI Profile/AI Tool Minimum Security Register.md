@@ -25,6 +25,8 @@ public-application exemption from published CASA.
 
 ## Deployment and actor applicability
 
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
+
 | Boundary | Treatment |
 | --- | --- |
 | Remote HTTP Tool | Applicable CASA baseline and supplemental leading practices; additional Tool safeguards SHOULD be implemented. |

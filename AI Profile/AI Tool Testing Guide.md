@@ -23,6 +23,8 @@ public-application exemption from published CASA.
 
 ## Deployment and actor applicability
 
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
+
 | Boundary | Treatment |
 | --- | --- |
 | Remote HTTP Tool | Applicable CASA baseline and supplemental leading practices; additional Tool safeguards SHOULD be implemented. |
@@ -98,7 +100,7 @@ For mixed cases, assess the baseline outcome and enhancement independently.
 - **Mandatory breach from advisory:** If an advisory exercise reveals a breach of an independently mandatory requirement, record a minimum failure with that requirement and observed effect. Any optional credential/proof used to establish required authority must undergo its required validation.
 - **Positive controls:** Use the legitimate authorized/control inputs in assessment_context and the assertion exercise. A security denial passes only with enough evidence that no prohibited output/effect occurred; a generic error is insufficient. Do not classify legitimate purpose-required private output as a leak.
 - **Result record:** Record each assertion ID, responsible actor, applicability/exception basis, implementation or enhancement status, evidence references, observed output/effect and assertion result. Keep the case minimum result separate from each enhancement result. A dependency record does not establish the external actor implementation as Tool-owned.
-- **Retained variants:** This assessment overlay applies only to remote_http_tool. Local Android retains the original case text, tier and original applicability from AI Tool Local Android Requirements.md; other local/mobile variants retain their current source disposition pending their separate scope decision.
+- **Retained variants:** This assessment overlay applies only to remote_http_tool. Local Android retains the applicable native requirement/case text, tier and exclusions in AI Tool Local Android Requirements.md. Other standalone local/desktop/iOS Tool variants are outside this revision's scope; historical source does not provide an assessment route. This exclusion does not waive desktop/mobile Agent runtime or integration duties. Local D1 wire conformance is not defined and does not replace mandatory local Android protections.
 <!-- /assessment-rules -->
 
 ## 1.1 Client/Server Authentication for Protected Access
@@ -460,7 +462,7 @@ Establish applicability and required authority first. Exercise the original scen
 - **1.7/V02 — BASELINE_GATE:** MUST: Do not bypass required X.509 trust/validity verification; preserve the published documented internal-CA and other applicable alternatives.
   - **1.7/V02/M01 exercise:** Present an untrusted/invalid certificate with the applicable valid-trust control.
   - **1.7/V02/M01 source requirements:** Tool:7.1.1.
-- **1.7/V03 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only under its original applicable local/platform variant.
+- **1.7/V03 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only where applicable to the retained local Android requirements. Other standalone local/desktop/iOS Tool variants are excluded; historical source is not an assessment route for them.
 - **1.7/V04 — ADVISORY:** SHOULD: The server refuses any handshake attempting to use TLS 1.2 or lower.
   - **1.7/V04/S01 exercise:** If implemented, use the context fixtures and relevant declared configuration to inspect/exercise this original scenario: The server refuses any handshake attempting to use TLS 1.2 or lower.
   - **1.7/V04/S01 source requirements:** Tool:7.1.1.
@@ -472,7 +474,7 @@ Establish applicability and required authority first. Exercise the original scen
 - **1.7/V06 — ADVISORY:** SHOULD: Duplicate messages are successfully rejected by the server based on an expired timestamp or used nonce.
   - **1.7/V06/S01 exercise:** If implemented, use the context fixtures and relevant declared configuration to inspect/exercise this original scenario: Duplicate messages are successfully rejected by the server based on an expired timestamp or used nonce.
   - **1.7/V06/S01 source requirements:** Tool:7.1.1.
-- **1.7/V07 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only under its original applicable local/platform variant.
+- **1.7/V07 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only where applicable to the retained local Android requirements. Other standalone local/desktop/iOS Tool variants are excluded; historical source is not an assessment route for them.
 
 ## 1.8 Sensitive Action Idempotency and Ambiguous Outcomes
 
@@ -2299,9 +2301,9 @@ Each entry follows the register's actor, protocol and publication conditions. Th
 
 **Verification:** Verify legitimate endpoint/domain control and downstream API provenance. Distinguish the technical access/ownership evidence from publisher-review process and avoid crediting undocumented proxy or impersonation routes.
 
-## Local and other retained variants
+## Local Android and excluded standalone variants
 
-Use the [Local Android Requirements](AI%20Tool%20Local%20Android%20Requirements.md) for the retained local Android test bodies, original applicability and mandatory strength. Other local/mobile variants continue to use the pinned source pending a separate decision.
+Use the [Local Android Requirements](AI%20Tool%20Local%20Android%20Requirements.md) for the applicable local Android test bodies, original exclusions and mandatory strength, including stdio and AppFunctions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope; historical source material does not provide a certification route for them. Their exclusion does not waive the applicable desktop/mobile Agent runtime or integration requirements.
 
 ## Contributors
 

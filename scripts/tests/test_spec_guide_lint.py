@@ -68,6 +68,13 @@ class AssessmentLintTests(unittest.TestCase):
         ledger['tests'][0]['cases'][0]['gate_by_variant']['local_android_tool'] = 'ADVISORY'
         self.assertTrue(any('Android' in e for e in self.metadata_errors(ledger=ledger)))
 
+    def test_excluded_local_variant_cannot_acquire_an_assessment_route(self):
+        ledger = copy.deepcopy(self.ledger)
+        ledger['tests'][0]['cases'][0]['gate_by_variant']['other_local_mobile'] = 'BASELINE_GATE'
+        self.assertTrue(any('excluded standalone' in e for e in self.metadata_errors(ledger=ledger)))
+        ledger['tests'][0]['cases'][0]['gate_by_variant']['other_local_mobile'] = 'CURRENT_UNCHANGED_OR_UNDECIDED'
+        self.assertTrue(any('excluded standalone' in e for e in self.metadata_errors(ledger=ledger)))
+
     def test_mixed_case_requires_atom_split(self):
         ledger = copy.deepcopy(self.ledger)
         case = next(c for t in ledger['tests'] for c in t['cases'] if c['disposition']=='MIXED_BASELINE_AND_ADVISORY')

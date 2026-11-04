@@ -210,8 +210,8 @@ def tool_metadata(spec, guide, register, ledger):
                 errors.append(f'{cid}: remote gate differs from declared disposition')
             if variants.get('local_android_tool')!='RETAIN_CURRENT_TEST_GATE_IF_ORIGINALLY_APPLICABLE':
                 errors.append(f'{cid}: local Android test strength changed')
-            if variants.get('other_local_mobile')!='CURRENT_UNCHANGED_OR_UNDECIDED':
-                errors.append(f'{cid}: other retained variant changed')
+            if variants.get('other_local_mobile')!='OUTSIDE_STANDALONE_TOOL_SCOPE':
+                errors.append(f'{cid}: excluded standalone local/desktop/iOS Tool variant acquired an assessment gate')
             if row and f'**{cid} — {gate}:**' not in row['body']:
                 errors.append(f'{cid}: Guide case missing or gate differs')
             if row and (not case.get('requirement_text') or case['requirement_text'] not in row['body']):

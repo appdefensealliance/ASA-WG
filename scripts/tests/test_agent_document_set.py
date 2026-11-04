@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -61,6 +62,73 @@ class AgentDocumentSetTests(unittest.TestCase):
                 self.assertIn('requirement_text',case)
                 self.assertFalse(any(k.startswith('proposed_') for k in case))
         self.assertEqual(210,sum(len(t['cases']) for t in ledger['tests']))
+
+    def test_standalone_scope_is_consistent_and_exclusions_do_not_waive_agent_duties(self):
+        names = ('AI Tool Specification.md', 'AI Tool Testing Guide.md',
+                 'AI Agent-Tool Interface Contract.md', 'AI Agent-Tool Identity and Consent Wire Format.md',
+                 'AI Tool Minimum Security Register.md')
+        for name in names:
+            text = (AI/name).read_text()
+            self.assertIn('standalone Tool profile covers remote HTTP and local Android Tools', text)
+            self.assertIn("Other standalone local/desktop/iOS Tool variants are outside this revision's scope", text)
+            self.assertIn('do not waive desktop/mobile Agent runtime or integration obligations', text)
+        guide = (AI/'AI Tool Testing Guide.md').read_text()
+        self.assertNotIn('Other local/mobile variants continue to use the pinned source', guide)
+        self.assertNotIn('other local/mobile variants retain their current source disposition pending', guide)
+        ledger = json.loads((ASSET/'AI Tool Assessment Cases.json').read_text())
+        self.assertIn("outside this revision's scope", ledger['assessment_rules']['retained_variants'])
+        for test in ledger['tests']:
+            for case in test['cases']:
+                self.assertEqual('OUTSIDE_STANDALONE_TOOL_SCOPE', case['gate_by_variant']['other_local_mobile'])
+                self.assertEqual('RETAIN_CURRENT_TEST_GATE_IF_ORIGINALLY_APPLICABLE', case['gate_by_variant']['local_android_tool'])
+        scope = json.loads((ASSET/'AI Tool Minimum Security Register.json').read_text())['standalone_tool_scope']
+        self.assertFalse(scope['agent_protections_waived_by_tool_scope_exclusion'])
+        self.assertFalse(scope['historical_source_is_excluded_variant_assessment_route'])
+
+    def test_optional_wire_has_no_unfinished_local_conformance_claim(self):
+        wire = (AI/'AI Agent-Tool Identity and Consent Wire Format.md').read_text()
+        self.assertIn('D1 remains optional', wire)
+        self.assertIn('does not define a D1 conformance route for local stdio or Android AppFunctions', wire)
+        self.assertIn('Any credential or proof used to establish protected authority MUST satisfy its applicable validation requirements', wire)
+        self.assertIn('A key authorized only for C3 MUST NOT authorize C1', wire)
+        self.assertIn('Its own consent/workload key cannot authenticate an arbitrary user', wire)
+        for stale in ('## Open WG decisions', '## Pre-normative verification tasks', '_meta` carrier (stdio)'):
+            self.assertNotIn(stale, wire)
+        annex = (AI/'AI Tool Local Android Requirements.md').read_text()
+        self.assertIn('Only the unfinished optional-wire conformance material is excluded', annex)
+        self.assertIn('mandatory local Android Specification, Testing Guide and Contract obligations above retain their original strength', annex)
+        self.assertIn('No local D1 conformance claim is required', annex)
+        self.assertNotIn('pending Open Decision 4', annex)
+        self.assertNotIn('original unresolved local-transport scope', annex)
+
+    def test_native_android_and_case_security_obligations_are_preserved(self):
+        base = '6ec5b54e62888771220a008151a9b074e87988ac'
+        def original(rel):
+            try:
+                return subprocess.check_output(['git','show',base+':'+rel], cwd=ROOT, text=True, stderr=subprocess.DEVNULL)
+            except subprocess.CalledProcessError:
+                self.skipTest('scope-clarification base unavailable')
+        begin = '## AI Tool Specification.md — retained source'
+        old = original('AI Profile/AI Tool Local Android Requirements.md')
+        old_native = old.split(begin,1)[1].split('## AI Agent-Tool Identity and Consent Wire Format.md — retained source',1)[0]
+        new = (AI/'AI Tool Local Android Requirements.md').read_text()
+        new_native = new.split(begin,1)[1].split('## Optional local-wire conformance boundary',1)[0]
+        self.assertEqual(old_native, new_native, 'Native Android Spec/Guide/Contract bodies must not be demoted')
+        old_cases = json.loads(original('assessment/ai/AI Tool Assessment Cases.json'))
+        new_cases = json.loads((ASSET/'AI Tool Assessment Cases.json').read_text())
+        for old_test, new_test in zip(old_cases['tests'],new_cases['tests']):
+            self.assertEqual(old_test['id'],new_test['id'])
+            self.assertEqual(old_test['mandatory_outcome'],new_test['mandatory_outcome'])
+            self.assertEqual(old_test['advisory_outcome'],new_test['advisory_outcome'])
+            for before, after in zip(old_test['cases'],new_test['cases']):
+                for field in ('case_id','current_text','original_assurance_tier','disposition'):
+                    self.assertEqual(before[field],after[field])
+                for field in ('mandatory_assertions','advisory_assertions'):
+                    self.assertEqual(before['assessment'][field],after['assessment'][field])
+                self.assertEqual(before['gate_by_variant']['local_android_tool'],after['gate_by_variant']['local_android_tool'])
+                self.assertEqual(before['gate_by_variant']['remote_http_tool'],after['gate_by_variant']['remote_http_tool'])
+        old_floor = json.loads(original('assessment/ai/AI Tool Minimum Security Register.json'))['CASA_floor']
+        self.assertEqual(old_floor,json.loads((ASSET/'AI Tool Minimum Security Register.json').read_text())['CASA_floor'])
 
     def test_mlc_benchmarks_remain_strictly_optional(self):
         for name in ('AI Agent Specification.md','AI Agent Test Guide.md'):

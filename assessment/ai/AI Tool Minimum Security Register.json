@@ -2222,5 +2222,18 @@
       "disposition": "COVERED_SECURITY_OUTCOMES_AND_ADVISORY_MECHANISM",
       "text": "Untrusted arguments must not bypass declared constraints or mandatory authorization/security outcomes (Tool 3.1.1 and TG-2.5, MIN-S15/S17). A prescribed model-parameter allowlist or fixed temperature/filter policy is recommended where relevant, not a universal Tool gate."
     }
-  ]
+  ],
+  "standalone_tool_scope": {
+    "covered_boundaries": [
+      "remote HTTP",
+      "local Android, including stdio and AppFunctions"
+    ],
+    "excluded_boundaries": [
+      "other standalone local/desktop/iOS Tool variants"
+    ],
+    "local_android_strength": "retain all applicable native requirements and original conditions/exclusions",
+    "optional_local_wire_conformance": "not defined in this revision; no substitute for mandatory local Android controls",
+    "agent_protections_waived_by_tool_scope_exclusion": false,
+    "historical_source_is_excluded_variant_assessment_route": false
+  }
 }
