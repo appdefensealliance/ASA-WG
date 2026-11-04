@@ -65,7 +65,7 @@ ENFORCEMENT = {"admission", "authentication_authorization", "consent", "untruste
                "isolation", "lifecycle", "logging", "outcome_reconciliation"}
 QUALIFYING_ACTIVITIES = {"adaptive_attack_development", "adaptive_execution_investigation"}
 PROFILE_FOR_DEPLOYMENT = {"mobile": "MASA", "desktop": "DASA", "web": "CASA"}
-SOURCE_PIN = "1074e2c33355b1648e14d6d92125bb1eac68b2b5"
+SOURCE_PIN = "fd7e54fe975f53641d8177a6de540050acab9055"
 ASSESSMENT = ROOT / "assessment" / "ai"
 FIXTURES = ROOT / "scripts" / "tests" / "fixtures" / "ai"
 GUIDE = AI / "AI Agent Test Guide.md"
