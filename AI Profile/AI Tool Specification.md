@@ -1,7 +1,5 @@
 # AI Tool Security Specification
 
-**Draft proposal for Working Group review — 29 October 2026.**
-
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
 The [Minimum Security Register](AI%20Tool%20Minimum%20Security%20Register.md)
@@ -20,10 +18,12 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
+
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
 
 | Boundary | Treatment |
 | --- | --- |
@@ -32,7 +32,7 @@ public-application exemption from published CASA.
 | Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
 | Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
 | Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
-| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
+| Other local, desktop and mobile standalone Tool variants | Outside the standalone Tool scope covered here; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
 
 Device-local HTTP and incidental outbound HTTP do not themselves determine the
 deployment category. Literal MCP fields and discovery rules apply to the selected
@@ -211,7 +211,7 @@ unconditional prerequisite.
 
 | Strength | Requirement |
 | --- | --- |
-| MUST when applicable | Baseline Agent HITL, Tool honest risk labels, authentication and CASAadmin-MFA/sensitive-account protections remain mandatory where applicable. |
+| MUST when applicable | Baseline Agent HITL, Tool honest risk labels, authentication and CASA admin-MFA/sensitive-account protections remain mandatory where applicable. |
 | SHOULD | Independent-channel OOB confirmation SHOULD be used for highest-risk actions, including remote/high-value deployments; a safe server-side fallback SHOULD be provided where infeasible. Pre-registered channel/authenticated provider page and matching/expiry/single-use checks SHOULD preserve the current security content. No absent OOB channel alone fails baseline. |
 
 ### 2.2.1 Stateless Request Level Isolation
@@ -301,8 +301,8 @@ unconditional prerequisite.
 
 | Strength | Requirement |
 | --- | --- |
-| MUST when applicable | Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, defaultTLS 1.2+ with exact legacy/internal-CA/Additional Context routes. |
-| SHOULD | TLS 1.3, all-message MAC/signatures, secureIPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment. |
+| MUST when applicable | Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, default TLS 1.2+ with exact legacy/internal-CA/Additional Context routes. |
+| SHOULD | TLS 1.3, all-message MAC/signatures, secure IPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment. |
 
 ### 7.7.1 Validate Origin Header on HTTP Transports
 
@@ -528,7 +528,7 @@ Validate registered redirect destinations and securely validate OAuth state; do 
 
 <!-- ada:requirement Tool:MIN-S08 -->
 
-Validate the client metadata identity against itsHTTPSURL and registered redirect values and accept only supported token-endpoint client-authentication methods.
+Validate the client metadata identity against its HTTPS URL and registered redirect values and accept only supported token-endpoint client-authentication methods.
 
 **Applicability:** Only if the selected connection implements CIMD. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
 
@@ -558,7 +558,7 @@ Keep credentials/tokens confidential and securely stored, using appropriate prot
 
 <!-- ada:requirement Tool:MIN-S11 -->
 
-Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selectedOAuthprofile.
+Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selected OAuth profile.
 
 **Applicability:** Public OAuth clients and token refresh. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
 
@@ -681,10 +681,10 @@ Implemented enhanced capabilities must be declared and assessed separately.
 
 * [CSA Monitoring & Operational Security](https://modelcontextprotocol-security.io/ttps/monitoring-operational-security/)
 * [OWASP MCP Top 10](https://github.com/OWASP/www-project-mcp-top-10/tree/main/2025)
-* [CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/model-context-protocol-security.md)
+* [CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/whitepapers/model-context-protocol-security.md)
 
 
-## Contributors
+## Acknowledgements
 
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
@@ -700,13 +700,12 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 ### Contributors
 
-* Debdutta Guha(Google)
+* Debdutta Guha (Google)
 * Nic Watson (Google)
 * Abhiraman Gcl (Google)
 * Daniel Bond (Meta)
 * Tony Balkan (Microsoft)
 * Dario Freni (Google)
-* TBD
 
 ## Licensing
 

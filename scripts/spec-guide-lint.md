@@ -102,7 +102,7 @@ mixed gates, local Android demotion, evidence artifacts and baseline bypass.
 
 ## Editing Tool verification cases
 
-`AI Profile/AI Tool Assessment Cases.json` schema version 2 maintains the remote
+`assessment/ai/AI Tool Assessment Cases.json` schema version 2 maintains the remote
 case assertions. Each case references its test's actor, applicability, setup,
 positive/negative controls and observation context. Mandatory and advisory assertion
 arrays identify their exercise, expected outcome and source requirements separately.

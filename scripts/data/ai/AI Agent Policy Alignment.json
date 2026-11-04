@@ -1,8 +1,20 @@
 {
-  "status": "owner-aligned proposal; WG review pending",
+  "status": "maintainer regression and provenance record",
+  "upstream_revocation_followup": {
+    "pr": 528,
+    "head": "a153c9090c83cde6c556e6f9b1e3fdb081637cf6",
+    "prior_migration_head": "63dff812fc2a38a6906844f9b2facd3528782041",
+    "change": "record second invocation attempt timestamp against enforcement deadline; faithfully ported to Guide procedure",
+    "merge_commit": "8d96b9017d8d689c3ff73eda0892748716263c8e",
+    "status": "merged upstream by the owner; historical baseline maps unchanged"
+  },
   "review_remediation": {
     "scenario": "c357d704d98af341fdb4cc1a6e53d735c994b35b",
-    "findings": ["A1", "A2", "A4"],
+    "findings": [
+      "A1",
+      "A2",
+      "A4"
+    ],
     "consent": "§3.3.1 follows operation risk and explicit Tool/product requirements, not privilege level alone",
     "private_stores": "Diagnostic/shared/error masking remains; separately permitted protected user stores require actual scope/isolation/retention evidence, not relabeling",
     "managed_runtime": "First-party or delegated Agent execution control remains managed regardless of transport"
@@ -10,23 +22,31 @@
   "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
   "baseline_evidence_head": "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65",
   "issues": [
+    410,
+    456,
     539,
     540,
+    541,
     542,
     544
   ],
   "allowed_audit_changes": [
+    "1.1.1",
     "1.2.1",
     "1.3.1",
     "2.1.1",
     "2.1.2",
+    "2.1.3",
     "2.2.2",
+    "2.2.3",
+    "3.1.3",
     "3.3.1",
     "4.1.1",
     "5.1.1",
     "5.1.2",
     "5.2.1",
-    "6.1.3"
+    "6.1.3",
+    "6.2.2"
   ],
   "baseline_spec_blocks": {
     "1.1.1": "a18fb741cd0da40e58b873884993c6505692d98b5c15ec3e2299d5d7a0bbf165",
@@ -106,18 +126,35 @@
     "6.2.1": "1e210667fde5b525e13217c733e8eba9b30a12497b74cdefde283e75c4ae5e15",
     "6.2.2": "6af05af5dc3e472b2c19bdf6537609ee3c2ad28607ce8368910efef0efd4318f"
   },
-  "source_pin_role": "historical migration baseline; the actual assessed draft/release bundle must be pinned separately",
+  "source_pin_role": "historical migration baseline; the actual versioned assessment bundle must be pinned separately",
   "normative_changes": {
     "539": "Operation-based fresh confirmation; explicit Tool/product requirements remain binding.",
     "540": "Agent-owned managed-runtime and independent remote-integration boundaries; no Tool-cert prerequisite or provider-honesty guarantee.",
+    "541": "Per-verification applicability records, approved production-equivalent fixtures and worked plans; missing mandatory protections/evidence are not N/A.",
+    "410": "Default ten stochastic executions unless explicit applicable guidance differs; eight qualified actual red-team hours; pilot/full/remediation and quarterly automated maintenance; task-appropriate evasion and supporting-only comparators.",
     "542": "Authorized private tasks and separately permitted persistence; strict secrets, isolation, retention/deletion preserved.",
-    "544": "General supported-ID use SHOULD; required-interface/correct-use and uncertainty safeguards MUST."
+    "544": "General supported-ID use SHOULD; required-interface/correct-use and uncertainty safeguards MUST.",
+    "456": "Agent-owned trusted requester/presentation separation across Tool interfaces; MCP supported-mode attribution, full-URL navigation consent, no-prefetch and page/input isolation; form/URL modes remain optional and presentation hardening remains SHOULD."
   },
   "upstream_revocation_candidate": {
     "pr": 528,
     "head": "63dff812fc2a38a6906844f9b2facd3528782041",
     "control": "2.4.2",
-    "status": "candidate migration into paired documents; upstream PR and WG review remain pending",
+    "status": "historical original migration; current upstream merge is recorded in upstream_revocation_followup",
     "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
+  },
+  "tool_impersonation_amendment": {
+    "issue": 456,
+    "prior_head": "6b9535a9a6880415b07290f8e1f3b99b6496e1ff",
+    "controls": [
+      "2.2.3",
+      "6.2.2"
+    ],
+    "new_numbered_audits": 0,
+    "protocol_reference": "https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation",
+    "protocol_markdown_sha256": "240eb8a4cd68812991e45e7da446f900602906e6e43c6ca24fa3233238d4e932",
+    "allocation": "Agent/client presentation and browser boundary only; independent server identity/session binding remains server-owned",
+    "feature_optionality": "form and URL modes independently optional; supported-mode protections mandatory, URL presentation hardening SHOULD",
+    "retained_baseline": "pre-amendment hashes and unrelated control inventory unchanged"
   }
 }

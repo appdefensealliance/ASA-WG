@@ -1,7 +1,5 @@
 # AI Tool Testing Guide
 
-**Draft proposal for Working Group review — 31 October 2026.**
-
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
 The [Minimum Security Register](AI%20Tool%20Minimum%20Security%20Register.md)
@@ -20,10 +18,12 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
+
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
 
 | Boundary | Treatment |
 | --- | --- |
@@ -32,7 +32,7 @@ public-application exemption from published CASA.
 | Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
 | Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
 | Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
-| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
+| Other local, desktop and mobile standalone Tool variants | Outside the standalone Tool scope covered here; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
 
 Device-local HTTP and incidental outbound HTTP do not themselves determine the
 deployment category. Literal MCP fields and discovery rules apply to the selected
@@ -86,21 +86,21 @@ evidence defaults. Label evidence as functional observations, named implementati
 artifacts/attestations or document review as appropriate. A Resource Server cannot
 be credited with independently controlled Agent UI or OAuth client/AS behavior.
 
-The [case ledger](AI%20Tool%20Assessment%20Cases.json) preserves all 210 source cases,
-their original tier and their individually proposed gate and variant disposition.
+The [case ledger](../assessment/ai/AI%20Tool%20Assessment%20Cases.json) preserves all 210 source cases,
+their original tier and their individual gate and variant disposition.
 For mixed cases, assess the baseline outcome and enhancement independently.
 
 <!-- assessment-rules -->
 ## Individual case grading
 
-- **Source precedence:** Assertions implement the referenced proposed Tool requirements. All applicable published CASA criteria, alternatives and exceptions remain independently mandatory; related CASA IDs are not a replacement for the full floor.
+- **Source precedence:** Assertions implement the versioned Tool requirements. All applicable published CASA criteria, alternatives and exceptions remain independently mandatory; related CASA IDs are not a replacement for the full floor.
 - **Tiers:** Keep each original_assurance_tier. AL0/AL1 review uses relevant declared artifacts and interface evidence; AL2 exercises the corresponding running implementation. External actor duties are dependency records, not Tool-owned passes.
 - **Minimum result:** PASS only when every applicable mandatory assertion has sufficient passing evidence; FAIL for any demonstrated mandatory breach; INSUFFICIENT_EVIDENCE when a required observation is unavailable; NOT_APPLICABLE only with a documented scope/actor/feature basis. An advisory-only case has no minimum assertion and is NOT_SCORED for the minimum; it does not establish a certification pass. Independently discovered mandatory breaches are still recorded against the breached requirement.
 - **Enhancement result:** Record each enhancement as IMPLEMENTED, ABSENT, WEAK, NOT_APPLICABLE or INSUFFICIENT_EVIDENCE. Absent/weak enhancements are advisory. Do not require an unused enhancement, its fixture, or its evidence to pass the minimum.
 - **Mandatory breach from advisory:** If an advisory exercise reveals a breach of an independently mandatory requirement, record a minimum failure with that requirement and observed effect. Any optional credential/proof used to establish required authority must undergo its required validation.
 - **Positive controls:** Use the legitimate authorized/control inputs in assessment_context and the assertion exercise. A security denial passes only with enough evidence that no prohibited output/effect occurred; a generic error is insufficient. Do not classify legitimate purpose-required private output as a leak.
 - **Result record:** Record each assertion ID, responsible actor, applicability/exception basis, implementation or enhancement status, evidence references, observed output/effect and assertion result. Keep the case minimum result separate from each enhancement result. A dependency record does not establish the external actor implementation as Tool-owned.
-- **Retained variants:** This assessment overlay applies only to remote_http_tool. Local Android retains the original case text, tier and original applicability from AI Tool Local Android Requirements.md; other local/mobile variants retain their current source disposition pending their separate scope decision.
+- **Retained variants:** This assessment overlay applies only to remote_http_tool. Local Android retains the applicable native requirement/case text, tier and exclusions in AI Tool Local Android Requirements.md. Other standalone local/desktop/iOS Tool variants are outside this revision's scope; historical source does not provide an assessment route. This exclusion does not waive desktop/mobile Agent runtime or integration duties. Local D1 wire conformance is not defined and does not replace mandatory local Android protections.
 <!-- /assessment-rules -->
 
 ## 1.1 Client/Server Authentication for Protected Access
@@ -433,11 +433,11 @@ Establish applicability and required authority first. Exercise the original scen
 
 ### Mandatory outcome
 
-Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, defaultTLS 1.2+ with exact legacy/internal-CA/Additional Context routes.
+Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, default TLS 1.2+ with exact legacy/internal-CA/Additional Context routes.
 
 ### Recommended enhancement
 
-TLS 1.3, all-message MAC/signatures, secureIPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment.
+TLS 1.3, all-message MAC/signatures, secure IPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment.
 
 **Applicable CASA references:** 4.1.1, 4.1.2, 4.1.3, 4.1.4. These relationships do not replace exact published criteria.
 
@@ -462,7 +462,7 @@ Establish applicability and required authority first. Exercise the original scen
 - **1.7/V02 — BASELINE_GATE:** MUST: Do not bypass required X.509 trust/validity verification; preserve the published documented internal-CA and other applicable alternatives.
   - **1.7/V02/M01 exercise:** Present an untrusted/invalid certificate with the applicable valid-trust control.
   - **1.7/V02/M01 source requirements:** Tool:7.1.1.
-- **1.7/V03 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only under its original applicable local/platform variant.
+- **1.7/V03 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only where applicable to the retained local Android requirements. Other standalone local/desktop/iOS Tool variants are excluded; historical source is not an assessment route for them.
 - **1.7/V04 — ADVISORY:** SHOULD: The server refuses any handshake attempting to use TLS 1.2 or lower.
   - **1.7/V04/S01 exercise:** If implemented, use the context fixtures and relevant declared configuration to inspect/exercise this original scenario: The server refuses any handshake attempting to use TLS 1.2 or lower.
   - **1.7/V04/S01 source requirements:** Tool:7.1.1.
@@ -474,7 +474,7 @@ Establish applicability and required authority first. Exercise the original scen
 - **1.7/V06 — ADVISORY:** SHOULD: Duplicate messages are successfully rejected by the server based on an expired timestamp or used nonce.
   - **1.7/V06/S01 exercise:** If implemented, use the context fixtures and relevant declared configuration to inspect/exercise this original scenario: Duplicate messages are successfully rejected by the server based on an expired timestamp or used nonce.
   - **1.7/V06/S01 source requirements:** Tool:7.1.1.
-- **1.7/V07 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only under its original applicable local/platform variant.
+- **1.7/V07 — CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT:** Outside remote_http_tool: assess the original case only where applicable to the retained local Android requirements. Other standalone local/desktop/iOS Tool variants are excluded; historical source is not an assessment route for them.
 
 ## 1.8 Sensitive Action Idempotency and Ambiguous Outcomes
 
@@ -896,7 +896,7 @@ Establish applicability and required authority first. Exercise the original scen
 
 ### Mandatory outcome
 
-Baseline Agent HITL, Tool honest risk labels, authentication and CASAadmin-MFA/sensitive-account protections remain mandatory where applicable.
+Baseline Agent HITL, Tool honest risk labels, authentication and CASA admin-MFA/sensitive-account protections remain mandatory where applicable.
 
 ### Recommended enhancement
 
@@ -2301,33 +2301,32 @@ Each entry follows the register's actor, protocol and publication conditions. Th
 
 **Verification:** Verify legitimate endpoint/domain control and downstream API provenance. Distinguish the technical access/ownership evidence from publisher-review process and avoid crediting undocumented proxy or impersonation routes.
 
-## Local and other retained variants
+## Local Android and excluded standalone variants
 
-Use the [Local Android Requirements](AI%20Tool%20Local%20Android%20Requirements.md) for the retained local Android test bodies, original applicability and mandatory strength. Other local/mobile variants continue to use the pinned source pending a separate decision.
+Use the [Local Android Requirements](AI%20Tool%20Local%20Android%20Requirements.md) for the applicable local Android test bodies, original exclusions and mandatory strength, including stdio and AppFunctions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope; historical source material does not provide a certification route for them. Their exclusion does not waive the applicable desktop/mobile Agent runtime or integration requirements.
 
-## Contributors
+## Acknowledgements
 
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
-## Application Security Assessment Working Group Leads
+### Application Security Assessment Working Group Leads
 * Alex Duff (Meta) \- ASA WG Chair
 * Anna Bhirud (Google) \- ASA WG Vice Chair
 
-## AI Profile Leads
+### AI Profile Leads
 
 * Brad Ree (Google)
 * Alex Duff (Meta)
 
-## Contributors
+### Contributors
 
-* Debdutta Guha(Google)
+* Debdutta Guha (Google)
 * Nic Watson (Google)
 * Abhiraman Gcl (Google)
 * Daniel Bond (Meta)
 * Tony Balkan (Microsoft)
 * Dario Freni (Google)
-* Anna Bhirud(Google)
-* TBD
+* Anna Bhirud (Google)
 
 ## Licensing
 

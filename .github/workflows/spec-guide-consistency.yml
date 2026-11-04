@@ -7,36 +7,46 @@ on:
   pull_request:
     paths:
       - 'AI Profile/**'
+      - 'assessment/ai/**'
+      - 'scripts/data/ai/**'
+      - 'scripts/tests/fixtures/ai/**'
       - 'MASA/MASA Specification.md'
       - 'MASA/MASA Test Guide.md'
       - 'CASA/CASA Specification.md'
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
       - 'scripts/ai_assessment_lint.py'
+      - 'scripts/ai_document_set.py'
+      - 'scripts/agent_policy_alignment.py'
+      - 'scripts/agent_assessment_policy_validate.py'
       - 'scripts/tool_case_render.py'
       - 'scripts/tests/test_spec_guide_lint.py'
       - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
       - 'AI Profile/AI Agent*.md'
-      - 'AI Profile/AI Agent Migration Coverage.json'
       - 'scripts/tests/test_agent_*.py'
       - '.github/workflows/spec-guide-consistency.yml'
   push:
     branches: [develop]
     paths:
       - 'AI Profile/**'
+      - 'assessment/ai/**'
+      - 'scripts/data/ai/**'
+      - 'scripts/tests/fixtures/ai/**'
       - 'MASA/MASA Specification.md'
       - 'MASA/MASA Test Guide.md'
       - 'CASA/CASA Specification.md'
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
       - 'scripts/ai_assessment_lint.py'
+      - 'scripts/ai_document_set.py'
+      - 'scripts/agent_policy_alignment.py'
+      - 'scripts/agent_assessment_policy_validate.py'
       - 'scripts/tool_case_render.py'
       - 'scripts/tests/test_spec_guide_lint.py'
       - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
       - 'AI Profile/AI Agent*.md'
-      - 'AI Profile/AI Agent Migration Coverage.json'
       - 'scripts/tests/test_agent_*.py'
 
 jobs:
@@ -44,12 +54,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Source-preservation and exploit regressions compare immutable
+          # historical commits; a shallow checkout silently skips old checks.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
       - name: Exercise Agent evidence and platform regressions
         run: python3 -m unittest discover -s scripts/tests -p 'test_agent_*.py'
-      - name: Lint Spec ↔ Test Guide pairs
-        run: python3 scripts/spec_guide_lint.py
+      - name: Validate decision alignment, assessment records and Spec ↔ Guide pairs
+        run: |
+          python3 scripts/agent_policy_alignment.py
+          python3 scripts/agent_assessment_policy_validate.py
+          python3 scripts/ai_document_set.py
+          python3 scripts/spec_guide_lint.py --strict
       - name: Exercise parser and assessment regressions
         run: python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py

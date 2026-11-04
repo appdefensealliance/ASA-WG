@@ -24,8 +24,14 @@ The App Defense Alliance’s initial set of profiles are specific to the archite
 * CASA - application security requirements and associated test guide applicable to developers of web apps and web-accessible APIs (previously referred to as the Web App Profile)
 * MASA - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices (previously referred to as the Mobile App Profile)
 * Cloud - security configuration requirements relevant to the use of IaaS and PaaS services offered by Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure
+* DASA - released desktop application security requirements and Test Guide for Windows, macOS and Linux.
+* AI Agent and AI Tool - [Agent Specification](AI%20Profile/AI%20Agent%20Specification.md) / [Test Guide and assessment methodology](AI%20Profile/AI%20Agent%20Test%20Guide.md), [Tool Specification](AI%20Profile/AI%20Tool%20Specification.md) / [Testing Guide](AI%20Profile/AI%20Tool%20Testing%20Guide.md), [interface Contract](AI%20Profile/AI%20Agent-Tool%20Interface%20Contract.md), [optional Identity and Consent Wire Format](AI%20Profile/AI%20Agent-Tool%20Identity%20and%20Consent%20Wire%20Format.md), [Local Android requirements and applicability](AI%20Profile/AI%20Tool%20Local%20Android%20Requirements.md), and [minimum-security rationale/register](AI%20Profile/AI%20Tool%20Minimum%20Security%20Register.md).
 
-In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
+Machine-readable [assessment assets](assessment/ai/README.md), [synthetic examples](scripts/tests/fixtures/ai/README.md), and [maintainer provenance/regression records](scripts/data/ai/README.md) are separate from the primary documents. Their presence or validation does not establish product conformity or governance approval.
+
+The standards-management lifecycle is documented in [CONTRIBUTING](CONTRIBUTING.md); certification scheme and lab-authorization rules are maintained in the ADA methodology and scheme documents.
+
+In the future, the App Defense Alliance may pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
 
 ## Validation
 ### Approach
@@ -33,7 +39,7 @@ In the future, the App Defense Alliance may pursue pursue new profiles (e.g., fo
 This App Defense Alliance's validation approach involves a collaborative effort between a standards setting organization (the alliance itself), software developers, and independent assessors.
 1. The App Defense Alliance establishes the criteria for product evaluation.
 2. Software developers use these standards to create software and secure cloud configurations that meet these requirements.
-3. Independent assessors, acting as neutral evaluators, then assess a developer's product against the standards and are authorize to issue a certification document if so.
+3. Independent assessors, acting as neutral evaluators, then assess a developer's product against the standards and are authorized to issue a certification document if so.
 
 This process aims to ensure that developers have met the security requirements, providing confidence to stakeholders.
 ### Levels

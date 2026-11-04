@@ -1,7 +1,5 @@
 # AI Agent–Tool Identity and Consent Wire Format
 
-**Draft proposal for Working Group review — 29 October 2026.**
-
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
 The [Minimum Security Register](AI%20Tool%20Minimum%20Security%20Register.md)
@@ -20,10 +18,12 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
+
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
 
 | Boundary | Treatment |
 | --- | --- |
@@ -32,7 +32,7 @@ public-application exemption from published CASA.
 | Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
 | Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
 | Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
-| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
+| Other local, desktop and mobile standalone Tool variants | Outside the standalone Tool scope covered here; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
 
 Device-local HTTP and incidental outbound HTTP do not themselves determine the
 deployment category. Literal MCP fields and discovery rules apply to the selected
@@ -70,11 +70,17 @@ nonce/session controls and uncertain-outcome honesty. Stable business-action IDs
 follow the conditional Agent rule in Contract C4 and Agent §6.1.3; they are not an
 unconditional prerequisite.
 
+## Optional wire-profile scope
+
+D1 remains optional. This revision supplies enhanced identity and consent guidance for remote HTTP integrations; it does not define a D1 conformance route for local stdio or Android AppFunctions. An implementation may use local extensions, but cannot claim that this profile assesses their local-wire interoperability or conformance. The historical local-wire design is not a substitute assessment route.
+
+This boundary applies only to the optional wire profile. All applicable local Android authentication, user-context validation, consent, isolation, secret handling, idempotency and lifecycle requirements remain governed by the Local Android Requirements. Agent-side protections remain independently applicable. Any credential or proof used to establish protected authority MUST satisfy its applicable validation requirements, including when an optional or locally extended wire mechanism carries it.
+
 ## Purpose
 
 ### Required outcome / retained baseline
 
-The proposed minimum is all applicable published CASA plus clearly applicable leading security practices. The baseline can be satisfied by the implementation's SUPPORTED validated OAuth JWT OR trusted opaque-token introspection; either is admissible assessment evidence, not a requirement that every Tool support both formats. Unsupported or unverifiable credentials MUST NOT grant protected access. Safe public/discovery unauthenticated access MAY exist.
+The Tool minimum is all applicable published CASA plus clearly applicable leading security practices. The baseline can be satisfied by the implementation's SUPPORTED validated OAuth JWT OR trusted opaque-token introspection; either is admissible assessment evidence, not a requirement that every Tool support both formats. Unsupported or unverifiable credentials MUST NOT grant protected access. Safe public/discovery unauthenticated access MAY exist.
 
 ### Recommended enhancement
 
@@ -108,7 +114,7 @@ Applicable selected MCP/OAuth discovery, user-resource binding and verification 
 
 ### Recommended enhancement
 
-ADA JWS/JWT, RAR/APH/JCS, DPoP, ID-JAG and MCPextension integration SHOULD be reusable enhanced substrates rather than a required universal wire.
+ADA JWS/JWT, RAR/APH/JCS, DPoP, ID-JAG and MCP extension integration SHOULD be reusable enhanced substrates rather than a required universal wire.
 
 ## Carrier: `_meta` canonical, `Authorization` header conformant on HTTP
 
@@ -118,7 +124,7 @@ A carrier used for baseline authentication MUST preserve and validate credential
 
 ### Recommended enhancement
 
-Canonical params._meta and HTTPAuthorization D1 carriers, exact dual-carrier equality, preservation keys and failure-on-stripping SHOULD be the enhanced profile behavior.
+Canonical params._meta and HTTP Authorization D1 carriers, exact dual-carrier equality, preservation keys and failure-on-stripping SHOULD be the enhanced profile behavior.
 
 ### Recommended enhanced carriers
 
@@ -132,13 +138,13 @@ If a presented token is used to authorize protected access, the Tool MUST valida
 
 ### Recommended enhancement
 
-D1specific typ/kid/act/client_id/jti/short-minute lifetime, asymmetric-only preference, request-level replay-cache and RAR/APH parameter claims SHOULD be used within enhanced D1. RAR support SHOULD be provided; APH MAY be an alternative; ambiguity SHOULD be rejected.
+D1-specific typ/kid/act/client_id/jti/short-minute lifetime, asymmetric-only preference, request-level replay-cache and RAR/APH parameter claims SHOULD be used within enhanced D1. RAR support SHOULD be provided; APH MAY be an alternative; ambiguity SHOULD be rejected.
 
 ### Recommended enhanced identity schema
 
 D1 SHOULD use the following signed envelope as an enhanced interoperability option, not as the only admissible baseline credential:
 
-| Field | Proposed interpretation |
+| Field | Interpretation |
 |---|---|
 | `typ` | SHOULD be `application/ada-identity+jwt` to distinguish credential use. |
 | `alg` | SHOULD use an asymmetric allowlist such as ES256/EdDSA for D1. Any baseline signed credential MUST use a valid trusted permitted algorithm and signature; unsigned `none` is not valid signed authentication. Standards-valid symmetric OAuth JWTs are not universally rejected merely by this D1 preference. |
@@ -163,7 +169,7 @@ Core Agent consequential-action HITL and shown-versus-executed fidelity MUST rem
 
 ### Recommended enhancement
 
-Signed C3receipt, user/account/operation/recipient/parameter/correlation/expiry/single-use binding and independent verification SHOULD remain enhanced. Tool-side elicitation/OOB SHOULD provide backstops.
+Signed C3 receipt, user/account/operation/recipient/parameter/correlation/expiry/single-use binding and independent verification SHOULD remain enhanced. Tool-side elicitation/OOB SHOULD provide backstops.
 
 ### Recommended enhanced consent schema
 
@@ -179,7 +185,7 @@ Baseline verification keys/issuers MUST be trusted and fetched without unauthori
 
 ### Recommended enhancement
 
-Pinned issuer allowlist/trust bundle, constrained JWKS bykid, TTLrefresh/rotation overlap, SPIFFE/registry substrates SHOULD be enhanced implementation guidance.
+Pinned issuer allowlist/trust bundle, constrained JWKS by kid, TTL refresh/rotation overlap, SPIFFE/registry substrates SHOULD be enhanced implementation guidance.
 
 ### Issuer roles and assertion meaning
 
@@ -220,13 +226,13 @@ a universal Tool certification gate and does not replace the Agent's own HITL.
 
 ### Required outcome / retained baseline
 
-First decide whether an operation is protected. On protected operations, validate selected baseline credential and user/resource/scope authority before execution; failures MUST deny protected data/side effects. Noauth MAY be used for demonstrably safe public/discovery operations.
+First decide whether an operation is protected. On protected operations, validate selected baseline credential and user/resource/scope authority before execution; failures MUST deny protected data/side effects. No-auth MAY be used for demonstrably safe public/discovery operations.
 
 ### Recommended enhancement
 
-The original D1algorithm SHOULD validate format, optional jti replaycache, dual carriers, RAR/APH parameters and C3receipt. Report enhancement failures as advisory/optional-profile findings unless they also violate a mandatory auth/data rule.
+The original D1 algorithm SHOULD validate format, optional jti replay cache, dual carriers, RAR/APH parameters and C3 receipt. Report enhancement failures as advisory/optional-profile findings unless they also violate a mandatory auth/data rule.
 
-### Proposed two-stage verification
+### Two-stage verification
 
 1. Classify the operation as protected/user-specific or demonstrably safe public/discovery.
 2. On protected operations, validate the selected baseline signed token or opaque introspection, trusted issuer/key and permitted assertion role/type, user, intended resource/audience, applicable expiry/not-before and scopes. Required authority failures MUST deny protected output or side effects.
@@ -262,29 +268,19 @@ Public remote protected OAuth integrations MUST retain the shared discovery/reso
 
 ### Recommended enhancement
 
-Transport-specific D1carrier, JCS canonicalization and local process-surviving jti cache SHOULD remain enhanced recommendations within the targeted public-remote model.
+D1 carrier, canonicalization and replay-handling interoperability guidance here applies to remote HTTP integrations. A local process-surviving cache or carrier implementation does not establish local D1 conformance under this revision.
 
-## Open WG decisions
-
-### Required outcome / retained baseline
-
-No baseline security outcome may be bypassed by unresolved wire design decisions.
-
-### Recommended enhancement
-
-Carrier/RAR/PoP/claim namespacing/trust-anchor/A2A deferral decisions SHOULD remain design guidance; no automatic ratification/publication occurs.
-
-## Pre-normative verification tasks
+## Optional-profile boundaries and interoperability checks
 
 ### Required outcome / retained baseline
 
-Mandatory baseline tests MUST still be satisfiable using supported valid standardOAuth/opaque authorization mechanisms.
+No baseline security outcome may be bypassed by optional wire-design choices. Mandatory baseline tests MUST still be satisfiable using supported valid standard OAuth or opaque-token authorization mechanisms. Optional D1 adoption is not a prerequisite for baseline conformance.
 
 ### Recommended enhancement
 
-Pre-normative ext-auth/carrier/key-name/ID-JAG/header compatibility checks SHOULD precede optional wire adoption or any later mandatory elevation.
+For an implemented remote HTTP enhancement, interoperability checks SHOULD exercise the selected identity/consent carrier and its preservation, issuer/key roles, claim namespacing, RAR or APH parameter binding, and any claimed proof-of-possession mechanism. ID-JAG remains an optional upstream mechanism, not a required Tool-facing credential. Assess only declared enhanced capabilities and their limitations; local-wire and A2A conformance are outside this profile's defined scope. Such checks do not turn an unused enhancement into a mandatory baseline gate.
 
-## Non-normative examples (straw-man)
+## Non-normative examples
 
 ### Required outcome / retained baseline
 
@@ -318,7 +314,7 @@ Decoded C1 payload (illustrative): `{ "iss":"https://idp.example", "sub":"user_1
 
 "exp":..., "jti":"..." }` — no per-action binding at this tier.
 
-**Sensitive Action tier** — C1 with per-action binding + C3 consent receipt, `_meta` carrier (stdio):
+**Enhanced Action tier** — C1 with per-action binding + C3 consent receipt, `_meta` carrier over HTTP:
 
 ```json
 
@@ -356,15 +352,15 @@ Decoded C3 payload (illustrative): same `sub`/`aud`, the same `authorization_det
 
 ## References
 
-MCP 2025-11-25 (base / tools / authorization / elicitation) · Agent–Tool Interface Contract (C1, C3) ·
+MCP 2025-11-25 (base / tools / authorization / elicitation) · [Agent–Tool Interface Contract](AI%20Agent-Tool%20Interface%20Contract.md) (C1, C3) ·
 
-AI Agent Specification §2.2.2, §2.2.3, §2.4.1, §6.1.1–§6.1.5 ·
+[Agent Specification](AI%20Agent%20Specification.md) §2.2.2, §2.2.3, §2.4.1, §6.1.1–§6.1.5 ·
 
-AI Tool Specification §1.1.1, §1.2.2, §1.2.3, §1.4, §2.1.1, §2.2.2 · ID-JAG draft-04 · OIDC Core 1.0 ·
+[Tool Specification](AI%20Tool%20Specification.md) §1.1.1, §1.2.2, §1.2.3, §§1.4.1–1.4.3, §2.1.1, §2.2.2 · ID-JAG draft-04 · OIDC Core 1.0 ·
 
 RFC 7515 / 7519 / 7523 / 7638 / 7800 / 8693 / 8705 / 8707 / 9068 / 9396 / 9449 / 9728 / 8785 ·
 
-CoSAI MCP Security §3.2.1–3.2.2 · OWASP Top 10 for Agentic Applications 2026 ASI03 ·
+[CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/whitepapers/model-context-protocol-security.md) §3.2.1–3.2.2 · OWASP Top 10 for Agentic Applications 2026 ASI03 ·
 
 AIUC-1 × OWASP crosswalk (Gap: signed per-action auth artifacts).
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "WG_DRAFT_PROPOSAL",
+  "status": "assessment asset",
   "policy": "Secure web application baseline established by published CASA, supplemented by leading security practices informed by market research.",
   "source_pins": {
     "AI": "34705233b5f249d3fd4e8fc82cbb5e765ef94b81",
@@ -1574,7 +1574,7 @@
     {
       "id": "MIN-S08",
       "title": "CIMD identity and redirect metadata validation",
-      "outcome": "Validate the client metadata identity against itsHTTPSURL and registered redirect values and accept only supported token-endpoint client-authentication methods.",
+      "outcome": "Validate the client metadata identity against its HTTPS URL and registered redirect values and accept only supported token-endpoint client-authentication methods.",
       "strength": "MUST_WHEN_APPLICABLE",
       "scope": "Only if the selected connection implements CIMD",
       "interface_condition": "MCP-style interface / corresponding selected MCP or OAuth profile only",
@@ -1713,7 +1713,7 @@
     {
       "id": "MIN-S11",
       "title": "Refresh-token and replay protection",
-      "outcome": "Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selectedOAuthprofile.",
+      "outcome": "Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selected OAuth profile.",
       "strength": "MUST_WHEN_APPLICABLE",
       "scope": "Public OAuth clients and token refresh",
       "interface_condition": "MCP-style interface / corresponding selected MCP or OAuth profile only",
@@ -2200,7 +2200,7 @@
     {
       "topic": "13.2 Geographic governance",
       "disposition": "DEFERRED_POLICY_SCOPE",
-      "text": "A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this proposal does not certify jurisdictional compliance."
+      "text": "A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this profile does not certify jurisdictional compliance."
     },
     {
       "topic": "13.3 Compliance transparency",
@@ -2222,5 +2222,18 @@
       "disposition": "COVERED_SECURITY_OUTCOMES_AND_ADVISORY_MECHANISM",
       "text": "Untrusted arguments must not bypass declared constraints or mandatory authorization/security outcomes (Tool 3.1.1 and TG-2.5, MIN-S15/S17). A prescribed model-parameter allowlist or fixed temperature/filter policy is recommended where relevant, not a universal Tool gate."
     }
-  ]
+  ],
+  "standalone_tool_scope": {
+    "covered_boundaries": [
+      "remote HTTP",
+      "local Android, including stdio and AppFunctions"
+    ],
+    "excluded_boundaries": [
+      "other standalone local/desktop/iOS Tool variants"
+    ],
+    "local_android_strength": "retain all applicable native requirements and original conditions/exclusions",
+    "optional_local_wire_conformance": "not defined in this revision; no substitute for mandatory local Android controls",
+    "agent_protections_waived_by_tool_scope_exclusion": false,
+    "historical_source_is_excluded_variant_assessment_route": false
+  }
 }

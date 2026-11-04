@@ -19,8 +19,8 @@ class AssessmentLintTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         root = SCRIPTS.parent
-        cls.register = json.loads((root/'AI Profile/AI Tool Minimum Security Register.json').read_text())
-        cls.ledger = json.loads((root/'AI Profile/AI Tool Assessment Cases.json').read_text())
+        cls.register = json.loads((root/'assessment/ai/AI Tool Minimum Security Register.json').read_text())
+        cls.ledger = json.loads((root/'assessment/ai/AI Tool Assessment Cases.json').read_text())
         cls.spec, _ = ai.extract((root/'AI Profile/AI Tool Specification.md').read_text(), 'Tool', False, 'spec')
         cls.guide, _ = ai.extract((root/'AI Profile/AI Tool Testing Guide.md').read_text(), 'Tool', True, 'guide')
         cls.agent, _ = ai.extract((root/'AI Profile/AI Agent Test Guide.md').read_text(), 'Agent', True, 'agent')
@@ -68,9 +68,16 @@ class AssessmentLintTests(unittest.TestCase):
         ledger['tests'][0]['cases'][0]['gate_by_variant']['local_android_tool'] = 'ADVISORY'
         self.assertTrue(any('Android' in e for e in self.metadata_errors(ledger=ledger)))
 
+    def test_excluded_local_variant_cannot_acquire_an_assessment_route(self):
+        ledger = copy.deepcopy(self.ledger)
+        ledger['tests'][0]['cases'][0]['gate_by_variant']['other_local_mobile'] = 'BASELINE_GATE'
+        self.assertTrue(any('excluded standalone' in e for e in self.metadata_errors(ledger=ledger)))
+        ledger['tests'][0]['cases'][0]['gate_by_variant']['other_local_mobile'] = 'CURRENT_UNCHANGED_OR_UNDECIDED'
+        self.assertTrue(any('excluded standalone' in e for e in self.metadata_errors(ledger=ledger)))
+
     def test_mixed_case_requires_atom_split(self):
         ledger = copy.deepcopy(self.ledger)
-        case = next(c for t in ledger['tests'] for c in t['cases'] if c['proposed_disposition']=='MIXED_BASELINE_AND_ADVISORY')
+        case = next(c for t in ledger['tests'] for c in t['cases'] if c['disposition']=='MIXED_BASELINE_AND_ADVISORY')
         case['requires_atom_split'] = False
         self.assertTrue(any('split' in e for e in self.metadata_errors(ledger=ledger)))
 
@@ -86,7 +93,7 @@ class AssessmentLintTests(unittest.TestCase):
 
     def mixed_case(self, ledger):
         return next(c for t in ledger['tests'] for c in t['cases']
-                    if c['proposed_disposition'] == 'MIXED_BASELINE_AND_ADVISORY')
+                    if c['disposition'] == 'MIXED_BASELINE_AND_ADVISORY')
 
     def test_split_flag_without_mandatory_assertions_rejected(self):
         ledger = copy.deepcopy(self.ledger)
@@ -131,13 +138,13 @@ class AssessmentLintTests(unittest.TestCase):
     def test_local_only_case_cannot_acquire_remote_assertions(self):
         ledger = copy.deepcopy(self.ledger)
         held = next(c for t in ledger['tests'] for c in t['cases']
-                    if c['proposed_disposition'] == 'CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT')
+                    if c['disposition'] == 'CURRENT_UNCHANGED_OUTSIDE_TARGET_VARIANT')
         held['assessment']['mandatory_assertions'] = [copy.deepcopy(self.mixed_case(ledger)['assessment']['mandatory_assertions'][0])]
         self.assertTrue(any('actual separate' in e for e in self.metadata_errors(ledger=ledger)))
 
     def test_advisory_cases_do_not_require_mandatory_assertions(self):
         self.assertEqual(self.metadata_errors(), [])
-        advisory = [c for t in self.ledger['tests'] for c in t['cases'] if c['proposed_disposition'] == 'ADVISORY']
+        advisory = [c for t in self.ledger['tests'] for c in t['cases'] if c['disposition'] == 'ADVISORY']
         self.assertTrue(advisory)
         self.assertTrue(all(not c['assessment']['mandatory_assertions'] for c in advisory))
 

@@ -19,7 +19,7 @@ REQUIRED_CLAUSES = (
     "together at Assurance Level 2 (AL2 Lab Assessment)",
     "single combined product certification",
     "released underlying Specification and Test Guide from `main`",
-    "not draft underlying-profile requirements from `develop`",
+    "not unreleased underlying-profile requirements from `develop`",
     "every applicable mandatory requirement of both the underlying profile and this AI Agent profile at AL2",
     "A prior underlying-profile certificate, an AL0/AL1 assessment, or an AI-only assessment MUST NOT substitute",
     "No separately issued underlying-profile certificate is required",
@@ -60,7 +60,7 @@ def revocation_gap_errors(spec, guide, coverage):
     if re.sub(r"\s+", " ", recorded).strip() != re.sub(r"\s+", " ", assertions).strip():
         errors.append("Revocation migration record mismatch")
     candidate = coverage["upstream_revocation_candidate"]
-    if candidate["head"] != "63dff812fc2a38a6906844f9b2facd3528782041" or "pending" not in candidate["status"]:
+    if candidate["head"] != "63dff812fc2a38a6906844f9b2facd3528782041" or "historical" not in candidate["status"]:
         errors.append("Revocation candidate provenance/status changed")
     if "AL0/AL1 static evidence" in block:
         errors.append("Stale evidence tier reintroduced")
@@ -72,7 +72,7 @@ class AgentPlatformExtensionTests(unittest.TestCase):
     def setUpClass(cls):
         cls.spec = (AI / "AI Agent Specification.md").read_text()
         cls.guide = (AI / "AI Agent Test Guide.md").read_text()
-        cls.coverage = json.loads((AI / "AI Agent Migration Coverage.json").read_text())
+        cls.coverage = json.loads((ROOT / "scripts/data/ai/AI Agent Migration Coverage.json").read_text())
         cls.block = integration_block(cls.spec)
 
     def test_shared_certification_requirements_match(self):
@@ -125,7 +125,7 @@ class AgentPlatformExtensionTests(unittest.TestCase):
         self.assertFalse(policy["AI_SHOULD_may_waive_underlying_MUST"])
         self.assertTrue(policy["underlying_AL2_evidence_preserved"])
         self.assertEqual(0, policy["numbered_AI_audits_added"])
-        self.assertIn("WG consensus pending", policy["status"])
+        self.assertIn("not certification authorization", policy["status"])
 
     def test_existing_37_agent_ids_are_preserved(self):
         spec_ids = re.findall(r"<!-- ada:requirement Agent:(\d+\.\d+\.\d+) -->", self.spec)

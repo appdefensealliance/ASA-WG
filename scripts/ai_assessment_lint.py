@@ -128,10 +128,10 @@ def tool_metadata(spec, guide, register, ledger):
         if row is None or row['covers']!=targets:
             errors.append(f'Tool {tid}: Guide and ledger coverage differ')
         if row:
-            for field in ['proposed_MUST_atoms','proposed_SHOULD_atoms']:
+            for field in ['mandatory_outcome','advisory_outcome']:
                 if not test.get(field) or test[field] not in row['body']:
                     errors.append(f'Tool {tid}: Guide and ledger outcome/enhancement text differ')
-        if test.get('proposed_gate_class') not in CLASSES:
+        if test.get('gate_class') not in CLASSES:
             errors.append(f'Tool {tid}: invalid test gate')
         if set(test.get('CASA_floor_ids',[]))-floor_ids:
             errors.append(f'Tool {tid}: unknown CASA reference')
@@ -144,10 +144,10 @@ def tool_metadata(spec, guide, register, ledger):
             case_ids.add(cid)
             if not isinstance(cid,str) or not cid.startswith(str(tid)+'/V'):
                 errors.append(f'{cid}: wrong test ownership')
-            for field in ['current_text','proposed_text','original_assurance_tier']:
+            for field in ['current_text','requirement_text','original_assurance_tier']:
                 if not case.get(field):
                     errors.append(f'{cid}: missing source/proposed text or tier')
-            gate = case.get('proposed_disposition')
+            gate = case.get('disposition')
             if gate not in CLASSES:
                 errors.append(f'{cid}: invalid case gate')
             if case.get('requires_atom_split') != (gate=='MIXED_BASELINE_AND_ADVISORY'):
@@ -201,7 +201,7 @@ def tool_metadata(spec, guide, register, ledger):
                 errors.append(f'{cid}: retained variant requires original-source assessment basis')
                 assessment_valid = False
             if assessment_valid:
-                if summary(case) != case.get('proposed_text'):
+                if summary(case) != case.get('requirement_text'):
                     errors.append(f'{cid}: proposed text differs from structured assertions')
                 if row and render_case(case) not in row['body']:
                     errors.append(f'{cid}: Guide and ledger assertion exercises/references differ')
@@ -210,11 +210,11 @@ def tool_metadata(spec, guide, register, ledger):
                 errors.append(f'{cid}: remote gate differs from declared disposition')
             if variants.get('local_android_tool')!='RETAIN_CURRENT_TEST_GATE_IF_ORIGINALLY_APPLICABLE':
                 errors.append(f'{cid}: local Android test strength changed')
-            if variants.get('other_local_mobile')!='CURRENT_UNCHANGED_OR_UNDECIDED':
-                errors.append(f'{cid}: other retained variant changed')
+            if variants.get('other_local_mobile')!='OUTSIDE_STANDALONE_TOOL_SCOPE':
+                errors.append(f'{cid}: excluded standalone local/desktop/iOS Tool variant acquired an assessment gate')
             if row and f'**{cid} — {gate}:**' not in row['body']:
                 errors.append(f'{cid}: Guide case missing or gate differs')
-            if row and (not case.get('proposed_text') or case['proposed_text'] not in row['body']):
+            if row and (not case.get('requirement_text') or case['requirement_text'] not in row['body']):
                 errors.append(f'{cid}: Guide and ledger proposed case text differ')
     if len(tests)!=40 or len(test_ids)!=40 or len(case_ids)!=210:
         errors.append('Case ledger must retain 40 unique tests and 210 unique source cases')
@@ -264,8 +264,8 @@ def lint_pair(root, name, cfg):
     covered = set().union(*(row['covers'] for row in guide.values())) if guide else set()
     errors = e1+e2
     if name=='AI Tool':
-        register = json.loads((root/'AI Profile/AI Tool Minimum Security Register.json').read_text())
-        ledger = json.loads((root/'AI Profile/AI Tool Assessment Cases.json').read_text())
+        register = json.loads((root/'assessment/ai/AI Tool Minimum Security Register.json').read_text())
+        ledger = json.loads((root/'assessment/ai/AI Tool Assessment Cases.json').read_text())
         errors += tool_metadata(spec,guide,register,ledger)
         if isinstance(ledger.get('assessment_rules'), dict) and all(isinstance(ledger['assessment_rules'].get(field), str) for field in RULE_FIELDS):
             if render_rules(ledger) not in (root/cfg['guide']).read_text():

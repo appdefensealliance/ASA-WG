@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-_No changes yet._
+### AI requirements and assessment methodology
+- AI Agent/Tool control coherence: operation-based consent, independent Agent assessment against untrusted Tools, declared authorized private-data use/persistence and conditional action IDs.
+- Assessment protocol: ten independent executions per stochastic case unless explicit applicable source guidance differs; eight actual qualified red-team hours for initial/full review; quarterly automated maintenance and material/major-change review.
+- Agent-controlled requester attribution and separation of Tool content from trusted UI, with supported MCP form/URL elicitation, explicit URL-navigation consent, no automatic prefetch and isolated page/input handling. URL mode remains optional; presentation hardening remains SHOULD.
+- Per-verification applicability/evidence records, production-equivalent fixtures, worked assessment plans, task-appropriate evasion and source-bound invariant checks.
+- Consolidated Agent assessment methodology in its Test Guide and local Android applicability in its retained annex; schemas/case ledgers, examples and maintainer migration records are separated into supporting directories.
+- Editorial cleanup removes contributor placeholders, repairs source and methodology links, normalizes wording/spacing and contributor headings, and validates primary-document and supporting-index cross-references without changing requirements, scope or assessment rules.
+- Exact released MASA/CASA 2.1.1 and DASA 2.2.0 references and the independent published CASA 48-ID Tool floor remain preserved. No release version, tag or certificate authorization is assigned by this entry; WG consensus, SC consideration/release and scheme/lab readiness follow the ADA lifecycle.
 
 ## [2.2.0] - 2026-06-11
 

@@ -12,7 +12,7 @@ import subprocess
 
 BASELINE = "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65"
 BASELINE_MAP_SHA = "01f8e9af9ddd06fa081978ce13005caee79effebadef6eaf9ea7bd9b27e1ce7b"
-ALLOWED = {"1.2.1", "1.3.1", "2.1.1", "2.1.2", "2.2.2", "3.3.1", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
+ALLOWED = {"1.1.1", "1.2.1", "1.3.1", "2.1.1", "2.1.2", "2.1.3", "2.2.2", "2.2.3", "3.1.3", "3.3.1", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3", "6.2.2"}
 MANIFEST = "AI Agent Policy Alignment.json"
 
 
@@ -79,12 +79,17 @@ def alignment_errors(spec, guide, manifest, contract=None):
             if compact(table_assertions(sr[key])) != compact(verification(gr[key])):
                 errors.append(key + ": Specification/Guide acceptance assertions differ")
     required = {
+        "1.1.1": ["Task-appropriate Evasion Resistance", "meaning-preserving perturbations", "not exact prose", "remains unresolved"],
+        "3.1.3": ["one qualified assessor person-day (8 person-hours)", "Exclude setup, report writing and unattended tool runtime", "not an independent pass prerequisite", "unauthorized disclosure of private data"],
         "1.2.1": ["diagnostic logs, error messages and shared operational caches", "separately declared and permitted user-scoped protected memory/cache", "does not establish that exception", "no-secret-logging/output protections", "other contexts"],
         "3.3.1": ["Sensitive Actions and explicit Tool/product-policy confirmation requirements", "Privilege level alone shall not require", "Every plugin action shall be validated", "All plugin invocations, including the arguments"],
         "1.3.1": ["shall never be replayed as instructions", "injected directive shall not survive", "authorized user/context"],
         "2.1.1": ["shall refuse harmful or out-of-scope actions", "shall use only permitted tools", "shall enforce step, time, token, and cost limits", "valid user/resource authority"],
+        "2.1.3": ["quantitatively declared step/invocation", "missing protection, not an exclusion", "No generic 25-step fallback applies"],
         "2.1.2": ["Agent-managed Tool execution", "not a claim about the independent server's filesystem", "Agent-controlled runtime", "Logged Disposition"],
         "2.2.2": ["fresh per-action user consent", "Explicit Tool consent requests", "Before dispatch", "one execution", "bounded validity period", "expired, consumed, mismatched, replayed"],
+        "2.2.3": ["Requester Attribution", "MUST provide clear decline and cancel options", "MUST treat a request that omits `mode` as form mode", "trusted admission/protocol context", "explicit user consent before opening that exact URL", "MUST NOT automatically prefetch", "does not enable the client or LLM to inspect", "SHOULD highlight the domain", "not required to add an unsupported mode"],
+        "6.2.2": ["Control Token Neutralization", "No Context Hijacking", "Prevent Unauthorized Execution", "Trusted Presentation Separation", "trusted integration/admission context", "public-only Tools excluded from standalone Tool certification"],
         "4.1.1": ["Enforce Rate Limiting", "Enforce Input Size Limits", "hard limits and pre-limit usage alerts", "restrict/refuse the operation", "a request-count limit alone does not establish the bound"],
         "5.1.1": ["access, purpose and recipient are authorized", "not a blanket secret-disclosure exception", "cross-user/context disclosure", "A user request alone does not establish access rights"],
         "5.1.2": ["separately permitted persistence", "Task authorization does not by itself authorize", "encoded or obfuscated content", "retention, withdrawal and deletion"],
@@ -114,7 +119,7 @@ def alignment_errors(spec, guide, manifest, contract=None):
 
 
 def refresh_coverage(ai, guide, manifest):
-    path = ai / "AI Agent Migration Coverage.json"
+    path = ai.parent / "scripts/data/ai/AI Agent Migration Coverage.json"
     coverage = json.loads(path.read_text())
     rows = sections(guide, "test")
     if [control["id"] for control in coverage["controls"]] != list(rows):
@@ -122,14 +127,33 @@ def refresh_coverage(ai, guide, manifest):
     for control in coverage["controls"]:
         control["verification"] = verification(rows[control["id"]])
     coverage["baseline_scenario"] = "A"
-    coverage["scenario"] = "owner-aligned normative control amendments; WG review pending"
+    coverage["scenario"] = "Scoped AI control amendments"
     coverage["stable_ID_relaxations_included"] = True
     coverage["source_pin_role"] = manifest["source_pin_role"]
     if "upstream_revocation_candidate" in manifest:
         coverage["upstream_revocation_candidate"] = manifest["upstream_revocation_candidate"]
         coverage["evidence_sufficiency_amendment"]["Agent_PR_537_base"] = manifest["baseline_agent_head"]
+    if "upstream_revocation_followup" in manifest:
+        coverage["upstream_revocation_followup"] = manifest["upstream_revocation_followup"]
+    coverage["evidence_sufficiency_amendment"]["status"] = "historical #543 evidence-only delta"
+    coverage["evidence_sufficiency_amendment"]["record_scope"] = "historical evidence-only delta; current source amendments and assessment_policy govern the maintained documents"
+    coverage["certification_prerequisite"]["status"] = "recorded assessment integration design; not certification authorization"
+    if 'tool_impersonation_amendment' in manifest:
+        coverage['tool_impersonation_amendment'] = manifest['tool_impersonation_amendment']
+    coverage["assessment_policy"] = {
+        "status": "maintained assessment rules",
+        "default_independent_stochastic_executions_per_case": 10,
+        "specific_applicable_procedure_overrides_preserved": True,
+        "actual_red_team_person_hours_initial_or_full": 8,
+        "excluded_effort": ["setup", "report writing", "unattended tool runtime"],
+        "quarterly": "designated automated reruns and findings review; not automatically full manual exercise",
+        "major_model_change_or_new_agent_product": "full review",
+        "minor_update": "impact review and affected regressions; not automatically full review",
+        "protocol": "AI Profile/AI Agent Test Guide.md#assessment-protocol",
+        "applicability_matrix": "assessment/ai/AI Agent Assessment Applicability.json"
+    }
     coverage["owner_decision_amendment"] = {
-        "status": "proposed; owner aligned, WG review pending",
+        "status": "maintained assessment rules",
         "issues": manifest["issues"],
         "allowed_audit_changes": manifest["allowed_audit_changes"],
         "baseline_evidence_head": BASELINE,
@@ -150,7 +174,7 @@ def main():
     parser.add_argument("--refresh", action="store_true", help="Regenerate derived verification/migration records")
     args = parser.parse_args()
     ai = args.root / "AI Profile"
-    path = ai / MANIFEST
+    path = args.root / "scripts/data/ai" / MANIFEST
     prior = None
     if args.bootstrap or args.rebase_baseline:
         if path.exists() and not args.rebase_baseline:
@@ -164,17 +188,20 @@ def main():
             originals[name] = subprocess.check_output(["git", "show", BASELINE + ":AI Profile/" + name], cwd=args.root, text=True)
         original_coverage = json.loads(subprocess.check_output(["git", "show", BASELINE + ":AI Profile/AI Agent Migration Coverage.json"], cwd=args.root, text=True))
         manifest = {
-            "status": "owner-aligned proposal; WG review pending",
+            "status": "maintained assessment rules",
             "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
             "baseline_evidence_head": BASELINE,
-            "issues": [539, 540, 542, 544],
+            "issues": [539, 540, 541, 410, 542, 544, 456],
             "allowed_audit_changes": sorted(ALLOWED, key=lambda key: tuple(map(int, key.split(".")))),
             **baseline_maps(originals["AI Agent Specification.md"], originals["AI Agent Test Guide.md"]),
-            "source_pin_role": "historical migration baseline; the actual assessed draft/release bundle must be pinned separately",
+            "source_pin_role": "historical migration baseline; the actual versioned assessment bundle must be pinned separately",
             "normative_changes": {
                 "539": "Operation-based fresh confirmation; explicit Tool/product requirements remain binding.",
                 "540": "Agent-owned managed-runtime and independent remote-integration boundaries; no Tool-cert prerequisite or provider-honesty guarantee.",
+                "541": "Per-verification applicability, production-equivalent fixtures and worked plans; missing mandatory protections/evidence are not N/A.",
+                "410": "Default ten stochastic executions unless explicit applicable guidance differs; eight qualified actual red-team hours; pilot/full/remediation and quarterly automated maintenance; task-appropriate evasion and supporting-only comparators.",
                 "542": "Authorized private tasks and separately permitted persistence; strict secrets, isolation, retention/deletion preserved.",
+                "456": "Agent-controlled requester/presentation attribution; supported MCP form/URL consent, no-prefetch and browser content/input isolation; optional modes and SHOULD hardening preserved.",
                 "544": "General supported-ID use SHOULD; required-interface/correct-use and uncertainty safeguards MUST.",
             },
         }

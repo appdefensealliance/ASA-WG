@@ -1,6 +1,6 @@
 # AI Tool Minimum Security Register
 
-**Draft proposal for Working Group review — 29 October 2026.**
+This is supporting rationale and source traceability for the Tool Specification and Testing Guide. It records the independent published CASA floor, supplemental practices and their applicability; it does not introduce an additional certification document or requirements outside those sources.
 
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
@@ -20,10 +20,12 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
+
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
 
 | Boundary | Treatment |
 | --- | --- |
@@ -32,7 +34,7 @@ public-application exemption from published CASA.
 | Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
 | Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
 | Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
-| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
+| Other local, desktop and mobile standalone Tool variants | Outside the standalone Tool scope covered here; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
 
 Device-local HTTP and incidental outbound HTTP do not themselves determine the
 deployment category. Literal MCP fields and discovery rules apply to the selected
@@ -84,8 +86,8 @@ without its required identifier, freshness or admission capability.
 
 The following 48 IDs retain their published scope, alternatives and AL1/AL2
 verification unchanged. Complete saved criteria are in the
-[machine-readable register](AI%20Tool%20Minimum%20Security%20Register.json).
-The pinned published source governs; current draft CASA changes are not imported.
+[machine-readable register](../assessment/ai/AI%20Tool%20Minimum%20Security%20Register.json).
+The pinned published source governs; unreleased CASA changes are not imported.
 
 | CASA ID | Published audit title | Source |
 | --- | --- | --- |
@@ -242,7 +244,7 @@ Apply each property only to its recorded interface, operation and actor. Optiona
 
 ### MIN-S08 CIMD identity and redirect metadata validation
 
-**Scoped required outcome:** Validate the client metadata identity against itsHTTPSURL and registered redirect values and accept only supported token-endpoint client-authentication methods.
+**Scoped required outcome:** Validate the client metadata identity against its HTTPS URL and registered redirect values and accept only supported token-endpoint client-authentication methods.
 
 **Applicability:** Only if the selected connection implements CIMD
 
@@ -284,7 +286,7 @@ Apply each property only to its recorded interface, operation and actor. Optiona
 
 ### MIN-S11 Refresh-token and replay protection
 
-**Scoped required outcome:** Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selectedOAuthprofile.
+**Scoped required outcome:** Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selected OAuth profile.
 
 **Applicability:** Public OAuth clients and token refresh
 
@@ -436,14 +438,14 @@ Apply each property only to its recorded interface, operation and actor. Optiona
 
 **Related CASA criteria:** No exact published counterpart recorded. Related criteria are not a claim of equivalence or implementation compliance.
 
-## Disposition of earlier retention/governance proposal
+## Historical retention/governance scope dispositions
 
 PR #324 supplied six outline topics. The dispositions below preserve the unresolved policy work without adopting its TBD sections as certification gates.
 
-| Topic | Proposed disposition | Treatment |
+| Topic | Disposition | Treatment |
 | --- | --- | --- |
 | 13.1 Temporal over-retention | ADVISORY_AND_EXISTING_BOUNDARIES | Data minimization and authorized task boundaries remain mandatory (Tool 9.1.1, MIN-S18/S19). A documented retention/deletion schedule is recommended; no new universal duration is adopted. |
-| 13.2 Geographic governance | DEFERRED_POLICY_SCOPE | A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this proposal does not certify jurisdictional compliance. |
+| 13.2 Geographic governance | DEFERRED_POLICY_SCOPE | A geographic-residency or jurisdiction-specific certification gate is deferred to separate WG policy work. Existing applicable legal/platform obligations remain; this profile does not certify jurisdictional compliance. |
 | 13.3 Compliance transparency | ASSESSMENT_RECORD_AND_DEFERRED_POLICY_SCOPE | Record components, applicability, dependencies and implemented enhancements. Broad regulatory compliance attestations and legal-recordkeeping gates are deferred to separate policy work. |
 | 13.4 Model allowlisting | EXISTING_AGENT_CONTROL_AND_TOOL_ADVISORY | Retain Agent per-model assessment and model/configuration boundaries. Tool-side approved-model policy is recommended where a Tool uses a model; no universal model list or sanctions-validation gate is created. |
 | 13.5 External data-source governance | COVERED_SECURITY_OUTCOMES | Trusted-layer authorization, least privilege, input validation, task minimization and legitimate API provenance apply (Tool 1.2.1/2.4.1/3.1.1/9.1.1, MIN-S05/S06/S16/S17/S18/S21). Broad organizational governance evidence remains advisory. |
@@ -451,7 +453,7 @@ PR #324 supplied six outline topics. The dispositions below preserve the unresol
 
 ## Market-research sources and currency
 
-Research was captured on 26 October 2026. These sources inform the proposed technical properties; directory publication rules are not evidence of identical requirements for all private APIs, SDKs or tunnels. Source recommendations and host behavior are distinguished from adopted normative outcomes in the JSON evidence trace.
+Research was captured on 26 October 2026. These sources inform the technical properties; directory publication rules are not evidence of identical requirements for all private APIs, SDKs or tunnels. Source recommendations and host behavior are distinguished from adopted normative outcomes in the JSON evidence trace.
 
 <a id="mr01"></a>
 

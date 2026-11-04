@@ -1,7 +1,5 @@
 # AI Agent–Tool Interface Contract
 
-**Draft proposal for Working Group review — 29 October 2026.**
-
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
 The [Minimum Security Register](AI%20Tool%20Minimum%20Security%20Register.md)
@@ -20,10 +18,12 @@ Relevant public/discovery interfaces of an in-scope Tool remain assessed. Genuin
 public calls may be unauthenticated. An excluded public-only Tool remains
 untrusted external input in Agent assessment, with applicable prompt-injection,
 authorization, HITL and safe-outcome controls retained. Exclusion is not a
-certification pass or proof of safety. This proposal does not introduce a blanket
+certification pass or proof of safety. This profile does not introduce a blanket
 public-application exemption from published CASA.
 
 ## Deployment and actor applicability
+
+The standalone Tool profile covers remote HTTP and local Android Tools, including stdio and AppFunctions, under their stated applicability conditions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope. Assess hybrid arrangements component by component; an excluded component is not certified by a covered component's result. These exclusions do not waive desktop/mobile Agent runtime or integration obligations.
 
 | Boundary | Treatment |
 | --- | --- |
@@ -32,7 +32,7 @@ public-application exemption from published CASA.
 | Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
 | Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
 | Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
-| Other local, desktop and mobile variants | Retain the existing source requirements and applicability pending a separate decision; published MASA is unchanged. |
+| Other local, desktop and mobile standalone Tool variants | Outside the standalone Tool scope covered here; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
 
 Device-local HTTP and incidental outbound HTTP do not themselves determine the
 deployment category. Literal MCP fields and discovery rules apply to the selected
@@ -71,7 +71,7 @@ follow the conditional Agent rule in C4; they are not an unconditional prerequis
 
 ## Residual assurance and retained Agent obligations
 
-Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. The paired candidate records the specific Agent source amendments and their retained controls in the policy-alignment manifest.
+Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. The paired documents record the specific Agent source amendments and their retained controls in the [policy-alignment manifest](../scripts/data/ai/AI%20Agent%20Policy%20Alignment.json).
 
 ## Canonical action and assessment boundaries
 
@@ -99,7 +99,7 @@ Issuer-minted user identity forwarded per request, per-action parameter binding,
 
 ### Required outcome / retained baseline
 
-The Tool MUST NOT embed hidden/obfuscated model-directed behavioral steering or unauthorized instructions in returned content/metadata and MUST independently enforce its inputs and authorization. The Agent MUST treat Tool Output as untrusted data, not instructions or authorization for consequential actions, and coreHITL remains mandatory. Producer tags MUST NOT establish trust.
+The Tool MUST NOT embed hidden/obfuscated model-directed behavioral steering or unauthorized instructions in returned content/metadata and MUST independently enforce its inputs and authorization. The Agent MUST treat Tool Output as untrusted data, not instructions or authorization for consequential actions, and core HITL remains mandatory. Producer tags MUST NOT establish trust.
 
 ### Recommended enhancement
 

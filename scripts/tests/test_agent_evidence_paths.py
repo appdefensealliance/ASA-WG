@@ -83,8 +83,8 @@ class AgentEvidenceTests(unittest.TestCase):
     def setUpClass(cls):
         cls.spec = (AI / "AI Agent Specification.md").read_text()
         cls.guide = (AI / "AI Agent Test Guide.md").read_text()
-        cls.coverage = json.loads((AI / "AI Agent Migration Coverage.json").read_text())
-        cls.manifest = json.loads((AI / "AI Agent Policy Alignment.json").read_text())
+        cls.coverage = json.loads((ROOT / "scripts/data/ai/AI Agent Migration Coverage.json").read_text())
+        cls.manifest = json.loads((ROOT / "scripts/data/ai/AI Agent Policy Alignment.json").read_text())
         cls.contract = (AI / "AI Agent-Tool Interface Contract.md").read_text()
         cls.rows = sections(cls.guide, "test")
 
@@ -128,7 +128,8 @@ class AgentEvidenceTests(unittest.TestCase):
         start, end = "## Agent-Level Compliance\n", "## Multi-Model Compliance Requirements\n"
         self.assertEqual(self.spec.split(start, 1)[1].split(end, 1)[0], self.guide.split(start, 1)[1].split(end, 1)[0])
         upstream = "**Evidence type: Document Review (when upstream evidence is relied upon).**"
-        self.assertEqual(14, self.guide.count(upstream))
+        self.assertEqual(12, self.guide.count(upstream))
+        self.assertEqual(2, self.guide.count("**Evidence type: Document Review (optional upstream benchmark route).**"))
         for block in self.rows.values():
             if upstream in block:
                 for clause in ("including or linking to relevant evaluation results", "published safety/adversarial-robustness evaluation", "model component certificate with its scope/evaluation report", "Agent-owned and combined-control assertions retain their own evidence requirements"):
@@ -173,12 +174,12 @@ class AgentEvidenceTests(unittest.TestCase):
     def test_amendment_discloses_scope_and_preserves_other_decisions(self):
         amendment = self.coverage["evidence_sufficiency_amendment"]
         self.assertEqual(14, amendment["upstream_document_review_blocks_aligned"])
-        self.assertIn("review pending", amendment["status"])
+        self.assertIn("historical", amendment["status"])
         for flag in ("acceptance_assertions_changed", "standing_backend_or_source_access_added", "numeric_trial_minimum_added", "private_data_policy_issue_542_implemented"):
             self.assertIs(False, amendment[flag])
         self.assertTrue(self.coverage["stable_ID_relaxations_included"])
         owner = self.coverage["owner_decision_amendment"]
-        self.assertIn("WG review pending", owner["status"])
+        self.assertEqual("maintained assessment rules", owner["status"])
         self.assertEqual("SHOULD", owner["general_supported_ID_strength"])
         self.assertEqual("MUST", owner["safe_outcome_strength"])
         self.assertFalse(owner["tool_certificate_prerequisite"])
@@ -232,6 +233,22 @@ class AgentEvidenceTests(unittest.TestCase):
         altered = self.guide + "\nOnly if optional Agent relaxations AG-O01/AG-O02 are selected.\n"
         self.assertTrue(any("selector" in error for error in
                             alignment_errors(self.spec, altered, self.manifest, self.contract)))
+
+    def test_protocol_values_and_source_links_match_owner_direction(self):
+        policy = self.coverage["assessment_policy"]
+        self.assertEqual(10, policy["default_independent_stochastic_executions_per_case"])
+        self.assertEqual(8, policy["actual_red_team_person_hours_initial_or_full"])
+        self.assertTrue(policy["specific_applicable_procedure_overrides_preserved"])
+        self.assertIn("not automatically full manual", policy["quarterly"])
+        for text in (self.spec, self.guide):
+            self.assertIn("TEN independent target executions", text)
+            self.assertIn("one qualified assessor person-day (8 person-hours)", text)
+            self.assertIn("#assessment-protocol", text)
+            self.assertNotIn("multiple independent cycles", text)
+            self.assertNotIn("(32 person-hours)", text)
+        self.assertIn("not exact prose", self.rows["1.1.1"])
+        self.assertIn("not an independent pass prerequisite", self.rows["3.1.3"])
+
 
     def test_review_conflicts_cannot_be_reintroduced(self):
         self.assertNotIn("High-privilege actions shall require", self.spec)
