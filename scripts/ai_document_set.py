@@ -54,6 +54,8 @@ def errors(root):
         text = p.read_text()
         if re.search(r'(?i)alpha[\s-]+pilot|pilot[\s-]+alpha|pilot-only|0\.1\.0-alpha\.1|ai-profile-version:|ai-alpha-preview:', text):
             problems.append(name + ': session publication/pilot framing remains')
+        if re.search(r'(?i)certification\s+is\s+(?:not\s+(?:(?:presently|currently|yet)\s+)?(?:available|possible)|(?:presently|currently)\s+unavailable)|documents are being finalized for WG consensus', text):
+            problems.append(name + ': temporary certification-readiness commentary remains')
         if re.search(r'(?im)^\*{0,2}(?:Draft proposal|Proposed (?:alpha|pilot|source))\b', text):
             problems.append(name + ': current requirement has a proposal-status wrapper')
         for target in re.findall(r'\[[^\]]*\]\(([^\s)]+)\)', text):

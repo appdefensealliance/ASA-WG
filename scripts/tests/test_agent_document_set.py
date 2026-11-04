@@ -22,10 +22,14 @@ from ai_document_set import DOCUMENTS, ASSETS, errors
 class AgentDocumentSetTests(unittest.TestCase):
     def test_primary_documents_and_supporting_assets_are_separate(self):
         self.assertEqual([], errors(ROOT))
-        for name in ('AI Agent Specification.md','AI Agent Test Guide.md'):
+        for name in DOCUMENTS:
             text = (AI/name).read_text()
-            for clause in ('WG consensus', 'Steering Committee consideration', 'SC approval and release', 'scheme-document updates', 'authorized test labs', 'Certification is not presently available'):
-                self.assertIn(clause, text)
+            self.assertNotIn('Certification is not presently available', text)
+            self.assertNotIn('These documents are being finalized for WG consensus', text)
+        for name in ('AI Agent Specification.md', 'AI Agent Test Guide.md'):
+            text = (AI/name).read_text()
+            self.assertIn('single combined product certification', text)
+            self.assertIn('every applicable mandatory requirement', text)
         self.assertEqual(48, len(json.loads((ASSET/'AI Tool Minimum Security Register.json').read_text())['CASA_floor']))
         self.assertIn('Local Android applicability', (AI/'AI Tool Local Android Requirements.md').read_text())
         self.assertIn('# Assessment Methodology', (AI/'AI Agent Test Guide.md').read_text())
@@ -36,8 +40,15 @@ class AgentDocumentSetTests(unittest.TestCase):
             for rel in ['AI Profile/'+n for n in DOCUMENTS] + list(ASSETS):
                 dest=root/rel;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/rel,dest)
             p=root/'AI Profile/AI Agent Specification.md'
-            p.write_text(p.read_text()+'\nThis is an alpha pilot.\n')
-            self.assertTrue(any('publication/pilot framing' in e for e in errors(root)))
+            original=p.read_text()
+            for phrase, error in (
+                ('This is an alpha pilot.', 'publication/pilot framing'),
+                ('Certification is not presently available against these documents.', 'certification-readiness commentary'),
+                ('Certification is not possible.', 'certification-readiness commentary'),
+            ):
+                with self.subTest(phrase=phrase):
+                    p.write_text(original+'\n'+phrase+'\n')
+                    self.assertTrue(any(error in e for e in errors(root)))
 
     def test_tool_assessment_fields_remain_canonical(self):
         ledger=json.loads((ASSET/'AI Tool Assessment Cases.json').read_text())

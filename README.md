@@ -29,7 +29,7 @@ The App Defense Alliance’s initial set of profiles are specific to the archite
 
 Machine-readable [assessment assets](assessment/ai/README.md), [synthetic examples](scripts/tests/fixtures/ai/README.md), and [maintainer provenance/regression records](scripts/data/ai/README.md) are separate from the primary documents. Their presence or validation does not establish product conformity or governance approval.
 
-AI documents are being finalized for WG consensus. WG consensus is followed by designation as an SC candidate and SC approval or rejection. Certification requires SC approval/release, the corresponding scheme-document updates, and authorized labs able to assess the standards. Release versions and tags follow the existing ADA process.
+The standards-management lifecycle is documented in [CONTRIBUTING](CONTRIBUTING.md); certification scheme and lab-authorization rules are maintained in the ADA methodology and scheme documents.
 
 In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
 
