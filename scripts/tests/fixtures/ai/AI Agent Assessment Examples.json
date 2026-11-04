@@ -23,7 +23,9 @@
     "consumed_schemas": true,
     "consumed_configuration": false,
     "consumed_errors": true,
-    "multiple_tools": true
+    "multiple_tools": true,
+    "elicitation_form": false,
+    "elicitation_url": false
   },
   "unchanged_controls": [
     "admission",
@@ -151,7 +153,8 @@
           "feature_overrides": {
             "persistent_memory": true,
             "managed_execution": true,
-            "elicitation": true
+            "elicitation": true,
+            "elicitation_form": true
           },
           "configuration_evidence": [
             "example://mcp-stdio/parent-pipe-executable-pin-and-OS-user-profile-capture",
@@ -461,7 +464,7 @@
           "deployment": "web",
           "interface": "mcp_http_public",
           "protocol_version": "example MCP/OAuth revision; pin actual versions",
-          "role": "Agent-owned web client/orchestrator with OAuth authorization-code flow",
+          "role": "Agent-owned web client/orchestrator with OAuth authorization-code flow; URL-only MCP elicitation client",
           "model": "synthetic-remote-reasoning-model",
           "model_version": "example-remote-v1",
           "task": "remote record retrieval feeding permitted local task",
@@ -473,11 +476,14 @@
             "retrieval": true,
             "stateful_transport": true,
             "oauth_code_flow": true,
-            "consumed_configuration": true
+            "consumed_configuration": true,
+            "elicitation": true,
+            "elicitation_url": true
           },
           "configuration_evidence": [
             "example://hybrid/remote-protocol-account-audience-route-and-component-boundary-originals",
-            "example://hybrid/remote-Tool-provider-is-untrusted-not-Agent-managed-runtime"
+            "example://hybrid/remote-Tool-provider-is-untrusted-not-Agent-managed-runtime",
+            "example://hybrid/verified-url-only-elicitation-and-isolated-browser-boundary"
           ]
         }
       ],

@@ -1,6 +1,6 @@
 # Synthetic AI assessment examples
 
-[Seven example plans](AI%20Agent%20Assessment%20Examples.json) exercise the [assessment schema](../../../../assessment/ai/AI%20Agent%20Assessment%20Plan.schema.json) and [applicability matrix](../../../../assessment/ai/AI%20Agent%20Assessment%20Applicability.json): public MCP HTTP, Android stdio, Android AppFunctions, desktop local, fixed REST, multimodal and hybrid boundaries.
+[Seven example plans](AI%20Agent%20Assessment%20Examples.json) exercise the [assessment schema](../../../../assessment/ai/AI%20Agent%20Assessment%20Plan.schema.json) and [applicability matrix](../../../../assessment/ai/AI%20Agent%20Assessment%20Applicability.json): public MCP HTTP, Android stdio (form-only), Android AppFunctions, desktop local, fixed REST, multimodal and hybrid boundaries (with a URL-only remote MCP context).
 
 These are test fixtures, not collected product evidence, approved production-equivalent fixtures or authorized assessments. Placeholder evidence and pending approvals cannot establish a pass. The [Agent Test Guide](../../../../AI%20Profile/AI%20Agent%20Test%20Guide.md#assessment-plans-and-records) explains how plans and records are used.
 

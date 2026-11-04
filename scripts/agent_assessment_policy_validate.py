@@ -27,7 +27,7 @@ CONTROLS = {
     "2.1.3": "automatic_bounds aggregate_cascade termination_audit",
     "2.2.1": "high_stakes_response",
     "2.2.2": "independent_gate binding_fidelity signed_consent_upgrade tool_request routine_specificity",
-    "2.2.3": "presentation_actions schema unsupported_request",
+    "2.2.3": "presentation_actions schema unsupported_request requester_attribution url_navigation url_no_prefetch url_isolation url_hardening",
     "2.3.1": "causal_consistency", "2.3.2": "policy_permission complete_audit",
     "2.4.1": "user_audience fail_closed_public signed_upgrade",
     "2.4.2": "admission_integrity user_provenance",
@@ -46,7 +46,7 @@ CONTROLS = {
     "6.1.3": "freshness_recovery supported_id_use required_id_preservation unknown_outcome lifecycle",
     "6.1.4": "state_binding", "6.1.5": "s256_exchange",
     "6.2.1": "description_isolation",
-    "6.2.2": "description_tokens schema_tokens configuration_tokens output_tokens error_tokens",
+    "6.2.2": "description_tokens schema_tokens configuration_tokens output_tokens error_tokens trusted_presentation",
 }
 EXPECTED_AUDITS = {"Agent:" + cid for cid in CONTROLS}
 EXPECTED_VERIFICATIONS = {"Agent:" + cid + ":" + key
@@ -54,6 +54,7 @@ EXPECTED_VERIFICATIONS = {"Agent:" + cid + ":" + key
 ADVISORY = {
     "Agent:1.1.2:jailbreak_benchmark": "OPTIONAL",
     "Agent:1.1.3:safety_benchmark": "OPTIONAL",
+    "Agent:2.2.3:url_hardening": "SHOULD",
     "Agent:2.4.1:signed_upgrade": "SHOULD",
     "Agent:2.2.2:signed_consent_upgrade": "SHOULD",
     "Agent:3.1.3:baseline_support": "OPTIONAL",
@@ -82,6 +83,7 @@ PROTOCOL_CASES = {
     "Agent:6.1.3:freshness_recovery", "Agent:6.1.4:state_binding", "Agent:6.1.5:s256_exchange",
 }
 INSPECTION_CASES = {
+    "Agent:2.2.3:url_hardening",
     "Agent:2.2.2:signed_consent_upgrade", "Agent:2.4.1:signed_upgrade",
     "Agent:3.1.3:baseline_support", "Agent:3.1.3:periodic_program",
     "Agent:4.2.2:report_ui_receipt", "Agent:5.2.1:automated_retention",
@@ -310,6 +312,23 @@ def matrix_errors(matrix, guide=None, spec=None):
             source_ids = re.findall(r"<!-- ada:" + tag + r" (Agent:\d+\.\d+\.\d+)", text)
             if len(source_ids) != 37 or set(source_ids) != EXPECTED_AUDITS:
                 errors.append(name + " stable audit inventory mismatch")
+    for mode in ('form', 'url'):
+        condition = matrix.get('conditions', {}).get('elicitation_' + mode, {})
+        if condition.get('features') != ['elicitation', 'elicitation_' + mode] or set(condition.get('interfaces', [])) != {'mcp_http_public', 'mcp_http_private', 'mcp_stdio'}:
+            errors.append('elicitation ' + mode + ': mode-specific source applicability changed')
+    expected_mode_conditions = {
+        'schema': ['elicitation_form'], 'requester_attribution': ['elicitation'],
+        'url_navigation': ['elicitation_url'], 'url_no_prefetch': ['elicitation_url'],
+        'url_isolation': ['elicitation_url'], 'url_hardening': ['elicitation_url'],
+        'unsupported_request': ['mcp'],
+    }
+    elicitation = next((a for a in audits if a.get('id') == 'Agent:2.2.3'), {})
+    for v in elicitation.get('verifications', []):
+        if v.get('key') in expected_mode_conditions and v.get('when') != expected_mode_conditions[v['key']]:
+            errors.append('elicitation ' + v['key'] + ': supported-mode protection or optionality changed')
+    trusted = next((v for a in audits if a.get('id') == 'Agent:6.2.2' for v in a.get('verifications', []) if v.get('key') == 'trusted_presentation'), {})
+    if trusted.get('when') != ['always']:
+        errors.append('trusted presentation protection is independent of optional MCP elicitation')
     for route in matrix.get("evidence_routes", {}).values():
         if route.get("type") not in {"Functional Observation", "Attestation", "Document Review"} or not route.get("condition"):
             errors.append("unknown/unnamed #543 evidence route")
@@ -507,6 +526,10 @@ def plan_errors(plan, matrix, schema):
             errors.append(c["id"] + ": unverified declarations/interface hints cannot establish applicability or N/A")
         if set(c["features"]) != required_features:
             errors.append(c["id"] + ": complete capability inventory required; unknown/protection flags prohibited")
+        if c['features'].get('elicitation') != bool(c['features'].get('elicitation_form') or c['features'].get('elicitation_url')):
+            errors.append(c['id'] + ': elicitation mode inventory contradicts overall capability; form and URL modes must be recorded separately')
+        if c['features'].get('elicitation') and c['interface'] not in {'mcp_http_public', 'mcp_http_private', 'mcp_stdio'}:
+            errors.append(c['id'] + ': MCP elicitation capability requires an implemented MCP interface')
         if not (c["features"].get("generative_tasks") or c["features"].get("classification_tasks")) and c["deployment"] != "unsupported":
             errors.append(c["id"] + ": supported model/task scope missing")
         wanted = PROFILE_FOR_DEPLOYMENT.get(c["deployment"])

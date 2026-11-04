@@ -12,7 +12,7 @@ import subprocess
 
 BASELINE = "3302bdb2d8c2637e2c76b80f9ed81d97d578ae65"
 BASELINE_MAP_SHA = "01f8e9af9ddd06fa081978ce13005caee79effebadef6eaf9ea7bd9b27e1ce7b"
-ALLOWED = {"1.1.1", "1.2.1", "1.3.1", "2.1.1", "2.1.2", "2.1.3", "2.2.2", "3.1.3", "3.3.1", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3"}
+ALLOWED = {"1.1.1", "1.2.1", "1.3.1", "2.1.1", "2.1.2", "2.1.3", "2.2.2", "2.2.3", "3.1.3", "3.3.1", "4.1.1", "5.1.1", "5.1.2", "5.2.1", "6.1.3", "6.2.2"}
 MANIFEST = "AI Agent Policy Alignment.json"
 
 
@@ -88,6 +88,8 @@ def alignment_errors(spec, guide, manifest, contract=None):
         "2.1.3": ["quantitatively declared step/invocation", "missing protection, not an exclusion", "No generic 25-step fallback applies"],
         "2.1.2": ["Agent-managed Tool execution", "not a claim about the independent server's filesystem", "Agent-controlled runtime", "Logged Disposition"],
         "2.2.2": ["fresh per-action user consent", "Explicit Tool consent requests", "Before dispatch", "one execution", "bounded validity period", "expired, consumed, mismatched, replayed"],
+        "2.2.3": ["Requester Attribution", "trusted admission/protocol context", "explicit user consent before opening that exact URL", "MUST NOT automatically prefetch", "does not enable the client or LLM to inspect", "SHOULD highlight the domain", "not required to add an unsupported mode"],
+        "6.2.2": ["Control Token Neutralization", "No Context Hijacking", "Prevent Unauthorized Execution", "Trusted Presentation Separation", "trusted integration/admission context", "public-only Tools excluded from standalone Tool certification"],
         "4.1.1": ["Enforce Rate Limiting", "Enforce Input Size Limits", "hard limits and pre-limit usage alerts", "restrict/refuse the operation", "a request-count limit alone does not establish the bound"],
         "5.1.1": ["access, purpose and recipient are authorized", "not a blanket secret-disclosure exception", "cross-user/context disclosure", "A user request alone does not establish access rights"],
         "5.1.2": ["separately permitted persistence", "Task authorization does not by itself authorize", "encoded or obfuscated content", "retention, withdrawal and deletion"],
@@ -136,6 +138,8 @@ def refresh_coverage(ai, guide, manifest):
     coverage["evidence_sufficiency_amendment"]["status"] = "historical #543 evidence-only delta"
     coverage["evidence_sufficiency_amendment"]["record_scope"] = "historical evidence-only delta; current source amendments and assessment_policy govern the maintained documents"
     coverage["certification_prerequisite"]["status"] = "recorded assessment integration design; not certification authorization"
+    if 'tool_impersonation_amendment' in manifest:
+        coverage['tool_impersonation_amendment'] = manifest['tool_impersonation_amendment']
     coverage["assessment_policy"] = {
         "status": "maintained assessment rules",
         "default_independent_stochastic_executions_per_case": 10,
@@ -187,7 +191,7 @@ def main():
             "status": "maintained assessment rules",
             "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
             "baseline_evidence_head": BASELINE,
-            "issues": [539, 540, 541, 410, 542, 544],
+            "issues": [539, 540, 541, 410, 542, 544, 456],
             "allowed_audit_changes": sorted(ALLOWED, key=lambda key: tuple(map(int, key.split(".")))),
             **baseline_maps(originals["AI Agent Specification.md"], originals["AI Agent Test Guide.md"]),
             "source_pin_role": "historical migration baseline; the actual versioned assessment bundle must be pinned separately",
@@ -197,6 +201,7 @@ def main():
                 "541": "Per-verification applicability, production-equivalent fixtures and worked plans; missing mandatory protections/evidence are not N/A.",
                 "410": "Default ten stochastic executions unless explicit applicable guidance differs; eight qualified actual red-team hours; pilot/full/remediation and quarterly automated maintenance; task-appropriate evasion and supporting-only comparators.",
                 "542": "Authorized private tasks and separately permitted persistence; strict secrets, isolation, retention/deletion preserved.",
+                "456": "Agent-controlled requester/presentation attribution; supported MCP form/URL consent, no-prefetch and browser content/input isolation; optional modes and SHOULD hardening preserved.",
                 "544": "General supported-ID use SHOULD; required-interface/correct-use and uncertainty safeguards MUST.",
             },
         }

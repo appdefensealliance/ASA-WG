@@ -6,6 +6,7 @@ security claim, production equivalence, calibration or actual assessor effort.
 import copy
 import importlib.util
 import json
+import re
 from pathlib import Path
 import unittest
 import subprocess
@@ -612,20 +613,41 @@ class AssessmentPolicyTests(unittest.TestCase):
         old["source_baseline"] = self.matrix["source_baseline"]
         old["procedure_catalog"]["source_revision"] = self.matrix["procedure_catalog"]["source_revision"]
         old["procedure_catalog"]["reference"] = self.matrix["procedure_catalog"]["reference"]
-        self.assertEqual(old,self.matrix,"inventory/cases/strength/evidence unchanged; source pin and its path identify the reorganized snapshot")
+        # #456 intentionally extends only §§2.2.3/6.2.2; its dedicated tests
+        # preserve their old safeguards and exercise new supported-mode cases.
+        comparable = copy.deepcopy(self.matrix)
+        for m in (old, comparable):
+            m['audits'] = [a for a in m['audits'] if a['id'] not in {'Agent:2.2.3', 'Agent:6.2.2'}]
+        for key in ('elicitation_form', 'elicitation_url'):
+            comparable['conditions'].pop(key)
+        comparable['conditions']['elicitation'] = old['conditions']['elicitation']
+        self.assertEqual(old,comparable,"unrelated inventories/cases/strength/evidence unchanged; source pin and path identify the reorganized snapshot")
         old_schema=json.loads(at_base("AI Profile/AI Agent Assessment Plan.schema.json"))
         old_schema.pop("x_profile_release",None)
         old_schema["title"]=self.schema["title"]
         self.assertEqual(old_schema,self.schema,"schema0.2 and pending fixtures unchanged")
         old_examples=json.loads(at_base("AI Profile/AI Agent Assessment Examples.json"))
         old_examples.pop("x_profile_release",None)
-        self.assertEqual(old_examples,self.examples,"synthetic scenarios/evidence remain unchanged")
+        old_examples['common_features'].update(elicitation_form=False, elicitation_url=False)
+        for example in old_examples['examples']:
+            for context in example['contexts']:
+                if example['id'] == 'mcp-stdio':
+                    context['feature_overrides']['elicitation_form'] = True
+                if example['id'] == 'hybrid' and context['id'] == 'remote-route':
+                    context['feature_overrides'].update(elicitation=True, elicitation_url=True)
+                    context['role'] += '; URL-only MCP elicitation client'
+                    context['configuration_evidence'].append('example://hybrid/verified-url-only-elicitation-and-isolated-browser-boundary')
+        self.assertEqual(old_examples,self.examples,"synthetic scenarios/evidence unchanged apart from explicit #456 supported-mode plan variations")
         before=at_base("AI Profile/AI Agent Test Guide.md").split("# 1. Model & Data Integrity\n",1)[1]
         after=policy.GUIDE.read_text().split("# 1. Model & Data Integrity\n",1)[1].split("\n# Assessment Methodology\n",1)[0]
         before=before.replace("(AI%20Agent%20Assessment%20Protocol.md#5-111-task-appropriate-outcomes)","(#5-task-appropriate-evasion-resistance-111)")
         before=before.replace("No generic 25-step fallback applies to this alpha.","No generic 25-step fallback applies.")
         before=before.replace("not a new TTL chosen by this alpha", "not a numeric TTL selected by these requirements")
-        self.assertEqual(before.rstrip(),after.rstrip(),"original audit/security clauses unchanged apart from named publication wording")
+        def without_456_blocks(text):
+            return ''.join(b for b in re.split(r'(?=^#{1,3} )', text, flags=re.M)
+                           if not any('<!-- ada:test Agent:' + cid + ' ' in b for cid in ('2.2.3', '6.2.2')))
+        self.assertEqual(without_456_blocks(before).rstrip(), without_456_blocks(after).rstrip(),
+                         "unrelated audit/security clauses unchanged apart from named publication wording")
 
     def test_substantive_methodology_paragraphs_preserved(self):
         import re
@@ -653,6 +675,7 @@ class AssessmentPolicyTests(unittest.TestCase):
                 paragraph=paragraph.replace("[Plans and worked examples](AI%20Agent%20Assessment%20Plans.md)","[Assessment Plans and Records](#assessment-plans-and-records)")
                 if paragraph.startswith("The matrix's #539"):
                     paragraph=paragraph.replace("AI Agent Policy Alignment.json.","[AI Agent Policy Alignment.json](../scripts/data/ai/AI%20Agent%20Policy%20Alignment.json).")
+                paragraph=paragraph.replace('An implemented interface with unsupported optional elicitation retains the safe-unsupported-request case.', 'An implemented MCP interface retains the safe-unsupported-request case. Record form and URL elicitation support separately; form-only products do not take URL-mode gates, URL-only products do not take form-schema gates, and a missing supported-mode protection is not an absent feature.')
                 self.assertIn(normalize(paragraph),method,(name,paragraph[:160]))
 
     def test_specific_cases_and_named_artifact_conditions_not_generic(self):
