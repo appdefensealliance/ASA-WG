@@ -946,8 +946,8 @@
           "strength": "MUST",
           "target": "llm_mediated",
           "source": "Faithful presentation/action fidelity",
-          "case": "ELICIT-ACTIONS-01: legitimate request in the supported form or URL mode; user accept/decline/cancel and accurate returned action",
-          "assertion": "Faithful supported-mode presentation, no auto-answer, correct distinct user accept/decline/cancel; form responses permit review/modification and URL accept does not claim completed interaction",
+          "case": "ELICIT-ACTIONS-01: legitimate supported-mode request; visibly offered decline/cancel options and actual accept/decline/cancel response",
+          "assertion": "Faithful supported-mode presentation with clear decline/cancel UI options, no auto-answer, correct distinct user accept/decline/cancel; form responses permit review/modification and URL accept does not claim completed interaction",
           "evidence": [
             "F"
           ]
@@ -974,8 +974,8 @@
           "strength": "MUST",
           "target": "llm_mediated",
           "source": "Safe unsupported/invalid-request handling",
-          "case": "ELICIT-UNSUPPORTED-01: unsolicited unsupported elicitation type over actual MCP interface even when capability absent",
-          "assertion": "Protocol-safe decline/error without auto-answer/internal state leak; no added elicitation capability required",
+          "case": "ELICIT-UNSUPPORTED-01: unsupported mode/type over actual MCP interface; omit mode to require form handling, including refusal on URL-only clients even if a URL field is supplied",
+          "assertion": "Protocol-safe decline/error without auto-answer/internal state leak or automatic navigation/prefetch. Omitted mode means form mode, never inferred URL mode; unsupported form is refused/errored without navigation. No added elicitation capability required",
           "evidence": [
             "F"
           ]

@@ -51,6 +51,23 @@ class ToolImpersonationTests(unittest.TestCase):
         self.assertEqual('inspection',index['Agent:2.2.3:url_hardening'][1]['target'])
         self.assertIn('not established as Agent-owned',self.guide)
 
+    def test_mcp_decline_cancel_ui_and_missing_mode_are_explicit(self):
+        for text in (self.spec, self.guide):
+            self.assertIn('MUST provide clear decline and cancel options', text)
+            self.assertIn('MUST treat a request that omits `mode` as form mode', text)
+        self.assertIn('On a URL-only client, omit `mode`', self.guide)
+        self.assertIn('not merely accepted by the response API', self.guide)
+        index = policy.inventory(self.matrix)
+        action = index['Agent:2.2.3:presentation_actions'][1]
+        unsupported = index['Agent:2.2.3:unsupported_request'][1]
+        self.assertIn('clear decline/cancel UI options', action['assertion'])
+        self.assertIn('Omitted mode means form mode, never inferred URL mode', unsupported['assertion'])
+        self.assertEqual(['mcp'], unsupported['when'])
+        for clause in ('MUST provide clear decline and cancel options',
+                       'MUST treat a request that omits `mode` as form mode'):
+            self.assertTrue(alignment.alignment_errors(self.spec.replace(clause, 'REMOVED'),
+                                                      self.guide.replace(clause, 'REMOVED'), self.manifest))
+
     def test_all_mode_combinations_without_making_optional_url_mandatory(self):
         for form,url in ((False,False),(True,False),(False,True),(True,True)):
             example=copy.deepcopy(next(x for x in self.examples['examples'] if x['id']=='mcp-http'))
