@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import re
 
-LEDGER = Path('AI Profile/AI Tool Assessment Cases.json')
+LEDGER = Path('assessment/ai/AI Tool Assessment Cases.json')
 GUIDE = Path('AI Profile/AI Tool Testing Guide.md')
 CONTEXT_FIELDS = ('actor', 'applies_when', 'setup_and_controls', 'observe')
 RULE_FIELDS = ('source_precedence', 'tiers', 'minimum_result', 'enhancement_result',

@@ -72,7 +72,7 @@ class AgentPlatformExtensionTests(unittest.TestCase):
     def setUpClass(cls):
         cls.spec = (AI / "AI Agent Specification.md").read_text()
         cls.guide = (AI / "AI Agent Test Guide.md").read_text()
-        cls.coverage = json.loads((AI / "AI Agent Migration Coverage.json").read_text())
+        cls.coverage = json.loads((ROOT / "scripts/data/ai/AI Agent Migration Coverage.json").read_text())
         cls.block = integration_block(cls.spec)
 
     def test_shared_certification_requirements_match(self):
@@ -125,7 +125,7 @@ class AgentPlatformExtensionTests(unittest.TestCase):
         self.assertFalse(policy["AI_SHOULD_may_waive_underlying_MUST"])
         self.assertTrue(policy["underlying_AL2_evidence_preserved"])
         self.assertEqual(0, policy["numbered_AI_audits_added"])
-        self.assertIn("WG consensus pending", policy["status"])
+        self.assertIn("not certification authorization", policy["status"])
 
     def test_existing_37_agent_ids_are_preserved(self):
         spec_ids = re.findall(r"<!-- ada:requirement Agent:(\d+\.\d+\.\d+) -->", self.spec)

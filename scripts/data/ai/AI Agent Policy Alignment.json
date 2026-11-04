@@ -1,5 +1,5 @@
 {
-  "status": "ALPHA",
+  "status": "maintainer regression and provenance record",
   "upstream_revocation_followup": {
     "pr": 528,
     "head": "a153c9090c83cde6c556e6f9b1e3fdb081637cf6",
@@ -138,11 +138,5 @@
     "control": "2.4.2",
     "status": "historical original migration; current upstream merge is recorded in upstream_revocation_followup",
     "transport_scope": "both applicable supported transports; no universal online revocation endpoint introduced"
-  },
-  "x_profile_release": {
-    "id": "AI-profiles-0.1.0-alpha.1",
-    "version": "0.1.0-alpha.1",
-    "document_state": "alpha",
-    "certification_authority": false
   }
 }

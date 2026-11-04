@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "status": "ALPHA",
+  "status": "assessment asset",
   "source_pin": "34705233b5f249d3fd4e8fc82cbb5e765ef94b81",
   "certification_scope": "Confidential inputs, credentials, private context, protected resources or sensitive operations bring the Tool into scope; anonymous public calls do not exempt an in-scope Tool.",
   "variants": [
@@ -7503,11 +7503,5 @@
     "positive_controls": "Use the legitimate authorized/control inputs in assessment_context and the assertion exercise. A security denial passes only with enough evidence that no prohibited output/effect occurred; a generic error is insufficient. Do not classify legitimate purpose-required private output as a leak.",
     "result_record": "Record each assertion ID, responsible actor, applicability/exception basis, implementation or enhancement status, evidence references, observed output/effect and assertion result. Keep the case minimum result separate from each enhancement result. A dependency record does not establish the external actor implementation as Tool-owned.",
     "retained_variants": "This assessment overlay applies only to remote_http_tool. Local Android retains the original case text, tier and original applicability from AI Tool Local Android Requirements.md; other local/mobile variants retain their current source disposition pending their separate scope decision."
-  },
-  "x_profile_release": {
-    "id": "AI-profiles-0.1.0-alpha.1",
-    "version": "0.1.0-alpha.1",
-    "document_state": "alpha",
-    "certification_authority": false
   }
 }

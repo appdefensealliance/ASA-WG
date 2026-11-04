@@ -1,9 +1,6 @@
 # AI Tool Minimum Security Register
 
-<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
-Version 0.1.0-alpha.1 — 2026-11-03
-
-This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
+This is supporting rationale and source traceability for the Tool Specification and Testing Guide. It records the independent published CASA floor, supplemental practices and their applicability; it does not introduce an additional certification document or requirements outside those sources.
 
 The AI Tool minimum combines the secure web application baseline established by
 published CASA with leading security practices informed by market research.
@@ -35,7 +32,7 @@ public-application exemption from published CASA.
 | Android Agent calling a remote Tool | Assess the Tool as remote; retain the Agent's mobile/platform duties. |
 | Local Android Tool using downstream HTTP | Remains local unless it invokes an independently exposed remote Tool boundary. |
 | Hybrid arrangement | Identify and assess each component and invocation/execution boundary. |
-| Other local, desktop and mobile standalone Tool variants | Outside this alpha's standalone Tool route; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
+| Other local, desktop and mobile standalone Tool variants | Outside the standalone Tool scope covered here; historical source is context, not a certification procedure by commit reference. Desktop/mobile Agent runtime obligations and released DASA/MASA remain applicable. |
 
 Device-local HTTP and incidental outbound HTTP do not themselves determine the
 deployment category. Literal MCP fields and discovery rules apply to the selected

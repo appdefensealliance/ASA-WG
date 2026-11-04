@@ -83,8 +83,8 @@ class AgentEvidenceTests(unittest.TestCase):
     def setUpClass(cls):
         cls.spec = (AI / "AI Agent Specification.md").read_text()
         cls.guide = (AI / "AI Agent Test Guide.md").read_text()
-        cls.coverage = json.loads((AI / "AI Agent Migration Coverage.json").read_text())
-        cls.manifest = json.loads((AI / "AI Agent Policy Alignment.json").read_text())
+        cls.coverage = json.loads((ROOT / "scripts/data/ai/AI Agent Migration Coverage.json").read_text())
+        cls.manifest = json.loads((ROOT / "scripts/data/ai/AI Agent Policy Alignment.json").read_text())
         cls.contract = (AI / "AI Agent-Tool Interface Contract.md").read_text()
         cls.rows = sections(cls.guide, "test")
 
@@ -174,13 +174,12 @@ class AgentEvidenceTests(unittest.TestCase):
     def test_amendment_discloses_scope_and_preserves_other_decisions(self):
         amendment = self.coverage["evidence_sufficiency_amendment"]
         self.assertEqual(14, amendment["upstream_document_review_blocks_aligned"])
-        self.assertIn("review pending", amendment["status"])
+        self.assertIn("historical", amendment["status"])
         for flag in ("acceptance_assertions_changed", "standing_backend_or_source_access_added", "numeric_trial_minimum_added", "private_data_policy_issue_542_implemented"):
             self.assertIs(False, amendment[flag])
         self.assertTrue(self.coverage["stable_ID_relaxations_included"])
         owner = self.coverage["owner_decision_amendment"]
-        self.assertEqual("ALPHA", owner["status"])
-        self.assertFalse(self.coverage["x_profile_release"]["certification_authority"])
+        self.assertEqual("maintained assessment rules", owner["status"])
         self.assertEqual("SHOULD", owner["general_supported_ID_strength"])
         self.assertEqual("MUST", owner["safe_outcome_strength"])
         self.assertFalse(owner["tool_certificate_prerequisite"])

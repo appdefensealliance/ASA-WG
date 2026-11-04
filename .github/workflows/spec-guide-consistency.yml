@@ -7,6 +7,9 @@ on:
   pull_request:
     paths:
       - 'AI Profile/**'
+      - 'assessment/ai/**'
+      - 'scripts/data/ai/**'
+      - 'scripts/tests/fixtures/ai/**'
       - 'MASA/MASA Specification.md'
       - 'MASA/MASA Test Guide.md'
       - 'CASA/CASA Specification.md'
@@ -27,6 +30,9 @@ on:
     branches: [develop]
     paths:
       - 'AI Profile/**'
+      - 'assessment/ai/**'
+      - 'scripts/data/ai/**'
+      - 'scripts/tests/fixtures/ai/**'
       - 'MASA/MASA Specification.md'
       - 'MASA/MASA Test Guide.md'
       - 'CASA/CASA Specification.md'
@@ -57,7 +63,7 @@ jobs:
         run: |
           python3 scripts/agent_policy_alignment.py
           python3 scripts/agent_assessment_policy_validate.py
-          python3 scripts/ai_alpha_scope.py
+          python3 scripts/ai_document_set.py
           python3 scripts/spec_guide_lint.py --strict
       - name: Exercise parser and assessment regressions
         run: python3 -m unittest discover -s scripts/tests -p test_spec_guide_lint.py

@@ -264,8 +264,8 @@ def lint_pair(root, name, cfg):
     covered = set().union(*(row['covers'] for row in guide.values())) if guide else set()
     errors = e1+e2
     if name=='AI Tool':
-        register = json.loads((root/'AI Profile/AI Tool Minimum Security Register.json').read_text())
-        ledger = json.loads((root/'AI Profile/AI Tool Assessment Cases.json').read_text())
+        register = json.loads((root/'assessment/ai/AI Tool Minimum Security Register.json').read_text())
+        ledger = json.loads((root/'assessment/ai/AI Tool Assessment Cases.json').read_text())
         errors += tool_metadata(spec,guide,register,ledger)
         if isinstance(ledger.get('assessment_rules'), dict) and all(isinstance(ledger['assessment_rules'].get(field), str) for field in RULE_FIELDS):
             if render_rules(ledger) not in (root/cfg['guide']).read_text():

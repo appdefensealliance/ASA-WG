@@ -19,8 +19,8 @@ class AssessmentLintTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         root = SCRIPTS.parent
-        cls.register = json.loads((root/'AI Profile/AI Tool Minimum Security Register.json').read_text())
-        cls.ledger = json.loads((root/'AI Profile/AI Tool Assessment Cases.json').read_text())
+        cls.register = json.loads((root/'assessment/ai/AI Tool Minimum Security Register.json').read_text())
+        cls.ledger = json.loads((root/'assessment/ai/AI Tool Assessment Cases.json').read_text())
         cls.spec, _ = ai.extract((root/'AI Profile/AI Tool Specification.md').read_text(), 'Tool', False, 'spec')
         cls.guide, _ = ai.extract((root/'AI Profile/AI Tool Testing Guide.md').read_text(), 'Tool', True, 'guide')
         cls.agent, _ = ai.extract((root/'AI Profile/AI Agent Test Guide.md').read_text(), 'Agent', True, 'agent')

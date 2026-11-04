@@ -1,21 +1,35 @@
 # AI Tool Local Android Requirements
 
-<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
-Version 0.1.0-alpha.1 — 2026-11-03
-
-This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
-
 This annex retains current applicable local Android requirement and test strength
 from the [AI source snapshot](https://github.com/appdefensealliance/ASA-WG/tree/34705233b5f249d3fd4e8fc82cbb5e765ef94b81/AI%20Profile).
 All original definitions, actor/feature scope, explicit exclusions and optional-profile
 conditions continue to govern. Transport descriptions do not create new local duties.
 The remote minimum does not demote this annex. Ordinary downstream HTTP does not
 reclassify a local Tool; an independently exposed remote Tool is a separate boundary.
-Other standalone local/mobile/desktop Tool routes are outside this alpha's assessed Tool scope; the historical snapshot is context, not a certification route by commit reference. Published CASA/MASA applicability and independent Agent desktop/mobile runtime duties remain unchanged. The [Tool-side Android planning map](AI%20Tool%20Local%20Android%20Applicability.md) records the retained corresponding IDs and source exclusions without altering their strength.
+Other standalone local/mobile/desktop Tool routes are outside the standalone Tool scope covered here; the historical snapshot is context, not a certification route by commit reference. Published CASA/MASA applicability and independent Agent desktop/mobile runtime duties remain unchanged. The [Tool-side Android planning map](AI%20Tool%20Local%20Android%20Requirements.md#local-android-applicability) records the retained corresponding IDs and source exclusions without altering their strength.
 
 For the Contract, only Tool-side duties are reproduced; Agent obligations are
 governed by the Agent Specification. The Wire Format remains an optional profile
 with its original unresolved local-transport scope; it is not universally required.
+
+## Local Android applicability
+
+This Tool-side companion resolves the retained annex's planning labels. `Local` is an invocation/execution boundary; `Mobile` is deployment. Android stdio and AppFunctions are **mobile + local**. Ordinary downstream HTTPS does not reclassify them as public remote Tools; separately exposed remote boundaries are assessed separately.
+
+Use each assertion's actual actor/protocol/feature conditions and explicit source exclusion, not whichever historical column is weaker. The [retained Android annex](AI%20Tool%20Local%20Android%20Requirements.md) remains the source for applicable local Tool strength, definitions and optional-profile conditions. Agent assessment does not certify these Tool internals and requires no Tool certificate.
+
+### Corresponding retained Spec/Guide dispositions
+
+- Tool §1.1.1 / Guide §1.1 remote client-server authentication: retain the explicit Local/Mobile exclusion of that handshake procedure. Descriptive parent-process examples do not invent a new mobile gate; independent Agent/platform caller admission still applies.
+- Tool §1.2.2 / Guide §2.2 user-context validation: retain the applicable Local/Mobile requirement, scoped downstream exchange and original strength. This is not Guide §1.5's different identity-propagation clause.
+- Tool §2.2.2 / Guide §1.5 multi-user identity propagation: its explicit Mobile exclusion applies to Android despite the Local column. It does not exclude independent authorization/user-context duties in §§1.2.1–1.2.2, Agent protections or MASA.
+- Tool §1.3.2 / Guide §1.6 downstream transport, and §§1.5.1–1.5.2 / Guide §§1.3–1.4 redirect/PKCE: retain the explicit Mobile exclusions of those Tool procedures. Applicable released MASA transport/platform requirements and separately exposed remote-component duties still apply.
+- Tool §§1.4.2–1.4.3 action idempotency/lifecycle: preserve applicable original Local/Mobile strength. The #544 Agent policy change does not demote the local Tool annex.
+- Preserve applicable local consent, secret management, request/user isolation, sandbox, metadata, resource and audit controls and conditional Wire Format adoption. No remote SHOULD overlay weakens them.
+
+The mapping is tied to actual corresponding IDs and source conditions, not a blanket mobile waiver. Any genuinely contradictory assertion must receive explicit WG disposition, not an invented passing exclusion. The [Agent applicability record](AI%20Agent%20Test%20Guide.md#assessment-applicability) separately maps Agent-owned duties at the invoked interface.
+
+The standalone Tool scope covered here remains remote HTTP plus retained local Android. Other standalone local Tool routes are outside this scope; desktop/mobile Agent runtime requirements remain applicable independently.
 
 ## AI Tool Specification.md — retained source
 

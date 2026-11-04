@@ -1,10 +1,5 @@
 # AI Agent Specification
 
-<!-- ai-profile-version: AI-profiles-0.1.0-alpha.1 -->
-Version 0.1.0-alpha.1 — 2026-11-03
-
-This alpha defines AI security requirements and assessment procedures within the [AI-only publication scope](AI%20Alpha%20Publication%20Scope.md). A document version alone does not grant assessor authorization or authority to issue ADA certificates.
-
 #  Contributors
 
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
@@ -116,9 +111,11 @@ The assessment MUST use the released underlying Specification and Test Guide fro
 
 The combined certification MUST NOT be issued unless the product meets every applicable mandatory requirement of both the underlying profile and this AI Agent profile at AL2. A prior underlying-profile certificate, an AL0/AL1 assessment, or an AI-only assessment MUST NOT substitute for this joint evaluation. No separately issued underlying-profile certificate is required. The combined assessment report and certificate MUST identify the evaluated product, covered architecture(s), both profile(s) and versions, and AL2 assurance level. AI-specific SHOULD provisions, optional features, or scope exclusions MUST NOT relax applicable mandatory requirements of the underlying profile. Requirements and acceptance criteria of the released underlying profile retain their original applicability, alternatives, and exceptions.
 
-### Alpha baseline lock
+### Underlying assessment references
 
-For this AI-only alpha pilot, use the exact released references in [AI Alpha Publication Scope](AI%20Alpha%20Publication%20Scope.md): MASA/CASA 2.1.1 and DASA 2.2.0 at released-main snapshot `63be51be0977512225c0bedf69c5dd69b98eab90`. The Tool floor remains the independent 48-ID CASA 2.1.1 document snapshot. A local all-PR tree does not release unreleased CASA 2.x/3.0 or MASA changes. A future adopted scheme must approve its exact baseline versions and reconcile the Tool floor; moving `main` or `develop` names alone are not assessment authority. The alpha itself is pilot-only and cannot authorize ADA certificates.
+Apply the released MASA/CASA 2.1.1 and DASA 2.2.0 Specification/Test Guide references at `63be51be0977512225c0bedf69c5dd69b98eab90` for the respective mobile/web/desktop components. The Tool minimum separately retains its published CASA 2.1.1 floor of 48 audit IDs at `7ad3cce0cbb8d6ece5a096afe4a669c1604af583`. Unreleased underlying-profile changes in an integration tree do not replace those references. Each assessment records its exact applicable profile and procedure references; a moving branch name is insufficient.
+
+These documents are being finalized for WG consensus. WG consensus is followed by designation as a candidate for Steering Committee consideration; the SC then approves a release or rejects it. Certification is not presently available against these documents. Certification requires completion of SC approval and release, corresponding scheme-document updates, and authorized test labs able to assess these standards. The detailed governance and authorization process belongs to the ADA methodology and scheme documents, not a lab's declaration or a document label.
 
 ### Remote Model Boundary
 
@@ -462,7 +459,7 @@ Restricting agents to the least-privilege principle minimizes the blast radius i
 
 | Audit ID | Requirement / retained acceptance obligation |
 | --- | --- |
-| 2.1.3 | * **Bounded Termination:** The Agent shall terminate automatically upon reaching its quantitatively declared step/invocation, time, token and cost bounds. A missing required declared/enforced ceiling is a missing protection, not an exclusion. No generic 25-step fallback applies to this alpha.<br>* **Declared Bounds Enforced:** The step, time, token, and cost limits referenced in §2.1.1 shall be quantitatively declared by the developer and demonstrably enforced; tool-supplied content shall not raise or disable them.<br>* **No Cascading Failure:** A tool-triggered chain shall not propagate into an unbounded cascade; the same aggregate bounds shall apply across chained tool calls.<br>* **Graceful Termination:** On hitting a bound, the agent shall stop, inform the user, and shall not crash, leak internal state, or fabricate a completed result.<br>* **Logged Disposition:** The loop, the bound that fired, and the termination shall be logged with a correlation ID for audit (§2.3). |
+| 2.1.3 | * **Bounded Termination:** The Agent shall terminate automatically upon reaching its quantitatively declared step/invocation, time, token and cost bounds. A missing required declared/enforced ceiling is a missing protection, not an exclusion. No generic 25-step fallback applies.<br>* **Declared Bounds Enforced:** The step, time, token, and cost limits referenced in §2.1.1 shall be quantitatively declared by the developer and demonstrably enforced; tool-supplied content shall not raise or disable them.<br>* **No Cascading Failure:** A tool-triggered chain shall not propagate into an unbounded cascade; the same aggregate bounds shall apply across chained tool calls.<br>* **Graceful Termination:** On hitting a bound, the agent shall stop, inform the user, and shall not crash, leak internal state, or fabricate a completed result.<br>* **Logged Disposition:** The loop, the bound that fired, and the termination shall be logged with a correlation ID for audit (§2.3). |
 
 **Test:** [Audit 2.1.3](AI%20Agent%20Test%20Guide.md). The linked Guide retains all mandatory procedure duties and original applicability; optional benchmark recommendations remain optional.
 

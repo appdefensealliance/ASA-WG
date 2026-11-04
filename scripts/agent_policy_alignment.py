@@ -85,7 +85,7 @@ def alignment_errors(spec, guide, manifest, contract=None):
         "3.3.1": ["Sensitive Actions and explicit Tool/product-policy confirmation requirements", "Privilege level alone shall not require", "Every plugin action shall be validated", "All plugin invocations, including the arguments"],
         "1.3.1": ["shall never be replayed as instructions", "injected directive shall not survive", "authorized user/context"],
         "2.1.1": ["shall refuse harmful or out-of-scope actions", "shall use only permitted tools", "shall enforce step, time, token, and cost limits", "valid user/resource authority"],
-        "2.1.3": ["quantitatively declared step/invocation", "missing protection, not an exclusion", "No generic 25-step fallback applies to this alpha"],
+        "2.1.3": ["quantitatively declared step/invocation", "missing protection, not an exclusion", "No generic 25-step fallback applies"],
         "2.1.2": ["Agent-managed Tool execution", "not a claim about the independent server's filesystem", "Agent-controlled runtime", "Logged Disposition"],
         "2.2.2": ["fresh per-action user consent", "Explicit Tool consent requests", "Before dispatch", "one execution", "bounded validity period", "expired, consumed, mismatched, replayed"],
         "4.1.1": ["Enforce Rate Limiting", "Enforce Input Size Limits", "hard limits and pre-limit usage alerts", "restrict/refuse the operation", "a request-count limit alone does not establish the bound"],
@@ -117,7 +117,7 @@ def alignment_errors(spec, guide, manifest, contract=None):
 
 
 def refresh_coverage(ai, guide, manifest):
-    path = ai / "AI Agent Migration Coverage.json"
+    path = ai.parent / "scripts/data/ai/AI Agent Migration Coverage.json"
     coverage = json.loads(path.read_text())
     rows = sections(guide, "test")
     if [control["id"] for control in coverage["controls"]] != list(rows):
@@ -125,7 +125,7 @@ def refresh_coverage(ai, guide, manifest):
     for control in coverage["controls"]:
         control["verification"] = verification(rows[control["id"]])
     coverage["baseline_scenario"] = "A"
-    coverage["scenario"] = "AI alpha scoped control amendments"
+    coverage["scenario"] = "Scoped AI control amendments"
     coverage["stable_ID_relaxations_included"] = True
     coverage["source_pin_role"] = manifest["source_pin_role"]
     if "upstream_revocation_candidate" in manifest:
@@ -133,9 +133,11 @@ def refresh_coverage(ai, guide, manifest):
         coverage["evidence_sufficiency_amendment"]["Agent_PR_537_base"] = manifest["baseline_agent_head"]
     if "upstream_revocation_followup" in manifest:
         coverage["upstream_revocation_followup"] = manifest["upstream_revocation_followup"]
-    coverage["evidence_sufficiency_amendment"]["record_scope"] = "historical evidence-only delta; current owner/source amendments and assessment_policy govern the full candidate"
+    coverage["evidence_sufficiency_amendment"]["status"] = "historical #543 evidence-only delta"
+    coverage["evidence_sufficiency_amendment"]["record_scope"] = "historical evidence-only delta; current source amendments and assessment_policy govern the maintained documents"
+    coverage["certification_prerequisite"]["status"] = "recorded assessment integration design; not certification authorization"
     coverage["assessment_policy"] = {
-        "status": "ALPHA",
+        "status": "maintained assessment rules",
         "default_independent_stochastic_executions_per_case": 10,
         "specific_applicable_procedure_overrides_preserved": True,
         "actual_red_team_person_hours_initial_or_full": 8,
@@ -143,11 +145,11 @@ def refresh_coverage(ai, guide, manifest):
         "quarterly": "designated automated reruns and findings review; not automatically full manual exercise",
         "major_model_change_or_new_agent_product": "full review",
         "minor_update": "impact review and affected regressions; not automatically full review",
-        "protocol": "AI Agent Assessment Protocol.md",
-        "applicability_matrix": "AI Agent Assessment Applicability.json"
+        "protocol": "AI Profile/AI Agent Test Guide.md#assessment-protocol",
+        "applicability_matrix": "assessment/ai/AI Agent Assessment Applicability.json"
     }
     coverage["owner_decision_amendment"] = {
-        "status": "ALPHA",
+        "status": "maintained assessment rules",
         "issues": manifest["issues"],
         "allowed_audit_changes": manifest["allowed_audit_changes"],
         "baseline_evidence_head": BASELINE,
@@ -168,7 +170,7 @@ def main():
     parser.add_argument("--refresh", action="store_true", help="Regenerate derived verification/migration records")
     args = parser.parse_args()
     ai = args.root / "AI Profile"
-    path = ai / MANIFEST
+    path = args.root / "scripts/data/ai" / MANIFEST
     prior = None
     if args.bootstrap or args.rebase_baseline:
         if path.exists() and not args.rebase_baseline:
@@ -182,7 +184,7 @@ def main():
             originals[name] = subprocess.check_output(["git", "show", BASELINE + ":AI Profile/" + name], cwd=args.root, text=True)
         original_coverage = json.loads(subprocess.check_output(["git", "show", BASELINE + ":AI Profile/AI Agent Migration Coverage.json"], cwd=args.root, text=True))
         manifest = {
-            "status": "ALPHA",
+            "status": "maintained assessment rules",
             "baseline_agent_head": "07bfda43f4c3974b9dbd6c333e76de8be9cb058b",
             "baseline_evidence_head": BASELINE,
             "issues": [539, 540, 541, 410, 542, 544],

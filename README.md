@@ -25,7 +25,11 @@ The App Defense Alliance’s initial set of profiles are specific to the archite
 * MASA - application security requirements and associated test guide applicable to developers that build apps that run on Android, Meta Quest, or Apple iOS devices (previously referred to as the Mobile App Profile)
 * Cloud - security configuration requirements relevant to the use of IaaS and PaaS services offered by Amazon Web Services (AWS), Google Cloud Platform (GCP), and Microsoft Azure
 * DASA - released desktop application security requirements and Test Guide for Windows, macOS and Linux.
-* AI Agent and AI Tool - [AI profiles and assessment records, version 0.1.0-alpha.1](AI%20Profile/AI%20Alpha%20Publication%20Scope.md). These define the alpha security requirements within their stated scope; a version label alone does not authorize certificates. The AI package references exact released underlying profiles and does not release unrelated CASA/MASA/CASA 3.0 changes.
+* AI Agent and AI Tool - [Agent Specification](AI%20Profile/AI%20Agent%20Specification.md) / [Test Guide and assessment methodology](AI%20Profile/AI%20Agent%20Test%20Guide.md), [Tool Specification](AI%20Profile/AI%20Tool%20Specification.md) / [Testing Guide](AI%20Profile/AI%20Tool%20Testing%20Guide.md), [interface Contract](AI%20Profile/AI%20Agent-Tool%20Interface%20Contract.md), [optional Identity and Consent Wire Format](AI%20Profile/AI%20Agent-Tool%20Identity%20and%20Consent%20Wire%20Format.md), [Local Android requirements and applicability](AI%20Profile/AI%20Tool%20Local%20Android%20Requirements.md), and [minimum-security rationale/register](AI%20Profile/AI%20Tool%20Minimum%20Security%20Register.md).
+
+Machine-readable [assessment assets](assessment/ai/README.md), [synthetic examples](scripts/tests/fixtures/ai/README.md), and [maintainer provenance/regression records](scripts/data/ai/README.md) are separate from the primary documents. Their presence or validation does not establish product conformity or governance approval.
+
+AI documents are being finalized for WG consensus. WG consensus is followed by designation as an SC candidate and SC approval or rejection. Certification requires SC approval/release, the corresponding scheme-document updates, and authorized labs able to assess the standards. Release versions and tags follow the existing ADA process.
 
 In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
 
