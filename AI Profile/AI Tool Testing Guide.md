@@ -433,11 +433,11 @@ Establish applicability and required authority first. Exercise the original scen
 
 ### Mandatory outcome
 
-Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, defaultTLS 1.2+ with exact legacy/internal-CA/Additional Context routes.
+Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, default TLS 1.2+ with exact legacy/internal-CA/Additional Context routes.
 
 ### Recommended enhancement
 
-TLS 1.3, all-message MAC/signatures, secureIPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment.
+TLS 1.3, all-message MAC/signatures, secure IPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment.
 
 **Applicable CASA references:** 4.1.1, 4.1.2, 4.1.3, 4.1.4. These relationships do not replace exact published criteria.
 
@@ -896,7 +896,7 @@ Establish applicability and required authority first. Exercise the original scen
 
 ### Mandatory outcome
 
-Baseline Agent HITL, Tool honest risk labels, authentication and CASAadmin-MFA/sensitive-account protections remain mandatory where applicable.
+Baseline Agent HITL, Tool honest risk labels, authentication and CASA admin-MFA/sensitive-account protections remain mandatory where applicable.
 
 ### Recommended enhancement
 
@@ -2305,29 +2305,28 @@ Each entry follows the register's actor, protocol and publication conditions. Th
 
 Use the [Local Android Requirements](AI%20Tool%20Local%20Android%20Requirements.md) for the applicable local Android test bodies, original exclusions and mandatory strength, including stdio and AppFunctions. Other standalone local/desktop/iOS Tool variants are outside this revision's scope; historical source material does not provide a certification route for them. Their exclusion does not waive the applicable desktop/mobile Agent runtime or integration requirements.
 
-## Contributors
+## Acknowledgements
 
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
-## Application Security Assessment Working Group Leads
+### Application Security Assessment Working Group Leads
 * Alex Duff (Meta) \- ASA WG Chair
 * Anna Bhirud (Google) \- ASA WG Vice Chair
 
-## AI Profile Leads
+### AI Profile Leads
 
 * Brad Ree (Google)
 * Alex Duff (Meta)
 
-## Contributors
+### Contributors
 
-* Debdutta Guha(Google)
+* Debdutta Guha (Google)
 * Nic Watson (Google)
 * Abhiraman Gcl (Google)
 * Daniel Bond (Meta)
 * Tony Balkan (Microsoft)
 * Dario Freni (Google)
-* Anna Bhirud(Google)
-* TBD
+* Anna Bhirud (Google)
 
 ## Licensing
 

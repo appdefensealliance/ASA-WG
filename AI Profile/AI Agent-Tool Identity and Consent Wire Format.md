@@ -114,7 +114,7 @@ Applicable selected MCP/OAuth discovery, user-resource binding and verification 
 
 ### Recommended enhancement
 
-ADA JWS/JWT, RAR/APH/JCS, DPoP, ID-JAG and MCPextension integration SHOULD be reusable enhanced substrates rather than a required universal wire.
+ADA JWS/JWT, RAR/APH/JCS, DPoP, ID-JAG and MCP extension integration SHOULD be reusable enhanced substrates rather than a required universal wire.
 
 ## Carrier: `_meta` canonical, `Authorization` header conformant on HTTP
 
@@ -124,7 +124,7 @@ A carrier used for baseline authentication MUST preserve and validate credential
 
 ### Recommended enhancement
 
-Canonical params._meta and HTTPAuthorization D1 carriers, exact dual-carrier equality, preservation keys and failure-on-stripping SHOULD be the enhanced profile behavior.
+Canonical params._meta and HTTP Authorization D1 carriers, exact dual-carrier equality, preservation keys and failure-on-stripping SHOULD be the enhanced profile behavior.
 
 ### Recommended enhanced carriers
 
@@ -138,7 +138,7 @@ If a presented token is used to authorize protected access, the Tool MUST valida
 
 ### Recommended enhancement
 
-D1specific typ/kid/act/client_id/jti/short-minute lifetime, asymmetric-only preference, request-level replay-cache and RAR/APH parameter claims SHOULD be used within enhanced D1. RAR support SHOULD be provided; APH MAY be an alternative; ambiguity SHOULD be rejected.
+D1-specific typ/kid/act/client_id/jti/short-minute lifetime, asymmetric-only preference, request-level replay-cache and RAR/APH parameter claims SHOULD be used within enhanced D1. RAR support SHOULD be provided; APH MAY be an alternative; ambiguity SHOULD be rejected.
 
 ### Recommended enhanced identity schema
 
@@ -169,7 +169,7 @@ Core Agent consequential-action HITL and shown-versus-executed fidelity MUST rem
 
 ### Recommended enhancement
 
-Signed C3receipt, user/account/operation/recipient/parameter/correlation/expiry/single-use binding and independent verification SHOULD remain enhanced. Tool-side elicitation/OOB SHOULD provide backstops.
+Signed C3 receipt, user/account/operation/recipient/parameter/correlation/expiry/single-use binding and independent verification SHOULD remain enhanced. Tool-side elicitation/OOB SHOULD provide backstops.
 
 ### Recommended enhanced consent schema
 
@@ -185,7 +185,7 @@ Baseline verification keys/issuers MUST be trusted and fetched without unauthori
 
 ### Recommended enhancement
 
-Pinned issuer allowlist/trust bundle, constrained JWKS bykid, TTLrefresh/rotation overlap, SPIFFE/registry substrates SHOULD be enhanced implementation guidance.
+Pinned issuer allowlist/trust bundle, constrained JWKS by kid, TTL refresh/rotation overlap, SPIFFE/registry substrates SHOULD be enhanced implementation guidance.
 
 ### Issuer roles and assertion meaning
 
@@ -226,11 +226,11 @@ a universal Tool certification gate and does not replace the Agent's own HITL.
 
 ### Required outcome / retained baseline
 
-First decide whether an operation is protected. On protected operations, validate selected baseline credential and user/resource/scope authority before execution; failures MUST deny protected data/side effects. Noauth MAY be used for demonstrably safe public/discovery operations.
+First decide whether an operation is protected. On protected operations, validate selected baseline credential and user/resource/scope authority before execution; failures MUST deny protected data/side effects. No-auth MAY be used for demonstrably safe public/discovery operations.
 
 ### Recommended enhancement
 
-The original D1algorithm SHOULD validate format, optional jti replaycache, dual carriers, RAR/APH parameters and C3receipt. Report enhancement failures as advisory/optional-profile findings unless they also violate a mandatory auth/data rule.
+The original D1 algorithm SHOULD validate format, optional jti replay cache, dual carriers, RAR/APH parameters and C3 receipt. Report enhancement failures as advisory/optional-profile findings unless they also violate a mandatory auth/data rule.
 
 ### Two-stage verification
 
@@ -352,15 +352,15 @@ Decoded C3 payload (illustrative): same `sub`/`aud`, the same `authorization_det
 
 ## References
 
-MCP 2025-11-25 (base / tools / authorization / elicitation) · Agent–Tool Interface Contract (C1, C3) ·
+MCP 2025-11-25 (base / tools / authorization / elicitation) · [Agent–Tool Interface Contract](AI%20Agent-Tool%20Interface%20Contract.md) (C1, C3) ·
 
-AI Agent Specification §2.2.2, §2.2.3, §2.4.1, §6.1.1–§6.1.5 ·
+[Agent Specification](AI%20Agent%20Specification.md) §2.2.2, §2.2.3, §2.4.1, §6.1.1–§6.1.5 ·
 
-AI Tool Specification §1.1.1, §1.2.2, §1.2.3, §1.4, §2.1.1, §2.2.2 · ID-JAG draft-04 · OIDC Core 1.0 ·
+[Tool Specification](AI%20Tool%20Specification.md) §1.1.1, §1.2.2, §1.2.3, §§1.4.1–1.4.3, §2.1.1, §2.2.2 · ID-JAG draft-04 · OIDC Core 1.0 ·
 
 RFC 7515 / 7519 / 7523 / 7638 / 7800 / 8693 / 8705 / 8707 / 9068 / 9396 / 9449 / 9728 / 8785 ·
 
-CoSAI MCP Security §3.2.1–3.2.2 · OWASP Top 10 for Agentic Applications 2026 ASI03 ·
+[CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/whitepapers/model-context-protocol-security.md) §3.2.1–3.2.2 · OWASP Top 10 for Agentic Applications 2026 ASI03 ·
 
 AIUC-1 × OWASP crosswalk (Gap: signed per-action auth artifacts).
 

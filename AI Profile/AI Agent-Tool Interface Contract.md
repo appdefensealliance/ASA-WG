@@ -71,7 +71,7 @@ follow the conditional Agent rule in C4; they are not an unconditional prerequis
 
 ## Residual assurance and retained Agent obligations
 
-Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. The paired candidate records the specific Agent source amendments and their retained controls in the policy-alignment manifest.
+Baseline conformance demonstrates concrete required properties, not universal safe-composition-by-construction, independently verified Tool-side human consent, exactly-once effects, or universal message integrity. The Agent Specification MAY retain stricter MUSTs; this minimum interface does not demote them. Existing Agent HITL full noncryptographic binding/fidelity, consumer distrust, session/nonce/state/PKCE, model/memory/sandbox and no-blind-retry/unknown-outcome honesty remain independently required unless the Agent-owner ledger expressly changes an affected clause. The paired documents record the specific Agent source amendments and their retained controls in the [policy-alignment manifest](../scripts/data/ai/AI%20Agent%20Policy%20Alignment.json).
 
 ## Canonical action and assessment boundaries
 
@@ -99,7 +99,7 @@ Issuer-minted user identity forwarded per request, per-action parameter binding,
 
 ### Required outcome / retained baseline
 
-The Tool MUST NOT embed hidden/obfuscated model-directed behavioral steering or unauthorized instructions in returned content/metadata and MUST independently enforce its inputs and authorization. The Agent MUST treat Tool Output as untrusted data, not instructions or authorization for consequential actions, and coreHITL remains mandatory. Producer tags MUST NOT establish trust.
+The Tool MUST NOT embed hidden/obfuscated model-directed behavioral steering or unauthorized instructions in returned content/metadata and MUST independently enforce its inputs and authorization. The Agent MUST treat Tool Output as untrusted data, not instructions or authorization for consequential actions, and core HITL remains mandatory. Producer tags MUST NOT establish trust.
 
 ### Recommended enhancement
 

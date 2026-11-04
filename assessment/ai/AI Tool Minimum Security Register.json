@@ -1574,7 +1574,7 @@
     {
       "id": "MIN-S08",
       "title": "CIMD identity and redirect metadata validation",
-      "outcome": "Validate the client metadata identity against itsHTTPSURL and registered redirect values and accept only supported token-endpoint client-authentication methods.",
+      "outcome": "Validate the client metadata identity against its HTTPS URL and registered redirect values and accept only supported token-endpoint client-authentication methods.",
       "strength": "MUST_WHEN_APPLICABLE",
       "scope": "Only if the selected connection implements CIMD",
       "interface_condition": "MCP-style interface / corresponding selected MCP or OAuth profile only",
@@ -1713,7 +1713,7 @@
     {
       "id": "MIN-S11",
       "title": "Refresh-token and replay protection",
-      "outcome": "Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selectedOAuthprofile.",
+      "outcome": "Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selected OAuth profile.",
       "strength": "MUST_WHEN_APPLICABLE",
       "scope": "Public OAuth clients and token refresh",
       "interface_condition": "MCP-style interface / corresponding selected MCP or OAuth profile only",

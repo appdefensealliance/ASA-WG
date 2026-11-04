@@ -17,7 +17,7 @@ AI = ROOT / 'AI Profile'
 ASSET = ROOT / 'assessment/ai'
 DATA = ROOT / 'scripts/data/ai'
 sys.path.insert(0, str(ROOT / 'scripts'))
-from ai_document_set import DOCUMENTS, ASSETS, errors
+from ai_document_set import DOCUMENTS, ASSETS, INDEXES, errors
 
 
 class AgentDocumentSetTests(unittest.TestCase):
@@ -38,7 +38,7 @@ class AgentDocumentSetTests(unittest.TestCase):
     def test_session_publication_framing_cannot_be_reintroduced(self):
         with tempfile.TemporaryDirectory() as dirname:
             root=Path(dirname)
-            for rel in ['AI Profile/'+n for n in DOCUMENTS] + list(ASSETS):
+            for rel in ['AI Profile/'+n for n in DOCUMENTS] + list(ASSETS) + list(INDEXES) + ['CONTRIBUTING.md']:
                 dest=root/rel;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/rel,dest)
             p=root/'AI Profile/AI Agent Specification.md'
             original=p.read_text()
@@ -118,8 +118,12 @@ class AgentDocumentSetTests(unittest.TestCase):
         new_cases = json.loads((ASSET/'AI Tool Assessment Cases.json').read_text())
         for old_test, new_test in zip(old_cases['tests'],new_cases['tests']):
             self.assertEqual(old_test['id'],new_test['id'])
-            self.assertEqual(old_test['mandatory_outcome'],new_test['mandatory_outcome'])
-            self.assertEqual(old_test['advisory_outcome'],new_test['advisory_outcome'])
+            def spacing(text):
+                for old, new in (('CASAadmin', 'CASA admin'), ('defaultTLS', 'default TLS'), ('secureIPC', 'secure IPC')):
+                    text = text.replace(old, new)
+                return text
+            self.assertEqual(spacing(old_test['mandatory_outcome']),new_test['mandatory_outcome'])
+            self.assertEqual(spacing(old_test['advisory_outcome']),new_test['advisory_outcome'])
             for before, after in zip(old_test['cases'],new_test['cases']):
                 for field in ('case_id','current_text','original_assurance_tier','disposition'):
                     self.assertEqual(before[field],after[field])

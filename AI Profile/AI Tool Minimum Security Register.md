@@ -244,7 +244,7 @@ Apply each property only to its recorded interface, operation and actor. Optiona
 
 ### MIN-S08 CIMD identity and redirect metadata validation
 
-**Scoped required outcome:** Validate the client metadata identity against itsHTTPSURL and registered redirect values and accept only supported token-endpoint client-authentication methods.
+**Scoped required outcome:** Validate the client metadata identity against its HTTPS URL and registered redirect values and accept only supported token-endpoint client-authentication methods.
 
 **Applicability:** Only if the selected connection implements CIMD
 
@@ -286,7 +286,7 @@ Apply each property only to its recorded interface, operation and actor. Optiona
 
 ### MIN-S11 Refresh-token and replay protection
 
-**Scoped required outcome:** Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selectedOAuthprofile.
+**Scoped required outcome:** Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selected OAuth profile.
 
 **Applicability:** Public OAuth clients and token refresh
 

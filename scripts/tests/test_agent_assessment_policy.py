@@ -646,6 +646,8 @@ class AssessmentPolicyTests(unittest.TestCase):
         def without_456_blocks(text):
             return ''.join(b for b in re.split(r'(?=^#{1,3} )', text, flags=re.M)
                            if not any('<!-- ada:test Agent:' + cid + ' ' in b for cid in ('2.2.3', '6.2.2')))
+        from test_agent_editorial_cleanup import guide_navigation
+        before = guide_navigation(before)
         self.assertEqual(without_456_blocks(before).rstrip(), without_456_blocks(after).rstrip(),
                          "unrelated audit/security clauses unchanged apart from named publication wording")
 

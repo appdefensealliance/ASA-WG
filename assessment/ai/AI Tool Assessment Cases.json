@@ -1345,8 +1345,8 @@
       "shared_group_ids": [
         "S01"
       ],
-      "mandatory_outcome": "Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, defaultTLS 1.2+ with exact legacy/internal-CA/Additional Context routes.",
-      "advisory_outcome": "TLS 1.3, all-message MAC/signatures, secureIPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment.",
+      "mandatory_outcome": "Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, default TLS 1.2+ with exact legacy/internal-CA/Additional Context routes.",
+      "advisory_outcome": "TLS 1.3, all-message MAC/signatures, secure IPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment.",
       "requirement_ids": [
         "7.1.1"
       ],
@@ -3149,7 +3149,7 @@
       "gate_class": "ADVISORY",
       "CASA_floor_ids": [],
       "shared_group_ids": [],
-      "mandatory_outcome": "Baseline Agent HITL, Tool honest risk labels, authentication and CASAadmin-MFA/sensitive-account protections remain mandatory where applicable.",
+      "mandatory_outcome": "Baseline Agent HITL, Tool honest risk labels, authentication and CASA admin-MFA/sensitive-account protections remain mandatory where applicable.",
       "advisory_outcome": "Independent-channel OOB confirmation SHOULD be used for highest-risk actions, including remote/high-value deployments; a safe server-side fallback SHOULD be provided where infeasible. Pre-registered channel/authenticated provider page and matching/expiry/single-use checks SHOULD preserve the current security content. No absent OOB channel alone fails baseline.",
       "requirement_ids": [
         "2.1.2"

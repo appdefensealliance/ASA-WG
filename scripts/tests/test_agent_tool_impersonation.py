@@ -18,6 +18,8 @@ sys.path.insert(0,str(ROOT/'scripts'))
 import agent_assessment_policy_validate as policy
 import agent_policy_alignment as alignment
 
+from test_agent_editorial_cleanup import guide_navigation
+
 URL_KEYS=('url_navigation','url_no_prefetch','url_isolation')
 
 
@@ -166,7 +168,7 @@ class ToolImpersonationTests(unittest.TestCase):
         for cid in oldspec:
             if cid not in {'2.2.3','6.2.2'}:
                 self.assertEqual(oldspec[cid],newspec[cid],cid)
-                self.assertEqual(oldguide[cid],newguide[cid],cid)
+                self.assertEqual(guide_navigation(oldguide[cid]),newguide[cid],cid)
         previous=alignment.verification(oldguide['6.2.2'])
         current=alignment.verification(newguide['6.2.2'])
         self.assertTrue(current.startswith(previous+'\n'), 'Original control-token/unauthorized-execution duties must be retained verbatim')

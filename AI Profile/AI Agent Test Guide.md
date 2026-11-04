@@ -1,6 +1,6 @@
 # AI Agent Test Guide
 
-#  Contributors
+# Contributors
 
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
@@ -411,7 +411,7 @@ Use the applicable techniques from [AITG-MOD-01](https://github.com/OWASP/www-pr
 #### Test Procedure
 The developer SHOULD perform [AILuminate Jailbreak benchmark](https://mlcommons.org/ailuminate/jailbreak/) for each model the Agent supports. The test SHOULD be performed on each of the user interfaces, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
 
-See section 3.1 for mandatory Input Validation and Sanitization requriements.
+See [§3.1 Input Validation and Sanitization](#31-input-validation-and-sanitization) for the mandatory requirements.
 
 #### Verification
 * This requirement is optional and thus does not have any mandatory verification conditions.
@@ -430,7 +430,7 @@ See section 3.1 for mandatory Input Validation and Sanitization requriements.
 
 The developer SHOULD perform [AILuminate safety benchmark](https://mlcommons.org/ailuminate/safety/) for each model the Agent will support. The test SHOULD be performed on each of the user interfaces, such as mobile, web, and/or desktop. (This test does not include data coming from the tool interface)
 
-See section 3.1 for mandatory Input Validation and Sanitization and section 3.2 for madatory Output Validation and Sanitization requirements.
+See [§3.1 Input Validation and Sanitization](#31-input-validation-and-sanitization) and [§3.2 Output Validation and Sanitization](#32-output-validation-and-sanitization) for the mandatory requirements.
 
 #### Verification
 

@@ -211,7 +211,7 @@ unconditional prerequisite.
 
 | Strength | Requirement |
 | --- | --- |
-| MUST when applicable | Baseline Agent HITL, Tool honest risk labels, authentication and CASAadmin-MFA/sensitive-account protections remain mandatory where applicable. |
+| MUST when applicable | Baseline Agent HITL, Tool honest risk labels, authentication and CASA admin-MFA/sensitive-account protections remain mandatory where applicable. |
 | SHOULD | Independent-channel OOB confirmation SHOULD be used for highest-risk actions, including remote/high-value deployments; a safe server-side fallback SHOULD be provided where infeasible. Pre-registered channel/authenticated provider page and matching/expiry/single-use checks SHOULD preserve the current security content. No absent OOB channel alone fails baseline. |
 
 ### 2.2.1 Stateless Request Level Isolation
@@ -301,8 +301,8 @@ unconditional prerequisite.
 
 | Strength | Requirement |
 | --- | --- |
-| MUST when applicable | Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, defaultTLS 1.2+ with exact legacy/internal-CA/Additional Context routes. |
-| SHOULD | TLS 1.3, all-message MAC/signatures, secureIPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment. |
+| MUST when applicable | Public remote endpoint MUST use HTTPS and meet full applicable CASA TLS/trust/crypto criteria, default TLS 1.2+ with exact legacy/internal-CA/Additional Context routes. |
+| SHOULD | TLS 1.3, all-message MAC/signatures, secure IPC/OS permissions and local loopback-only binding SHOULD be considered for this public-remote impact model. Existing local/mobile strengths are not automatically changed; held variants require separate assessment. |
 
 ### 7.7.1 Validate Origin Header on HTTP Transports
 
@@ -528,7 +528,7 @@ Validate registered redirect destinations and securely validate OAuth state; do 
 
 <!-- ada:requirement Tool:MIN-S08 -->
 
-Validate the client metadata identity against itsHTTPSURL and registered redirect values and accept only supported token-endpoint client-authentication methods.
+Validate the client metadata identity against its HTTPS URL and registered redirect values and accept only supported token-endpoint client-authentication methods.
 
 **Applicability:** Only if the selected connection implements CIMD. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
 
@@ -558,7 +558,7 @@ Keep credentials/tokens confidential and securely stored, using appropriate prot
 
 <!-- ada:requirement Tool:MIN-S11 -->
 
-Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selectedOAuthprofile.
+Protect public-client refresh tokens against replay, validate refresh failures/expiry, and apply required rotation or sender constraints under the selected OAuth profile.
 
 **Applicability:** Public OAuth clients and token refresh. MCP-style interface / corresponding selected MCP or OAuth profile only. Public directory reachability applies only when publishing to that directory.
 
@@ -681,10 +681,10 @@ Implemented enhanced capabilities must be declared and assessed separately.
 
 * [CSA Monitoring & Operational Security](https://modelcontextprotocol-security.io/ttps/monitoring-operational-security/)
 * [OWASP MCP Top 10](https://github.com/OWASP/www-project-mcp-top-10/tree/main/2025)
-* [CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/model-context-protocol-security.md)
+* [CoSAI MCP Security](https://github.com/cosai-oasis/ws4-secure-design-agentic-systems/blob/main/whitepapers/model-context-protocol-security.md)
 
 
-## Contributors
+## Acknowledgements
 
 The App Defense Alliance Application Security Assessment Working Group (ASA WG) would like to thank the following individuals for their contributions to this specification.
 
@@ -700,13 +700,12 @@ The App Defense Alliance Application Security Assessment Working Group (ASA WG) 
 
 ### Contributors
 
-* Debdutta Guha(Google)
+* Debdutta Guha (Google)
 * Nic Watson (Google)
 * Abhiraman Gcl (Google)
 * Daniel Bond (Meta)
 * Tony Balkan (Microsoft)
 * Dario Freni (Google)
-* TBD
 
 ## Licensing
 

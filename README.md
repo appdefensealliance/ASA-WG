@@ -31,7 +31,7 @@ Machine-readable [assessment assets](assessment/ai/README.md), [synthetic exampl
 
 The standards-management lifecycle is documented in [CONTRIBUTING](CONTRIBUTING.md); certification scheme and lab-authorization rules are maintained in the ADA methodology and scheme documents.
 
-In the future, the App Defense Alliance may pursue pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
+In the future, the App Defense Alliance may pursue new profiles (e.g., for new software types) or profile extensions that are applicable to specific subclasses of applications (e.g., for VPN apps).
 
 ## Validation
 ### Approach
@@ -39,7 +39,7 @@ In the future, the App Defense Alliance may pursue pursue new profiles (e.g., fo
 This App Defense Alliance's validation approach involves a collaborative effort between a standards setting organization (the alliance itself), software developers, and independent assessors.
 1. The App Defense Alliance establishes the criteria for product evaluation.
 2. Software developers use these standards to create software and secure cloud configurations that meet these requirements.
-3. Independent assessors, acting as neutral evaluators, then assess a developer's product against the standards and are authorize to issue a certification document if so.
+3. Independent assessors, acting as neutral evaluators, then assess a developer's product against the standards and are authorized to issue a certification document if so.
 
 This process aims to ensure that developers have met the security requirements, providing confidence to stakeholders.
 ### Levels

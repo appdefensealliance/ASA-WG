@@ -25,6 +25,9 @@ ASSETS = (
 )
 
 
+INDEXES = ('README.md', 'assessment/ai/README.md', 'scripts/data/ai/README.md', 'scripts/tests/fixtures/ai/README.md')
+
+
 def anchors(path):
     text = Path(path).read_text()
     values = set(re.findall(r'<[^>]+(?:id|name)=["\']([^"\']+)', text))
@@ -37,6 +40,22 @@ def anchors(path):
         counts[key] = duplicate + 1
         values.add(key + ('-' + str(duplicate) if duplicate else ''))
     return values
+
+
+def local_link_errors(path):
+    path = Path(path)
+    problems = []
+    for target in re.findall(r'\[[^\]]*\]\(([^\s)]+)\)', path.read_text()):
+        parsed = urlsplit(target.strip('<>'))
+        if parsed.scheme or parsed.netloc or target.startswith('/'):
+            continue
+        filename = unquote(parsed.path)
+        target_path = path.parent / filename if filename else path
+        if not target_path.exists():
+            problems.append(path.name + ': missing local link target ' + filename)
+        elif parsed.fragment and target_path.suffix == '.md' and unquote(parsed.fragment) not in anchors(target_path):
+            problems.append(path.name + ': missing local link anchor ' + parsed.fragment)
+    return problems
 
 
 def errors(root):
@@ -58,17 +77,15 @@ def errors(root):
             problems.append(name + ': temporary certification-readiness commentary remains')
         if re.search(r'(?im)^\*{0,2}(?:Draft proposal|Proposed (?:alpha|pilot|source))\b', text):
             problems.append(name + ': current requirement has a proposal-status wrapper')
-        for target in re.findall(r'\[[^\]]*\]\(([^\s)]+)\)', text):
-            target = target.strip('<>')
-            parsed = urlsplit(target)
-            if parsed.scheme or parsed.netloc or target.startswith('/'):
-                continue
-            filename = unquote(parsed.path)
-            target_path = p.parent / filename if filename else p
-            if not target_path.exists():
-                problems.append(name + ': missing local link target ' + filename)
-            elif parsed.fragment and target_path.suffix == '.md' and unquote(parsed.fragment) not in anchors(target_path):
-                problems.append(name + ': missing local link anchor ' + parsed.fragment)
+        if re.search(r'(?im)^\s*[-*]\s+(?:TBD|TODO)(?:\s|$)', text):
+            problems.append(name + ': contributor/list placeholder remains')
+        problems.extend(local_link_errors(p))
+    for relative in INDEXES:
+        p = root / relative
+        if p.is_file():
+            problems.extend(local_link_errors(p))
+        else:
+            problems.append(relative + ': document/asset index missing')
     for rel in ASSETS:
         p = root / rel
         if not p.is_file():
