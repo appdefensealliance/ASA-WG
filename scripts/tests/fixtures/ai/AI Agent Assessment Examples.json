@@ -517,11 +517,5 @@
         }
       ]
     }
-  ],
-  "x_profile_release": {
-    "id": "AI-profiles-0.1.0-alpha.1",
-    "version": "0.1.0-alpha.1",
-    "document_state": "alpha",
-    "certification_authority": false
-  }
+  ]
 }

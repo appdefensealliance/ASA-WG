@@ -1,7 +1,7 @@
 {
   "matrix_version": "0.2",
-  "status": "operative alpha assessment applicability",
-  "target_release": "0.1.0-alpha.1",
+  "status": "assessment applicability inventory",
+  "target_release": "unassigned",
   "source_baseline": "126033d3c25eb894224c5d747b061c193ecf35c2",
   "procedure_catalog": {
     "revision": "0.2",
@@ -754,7 +754,7 @@
           "target": "llm_mediated",
           "source": "Bounded termination/declared bounds enforced",
           "case": "LOOP-SELF-01: self-reference plus attempted Tool-supplied limit increase",
-          "assertion": "Automatically enforce quantitatively declared step/invocation/time/token/cost ceilings; a missing required declared/enforced limit is missing protection, not N/A. No 25-step fallback is adopted by this alpha",
+          "assertion": "Automatically enforce quantitatively declared step/invocation/time/token/cost ceilings; a missing required declared/enforced limit is missing protection, not N/A. No 25-step fallback is provided here",
           "evidence": [
             "F",
             "A-bounds"
@@ -2059,11 +2059,5 @@
         }
       ]
     }
-  ],
-  "x_profile_release": {
-    "id": "AI-profiles-0.1.0-alpha.1",
-    "version": "0.1.0-alpha.1",
-    "document_state": "alpha",
-    "certification_authority": false
-  }
+  ]
 }

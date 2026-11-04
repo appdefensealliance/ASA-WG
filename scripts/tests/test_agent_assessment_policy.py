@@ -23,9 +23,9 @@ AI = ROOT / "AI Profile"
 class AssessmentPolicyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.matrix = policy.read_json(AI / "AI Agent Assessment Applicability.json")
-        cls.schema = policy.read_json(AI / "AI Agent Assessment Plan.schema.json")
-        cls.examples = policy.read_json(AI / "AI Agent Assessment Examples.json")
+        cls.matrix = policy.read_json(policy.ASSESSMENT / "AI Agent Assessment Applicability.json")
+        cls.schema = policy.read_json(policy.ASSESSMENT / "AI Agent Assessment Plan.schema.json")
+        cls.examples = policy.read_json(policy.FIXTURES / "AI Agent Assessment Examples.json")
         cls.plans = {e["id"]: policy.expand_example(cls.matrix, cls.examples, e) for e in cls.examples["examples"]}
 
     def errors(self, plan):
@@ -311,20 +311,19 @@ class AssessmentPolicyTests(unittest.TestCase):
 
     def test_android_scope_mapping_uses_corresponding_tool_requirements(self):
         annex = (AI / "AI Tool Local Android Requirements.md").read_text()
-        applicability_doc = (AI / "AI Tool Local Android Applicability.md").read_text()
-        agent_doc = (AI / "AI Agent Assessment Applicability.md").read_text()
-        self.assertIn("AI%20Tool%20Local%20Android%20Applicability.md", agent_doc)
-        self.assertIn("AI%20Tool%20Local%20Android%20Applicability.md", annex)
+        agent_doc = policy.GUIDE.read_text().split("# Assessment Methodology\n",1)[1]
+        self.assertIn("AI%20Tool%20Local%20Android%20Requirements.md#local-android-applicability", agent_doc)
         user_context = annex.split("### LOCAL_ANDROID 1.2.2 —", 1)[1].split("### LOCAL_ANDROID 1.2.3 —", 1)[0]
         propagation = annex.split("### LOCAL_ANDROID 2.2.2 —", 1)[1].split("### LOCAL_ANDROID 2.2.3 —", 1)[0]
         self.assertIn("| Mobile | In Scope |", user_context)
         self.assertIn("| Mobile | Out of Scope |", propagation)
-        ledger = policy.read_json(AI / "AI Tool Assessment Cases.json")
+        ledger_path=policy.ASSESSMENT / "AI Tool Assessment Cases.json"
+        if not ledger_path.exists():
+            # Read-only compatibility with the uncombined parent move; not a product/evidence fallback.
+            ledger_path=AI / "AI Tool Assessment Cases.json"
+        ledger = policy.read_json(ledger_path)
         self.assertEqual(["2.2.2"], next(t for t in ledger["tests"] if t["id"] == "1.5")["requirement_ids"])
         self.assertEqual(["1.2.2"], next(t for t in ledger["tests"] if t["id"] == "2.2")["requirement_ids"])
-        self.assertIn("Tool §1.2.2 / Guide §2.2", applicability_doc)
-        self.assertIn("Tool §2.2.2 / Guide §1.5", applicability_doc)
-        self.assertNotIn("Tool §1.2.2 marks Mobile in scope while Guide identity propagation §1.5", applicability_doc)
 
     def baseline_observed(self, vid="Agent:3.1.2:untrusted_consequence", example="mcp-http"):
         """Read the exact pushed base in memory; no extra files or checkout writes."""
@@ -546,38 +545,43 @@ class AssessmentPolicyTests(unittest.TestCase):
         self.assertEqual(1,rejected.returncode)
         self.assertIn("target classification drift",rejected.stderr)
 
-    def test_current_alpha_publication_labels_reject_draft_and_proposed_status(self):
-        docs={name:(AI/name).read_text() for name in (
-            "AI Agent Assessment Protocol.md","AI Agent Assessment Applicability.md","AI Agent Assessment Plans.md")}
-        self.assertEqual([],policy.publication_state_errors(self.matrix,self.schema,self.examples,docs))
-        self.assertEqual("0.1.0-alpha.1",self.matrix["target_release"])
-        for status in ("owner-aligned draft; not WG adoption","proposed WG alpha","WG/SC released"):
-            changed=copy.deepcopy(self.matrix)
-            changed["status"]=status
-            self.assertError(policy.publication_state_errors(changed),"operative alpha publication status/version")
-        changed=copy.deepcopy(self.matrix)
-        changed["audits"][0]["verifications"][0]["source"]="Proposed #410 source amendment"
-        self.assertError(policy.publication_state_errors(changed),"current draft/proposed standard status")
-        for name in docs:
-            changed=dict(docs)
-            changed[name]+="\n**Draft 0.1 — proposed assessment standard**\n"
-            self.assertError(policy.publication_state_errors(self.matrix,documents=changed),"companion body")
-        changed=copy.deepcopy(self.schema)
-        changed["title"]="Draft AI Agent assessment schema"
-        self.assertError(policy.publication_state_errors(self.matrix,changed),"current draft/proposed standard status")
+    def test_consolidated_methodology_structure_and_live_records(self):
+        guide=policy.GUIDE.read_text()
+        self.assertEqual([],policy.methodology_errors(guide))
+        method=guide.split("# Assessment Methodology\n",1)[1]
+        for heading in ("Assessment Protocol","Assessment Applicability","Assessment Plans and Records"):
+            self.assertEqual(1,method.count("## "+heading+"\n"))
+        for case in ("EV-TEXT-01","EV-IMAGE-01","EV-AUTH-01","HYBRID-CHAIN-01"):
+            self.assertIn(case,method)
+        self.assertIn('id="5-111-task-appropriate-outcomes"',method)
+        for name in ("AI Agent Assessment Protocol.md","AI Agent Assessment Applicability.md","AI Agent Assessment Plans.md"):
+            self.assertFalse((AI/name).exists(),"retired standalone methodology")
+        self.assertTrue((policy.ASSESSMENT/"AI Agent Assessment Applicability.json").is_file())
+        self.assertTrue((policy.ASSESSMENT/"AI Agent Assessment Plan.schema.json").is_file())
+        self.assertTrue((policy.FIXTURES/"AI Agent Assessment Examples.json").is_file())
+        self.assertTrue(policy.methodology_errors(guide.replace("## Assessment Applicability\n","## Missing\n")))
+        self.assertTrue(policy.methodology_errors(guide+"\n# Assessment Methodology\n"))
 
-    def test_schema_dialect_history_and_proposed_action_parameters_are_preserved(self):
+    def test_neutral_revision_and_schema_are_not_publication_authority(self):
+        self.assertEqual("unassigned",self.matrix["target_release"])
         self.assertEqual("https://json-schema.org/draft/2020-12/schema",self.schema["$schema"])
-        legitimate={"references":"Historical source: earlier draft requirements\n"
-                    "JSON-Schema Draft 2020-12: https://json-schema.org/draft/2020-12/schema\n"
-                    "Observe proposed parameters/consent before action dispatch.\n"
-                    "Draft an email within the authorized task; this is an action, not a standard status.\n"}
-        self.assertEqual([],policy.publication_state_errors(self.matrix,self.schema,self.examples,legitimate))
-        protocol=(AI/"AI Agent Assessment Protocol.md").read_text()
-        self.assertIn("proposed parameters/consent",protocol)
-        changed=copy.deepcopy(self.matrix)
-        changed["procedure_catalog"]["reference"]="Historical draft source at an immutable revision"
-        self.assertEqual([],policy.publication_state_errors(changed))
+        for data in (self.matrix,self.schema,self.examples):
+            self.assertNotIn("x_profile_release",data)
+        self.assertFalse(hasattr(policy,"publication_state_errors"))
+        self.assertFalse(hasattr(policy,"PROFILE_VERSION"))
+        method=policy.GUIDE.read_text().split("# Assessment Methodology\n",1)[1]
+        self.assertNotIn("0.1.0-alpha",method)
+        self.assertNotIn("AI-only publication scope",method)
+        self.assertIn("proposed parameters/consent",method)
+        self.assertIn("**Pilot:**",method,"pilot testing stage remains methodology")
+        self.assertIn("**Full campaign:**",method)
+        self.assertIn("**Remediation:**",method)
+        p=copy.deepcopy(self.plans["desktop-local"])
+        p["status"]="certification_ready"
+        self.assertError(self.errors(p),"illustrative placeholders/unassigned release")
+        self.assertError(self.errors(p),"mandatory assertion unresolved/breached")
+        p["target_release"]="invented-release"
+        self.assertError(self.errors(p),"governing profile revision")
 
     def test_pending_fixture_is_never_an_approved_or_passing_fixture(self):
         for p in self.plans.values():
@@ -590,57 +594,60 @@ class AssessmentPolicyTests(unittest.TestCase):
         p["fixtures"][0]["approval"]["status"]="approved"
         self.assertEqual([],self.errors(p),"synthetic structural case only; no real approval/security claim")
 
-    def test_alpha_certification_authority_remains_false(self):
-        for data in (self.matrix,self.schema,self.examples):
-            metadata=data.get("x_profile_release",data.get("x_alpha_preview"))
-            self.assertIs(False,metadata["certification_authority"])
-        changed=copy.deepcopy(self.matrix)
-        metadata_key="x_profile_release" if "x_profile_release" in changed else "x_alpha_preview"
-        changed[metadata_key]["certification_authority"]=True
-        self.assertError(policy.publication_state_errors(changed),"certification authority must remain false")
-        p=copy.deepcopy(self.plans["desktop-local"])
-        p["status"]="certification_ready"
-        self.assertError(self.errors(p),"alpha assessment conformance does not authorize")
-        p["target_release"]="invented-release"
-        self.assertError(self.errors(p),"bind the operative alpha profile version")
-
-    def test_publication_cleanup_preserves_policy_source_pin_and_parent_preview(self):
-        base="d961a5d004fe3b8894b792a0f80e7723efc50ef2"
+    def test_consolidation_preserves_security_controls_and_data(self):
+        base="94f0ac2067d005fad9c4644fd98f8dc9b731900f"
         def at_base(name):
             try:
-                return json.loads(subprocess.check_output(["git","show",base+":AI Profile/"+name],cwd=ROOT,text=True,stderr=subprocess.DEVNULL))
+                return subprocess.check_output(["git","show",base+":"+name],cwd=ROOT,text=True,stderr=subprocess.DEVNULL)
             except subprocess.CalledProcessError:
-                self.skipTest("publication base unavailable in this checkout")
-        old=at_base("AI Agent Assessment Applicability.json")
-        self.assertEqual(policy.SOURCE_PIN,self.matrix["source_baseline"],"pin stays bound to the parent's reviewed freeze")
-        old_catalog=copy.deepcopy(old["procedure_catalog"])
-        # A later parent-owned source freeze may replace only these references.
-        old_catalog["source_revision"]=self.matrix["procedure_catalog"]["source_revision"]
-        old_catalog["reference"]=self.matrix["procedure_catalog"]["reference"]
-        self.assertEqual(old_catalog,self.matrix["procedure_catalog"])
-        self.assertEqual(old["evidence_routes"],self.matrix["evidence_routes"])
-        if "x_alpha_preview" in self.matrix:
-            self.assertEqual(old["x_alpha_preview"],self.matrix["x_alpha_preview"],"parent converts preview metadata")
-        else:
-            self.assertIs(False,self.matrix["x_profile_release"]["certification_authority"])
-        for before,after in zip(old["audits"],self.matrix["audits"]):
-            for a,b in zip(before["verifications"],after["verifications"]):
-                self.assertEqual({k:v for k,v in a.items() if k!="source"},{k:v for k,v in b.items() if k!="source"},"case/assertion/strength/applicability/evidence unchanged")
-        old_schema=at_base("AI Agent Assessment Plan.schema.json")
+                self.skipTest("consolidation base unavailable in this checkout")
+        old=json.loads(at_base("AI Profile/AI Agent Assessment Applicability.json"))
+        old.pop("x_profile_release",None)
+        old["status"]=self.matrix["status"]
+        old["target_release"]=self.matrix["target_release"]
+        for a in old["audits"]:
+            for v in a["verifications"]:
+                v["assertion"]=v["assertion"].replace("No 25-step fallback is adopted by this alpha","No 25-step fallback is provided here")
+        self.assertEqual(old,self.matrix,"inventory/cases/strength/evidence/pin unchanged")
+        old_schema=json.loads(at_base("AI Profile/AI Agent Assessment Plan.schema.json"))
+        old_schema.pop("x_profile_release",None)
         old_schema["title"]=self.schema["title"]
-        old_schema["$defs"]["fixture"]["properties"]["approval"]["properties"]["status"]["enum"]=["pending","approved","rejected"]
-        if "x_profile_release" in self.schema:
-            old_schema.pop("x_alpha_preview",None)
-            old_schema["x_profile_release"]=self.schema["x_profile_release"]
-        self.assertEqual(old_schema,self.schema,"schema changes limited to publication metadata/title and pending fixture label")
-        old_examples=at_base("AI Agent Assessment Examples.json")
-        if "x_profile_release" in self.examples:
-            old_examples.pop("x_alpha_preview",None)
-            old_examples["x_profile_release"]=self.examples["x_profile_release"]
-        for before,after in zip(old_examples["examples"],self.examples["examples"]):
-            if "rubric" in before["fixture"]["differences"]:
-                before["fixture"]["differences"]["rubric"]=after["fixture"]["differences"]["rubric"]
-        self.assertEqual(old_examples,self.examples,"synthetic limitations, action proposals and fixture paths unchanged")
+        self.assertEqual(old_schema,self.schema,"schema0.2 and pending fixtures unchanged")
+        old_examples=json.loads(at_base("AI Profile/AI Agent Assessment Examples.json"))
+        old_examples.pop("x_profile_release",None)
+        self.assertEqual(old_examples,self.examples,"synthetic scenarios/evidence remain unchanged")
+        before=at_base("AI Profile/AI Agent Test Guide.md").split("# 1. Model & Data Integrity\n",1)[1]
+        after=policy.GUIDE.read_text().split("# 1. Model & Data Integrity\n",1)[1].split("\n# Assessment Methodology\n",1)[0]
+        before=before.replace("(AI%20Agent%20Assessment%20Protocol.md#5-111-task-appropriate-outcomes)","(#5-111-task-appropriate-outcomes)")
+        self.assertEqual(before.rstrip(),after.rstrip(),"original audit/security clauses unchanged")
+
+    def test_substantive_methodology_paragraphs_preserved(self):
+        import re
+        base="94f0ac2067d005fad9c4644fd98f8dc9b731900f"
+        def normalize(text):
+            text=re.sub(r"\[([^\]]+)\]\([^)]+\)",r"\1",text)
+            text=re.sub(r"(?m)^#{1,4} ","",text)
+            return " ".join(text.split())
+        method=normalize(policy.GUIDE.read_text().split("# Assessment Methodology\n",1)[1])
+        for name in ("AI Agent Assessment Protocol.md","AI Agent Assessment Applicability.md","AI Agent Assessment Plans.md"):
+            try:
+                old=subprocess.check_output(["git","show",base+":AI Profile/"+name],cwd=ROOT,text=True,stderr=subprocess.DEVNULL)
+            except subprocess.CalledProcessError:
+                self.skipTest("consolidation base unavailable")
+            for paragraph in old.split("\n\n"):
+                # File identity, navigation and publication wrappers are not controls.
+                if not paragraph.strip() or paragraph.startswith(("# AI Agent Assessment","<!-- ai-profile-version:","This alpha defines","**AI Agent assessment","This companion governs","Companions:","Files:","These records are paired")):
+                    continue
+                if paragraph.startswith("The corresponding retained **Tool**"):
+                    continue  # Parent relocated this live source into the annex.
+                paragraph=paragraph.replace("Eight actual qualified red-team hours and the ten-execution default are the alpha assessment requirements","Eight actual qualified red-team hours and the ten-execution default are the assessment requirements")
+                paragraph=paragraph.replace(" These operative rules make no assertion about a WG/SC vote or certificate-issuance authority.","")
+                paragraph=paragraph.replace("Passing structural validation is not product security evidence, a governance decision or authority to issue an ADA certificate.","Passing structural validation is not product security evidence.")
+                paragraph=paragraph.replace("; alpha assessment conformance does not authorize ADA certificate issuance.",".")
+                paragraph=paragraph.replace("[Plans and worked examples](AI%20Agent%20Assessment%20Plans.md)","[Assessment Plans and Records](#assessment-plans-and-records)")
+                if paragraph.startswith("The matrix's #539"):
+                    paragraph=paragraph.replace("AI Agent Policy Alignment.json.","[AI Agent Policy Alignment.json](../scripts/data/ai/AI%20Agent%20Policy%20Alignment.json).")
+                self.assertIn(normalize(paragraph),method,(name,paragraph[:160]))
 
     def test_specific_cases_and_named_artifact_conditions_not_generic(self):
         for _, v in policy.inventory(self.matrix).values():

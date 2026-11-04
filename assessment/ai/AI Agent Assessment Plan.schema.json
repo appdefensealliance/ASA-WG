@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "urn:ada:ai-agent:assessment-plan:0.2",
-  "title": "AI Agent alpha assessment plan/record using Guide #543 assertion semantics",
+  "title": "AI Agent assessment plan/record using Guide #543 assertion semantics",
   "description": "Structure and declared source/evidence links only; never authenticity, completeness, production equivalence, security, calibration or actual human work.",
   "type": "object",
   "additionalProperties": false,
@@ -1028,11 +1028,5 @@
         }
       }
     }
-  },
-  "x_profile_release": {
-    "id": "AI-profiles-0.1.0-alpha.1",
-    "version": "0.1.0-alpha.1",
-    "document_state": "alpha",
-    "certification_authority": false
   }
 }
