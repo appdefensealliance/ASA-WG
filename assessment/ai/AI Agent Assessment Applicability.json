@@ -2,11 +2,11 @@
   "matrix_version": "0.2",
   "status": "assessment applicability inventory",
   "target_release": "unassigned",
-  "source_baseline": "bdc6ca0ee84068c0b4821649ef919062ba339cb1",
+  "source_baseline": "89e3f774063aabfda114b9f7f8702eebd2210052",
   "procedure_catalog": {
     "revision": "0.2",
-    "source_revision": "bdc6ca0ee84068c0b4821649ef919062ba339cb1",
-    "reference": "AI Profile/AI Agent Test Guide.md#assessment-methodology at bdc6ca0ee84068c0b4821649ef919062ba339cb1",
+    "source_revision": "89e3f774063aabfda114b9f7f8702eebd2210052",
+    "reference": "AI Profile/AI Agent Test Guide.md#assessment-methodology at 89e3f774063aabfda114b9f7f8702eebd2210052",
     "primary_cases": "Each verification selector is its governing procedure_id, with the primary case_id from its versioned case. This reviewed catalog, not a per-record lab plan, classifies the target.",
     "classification_basis": {
       "llm_mediated": "Prescribed Agent/model decision or output experiment: TEN independent target executions, regardless of global flags, fixed seeds, temperature or deterministic judging.",
