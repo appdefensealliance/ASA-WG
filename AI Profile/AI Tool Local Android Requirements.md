@@ -27,7 +27,7 @@ Use each assertion's actual actor/protocol/feature conditions and explicit sourc
 - Tool §2.2.2 / Guide §1.5 multi-user identity propagation: its explicit Mobile exclusion applies to Android despite the Local column. It does not exclude independent authorization/user-context duties in §§1.2.1–1.2.2, Agent protections or MASA.
 - Tool §1.3.2 / Guide §1.6 downstream transport, and §§1.5.1–1.5.2 / Guide §§1.3–1.4 redirect/PKCE: retain the explicit Mobile exclusions of those Tool procedures. Applicable released MASA transport/platform requirements and separately exposed remote-component duties still apply.
 - Tool §§1.4.2–1.4.3 action idempotency/lifecycle: preserve applicable original Local/Mobile strength. The #544 Agent policy change does not demote the local Tool annex.
-- Preserve applicable local consent, secret management, request/user isolation, sandbox, metadata, resource and audit controls and conditional Wire Format adoption. No remote SHOULD overlay weakens them.
+- Preserve applicable local consent, secret management, request/user isolation, sandbox, metadata, resource and audit controls. Optional Wire Format use does not establish local D1 conformance; see the [local-wire boundary](#optional-local-wire-conformance-boundary). No remote SHOULD overlay weakens the mandatory local controls.
 
 The mapping is tied to actual corresponding IDs and source conditions, not a blanket mobile waiver. Any genuinely contradictory assertion must receive explicit WG disposition, not an invented passing exclusion. The [Agent applicability record](AI%20Agent%20Test%20Guide.md#assessment-applicability) separately maps Agent-owned duties at the invoked interface.
 
