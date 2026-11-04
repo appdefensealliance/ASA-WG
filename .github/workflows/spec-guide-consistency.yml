@@ -16,6 +16,7 @@ on:
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
       - 'scripts/ai_assessment_lint.py'
+      - 'scripts/ai_document_set.py'
       - 'scripts/agent_policy_alignment.py'
       - 'scripts/agent_assessment_policy_validate.py'
       - 'scripts/tool_case_render.py'
@@ -23,7 +24,6 @@ on:
       - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
       - 'AI Profile/AI Agent*.md'
-      - 'AI Profile/AI Agent Migration Coverage.json'
       - 'scripts/tests/test_agent_*.py'
       - '.github/workflows/spec-guide-consistency.yml'
   push:
@@ -39,6 +39,7 @@ on:
       - 'CASA/CASA Test Guide.md'
       - 'scripts/spec_guide_lint.py'
       - 'scripts/ai_assessment_lint.py'
+      - 'scripts/ai_document_set.py'
       - 'scripts/agent_policy_alignment.py'
       - 'scripts/agent_assessment_policy_validate.py'
       - 'scripts/tool_case_render.py'
@@ -46,7 +47,6 @@ on:
       - 'scripts/spec-guide-lint.md'
       - 'scripts/spec_guide_lint_baseline.json'
       - 'AI Profile/AI Agent*.md'
-      - 'AI Profile/AI Agent Migration Coverage.json'
       - 'scripts/tests/test_agent_*.py'
 
 jobs:

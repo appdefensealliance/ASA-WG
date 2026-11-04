@@ -153,7 +153,7 @@ This is a certification prerequisite, not an additional numbered AI model/behavi
 2. Confirm that the underlying Specification and Test Guide are released artifacts from `main`, with recorded version/reference, and that both the underlying and AI portions are evaluated together at AL2 for the same assessed product and configuration.
 3. Check the combined record for every applicable mandatory requirement in both portions, retaining the underlying profile's original alternatives and justified exclusions. An AI-only pass, an AL0/AL1 underlying assessment, a prior underlying certificate alone, or unresolved mandatory underlying failures cannot satisfy this prerequisite.
 4. For a PC/Mac desktop Agent using an external remote LLM, verify DASA + AI Agent evaluation without demanding a separate CASA evaluation of the LLM provider's backend. Confirm that this exclusion does not remove the Agent's model-behaviour/version evidence, secure integration, data-handling requirements, or its own in-scope product components.
-5. Confirm that the combined report and single certificate, when issuance is independently authorized identify the product, covered architecture(s), both profile(s)/versions, and AL2.
+5. Confirm that the combined report and single certificate, when issuance is independently authorized, identify the product, covered architecture(s), both profile(s)/versions, and AL2.
 
 **Verification:** A combined certificate MUST NOT be issued unless the joint record demonstrates AL2 conformance to every applicable mandatory underlying-profile and AI-profile requirement for the same assessed product/configuration. Missing or failed prerequisite evidence MUST NOT be scored as an optional AI enhancement or bypassed by an AI-profile SHOULD. No separately issued underlying-profile certificate is required. This gate does not certify the external model-provider backend or expand the existing AI model-hosting-infrastructure scope.
 
@@ -1726,7 +1726,7 @@ Approved fixture classes (approval is required per product/record, not granted g
 
 Android stdio/AppFunctions Agent plans use their actual mobile/local invocation boundary and retain the independently applicable MASA/AI Agent authority, containment, consent, lifecycle and data duties. They do not require a Tool certificate or certify Tool internals.
 
-The corresponding retained **Tool** Spec/Guide planning labels and exclusions belong to [AI Tool Local Android Applicability](AI%20Tool%20Local%20Android%20Requirements.md#local-android-applicability), not this Agent matrix. That companion preserves original local Tool strength and explicit conditions without selecting a weaker historical column. A remote transport overlay cannot demote local Android requirements.
+The corresponding retained **Tool** Spec/Guide planning labels and exclusions belong to [Local Android applicability](AI%20Tool%20Local%20Android%20Requirements.md#local-android-applicability), not this Agent matrix. That annex section preserves original local Tool strength and explicit conditions without selecting a weaker historical column. A remote transport overlay cannot demote local Android requirements.
 
 ### 5. Local validation and review
 

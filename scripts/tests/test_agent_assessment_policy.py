@@ -608,6 +608,7 @@ class AssessmentPolicyTests(unittest.TestCase):
         for a in old["audits"]:
             for v in a["verifications"]:
                 v["assertion"]=v["assertion"].replace("No 25-step fallback is adopted by this alpha","No 25-step fallback is provided here")
+        old["source_control_amendment"] = self.matrix["source_control_amendment"]
         old["source_baseline"] = self.matrix["source_baseline"]
         old["procedure_catalog"]["source_revision"] = self.matrix["procedure_catalog"]["source_revision"]
         old["procedure_catalog"]["reference"] = self.matrix["procedure_catalog"]["reference"]

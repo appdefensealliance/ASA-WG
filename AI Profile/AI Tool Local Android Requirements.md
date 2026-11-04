@@ -14,9 +14,9 @@ with its original unresolved local-transport scope; it is not universally requir
 
 ## Local Android applicability
 
-This Tool-side companion resolves the retained annex's planning labels. `Local` is an invocation/execution boundary; `Mobile` is deployment. Android stdio and AppFunctions are **mobile + local**. Ordinary downstream HTTPS does not reclassify them as public remote Tools; separately exposed remote boundaries are assessed separately.
+This section resolves the retained source's planning labels. `Local` is an invocation/execution boundary; `Mobile` is deployment. Android stdio and AppFunctions are **mobile + local**. Ordinary downstream HTTPS does not reclassify them as public remote Tools; separately exposed remote boundaries are assessed separately.
 
-Use each assertion's actual actor/protocol/feature conditions and explicit source exclusion, not whichever historical column is weaker. The [retained Android annex](AI%20Tool%20Local%20Android%20Requirements.md) remains the source for applicable local Tool strength, definitions and optional-profile conditions. Agent assessment does not certify these Tool internals and requires no Tool certificate.
+Use each assertion's actual actor/protocol/feature conditions and explicit source exclusion, not whichever historical column is weaker. The retained source sections below remain the source for applicable local Tool strength, definitions and optional-profile conditions. Agent assessment does not certify these Tool internals and requires no Tool certificate.
 
 ### Corresponding retained Spec/Guide dispositions
 

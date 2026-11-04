@@ -51,7 +51,7 @@
       }
     }
   },
-  "source_control_amendment": "AI Agent Policy Alignment.json (paired source requirements and review record)",
+  "source_control_amendment": "scripts/data/ai/AI Agent Policy Alignment.json (maintainer record paired with the source requirements)",
   "source_guide": "AI Agent Test Guide.md",
   "selector_semantics": "Agent audit ID plus stable mnemonic verification; source assertions and #543 dispositions, not new audit requirements or evidence types",
   "conditions": {

@@ -7,6 +7,8 @@ defines the baseline, applicability conditions, actor allocation and assurance l
 
 ## Certification scope
 
+Certification is not presently available against these documents. It requires WG consensus, SC consideration and approval/release, the corresponding scheme-document updates, and authorized test labs able to assess these standards.
+
 Standalone Tool certification scope and call-level authentication are separate.
 A Tool is in scope when its intended integration processes confidential data or
 enables sensitive operations. A public-only, read-only Tool may be excluded only
