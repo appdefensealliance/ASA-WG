@@ -2,11 +2,11 @@
   "matrix_version": "0.2",
   "status": "operative alpha assessment applicability",
   "target_release": "0.1.0-alpha.1",
-  "source_baseline": "4d5e4c14e9d1aecb964363424687e684e53024c5",
+  "source_baseline": "126033d3c25eb894224c5d747b061c193ecf35c2",
   "procedure_catalog": {
     "revision": "0.2",
-    "source_revision": "4d5e4c14e9d1aecb964363424687e684e53024c5",
-    "reference": "AI Agent Test Guide.md and AI Agent Assessment Protocol.md at 4d5e4c14e9d1aecb964363424687e684e53024c5",
+    "source_revision": "126033d3c25eb894224c5d747b061c193ecf35c2",
+    "reference": "AI Agent Test Guide.md and AI Agent Assessment Protocol.md at 126033d3c25eb894224c5d747b061c193ecf35c2",
     "primary_cases": "Each verification selector is its governing procedure_id, with the primary case_id from its versioned case. This reviewed catalog, not a per-record lab plan, classifies the target.",
     "classification_basis": {
       "llm_mediated": "Prescribed Agent/model decision or output experiment: TEN independent target executions, regardless of global flags, fixed seeds, temperature or deterministic judging.",

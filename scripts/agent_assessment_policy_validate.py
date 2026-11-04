@@ -64,7 +64,7 @@ ENFORCEMENT = {"admission", "authentication_authorization", "consent", "untruste
                "isolation", "lifecycle", "logging", "outcome_reconciliation"}
 QUALIFYING_ACTIVITIES = {"adaptive_attack_development", "adaptive_execution_investigation"}
 PROFILE_FOR_DEPLOYMENT = {"mobile": "MASA", "desktop": "DASA", "web": "CASA"}
-SOURCE_PIN = "4d5e4c14e9d1aecb964363424687e684e53024c5"
+SOURCE_PIN = "126033d3c25eb894224c5d747b061c193ecf35c2"
 PROFILE_VERSION = "0.1.0-alpha.1"
 CURRENT_STATUS_LANGUAGE = re.compile(
     r"\bdraft\b(?=\s*(?:\d|AI\b|ASA\b|assessment\b|standard\b|profile\b|"
